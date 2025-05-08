@@ -1,0 +1,66 @@
+"use client"
+
+import Image from "next/image"
+import Link from "next/link"
+import { Building2, MapPin, Calendar, Home } from "lucide-react"
+import { Button } from "@/components/ui/button"
+
+interface ProjectCardProps {
+  title: string
+  location: string
+  price: string
+  image: string
+  units: string
+  developer: string
+  completion: string
+  slug: string
+}
+
+export default function ProjectCard({
+  title,
+  location,
+  price,
+  image,
+  units,
+  developer,
+  completion,
+  slug,
+}: ProjectCardProps) {
+  return (
+    <div className="bg-white rounded-lg overflow-hidden shadow-lg transition-transform hover:scale-[1.02]">
+      <div className="relative h-60">
+        <Image src={image || "/placeholder.svg"} alt={title} fill className="object-cover" />
+        <div className="absolute top-3 right-3 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
+          New Launch
+        </div>
+      </div>
+      <div className="p-5">
+        <h3 className="text-xl font-bold mb-1">{title}</h3>
+        <div className="flex items-center text-gray-500 mb-3">
+          <MapPin className="h-4 w-4 mr-1" />
+          <span className="text-sm">{location}</span>
+        </div>
+        <p className="text-lg font-semibold text-primary mb-4">{price}</p>
+
+        <div className="grid grid-cols-2 gap-3 mb-5">
+          <div className="flex items-center text-gray-600">
+            <Building2 className="h-4 w-4 mr-1 text-gray-400" />
+            <span className="text-sm">{developer}</span>
+          </div>
+          <div className="flex items-center text-gray-600">
+            <Home className="h-4 w-4 mr-1 text-gray-400" />
+            <span className="text-sm">{units}</span>
+          </div>
+          <div className="flex items-center text-gray-600">
+            <Calendar className="h-4 w-4 mr-1 text-gray-400" />
+            <span className="text-sm">Est. {completion}</span>
+          </div>
+        </div>
+
+        <Link href={`/projects/${slug}`}>
+          <Button className="w-full bg-primary text-white hover:bg-primary/90">View Details</Button>
+        </Link>
+      </div>
+    </div>
+  )
+}
