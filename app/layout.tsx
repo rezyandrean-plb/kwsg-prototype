@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ThemeProvider } from "@/components/theme-provider"
 import TransparentHeader from "@/components/transparent-header"
+import MobileMenu from "@/components/mobile-menu"
 import Image from "next/image"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -25,7 +26,7 @@ export default function RootLayout({
           <TransparentHeader />
           <div className="flex min-h-screen flex-col">
             <header className="fixed top-0 z-50 w-full transition-all duration-300" id="main-header">
-              <div className="container flex h-16 items-center">
+              <div className="container flex h-16 items-center justify-between">
                 <Link href="/" className="flex items-center space-x-2">
                   <Image
                     src="/images/kwsg-logo.png"
@@ -35,7 +36,8 @@ export default function RootLayout({
                     priority
                   />
                 </Link>
-                <nav className="ml-auto flex gap-4 sm:gap-6">
+                {/* Desktop Navigation */}
+                <nav className="hidden md:flex gap-4 lg:gap-6">
                   <Link href="/projects" className="text-sm font-medium text-white hover:text-white/80 hover:bg-primary/20 rounded px-2 py-1" id="nav-link">
                     Projects
                   </Link>
@@ -53,11 +55,13 @@ export default function RootLayout({
                     Editorial
                   </Link>
                 </nav>
-                <div className="ml-4">
+                <div className="hidden md:block">
                   <Button id="join-webinar-button" className="bg-primary text-white hover:bg-primary/90">
                     Join Webinar
                   </Button>
                 </div>
+                {/* Mobile Menu */}
+                <MobileMenu />
               </div>
             </header>
             {children}

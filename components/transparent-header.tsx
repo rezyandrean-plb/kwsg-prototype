@@ -30,6 +30,7 @@ export default function TransparentHeader() {
     const logoText = document.getElementById("logo-text")
     const navLinks = document.querySelectorAll("#nav-link")
     const joinButton = document.querySelector("#join-webinar-button")
+    const mobileMenuButton = document.querySelector("[data-mobile-menu-button]")
 
     if (scrolled) {
       // When scrolled, make header solid
@@ -53,6 +54,10 @@ export default function TransparentHeader() {
       // Always use primary color for button
       joinButton?.classList.remove("bg-white", "text-primary", "hover:bg-white/90")
       joinButton?.classList.add("bg-primary", "text-white", "hover:bg-primary/90")
+
+      // Update mobile menu button color
+      mobileMenuButton?.classList.remove("text-white", "hover:text-white/80")
+      mobileMenuButton?.classList.add("text-foreground", "hover:text-primary")
     } else {
       // When at top, make header transparent
       header?.classList.remove(
@@ -75,6 +80,10 @@ export default function TransparentHeader() {
       // Always use primary color for button
       joinButton?.classList.remove("bg-white", "text-primary", "hover:bg-white/90")
       joinButton?.classList.add("bg-primary", "text-white", "hover:bg-primary/90")
+
+      // Update mobile menu button color
+      mobileMenuButton?.classList.remove("text-foreground", "hover:text-primary")
+      mobileMenuButton?.classList.add("text-white", "hover:text-white/80")
     }
   }, [scrolled])
 
