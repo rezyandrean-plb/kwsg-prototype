@@ -33,56 +33,58 @@ export default function TransparentHeader() {
     const mobileMenuButton = document.querySelector("[data-mobile-menu-button]")
 
     if (scrolled) {
-      // When scrolled, make header solid
+      // When scrolled, make header solid black
       header?.classList.remove("bg-transparent")
       header?.classList.add(
-        "bg-background/95",
+        "bg-black",
         "backdrop-blur",
-        "supports-[backdrop-filter]:bg-background/60",
+        "supports-[backdrop-filter]:bg-black/60",
         "border-b",
+        "border-gray-800"
       )
 
       // Change text color
       logoText?.classList.remove("text-white")
-      logoText?.classList.add("text-primary")
+      logoText?.classList.add("text-white")
 
       navLinks.forEach((link) => {
         link.classList.remove("text-white", "hover:text-white/80")
-        link.classList.add("text-foreground", "hover:text-primary")
+        link.classList.add("text-white", "hover:text-white/80")
       })
 
-      // Always use primary color for button
+      // Use red color for button
       joinButton?.classList.remove("bg-white", "text-primary", "hover:bg-white/90")
-      joinButton?.classList.add("bg-primary", "text-white", "hover:bg-primary/90")
+      joinButton?.classList.add("bg-primary-red", "text-white", "hover:bg-primary-red/90")
 
       // Update mobile menu button color
       mobileMenuButton?.classList.remove("text-white", "hover:text-white/80")
-      mobileMenuButton?.classList.add("text-foreground", "hover:text-primary")
+      mobileMenuButton?.classList.add("text-white", "hover:text-white/80")
     } else {
       // When at top, make header transparent
       header?.classList.remove(
-        "bg-background/95",
+        "bg-black",
         "backdrop-blur",
-        "supports-[backdrop-filter]:bg-background/60",
+        "supports-[backdrop-filter]:bg-black/60",
         "border-b",
+        "border-gray-800"
       )
       header?.classList.add("bg-transparent")
 
       // Change text color
-      logoText?.classList.remove("text-primary")
+      logoText?.classList.remove("text-white")
       logoText?.classList.add("text-white")
 
       navLinks.forEach((link) => {
-        link.classList.remove("text-foreground", "hover:text-primary")
+        link.classList.remove("text-white", "hover:text-white/80")
         link.classList.add("text-white", "hover:text-white/80")
       })
 
-      // Always use primary color for button
+      // Use red color for button
       joinButton?.classList.remove("bg-white", "text-primary", "hover:bg-white/90")
-      joinButton?.classList.add("bg-primary", "text-white", "hover:bg-primary/90")
+      joinButton?.classList.add("bg-primary-red", "text-white", "hover:bg-primary-red/90")
 
       // Update mobile menu button color
-      mobileMenuButton?.classList.remove("text-foreground", "hover:text-primary")
+      mobileMenuButton?.classList.remove("text-white", "hover:text-white/80")
       mobileMenuButton?.classList.add("text-white", "hover:text-white/80")
     }
   }, [scrolled])

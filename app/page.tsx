@@ -28,22 +28,22 @@ export default function Home() {
           src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80"
           alt="New Launch Property"
           fill
-          className="object-cover brightness-75"
+          className="object-cover brightness-50"
           priority
         />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
-          <h1 className="text-4xl md:text-6xl font-bold text-center mb-6 text-primary">Find Your New Launch Property</h1>
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-4 bg-black/40">
+          <h1 className="text-4xl md:text-6xl font-bold text-center mb-6 text-white">Find Your New Launch Property</h1>
           <p className="text-xl md:text-2xl text-center mb-8 max-w-2xl text-gray-100">
             We are the niche category king in New Launches
           </p>
-          <div className="w-full max-w-4xl bg-white rounded-lg overflow-hidden shadow-lg">
-            <div className="flex border-b">
+          <div className="w-full max-w-4xl bg-black/90 rounded-lg overflow-hidden shadow-lg backdrop-blur-sm">
+            <div className="flex border-b border-gray-800">
               {["New Launches", "Resale", "Rent"].map((tab, index) => (
                 <button
                   key={index}
                   onClick={() => setActiveTab(index)}
                   className={`flex-1 py-3 px-4 font-medium transition-colors ${
-                    activeTab === index ? "bg-primary text-white" : "text-gray-700 hover:bg-gray-100"
+                    activeTab === index ? "bg-primary-red text-white" : "text-gray-300 hover:bg-gray-800"
                   }`}
                 >
                   {tab}
@@ -60,9 +60,9 @@ export default function Home() {
                       ? "Search for resale properties, locations..."
                       : "Search for rental properties, monthly rates..."
                 }
-                className="flex-1 border-0 focus-visible:ring-0"
+                className="flex-1 border-0 bg-gray-900 text-white placeholder:text-gray-400 focus-visible:ring-0"
               />
-              <Button type="submit" size="icon" className="ml-2">
+              <Button type="submit" size="icon" className="ml-2 bg-primary-red hover:bg-primary-red/90">
                 <Search className="h-5 w-5" />
               </Button>
             </form>
@@ -71,15 +71,15 @@ export default function Home() {
       </section>
 
       {/* CTA Section - Webinar */}
-      <section className="bg-primary text-white py-10">
+      <section className="bg-black text-white py-16">
         <div className="container mx-auto text-center">
           <div className="flex items-center justify-center mb-4">
-            <Calendar className="h-6 w-6 mr-2" />
+            <Calendar className="h-6 w-6 mr-2 text-primary-red" />
             <h2 className="text-2xl font-bold">Next Recruitment Webinar</h2>
           </div>
-          <p className="text-lg mb-6">Learn how to leverage the number one realty globally</p>
+          <p className="text-lg mb-6 text-gray-300">Learn how to leverage the number one realty globally</p>
           <CountdownTimer targetDate="2024-06-15T18:00:00" />
-          <Button className="mt-6 bg-white text-primary hover:bg-gray-100">
+          <Button className="mt-6 bg-primary-red text-white hover:bg-primary-red/90">
             Join Recruitment Webinar
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
@@ -87,59 +87,59 @@ export default function Home() {
       </section>
 
       {/* PSR Section: Problem, Solution, Result woven into narrative */}
-      <section className="py-16 bg-white">
+      <section className="py-20 bg-gray-900 text-white">
         <div className="container mx-auto px-4 text-center max-w-3xl">
-          <h2 className="text-3xl font-bold mb-4 text-primary">The Challenge in Singapore's New Launch Market</h2>
-          <p className="text-lg mb-8 text-gray-900">
+          <h2 className="text-3xl font-bold mb-4 text-white">The Challenge in Singapore's New Launch Market</h2>
+          <p className="text-lg mb-8 text-gray-300">
             In Singapore's fast-paced property market, both buyers and agents face a unique set of challenges. With countless new launches, ever-changing regulations, and intense competition, it's easy to feel lost. Buyers often struggle to find reliable, up-to-date information, while agents work hard to stand out and close deals efficiently. The result? Frustration, missed opportunities, and uncertainty for everyone involved.
           </p>
-          <h2 className="text-3xl font-bold mb-4 text-primary">How KW Singapore Makes a Difference</h2>
-          <p className="text-lg mb-8 text-gray-900">
+          <h2 className="text-3xl font-bold mb-4 text-white">How KW Singapore Makes a Difference</h2>
+          <p className="text-lg mb-8 text-gray-300">
             That's where KW Singapore steps in. As the niche category king in new launches, we've reimagined the experience for both agents and buyers. Our platform combines cutting-edge technology, exclusive access to the latest projects, and world-class training. With advanced search, real-time analytics, and immersive virtual tours, we make it easy to discover, showcase, and secure the best properties. Agents receive specialized coaching and support, while buyers enjoy a seamless, transparent journey from search to sale.
           </p>
-          <h2 className="text-3xl font-bold mb-4 text-gray-900">The KW Singapore Advantage</h2>
-          <p className="text-lg text-gray-700">
+          <h2 className="text-3xl font-bold mb-4 text-white">The KW Singapore Advantage</h2>
+          <p className="text-lg text-gray-300">
             The results speak for themselves: KW agents become new launch specialists, closing more deals with less effort and building a reputation for excellence. Buyers find their dream homes faster and with greater confidence. Together, we're setting new standards for success in Singapore's property market—driving faster sales, stronger engagement, and lasting client relationships. Experience the KW difference today.
           </p>
         </div>
       </section>
 
       {/* PSR Section: Solution */}
-      <section className="py-16 bg-primary/5">
+      <section className="py-16 bg-black text-white">
         <div className="container mx-auto px-4 text-center max-w-3xl">
-          <h2 className="text-3xl font-bold mb-4 text-primary">Solution</h2>
-          <p className="text-lg text-gray-700 mb-6">
+          <h2 className="text-3xl font-bold mb-4 text-white">Solution</h2>
+          <p className="text-lg text-gray-300 mb-6">
             KW Singapore is the niche category king in new launches. We empower agents and buyers with cutting-edge technology, exclusive access to the latest projects, and world-class training. Our platform features advanced search, real-time market analytics, and immersive virtual tours, making it easy to discover, showcase, and secure the best properties. Agents receive specialized coaching and support, while buyers enjoy a seamless, transparent experience.
           </p>
         </div>
       </section>
 
       {/* PSR Section: Result */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gray-900 text-white">
         <div className="container mx-auto px-4 text-center max-w-3xl">
-          <h2 className="text-3xl font-bold mb-4 text-green-700">Result</h2>
-          <p className="text-lg text-gray-700 mb-6">
+          <h2 className="text-3xl font-bold mb-4 text-primary-red">Result</h2>
+          <p className="text-lg text-gray-300 mb-6">
             KW agents become new launch specialists, closing more deals with less effort and building a reputation for excellence. Buyers find their dream homes faster and with greater confidence. Together, we set new standards for success in Singapore's property market—driving faster sales, stronger engagement, and lasting client relationships.
           </p>
         </div>
       </section>
 
       {/* Tech Positioning Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-20 bg-black text-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Leverage Our Technology</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
               Access cutting-edge real estate technology that puts you ahead of the competition
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-lg shadow-md text-center">
-              <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="bg-gray-900 p-8 rounded-lg shadow-lg text-center border border-gray-800">
+              <div className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-primary"
+                  className="h-8 w-8 text-primary-red"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -152,17 +152,17 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-2">Advanced CRM</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-bold mb-2 text-white">Advanced CRM</h3>
+              <p className="text-gray-300">
                 Manage your clients and leads with our proprietary CRM system designed specifically for new launches
               </p>
             </div>
 
-            <div className="bg-white p-8 rounded-lg shadow-md text-center">
-              <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="bg-gray-900 p-8 rounded-lg shadow-lg text-center border border-gray-800">
+              <div className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-primary"
+                  className="h-8 w-8 text-primary-red"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -175,17 +175,17 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-2">Market Analytics</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-bold mb-2 text-white">Market Analytics</h3>
+              <p className="text-gray-300">
                 Get real-time insights on market trends, pricing, and buyer preferences for new launches
               </p>
             </div>
 
-            <div className="bg-white p-8 rounded-lg shadow-md text-center">
-              <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="bg-gray-900 p-8 rounded-lg shadow-lg text-center border border-gray-800">
+              <div className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-primary"
+                  className="h-8 w-8 text-primary-red"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -198,24 +198,17 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-2">Virtual Tours</h3>
-              <p className="text-gray-600">
-                Showcase properties with immersive 3D virtual tours and interactive floor plans
+              <h3 className="text-xl font-bold mb-2 text-white">Real-time Updates</h3>
+              <p className="text-gray-300">
+                Stay ahead with instant notifications on new launches, price changes, and market movements
               </p>
             </div>
-          </div>
-
-          <div className="text-center mt-12">
-            <Button className="bg-primary text-white hover:bg-primary/90">
-              Learn More About Our Technology
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
           </div>
         </div>
       </section>
 
       {/* Training & Growth Section */}
-      <section className="py-16">
+      <section className="py-16 bg-black text-white">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-12 items-center">
             <div className="md:w-1/2">
@@ -228,17 +221,17 @@ export default function Home() {
               />
             </div>
             <div className="md:w-1/2">
-              <h2 className="text-3xl font-bold mb-4">World-Class Training</h2>
-              <p className="text-lg text-gray-600 mb-6">
+              <h2 className="text-3xl font-bold mb-4 text-white">World-Class Training</h2>
+              <p className="text-lg text-gray-300 mb-6">
                 Our comprehensive training program equips you with the skills and knowledge to excel in the new launches
                 market.
               </p>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start">
-                  <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
+                  <div className="bg-primary-red/10 p-1 rounded-full mr-3 mt-1">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 text-primary"
+                      className="h-5 w-5 text-primary-red"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -247,17 +240,17 @@ export default function Home() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg">Specialized New Launch Training</h3>
-                    <p className="text-gray-600">
+                    <h3 className="font-semibold text-lg text-white">Specialized New Launch Training</h3>
+                    <p className="text-gray-300">
                       Learn the unique aspects of marketing and selling new launch properties
                     </p>
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
+                  <div className="bg-primary-red/10 p-1 rounded-full mr-3 mt-1">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 text-primary"
+                      className="h-5 w-5 text-primary-red"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -266,17 +259,17 @@ export default function Home() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg">Growth Share Program</h3>
-                    <p className="text-gray-600">
+                    <h3 className="font-semibold text-lg text-white">Growth Share Program</h3>
+                    <p className="text-gray-300">
                       Benefit from our unique commission structure that rewards performance
                     </p>
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
+                  <div className="bg-primary-red/10 p-1 rounded-full mr-3 mt-1">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 text-primary"
+                      className="h-5 w-5 text-primary-red"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -285,14 +278,14 @@ export default function Home() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg">MVVBP Framework</h3>
-                    <p className="text-gray-600">
+                    <h3 className="font-semibold text-lg text-white">MVVBP Framework</h3>
+                    <p className="text-gray-300">
                       Master our Mission, Vision, Values, Beliefs, and Perspective methodology
                     </p>
                   </div>
                 </li>
               </ul>
-              <Button className="bg-primary text-white hover:bg-primary/90">
+              <Button className="bg-primary-red text-white hover:bg-primary-red/90">
                 Join In-person Webinar
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -302,10 +295,10 @@ export default function Home() {
       </section>
 
       {/* Featured Projects */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-900 text-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-2 text-center">Featured New Launches</h2>
-          <p className="text-lg text-gray-600 mb-12 text-center max-w-3xl mx-auto">
+          <h2 className="text-3xl font-bold mb-2 text-center text-white">Featured New Launches</h2>
+          <p className="text-lg text-gray-300 mb-12 text-center max-w-3xl mx-auto">
             Discover the most exclusive new property launches in prime locations
           </p>
 
@@ -346,7 +339,7 @@ export default function Home() {
 
           <div className="text-center mt-12">
             <Link href="/projects">
-              <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
+              <Button variant="outline" className="border-primary-red text-primary-red hover:bg-primary-red hover:text-white">
                 View All New Launches
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -356,36 +349,36 @@ export default function Home() {
       </section>
 
       {/* Success Story Section */}
-      <section className="py-16">
+      <section className="py-16 bg-black text-white">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-12 items-center">
             <div className="md:w-1/2">
-              <h2 className="text-3xl font-bold mb-4">Melvin's Headturner Story</h2>
-              <p className="text-lg text-gray-600 mb-6">
+              <h2 className="text-3xl font-bold mb-4 text-white">Melvin's Headturner Story</h2>
+              <p className="text-lg text-gray-300 mb-6">
                 From struggling agent to top producer specializing in new launches - discover how Melvin transformed his
                 career.
               </p>
-              <blockquote className="border-l-4 border-primary pl-4 italic mb-8">
+              <blockquote className="border-l-4 border-primary-red pl-4 italic mb-8 text-gray-300">
                 "Focusing on new launches completely changed my business. The specialized training and technology
                 provided gave me the edge I needed to become a market leader."
               </blockquote>
               <div className="flex items-center mb-8">
                 <div className="flex -space-x-2">
-                  <div className="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg">
+                  <div className="bg-primary-red text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg">
                     $1M+
                   </div>
-                  <div className="bg-primary/80 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg">
+                  <div className="bg-primary-red/80 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg">
                     50+
                   </div>
-                  <div className="bg-primary/60 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg">
+                  <div className="bg-primary-red/60 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg">
                     #1
                   </div>
                 </div>
                 <div className="ml-6">
-                  <p className="text-sm text-gray-500">Annual commission | Units sold | In new launches</p>
+                  <p className="text-sm text-gray-400">Annual commission | Units sold | In new launches</p>
                 </div>
               </div>
-              <Button className="bg-primary text-white hover:bg-primary/90">
+              <Button className="bg-primary-red text-white hover:bg-primary-red/90">
                 Join Recruitment Webinar
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>

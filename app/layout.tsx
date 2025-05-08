@@ -38,25 +38,25 @@ export default function RootLayout({
                 </Link>
                 {/* Desktop Navigation */}
                 <nav className="hidden md:flex gap-4 lg:gap-6">
-                  <Link href="/projects" className="text-sm font-medium text-white hover:text-white/80 hover:bg-primary/20 rounded px-2 py-1" id="nav-link">
+                  <Link href="/projects" className="text-sm font-medium text-white hover:text-white/80 hover:bg-black/20 rounded px-2 py-1" id="nav-link">
                     Projects
                   </Link>
-                  <Link href="/why-kw" className="text-sm font-medium text-white hover:text-white/80 hover:bg-primary/20 rounded px-2 py-1" id="nav-link">
+                  <Link href="/why-kw" className="text-sm font-medium text-white hover:text-white/80 hover:bg-black/20 rounded px-2 py-1" id="nav-link">
                     Why KW
                   </Link>
                   <Link
                     href="/melvin-story"
-                    className="text-sm font-medium text-white hover:text-white/80 hover:bg-primary/20 rounded px-2 py-1"
+                    className="text-sm font-medium text-white hover:text-white/80 hover:bg-black/20 rounded px-2 py-1"
                     id="nav-link"
                   >
                     Melvin Headhunter Story
                   </Link>
-                  <Link href="/editorial" className="text-sm font-medium text-white hover:text-white/80 hover:bg-primary/20 rounded px-2 py-1" id="nav-link">
+                  <Link href="/editorial" className="text-sm font-medium text-white hover:text-white/80 hover:bg-black/20 rounded px-2 py-1" id="nav-link">
                     Editorial
                   </Link>
                 </nav>
                 <div className="hidden md:block">
-                  <Button id="join-webinar-button" className="bg-primary text-white hover:bg-primary/90">
+                  <Button id="join-webinar-button" className="bg-primary-red text-white hover:bg-primary-red/90">
                     Join Webinar
                   </Button>
                 </div>
@@ -65,7 +65,7 @@ export default function RootLayout({
               </div>
             </header>
             {children}
-            <footer className="border-t py-8 md:py-12">
+            <footer className="border-t py-8 md:py-12 bg-black text-white">
               <div className="container grid gap-8 md:grid-cols-2 lg:grid-cols-4">
                 <div className="space-y-4">
                   <Image
@@ -74,52 +74,52 @@ export default function RootLayout({
                     width={80}
                     height={40}
                   />
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-gray-300">
                     The niche category king in new property launches, leveraging on the number one realty globally.
                   </p>
                 </div>
                 <div className="space-y-4">
-                  <h3 className="text-lg font-bold">Quick Links</h3>
-                  <ul className="space-y-2 text-sm">
+                  <h3 className="text-lg font-bold text-white">Quick Links</h3>
+                  <ul className="space-y-2 text-sm text-gray-300">
                     <li>
-                      <Link href="/" className="hover:underline">
+                      <Link href="/" className="hover:text-white">
                         Home
                       </Link>
                     </li>
                     <li>
-                      <Link href="/projects" className="hover:underline">
+                      <Link href="/projects" className="hover:text-white">
                         Projects
                       </Link>
                     </li>
                     <li>
-                      <Link href="/why-kw" className="hover:underline">
+                      <Link href="/why-kw" className="hover:text-white">
                         Why KW
                       </Link>
                     </li>
                     <li>
-                      <Link href="/melvin-story" className="hover:underline">
+                      <Link href="/melvin-story" className="hover:text-white">
                         Melvin Headhunter Story
                       </Link>
                     </li>
                     <li>
-                      <Link href="/editorial" className="hover:underline">
+                      <Link href="/editorial" className="hover:text-white">
                         Editorial
                       </Link>
                     </li>
                   </ul>
                 </div>
                 <div className="space-y-4">
-                  <h3 className="text-lg font-bold">Contact Us</h3>
-                  <ul className="space-y-2 text-sm">
+                  <h3 className="text-lg font-bold text-white">Contact Us</h3>
+                  <ul className="space-y-2 text-sm text-gray-300">
                     <li>Email: info@kwnewlaunches.com</li>
                     <li>Phone: +65 6123 4567</li>
                     <li>Address: 8 Marina View, Singapore</li>
                   </ul>
                 </div>
                 <div className="space-y-4">
-                  <h3 className="text-lg font-bold">Follow Us</h3>
+                  <h3 className="text-lg font-bold text-white">Follow Us</h3>
                   <div className="flex space-x-4">
-                    <Link href="#" className="text-muted-foreground hover:text-foreground">
+                    <Link href="#" className="text-gray-300 hover:text-white">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -136,7 +136,7 @@ export default function RootLayout({
                       </svg>
                       <span className="sr-only">Facebook</span>
                     </Link>
-                    <Link href="#" className="text-muted-foreground hover:text-foreground">
+                    <Link href="#" className="text-gray-300 hover:text-white">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -155,7 +155,7 @@ export default function RootLayout({
                       </svg>
                       <span className="sr-only">Instagram</span>
                     </Link>
-                    <Link href="#" className="text-muted-foreground hover:text-foreground">
+                    <Link href="#" className="text-gray-300 hover:text-white">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -177,7 +177,7 @@ export default function RootLayout({
                   </div>
                 </div>
               </div>
-              <div className="container mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
+              <div className="container mt-8 border-t border-gray-800 pt-8 text-center text-sm text-gray-300">
                 <p>&copy; {new Date().getFullYear()} KW New Launches. All rights reserved.</p>
               </div>
             </footer>

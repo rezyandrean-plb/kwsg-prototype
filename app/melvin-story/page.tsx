@@ -11,13 +11,13 @@ export default function MelvinStoryPage() {
           src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80"
           alt="Melvin Headhunter Story"
           fill
-          className="object-cover brightness-75"
+          className="object-cover brightness-50"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+        <div className="absolute inset-0 bg-black/40 flex items-end">
           <div className="container mx-auto px-4 pb-16">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Melvin's Headhunter Story</h1>
-            <p className="text-xl text-white/90 max-w-2xl">
+            <p className="text-xl text-gray-100 max-w-2xl">
               From struggling agent to top producer - a journey of transformation and success
             </p>
           </div>
@@ -25,7 +25,7 @@ export default function MelvinStoryPage() {
       </section>
 
       {/* Story Introduction */}
-      <section className="py-16">
+      <section className="py-16 bg-black">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-12 items-center">
             <div className="md:w-1/2">
@@ -38,29 +38,29 @@ export default function MelvinStoryPage() {
               />
             </div>
             <div className="md:w-1/2">
-              <h2 className="text-3xl font-bold mb-4">Meet Melvin</h2>
-              <p className="text-lg text-gray-600 mb-6">
+              <h2 className="text-3xl font-bold mb-4 text-white">Meet Melvin</h2>
+              <p className="text-lg text-gray-300 mb-6">
                 From struggling agent to top producer specializing in new launches - discover how Melvin transformed his
                 career and became the leading specialist in new property launches.
               </p>
-              <blockquote className="border-l-4 border-primary pl-4 italic mb-8">
+              <blockquote className="border-l-4 border-primary-red pl-4 italic mb-8 text-gray-300">
                 "Focusing on new launches completely changed my business. The specialized training and technology
                 provided gave me the edge I needed to become a market leader."
               </blockquote>
               <div className="flex items-center mb-8">
                 <div className="flex -space-x-2">
-                  <div className="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg">
+                  <div className="bg-primary-red text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg">
                     $1M+
                   </div>
-                  <div className="bg-primary/80 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg">
+                  <div className="bg-primary-red/80 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg">
                     50+
                   </div>
-                  <div className="bg-primary/60 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg">
+                  <div className="bg-primary-red/60 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg">
                     #1
                   </div>
                 </div>
                 <div className="ml-6">
-                  <p className="text-sm text-gray-500">Annual commission | Units sold | In new launches</p>
+                  <p className="text-sm text-gray-400">Annual commission | Units sold | In new launches</p>
                 </div>
               </div>
             </div>
@@ -69,39 +69,39 @@ export default function MelvinStoryPage() {
       </section>
 
       {/* The Journey */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-900">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">The Journey to Success</h2>
+          <h2 className="text-3xl font-bold mb-12 text-center text-white">The Journey to Success</h2>
 
           <div className="grid md:grid-cols-3 gap-8 mb-12">
-            <div className="bg-white p-8 rounded-lg shadow-md">
-              <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-primary">1</span>
+            <div className="bg-black p-8 rounded-lg shadow-md border border-gray-800">
+              <div className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-primary-red">1</span>
               </div>
-              <h3 className="text-xl font-bold mb-2 text-center">The Beginning</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-bold mb-2 text-center text-white">The Beginning</h3>
+              <p className="text-gray-300">
                 Melvin started as a general real estate agent, struggling to stand out in a crowded market. With
                 inconsistent income and long hours, he knew he needed to find a specialization.
               </p>
             </div>
 
-            <div className="bg-white p-8 rounded-lg shadow-md">
-              <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-primary">2</span>
+            <div className="bg-black p-8 rounded-lg shadow-md border border-gray-800">
+              <div className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-primary-red">2</span>
               </div>
-              <h3 className="text-xl font-bold mb-2 text-center">The Turning Point</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-bold mb-2 text-center text-white">The Turning Point</h3>
+              <p className="text-gray-300">
                 After joining KW, Melvin discovered the untapped potential in new property launches. He leveraged KW's
                 specialized training and technology to become an expert in this niche.
               </p>
             </div>
 
-            <div className="bg-white p-8 rounded-lg shadow-md">
-              <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-primary">3</span>
+            <div className="bg-black p-8 rounded-lg shadow-md border border-gray-800">
+              <div className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-primary-red">3</span>
               </div>
-              <h3 className="text-xl font-bold mb-2 text-center">The Success</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-bold mb-2 text-center text-white">The Success</h3>
+              <p className="text-gray-300">
                 Today, Melvin is recognized as the go-to specialist for new launches. He has built a team of agents who
                 follow his methodology and consistently achieves record-breaking sales.
               </p>
@@ -109,7 +109,7 @@ export default function MelvinStoryPage() {
           </div>
 
           <div className="text-center">
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+            <p className="text-lg text-gray-300 max-w-3xl mx-auto mb-8">
               "The key to my success was finding a niche and becoming the absolute best at it. KW gave me the tools,
               training, and support to make that happen."
             </p>
@@ -118,16 +118,16 @@ export default function MelvinStoryPage() {
       </section>
 
       {/* Key Success Factors */}
-      <section className="py-16">
+      <section className="py-16 bg-black">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Key Success Factors</h2>
+          <h2 className="text-3xl font-bold mb-12 text-center text-white">Key Success Factors</h2>
 
           <div className="grid md:grid-cols-2 gap-12">
             <div className="flex flex-col md:flex-row gap-6 items-start">
-              <div className="bg-primary/10 p-4 rounded-full">
+              <div className="bg-primary-red/10 p-4 rounded-full">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-primary"
+                  className="h-8 w-8 text-primary-red"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -141,8 +141,8 @@ export default function MelvinStoryPage() {
                 </svg>
               </div>
               <div>
-                <h3 className="text-xl font-bold mb-2">Leveraging Technology</h3>
-                <p className="text-gray-600">
+                <h3 className="text-xl font-bold mb-2 text-white">Leveraging Technology</h3>
+                <p className="text-gray-300">
                   Melvin embraced KW's cutting-edge technology platform to streamline his business operations, analyze
                   market trends, and identify potential buyers for new launches. This gave him a significant edge over
                   competitors who relied on traditional methods.
@@ -151,10 +151,10 @@ export default function MelvinStoryPage() {
             </div>
 
             <div className="flex flex-col md:flex-row gap-6 items-start">
-              <div className="bg-primary/10 p-4 rounded-full">
+              <div className="bg-primary-red/10 p-4 rounded-full">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-primary"
+                  className="h-8 w-8 text-primary-red"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -168,8 +168,8 @@ export default function MelvinStoryPage() {
                 </svg>
               </div>
               <div>
-                <h3 className="text-xl font-bold mb-2">Specialized Training</h3>
-                <p className="text-gray-600">
+                <h3 className="text-xl font-bold mb-2 text-white">Specialized Training</h3>
+                <p className="text-gray-300">
                   Through KW's comprehensive training programs, Melvin gained deep expertise in the new launches market.
                   He learned how to effectively communicate the value of pre-construction properties and address common
                   buyer concerns.
@@ -178,10 +178,10 @@ export default function MelvinStoryPage() {
             </div>
 
             <div className="flex flex-col md:flex-row gap-6 items-start">
-              <div className="bg-primary/10 p-4 rounded-full">
+              <div className="bg-primary-red/10 p-4 rounded-full">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-primary"
+                  className="h-8 w-8 text-primary-red"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -195,8 +195,8 @@ export default function MelvinStoryPage() {
                 </svg>
               </div>
               <div>
-                <h3 className="text-xl font-bold mb-2">Building a Network</h3>
-                <p className="text-gray-600">
+                <h3 className="text-xl font-bold mb-2 text-white">Building a Network</h3>
+                <p className="text-gray-300">
                   Melvin built strong relationships with developers, giving him early access to new projects and
                   exclusive information. He also cultivated a network of investors and buyers specifically interested in
                   new launches.
@@ -205,10 +205,10 @@ export default function MelvinStoryPage() {
             </div>
 
             <div className="flex flex-col md:flex-row gap-6 items-start">
-              <div className="bg-primary/10 p-4 rounded-full">
+              <div className="bg-primary-red/10 p-4 rounded-full">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-primary"
+                  className="h-8 w-8 text-primary-red"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -222,8 +222,8 @@ export default function MelvinStoryPage() {
                 </svg>
               </div>
               <div>
-                <h3 className="text-xl font-bold mb-2">Growth Share Model</h3>
-                <p className="text-gray-600">
+                <h3 className="text-xl font-bold mb-2 text-white">Growth Share Model</h3>
+                <p className="text-gray-300">
                   KW's unique growth share model allowed Melvin to reinvest in his business and build a team. This
                   scalability was crucial for handling multiple new launch projects simultaneously and maximizing his
                   reach.
@@ -235,72 +235,72 @@ export default function MelvinStoryPage() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-900">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">What Others Say About Melvin</h2>
+          <h2 className="text-3xl font-bold mb-12 text-center text-white">What Others Say About Melvin</h2>
 
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-white p-8 rounded-lg shadow-md">
+            <div className="bg-black p-8 rounded-lg shadow-md border border-gray-800">
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mr-4">
-                  <span className="text-primary font-bold">JL</span>
+                <div className="w-12 h-12 bg-primary-red/20 rounded-full flex items-center justify-center mr-4">
+                  <span className="text-primary-red font-bold">JL</span>
                 </div>
                 <div>
-                  <h4 className="font-bold">John Lee</h4>
-                  <p className="text-sm text-gray-500">Property Developer</p>
+                  <h4 className="font-bold text-white">John Lee</h4>
+                  <p className="text-sm text-gray-400">Property Developer</p>
                 </div>
               </div>
-              <p className="italic text-gray-600">
-                "Melvin has been our go-to agent for new launches. His understanding of the market and ability to
-                connect with buyers is unmatched. He consistently outperforms other agents by a significant margin."
+              <p className="text-gray-300">
+                "Melvin's expertise in new launches is unmatched. His ability to understand market trends and connect
+                with buyers has made him an invaluable partner for our projects."
               </p>
             </div>
 
-            <div className="bg-white p-8 rounded-lg shadow-md">
+            <div className="bg-black p-8 rounded-lg shadow-md border border-gray-800">
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mr-4">
-                  <span className="text-primary font-bold">ST</span>
+                <div className="w-12 h-12 bg-primary-red/20 rounded-full flex items-center justify-center mr-4">
+                  <span className="text-primary-red font-bold">ST</span>
                 </div>
                 <div>
-                  <h4 className="font-bold">Sarah Tan</h4>
-                  <p className="text-sm text-gray-500">First-time Homebuyer</p>
+                  <h4 className="font-bold text-white">Sarah Tan</h4>
+                  <p className="text-sm text-gray-400">First-time Homebuyer</p>
                 </div>
               </div>
-              <p className="italic text-gray-600">
+              <p className="text-gray-300">
                 "As someone new to property investment, I was hesitant about buying a pre-construction unit. Melvin
                 walked me through the entire process, explained the benefits, and helped me find the perfect property. I
                 couldn't be happier with my investment."
               </p>
             </div>
 
-            <div className="bg-white p-8 rounded-lg shadow-md">
+            <div className="bg-black p-8 rounded-lg shadow-md border border-gray-800">
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mr-4">
-                  <span className="text-primary font-bold">RK</span>
+                <div className="w-12 h-12 bg-primary-red/20 rounded-full flex items-center justify-center mr-4">
+                  <span className="text-primary-red font-bold">RK</span>
                 </div>
                 <div>
-                  <h4 className="font-bold">Robert Kim</h4>
-                  <p className="text-sm text-gray-500">Property Investor</p>
+                  <h4 className="font-bold text-white">Robert Kim</h4>
+                  <p className="text-sm text-gray-400">Property Investor</p>
                 </div>
               </div>
-              <p className="italic text-gray-600">
+              <p className="text-gray-300">
                 "I've worked with many agents over the years, but Melvin's expertise in new launches is exceptional. He
                 has a knack for identifying properties with the best appreciation potential, which has significantly
                 increased my portfolio's value."
               </p>
             </div>
 
-            <div className="bg-white p-8 rounded-lg shadow-md">
+            <div className="bg-black p-8 rounded-lg shadow-md border border-gray-800">
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mr-4">
-                  <span className="text-primary font-bold">MC</span>
+                <div className="w-12 h-12 bg-primary-red/20 rounded-full flex items-center justify-center mr-4">
+                  <span className="text-primary-red font-bold">MC</span>
                 </div>
                 <div>
-                  <h4 className="font-bold">Maria Chen</h4>
-                  <p className="text-sm text-gray-500">Team Member</p>
+                  <h4 className="font-bold text-white">Maria Chen</h4>
+                  <p className="text-sm text-gray-400">Team Member</p>
                 </div>
               </div>
-              <p className="italic text-gray-600">
+              <p className="text-gray-300">
                 "Joining Melvin's team was the best career decision I've made. His mentorship and the systems he's put
                 in place have helped me grow my business exponentially. The specialized training in new launches gave me
                 a clear advantage in the market."
