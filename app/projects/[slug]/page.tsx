@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Building2, MapPin, Calendar, Home, DollarSign, Phone, Mail, ArrowRight } from "lucide-react"
 import { Input } from "@/components/ui/input"
-import { ProjectCard } from "@/components/project-card"
+import ProjectCard from "@/components/project-card"
 
 interface ProjectPageProps {
   params: {
@@ -63,6 +63,47 @@ export default function ProjectPage({ params }: ProjectPageProps) {
       "/placeholder.svg?key=7ewf3",
       "/placeholder.svg?key=jdjoc",
     ],
+    similarProjects: [
+      {
+        title: "The Avenir",
+        location: "River Valley, District 9",
+        price: "From $2.5M",
+        image: "/placeholder.svg?key=1wce3",
+        units: "376 Units",
+        developer: "Hong Leong Group",
+        completion: "2025",
+        slug: "the-avenir",
+        description: "Luxury living in the heart of River Valley with stunning city views and world-class amenities.",
+        features: ["Freehold", "Luxury finishes", "City views", "Full facilities"],
+        pricePerSqFt: "$2,800 - $3,200 psf"
+      },
+      {
+        title: "Midtown Modern",
+        location: "Bugis, District 7",
+        price: "From $1.8M",
+        image: "/placeholder.svg?key=7233g",
+        units: "558 Units",
+        developer: "GuocoLand",
+        completion: "2024",
+        slug: "midtown-modern",
+        description: "Contemporary urban living in the vibrant Bugis district, combining modern design with convenience.",
+        features: ["99-year leasehold", "Smart home features", "Urban lifestyle", "Integrated development"],
+        pricePerSqFt: "$2,400 - $2,800 psf"
+      },
+      {
+        title: "Clavon",
+        location: "Clementi, District 5",
+        price: "From $1.5M",
+        image: "/placeholder.svg?key=5j2ou",
+        units: "640 Units",
+        developer: "UOL Group",
+        completion: "2024",
+        slug: "clavon",
+        description: "Family-friendly development in the established Clementi neighborhood with excellent connectivity.",
+        features: ["99-year leasehold", "Family-oriented", "Near MRT", "Good schools"],
+        pricePerSqFt: "$1,800 - $2,200 psf"
+      }
+    ]
   }
 
   return (
@@ -408,38 +449,22 @@ export default function ProjectPage({ params }: ProjectPageProps) {
           <h2 className="text-2xl font-bold mb-8">Similar Projects You May Like</h2>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <ProjectCard
-              title="The Avenir"
-              location="River Valley, District 9"
-              price="From $2.5M"
-              image="/placeholder.svg?key=1wce3"
-              units="376 Units"
-              developer="Hong Leong Group"
-              completion="2025"
-              slug="the-avenir"
-            />
-
-            <ProjectCard
-              title="Midtown Modern"
-              location="Bugis, District 7"
-              price="From $1.8M"
-              image="/placeholder.svg?key=7233g"
-              units="558 Units"
-              developer="GuocoLand"
-              completion="2024"
-              slug="midtown-modern"
-            />
-
-            <ProjectCard
-              title="Clavon"
-              location="Clementi, District 5"
-              price="From $1.5M"
-              image="/placeholder.svg?key=5j2ou"
-              units="640 Units"
-              developer="UOL Group"
-              completion="2024"
-              slug="clavon"
-            />
+            {project.similarProjects.map((similarProject) => (
+              <ProjectCard
+                key={similarProject.slug}
+                title={similarProject.title}
+                location={similarProject.location}
+                price={similarProject.price}
+                image={similarProject.image}
+                units={similarProject.units}
+                developer={similarProject.developer}
+                completion={similarProject.completion}
+                slug={similarProject.slug}
+                description={similarProject.description}
+                pricePerSqFt={similarProject.pricePerSqFt}
+                features={similarProject.features}
+              />
+            ))}
           </div>
         </div>
       </section>

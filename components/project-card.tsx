@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { Building2, MapPin, Calendar, Home } from "lucide-react"
+import { Building2, MapPin, Calendar, Home, DollarSign, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 interface ProjectCardProps {
@@ -14,6 +14,9 @@ interface ProjectCardProps {
   developer: string
   completion: string
   slug: string
+  description?: string
+  pricePerSqFt?: string
+  features?: string[]
 }
 
 export default function ProjectCard({
@@ -25,22 +28,35 @@ export default function ProjectCard({
   developer,
   completion,
   slug,
+  description,
+  pricePerSqFt,
+  features,
 }: ProjectCardProps) {
   return (
-    <div className="bg-white rounded-lg overflow-hidden shadow-lg transition-transform hover:scale-[1.02]">
+    <div className="bg-white rounded-lg overflow-hidden shadow-lg transition-transform hover:scale-[1.02] flex flex-col h-full">
       <div className="relative h-60">
         <Image src={image || "/placeholder.svg"} alt={title} fill className="object-cover" />
         <div className="absolute top-3 right-3 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
           New Launch
         </div>
       </div>
-      <div className="p-5">
+      <div className="p-5 flex flex-col flex-grow">
         <h3 className="text-xl font-bold mb-1">{title}</h3>
         <div className="flex items-center text-gray-500 mb-3">
           <MapPin className="h-4 w-4 mr-1" />
           <span className="text-sm">{location}</span>
         </div>
-        <p className="text-lg font-semibold text-primary mb-4">{price}</p>
+        
+        <div className="mb-4">
+          <p className="text-lg font-semibold text-primary">{price}</p>
+          {pricePerSqFt && (
+            <p className="text-sm text-gray-600">{pricePerSqFt}</p>
+          )}
+        </div>
+
+        {description && (
+          <p className="text-gray-600 text-sm mb-4 line-clamp-2">{description}</p>
+        )}
 
         <div className="grid grid-cols-2 gap-3 mb-5">
           <div className="flex items-center text-gray-600">
@@ -57,9 +73,34 @@ export default function ProjectCard({
           </div>
         </div>
 
-        <Link href={`/projects/${slug}`}>
-          <Button className="w-full bg-primary text-white hover:bg-primary/90">View Details</Button>
-        </Link>
+        {features && features.length > 0 && (
+          <div className="mb-5">
+            <div className="flex flex-wrap gap-2">
+              {features.slice(0, 3).map((feature, index) => (
+                <span
+                  key={index}
+                  className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs"
+                >
+                  {feature}
+                </span>
+              ))}
+              {features.length > 3 && (
+                <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
+                  +{features.length - 3} more
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+
+        <div className="mt-auto">
+          <Link href={`/projects/${slug}`}>
+            <Button className="w-full bg-primary text-white hover:bg-primary/90 group">
+              View Details
+              <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   )
