@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Building2, MapPin, Calendar, Home, DollarSign, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 interface ProjectCardProps {
   title: string
@@ -17,6 +18,7 @@ interface ProjectCardProps {
   description?: string
   pricePerSqFt?: string
   features?: string[]
+  className?: string
 }
 
 export default function ProjectCard({
@@ -31,9 +33,10 @@ export default function ProjectCard({
   description,
   pricePerSqFt,
   features,
+  className,
 }: ProjectCardProps) {
   return (
-    <div className="bg-white rounded-lg overflow-hidden shadow-lg transition-transform hover:scale-[1.02] flex flex-col h-full">
+    <div className={cn("bg-white rounded-lg overflow-hidden shadow-lg transition-transform hover:scale-[1.02] flex flex-col h-full", className)}>
       <div className="relative h-60">
         <Image src={image || "/placeholder.svg"} alt={title} fill className="object-cover" />
         <div className="absolute top-3 right-3 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">

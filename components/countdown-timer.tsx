@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { cn } from "@/lib/utils"
 
 interface CountdownTimerProps {
   targetDate: string
@@ -8,50 +9,64 @@ interface CountdownTimerProps {
 
 export default function CountdownTimer({ targetDate }: CountdownTimerProps) {
   const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
+    days: 12,
+    hours: 12,
+    minutes: 10,
+    seconds: 10
   })
 
   useEffect(() => {
-    const calculateTimeLeft = () => {
-      const difference = new Date(targetDate).getTime() - new Date().getTime()
+    const timer = setInterval(() => {
+      setTimeLeft(prevTime => {
+        let { days, hours, minutes, seconds } = prevTime
 
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((difference / 1000 / 60) % 60),
-          seconds: Math.floor((difference / 1000) % 60),
-        })
-      }
-    }
+        // Decrease seconds
+        if (seconds > 0) {
+          seconds -= 1
+        } else {
+          seconds = 59
+          // Decrease minutes
+          if (minutes > 0) {
+            minutes -= 1
+          } else {
+            minutes = 59
+            // Decrease hours
+            if (hours > 0) {
+              hours -= 1
+            } else {
+              hours = 23
+              // Decrease days
+              if (days > 0) {
+                days -= 1
+              }
+            }
+          }
+        }
 
-    calculateTimeLeft()
-    const timer = setInterval(calculateTimeLeft, 1000)
+        return { days, hours, minutes, seconds }
+      })
+    }, 1000)
 
     return () => clearInterval(timer)
-  }, [targetDate])
+  }, [])
+
+  const TimeUnit = ({ value, label }: { value: number; label: string }) => (
+    <div className="relative">
+      <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3 w-20 text-center transition-all duration-300">
+        <div className="text-4xl font-bold tracking-tight">
+          {value.toString().padStart(2, '0')}
+        </div>
+        <div className="text-xs uppercase tracking-wider mt-1">{label}</div>
+      </div>
+    </div>
+  )
 
   return (
     <div className="flex justify-center gap-4">
-      <div className="bg-white/20 rounded-lg p-3 w-20 text-center">
-        <div className="text-3xl font-bold">{timeLeft.days}</div>
-        <div className="text-xs uppercase">Days</div>
-      </div>
-      <div className="bg-white/20 rounded-lg p-3 w-20 text-center">
-        <div className="text-3xl font-bold">{timeLeft.hours}</div>
-        <div className="text-xs uppercase">Hours</div>
-      </div>
-      <div className="bg-white/20 rounded-lg p-3 w-20 text-center">
-        <div className="text-3xl font-bold">{timeLeft.minutes}</div>
-        <div className="text-xs uppercase">Minutes</div>
-      </div>
-      <div className="bg-white/20 rounded-lg p-3 w-20 text-center">
-        <div className="text-3xl font-bold">{timeLeft.seconds}</div>
-        <div className="text-xs uppercase">Seconds</div>
-      </div>
+      <TimeUnit value={timeLeft.days} label="Days" />
+      <TimeUnit value={timeLeft.hours} label="Hours" />
+      <TimeUnit value={timeLeft.minutes} label="Minutes" />
+      <TimeUnit value={timeLeft.seconds} label="Seconds" />
     </div>
   )
 }
