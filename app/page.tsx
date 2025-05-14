@@ -110,6 +110,54 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Featured New Launches Section - Enhanced with better card design */}
+      <section className="relative py-24 md:py-32 bg-gray-900 text-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center max-w-4xl mx-auto mb-20">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">Featured New Launches</h2>
+            <p className="text-xl text-gray-300 leading-relaxed">
+              Discover the most exclusive new property launches in prime locations
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            <ProjectCard
+              title="10 Evelyn"
+              location="Newton, District 11"
+              price="From $1.2M"
+              image="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80"
+              units="120 Units"
+              developer="Amara Holdings"
+              completion="2025"
+              slug="10-evelyn"
+              className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+            />
+
+            <ProjectCard
+              title="The Avenir"
+              location="River Valley, District 9"
+              price="From $2.5M"
+              image="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80"
+              units="376 Units"
+              developer="Hong Leong Group"
+              completion="2025"
+              slug="the-avenir"
+            />
+
+            <ProjectCard
+              title="Midtown Modern"
+              location="Bugis, District 7"
+              price="From $1.8M"
+              image="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80"
+              units="558 Units"
+              developer="GuocoLand"
+              completion="2024"
+              slug="midtown-modern"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* New Section - Launch Countdown */}
       <section className="relative py-14 sm:py-20 md:py-28 bg-black text-white overflow-hidden">
         {/* Background Image with Parallax-like Effect */}
@@ -613,197 +661,6 @@ export default function Home() {
               >
                 Discover KW Tech
                 <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* PSR Section: Enhanced with better spacing and typography */}
-      <section className="relative py-24 md:py-32 bg-gray-900 text-white">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <div className="space-y-24">
-            <div className="text-center space-y-6">
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">The Challenge in Singapore's New Launch Market</h2>
-              <p className="text-xl text-gray-300 leading-relaxed">
-                In Singapore's fast-paced property market, both buyers and agents face a unique set of challenges. With countless new launches, ever-changing regulations, and intense competition, it's easy to feel lost.
-              </p>
-            </div>
-
-            <div className="text-center space-y-6">
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">How KW Singapore Makes a Difference</h2>
-              <p className="text-xl text-gray-300 leading-relaxed">
-                That's where KW Singapore steps in. As the niche category king in new launches, we've reimagined the experience for both agents and buyers. Our platform combines cutting-edge technology, exclusive access to the latest projects, and world-class training.
-              </p>
-            </div>
-
-            <div className="text-center space-y-6">
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-primary-red">The KW Singapore Advantage</h2>
-              <p className="text-xl text-gray-300 leading-relaxed">
-                The results speak for themselves: KW agents become new launch specialists, closing more deals with less effort and building a reputation for excellence. Buyers find their dream homes faster and with greater confidence.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Tech Positioning Section - Enhanced with better card design */}
-      <section className="relative py-24 md:py-32 bg-black text-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-4xl mx-auto mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">Leverage Our Technology</h2>
-            <p className="text-xl text-gray-300 leading-relaxed">
-              Access cutting-edge real estate technology that puts you ahead of the competition
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {/* Enhanced card design with better spacing and hover effects */}
-            <div className="bg-gray-900 p-8 rounded-xl shadow-xl text-center border border-gray-800 hover:border-primary-red/50 transition-all duration-300 transform hover:-translate-y-1">
-              <div className="bg-primary-red/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-10 w-10 text-primary-red"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-white">Advanced CRM</h3>
-              <p className="text-gray-300 text-lg leading-relaxed">
-                Manage your clients and leads with our proprietary CRM system designed specifically for new launches
-              </p>
-            </div>
-
-            {/* Repeat similar enhanced card design for other tech features */}
-            <div className="bg-gray-900 p-8 rounded-xl shadow-xl text-center border border-gray-800 hover:border-primary-red/50 transition-all duration-300 transform hover:-translate-y-1">
-              <div className="bg-primary-red/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-10 w-10 text-primary-red"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-white">Market Analytics</h3>
-              <p className="text-gray-300 text-lg leading-relaxed">
-                Get real-time insights on market trends, pricing, and buyer preferences for new launches
-              </p>
-            </div>
-
-            <div className="bg-gray-900 p-8 rounded-xl shadow-xl text-center border border-gray-800 hover:border-primary-red/50 transition-all duration-300 transform hover:-translate-y-1">
-              <div className="bg-primary-red/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-10 w-10 text-primary-red"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-white">Real-time Updates</h3>
-              <p className="text-gray-300 text-lg leading-relaxed">
-                Stay ahead with instant notifications on new launches, price changes, and market movements
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured New Launches Section - Enhanced with better card design */}
-      <section className="relative py-24 md:py-32 bg-gray-900 text-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-4xl mx-auto mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">Featured New Launches</h2>
-            <p className="text-xl text-gray-300 leading-relaxed">
-              Discover the most exclusive new property launches in prime locations
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            <ProjectCard
-              title="10 Evelyn"
-              location="Newton, District 11"
-              price="From $1.2M"
-              image="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80"
-              units="120 Units"
-              developer="Amara Holdings"
-              completion="2025"
-              slug="10-evelyn"
-              className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
-            />
-
-            <ProjectCard
-              title="The Avenir"
-              location="River Valley, District 9"
-              price="From $2.5M"
-              image="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80"
-              units="376 Units"
-              developer="Hong Leong Group"
-              completion="2025"
-              slug="the-avenir"
-            />
-
-            <ProjectCard
-              title="Midtown Modern"
-              location="Bugis, District 7"
-              price="From $1.8M"
-              image="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80"
-              units="558 Units"
-              developer="GuocoLand"
-              completion="2024"
-              slug="midtown-modern"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Training & Growth Section - Enhanced with better layout */}
-      <section className="relative py-24 md:py-32 bg-black text-white">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row gap-16 items-center max-w-7xl mx-auto">
-            <div className="md:w-1/2">
-              <Image
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80"
-                alt="Training Session"
-                width={600}
-                height={400}
-                className="rounded-xl shadow-2xl"
-                quality={100}
-              />
-            </div>
-            <div className="md:w-1/2 space-y-8">
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">World-Class Training</h2>
-              <p className="text-xl text-gray-300 leading-relaxed">
-                Our comprehensive training program equips you with the skills and knowledge to excel in the new launches market. Learn from industry experts and gain exclusive insights into Singapore's property landscape.
-              </p>
-              <Button 
-                className="px-8 py-6 text-lg bg-primary-red text-white hover:bg-primary-red/90 rounded-lg transition-all duration-300 transform hover:scale-105"
-              >
-                Start Your Journey
-                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </div>
           </div>
