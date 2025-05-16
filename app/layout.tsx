@@ -46,20 +46,19 @@ export default function RootLayout({
                   {/* Desktop Navigation */}
                   <nav className="hidden md:flex gap-4 lg:gap-6">
                     <Link href="/projects" className="text-sm font-medium text-white hover:text-white/80 hover:bg-black/20 rounded px-2 py-1" id="nav-link">
-                      Projects
+                      New Launch Directory
                     </Link>
-                    <Link href="/why-kw" className="text-sm font-medium text-white hover:text-white/80 hover:bg-black/20 rounded px-2 py-1" id="nav-link">
-                      Why KW
+                    <Link href="/join" className="text-sm font-medium text-white hover:text-white/80 hover:bg-black/20 rounded px-2 py-1" id="nav-link">
+                      Join KW Singapore
                     </Link>
-                    <Link
-                      href="/melvin-story"
-                      className="text-sm font-medium text-white hover:text-white/80 hover:bg-black/20 rounded px-2 py-1"
-                      id="nav-link"
-                    >
-                      Melvin Headhunter Story
+                    <Link href="/about-us" className="text-sm font-medium text-white hover:text-white/80 hover:bg-black/20 rounded px-2 py-1" id="nav-link">
+                      About Us
                     </Link>
                     <Link href="/editorial" className="text-sm font-medium text-white hover:text-white/80 hover:bg-black/20 rounded px-2 py-1" id="nav-link">
                       Editorial
+                    </Link>
+                    <Link href="/contact" className="text-sm font-medium text-white hover:text-white/80 hover:bg-black/20 rounded px-2 py-1" id="nav-link">
+                      Contact Us
                     </Link>
                   </nav>
                   <div className="hidden md:block">
@@ -97,12 +96,12 @@ export default function RootLayout({
                       </li>
                       <li>
                         <Link href="/projects" className="hover:text-white">
-                          Projects
+                          New Launch Directory
                         </Link>
                       </li>
                       <li>
-                        <Link href="/why-kw" className="hover:text-white">
-                          Why KW
+                        <Link href="/about-us" className="hover:text-white">
+                          About Us
                         </Link>
                       </li>
                       <li>

@@ -1,9 +1,13 @@
+"use client"
+
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Building2, MapPin, Calendar, Home, DollarSign, Phone, Mail, ArrowRight } from "lucide-react"
+import { Building2, MapPin, Calendar, Home, DollarSign, Phone, Mail, ArrowRight, Star, TrendingUp, Train, School, ShoppingBag, Trees } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import ProjectCard from "@/components/project-card"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent } from "@/components/ui/card"
 
 interface ProjectPageProps {
   params: {
@@ -13,95 +17,93 @@ interface ProjectPageProps {
 
 export default function ProjectPage({ params }: ProjectPageProps) {
   // This would normally fetch data based on the slug
-  // For this prototype, we'll use hardcoded data for 10 Evelyn
   const project = {
     title: "10 Evelyn",
     location: "Newton, District 11",
     price: "From $1.2M",
     pricePerSqFt: "$2,100 - $2,400 psf",
-    description:
-      "10 Evelyn is a freehold condominium development located in the prime District 11 of Singapore. Nestled in the tranquil Newton enclave, this exclusive development offers a perfect blend of luxury, convenience, and serenity. With its strategic location, residents enjoy proximity to Newton MRT Station, providing seamless connectivity to the rest of the island.",
-    features: [
-      "Freehold tenure",
-      "56 exclusive units",
-      "1 to 3 bedroom configurations",
-      "Full condominium facilities",
-      "Close proximity to Newton MRT",
-      "Near prestigious schools",
-      "Surrounded by amenities",
-    ],
-    developer: "Amara Holdings",
-    tenure: "Freehold",
-    completion: "2025",
-    totalUnits: "56 Units",
-    unitTypes: [
-      { type: "1 Bedroom", size: "484 - 506 sq ft", price: "From $1.2M" },
-      { type: "2 Bedroom", size: "678 - 721 sq ft", price: "From $1.6M" },
-      { type: "3 Bedroom", size: "1,066 - 1,119 sq ft", price: "From $2.5M" },
-    ],
-    facilities: [
-      "Swimming Pool",
-      "Gymnasium",
-      "BBQ Pits",
-      "Children's Playground",
-      "Clubhouse",
-      "Function Room",
-      "Landscaped Gardens",
-    ],
-    nearbyAmenities: [
-      "Newton MRT Station (5 min walk)",
-      "Novena MRT Station (10 min walk)",
-      "United Square Shopping Mall",
-      "Velocity @ Novena Square",
-      "Newton Food Centre",
-      "Anglo-Chinese School (Junior)",
-      "St. Joseph's Institution",
-    ],
     images: [
-      "/placeholder.svg?key=gabjg",
-      "/placeholder.svg?key=6s9zc",
-      "/placeholder.svg?key=7ewf3",
-      "/placeholder.svg?key=jdjoc",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80"
+    ],
+    units: "56 Units",
+    developer: "Amara Holdings",
+    completion: "2025",
+    description: "Luxury freehold development in the heart of Newton, offering exclusive living spaces with premium finishes.",
+    features: ["Freehold", "Luxury finishes", "Prime location", "Full facilities"],
+    district: 11,
+    tenure: "Freehold",
+    propertyType: "Condominium",
+    status: "Launching Soon",
+    totalUnits: "56 Units",
+    totalFloors: "24 Floors",
+    siteArea: "12,000 sq ft",
+    unitTypes: [
+      { type: "1 Bedroom", size: "484 - 527 sq ft", price: "From $1.2M" },
+      { type: "2 Bedroom", size: "678 - 753 sq ft", price: "From $1.8M" },
+      { type: "3 Bedroom", size: "1,076 - 1,184 sq ft", price: "From $2.8M" },
+      { type: "4 Bedroom", size: "1,518 - 1,636 sq ft", price: "From $4.2M" }
+    ],
+    floorPlans: [
+      { type: "1 Bedroom", image: "/floor-plans/1br.svg" },
+      { type: "2 Bedroom", image: "/floor-plans/2br.svg" },
+      { type: "3 Bedroom", image: "/floor-plans/3br.svg" },
+      { type: "4 Bedroom", image: "/floor-plans/4br.svg" }
+    ],
+    locationAnalytics: {
+      mrt: [
+        { name: "Newton MRT", distance: "3 min walk" },
+        { name: "Orchard MRT", distance: "10 min walk" }
+      ],
+      schools: [
+        { name: "Anglo-Chinese School (Junior)", distance: "5 min walk" },
+        { name: "St. Margaret's Primary School", distance: "8 min walk" }
+      ],
+      amenities: [
+        { name: "United Square", distance: "3 min walk" },
+        { name: "Goldhill Plaza", distance: "5 min walk" }
+      ],
+      parks: [
+        { name: "Newton Green", distance: "2 min walk" }
+      ]
+    },
+    mediaReviews: [
+      {
+        source: "The Edge Property",
+        date: "2024-02-15",
+        title: "10 Evelyn: A Rare Freehold Gem in Newton",
+        excerpt: "The development offers a unique opportunity for investors and homeowners alike...",
+        rating: 4.5
+      },
+      {
+        source: "PropertyGuru",
+        date: "2024-02-10",
+        title: "Why 10 Evelyn is the Talk of Newton",
+        excerpt: "With its prime location and luxury finishes, 10 Evelyn stands out...",
+        rating: 4.8
+      }
     ],
     similarProjects: [
       {
         title: "The Avenir",
         location: "River Valley, District 9",
         price: "From $2.5M",
-        image: "/placeholder.svg?key=1wce3",
+        image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80",
         units: "376 Units",
         developer: "Hong Leong Group",
         completion: "2025",
-        slug: "the-avenir",
-        description: "Luxury living in the heart of River Valley with stunning city views and world-class amenities.",
-        features: ["Freehold", "Luxury finishes", "City views", "Full facilities"],
-        pricePerSqFt: "$2,800 - $3,200 psf"
+        slug: "the-avenir"
       },
       {
         title: "Midtown Modern",
         location: "Bugis, District 7",
         price: "From $1.8M",
-        image: "/placeholder.svg?key=7233g",
+        image: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80",
         units: "558 Units",
         developer: "GuocoLand",
         completion: "2024",
-        slug: "midtown-modern",
-        description: "Contemporary urban living in the vibrant Bugis district, combining modern design with convenience.",
-        features: ["99-year leasehold", "Smart home features", "Urban lifestyle", "Integrated development"],
-        pricePerSqFt: "$2,400 - $2,800 psf"
-      },
-      {
-        title: "Clavon",
-        location: "Clementi, District 5",
-        price: "From $1.5M",
-        image: "/placeholder.svg?key=5j2ou",
-        units: "640 Units",
-        developer: "UOL Group",
-        completion: "2024",
-        slug: "clavon",
-        description: "Family-friendly development in the established Clementi neighborhood with excellent connectivity.",
-        features: ["99-year leasehold", "Family-oriented", "Near MRT", "Good schools"],
-        pricePerSqFt: "$1,800 - $2,200 psf"
+        slug: "midtown-modern"
       }
     ]
   }
@@ -111,7 +113,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
       {/* Hero Section */}
       <section className="relative h-screen w-full">
         <Image
-          src={project.images[0] || "/placeholder.svg"}
+          src={project.images[0]}
           alt={project.title}
           fill
           className="object-cover brightness-75"
@@ -120,7 +122,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
           <div className="container mx-auto px-4 pb-16">
             <div className="bg-primary text-white px-3 py-1 rounded-full text-sm font-medium inline-block mb-4 w-fit">
-              New Launch
+              {project.status}
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">{project.title}</h1>
             <div className="flex items-center text-white/90 mb-4">
@@ -157,283 +159,261 @@ export default function ProjectPage({ params }: ProjectPageProps) {
             <div className="lg:w-2/3">
               <Tabs defaultValue="overview">
                 <TabsList className="w-full border-b mb-8">
-                  <TabsTrigger value="overview" className="text-lg">
-                    Overview
-                  </TabsTrigger>
-                  <TabsTrigger value="gallery" className="text-lg">
-                    Gallery
-                  </TabsTrigger>
-                  <TabsTrigger value="floor-plans" className="text-lg">
-                    Floor Plans
-                  </TabsTrigger>
-                  <TabsTrigger value="location" className="text-lg">
-                    Location
-                  </TabsTrigger>
+                  <TabsTrigger value="overview" className="text-lg">Overview</TabsTrigger>
+                  <TabsTrigger value="pricing" className="text-lg">Pricing</TabsTrigger>
+                  <TabsTrigger value="floor-plans" className="text-lg">Floor Plans</TabsTrigger>
+                  <TabsTrigger value="location" className="text-lg">Location</TabsTrigger>
+                  <TabsTrigger value="reviews" className="text-lg">Reviews</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="overview" className="space-y-8">
                   <div>
-                    <h2 className="text-2xl font-bold mb-4">About {project.title}</h2>
-                    <p className="text-gray-700 leading-relaxed mb-6">{project.description}</p>
+                    <h2 className="text-2xl font-bold mb-4">Project Overview</h2>
+                    <p className="text-gray-600 leading-relaxed">{project.description}</p>
+                  </div>
 
-                    <h3 className="text-xl font-bold mb-3">Key Features</h3>
-                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+                  <div>
+                    <h3 className="text-xl font-semibold mb-4">Key Features</h3>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                       {project.features.map((feature, index) => (
-                        <li key={index} className="flex items-start">
-                          <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-4 w-4 text-primary"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
-                          </div>
-                          {feature}
-                        </li>
+                        <div key={index} className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-primary rounded-full" />
+                          <span>{feature}</span>
+                        </div>
                       ))}
-                    </ul>
+                    </div>
                   </div>
 
                   <div>
-                    <h2 className="text-2xl font-bold mb-4">Unit Types</h2>
-                    <div className="overflow-x-auto">
-                      <table className="min-w-full border-collapse">
-                        <thead>
-                          <tr className="bg-gray-100">
-                            <th className="border px-4 py-3 text-left">Type</th>
-                            <th className="border px-4 py-3 text-left">Size</th>
-                            <th className="border px-4 py-3 text-left">Price</th>
-                            <th className="border px-4 py-3 text-left">Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {project.unitTypes.map((unit, index) => (
-                            <tr key={index} className="border-b">
-                              <td className="border px-4 py-3">{unit.type}</td>
-                              <td className="border px-4 py-3">{unit.size}</td>
-                              <td className="border px-4 py-3">{unit.price}</td>
-                              <td className="border px-4 py-3">
-                                <Button size="sm">View Details</Button>
-                              </td>
-                            </tr>
+                    <h3 className="text-xl font-semibold mb-4">Project Details</h3>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      <div className="bg-gray-50 p-4 rounded-lg">
+                        <div className="text-sm text-gray-500">Total Units</div>
+                        <div className="font-semibold">{project.totalUnits}</div>
+                      </div>
+                      <div className="bg-gray-50 p-4 rounded-lg">
+                        <div className="text-sm text-gray-500">Total Floors</div>
+                        <div className="font-semibold">{project.totalFloors}</div>
+                      </div>
+                      <div className="bg-gray-50 p-4 rounded-lg">
+                        <div className="text-sm text-gray-500">Site Area</div>
+                        <div className="font-semibold">{project.siteArea}</div>
+                      </div>
+                      <div className="bg-gray-50 p-4 rounded-lg">
+                        <div className="text-sm text-gray-500">Tenure</div>
+                        <div className="font-semibold">{project.tenure}</div>
+                      </div>
+                    </div>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="pricing" className="space-y-8">
+                  <div>
+                    <h2 className="text-2xl font-bold mb-6">Unit Types & Pricing</h2>
+                    <div className="grid gap-6">
+                      {project.unitTypes.map((unit, index) => (
+                        <Card key={index}>
+                          <CardContent className="p-6">
+                            <div className="flex justify-between items-start">
+                              <div>
+                                <h3 className="text-xl font-semibold mb-2">{unit.type}</h3>
+                                <p className="text-gray-600">{unit.size}</p>
+                              </div>
+                              <div className="text-right">
+                                <div className="text-xl font-bold text-primary">{unit.price}</div>
+                                <div className="text-sm text-gray-500">Starting Price</div>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="floor-plans" className="space-y-8">
+                  <div>
+                    <h2 className="text-2xl font-bold mb-6">Floor Plans</h2>
+                    <div className="grid gap-8">
+                      {project.floorPlans.map((plan, index) => (
+                        <div key={index} className="bg-gray-50 p-6 rounded-lg">
+                          <h3 className="text-xl font-semibold mb-4">{plan.type}</h3>
+                          <div className="aspect-[4/3] relative bg-white rounded-lg overflow-hidden">
+                            <Image
+                              src={plan.image}
+                              alt={`${plan.type} Floor Plan`}
+                              fill
+                              className="object-contain"
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="location" className="space-y-8">
+                  <div>
+                    <h2 className="text-2xl font-bold mb-6">Location Analytics</h2>
+                    <div className="grid gap-8">
+                      <div>
+                        <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                          <Train className="h-5 w-5 text-primary" />
+                          MRT Stations
+                        </h3>
+                        <div className="grid gap-4">
+                          {project.locationAnalytics.mrt.map((station, index) => (
+                            <div key={index} className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
+                              <span>{station.name}</span>
+                              <Badge variant="secondary">{station.distance}</Badge>
+                            </div>
                           ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h2 className="text-2xl font-bold mb-4">Facilities</h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                      {project.facilities.map((facility, index) => (
-                        <div key={index} className="flex items-center p-3 bg-gray-50 rounded-lg">
-                          <div className="bg-primary/10 p-2 rounded-full mr-3">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-5 w-5 text-primary"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
-                          </div>
-                          {facility}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <h2 className="text-2xl font-bold mb-4">Nearby Amenities</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {project.nearbyAmenities.map((amenity, index) => (
-                        <div key={index} className="flex items-start">
-                          <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
-                            <MapPin className="h-4 w-4 text-primary" />
-                          </div>
-                          {amenity}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </TabsContent>
-
-                <TabsContent value="gallery">
-                  <h2 className="text-2xl font-bold mb-6">Project Gallery</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {project.images.map((image, index) => (
-                      <div key={index} className="rounded-lg overflow-hidden shadow-md">
-                        <Image
-                          src={image || "/placeholder.svg"}
-                          alt={`${project.title} - Image ${index + 1}`}
-                          width={600}
-                          height={400}
-                          className="w-full h-auto"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </TabsContent>
-
-                <TabsContent value="floor-plans">
-                  <h2 className="text-2xl font-bold mb-6">Floor Plans</h2>
-                  <div className="space-y-8">
-                    {project.unitTypes.map((unit, index) => (
-                      <div key={index} className="border rounded-lg overflow-hidden">
-                        <div className="bg-gray-50 p-4 border-b">
-                          <h3 className="text-xl font-bold">{unit.type}</h3>
-                          <p className="text-gray-600">{unit.size}</p>
-                        </div>
-                        <div className="p-6">
-                          <Image
-                            src={`/placeholder.svg?key=6t3k5&key=glhwa&height=400&width=600&query=floor plan for ${unit.type} apartment`}
-                            alt={`Floor Plan - ${unit.type}`}
-                            width={600}
-                            height={400}
-                            className="w-full h-auto"
-                          />
                         </div>
                       </div>
-                    ))}
+
+                      <div>
+                        <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                          <School className="h-5 w-5 text-primary" />
+                          Schools
+                        </h3>
+                        <div className="grid gap-4">
+                          {project.locationAnalytics.schools.map((school, index) => (
+                            <div key={index} className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
+                              <span>{school.name}</span>
+                              <Badge variant="secondary">{school.distance}</Badge>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                          <ShoppingBag className="h-5 w-5 text-primary" />
+                          Shopping & Amenities
+                        </h3>
+                        <div className="grid gap-4">
+                          {project.locationAnalytics.amenities.map((amenity, index) => (
+                            <div key={index} className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
+                              <span>{amenity.name}</span>
+                              <Badge variant="secondary">{amenity.distance}</Badge>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                          <Trees className="h-5 w-5 text-primary" />
+                          Parks & Recreation
+                        </h3>
+                        <div className="grid gap-4">
+                          {project.locationAnalytics.parks.map((park, index) => (
+                            <div key={index} className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
+                              <span>{park.name}</span>
+                              <Badge variant="secondary">{park.distance}</Badge>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </TabsContent>
 
-                <TabsContent value="location">
-                  <h2 className="text-2xl font-bold mb-6">Location</h2>
-                  <div className="rounded-lg overflow-hidden shadow-lg mb-6">
-                    <Image
-                      src="/placeholder.svg?key=t9q5d"
-                      alt="Location Map"
-                      width={800}
-                      height={400}
-                      className="w-full h-auto"
-                    />
-                  </div>
+                <TabsContent value="reviews" className="space-y-8">
                   <div>
-                    <h3 className="text-xl font-bold mb-3">Transportation</h3>
-                    <ul className="space-y-2 mb-6">
-                      <li className="flex items-start">
-                        <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-4 w-4 text-primary"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                            />
-                          </svg>
-                        </div>
-                        Newton MRT Station (5 min walk)
-                      </li>
-                      <li className="flex items-start">
-                        <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-4 w-4 text-primary"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                            />
-                          </svg>
-                        </div>
-                        Novena MRT Station (10 min walk)
-                      </li>
-                      <li className="flex items-start">
-                        <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-4 w-4 text-primary"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                            />
-                          </svg>
-                        </div>
-                        Multiple bus services along Bukit Timah Road
-                      </li>
-                    </ul>
+                    <h2 className="text-2xl font-bold mb-6">Media Reviews</h2>
+                    <div className="grid gap-6">
+                      {project.mediaReviews.map((review, index) => (
+                        <Card key={index}>
+                          <CardContent className="p-6">
+                            <div className="flex justify-between items-start mb-4">
+                              <div>
+                                <h3 className="text-xl font-semibold mb-2">{review.title}</h3>
+                                <p className="text-gray-500">{review.source} • {review.date}</p>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
+                                <span className="font-semibold">{review.rating}</span>
+                              </div>
+                            </div>
+                            <p className="text-gray-600">{review.excerpt}</p>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
                   </div>
                 </TabsContent>
               </Tabs>
             </div>
 
-            {/* Right Column - Sidebar */}
+            {/* Right Column - Contact Form */}
             <div className="lg:w-1/3">
-              <div className="bg-white rounded-lg shadow-lg p-6 sticky top-6">
-                <h3 className="text-xl font-bold mb-4">Interested in this project?</h3>
-                <p className="text-gray-600 mb-6">
-                  Fill out the form below and our specialist will get in touch with you shortly.
-                </p>
-
-                <form className="space-y-4">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                      Full Name
-                    </label>
-                    <Input id="name" type="text" placeholder="Your name" />
-                  </div>
-
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                      Email
-                    </label>
-                    <Input id="email" type="email" placeholder="Your email" />
-                  </div>
-
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                      Phone
-                    </label>
-                    <Input id="phone" type="tel" placeholder="Your phone number" />
-                  </div>
-
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      rows={4}
-                      placeholder="I'm interested in this project..."
-                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                    ></textarea>
-                  </div>
-
-                  <Button className="w-full bg-primary text-white hover:bg-primary/90">Inquire Now</Button>
-                </form>
-
-                <div className="mt-6 pt-6 border-t">
-                  <h4 className="font-semibold mb-3">Contact our specialist directly:</h4>
-                  <div className="space-y-2">
-                    <div className="flex items-center">
-                      <Phone className="h-5 w-5 mr-2 text-primary" />
-                      <span>+65 8123 4567</span>
+              <div className="sticky top-8">
+                <div className="bg-white rounded-lg shadow-lg p-6">
+                  <h3 className="text-xl font-semibold mb-4">Interested in this project?</h3>
+                  <form className="space-y-4">
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                        Name
+                      </label>
+                      <Input
+                        id="name"
+                        type="text"
+                        placeholder="Your name"
+                        className="w-full"
+                      />
                     </div>
-                    <div className="flex items-center">
-                      <Mail className="h-5 w-5 mr-2 text-primary" />
-                      <span>newlaunches@example.com</span>
+
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                        Email
+                      </label>
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="Your email"
+                        className="w-full"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                        Phone
+                      </label>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        placeholder="Your phone number"
+                        className="w-full"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                        Message
+                      </label>
+                      <textarea
+                        id="message"
+                        rows={4}
+                        placeholder="I'm interested in this project..."
+                        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                      ></textarea>
+                    </div>
+
+                    <Button className="w-full bg-primary text-white hover:bg-primary/90">Inquire Now</Button>
+                  </form>
+
+                  <div className="mt-6 pt-6 border-t">
+                    <h4 className="font-semibold mb-3">Contact our specialist directly:</h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center">
+                        <Phone className="h-5 w-5 mr-2 text-primary" />
+                        <span>+65 8123 4567</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Mail className="h-5 w-5 mr-2 text-primary" />
+                        <span>newlaunches@example.com</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -452,34 +432,10 @@ export default function ProjectPage({ params }: ProjectPageProps) {
             {project.similarProjects.map((similarProject) => (
               <ProjectCard
                 key={similarProject.slug}
-                title={similarProject.title}
-                location={similarProject.location}
-                price={similarProject.price}
-                image={similarProject.image}
-                units={similarProject.units}
-                developer={similarProject.developer}
-                completion={similarProject.completion}
-                slug={similarProject.slug}
-                description={similarProject.description}
-                pricePerSqFt={similarProject.pricePerSqFt}
-                features={similarProject.features}
+                {...similarProject}
               />
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-12 bg-primary text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Join Our Team of New Launch Specialists</h2>
-          <p className="text-xl max-w-3xl mx-auto mb-8">
-            Leverage our technology, training, and exclusive developer relationships to grow your real estate career
-          </p>
-          <Button className="bg-white text-primary hover:bg-gray-100">
-            Join Recruitment Webinar
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
         </div>
       </section>
     </main>

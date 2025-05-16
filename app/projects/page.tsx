@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Search, Filter, ArrowRight, X } from "lucide-react"
+import { Search, Filter, ArrowRight, X, MapPin, Building2, Calendar, DollarSign, LayoutGrid, Map } from "lucide-react"
 import ProjectCard from "@/components/project-card"
 import Image from "next/image"
 import {
@@ -29,7 +29,7 @@ const projects = [
     location: "Newton, District 11",
     price: "From $1.2M",
     pricePerSqFt: "$2,100 - $2,400 psf",
-    image: "/placeholder.svg?key=gabjg",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80",
     units: "56 Units",
     developer: "Amara Holdings",
     completion: "2025",
@@ -38,14 +38,15 @@ const projects = [
     features: ["Freehold", "Luxury finishes", "Prime location", "Full facilities"],
     district: 11,
     tenure: "Freehold",
-    propertyType: "Condominium"
+    propertyType: "Condominium",
+    status: "Launching Soon"
   },
   {
     title: "The Avenir",
     location: "River Valley, District 9",
     price: "From $2.5M",
     pricePerSqFt: "$2,800 - $3,200 psf",
-    image: "/placeholder.svg?key=1wce3",
+    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80",
     units: "376 Units",
     developer: "Hong Leong Group",
     completion: "2025",
@@ -54,14 +55,15 @@ const projects = [
     features: ["Freehold", "Luxury finishes", "City views", "Full facilities"],
     district: 9,
     tenure: "Freehold",
-    propertyType: "Condominium"
+    propertyType: "Condominium",
+    status: "Now Selling"
   },
   {
     title: "Midtown Modern",
     location: "Bugis, District 7",
     price: "From $1.8M",
     pricePerSqFt: "$2,400 - $2,800 psf",
-    image: "/placeholder.svg?key=7233g",
+    image: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80",
     units: "558 Units",
     developer: "GuocoLand",
     completion: "2024",
@@ -70,14 +72,15 @@ const projects = [
     features: ["99-year leasehold", "Smart home features", "Urban lifestyle", "Integrated development"],
     district: 7,
     tenure: "99-year Leasehold",
-    propertyType: "Condominium"
+    propertyType: "Condominium",
+    status: "Now Selling"
   },
   {
     title: "Clavon",
     location: "Clementi, District 5",
     price: "From $1.5M",
     pricePerSqFt: "$1,800 - $2,200 psf",
-    image: "/placeholder.svg?key=5j2ou",
+    image: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&q=80",
     units: "640 Units",
     developer: "UOL Group",
     completion: "2024",
@@ -86,14 +89,15 @@ const projects = [
     features: ["99-year leasehold", "Family-oriented", "Near MRT", "Good schools"],
     district: 5,
     tenure: "99-year Leasehold",
-    propertyType: "Condominium"
+    propertyType: "Condominium",
+    status: "Now Selling"
   },
   {
     title: "Normanton Park",
     location: "Kent Ridge, District 5",
     price: "From $1.1M",
     pricePerSqFt: "$1,600 - $1,900 psf",
-    image: "/placeholder.svg?key=normanton",
+    image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80",
     units: "1862 Units",
     developer: "Kingsford Development",
     completion: "2023",
@@ -102,14 +106,15 @@ const projects = [
     features: ["99-year leasehold", "Large development", "Family-friendly", "Near NUS"],
     district: 5,
     tenure: "99-year Leasehold",
-    propertyType: "Condominium"
+    propertyType: "Condominium",
+    status: "Now Selling"
   },
   {
     title: "The Reef at King's Dock",
     location: "HarbourFront, District 4",
     price: "From $2.0M",
     pricePerSqFt: "$2,500 - $2,900 psf",
-    image: "/placeholder.svg?key=reef",
+    image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80",
     units: "429 Units",
     developer: "Mapletree/Keppel Land",
     completion: "2025",
@@ -118,20 +123,42 @@ const projects = [
     features: ["99-year leasehold", "Waterfront", "Marina access", "Luxury living"],
     district: 4,
     tenure: "99-year Leasehold",
-    propertyType: "Condominium"
+    propertyType: "Condominium",
+    status: "Launching Soon"
   }
 ]
 
-export default function ProjectsPage() {
+// Add type definition for Project
+type Project = {
+  title: string
+  location: string
+  price: string
+  pricePerSqFt: string
+  image: string
+  units: string
+  developer: string
+  completion: string
+  slug: string
+  description: string
+  features: string[]
+  district: number
+  tenure: string
+  propertyType: string
+  status: string
+}
+
+export default function NewLaunchDirectory() {
   const [searchQuery, setSearchQuery] = useState("")
   const [sortBy, setSortBy] = useState("latest")
   const [selectedDistricts, setSelectedDistricts] = useState<number[]>([])
   const [selectedTenures, setSelectedTenures] = useState<string[]>([])
   const [selectedPropertyTypes, setSelectedPropertyTypes] = useState<string[]>([])
+  const [selectedStatus, setSelectedStatus] = useState<string[]>([])
+  const [viewMode, setViewMode] = useState<"grid" | "map">("grid")
 
   // Filter and sort projects
   const filteredProjects = projects
-    .filter((project) => {
+    .filter((project: Project) => {
       const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         project.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
         project.developer.toLowerCase().includes(searchQuery.toLowerCase())
@@ -139,8 +166,9 @@ export default function ProjectsPage() {
       const matchesDistrict = selectedDistricts.length === 0 || selectedDistricts.includes(project.district)
       const matchesTenure = selectedTenures.length === 0 || selectedTenures.includes(project.tenure)
       const matchesPropertyType = selectedPropertyTypes.length === 0 || selectedPropertyTypes.includes(project.propertyType)
+      const matchesStatus = selectedStatus.length === 0 || selectedStatus.includes(project.status)
 
-      return matchesSearch && matchesDistrict && matchesTenure && matchesPropertyType
+      return matchesSearch && matchesDistrict && matchesTenure && matchesPropertyType && matchesStatus
     })
     .sort((a, b) => {
       switch (sortBy) {
@@ -155,61 +183,143 @@ export default function ProjectsPage() {
       }
     })
 
+  // Get featured projects (first 3 projects)
+  const featuredProjects = filteredProjects.slice(0, 3)
+
   const districts = Array.from(new Set(projects.map(p => p.district))).sort()
   const tenures = Array.from(new Set(projects.map(p => p.tenure)))
   const propertyTypes = Array.from(new Set(projects.map(p => p.propertyType)))
+  const statuses = Array.from(new Set(projects.map(p => p.status)))
 
   return (
-    <main className="min-h-screen flex flex-col">
-      <section className="bg-black text-white h-screen flex items-center">
-        <div className="relative w-full h-full">
+    <main className="min-h-screen flex flex-col bg-black text-white">
+      {/* Hero Section */}
+      <section className="relative h-[60vh] flex items-center">
+        <div className="absolute inset-0">
           <Image
-            src="/placeholder.svg?key=hero"
+            src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80"
             alt="New Launch Projects"
             fill
-            className="object-cover brightness-50"
+            className="object-cover brightness-[0.3]"
             priority
           />
-          <div className="absolute inset-0 flex items-center bg-black/40">
-            <div className="container mx-auto px-4 text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">New Launch Projects</h1>
-              <p className="text-xl max-w-3xl mx-auto mb-12 text-gray-100">
-                Discover the most exclusive new property launches in prime locations
-              </p>
-              <div className="max-w-3xl mx-auto bg-black/90 rounded-lg overflow-hidden flex backdrop-blur-sm">
-                <Input
-                  type="text"
-                  placeholder="Search by project name, location, or developer..."
-                  className="flex-1 border-0 bg-gray-900 text-white placeholder:text-gray-400 focus-visible:ring-0"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <Button className="rounded-none bg-primary hover:bg-primary/90">
-                  <Search className="h-5 w-5 mr-2" />
-                  Search
-                </Button>
-              </div>
-            </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60" />
+        </div>
+        <div className="relative container mx-auto px-4 text-center">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
+            New Launch Directory
+          </h1>
+          <p className="text-xl max-w-3xl mx-auto mb-12 text-gray-200">
+            Discover Singapore's most exclusive new property launches with KW Singapore's comprehensive directory
+          </p>
+          <div className="max-w-3xl mx-auto bg-black/90 rounded-lg overflow-hidden flex backdrop-blur-sm">
+            <Input
+              type="text"
+              placeholder="Search by project name, location, or developer..."
+              className="flex-1 border-0 bg-gray-900 text-white placeholder:text-gray-400 focus-visible:ring-0"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <Button className="rounded-none bg-primary-red hover:bg-primary-red/90">
+              <Search className="h-5 w-5 mr-2" />
+              Search
+            </Button>
           </div>
         </div>
       </section>
 
-      <section className="py-12 bg-black text-white">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
-            <div>
-              <h2 className="text-2xl font-bold text-white">All Projects</h2>
-              <p className="text-gray-300">Showing {filteredProjects.length} new launch projects</p>
+      {/* Featured Projects Section */}
+      {featuredProjects.length > 0 && (
+        <section className="py-12 bg-gray-900">
+          <div className="container mx-auto px-4">
+            <div className="text-center max-w-4xl mx-auto mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured New Launches</h2>
+              <p className="text-xl text-gray-300">Exclusive preview of our most anticipated developments</p>
             </div>
-            <div className="mt-4 md:mt-0 flex items-center gap-4">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {featuredProjects.map((project) => (
+                <ProjectCard
+                  key={project.slug}
+                  {...project}
+                  className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Main Content Section */}
+      <section className="py-12">
+        <div className="container mx-auto px-4">
+          {/* Header with Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            <div className="bg-gray-900 rounded-lg p-6 text-center">
+              <Building2 className="h-8 w-8 text-primary-red mx-auto mb-2" />
+              <div className="text-2xl font-bold">{projects.length}</div>
+              <div className="text-gray-400">Active Projects</div>
+            </div>
+            <div className="bg-gray-900 rounded-lg p-6 text-center">
+              <MapPin className="h-8 w-8 text-primary-red mx-auto mb-2" />
+              <div className="text-2xl font-bold">{districts.length}</div>
+              <div className="text-gray-400">Districts</div>
+            </div>
+            <div className="bg-gray-900 rounded-lg p-6 text-center">
+              <Calendar className="h-8 w-8 text-primary-red mx-auto mb-2" />
+              <div className="text-2xl font-bold">2024</div>
+              <div className="text-gray-400">Launch Year</div>
+            </div>
+            <div className="bg-gray-900 rounded-lg p-6 text-center">
+              <DollarSign className="h-8 w-8 text-primary-red mx-auto mb-2" />
+              <div className="text-2xl font-bold">$1.2M+</div>
+              <div className="text-gray-400">Starting Price</div>
+            </div>
+          </div>
+
+          {/* Filters and Sort */}
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+            <div>
+              <h2 className="text-2xl font-bold text-white">All New Launches</h2>
+              <p className="text-gray-300">Showing {filteredProjects.length} projects</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 bg-gray-900 rounded-lg p-1">
+                <Button
+                  variant={viewMode === "grid" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("grid")}
+                  className="text-white"
+                >
+                  <LayoutGrid className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant={viewMode === "map" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("map")}
+                  className="text-white"
+                >
+                  <Map className="h-4 w-4" />
+                </Button>
+              </div>
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger className="w-[180px] bg-gray-900 border-gray-700">
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent className="bg-gray-900 border-gray-700">
+                  <SelectItem value="latest">Latest First</SelectItem>
+                  <SelectItem value="price-low-high">Price: Low to High</SelectItem>
+                  <SelectItem value="price-high-low">Price: High to Low</SelectItem>
+                  <SelectItem value="completion">Completion Date</SelectItem>
+                </SelectContent>
+              </Select>
               <Sheet>
                 <SheetTrigger asChild>
                   <Button variant="outline" className="flex items-center border-gray-700 text-gray-300 hover:bg-gray-800">
                     <Filter className="h-4 w-4 mr-2" />
                     Filter
-                    {(selectedDistricts.length > 0 || selectedTenures.length > 0 || selectedPropertyTypes.length > 0) && (
+                    {(selectedDistricts.length > 0 || selectedTenures.length > 0 || selectedPropertyTypes.length > 0 || selectedStatus.length > 0) && (
                       <Badge variant="secondary" className="ml-2">
-                        {selectedDistricts.length + selectedTenures.length + selectedPropertyTypes.length}
+                        {selectedDistricts.length + selectedTenures.length + selectedPropertyTypes.length + selectedStatus.length}
                       </Badge>
                     )}
                   </Button>
@@ -219,6 +329,28 @@ export default function ProjectsPage() {
                     <SheetTitle>Filter Projects</SheetTitle>
                   </SheetHeader>
                   <div className="mt-6 space-y-6">
+                    <div>
+                      <h3 className="font-semibold mb-3">Status</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {statuses.map((status) => (
+                          <Badge
+                            key={status}
+                            variant={selectedStatus.includes(status) ? "default" : "outline"}
+                            className="cursor-pointer"
+                            onClick={() => {
+                              setSelectedStatus(prev =>
+                                prev.includes(status)
+                                  ? prev.filter(s => s !== status)
+                                  : [...prev, status]
+                              )
+                            }}
+                          >
+                            {status}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+
                     <div>
                       <h3 className="font-semibold mb-3">District</h3>
                       <div className="flex flex-wrap gap-2">
@@ -285,157 +417,54 @@ export default function ProjectsPage() {
                       </div>
                     </div>
 
-                    <Button
-                      variant="outline"
-                      className="w-full border-gray-700 text-gray-300 hover:bg-gray-800"
-                      onClick={() => {
-                        setSelectedDistricts([])
-                        setSelectedTenures([])
-                        setSelectedPropertyTypes([])
-                      }}
-                    >
-                      Clear All Filters
-                    </Button>
+                    <div className="flex justify-end">
+                      <Button
+                        variant="ghost"
+                        className="text-gray-400 hover:text-white"
+                        onClick={() => {
+                          setSelectedDistricts([])
+                          setSelectedTenures([])
+                          setSelectedPropertyTypes([])
+                          setSelectedStatus([])
+                        }}
+                      >
+                        <X className="h-4 w-4 mr-2" />
+                        Clear All
+                      </Button>
+                    </div>
                   </div>
                 </SheetContent>
               </Sheet>
-
-              <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-[180px] bg-gray-900 border-gray-700 text-gray-300">
-                  <SelectValue placeholder="Sort by" />
-                </SelectTrigger>
-                <SelectContent className="bg-gray-900 border-gray-700 text-gray-300">
-                  <SelectItem value="latest">Latest</SelectItem>
-                  <SelectItem value="price-low-high">Price (Low to High)</SelectItem>
-                  <SelectItem value="price-high-low">Price (High to Low)</SelectItem>
-                  <SelectItem value="completion">Completion Date</SelectItem>
-                </SelectContent>
-              </Select>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.map((project) => (
-              <ProjectCard
-                key={project.slug}
-                title={project.title}
-                location={project.location}
-                price={project.price}
-                image={project.image}
-                units={project.units}
-                developer={project.developer}
-                completion={project.completion}
-                slug={project.slug}
-                description={project.description}
-                pricePerSqFt={project.pricePerSqFt}
-                features={project.features}
-              />
-            ))}
-          </div>
-
-          {filteredProjects.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-gray-400 text-lg">No projects found matching your criteria</p>
-              <Button
-                variant="outline"
-                className="mt-4 border-gray-700 text-gray-300 hover:bg-gray-800"
-                onClick={() => {
-                  setSearchQuery("")
-                  setSelectedDistricts([])
-                  setSelectedTenures([])
-                  setSelectedPropertyTypes([])
-                }}
-              >
-                Clear All Filters
-              </Button>
+          {/* Projects Display */}
+          {viewMode === "grid" ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredProjects.map((project) => (
+                <ProjectCard
+                  key={project.slug}
+                  {...project}
+                  className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="h-[600px] bg-gray-900 rounded-lg overflow-hidden">
+              {/* Map component would go here */}
+              <div className="h-full flex items-center justify-center text-gray-400">
+                Map view coming soon
+              </div>
             </div>
           )}
 
-          <div className="flex justify-center mt-12">
-            <Button variant="outline" className="mx-1 px-4 border-gray-700 text-gray-300 hover:bg-gray-800">
-              1
-            </Button>
-            <Button variant="outline" className="mx-1 px-4 border-gray-700 text-gray-300 hover:bg-gray-800">
-              2
-            </Button>
-            <Button variant="outline" className="mx-1 px-4 border-gray-700 text-gray-300 hover:bg-gray-800">
-              3
-            </Button>
-            <Button variant="outline" className="mx-1 border-gray-700 text-gray-300 hover:bg-gray-800">
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-12 bg-gray-900 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4 text-white">Why Choose Us for New Launches?</h2>
-          <p className="text-lg text-gray-300 max-w-3xl mx-auto mb-12">
-            We specialize exclusively in new property launches, giving you the edge in this competitive market
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-700">
-              <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-primary"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-white">First Access</h3>
-              <p className="text-gray-300">Get priority access to new launches before they hit the market</p>
+          {/* No Results Message */}
+          {filteredProjects.length === 0 && (
+            <div className="text-center py-12">
+              <h3 className="text-xl font-semibold text-gray-300 mb-2">No projects found</h3>
+              <p className="text-gray-400">Try adjusting your filters or search terms</p>
             </div>
-
-            <div className="bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-700">
-              <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-primary"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-white">Expert Guidance</h3>
-              <p className="text-gray-300">Our specialists have in-depth knowledge of every new launch project</p>
-            </div>
-
-            <div className="bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-700">
-              <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-primary"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-white">Exclusive Deals</h3>
-              <p className="text-gray-300">
-                Access to developer discounts and special packages not available elsewhere
-              </p>
-            </div>
-          </div>
+          )}
         </div>
       </section>
     </main>

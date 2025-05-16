@@ -51,7 +51,7 @@ export default function MobileMenu() {
                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-900"
                     onClick={() => setIsOpen(false)}
                   >
-                    Projects
+                    New Launch Directory
                   </Link>
                   <Link
                     href="/why-kw"
@@ -73,6 +73,20 @@ export default function MobileMenu() {
                     onClick={() => setIsOpen(false)}
                   >
                     Editorial
+                  </Link>
+                  <Link
+                    href="/contact"
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-900"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Contact Us
+                  </Link>
+                  <Link
+                    href="/join"
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-900"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Join KW Singapore
                   </Link>
                 </div>
                 <div className="py-6">
