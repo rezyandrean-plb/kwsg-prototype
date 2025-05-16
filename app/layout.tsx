@@ -100,18 +100,22 @@ export default function RootLayout({
                         </Link>
                       </li>
                       <li>
+                        <Link href="/join" className="hover:text-white">
+                         Join KW Singapore
+                        </Link>
+                      </li>
+                      <li>
                         <Link href="/about-us" className="hover:text-white">
                           About Us
                         </Link>
                       </li>
                       <li>
-                        <Link href="/melvin-story" className="hover:text-white">
-                          Melvin Headhunter Story
-                        </Link>
-                      </li>
-                      <li>
                         <Link href="/editorial" className="hover:text-white">
                           Editorial
+                        </Link>
+                      </li><li>
+                        <Link href="/contact" className="hover:text-white">
+                          Contact Us
                         </Link>
                       </li>
                     </ul>

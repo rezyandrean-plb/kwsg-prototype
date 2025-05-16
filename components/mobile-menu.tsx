@@ -54,18 +54,18 @@ export default function MobileMenu() {
                     New Launch Directory
                   </Link>
                   <Link
-                    href="/why-kw"
+                    href="/join"
                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-900"
                     onClick={() => setIsOpen(false)}
                   >
-                    Why KW
+                    Join KW Singapore
                   </Link>
                   <Link
-                    href="/melvin-story"
+                    href="/about-us"
                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-900"
                     onClick={() => setIsOpen(false)}
                   >
-                    Melvin Headhunter Story
+                    About Us
                   </Link>
                   <Link
                     href="/editorial"
@@ -80,13 +80,6 @@ export default function MobileMenu() {
                     onClick={() => setIsOpen(false)}
                   >
                     Contact Us
-                  </Link>
-                  <Link
-                    href="/join"
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-900"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Join KW Singapore
                   </Link>
                 </div>
                 <div className="py-6">
