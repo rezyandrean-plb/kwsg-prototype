@@ -392,12 +392,12 @@ export default function Home() {
                     {/* Enhanced Countdown Timer */}
                     <div className="w-full flex justify-center">
                       <div className="transform scale-100 sm:scale-105 w-full max-w-xs">
-                        <CountdownTimer targetDate="2024-05-25T00:00:00" />
+                        <CountdownTimer targetDate="2025-07-01T00:00:00" />
                       </div>
                     </div>
                     {/* Additional Info */}
                     <p className="text-center text-gray-300 text-base sm:text-lg">
-                      Join us for the most anticipated real estate launch of 2024
+                      Join us for the most anticipated real estate launch of July 1st 2025  
                     </p>
                   </div>
                 </div>
