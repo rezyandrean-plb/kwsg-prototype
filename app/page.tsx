@@ -69,52 +69,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* New Section - Unfair Advantage */}
-      <section className="relative py-16 sm:py-24 md:py-32 bg-black text-white overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80"
-            alt="Luxury Property Development"
-            fill
-            className="object-cover brightness-[0.2]"
-            quality={100}
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/80" />
-        </div>
-        <div className="relative z-10 container mx-auto px-4 sm:px-6">
-          <div className="max-w-4xl mx-auto text-center space-y-8 sm:space-y-12">
-            <div className="space-y-4 sm:space-y-6">
-              <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white">
-                Discover Singapore's Latest New Launches
-              </h2>
-              <p className="text-base sm:text-xl text-gray-300 leading-relaxed">
-                Get access to the newest condominiums and project launches. Backed by deep research and a media-first strategy, KW Singapore's new launch division delivers insights that empower your next property decision.
-              </p>
-            </div>
-
-            {/* New Launch Search */}
-            <div className="w-full max-w-3xl mx-auto">
-              <form onSubmit={handleNewLaunchSearch} className="flex flex-col md:flex-row gap-3 sm:gap-4">
-                <Input
-                  type="text"
-                  placeholder="Search for new launch projects, developers..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 h-12 sm:h-14 text-base sm:text-lg border-0 bg-white/10 text-white placeholder:text-gray-400 focus-visible:ring-2 focus-visible:ring-primary-red rounded-lg backdrop-blur-sm"
-                />
-                <Button 
-                  type="submit"
-                  className="h-12 sm:h-14 px-6 sm:px-8 bg-primary-red hover:bg-primary-red/90 text-white font-medium rounded-lg transition-all duration-300"
-                >
-                  <Search className="h-5 w-5 mr-2" />
-                  Search
-                </Button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Featured New Launches Section - Enhanced with better card design */}
       <section className="relative py-24 md:py-32 bg-gray-900 text-white">
         <div className="container mx-auto px-4">
@@ -130,8 +84,12 @@ export default function Home() {
               title="10 Evelyn"
               location="Newton, District 11"
               price="From $1.2M"
+              priceRange="$1.2M - $2.8M"
+              pricePerSqFt="$1,800 - $2,200 psf"
               image="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80"
               units="120 Units"
+              unitsAvailable="120 Units"
+              propertySizeRange="527 - 1,302 sqft"
               developer="Amara Holdings"
               completion="2025"
               slug="10-evelyn"
@@ -142,8 +100,12 @@ export default function Home() {
               title="The Avenir"
               location="River Valley, District 9"
               price="From $2.5M"
+              priceRange="$2.5M - $4.8M"
+              pricePerSqFt="$2,200 - $2,600 psf"
               image="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80"
               units="376 Units"
+              unitsAvailable="376 Units"
+              propertySizeRange="614 - 1,862 sqft"
               developer="Hong Leong Group"
               completion="2025"
               slug="the-avenir"
@@ -153,8 +115,12 @@ export default function Home() {
               title="Midtown Modern"
               location="Bugis, District 7"
               price="From $1.8M"
+              priceRange="$1.8M - $3.8M"
+              pricePerSqFt="$1,900 - $2,300 psf"
               image="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80"
               units="558 Units"
+              unitsAvailable="558 Units"
+              propertySizeRange="678 - 1,862 sqft"
               developer="GuocoLand"
               completion="2024"
               slug="midtown-modern"

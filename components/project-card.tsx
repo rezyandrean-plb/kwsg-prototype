@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { Building2, MapPin, Calendar, Home, DollarSign, ChevronRight } from "lucide-react"
+import { Building2, MapPin, Calendar, Home, DollarSign, ChevronRight, Ruler } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -10,8 +10,11 @@ interface ProjectCardProps {
   title: string
   location: string
   price: string
+  priceRange: string
   image: string
   units: string
+  unitsAvailable: string
+  propertySizeRange: string
   developer: string
   completion: string
   slug: string
@@ -25,8 +28,11 @@ export default function ProjectCard({
   title,
   location,
   price,
+  priceRange,
   image,
   units,
+  unitsAvailable,
+  propertySizeRange,
   developer,
   completion,
   slug,
@@ -44,17 +50,31 @@ export default function ProjectCard({
         </div>
       </div>
       <div className="p-5 flex flex-col flex-grow">
-        <h3 className="text-xl font-bold mb-1">{title}</h3>
+        <h3 className="text-2xl font-bold mb-1 text-primary">{title}</h3>
         <div className="flex items-center text-gray-500 mb-3">
           <MapPin className="h-4 w-4 mr-1" />
           <span className="text-sm">{location}</span>
         </div>
         
-        <div className="mb-4">
-          <p className="text-lg font-semibold text-primary">{price}</p>
+        <div className="mb-4 space-y-2">
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-gray-600">Price Range</p>
+            <p className="text-sm font-medium text-gray-800">{priceRange}</p>
+          </div>
           {pricePerSqFt && (
-            <p className="text-sm text-gray-600">{pricePerSqFt}</p>
+            <div className="flex items-center justify-between">
+              <p className="text-sm text-gray-600">Price PSF</p>
+              <p className="text-sm font-medium text-gray-800">{pricePerSqFt}</p>
+            </div>
           )}
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-gray-600">Property Size</p>
+            <p className="text-sm font-medium text-gray-800">{propertySizeRange}</p>
+          </div>
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-gray-600">Units Available</p>
+            <p className="text-sm font-medium text-gray-800">{unitsAvailable}</p>
+          </div>
         </div>
 
         {description && (
