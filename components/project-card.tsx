@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { Building2, MapPin, Calendar, Home, DollarSign, ChevronRight, Ruler } from "lucide-react"
+import { Building2, MapPin, Calendar, Home, Banknote, ChevronRight, Ruler } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -22,6 +22,7 @@ interface ProjectCardProps {
   pricePerSqFt?: string
   features?: string[]
   className?: string
+  status?: 'upcoming' | 'ongoing' | 'completed'
 }
 
 export default function ProjectCard({
@@ -40,87 +41,67 @@ export default function ProjectCard({
   pricePerSqFt,
   features,
   className,
+  status = 'upcoming',
 }: ProjectCardProps) {
+  const statusConfig = {
+    upcoming: {
+      label: 'Upcoming',
+      className: 'bg-black text-white'
+    },
+    ongoing: {
+      label: 'Ongoing',
+      className: 'bg-green-500 text-white'
+    },
+    completed: {
+      label: 'Completed',
+      className: 'bg-gray-500 text-white'
+    }
+  } as const
+
+  const currentStatus = statusConfig[status] || statusConfig.upcoming
+
   return (
     <div className={cn("bg-white rounded-lg overflow-hidden shadow-lg transition-transform hover:scale-[1.02] flex flex-col h-full", className)}>
       <div className="relative h-60">
         <Image src={image || "/placeholder.svg"} alt={title} fill className="object-cover" />
-        <div className="absolute top-3 right-3 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
-          New Launch
+        <div className={cn("absolute top-3 right-3 px-3 py-1 rounded-full text-sm font-medium", currentStatus.className)}>
+          {currentStatus.label}
         </div>
       </div>
-      <div className="p-5 flex flex-col flex-grow">
-        <h3 className="text-2xl font-bold mb-1 text-primary">{title}</h3>
-        <div className="flex items-center text-gray-500 mb-3">
-          <MapPin className="h-4 w-4 mr-1" />
-          <span className="text-sm">{location}</span>
+      <div className="p-4 flex flex-col flex-grow">
+        {/* Location/District */}
+        <div className="text-xs text-gray-500 mb-1.5 truncate flex items-center">
+          <MapPin className="h-3.5 w-3.5 mr-1 text-gray-400" />
+          {location}
         </div>
-        
-        <div className="mb-4 space-y-2">
-          <div className="flex items-center justify-between">
-            <p className="text-sm text-gray-600">Price Range</p>
-            <p className="text-sm font-medium text-gray-800">{priceRange}</p>
-          </div>
-          {pricePerSqFt && (
-            <div className="flex items-center justify-between">
-              <p className="text-sm text-gray-600">Price PSF</p>
-              <p className="text-sm font-medium text-gray-800">{pricePerSqFt}</p>
-            </div>
+        {/* Project Name */}
+        <h3 className="text-lg font-semibold mb-2 text-gray-900 truncate">{title}</h3>
+        {/* Badges for tenure and TOP */}
+        <div className="flex flex-wrap gap-1.5 mb-2">
+          {features && features[0] && (
+            <span className="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full text-xs font-medium border border-gray-200">{features[0]}</span>
           )}
-          <div className="flex items-center justify-between">
-            <p className="text-sm text-gray-600">Property Size</p>
-            <p className="text-sm font-medium text-gray-800">{propertySizeRange}</p>
-          </div>
-          <div className="flex items-center justify-between">
-            <p className="text-sm text-gray-600">Units Available</p>
-            <p className="text-sm font-medium text-gray-800">{unitsAvailable}</p>
-          </div>
+          {completion && (
+            <span className="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full text-xs font-medium border border-gray-200">TOP: {completion}</span>
+          )}
         </div>
-
-        {description && (
-          <p className="text-gray-600 text-sm mb-4 line-clamp-2">{description}</p>
-        )}
-
-        <div className="grid grid-cols-2 gap-3 mb-5">
-          <div className="flex items-center text-gray-600">
-            <Building2 className="h-4 w-4 mr-1 text-gray-400" />
-            <span className="text-sm">{developer}</span>
-          </div>
-          <div className="flex items-center text-gray-600">
-            <Home className="h-4 w-4 mr-1 text-gray-400" />
-            <span className="text-sm">{units}</span>
-          </div>
-          <div className="flex items-center text-gray-600">
-            <Calendar className="h-4 w-4 mr-1 text-gray-400" />
-            <span className="text-sm">Est. {completion}</span>
-          </div>
+        {/* Bedroom range and property size */}
+        <div className="text-xs text-gray-700 mb-2 flex items-center gap-4">
+          {units && (
+            <span className="flex items-center"><Home className="h-3.5 w-3.5 mr-1 text-gray-400" />{units}</span>
+          )}
+          {propertySizeRange && (
+            <span className="flex items-center"><Ruler className="h-3.5 w-3.5 mr-1 text-gray-400" />{propertySizeRange}</span>
+          )}
         </div>
-
-        {features && features.length > 0 && (
-          <div className="mb-5">
-            <div className="flex flex-wrap gap-2">
-              {features.slice(0, 3).map((feature, index) => (
-                <span
-                  key={index}
-                  className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs"
-                >
-                  {feature}
-                </span>
-              ))}
-              {features.length > 3 && (
-                <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
-                  +{features.length - 3} more
-                </span>
-              )}
-            </div>
-          </div>
-        )}
-
-        <div className="mt-auto">
-          <Link href={`/projects/${slug}`}>
-            <Button className="w-full bg-primary text-white hover:bg-primary/90 group">
+        {/* Price at the bottom */}
+        <div className="mt-auto pt-2 border-t border-gray-100">
+          <div className="text-xs text-gray-500 mb-0.5">From</div>
+          <div className="text-lg font-bold text-gray-900">{priceRange}</div>
+          <Link href={`/projects/${slug}`} className="mt-3">
+            <Button variant="default" className="w-full flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white">
               View Details
-              <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <ChevronRight className="h-4 w-4" />
             </Button>
           </Link>
         </div>

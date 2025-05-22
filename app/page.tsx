@@ -12,6 +12,7 @@ import CountdownTimer from "@/components/countdown-timer"
 import ProjectCard from "@/components/project-card"
 import { ComposableMap, Geographies, Geography } from "react-simple-maps"
 import CountUp from "react-countup"
+import { projects } from "@/data/projects"
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState(0)
@@ -70,67 +71,29 @@ export default function Home() {
       </section>
 
       {/* Featured New Launches Section - Enhanced with better card design */}
-      <section className="relative py-24 md:py-32 bg-gray-900 text-white">
+      <section className="relative py-16 md:py-20 bg-gray-900 text-white">
         <div className="container mx-auto px-4">
-          <div className="text-center max-w-4xl mx-auto mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">Featured New Launches</h2>
+          <div className="text-center max-w-4xl mx-auto mb-10">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">Featured New Launches</h2>
             <p className="text-xl text-gray-300 leading-relaxed">
               Discover the most exclusive new property launches in prime locations
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            <ProjectCard
-              title="10 Evelyn"
-              location="Newton, District 11"
-              price="From $1.2M"
-              priceRange="$1.2M - $2.8M"
-              pricePerSqFt="$1,800 - $2,200 psf"
-              image="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80"
-              units="120 Units"
-              unitsAvailable="120 Units"
-              propertySizeRange="527 - 1,302 sqft"
-              developer="Amara Holdings"
-              completion="2025"
-              slug="10-evelyn"
-              className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
-            />
-
-            <ProjectCard
-              title="The Avenir"
-              location="River Valley, District 9"
-              price="From $2.5M"
-              priceRange="$2.5M - $4.8M"
-              pricePerSqFt="$2,200 - $2,600 psf"
-              image="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80"
-              units="376 Units"
-              unitsAvailable="376 Units"
-              propertySizeRange="614 - 1,862 sqft"
-              developer="Hong Leong Group"
-              completion="2025"
-              slug="the-avenir"
-            />
-
-            <ProjectCard
-              title="Midtown Modern"
-              location="Bugis, District 7"
-              price="From $1.8M"
-              priceRange="$1.8M - $3.8M"
-              pricePerSqFt="$1,900 - $2,300 psf"
-              image="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80"
-              units="558 Units"
-              unitsAvailable="558 Units"
-              propertySizeRange="678 - 1,862 sqft"
-              developer="GuocoLand"
-              completion="2024"
-              slug="midtown-modern"
-            />
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.slug}
+                {...project}
+                className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+              />
+            ))}
           </div>
         </div>
       </section>
 
       {/* Why KW Singapore Section */}
-      <section className="relative py-24 md:py-32 bg-black text-white overflow-hidden">
+      <section className="relative py-16 md:py-20 bg-black text-white overflow-hidden">
         {/* Background with subtle gradient */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-black" />
@@ -139,8 +102,8 @@ export default function Home() {
 
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-6">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-4">
                 Why KW Singapore?
               </h2>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -148,7 +111,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-6">
               {/* Card 1: Media-Led */}
               <div className="group relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-red/20 to-transparent rounded-2xl transform transition-transform group-hover:scale-105"></div>
@@ -208,7 +171,7 @@ export default function Home() {
       </section>
 
       {/* KW Advantage Section */}
-      <section className="relative py-24 md:py-32 bg-black text-white overflow-hidden">
+      <section className="relative py-16 md:py-20 bg-black text-white overflow-hidden">
         {/* Background Image with Parallax-like Effect */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -228,22 +191,22 @@ export default function Home() {
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             {/* Header Content */}
-            <div className="text-center mb-16 space-y-6">
+            <div className="text-center mb-10 space-y-4">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
                 The KW Advantage
               </h2>
             </div>
 
             {/* Technology Cards Grid */}
-            <div className="grid md:grid-cols-3 gap-8 mb-16">
+            <div className="grid md:grid-cols-3 gap-6 mb-10">
               {/* KW Global Brand Card */}
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-red/20 to-transparent rounded-2xl transform transition-transform group-hover:scale-105"></div>
                 <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-8 h-full transform transition-all duration-300 group-hover:-translate-y-2">
                   <div className="mb-6">
-                    <div className="w-16 h-16 bg-primary-red/10 rounded-xl flex items-center justify-center mb-6 transform transition-transform group-hover:scale-110">
+                    <div className="w-16 h-16 bg-primary-red/10 rounded-xl flex items-center justify-center mb-6 transform transition-transform group-hover:scale-110 animate-pulse">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                       </svg>
                     </div>
                     <h3 className="text-2xl font-bold text-white mb-4">KW Global Brand & Trust</h3>
@@ -259,9 +222,9 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-red/20 to-transparent rounded-2xl transform transition-transform group-hover:scale-105"></div>
                 <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-8 h-full transform transition-all duration-300 group-hover:-translate-y-2">
                   <div className="mb-6">
-                    <div className="w-16 h-16 bg-primary-red/10 rounded-xl flex items-center justify-center mb-6 transform transition-transform group-hover:scale-110">
+                    <div className="w-16 h-16 bg-primary-red/10 rounded-xl flex items-center justify-center mb-6 transform transition-transform group-hover:scale-110 animate-bounce">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                       </svg>
                     </div>
                     <h3 className="text-2xl font-bold text-white mb-4">KW PropTech: Command</h3>
@@ -277,9 +240,9 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-red/20 to-transparent rounded-2xl transform transition-transform group-hover:scale-105"></div>
                 <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-8 h-full transform transition-all duration-300 group-hover:-translate-y-2">
                   <div className="mb-6">
-                    <div className="w-16 h-16 bg-primary-red/10 rounded-xl flex items-center justify-center mb-6 transform transition-transform group-hover:scale-110">
+                    <div className="w-16 h-16 bg-primary-red/10 rounded-xl flex items-center justify-center mb-6 transform transition-transform group-hover:scale-110 animate-spin-slow">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                       </svg>
                     </div>
                     <h3 className="text-2xl font-bold text-white mb-4">KW Research Hub</h3>

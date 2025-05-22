@@ -314,13 +314,19 @@ export default function AboutUsPage() {
       {/* Sales Leadership Team Section */}
       <section className="py-20 bg-gray-900 text-white">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+          <motion.div 
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold mb-6">Sales Leadership Team</h2>
             <p className="text-lg text-gray-300 max-w-3xl mx-auto">
               Our sales leadership drives performance across growth, training, and retention. Each leader is measured not just by numbers, but by how many consultants they elevate. They train. They coach. They recruit — strategically.<br />
               Meet the minds behind the market center's productivity engine. Every metric we hit begins with them.
             </p>
-          </div>
+          </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
             {[1,2,3].map(i => (
               <div key={i} className="bg-gray-800 rounded-2xl shadow-xl border border-gray-700 flex flex-col items-center p-8 h-full">
@@ -343,12 +349,18 @@ export default function AboutUsPage() {
       {/* Meet Our Sales Consultants Section */}
       <section className="py-20 bg-black text-white">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+          <motion.div 
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold mb-6">Meet Our Sales Consultants</h2>
             <p className="text-lg text-gray-300 max-w-3xl mx-auto">
               We don't recruit realtors. We develop real estate consultants. Our network comprises high-performing professionals focused on serving clients with precision, integrity, and market intelligence. Meet the individuals reshaping what it means to be a trusted advisor in real estate.
             </p>
-          </div>
+          </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
             {[1,2,3].map(i => (
               <div key={i} className="bg-gray-800 rounded-2xl shadow-xl border border-gray-700 flex flex-col items-center p-8 h-full">

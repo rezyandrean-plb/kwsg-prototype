@@ -41,12 +41,12 @@ type Project = {
   district: number
   tenure: string
   propertyType: string
-  status: string
+  status: "upcoming" | "ongoing" | "completed"
   bedrooms: string[]
 }
 
 // Project data
-const projects = [
+const projects: Project[] = [
   {
     title: "Lentor Modern",
     location: "Lentor, District 26",
@@ -65,7 +65,7 @@ const projects = [
     district: 26,
     tenure: "99-year Leasehold",
     propertyType: "Mixed Development",
-    status: "Launching Soon",
+    status: "upcoming",
     bedrooms: ["1 Bedroom", "2 Bedrooms", "3 Bedrooms", "4 Bedrooms"]
   },
   {
@@ -86,7 +86,7 @@ const projects = [
     district: 17,
     tenure: "99-year Leasehold",
     propertyType: "Waterfront Condominium",
-    status: "Launching Soon",
+    status: "ongoing",
     bedrooms: ["1 Bedroom", "2 Bedrooms", "3 Bedrooms", "4 Bedrooms"]
   },
   {
@@ -107,7 +107,7 @@ const projects = [
     district: 21,
     tenure: "99-year Leasehold",
     propertyType: "Luxury Condominium",
-    status: "Launching Soon",
+    status: "completed",
     bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"]
   },
   {
@@ -128,7 +128,7 @@ const projects = [
     district: 14,
     tenure: "99-year Leasehold",
     propertyType: "Mass Market Condominium",
-    status: "Launching Soon",
+    status: "upcoming",
     bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms"]
   },
   {
@@ -149,7 +149,7 @@ const projects = [
     district: 16,
     tenure: "99-year Leasehold",
     propertyType: "Mixed Development",
-    status: "Launching Soon",
+    status: "ongoing",
     bedrooms: ["1 Bedroom", "2 Bedrooms", "3 Bedrooms", "4 Bedrooms"]
   },
   {
@@ -170,8 +170,197 @@ const projects = [
     district: 21,
     tenure: "Freehold",
     propertyType: "Luxury Condominium",
-    status: "Launching Soon",
+    status: "completed",
     bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"]
+  },
+  {
+    title: "The Continuum",
+    location: "Thiam Siew, District 15",
+    price: "From $1.68M",
+    priceRange: "$1.68M - $3.88M",
+    pricePerSqFt: "$2,000 - $2,400 psf",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80",
+    units: "816 Units",
+    unitsAvailable: "816 Units",
+    propertySizeRange: "592 - 1,722 sqft",
+    developer: "Hoi Hup & Sunway",
+    completion: "2027",
+    slug: "the-continuum",
+    description: "Premium development in the heart of District 15, offering sophisticated living spaces with panoramic city views.",
+    features: ["99-year leasehold", "City views", "Premium finishes", "Full facilities"],
+    district: 15,
+    tenure: "99-year Leasehold",
+    propertyType: "Premium Condominium",
+    status: "upcoming",
+    bedrooms: ["1 Bedroom", "2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"]
+  },
+  {
+    title: "Lentor Hills Residences",
+    location: "Lentor, District 26",
+    price: "From $1.38M",
+    priceRange: "$1.38M - $2.98M",
+    pricePerSqFt: "$1,900 - $2,200 psf",
+    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80",
+    units: "598 Units",
+    unitsAvailable: "598 Units",
+    propertySizeRange: "538 - 1,335 sqft",
+    developer: "GuocoLand",
+    completion: "2026",
+    slug: "lentor-hills-residences",
+    description: "Family-oriented development in the upcoming Lentor Hills precinct, offering modern living spaces with nature-inspired amenities.",
+    features: ["99-year leasehold", "Nature-inspired", "Family-friendly", "Full facilities"],
+    district: 26,
+    tenure: "99-year Leasehold",
+    propertyType: "Mass Market Condominium",
+    status: "ongoing",
+    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms"]
+  },
+  {
+    title: "Marina View Residences",
+    location: "Marina Bay, District 1",
+    price: "From $2.88M",
+    priceRange: "$2.88M - $5.88M",
+    pricePerSqFt: "$3,200 - $3,800 psf",
+    image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80",
+    units: "450 Units",
+    unitsAvailable: "450 Units",
+    propertySizeRange: "678 - 2,152 sqft",
+    developer: "CapitaLand",
+    completion: "2027",
+    slug: "marina-view-residences",
+    description: "Luxury waterfront living in the heart of Marina Bay, offering panoramic views of the city skyline and waterfront.",
+    features: ["99-year leasehold", "Waterfront living", "City views", "Premium facilities"],
+    district: 1,
+    tenure: "99-year Leasehold",
+    propertyType: "Luxury Waterfront Condominium",
+    status: "upcoming",
+    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms", "Penthouse"]
+  },
+  {
+    title: "Orchard Residences",
+    location: "Orchard, District 9",
+    price: "From $3.28M",
+    priceRange: "$3.28M - $6.88M",
+    pricePerSqFt: "$3,500 - $4,000 psf",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80",
+    units: "380 Units",
+    unitsAvailable: "380 Units",
+    propertySizeRange: "592 - 2,152 sqft",
+    developer: "Far East Organization",
+    completion: "2027",
+    slug: "orchard-residences",
+    description: "Ultra-luxury living in the heart of Orchard Road, Singapore's premier shopping and lifestyle district.",
+    features: ["Freehold", "Prime location", "Luxury finishes", "Full facilities"],
+    district: 9,
+    tenure: "Freehold",
+    propertyType: "Luxury Condominium",
+    status: "upcoming",
+    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms", "Penthouse"]
+  },
+  {
+    title: "Sentosa Cove Villas",
+    location: "Sentosa Cove, District 4",
+    price: "From $4.88M",
+    priceRange: "$4.88M - $8.88M",
+    pricePerSqFt: "$4,200 - $4,800 psf",
+    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80",
+    units: "120 Units",
+    unitsAvailable: "120 Units",
+    propertySizeRange: "1,200 - 3,000 sqft",
+    developer: "CDL",
+    completion: "2027",
+    slug: "sentosa-cove-villas",
+    description: "Exclusive waterfront living in Sentosa Cove, offering private marina access and luxury amenities.",
+    features: ["Freehold", "Waterfront living", "Marina access", "Private facilities"],
+    district: 4,
+    tenure: "Freehold",
+    propertyType: "Luxury Waterfront Villas",
+    status: "upcoming",
+    bedrooms: ["4 Bedrooms", "5 Bedrooms", "6 Bedrooms", "Penthouse"]
+  },
+  {
+    title: "Newton Edge",
+    location: "Newton, District 11",
+    price: "From $2.18M",
+    priceRange: "$2.18M - $4.18M",
+    pricePerSqFt: "$2,800 - $3,200 psf",
+    image: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80",
+    units: "280 Units",
+    unitsAvailable: "280 Units",
+    propertySizeRange: "592 - 1,722 sqft",
+    developer: "Hong Leong Group",
+    completion: "2027",
+    slug: "newton-edge",
+    description: "Sophisticated living in the prestigious Newton area, offering modern luxury with excellent connectivity.",
+    features: ["99-year leasehold", "Prime location", "Luxury finishes", "Full facilities"],
+    district: 11,
+    tenure: "99-year Leasehold",
+    propertyType: "Luxury Condominium",
+    status: "upcoming",
+    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"]
+  },
+  {
+    title: "Holland Village Residences",
+    location: "Holland Village, District 10",
+    price: "From $2.48M",
+    priceRange: "$2.48M - $4.88M",
+    pricePerSqFt: "$2,900 - $3,400 psf",
+    image: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&q=80",
+    units: "320 Units",
+    unitsAvailable: "320 Units",
+    propertySizeRange: "592 - 1,862 sqft",
+    developer: "GuocoLand",
+    completion: "2027",
+    slug: "holland-village-residences",
+    description: "Contemporary living in the vibrant Holland Village area, offering a perfect blend of lifestyle and convenience.",
+    features: ["99-year leasehold", "Lifestyle location", "Modern design", "Full facilities"],
+    district: 10,
+    tenure: "99-year Leasehold",
+    propertyType: "Luxury Condominium",
+    status: "upcoming",
+    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"]
+  },
+  {
+    title: "East Coast Residences",
+    location: "East Coast, District 15",
+    price: "From $1.88M",
+    priceRange: "$1.88M - $3.88M",
+    pricePerSqFt: "$2,200 - $2,600 psf",
+    image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80",
+    units: "420 Units",
+    unitsAvailable: "420 Units",
+    propertySizeRange: "592 - 1,722 sqft",
+    developer: "MCC Land",
+    completion: "2027",
+    slug: "east-coast-residences",
+    description: "Seaside living in the popular East Coast area, offering a relaxed lifestyle with excellent amenities.",
+    features: ["99-year leasehold", "Seaside living", "Family-friendly", "Full facilities"],
+    district: 15,
+    tenure: "99-year Leasehold",
+    propertyType: "Mass Market Condominium",
+    status: "upcoming",
+    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms"]
+  },
+  {
+    title: "Jurong Lake Residences",
+    location: "Jurong Lake, District 22",
+    price: "From $1.28M",
+    priceRange: "$1.28M - $2.88M",
+    pricePerSqFt: "$1,800 - $2,200 psf",
+    image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80",
+    units: "580 Units",
+    unitsAvailable: "580 Units",
+    propertySizeRange: "527 - 1,302 sqft",
+    developer: "CDL",
+    completion: "2027",
+    slug: "jurong-lake-residences",
+    description: "Lakeside living in the upcoming Jurong Lake District, offering modern comfort with nature-inspired amenities.",
+    features: ["99-year leasehold", "Lakeside living", "Nature-inspired", "Full facilities"],
+    district: 22,
+    tenure: "99-year Leasehold",
+    propertyType: "Mass Market Condominium",
+    status: "upcoming",
+    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms"]
   }
 ]
 
@@ -181,10 +370,12 @@ export default function NewLaunchDirectory() {
   const [selectedDistricts, setSelectedDistricts] = useState<number[]>([])
   const [selectedTenures, setSelectedTenures] = useState<string[]>([])
   const [selectedPropertyTypes, setSelectedPropertyTypes] = useState<string[]>([])
-  const [selectedStatus, setSelectedStatus] = useState<string[]>([])
+  const [selectedStatus, setSelectedStatus] = useState<("upcoming" | "ongoing" | "completed")[]>([])
   const [selectedBedrooms, setSelectedBedrooms] = useState<string[]>([])
   const [selectedPriceRange, setSelectedPriceRange] = useState<string[]>([])
   const [viewMode, setViewMode] = useState<"grid" | "map">("grid")
+  const [currentPage, setCurrentPage] = useState(1)
+  const projectsPerPage = 8
 
   // Price range options
   const priceRanges = [
@@ -234,13 +425,24 @@ export default function NewLaunchDirectory() {
     })
 
   // Get featured projects (first 3 projects)
-  const featuredProjects = filteredProjects.slice(0, 3)
+  const featuredProjects = [
+    projects[0], // Lentor Modern
+    projects[2], // The Reserve Residences
+    projects[3], // Tembusu Grand
+    projects[6], // The Continuum
+  ]
 
   const districts = Array.from(new Set(projects.map(p => p.district))).sort()
   const tenures = Array.from(new Set(projects.map(p => p.tenure)))
   const propertyTypes = Array.from(new Set(projects.map(p => p.propertyType)))
-  const statuses = Array.from(new Set(projects.map(p => p.status)))
+  const statuses: ("upcoming" | "ongoing" | "completed")[] = ["upcoming", "ongoing", "completed"]
   const bedrooms = Array.from(new Set(projects.flatMap(p => p.bedrooms)))
+
+  // Calculate pagination
+  const indexOfLastProject = currentPage * projectsPerPage
+  const indexOfFirstProject = indexOfLastProject - projectsPerPage
+  const currentProjects = filteredProjects.slice(indexOfFirstProject, indexOfLastProject)
+  const totalPages = Math.ceil(filteredProjects.length / projectsPerPage)
 
   return (
     <main className="min-h-screen flex flex-col bg-black text-white">
@@ -287,11 +489,25 @@ export default function NewLaunchDirectory() {
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured New Launches</h2>
               <p className="text-xl text-gray-300">Exclusive preview of our most anticipated developments</p>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {featuredProjects.map((project) => (
                 <ProjectCard
                   key={project.slug}
-                  {...project}
+                  title={project.title}
+                  location={project.location}
+                  price={project.price}
+                  priceRange={project.priceRange}
+                  image={project.image}
+                  units={project.units}
+                  unitsAvailable={project.unitsAvailable}
+                  propertySizeRange={project.propertySizeRange}
+                  developer={project.developer}
+                  completion={project.completion}
+                  slug={project.slug}
+                  description={project.description}
+                  pricePerSqFt={project.pricePerSqFt}
+                  features={project.features}
+                  status="upcoming"
                   className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
                 />
               ))}
@@ -357,10 +573,10 @@ export default function NewLaunchDirectory() {
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent className="bg-gray-900 border-gray-700">
-                  <SelectItem value="latest">Latest First</SelectItem>
-                  <SelectItem value="price-low-high">Price: Low to High</SelectItem>
-                  <SelectItem value="price-high-low">Price: High to Low</SelectItem>
-                  <SelectItem value="completion">Completion Date</SelectItem>
+                  <SelectItem value="latest" className="text-white hover:bg-primary-red hover:text-white focus:bg-primary-red focus:text-white">Latest First</SelectItem>
+                  <SelectItem value="price-low-high" className="text-white hover:bg-primary-red hover:text-white focus:bg-primary-red focus:text-white">Price: Low to High</SelectItem>
+                  <SelectItem value="price-high-low" className="text-white hover:bg-primary-red hover:text-white focus:bg-primary-red focus:text-white">Price: High to Low</SelectItem>
+                  <SelectItem value="completion" className="text-white hover:bg-primary-red hover:text-white focus:bg-primary-red focus:text-white">Completion Date</SelectItem>
                 </SelectContent>
               </Select>
               <Sheet>
@@ -426,7 +642,7 @@ export default function NewLaunchDirectory() {
                               )
                             }}
                           >
-                            {status}
+                            {status.charAt(0).toUpperCase() + status.slice(1)}
                           </Badge>
                         ))}
                       </div>
@@ -561,15 +777,69 @@ export default function NewLaunchDirectory() {
 
           {/* Projects Display */}
           {viewMode === "grid" ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredProjects.map((project) => (
-                <ProjectCard
-                  key={project.slug}
-                  {...project}
-                  className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
-                />
-              ))}
-            </div>
+            <>
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {currentProjects.map((project) => (
+                  <ProjectCard
+                    key={project.slug}
+                    title={project.title}
+                    location={project.location}
+                    price={project.price}
+                    priceRange={project.priceRange}
+                    image={project.image}
+                    units={project.units}
+                    unitsAvailable={project.unitsAvailable}
+                    propertySizeRange={project.propertySizeRange}
+                    developer={project.developer}
+                    completion={project.completion}
+                    slug={project.slug}
+                    description={project.description}
+                    pricePerSqFt={project.pricePerSqFt}
+                    features={project.features}
+                    status={project.status}
+                    className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+                  />
+                ))}
+              </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="flex justify-center items-center gap-3 mt-12">
+                  <Button
+                    variant="outline"
+                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                    className="border-gray-700 text-black hover:bg-gray-800 hover:text-white disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-gray-300 font-medium"
+                  >
+                    Previous
+                  </Button>
+                  <div className="flex items-center gap-2">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                      <Button
+                        key={page}
+                        variant={currentPage === page ? "default" : "outline"}
+                        onClick={() => setCurrentPage(page)}
+                        className={`font-medium ${
+                          currentPage === page 
+                            ? "bg-primary-red text-white hover:bg-primary-red/90" 
+                            : "border-gray-700 text-black hover:bg-gray-800 hover:text-white"
+                        }`}
+                      >
+                        {page}
+                      </Button>
+                    ))}
+                  </div>
+                  <Button
+                    variant="outline"
+                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                    className="border-gray-700 text-black hover:bg-gray-800 hover:text-white disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-gray-300 font-medium"
+                  >
+                    Next
+                  </Button>
+                </div>
+              )}
+            </>
           ) : (
             <div className="h-[600px] bg-gray-900 rounded-lg overflow-hidden">
               {/* Map component would go here */}

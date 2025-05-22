@@ -36,7 +36,7 @@ export default function RootLayout({
                 <div className="container flex h-16 items-center justify-between">
                   <Link href="/" className="flex items-center space-x-2">
                     <Image
-                      src="/images/kwsg-logo.png"
+                      src="/images/kwsg-logo-light.png"
                       alt="KW Logo"
                       width={120}
                       height={60}
@@ -44,7 +44,7 @@ export default function RootLayout({
                     />
                   </Link>
                   {/* Desktop Navigation */}
-                  <nav className="hidden md:flex gap-4 lg:gap-6">
+                  <nav className="hidden lg:flex gap-4 lg:gap-6">
                     <Link href="/projects" className="text-sm font-medium text-white hover:text-white/80 hover:bg-black/20 rounded px-2 py-1" id="nav-link">
                       New Launch Directory
                     </Link>
@@ -61,12 +61,12 @@ export default function RootLayout({
                       Contact Us
                     </Link>
                   </nav>
-                  <div className="hidden md:block">
+                  <div className="hidden lg:block">
                     <Button id="join-webinar-button" className="bg-primary-red text-white hover:bg-primary-red/90">
                       Join Webinar
                     </Button>
                   </div>
-                  {/* Mobile Menu */}
+                  {/* Mobile and Tablet Menu */}
                   <MobileMenu />
                 </div>
               </header>
@@ -77,10 +77,10 @@ export default function RootLayout({
                 <div className="container grid gap-8 md:grid-cols-2 lg:grid-cols-4">
                   <div className="space-y-4">
                     <Image
-                      src="/images/kw-logo.png"
+                      src="/images/kwsg-logo-light.png"
                       alt="KW Logo"
-                      width={80}
-                      height={40}
+                      width={180}
+                      height={90}
                     />
                     <p className="text-sm text-gray-300">
                       The niche category king in new property launches, leveraging on the number one realty globally.
