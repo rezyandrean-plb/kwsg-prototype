@@ -51,7 +51,7 @@ export default function MobileMenu() {
                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-900"
                     onClick={() => setIsOpen(false)}
                   >
-                    New Launch Directory
+                    New Launch Project
                   </Link>
                   <Link
                     href="/join"

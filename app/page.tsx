@@ -13,6 +13,7 @@ import ProjectCard from "@/components/project-card"
 import { ComposableMap, Geographies, Geography } from "react-simple-maps"
 import CountUp from "react-countup"
 import { projects } from "@/data/projects"
+import { ContactDialog } from "@/components/contact-dialog"
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState(0)
@@ -27,6 +28,11 @@ export default function Home() {
   const handleNewLaunchSearch = (e: React.FormEvent) => {
     e.preventDefault()
     console.log("Searching new launches:", searchQuery)
+  }
+
+  const handleFormSubmit = (data: any) => {
+    console.log("Form submitted:", data)
+    // Here you would typically send the data to your backend
   }
 
   return (
@@ -53,18 +59,19 @@ export default function Home() {
               Keller Williams Singapore is a next-generation realty brand powered by technology, media, and proven global systems. Designed for today's buyers, sellers, and realtors.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                className="group px-8 sm:px-10 py-4 sm:py-6 text-lg sm:text-xl bg-primary-red text-white hover:bg-primary-red/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]"
-              >
-                Explore KW Singapore
-                <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
-              </Button>
-              <Button 
-                className="group px-8 sm:px-10 py-4 sm:py-6 text-lg sm:text-xl bg-white text-primary-red hover:bg-white/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]"
-              >
-                Join Us Today
-                <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
-              </Button>
+              <ContactDialog
+                triggerText="Find Out More"
+                headline="Unlock Your Full Potential with Keller Williams Singapore"
+                body="Discover how our unparalleled support and resources can help you thrive in Singapore's dynamic property market. Fill out the form below to learn more."
+                onSubmit={handleFormSubmit}
+              />
+              <ContactDialog
+                triggerText="Join Us Today"
+                headline="Join the #1 Global Realty Network"
+                body="Want to be part of the world's largest real estate company and leverage a global network for your success in Singapore? Complete the form to connect with us."
+                onSubmit={handleFormSubmit}
+                variant="outline"
+              />
             </div>
           </div>
         </div>
@@ -166,108 +173,22 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* KW Advantage Section */}
-      <section className="relative py-16 md:py-20 bg-black text-white overflow-hidden">
-        {/* Background Image with Parallax-like Effect */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80"
-            alt="Technology Background"
-            fill
-            sizes="100vw"
-            priority
-            className="object-cover object-center brightness-[0.5]"
-            quality={100}
-          />
-          {/* Enhanced Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/40" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.05),transparent_20%)]" />
-        </div>
-
-        <div className="relative z-10 container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            {/* Header Content */}
-            <div className="text-center mb-10 space-y-4">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
-                The KW Advantage
-              </h2>
-            </div>
-
-            {/* Technology Cards Grid */}
-            <div className="grid md:grid-cols-3 gap-6 mb-10">
-              {/* KW Global Brand Card */}
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-red/20 to-transparent rounded-2xl transform transition-transform group-hover:scale-105"></div>
-                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-8 h-full transform transition-all duration-300 group-hover:-translate-y-2">
-                  <div className="mb-6">
-                    <div className="w-16 h-16 bg-primary-red/10 rounded-xl flex items-center justify-center mb-6 transform transition-transform group-hover:scale-110 animate-pulse">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                      </svg>
-                    </div>
-                    <h3 className="text-2xl font-bold text-white mb-4">KW Global Brand & Trust</h3>
-                    <p className="text-gray-300 leading-relaxed">
-                      Backed by 200,000+ professionals in 60+ countries, Keller Williams is the world's most trusted realty network. In Singapore, that trust becomes your competitive edge.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* KW PropTech Card */}
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-red/20 to-transparent rounded-2xl transform transition-transform group-hover:scale-105"></div>
-                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-8 h-full transform transition-all duration-300 group-hover:-translate-y-2">
-                  <div className="mb-6">
-                    <div className="w-16 h-16 bg-primary-red/10 rounded-xl flex items-center justify-center mb-6 transform transition-transform group-hover:scale-110 animate-bounce">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-2xl font-bold text-white mb-4">KW PropTech: Command</h3>
-                    <p className="text-gray-300 leading-relaxed">
-                      Our proprietary system streamlines every part of your business—from CRM to closing—on a single, mobile-optimized interface tailored to the Singapore market.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* KW Research Hub Card */}
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-red/20 to-transparent rounded-2xl transform transition-transform group-hover:scale-105"></div>
-                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-8 h-full transform transition-all duration-300 group-hover:-translate-y-2">
-                  <div className="mb-6">
-                    <div className="w-16 h-16 bg-primary-red/10 rounded-xl flex items-center justify-center mb-6 transform transition-transform group-hover:scale-110 animate-spin-slow">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-2xl font-bold text-white mb-4">KW Research Hub</h3>
-                    <p className="text-gray-300 leading-relaxed">
-                      AI-enhanced data, market trends, and district insights—at your fingertips. It's the intelligence behind better advice, faster deals, and lasting client trust.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                className="group px-8 sm:px-10 py-4 sm:py-6 text-lg sm:text-xl bg-primary-red text-white hover:bg-primary-red/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]"
-              >
-                Join KW Singapore
-                <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
-              </Button>
-              <Button 
-                className="group px-8 sm:px-10 py-4 sm:py-6 text-lg sm:text-xl bg-white text-primary-red hover:bg-white/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]"
-              >
-                Explore Our PropTech
-                <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
-              </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
+              <ContactDialog
+                triggerText="Join KW Singapore"
+                headline="Join the #1 Global Realty Network"
+                body="Want to be part of the world's largest real estate company and leverage a global network for your success in Singapore? Complete the form to connect with us."
+                onSubmit={handleFormSubmit}
+              />
+              <ContactDialog
+                triggerText="Explore Our PropTech"
+                headline="Discover KW's Intelligent Technology"
+                body="Want to see how our integrated tech ecosystem, powered by AI (KWIQ), can streamline your business and enhance client engagement? Fill out the form to explore KW Tech Suite!"
+                onSubmit={handleFormSubmit}
+                variant="outline"
+              />
             </div>
           </div>
         </div>
@@ -326,13 +247,13 @@ export default function Home() {
               </div>
 
               {/* CTA Button */}
-              <div className="flex justify-center pt-2">
-                <Button 
-                  className="group px-8 py-4 text-lg bg-primary-red text-white hover:bg-primary-red/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]"
-                >
-                  Be Part of the Launch
-                  <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
-                </Button>
+              <div className="flex justify-center">
+                <ContactDialog
+                  triggerText="Be Part of the Launch"
+                  headline="Be at the Forefront of KW Singapore's Launch"
+                  body="Excited about the future of real estate in Singapore? Register your interest to be among the first to learn about Keller Williams Singapore. Fill out the form to stay informed."
+                  onSubmit={handleFormSubmit}
+                />
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Search, Filter, ArrowRight, X, MapPin, Building2, Calendar, DollarSign, LayoutGrid, Map } from "lucide-react"
+import { Search, Filter, ArrowRight, X, MapPin, Building2, Calendar, DollarSign, LayoutGrid, Map, Bed, SlidersHorizontal, Check } from "lucide-react"
 import ProjectCard from "@/components/project-card"
 import Image from "next/image"
 import {
@@ -21,6 +21,15 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { Badge } from "@/components/ui/badge"
+import { motion } from "framer-motion"
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+  DropdownMenuSeparator
+} from "@/components/ui/dropdown-menu"
+import { Slider } from "@/components/ui/slider"
 
 // Add type definition for Project
 type Project = {
@@ -376,6 +385,8 @@ export default function NewLaunchDirectory() {
   const [viewMode, setViewMode] = useState<"grid" | "map">("grid")
   const [currentPage, setCurrentPage] = useState(1)
   const projectsPerPage = 8
+  const [priceMin, setPriceMin] = useState(0)
+  const [priceMax, setPriceMax] = useState(0)
 
   // Price range options
   const priceRanges = [
@@ -401,13 +412,10 @@ export default function NewLaunchDirectory() {
       const matchesStatus = selectedStatus.length === 0 || selectedStatus.includes(project.status)
       const matchesBedrooms = selectedBedrooms.length === 0 || selectedBedrooms.some(bedroom => project.bedrooms.includes(bedroom))
       
-      // Price range filter
-      const matchesPriceRange = selectedPriceRange.length === 0 || selectedPriceRange.some(range => {
-        const [min, max] = range.split(" - ").map(price => parseInt(price.replace(/[^0-9]/g, "")))
-        const projectMin = parseInt(project.priceRange.split(" - ")[0].replace(/[^0-9]/g, ""))
-        const projectMax = parseInt(project.priceRange.split(" - ")[1].replace(/[^0-9]/g, ""))
-        return projectMin >= min && projectMax <= max
-      })
+      // Price range filter (use priceMin and priceMax)
+      const [projectMin, projectMax] = project.priceRange.split(" - ").map(price => parseInt(price.replace(/[^0-9]/g, "")))
+      const matchesPriceRange = (priceMin === 0 && priceMax === 0) ||
+        (projectMax >= priceMin && projectMin <= priceMax)
 
       return matchesSearch && matchesDistrict && matchesTenure && matchesPropertyType && matchesStatus && matchesBedrooms && matchesPriceRange
     })
@@ -458,18 +466,38 @@ export default function NewLaunchDirectory() {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60" />
         </div>
-        <div className="relative container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
-            New Launch Directory
-          </h1>
-          <p className="text-xl max-w-3xl mx-auto mb-12 text-gray-200">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="relative container mx-auto px-4 text-center"
+        >
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white"
+          >
+            New Launch Project
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-xl max-w-3xl mx-auto mb-12 text-gray-200"
+          >
             Discover Singapore's most exclusive new property launches with KW Singapore's comprehensive directory
-          </p>
-          <div className="max-w-3xl mx-auto bg-black/90 rounded-lg overflow-hidden flex backdrop-blur-sm">
+          </motion.p>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="max-w-3xl mx-auto bg-black/90 rounded-lg overflow-hidden flex backdrop-blur-sm"
+          >
             <Input
               type="text"
               placeholder="Search by project name, location, or developer..."
-              className="flex-1 border-0 bg-gray-900 text-white placeholder:text-gray-400 focus-visible:ring-0"
+              className="flex-1 border-0 bg-white text-black placeholder:text-gray-500 focus-visible:ring-0"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -477,50 +505,81 @@ export default function NewLaunchDirectory() {
               <Search className="h-5 w-5 mr-2" />
               Search
             </Button>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Featured Projects Section */}
       {featuredProjects.length > 0 && (
-        <section className="py-12 bg-gray-900">
+        <motion.section 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="py-12 bg-gray-900"
+        >
           <div className="container mx-auto px-4">
-            <div className="text-center max-w-4xl mx-auto mb-12">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="text-center max-w-4xl mx-auto mb-12"
+            >
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured New Launches</h2>
               <p className="text-xl text-gray-300">Exclusive preview of our most anticipated developments</p>
-            </div>
+            </motion.div>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {featuredProjects.map((project) => (
-                <ProjectCard
+              {featuredProjects.map((project, index) => (
+                <motion.div
                   key={project.slug}
-                  title={project.title}
-                  location={project.location}
-                  price={project.price}
-                  priceRange={project.priceRange}
-                  image={project.image}
-                  units={project.units}
-                  unitsAvailable={project.unitsAvailable}
-                  propertySizeRange={project.propertySizeRange}
-                  developer={project.developer}
-                  completion={project.completion}
-                  slug={project.slug}
-                  description={project.description}
-                  pricePerSqFt={project.pricePerSqFt}
-                  features={project.features}
-                  status="upcoming"
-                  className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
-                />
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <ProjectCard
+                    title={project.title}
+                    location={project.location}
+                    price={project.price}
+                    priceRange={project.priceRange}
+                    image={project.image}
+                    units={project.units}
+                    unitsAvailable={project.unitsAvailable}
+                    propertySizeRange={project.propertySizeRange}
+                    developer={project.developer}
+                    completion={project.completion}
+                    slug={project.slug}
+                    description={project.description}
+                    pricePerSqFt={project.pricePerSqFt}
+                    features={project.features}
+                    status="upcoming"
+                    className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+                  />
+                </motion.div>
               ))}
             </div>
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* Main Content Section */}
-      <section className="py-12">
+      <motion.section 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="py-12"
+      >
         <div className="container mx-auto px-4">
           {/* Header with Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
+          >
             <div className="bg-gray-900 rounded-lg p-6 text-center">
               <Building2 className="h-8 w-8 text-primary-red mx-auto mb-2" />
               <div className="text-2xl font-bold">{projects.length}</div>
@@ -541,55 +600,180 @@ export default function NewLaunchDirectory() {
               <div className="text-2xl font-bold">$1.2M+</div>
               <div className="text-gray-400">Starting Price</div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Filters and Sort */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-            <div>
-              <h2 className="text-2xl font-bold text-white">All New Launches</h2>
-              <p className="text-gray-300">Showing {filteredProjects.length} projects</p>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-y-2 gap-x-4"
+          >
+            <div className="flex flex-col min-w-0">
+               <h2 className="text-2xl font-bold text-white whitespace-nowrap">All New Launches</h2>
+               <p className="text-gray-300 whitespace-nowrap">Showing {filteredProjects.length} projects</p>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 bg-gray-900 rounded-lg p-1">
-                <Button
-                  variant={viewMode === "grid" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setViewMode("grid")}
-                  className="text-white"
-                >
-                  <LayoutGrid className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant={viewMode === "map" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setViewMode("map")}
-                  className="text-white"
-                >
-                  <Map className="h-4 w-4" />
-                </Button>
-              </div>
-              <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-[180px] bg-gray-900 border-gray-700">
-                  <SelectValue placeholder="Sort by" />
-                </SelectTrigger>
-                <SelectContent className="bg-gray-900 border-gray-700">
-                  <SelectItem value="latest" className="text-white hover:bg-primary-red hover:text-white focus:bg-primary-red focus:text-white">Latest First</SelectItem>
-                  <SelectItem value="price-low-high" className="text-white hover:bg-primary-red hover:text-white focus:bg-primary-red focus:text-white">Price: Low to High</SelectItem>
-                  <SelectItem value="price-high-low" className="text-white hover:bg-primary-red hover:text-white focus:bg-primary-red focus:text-white">Price: High to Low</SelectItem>
-                  <SelectItem value="completion" className="text-white hover:bg-primary-red hover:text-white focus:bg-primary-red focus:text-white">Completion Date</SelectItem>
-                </SelectContent>
-              </Select>
+            {/* New Filter Bar */}
+            <div className="w-full flex flex-row flex-wrap gap-x-2 gap-y-2 items-center bg-transparent py-2 justify-end md:flex-nowrap md:gap-y-0 scrollbar-hide">
+              {/* District */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="min-w-[80px] h-8 px-2 text-xs md:min-w-[100px] md:h-9 md:px-3 md:text-sm bg-white text-blue-900 border-none rounded-full shadow-sm flex items-center gap-2 focus:ring-2 focus:ring-blue-200">
+                    <MapPin className="h-4 w-4 text-blue-900 mr-1" />
+                    {selectedDistricts.length === 0 ? 'District' : selectedDistricts.length === 1 ? `D${selectedDistricts[0]}` : `${selectedDistricts.length} selected`}
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" side="bottom" className="w-[40rem] p-4">
+                  <div className={`grid gap-x-4 gap-y-2 ${districts.length > 8 ? 'grid-cols-6' : 'grid-cols-4'}`}>
+                    {districts.map(d => (
+                      <DropdownMenuCheckboxItem
+                        key={d}
+                        checked={selectedDistricts.includes(d)}
+                        onCheckedChange={checked => {
+                          setSelectedDistricts(prev => checked ? [...prev, d] : prev.filter(x => x !== d))
+                        }}
+                        className="px-2 py-1 flex items-center gap-2"
+                      >
+                        <span className="relative flex items-center">
+                          <span className={`inline-block w-4 h-4 border border-blue-900 rounded-none mr-2 bg-white ${selectedDistricts.includes(d) ? 'bg-blue-100' : ''}`}>
+                            {selectedDistricts.includes(d) && (
+                              <Check className="w-3 h-3 text-blue-900 absolute left-0.5 top-0.5" strokeWidth={3} />
+                            )}
+                          </span>
+                        </span>
+                        District {d}
+                      </DropdownMenuCheckboxItem>
+                    ))}
+                  </div>
+                  <DropdownMenuSeparator />
+                  <button className="w-full text-left text-xs text-blue-900 py-1 hover:underline" onClick={() => setSelectedDistricts([])}>Clear</button>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              {/* Property Type */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="min-w-[80px] h-8 px-2 text-xs md:min-w-[100px] md:h-9 md:px-3 md:text-sm bg-white text-blue-900 border-none rounded-full shadow-sm flex items-center gap-2 focus:ring-2 focus:ring-blue-200">
+                    <Building2 className="h-4 w-4 text-blue-900 mr-1" />
+                    {selectedPropertyTypes.length === 0 ? 'Type' : selectedPropertyTypes.length === 1 ? selectedPropertyTypes[0] : `${selectedPropertyTypes.length} selected`}
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" side="bottom" className="w-[40rem] p-4">
+                  <div className={`grid gap-x-4 gap-y-2 ${propertyTypes.length > 8 ? 'grid-cols-6' : 'grid-cols-4'}`}>
+                    {propertyTypes.map(type => (
+                      <DropdownMenuCheckboxItem
+                        key={type}
+                        checked={selectedPropertyTypes.includes(type)}
+                        onCheckedChange={checked => {
+                          setSelectedPropertyTypes(prev => checked ? [...prev, type] : prev.filter(x => x !== type))
+                        }}
+                        className="px-2 py-1 flex items-center gap-2"
+                      >
+                        <span className="relative flex items-center">
+                          <span className={`inline-block w-4 h-4 border border-blue-900 rounded-none mr-2 bg-white ${selectedPropertyTypes.includes(type) ? 'bg-blue-100' : ''}`}>
+                            {selectedPropertyTypes.includes(type) && (
+                              <Check className="w-3 h-3 text-blue-900 absolute left-0.5 top-0.5" strokeWidth={3} />
+                            )}
+                          </span>
+                        </span>
+                        {type}
+                      </DropdownMenuCheckboxItem>
+                    ))}
+                  </div>
+                  <DropdownMenuSeparator />
+                  <button className="w-full text-left text-xs text-blue-900 py-1 hover:underline" onClick={() => setSelectedPropertyTypes([])}>Clear</button>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              {/* Bedrooms */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="min-w-[80px] h-8 px-2 text-xs md:min-w-[100px] md:h-9 md:px-3 md:text-sm bg-white text-blue-900 border-none rounded-full shadow-sm flex items-center gap-2 focus:ring-2 focus:ring-blue-200">
+                    <Bed className="h-4 w-4 text-blue-900 mr-1" />
+                    {selectedBedrooms.length === 0 ? 'Beds' : selectedBedrooms.length === 1 ? selectedBedrooms[0] : `${selectedBedrooms.length} selected`}
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" side="bottom" className="w-[40rem] p-4">
+                  <div className={`grid gap-x-4 gap-y-2 ${bedrooms.length > 8 ? 'grid-cols-6' : 'grid-cols-4'}`}>
+                    {bedrooms.map(bed => (
+                      <DropdownMenuCheckboxItem
+                        key={bed}
+                        checked={selectedBedrooms.includes(bed)}
+                        onCheckedChange={checked => {
+                          setSelectedBedrooms(prev => checked ? [...prev, bed] : prev.filter(x => x !== bed))
+                        }}
+                        className="px-2 py-1 flex items-center gap-2"
+                      >
+                        <span className="relative flex items-center">
+                          <span className={`inline-block w-4 h-4 border border-blue-900 rounded-none mr-2 bg-white ${selectedBedrooms.includes(bed) ? 'bg-blue-100' : ''}`}>
+                            {selectedBedrooms.includes(bed) && (
+                              <Check className="w-3 h-3 text-blue-900 absolute left-0.5 top-0.5" strokeWidth={3} />
+                            )}
+                          </span>
+                        </span>
+                        {bed}
+                      </DropdownMenuCheckboxItem>
+                    ))}
+                  </div>
+                  <DropdownMenuSeparator />
+                  <button className="w-full text-left text-xs text-blue-900 py-1 hover:underline" onClick={() => setSelectedBedrooms([])}>Clear</button>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              {/* Price */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="min-w-[80px] h-8 px-2 text-xs md:min-w-[100px] md:h-9 md:px-3 md:text-sm bg-white text-blue-900 border-none rounded-full shadow-sm flex items-center gap-2 focus:ring-2 focus:ring-blue-200">
+                    <DollarSign className="h-4 w-4 text-blue-900 mr-1" />
+                    {priceMin === 0 && priceMax === 0 ? 'Price' : `$${priceMin.toLocaleString()} - $${priceMax.toLocaleString()}`}
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" side="bottom" className="w-80 p-4">
+                  <div className="flex flex-col gap-3">
+                    <Slider
+                      min={0}
+                      max={10000000}
+                      step={10000}
+                      value={[priceMin, priceMax === 0 ? 10000000 : priceMax]}
+                      onValueChange={([min, max]) => {
+                        setPriceMin(min)
+                        setPriceMax(max === 10000000 ? 0 : max)
+                      }}
+                      className="mb-2"
+                    />
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-blue-900">Min</span>
+                      <input
+                        type="number"
+                        className="w-24 px-2 py-1 border border-blue-200 rounded"
+                        placeholder="Min"
+                        value={priceMin === 0 ? '' : priceMin}
+                        min={0}
+                        max={priceMax || 10000000}
+                        step={10000}
+                        onChange={e => setPriceMin(Number(e.target.value))}
+                      />
+                      <span className="text-xs text-blue-900">Max</span>
+                      <input
+                        type="number"
+                        className="w-24 px-2 py-1 border border-blue-200 rounded"
+                        placeholder="Max"
+                        value={priceMax === 0 ? '' : priceMax}
+                        min={priceMin}
+                        max={10000000}
+                        step={10000}
+                        onChange={e => setPriceMax(Number(e.target.value))}
+                      />
+                    </div>
+                    <button className="w-full text-left text-xs text-blue-900 py-1 hover:underline" onClick={() => { setPriceMin(0); setPriceMax(0); }}>Clear</button>
+                  </div>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              {/* Filters Button */}
               <Sheet>
                 <SheetTrigger asChild>
-                  <Button variant="outline" className="flex items-center border-gray-700 text-black hover:bg-gray-100">
-                    <Filter className="h-4 w-4 mr-2 text-black" />
-                    Filter
-                    {(selectedDistricts.length > 0 || selectedTenures.length > 0 || selectedPropertyTypes.length > 0 || selectedStatus.length > 0 || selectedBedrooms.length > 0 || selectedPriceRange.length > 0) && (
-                      <Badge variant="secondary" className="ml-2 bg-gray-200 text-black">
-                        {selectedDistricts.length + selectedTenures.length + selectedPropertyTypes.length + selectedStatus.length + selectedBedrooms.length + selectedPriceRange.length}
-                      </Badge>
-                    )}
-                  </Button>
+                  <button className="min-w-[80px] h-8 px-2 text-xs md:min-w-[100px] md:h-9 md:px-3 md:text-sm flex items-center justify-center gap-2 bg-white text-blue-900 border-none rounded-full shadow-sm font-medium hover:bg-blue-50 transition">
+                    <SlidersHorizontal className="h-4 w-4 text-blue-900" />
+                    Filters
+                  </button>
                 </SheetTrigger>
                 <SheetContent className="bg-gray-900 text-white border-gray-800">
                   <SheetHeader>
@@ -773,38 +957,51 @@ export default function NewLaunchDirectory() {
                 </SheetContent>
               </Sheet>
             </div>
-          </div>
+          </motion.div>
 
           {/* Projects Display */}
           {viewMode === "grid" ? (
             <>
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                {currentProjects.map((project) => (
-                  <ProjectCard
+                {currentProjects.map((project, index) => (
+                  <motion.div
                     key={project.slug}
-                    title={project.title}
-                    location={project.location}
-                    price={project.price}
-                    priceRange={project.priceRange}
-                    image={project.image}
-                    units={project.units}
-                    unitsAvailable={project.unitsAvailable}
-                    propertySizeRange={project.propertySizeRange}
-                    developer={project.developer}
-                    completion={project.completion}
-                    slug={project.slug}
-                    description={project.description}
-                    pricePerSqFt={project.pricePerSqFt}
-                    features={project.features}
-                    status={project.status}
-                    className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
-                  />
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    <ProjectCard
+                      title={project.title}
+                      location={project.location}
+                      price={project.price}
+                      priceRange={project.priceRange}
+                      image={project.image}
+                      units={project.units}
+                      unitsAvailable={project.unitsAvailable}
+                      propertySizeRange={project.propertySizeRange}
+                      developer={project.developer}
+                      completion={project.completion}
+                      slug={project.slug}
+                      description={project.description}
+                      pricePerSqFt={project.pricePerSqFt}
+                      features={project.features}
+                      status={project.status}
+                      className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+                    />
+                  </motion.div>
                 ))}
               </div>
 
               {/* Pagination */}
               {totalPages > 1 && (
-                <div className="flex justify-center items-center gap-3 mt-12">
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  className="flex justify-center items-center gap-3 mt-12"
+                >
                   <Button
                     variant="outline"
                     onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
@@ -837,27 +1034,39 @@ export default function NewLaunchDirectory() {
                   >
                     Next
                   </Button>
-                </div>
+                </motion.div>
               )}
             </>
           ) : (
-            <div className="h-[600px] bg-gray-900 rounded-lg overflow-hidden">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="h-[600px] bg-gray-900 rounded-lg overflow-hidden"
+            >
               {/* Map component would go here */}
               <div className="h-full flex items-center justify-center text-gray-400">
                 Map view coming soon
               </div>
-            </div>
+            </motion.div>
           )}
 
           {/* No Results Message */}
           {filteredProjects.length === 0 && (
-            <div className="text-center py-12">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-center py-12"
+            >
               <h3 className="text-xl font-semibold text-gray-300 mb-2">No projects found</h3>
               <p className="text-gray-400">Try adjusting your filters or search terms</p>
-            </div>
+            </motion.div>
           )}
         </div>
-      </section>
+      </motion.section>
     </main>
   )
 }

@@ -80,7 +80,12 @@ export default function AboutUsPage() {
   ]
 
   return (
-    <main className="min-h-screen flex flex-col">
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      className="min-h-screen flex flex-col"
+    >
       {/* Hero Section */}
       <section className="relative h-[60vh] w-full">
         <Image
@@ -90,10 +95,10 @@ export default function AboutUsPage() {
           className="object-cover brightness-50"
           priority
         />
-        <div className="absolute inset-0 bg-black/40 flex items-end">
-          <div className="container mx-auto px-4 pb-16">
+        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+          <div className="container mx-auto px-4 text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">About KW Singapore</h1>
-            <p className="text-xl text-gray-100 max-w-3xl">
+            <p className="text-xl text-gray-100 max-w-3xl mx-auto">
               Keller Williams Singapore is more than a realty — it's a launchpad for real estate entrepreneurs. We are the strategic intersection of performance, consulting, and innovation.
             </p>
           </div>
@@ -135,7 +140,7 @@ export default function AboutUsPage() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* First Row - 3 cards */}
+            {/* First Row - 3 cards (Mission, Vision, Values) */}
             <motion.div 
               className="bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-700"
               initial={{ opacity: 0, y: 20 }}
@@ -143,9 +148,15 @@ export default function AboutUsPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <div className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <motion.div
+                className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                initial={{ scale: 1 }}
+                whileInView={{ scale: [1, 1.15, 1] }}
+                transition={{ duration: 0.8, repeat: Infinity, repeatType: 'loop' }}
+                viewport={{ once: true }}
+              >
                 <Target className="h-8 w-8 text-primary-red" />
-              </div>
+              </motion.div>
               <h3 className="text-xl font-bold mb-2 text-center text-white">Mission</h3>
               <p className="text-gray-300 text-center">
                 Build careers worth having, businesses worth owning, lives worth living, experiences worth giving, and legacies worth leaving.
@@ -159,9 +170,15 @@ export default function AboutUsPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <div className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <motion.div
+                className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                initial={{ opacity: 0.5 }}
+                whileInView={{ opacity: [0.5, 1, 0.7, 1] }}
+                transition={{ duration: 0.8, repeat: Infinity, repeatType: 'loop' }}
+                viewport={{ once: true }}
+              >
                 <Lightbulb className="h-8 w-8 text-primary-red" />
-              </div>
+              </motion.div>
               <h3 className="text-xl font-bold mb-2 text-center text-white">Vision</h3>
               <p className="text-gray-300 text-center">
                 To be the real estate company of choice for consultants and their clients in Singapore.
@@ -175,49 +192,65 @@ export default function AboutUsPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              <div className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <motion.div
+                className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                initial={{ scale: 1 }}
+                whileInView={{ scale: [1, 1.18, 1] }}
+                transition={{ duration: 0.7, repeat: Infinity, repeatType: 'loop' }}
+                viewport={{ once: true }}
+              >
                 <Heart className="h-8 w-8 text-primary-red" />
-              </div>
+              </motion.div>
               <h3 className="text-xl font-bold mb-2 text-center text-white">Values</h3>
               <p className="text-gray-300 text-center">
                 God, family, then business.
               </p>
             </motion.div>
 
-            {/* Second Row - 2 centered cards */}
-            <div className="md:col-span-2 lg:col-span-3 flex justify-center gap-8">
-              <motion.div 
-                className="bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-700 w-full max-w-md"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+            <motion.div 
+              className="bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-700"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <motion.div
+                className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                initial={{ rotate: 0 }}
+                whileInView={{ rotate: [0, 10, -10, 0] }}
+                transition={{ duration: 0.8, repeat: Infinity, repeatType: 'loop' }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.4 }}
               >
-                <div className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Brain className="h-8 w-8 text-primary-red" />
-                </div>
-                <h3 className="text-xl font-bold mb-2 text-center text-white">Beliefs</h3>
-                <p className="text-gray-300 text-center">
-                  WI4C2TES – Win-Win, Integrity, Clients First, Commitment, Communication, Creativity, Teamwork, Trust, Equity, Success.
-                </p>
+                <Brain className="h-8 w-8 text-primary-red" />
               </motion.div>
+              <h3 className="text-xl font-bold mb-2 text-center text-white">Beliefs</h3>
+              <p className="text-gray-300 text-center">
+                WI4C2TES – Win-Win, Integrity, Clients First, Commitment, Communication, Creativity, Teamwork, Trust, Equity, Success.
+              </p>
+            </motion.div>
 
-              <motion.div 
-                className="bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-700 w-full max-w-md"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+            {/* Fifth card: Perspective, centered on md, normal on lg+ */}
+            <motion.div 
+              className="bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-700 md:col-span-2 md:mx-auto md:w-1/2 lg:col-span-1 lg:mx-0 lg:w-auto"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            >
+              <motion.div
+                className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                initial={{ y: 0 }}
+                whileInView={{ y: [0, -10, 0] }}
+                transition={{ duration: 0.7, repeat: Infinity, repeatType: 'loop' }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.5 }}
               >
-                <div className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users2 className="h-8 w-8 text-primary-red" />
-                </div>
-                <h3 className="text-xl font-bold mb-2 text-center text-white">Perspective</h3>
-                <p className="text-gray-300 text-center">
-                  We are a tech company that provides a real estate platform preferred by clients — thinking like top producers, consulting like coaches, and focusing on productivity, service, and profitability.
-                </p>
+                <Users2 className="h-8 w-8 text-primary-red" />
               </motion.div>
-            </div>
+              <h3 className="text-xl font-bold mb-2 text-center text-white">Perspective</h3>
+              <p className="text-gray-300 text-center">
+                We are a tech company that provides a real estate platform preferred by clients — thinking like top producers, consulting like coaches, and focusing on productivity, service, and profitability.
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -238,35 +271,32 @@ export default function AboutUsPage() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-            {team.map(member => (
-              <motion.button
+          <div className="space-y-16">
+            {team.map((member, idx) => (
+              <motion.div
                 key={member.key}
-                className="bg-gray-800 rounded-2xl shadow-xl border border-gray-700 flex flex-col h-full transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-primary-red"
-                style={{ textAlign: 'left' }}
+                className="flex flex-col md:flex-row items-center md:items-start bg-white rounded-2xl shadow-lg border border-gray-200 p-8 gap-8"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                onClick={() => setOpenModal(member.key)}
-                tabIndex={0}
-                type="button"
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
               >
-                <div className="relative w-full aspect-square overflow-hidden rounded-t-2xl">
+                <div className="relative w-40 h-40 md:w-[220px] md:h-[220px] mb-6 md:mb-0 md:mr-10 flex-shrink-0 rounded-2xl overflow-hidden border-4 border-gray-100 bg-gray-100">
                   <Image
                     src={member.image}
                     alt={member.name}
                     fill
                     className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    priority
                   />
                 </div>
-                <div className="flex flex-col flex-1 p-6">
-                  <h3 className="text-xl font-bold mb-1 text-white">{member.name}</h3>
-                  <p className="text-primary-red font-medium mb-0 text-sm">{member.position}</p>
+                <div className="flex-1 flex flex-col justify-center">
+                  <h3 className="text-3xl font-bold mb-2 text-black">{member.name}</h3>
+                  <p className="text-lg font-semibold mb-4 text-primary-red">{member.position}</p>
+                  <div className="space-y-3 text-gray-700 text-base leading-relaxed">
+                    {member.bio.map((b, i) => <p key={i}>{b}</p>)}
+                  </div>
                 </div>
-              </motion.button>
+              </motion.div>
             ))}
           </div>
 
@@ -361,21 +391,16 @@ export default function AboutUsPage() {
               We don't recruit realtors. We develop real estate consultants. Our network comprises high-performing professionals focused on serving clients with precision, integrity, and market intelligence. Meet the individuals reshaping what it means to be a trusted advisor in real estate.
             </p>
           </motion.div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-            {[1,2,3].map(i => (
-              <div key={i} className="bg-gray-800 rounded-2xl shadow-xl border border-gray-700 flex flex-col items-center p-8 h-full">
-                <div className="relative w-28 h-28 mb-4 rounded-full overflow-hidden border-4 border-primary-red">
-                  <img
-                    src={`https://randomuser.me/api/portraits/women/${i+30}.jpg`}
-                    alt="Consultant Avatar"
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-                <h3 className="text-xl font-bold mb-1 text-white">Consultant Name {i}</h3>
-                <p className="text-primary-red font-medium mb-2">Real Estate Consultant</p>
-                <p className="text-gray-300 text-center text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod, nisi eu consectetur.</p>
-              </div>
-            ))}
+          <div className="flex justify-center">
+            <motion.img
+              src="https://plb-integrity1-media.propertylimbrothers.com/wp-content/uploads/2023/04/10100316/0.-PLB-Team_1.jpg"
+              alt="Group of Sales Consultants"
+              className="rounded-2xl shadow-lg border border-gray-700 w-full max-w-3xl object-cover"
+              initial={{ opacity: 0, scale: 0.96 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            />
           </div>
         </div>
       </section>
@@ -487,6 +512,6 @@ export default function AboutUsPage() {
           </motion.div>
         </div>
       </section>
-    </main>
+    </motion.main>
   )
 }

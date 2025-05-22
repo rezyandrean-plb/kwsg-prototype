@@ -46,7 +46,7 @@ export default function RootLayout({
                   {/* Desktop Navigation */}
                   <nav className="hidden lg:flex gap-4 lg:gap-6">
                     <Link href="/projects" className="text-sm font-medium text-white hover:text-white/80 hover:bg-black/20 rounded px-2 py-1" id="nav-link">
-                      New Launch Directory
+                      New Launch Project
                     </Link>
                     <Link href="/join" className="text-sm font-medium text-white hover:text-white/80 hover:bg-black/20 rounded px-2 py-1" id="nav-link">
                       Join KW Singapore
@@ -96,7 +96,7 @@ export default function RootLayout({
                       </li>
                       <li>
                         <Link href="/projects" className="hover:text-white">
-                          New Launch Directory
+                          New Launch Project
                         </Link>
                       </li>
                       <li>
