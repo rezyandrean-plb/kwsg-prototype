@@ -1,10 +1,10 @@
 import { EditProjectForm } from "./edit-project-form"
 
-type Props = {
-  params: { id: string }
-  searchParams: { [key: string]: string | string[] | undefined }
-}
-
-export default async function EditProjectPage({ params }: Props) {
-  return <EditProjectForm id={params.id} />
+export default async function EditProjectPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const resolvedParams = await params
+  return <EditProjectForm id={resolvedParams.id} />
 } 
