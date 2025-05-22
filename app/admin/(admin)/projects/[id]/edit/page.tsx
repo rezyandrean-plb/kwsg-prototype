@@ -1,9 +1,11 @@
 import { EditProjectForm } from "./edit-project-form"
 
-export default function EditProjectPage({
-  params,
-}: {
-  params: { id: string }
-}) {
+interface PageProps {
+  params: {
+    id: string
+  }
+}
+
+export default function EditProjectPage({ params }: PageProps) {
   return <EditProjectForm id={params.id} />
 } 
