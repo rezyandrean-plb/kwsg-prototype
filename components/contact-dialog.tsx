@@ -40,7 +40,7 @@ export function ContactDialog({
           <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[800px]">
+      <DialogContent className="w-[95vw] max-w-[800px] p-4 sm:p-6 md:p-8 max-h-[90vh] overflow-y-auto">
         <DialogTitle className="sr-only">{headline}</DialogTitle>
         <ContactForm
           headline={headline}
