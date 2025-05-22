@@ -274,7 +274,7 @@ export default function Home() {
       </section>
 
       {/* New Section - Launch Countdown */}
-      <section className="relative py-14 sm:py-20 md:py-28 bg-black text-white overflow-hidden">
+      <section className="relative py-10 sm:py-14 md:py-20 bg-black text-white overflow-hidden">
         {/* Background Image with Parallax-like Effect */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -293,53 +293,46 @@ export default function Home() {
         {/* Content Container */}
         <div className="relative z-10 container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto">
-            {/* Main Content Card */}
-            <div className="relative overflow-hidden rounded-3xl backdrop-blur-sm border border-white/10 bg-black/30">
-              {/* Content Layout - Single Column */}
-              <div className="p-6 sm:p-8 md:p-10 space-y-6 sm:space-y-8">
-                {/* Text Content */}
-                <div className="space-y-3 sm:space-y-4 text-center">
-                  <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
-                    The Future of Real Estate in Singapore is Here. Are You Ready?
-                  </h2>
-                  <div className="space-y-2 sm:space-y-3">
-                    <p className="text-base sm:text-lg md:text-xl text-gray-200 leading-relaxed">
-                      Get ready to experience a new era of real estate with the upcoming launch of Keller Williams Singapore. Be among the first to join a revolutionary platform designed to elevate your career with unparalleled support, cutting-edge technology, and a global network. The countdown has begun!
-                    </p>
+            {/* Main Content */}
+            <div className="space-y-6">
+              {/* Text Content */}
+              <div className="space-y-3 text-center">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
+                  The Future of Real Estate in Singapore is Here. Are You Ready?
+                </h2>
+                <p className="text-base sm:text-lg md:text-xl text-gray-200 leading-relaxed">
+                  Get ready to experience a new era of real estate with the upcoming launch of Keller Williams Singapore. Be among the first to join a revolutionary platform designed to elevate your career with unparalleled support, cutting-edge technology, and a global network. The countdown has begun!
+                </p>
+              </div>
+
+              {/* Countdown Timer */}
+              <div className="flex flex-col items-center space-y-4">
+                <div className="flex items-center justify-center gap-3">
+                  <div className="p-2 rounded-full bg-primary-red/10">
+                    <Calendar className="h-6 w-6 text-primary-red" />
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white">Launch Countdown</h3>
+                </div>
+                {/* Enhanced Countdown Timer */}
+                <div className="w-full flex justify-center">
+                  <div className="transform scale-100 sm:scale-105 w-full max-w-xs">
+                    <CountdownTimer targetDate="2025-07-01T00:00:00" />
                   </div>
                 </div>
+                {/* Additional Info */}
+                <p className="text-center text-gray-300 text-base">
+                  Join us for the most anticipated real estate launch of July 1st 2025  
+                </p>
+              </div>
 
-                {/* Countdown Timer */}
-                <div className="bg-black/50 rounded-2xl border border-primary-red/20 p-4 sm:p-6 md:p-8">
-                  <div className="flex flex-col items-center space-y-3 sm:space-y-5 w-full">
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 w-full">
-                      <div className="p-2 rounded-full bg-primary-red/10 mb-2 sm:mb-0">
-                        <Calendar className="h-6 w-6 sm:h-7 sm:w-7 text-primary-red" />
-                      </div>
-                      <h3 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white text-center">Launch Countdown</h3>
-                    </div>
-                    {/* Enhanced Countdown Timer */}
-                    <div className="w-full flex justify-center">
-                      <div className="transform scale-100 sm:scale-105 w-full max-w-xs">
-                        <CountdownTimer targetDate="2025-07-01T00:00:00" />
-                      </div>
-                    </div>
-                    {/* Additional Info */}
-                    <p className="text-center text-gray-300 text-base sm:text-lg">
-                      Join us for the most anticipated real estate launch of July 1st 2025  
-                    </p>
-                  </div>
-                </div>
-
-                {/* CTA Button */}
-                <div className="flex justify-center">
-                  <Button 
-                    className="group px-8 sm:px-10 py-4 sm:py-6 text-lg sm:text-xl bg-primary-red text-white hover:bg-primary-red/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]"
-                  >
-                    Be Part of the Launch
-                    <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
-                  </Button>
-                </div>
+              {/* CTA Button */}
+              <div className="flex justify-center pt-2">
+                <Button 
+                  className="group px-8 py-4 text-lg bg-primary-red text-white hover:bg-primary-red/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]"
+                >
+                  Be Part of the Launch
+                  <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
+                </Button>
               </div>
             </div>
           </div>
