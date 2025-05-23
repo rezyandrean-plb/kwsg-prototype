@@ -45,27 +45,27 @@ export default function RootLayout({
                   </Link>
                   {/* Desktop Navigation */}
                   <nav className="hidden lg:flex gap-4 lg:gap-6">
-                    <Link href="/projects" className="text-sm font-medium text-white hover:text-white/80 hover:bg-black/20 rounded px-2 py-1" id="nav-link">
+                    <Link href="/projects" className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group" id="nav-link">
                       New Launch Project
+                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
                     </Link>
-                    <Link href="/join" className="text-sm font-medium text-white hover:text-white/80 hover:bg-black/20 rounded px-2 py-1" id="nav-link">
+                    <Link href="/join" className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group" id="nav-link">
                       Join KW Singapore
+                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
                     </Link>
-                    <Link href="/about-us" className="text-sm font-medium text-white hover:text-white/80 hover:bg-black/20 rounded px-2 py-1" id="nav-link">
+                    <Link href="/about-us" className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group" id="nav-link">
                       About Us
+                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
                     </Link>
-                    <Link href="/editorial" className="text-sm font-medium text-white hover:text-white/80 hover:bg-black/20 rounded px-2 py-1" id="nav-link">
+                    <Link href="/editorial" className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group" id="nav-link">
                       Editorial
+                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
                     </Link>
-                    <Link href="/contact" className="text-sm font-medium text-white hover:text-white/80 hover:bg-black/20 rounded px-2 py-1" id="nav-link">
+                    <Link href="/contact" className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group" id="nav-link">
                       Contact Us
+                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
                     </Link>
                   </nav>
-                  <div className="hidden lg:block">
-                    <Button id="join-webinar-button" className="bg-primary-red text-white hover:bg-primary-red/90">
-                      Join Webinar
-                    </Button>
-                  </div>
                   {/* Mobile and Tablet Menu */}
                   <MobileMenu />
                 </div>

@@ -103,7 +103,7 @@ export default function JoinKW() {
       </section>
 
       {/* AI & Tech Tools Section */}
-      <section className="py-20">
+      <section id="tech-tools" className="py-20">
         <div className="container mx-auto px-4">
           <motion.div 
             className="grid md:grid-cols-2 gap-12 items-center"

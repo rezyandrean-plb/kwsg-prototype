@@ -48,44 +48,44 @@ export default function MobileMenu() {
                 <div className="space-y-2 py-6">
                   <Link
                     href="/projects"
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-900"
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
                     onClick={() => setIsOpen(false)}
                   >
                     New Launch Project
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
                   </Link>
                   <Link
                     href="/join"
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-900"
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
                     onClick={() => setIsOpen(false)}
                   >
                     Join KW Singapore
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
                   </Link>
                   <Link
                     href="/about-us"
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-900"
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
                     onClick={() => setIsOpen(false)}
                   >
                     About Us
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
                   </Link>
                   <Link
                     href="/editorial"
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-900"
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
                     onClick={() => setIsOpen(false)}
                   >
                     Editorial
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
                   </Link>
                   <Link
                     href="/contact"
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-900"
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
                     onClick={() => setIsOpen(false)}
                   >
                     Contact Us
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
                   </Link>
-                </div>
-                <div className="py-6">
-                  <Button className="w-full bg-primary-red text-white hover:bg-primary-red/90">
-                    Join Webinar
-                  </Button>
                 </div>
               </div>
             </div>
