@@ -89,8 +89,8 @@ export default function ProjectPage({ params }: ProjectPageProps) {
     ],
     similarProjects: [
       {
-        title: "The Avenir",
-        location: "River Valley, District 9",
+        name: "The Avenir",
+        location: "River Valley",
         price: "From $2.5M",
         priceRange: "$2.5M - $4.8M",
         image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80",
@@ -99,11 +99,13 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         propertySizeRange: "614 - 1,862 sqft",
         developer: "Hong Leong Group",
         completion: "2025",
-        slug: "the-avenir"
+        slug: "the-avenir",
+        type: "Luxury Condominium",
+        coordinates: { lat: 1.3521, lng: 103.8198 }
       },
       {
-        title: "Midtown Modern",
-        location: "Bugis, District 7",
+        name: "Midtown Modern",
+        location: "Bugis",
         price: "From $1.8M",
         priceRange: "$1.8M - $3.8M",
         image: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80",
@@ -112,7 +114,9 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         propertySizeRange: "678 - 1,862 sqft",
         developer: "GuocoLand",
         completion: "2024",
-        slug: "midtown-modern"
+        slug: "midtown-modern",
+        type: "Mixed Development",
+        coordinates: { lat: 1.3521, lng: 103.8198 }
       }
     ]
   }
@@ -645,7 +649,19 @@ export default function ProjectPage({ params }: ProjectPageProps) {
             {project.similarProjects.map((similarProject) => (
               <ProjectCard
                 key={similarProject.slug}
-                {...similarProject}
+                name={similarProject.name}
+                location={similarProject.location}
+                price={similarProject.price}
+                priceRange={similarProject.priceRange}
+                image={similarProject.image}
+                units={similarProject.units}
+                unitsAvailable={similarProject.unitsAvailable}
+                propertySizeRange={similarProject.propertySizeRange}
+                developer={similarProject.developer}
+                completion={similarProject.completion}
+                slug={similarProject.slug}
+                type={similarProject.type}
+                coordinates={similarProject.coordinates}
               />
             ))}
           </div>
