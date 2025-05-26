@@ -37,9 +37,9 @@ type Project = {
   name: string
   location: string
   price: string
-  type: string
+  type?: string
   image: string
-  coordinates: {
+  coordinates?: {
     lat: number
     lng: number
   }
@@ -53,6 +53,10 @@ type Project = {
   pricePerSqFt?: string
   features?: string[]
   status?: 'upcoming' | 'ongoing' | 'completed'
+  district?: number
+  tenure?: string
+  propertyType?: string
+  bedrooms?: string[]
 }
 
 // Project data
@@ -114,7 +118,9 @@ const projects: Project[] = [
     tenure: "99-year Leasehold",
     propertyType: "Luxury Condominium",
     status: "completed",
-    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"]
+    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"],
+    type: "Luxury Condominium",
+    coordinates: { lat: 1.3521, lng: 103.8198 }
   },
   {
     name: "Tembusu Grand",
@@ -135,7 +141,9 @@ const projects: Project[] = [
     tenure: "99-year Leasehold",
     propertyType: "Mass Market Condominium",
     status: "upcoming",
-    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms"]
+    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms"],
+    type: "Mass Market Condominium",
+    coordinates: { lat: 1.3521, lng: 103.8198 }
   },
   {
     name: "Sceneca Residence",
@@ -156,7 +164,9 @@ const projects: Project[] = [
     tenure: "99-year Leasehold",
     propertyType: "Mixed Development",
     status: "ongoing",
-    bedrooms: ["1 Bedroom", "2 Bedrooms", "3 Bedrooms", "4 Bedrooms"]
+    bedrooms: ["1 Bedroom", "2 Bedrooms", "3 Bedrooms", "4 Bedrooms"],
+    type: "Mixed Development",
+    coordinates: { lat: 1.3521, lng: 103.8198 }
   },
   {
     name: "Pinetree Hill",
@@ -177,7 +187,9 @@ const projects: Project[] = [
     tenure: "Freehold",
     propertyType: "Luxury Condominium",
     status: "completed",
-    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"]
+    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"],
+    type: "Luxury Condominium",
+    coordinates: { lat: 1.3521, lng: 103.8198 }
   },
   {
     name: "The Continuum",
@@ -198,7 +210,9 @@ const projects: Project[] = [
     tenure: "99-year Leasehold",
     propertyType: "Premium Condominium",
     status: "upcoming",
-    bedrooms: ["1 Bedroom", "2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"]
+    bedrooms: ["1 Bedroom", "2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"],
+    type: "Premium Condominium",
+    coordinates: { lat: 1.3521, lng: 103.8198 }
   },
   {
     name: "Lentor Hills Residences",
@@ -219,7 +233,9 @@ const projects: Project[] = [
     tenure: "99-year Leasehold",
     propertyType: "Mass Market Condominium",
     status: "ongoing",
-    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms"]
+    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms"],
+    type: "Mass Market Condominium",
+    coordinates: { lat: 1.3521, lng: 103.8198 }
   },
   {
     name: "Marina View Residences",
@@ -240,7 +256,9 @@ const projects: Project[] = [
     tenure: "99-year Leasehold",
     propertyType: "Luxury Waterfront Condominium",
     status: "upcoming",
-    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms", "Penthouse"]
+    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms", "Penthouse"],
+    type: "Luxury Waterfront Condominium",
+    coordinates: { lat: 1.3521, lng: 103.8198 }
   },
   {
     name: "Orchard Residences",
@@ -261,7 +279,9 @@ const projects: Project[] = [
     tenure: "Freehold",
     propertyType: "Luxury Condominium",
     status: "upcoming",
-    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms", "Penthouse"]
+    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms", "Penthouse"],
+    type: "Luxury Condominium",
+    coordinates: { lat: 1.3521, lng: 103.8198 }
   },
   {
     name: "Sentosa Cove Villas",
@@ -282,7 +302,9 @@ const projects: Project[] = [
     tenure: "Freehold",
     propertyType: "Luxury Waterfront Villas",
     status: "upcoming",
-    bedrooms: ["4 Bedrooms", "5 Bedrooms", "6 Bedrooms", "Penthouse"]
+    bedrooms: ["4 Bedrooms", "5 Bedrooms", "6 Bedrooms", "Penthouse"],
+    type: "Luxury Waterfront Villas",
+    coordinates: { lat: 1.3521, lng: 103.8198 }
   },
   {
     name: "Newton Edge",
@@ -303,7 +325,9 @@ const projects: Project[] = [
     tenure: "99-year Leasehold",
     propertyType: "Luxury Condominium",
     status: "upcoming",
-    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"]
+    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"],
+    type: "Luxury Condominium",
+    coordinates: { lat: 1.3521, lng: 103.8198 }
   },
   {
     name: "Holland Village Residences",
@@ -324,7 +348,9 @@ const projects: Project[] = [
     tenure: "99-year Leasehold",
     propertyType: "Luxury Condominium",
     status: "upcoming",
-    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"]
+    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"],
+    type: "Luxury Condominium",
+    coordinates: { lat: 1.3521, lng: 103.8198 }
   },
   {
     name: "East Coast Residences",
@@ -345,7 +371,9 @@ const projects: Project[] = [
     tenure: "99-year Leasehold",
     propertyType: "Mass Market Condominium",
     status: "upcoming",
-    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms"]
+    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms"],
+    type: "Mass Market Condominium",
+    coordinates: { lat: 1.3521, lng: 103.8198 }
   },
   {
     name: "Jurong Lake Residences",
@@ -366,7 +394,9 @@ const projects: Project[] = [
     tenure: "99-year Leasehold",
     propertyType: "Mass Market Condominium",
     status: "upcoming",
-    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms"]
+    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms"],
+    type: "Mass Market Condominium",
+    coordinates: { lat: 1.3521, lng: 103.8198 }
   }
 ]
 
@@ -401,16 +431,16 @@ export default function NewLaunchDirectory() {
     .filter((project) => {
       const matchesSearch = project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         project.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        project.developer.toLowerCase().includes(searchQuery.toLowerCase())
+        (project.developer?.toLowerCase() || '').includes(searchQuery.toLowerCase())
       
-      const matchesDistrict = selectedDistricts.length === 0 || selectedDistricts.includes(project.district)
-      const matchesTenure = selectedTenures.length === 0 || selectedTenures.includes(project.tenure)
-      const matchesPropertyType = selectedPropertyTypes.length === 0 || selectedPropertyTypes.includes(project.propertyType)
-      const matchesStatus = selectedStatus.length === 0 || selectedStatus.includes(project.status)
-      const matchesBedrooms = selectedBedrooms.length === 0 || selectedBedrooms.some(bedroom => project.bedrooms.includes(bedroom))
+      const matchesDistrict = selectedDistricts.length === 0 || (project.district && selectedDistricts.includes(project.district))
+      const matchesTenure = selectedTenures.length === 0 || (project.tenure && selectedTenures.includes(project.tenure))
+      const matchesPropertyType = selectedPropertyTypes.length === 0 || (project.propertyType && selectedPropertyTypes.includes(project.propertyType))
+      const matchesStatus = selectedStatus.length === 0 || (project.status && selectedStatus.includes(project.status))
+      const matchesBedrooms = selectedBedrooms.length === 0 || (project.bedrooms && selectedBedrooms.some(bedroom => project.bedrooms?.includes(bedroom)))
       
       // Price range filter (use priceMin and priceMax)
-      const [projectMin, projectMax] = project.priceRange.split(" - ").map(price => parseInt(price.replace(/[^0-9]/g, "")))
+      const [projectMin, projectMax] = (project.priceRange || '').split(" - ").map(price => parseInt(price.replace(/[^0-9]/g, "")))
       const matchesPriceRange = (priceMin === 0 && priceMax === 0) ||
         (projectMax >= priceMin && projectMin <= priceMax)
 
@@ -423,7 +453,7 @@ export default function NewLaunchDirectory() {
         case "price-high-low":
           return parseInt(b.price.replace(/[^0-9]/g, "")) - parseInt(a.price.replace(/[^0-9]/g, ""))
         case "completion":
-          return new Date(a.completion).getTime() - new Date(b.completion).getTime()
+          return new Date(a.completion || '').getTime() - new Date(b.completion || '').getTime()
         default:
           return 0
       }
@@ -448,6 +478,51 @@ export default function NewLaunchDirectory() {
   const indexOfFirstProject = indexOfLastProject - projectsPerPage
   const currentProjects = filteredProjects.slice(indexOfFirstProject, indexOfLastProject)
   const totalPages = Math.ceil(filteredProjects.length / projectsPerPage)
+
+  const handleDistrictChange = (district?: number) => {
+    if (district === undefined) return
+    setSelectedDistricts(prev => 
+      prev.includes(district) 
+        ? prev.filter(d => d !== district)
+        : [...prev, district]
+    )
+  }
+
+  const handleTenureChange = (tenure?: string) => {
+    if (tenure === undefined) return
+    setSelectedTenures(prev => 
+      prev.includes(tenure) 
+        ? prev.filter(t => t !== tenure)
+        : [...prev, tenure]
+    )
+  }
+
+  const handlePropertyTypeChange = (type?: string) => {
+    if (type === undefined) return
+    setSelectedPropertyTypes(prev => 
+      prev.includes(type) 
+        ? prev.filter(t => t !== type)
+        : [...prev, type]
+    )
+  }
+
+  const handleStatusChange = (status?: 'upcoming' | 'ongoing' | 'completed') => {
+    if (status === undefined) return
+    setSelectedStatus(prev => 
+      prev.includes(status) 
+        ? prev.filter(s => s !== status)
+        : [...prev, status]
+    )
+  }
+
+  const handleBedroomChange = (bedroom?: string) => {
+    if (bedroom === undefined) return
+    setSelectedBedrooms(prev => 
+      prev.includes(bedroom) 
+        ? prev.filter(b => b !== bedroom)
+        : [...prev, bedroom]
+    )
+  }
 
   return (
     <main className="min-h-screen flex flex-col bg-black text-white">
@@ -539,20 +614,20 @@ export default function NewLaunchDirectory() {
                     name={project.name}
                     location={project.location}
                     price={project.price}
-                    priceRange={project.priceRange}
+                    priceRange={project.priceRange || ''}
                     image={project.image}
-                    units={project.units}
-                    unitsAvailable={project.unitsAvailable}
-                    propertySizeRange={project.propertySizeRange}
-                    developer={project.developer}
-                    completion={project.completion}
+                    units={project.units || ''}
+                    unitsAvailable={project.unitsAvailable || ''}
+                    propertySizeRange={project.propertySizeRange || ''}
+                    developer={project.developer || ''}
+                    completion={project.completion || ''}
                     slug={project.slug}
-                    description={project.description}
-                    pricePerSqFt={project.pricePerSqFt}
-                    features={project.features}
-                    status={project.status}
-                    type={project.propertyType}
-                    coordinates={{ lat: 1.3521, lng: 103.8198 }}
+                    description={project.description || ''}
+                    pricePerSqFt={project.pricePerSqFt || ''}
+                    features={project.features || []}
+                    status={project.status || 'upcoming'}
+                    type={project.type || project.propertyType || ''}
+                    coordinates={project.coordinates || { lat: 1.3521, lng: 103.8198 }}
                     className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
                   />
                 </motion.div>
@@ -630,7 +705,9 @@ export default function NewLaunchDirectory() {
                         key={d}
                         checked={selectedDistricts.includes(d)}
                         onCheckedChange={checked => {
-                          setSelectedDistricts(prev => checked ? [...prev, d] : prev.filter(x => x !== d))
+                          if (checked) {
+                            handleDistrictChange(d)
+                          }
                         }}
                         className="px-2 py-1 flex items-center gap-2"
                       >
@@ -664,7 +741,9 @@ export default function NewLaunchDirectory() {
                         key={type}
                         checked={selectedPropertyTypes.includes(type)}
                         onCheckedChange={checked => {
-                          setSelectedPropertyTypes(prev => checked ? [...prev, type] : prev.filter(x => x !== type))
+                          if (checked) {
+                            handlePropertyTypeChange(type)
+                          }
                         }}
                         className="px-2 py-1 flex items-center gap-2"
                       >
@@ -698,7 +777,9 @@ export default function NewLaunchDirectory() {
                         key={bed}
                         checked={selectedBedrooms.includes(bed)}
                         onCheckedChange={checked => {
-                          setSelectedBedrooms(prev => checked ? [...prev, bed] : prev.filter(x => x !== bed))
+                          if (checked) {
+                            handleBedroomChange(bed)
+                          }
                         }}
                         className="px-2 py-1 flex items-center gap-2"
                       >
@@ -817,13 +898,7 @@ export default function NewLaunchDirectory() {
                                 ? "bg-white text-black hover:bg-gray-100"
                                 : "text-white"
                             }`}
-                            onClick={() => {
-                              setSelectedStatus(prev =>
-                                prev.includes(status)
-                                  ? prev.filter(s => s !== status)
-                                  : [...prev, status]
-                              )
-                            }}
+                            onClick={() => handleStatusChange(status)}
                           >
                             {status.charAt(0).toUpperCase() + status.slice(1)}
                           </Badge>
@@ -843,13 +918,7 @@ export default function NewLaunchDirectory() {
                                 ? "bg-white text-black hover:bg-gray-100"
                                 : "text-white"
                             }`}
-                            onClick={() => {
-                              setSelectedDistricts(prev =>
-                                prev.includes(district)
-                                  ? prev.filter(d => d !== district)
-                                  : [...prev, district]
-                              )
-                            }}
+                            onClick={() => handleDistrictChange(district)}
                           >
                             District {district}
                           </Badge>
@@ -869,13 +938,7 @@ export default function NewLaunchDirectory() {
                                 ? "bg-white text-black hover:bg-gray-100"
                                 : "text-white"
                             }`}
-                            onClick={() => {
-                              setSelectedTenures(prev =>
-                                prev.includes(tenure)
-                                  ? prev.filter(t => t !== tenure)
-                                  : [...prev, tenure]
-                              )
-                            }}
+                            onClick={() => handleTenureChange(tenure)}
                           >
                             {tenure}
                           </Badge>
@@ -895,13 +958,7 @@ export default function NewLaunchDirectory() {
                                 ? "bg-white text-black hover:bg-gray-100"
                                 : "text-white"
                             }`}
-                            onClick={() => {
-                              setSelectedPropertyTypes(prev =>
-                                prev.includes(type)
-                                  ? prev.filter(t => t !== type)
-                                  : [...prev, type]
-                              )
-                            }}
+                            onClick={() => handlePropertyTypeChange(type)}
                           >
                             {type}
                           </Badge>
@@ -921,13 +978,7 @@ export default function NewLaunchDirectory() {
                                 ? "bg-white text-black hover:bg-gray-100"
                                 : "text-white"
                             }`}
-                            onClick={() => {
-                              setSelectedBedrooms(prev =>
-                                prev.includes(bedroom)
-                                  ? prev.filter(b => b !== bedroom)
-                                  : [...prev, bedroom]
-                              )
-                            }}
+                            onClick={() => handleBedroomChange(bedroom)}
                           >
                             {bedroom}
                           </Badge>
@@ -974,20 +1025,20 @@ export default function NewLaunchDirectory() {
                       name={project.name}
                       location={project.location}
                       price={project.price}
-                      priceRange={project.priceRange}
+                      priceRange={project.priceRange || ''}
                       image={project.image}
-                      units={project.units}
-                      unitsAvailable={project.unitsAvailable}
-                      propertySizeRange={project.propertySizeRange}
-                      developer={project.developer}
-                      completion={project.completion}
+                      units={project.units || ''}
+                      unitsAvailable={project.unitsAvailable || ''}
+                      propertySizeRange={project.propertySizeRange || ''}
+                      developer={project.developer || ''}
+                      completion={project.completion || ''}
                       slug={project.slug}
-                      description={project.description}
-                      pricePerSqFt={project.pricePerSqFt}
-                      features={project.features}
-                      status={project.status}
-                      type={project.propertyType}
-                      coordinates={{ lat: 1.3521, lng: 103.8198 }}
+                      description={project.description || ''}
+                      pricePerSqFt={project.pricePerSqFt || ''}
+                      features={project.features || []}
+                      status={project.status || 'upcoming'}
+                      type={project.type || project.propertyType || ''}
+                      coordinates={project.coordinates || { lat: 1.3521, lng: 103.8198 }}
                       className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
                     />
                   </motion.div>
