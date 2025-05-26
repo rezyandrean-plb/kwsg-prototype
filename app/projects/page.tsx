@@ -467,11 +467,12 @@ export default function NewLaunchDirectory() {
     projects[6], // The Continuum
   ]
 
-  const districts = Array.from(new Set(projects.map(p => p.district))).sort()
-  const tenures = Array.from(new Set(projects.map(p => p.tenure)))
-  const propertyTypes = Array.from(new Set(projects.map(p => p.propertyType)))
+  // Update all filter arrays to handle undefined values
+  const districts = Array.from(new Set(projects.map(p => p.district).filter((d): d is number => d !== undefined))).sort((a, b) => a - b)
+  const tenures = Array.from(new Set(projects.map(p => p.tenure).filter((t): t is string => t !== undefined)))
+  const propertyTypes = Array.from(new Set(projects.map(p => p.propertyType).filter((t): t is string => t !== undefined)))
   const statuses: ("upcoming" | "ongoing" | "completed")[] = ["upcoming", "ongoing", "completed"]
-  const bedrooms = Array.from(new Set(projects.flatMap(p => p.bedrooms)))
+  const bedrooms = Array.from(new Set(projects.flatMap(p => p.bedrooms || [])))
 
   // Calculate pagination
   const indexOfLastProject = currentPage * projectsPerPage
@@ -479,8 +480,7 @@ export default function NewLaunchDirectory() {
   const currentProjects = filteredProjects.slice(indexOfFirstProject, indexOfLastProject)
   const totalPages = Math.ceil(filteredProjects.length / projectsPerPage)
 
-  const handleDistrictChange = (district?: number) => {
-    if (district === undefined) return
+  const handleDistrictChange = (district: number) => {
     setSelectedDistricts(prev => 
       prev.includes(district) 
         ? prev.filter(d => d !== district)
