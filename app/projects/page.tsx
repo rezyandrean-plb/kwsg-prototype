@@ -401,6 +401,7 @@ const projects: Project[] = [
 ]
 
 export default function NewLaunchDirectory() {
+  const [searchInput, setSearchInput] = useState("")
   const [searchQuery, setSearchQuery] = useState("")
   const [sortBy, setSortBy] = useState("latest")
   const [selectedDistricts, setSelectedDistricts] = useState<number[]>([])
@@ -531,7 +532,7 @@ export default function NewLaunchDirectory() {
         <div className="absolute inset-0">
           <Image
             src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80"
-            alt="New Launch Projects"
+            alt="New Launch Condos"
             fill
             className="object-cover brightness-[0.3]"
             priority
@@ -550,7 +551,7 @@ export default function NewLaunchDirectory() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white"
           >
-            New Launch Project
+            New Launch Condo
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -570,10 +571,18 @@ export default function NewLaunchDirectory() {
               type="text"
               placeholder="Search by project name, location, or developer..."
               className="flex-1 border-0 bg-white text-black placeholder:text-gray-500 focus-visible:ring-0"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  setSearchQuery(searchInput)
+                }
+              }}
             />
-            <Button className="rounded-none bg-primary-red hover:bg-primary-red/90">
+            <Button 
+              className="rounded-none bg-primary-red hover:bg-primary-red/90"
+              onClick={() => setSearchQuery(searchInput)}
+            >
               <Search className="h-5 w-5 mr-2" />
               Search
             </Button>
@@ -582,7 +591,7 @@ export default function NewLaunchDirectory() {
       </section>
 
       {/* Featured Projects Section */}
-      {featuredProjects.length > 0 && !searchQuery && (
+      {featuredProjects.length > 0 && !searchQuery && !searchInput && (
         <motion.section 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

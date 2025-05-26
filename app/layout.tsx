@@ -36,7 +36,7 @@ export default function RootLayout({
                 <div className="container flex h-16 items-center justify-between">
                   <Link href="/" className="flex items-center space-x-2">
                     <Image
-                      src="/images/kwsg-logo-light.png"
+                      src="/images/kwsg-logo.png"
                       alt="KW Logo"
                       width={120}
                       height={60}
@@ -45,24 +45,24 @@ export default function RootLayout({
                   </Link>
                   {/* Desktop Navigation */}
                   <nav className="hidden lg:flex gap-4 lg:gap-6">
-                    <Link href="/projects" className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group" id="nav-link">
-                      New Launch Project
+                    <Link href="/editorial" className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group" id="nav-link">
+                      KW Blog
                       <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
                     </Link>
-                    <Link href="/join" className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group" id="nav-link">
-                      Join KW Singapore
+                    <Link href="/projects" className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group" id="nav-link">
+                      New Launch
                       <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
                     </Link>
                     <Link href="/about-us" className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group" id="nav-link">
                       About Us
                       <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
                     </Link>
-                    <Link href="/editorial" className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group" id="nav-link">
-                      Editorial
+                    <Link href="/contact" className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group" id="nav-link">
+                      Contact
                       <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
                     </Link>
-                    <Link href="/contact" className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group" id="nav-link">
-                      Contact Us
+                    <Link href="/join" className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group" id="nav-link">
+                      Join KW Singapore
                       <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
                     </Link>
                   </nav>
@@ -77,13 +77,13 @@ export default function RootLayout({
                 <div className="container grid gap-8 md:grid-cols-2 lg:grid-cols-4">
                   <div className="space-y-4">
                     <Image
-                      src="/images/kwsg-logo-light.png"
+                      src="/images/kwsg-logo.png"
                       alt="KW Logo"
                       width={180}
                       height={90}
                     />
                     <p className="text-sm text-gray-300">
-                      The niche category king in new property launches, leveraging on the number one realty globally.
+                      The Real Estate Model of the Future. Built Today.
                     </p>
                   </div>
                   <div className="space-y-4">
@@ -95,13 +95,13 @@ export default function RootLayout({
                         </Link>
                       </li>
                       <li>
-                        <Link href="/projects" className="hover:text-white">
-                          New Launch Project
+                        <Link href="/editorial" className="hover:text-white">
+                          KW Blog
                         </Link>
                       </li>
                       <li>
-                        <Link href="/join" className="hover:text-white">
-                         Join KW Singapore
+                        <Link href="/projects" className="hover:text-white">
+                          New Launch
                         </Link>
                       </li>
                       <li>
@@ -110,18 +110,19 @@ export default function RootLayout({
                         </Link>
                       </li>
                       <li>
-                        <Link href="/editorial" className="hover:text-white">
-                          Editorial
-                        </Link>
-                      </li><li>
                         <Link href="/contact" className="hover:text-white">
-                          Contact Us
+                          Contact
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/join" className="hover:text-white">
+                          Join KW Singapore
                         </Link>
                       </li>
                     </ul>
                   </div>
                   <div className="space-y-4">
-                    <h3 className="text-lg font-bold text-white">Contact Us</h3>
+                    <h3 className="text-lg font-bold text-white">Contact</h3>
                     <ul className="space-y-2 text-sm text-gray-300">
                       <li>Email: info@kwnewlaunches.com</li>
                       <li>Phone: +65 6123 4567</li>
@@ -129,7 +130,7 @@ export default function RootLayout({
                     </ul>
                   </div>
                   <div className="space-y-4">
-                    <h3 className="text-lg font-bold text-white">Follow Us</h3>
+                    <h3 className="text-lg font-bold text-white">Connect</h3>
                     <div className="flex space-x-4">
                       <Link href="#" className="text-gray-300 hover:text-white">
                         <svg

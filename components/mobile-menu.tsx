@@ -51,7 +51,7 @@ export default function MobileMenu() {
                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
                     onClick={() => setIsOpen(false)}
                   >
-                    New Launch Project
+                    New Launch Condo
                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
                   </Link>
                   <Link
@@ -75,7 +75,7 @@ export default function MobileMenu() {
                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
                     onClick={() => setIsOpen(false)}
                   >
-                    Editorial
+                    KW Blog
                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
                   </Link>
                   <Link
@@ -83,7 +83,7 @@ export default function MobileMenu() {
                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
                     onClick={() => setIsOpen(false)}
                   >
-                    Contact Us
+                    Contact
                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
                   </Link>
                 </div>
