@@ -1,0 +1,81 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Central Region",
+        "id": "CR"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [103.7, 1.35],
+          [103.85, 1.35],
+          [103.85, 1.3],
+          [103.8, 1.28],
+          [103.75, 1.28],
+          [103.7, 1.3],
+          [103.7, 1.35]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "East Region",
+        "id": "ER"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [103.85, 1.35],
+          [104.0, 1.35],
+          [104.0, 1.3],
+          [103.95, 1.28],
+          [103.85, 1.28],
+          [103.85, 1.3],
+          [103.85, 1.35]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "North Region",
+        "id": "NR"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [103.7, 1.3],
+          [103.85, 1.3],
+          [103.85, 1.25],
+          [103.8, 1.23],
+          [103.75, 1.23],
+          [103.7, 1.25],
+          [103.7, 1.3]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "West Region",
+        "id": "WR"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [103.85, 1.3],
+          [104.0, 1.3],
+          [104.0, 1.25],
+          [103.95, 1.23],
+          [103.85, 1.23],
+          [103.85, 1.25],
+          [103.85, 1.3]
+        ]]
+      }
+    }
+  ]
+} 

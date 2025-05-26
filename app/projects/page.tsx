@@ -33,32 +33,33 @@ import { Slider } from "@/components/ui/slider"
 
 // Add type definition for Project
 type Project = {
-  title: string
+  slug: string
+  name: string
   location: string
   price: string
-  priceRange: string
-  pricePerSqFt: string
+  type: string
   image: string
-  units: string
-  unitsAvailable: string
-  propertySizeRange: string
-  developer: string
-  completion: string
-  slug: string
-  description: string
-  features: string[]
-  district: number
-  tenure: string
-  propertyType: string
-  status: "upcoming" | "ongoing" | "completed"
-  bedrooms: string[]
+  coordinates: {
+    lat: number
+    lng: number
+  }
+  priceRange?: string
+  units?: string
+  unitsAvailable?: string
+  propertySizeRange?: string
+  developer?: string
+  completion?: string
+  description?: string
+  pricePerSqFt?: string
+  features?: string[]
+  status?: 'upcoming' | 'ongoing' | 'completed'
 }
 
 // Project data
 const projects: Project[] = [
   {
-    title: "Lentor Modern",
-    location: "Lentor, District 26",
+    name: "Lentor Modern",
+    location: "Lentor",
     price: "From $1.28M",
     priceRange: "$1.28M - $2.88M",
     pricePerSqFt: "$1,800 - $2,100 psf",
@@ -71,15 +72,13 @@ const projects: Project[] = [
     slug: "lentor-modern",
     description: "Integrated development featuring residential units, retail spaces, and direct MRT connectivity at Lentor Station.",
     features: ["99-year leasehold", "Integrated development", "Direct MRT access", "Full facilities"],
-    district: 26,
-    tenure: "99-year Leasehold",
-    propertyType: "Mixed Development",
+    type: "Mixed Development",
     status: "upcoming",
-    bedrooms: ["1 Bedroom", "2 Bedrooms", "3 Bedrooms", "4 Bedrooms"]
+    coordinates: { lat: 1.3521, lng: 103.8198 }
   },
   {
-    title: "The Landmark",
-    location: "Changi, District 17",
+    name: "The Landmark",
+    location: "Changi",
     price: "From $1.15M",
     priceRange: "$1.15M - $2.45M",
     pricePerSqFt: "$1,600 - $1,900 psf",
@@ -92,15 +91,13 @@ const projects: Project[] = [
     slug: "the-landmark",
     description: "Waterfront living with panoramic sea views and exclusive marina access in the upcoming Changi Bay area.",
     features: ["99-year leasehold", "Waterfront living", "Marina access", "Full facilities"],
-    district: 17,
-    tenure: "99-year Leasehold",
-    propertyType: "Waterfront Condominium",
+    type: "Waterfront Condominium",
     status: "ongoing",
-    bedrooms: ["1 Bedroom", "2 Bedrooms", "3 Bedrooms", "4 Bedrooms"]
+    coordinates: { lat: 1.3521, lng: 103.8198 }
   },
   {
-    title: "The Reserve Residences",
-    location: "Bukit Timah, District 21",
+    name: "The Reserve Residences",
+    location: "Bukit Timah",
     price: "From $1.88M",
     priceRange: "$1.88M - $4.28M",
     pricePerSqFt: "$2,200 - $2,600 psf",
@@ -120,8 +117,8 @@ const projects: Project[] = [
     bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"]
   },
   {
-    title: "Tembusu Grand",
-    location: "Tembusu, District 14",
+    name: "Tembusu Grand",
+    location: "Tembusu",
     price: "From $1.48M",
     priceRange: "$1.48M - $3.28M",
     pricePerSqFt: "$1,900 - $2,200 psf",
@@ -141,8 +138,8 @@ const projects: Project[] = [
     bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms"]
   },
   {
-    title: "Sceneca Residence",
-    location: "Tanah Merah, District 16",
+    name: "Sceneca Residence",
+    location: "Tanah Merah",
     price: "From $1.18M",
     priceRange: "$1.18M - $2.68M",
     pricePerSqFt: "$1,700 - $2,000 psf",
@@ -162,8 +159,8 @@ const projects: Project[] = [
     bedrooms: ["1 Bedroom", "2 Bedrooms", "3 Bedrooms", "4 Bedrooms"]
   },
   {
-    title: "Pinetree Hill",
-    location: "Dunearn, District 21",
+    name: "Pinetree Hill",
+    location: "Dunearn",
     price: "From $1.98M",
     priceRange: "$1.98M - $4.58M",
     pricePerSqFt: "$2,300 - $2,700 psf",
@@ -183,8 +180,8 @@ const projects: Project[] = [
     bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"]
   },
   {
-    title: "The Continuum",
-    location: "Thiam Siew, District 15",
+    name: "The Continuum",
+    location: "Thiam Siew",
     price: "From $1.68M",
     priceRange: "$1.68M - $3.88M",
     pricePerSqFt: "$2,000 - $2,400 psf",
@@ -204,8 +201,8 @@ const projects: Project[] = [
     bedrooms: ["1 Bedroom", "2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"]
   },
   {
-    title: "Lentor Hills Residences",
-    location: "Lentor, District 26",
+    name: "Lentor Hills Residences",
+    location: "Lentor",
     price: "From $1.38M",
     priceRange: "$1.38M - $2.98M",
     pricePerSqFt: "$1,900 - $2,200 psf",
@@ -225,8 +222,8 @@ const projects: Project[] = [
     bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms"]
   },
   {
-    title: "Marina View Residences",
-    location: "Marina Bay, District 1",
+    name: "Marina View Residences",
+    location: "Marina Bay",
     price: "From $2.88M",
     priceRange: "$2.88M - $5.88M",
     pricePerSqFt: "$3,200 - $3,800 psf",
@@ -246,8 +243,8 @@ const projects: Project[] = [
     bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms", "Penthouse"]
   },
   {
-    title: "Orchard Residences",
-    location: "Orchard, District 9",
+    name: "Orchard Residences",
+    location: "Orchard",
     price: "From $3.28M",
     priceRange: "$3.28M - $6.88M",
     pricePerSqFt: "$3,500 - $4,000 psf",
@@ -267,8 +264,8 @@ const projects: Project[] = [
     bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms", "Penthouse"]
   },
   {
-    title: "Sentosa Cove Villas",
-    location: "Sentosa Cove, District 4",
+    name: "Sentosa Cove Villas",
+    location: "Sentosa Cove",
     price: "From $4.88M",
     priceRange: "$4.88M - $8.88M",
     pricePerSqFt: "$4,200 - $4,800 psf",
@@ -288,8 +285,8 @@ const projects: Project[] = [
     bedrooms: ["4 Bedrooms", "5 Bedrooms", "6 Bedrooms", "Penthouse"]
   },
   {
-    title: "Newton Edge",
-    location: "Newton, District 11",
+    name: "Newton Edge",
+    location: "Newton",
     price: "From $2.18M",
     priceRange: "$2.18M - $4.18M",
     pricePerSqFt: "$2,800 - $3,200 psf",
@@ -309,8 +306,8 @@ const projects: Project[] = [
     bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"]
   },
   {
-    title: "Holland Village Residences",
-    location: "Holland Village, District 10",
+    name: "Holland Village Residences",
+    location: "Holland Village",
     price: "From $2.48M",
     priceRange: "$2.48M - $4.88M",
     pricePerSqFt: "$2,900 - $3,400 psf",
@@ -330,8 +327,8 @@ const projects: Project[] = [
     bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"]
   },
   {
-    title: "East Coast Residences",
-    location: "East Coast, District 15",
+    name: "East Coast Residences",
+    location: "East Coast",
     price: "From $1.88M",
     priceRange: "$1.88M - $3.88M",
     pricePerSqFt: "$2,200 - $2,600 psf",
@@ -351,8 +348,8 @@ const projects: Project[] = [
     bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms"]
   },
   {
-    title: "Jurong Lake Residences",
-    location: "Jurong Lake, District 22",
+    name: "Jurong Lake Residences",
+    location: "Jurong Lake",
     price: "From $1.28M",
     priceRange: "$1.28M - $2.88M",
     pricePerSqFt: "$1,800 - $2,200 psf",
@@ -402,7 +399,7 @@ export default function NewLaunchDirectory() {
   // Filter and sort projects
   const filteredProjects = projects
     .filter((project) => {
-      const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      const matchesSearch = project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         project.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
         project.developer.toLowerCase().includes(searchQuery.toLowerCase())
       
@@ -510,7 +507,7 @@ export default function NewLaunchDirectory() {
       </section>
 
       {/* Featured Projects Section */}
-      {featuredProjects.length > 0 && (
+      {featuredProjects.length > 0 && !searchQuery && (
         <motion.section 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -539,7 +536,7 @@ export default function NewLaunchDirectory() {
                   viewport={{ once: true }}
                 >
                   <ProjectCard
-                    title={project.title}
+                    name={project.name}
                     location={project.location}
                     price={project.price}
                     priceRange={project.priceRange}
@@ -553,7 +550,9 @@ export default function NewLaunchDirectory() {
                     description={project.description}
                     pricePerSqFt={project.pricePerSqFt}
                     features={project.features}
-                    status="upcoming"
+                    status={project.status}
+                    type={project.propertyType}
+                    coordinates={{ lat: 1.3521, lng: 103.8198 }}
                     className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
                   />
                 </motion.div>
@@ -972,7 +971,7 @@ export default function NewLaunchDirectory() {
                     viewport={{ once: true }}
                   >
                     <ProjectCard
-                      title={project.title}
+                      name={project.name}
                       location={project.location}
                       price={project.price}
                       priceRange={project.priceRange}
@@ -987,6 +986,8 @@ export default function NewLaunchDirectory() {
                       pricePerSqFt={project.pricePerSqFt}
                       features={project.features}
                       status={project.status}
+                      type={project.propertyType}
+                      coordinates={{ lat: 1.3521, lng: 103.8198 }}
                       className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
                     />
                   </motion.div>

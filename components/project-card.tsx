@@ -5,43 +5,40 @@ import Link from "next/link"
 import { Building2, MapPin, Calendar, Home, Banknote, ChevronRight, Ruler } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { Project } from "@/data/projects"
 
-interface ProjectCardProps {
-  title: string
-  location: string
-  price: string
-  priceRange: string
-  image: string
-  units: string
-  unitsAvailable: string
-  propertySizeRange: string
-  developer: string
-  completion: string
-  slug: string
+interface ProjectCardProps extends Project {
+  className?: string
+  priceRange?: string
+  units?: string
+  unitsAvailable?: string
+  propertySizeRange?: string
+  developer?: string
+  completion?: string
   description?: string
   pricePerSqFt?: string
   features?: string[]
-  className?: string
   status?: 'upcoming' | 'ongoing' | 'completed'
 }
 
 export default function ProjectCard({
-  title,
+  slug,
+  name,
   location,
   price,
-  priceRange,
+  type,
   image,
+  className = "",
+  priceRange,
   units,
   unitsAvailable,
   propertySizeRange,
   developer,
   completion,
-  slug,
   description,
   pricePerSqFt,
   features,
-  className,
-  status = 'upcoming',
+  status = 'upcoming'
 }: ProjectCardProps) {
   const statusConfig = {
     upcoming: {
@@ -63,7 +60,12 @@ export default function ProjectCard({
   return (
     <div className={cn("bg-white rounded-lg overflow-hidden shadow-lg transition-transform hover:scale-[1.02] flex flex-col h-full", className)}>
       <div className="relative h-60">
-        <Image src={image || "/placeholder.svg"} alt={title} fill className="object-cover" />
+        <Image 
+          src={image || "/placeholder.svg"} 
+          alt={`${name} - ${type} property in ${location}`} 
+          fill 
+          className="object-cover" 
+        />
         <div className={cn("absolute top-3 right-3 px-3 py-1 rounded-full text-sm font-medium", currentStatus.className)}>
           {currentStatus.label}
         </div>
@@ -75,7 +77,7 @@ export default function ProjectCard({
           {location}
         </div>
         {/* Project Name */}
-        <h3 className="text-lg font-semibold mb-2 text-gray-900 truncate">{title}</h3>
+        <h3 className="text-lg font-semibold mb-2 text-gray-900 truncate">{name}</h3>
         {/* Badges for tenure and TOP */}
         <div className="flex flex-wrap gap-1.5 mb-2">
           {features && features[0] && (
@@ -97,7 +99,7 @@ export default function ProjectCard({
         {/* Price at the bottom */}
         <div className="mt-auto pt-2 border-t border-gray-100">
           <div className="text-xs text-gray-500 mb-0.5">From</div>
-          <div className="text-lg font-bold text-gray-900">{priceRange}</div>
+          <div className="text-lg font-bold text-gray-900">{priceRange || price}</div>
           <Link href={`/projects/${slug}`} className="mt-3">
             <Button variant="default" className="w-full flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white">
               View Details

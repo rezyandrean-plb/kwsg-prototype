@@ -175,6 +175,14 @@ export default function ProjectPage({ params }: ProjectPageProps) {
               <Button className="mt-4 bg-white text-primary hover:bg-gray-100 font-semibold" variant="outline">
                 Download Brochure
               </Button>
+              <div className="flex flex-col gap-2 mt-2">
+                <Button className="bg-white text-primary hover:bg-gray-100 font-semibold" variant="outline">
+                  Schedule Viewing
+                </Button>
+                <Button className="bg-white text-primary hover:bg-gray-100 font-semibold" variant="outline">
+                  Request Price List
+                </Button>
+              </div>
             </div>
             {/* Key Facts Card */}
             <div className="bg-white border rounded-lg p-4 grid grid-cols-2 gap-4 text-sm">
@@ -257,272 +265,253 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row gap-12">
             {/* Left Column - Main Content */}
-            <div className="lg:w-2/3">
-              <Tabs defaultValue="overview">
-                <TabsList className="w-full border-b mb-8">
-                  <TabsTrigger value="overview" className="text-lg">Overview</TabsTrigger>
-                  <TabsTrigger value="pricing" className="text-lg">Pricing</TabsTrigger>
-                  <TabsTrigger value="floor-plans" className="text-lg">Floor Plans</TabsTrigger>
-                  <TabsTrigger value="location" className="text-lg">Location</TabsTrigger>
-                  <TabsTrigger value="reviews" className="text-lg">Reviews</TabsTrigger>
-                </TabsList>
+            <div className="lg:w-2/3 space-y-12">
+              {/* Overview Section */}
+              <div>
+                <h2 className="text-2xl font-bold mb-4">Project Overview</h2>
+                <p className="text-gray-600 leading-relaxed mb-8">{project.description}</p>
 
-                <TabsContent value="overview" className="space-y-8">
-                  <div>
-                    <h2 className="text-2xl font-bold mb-4">Project Overview</h2>
-                    <p className="text-gray-600 leading-relaxed">{project.description}</p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-xl font-semibold mb-4">Key Features</h3>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                      {project.features.map((feature, index) => (
-                        <div key={index} className="flex items-center gap-2">
-                          <div className="w-2 h-2 bg-primary rounded-full" />
-                          <span>{feature}</span>
-                        </div>
-                      ))}
+                <h3 className="text-xl font-semibold mb-4">Key Features</h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+                  {project.features.map((feature, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-primary rounded-full" />
+                      <span>{feature}</span>
                     </div>
-                  </div>
+                  ))}
+                </div>
 
-                  <div>
-                    <h3 className="text-xl font-semibold mb-4">Project Details</h3>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      <div className="bg-gray-50 p-4 rounded-lg">
-                        <div className="text-sm text-gray-500">Tenure</div>
-                        <div className="font-semibold">{project.tenure}</div>
-                      </div>
-                      <div className="bg-gray-50 p-4 rounded-lg">
-                        <div className="text-sm text-gray-500">Available / Total Units</div>
-                        <div className="font-semibold">{project.totalUnits}</div>
-                      </div>
-                      <div className="bg-gray-50 p-4 rounded-lg">
-                        <div className="text-sm text-gray-500">TOP Build Year</div>
-                        <div className="font-semibold">{project.completion}</div>
-                      </div>
-                      <div className="bg-gray-50 p-4 rounded-lg">
-                        <div className="text-sm text-gray-500">Project Type</div>
-                        <div className="font-semibold">{project.propertyType}</div>
-                      </div>
-                    </div>
+                <h3 className="text-xl font-semibold mb-4">Project Details</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <div className="text-sm text-gray-500">Tenure</div>
+                    <div className="font-semibold">{project.tenure}</div>
                   </div>
-                </TabsContent>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <div className="text-sm text-gray-500">Available / Total Units</div>
+                    <div className="font-semibold">{project.totalUnits}</div>
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <div className="text-sm text-gray-500">TOP Build Year</div>
+                    <div className="font-semibold">{project.completion}</div>
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <div className="text-sm text-gray-500">Project Type</div>
+                    <div className="font-semibold">{project.propertyType}</div>
+                  </div>
+                </div>
+              </div>
 
-                <TabsContent value="pricing" className="space-y-8">
-                  <div>
-                    <h2 className="text-2xl font-bold mb-6">Unit Types & Pricing</h2>
-                    <div className="grid gap-6">
-                      {project.unitTypes.map((unit, index) => (
-                        <Card key={index}>
-                          <CardContent className="p-6">
-                            <div className="flex flex-col md:flex-row justify-between items-start gap-4">
-                              <div className="space-y-2">
-                                <h3 className="text-xl font-semibold">{unit.type}</h3>
-                                <div className="flex items-center text-gray-600">
-                                  <Home className="h-4 w-4 mr-2" />
-                                  <span>{unit.size}</span>
-                                </div>
-                                <div className="flex flex-wrap gap-2">
-                                  <Badge variant="secondary">Starting from</Badge>
-                                  <Badge variant="outline">{unit.price}</Badge>
-                                </div>
-                              </div>
-                              <div className="text-right space-y-2">
-                                <div className="text-xl font-bold text-primary">{unit.price}</div>
-                                <div className="text-sm text-gray-500">Starting Price</div>
-                                <Button variant="outline" className="mt-2">
-                                  View Floor Plan
-                                </Button>
-                              </div>
+              {/* Pricing Section */}
+              <div>
+                <h2 className="text-2xl font-bold mb-6">Unit Types & Pricing</h2>
+                <div className="grid gap-6">
+                  {project.unitTypes.map((unit, index) => (
+                    <Card key={index}>
+                      <CardContent className="p-6">
+                        <div className="flex flex-col md:flex-row justify-between items-start gap-4">
+                          <div className="space-y-2">
+                            <h3 className="text-xl font-semibold">{unit.type}</h3>
+                            <div className="flex items-center text-gray-600">
+                              <Home className="h-4 w-4 mr-2" />
+                              <span>{unit.size}</span>
                             </div>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
-
-                    <div className="mt-8 bg-gray-50 rounded-lg p-6">
-                      <h3 className="text-xl font-semibold mb-4">Payment Schedule</h3>
-                      <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                          <span>Booking Fee</span>
-                          <span className="font-medium">5%</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span>Option to Purchase (OTP) Exercise</span>
-                          <span className="font-medium">15%</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span>Foundation Completion</span>
-                          <span className="font-medium">10%</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span>Superstructure Completion</span>
-                          <span className="font-medium">10%</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span>TOP</span>
-                          <span className="font-medium">25%</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span>Final Completion</span>
-                          <span className="font-medium">35%</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </TabsContent>
-
-                <TabsContent value="floor-plans" className="space-y-8">
-                  <div>
-                    <h2 className="text-2xl font-bold mb-6">Floor Plans</h2>
-                    <div className="grid gap-8">
-                      {project.floorPlans.map((plan, index) => (
-                        <div key={index} className="bg-gray-50 p-6 rounded-lg">
-                          <h3 className="text-xl font-semibold mb-4">{plan.type}</h3>
-                          <div className="aspect-[4/3] relative bg-white rounded-lg overflow-hidden">
-                            <Image
-                              src={plan.image}
-                              alt={`${plan.type} Floor Plan`}
-                              fill
-                              className="object-contain"
-                            />
+                            <div className="flex flex-wrap gap-2">
+                              <Badge variant="secondary">Starting from</Badge>
+                              <Badge variant="outline">{unit.price}</Badge>
+                            </div>
+                          </div>
+                          <div className="text-right space-y-2">
+                            <div className="text-xl font-bold text-primary">{unit.price}</div>
+                            <div className="text-sm text-gray-500">Starting Price</div>
+                            <Button variant="outline" className="mt-2">
+                              View Floor Plan
+                            </Button>
                           </div>
                         </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+
+                <div className="mt-8 bg-gray-50 rounded-lg p-6">
+                  <h3 className="text-xl font-semibold mb-4">Payment Schedule</h3>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span>Booking Fee</span>
+                      <span className="font-medium">5%</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span>Option to Purchase (OTP) Exercise</span>
+                      <span className="font-medium">15%</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span>Foundation Completion</span>
+                      <span className="font-medium">10%</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span>Superstructure Completion</span>
+                      <span className="font-medium">10%</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span>TOP</span>
+                      <span className="font-medium">25%</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span>Final Completion</span>
+                      <span className="font-medium">35%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floor Plans Section */}
+              <div>
+                <h2 className="text-2xl font-bold mb-6">Floor Plans</h2>
+                <div className="grid gap-8">
+                  {project.floorPlans.map((plan, index) => (
+                    <div key={index} className="bg-gray-50 p-6 rounded-lg">
+                      <h3 className="text-xl font-semibold mb-4">{plan.type}</h3>
+                      <div className="aspect-[4/3] relative bg-white rounded-lg overflow-hidden">
+                        <Image
+                          src={plan.image}
+                          alt={`${plan.type} Floor Plan`}
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Location Section */}
+              <div>
+                <h2 className="text-2xl font-bold mb-6">Location</h2>
+                
+                {/* Location Overview */}
+                <div className="mb-8 bg-gray-50 rounded-lg p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <MapPin className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold mb-2">{project.location}</h3>
+                      <p className="text-gray-600">
+                        Located in the heart of {project.location}, this development offers convenient access to key amenities, 
+                        transportation hubs, and lifestyle destinations. The strategic location ensures residents enjoy the best 
+                        of urban living with excellent connectivity.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div>
+                    <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                      <Train className="h-5 w-5 text-primary" />
+                      MRT Stations
+                    </h3>
+                    <div className="grid gap-4">
+                      {project.locationAnalytics.mrt.map((station, index) => (
+                        <div key={index} className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                              <Train className="h-4 w-4 text-primary" />
+                            </div>
+                            <span>{station.name}</span>
+                          </div>
+                          <Badge variant="secondary">{station.distance}</Badge>
+                        </div>
                       ))}
                     </div>
                   </div>
-                </TabsContent>
 
-                <TabsContent value="location" className="space-y-8">
                   <div>
-                    <h2 className="text-2xl font-bold mb-6">Location</h2>
-                    
-                    {/* Location Overview */}
-                    <div className="mb-8 bg-gray-50 rounded-lg p-6">
-                      <div className="flex items-start gap-4">
-                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                          <MapPin className="h-6 w-6 text-primary" />
-                        </div>
-                        <div>
-                          <h3 className="text-xl font-semibold mb-2">{project.location}</h3>
-                          <p className="text-gray-600">
-                            Located in the heart of {project.location}, this development offers convenient access to key amenities, 
-                            transportation hubs, and lifestyle destinations. The strategic location ensures residents enjoy the best 
-                            of urban living with excellent connectivity.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-8">
-                      <div>
-                        <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                          <Train className="h-5 w-5 text-primary" />
-                          MRT Stations
-                        </h3>
-                        <div className="grid gap-4">
-                          {project.locationAnalytics.mrt.map((station, index) => (
-                            <div key={index} className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
-                              <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                                  <Train className="h-4 w-4 text-primary" />
-                                </div>
-                                <span>{station.name}</span>
-                              </div>
-                              <Badge variant="secondary">{station.distance}</Badge>
+                    <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                      <School className="h-5 w-5 text-primary" />
+                      Schools
+                    </h3>
+                    <div className="grid gap-4">
+                      {project.locationAnalytics.schools.map((school, index) => (
+                        <div key={index} className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                              <School className="h-4 w-4 text-primary" />
                             </div>
-                          ))}
+                            <span>{school.name}</span>
+                          </div>
+                          <Badge variant="secondary">{school.distance}</Badge>
                         </div>
-                      </div>
-
-                      <div>
-                        <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                          <School className="h-5 w-5 text-primary" />
-                          Schools
-                        </h3>
-                        <div className="grid gap-4">
-                          {project.locationAnalytics.schools.map((school, index) => (
-                            <div key={index} className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
-                              <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                                  <School className="h-4 w-4 text-primary" />
-                                </div>
-                                <span>{school.name}</span>
-                              </div>
-                              <Badge variant="secondary">{school.distance}</Badge>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div>
-                        <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                          <ShoppingBag className="h-5 w-5 text-primary" />
-                          Shopping & Amenities
-                        </h3>
-                        <div className="grid gap-4">
-                          {project.locationAnalytics.amenities.map((amenity, index) => (
-                            <div key={index} className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
-                              <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                                  <ShoppingBag className="h-4 w-4 text-primary" />
-                                </div>
-                                <span>{amenity.name}</span>
-                              </div>
-                              <Badge variant="secondary">{amenity.distance}</Badge>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div>
-                        <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                          <Trees className="h-5 w-5 text-primary" />
-                          Parks & Recreation
-                        </h3>
-                        <div className="grid gap-4">
-                          {project.locationAnalytics.parks.map((park, index) => (
-                            <div key={index} className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
-                              <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                                  <Trees className="h-4 w-4 text-primary" />
-                                </div>
-                                <span>{park.name}</span>
-                              </div>
-                              <Badge variant="secondary">{park.distance}</Badge>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </TabsContent>
-
-                <TabsContent value="reviews" className="space-y-8">
-                  <div>
-                    <h2 className="text-2xl font-bold mb-6">Media Reviews</h2>
-                    <div className="grid gap-6">
-                      {project.mediaReviews.map((review, index) => (
-                        <Card key={index}>
-                          <CardContent className="p-6">
-                            <div className="flex justify-between items-start mb-4">
-                              <div>
-                                <h3 className="text-xl font-semibold mb-2">{review.title}</h3>
-                                <p className="text-gray-500">{review.source} • {review.date}</p>
-                              </div>
-                              <div className="flex items-center gap-1">
-                                <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
-                                <span className="font-semibold">{review.rating}</span>
-                              </div>
-                            </div>
-                            <p className="text-gray-600">{review.excerpt}</p>
-                          </CardContent>
-                        </Card>
                       ))}
                     </div>
                   </div>
-                </TabsContent>
-              </Tabs>
+
+                  <div>
+                    <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                      <ShoppingBag className="h-5 w-5 text-primary" />
+                      Shopping & Amenities
+                    </h3>
+                    <div className="grid gap-4">
+                      {project.locationAnalytics.amenities.map((amenity, index) => (
+                        <div key={index} className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                              <ShoppingBag className="h-4 w-4 text-primary" />
+                            </div>
+                            <span>{amenity.name}</span>
+                          </div>
+                          <Badge variant="secondary">{amenity.distance}</Badge>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                      <Trees className="h-5 w-5 text-primary" />
+                      Parks & Recreation
+                    </h3>
+                    <div className="grid gap-4">
+                      {project.locationAnalytics.parks.map((park, index) => (
+                        <div key={index} className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                              <Trees className="h-4 w-4 text-primary" />
+                            </div>
+                            <span>{park.name}</span>
+                          </div>
+                          <Badge variant="secondary">{park.distance}</Badge>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Reviews Section */}
+              <div>
+                <h2 className="text-2xl font-bold mb-6">Media Reviews</h2>
+                <div className="grid gap-6">
+                  {project.mediaReviews.map((review, index) => (
+                    <Card key={index}>
+                      <CardContent className="p-6">
+                        <div className="flex justify-between items-start mb-4">
+                          <div>
+                            <h3 className="text-xl font-semibold mb-2">{review.title}</h3>
+                            <p className="text-gray-500">{review.source} • {review.date}</p>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
+                            <span className="font-semibold">{review.rating}</span>
+                          </div>
+                        </div>
+                        <p className="text-gray-600">{review.excerpt}</p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Right Column - Contact Form */}
