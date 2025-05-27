@@ -50,7 +50,7 @@ export default function RootLayout({
                       <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
                     </Link>
                     <Link href="/projects" className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group" id="nav-link">
-                      New Launch
+                      New Launch Condo
                       <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
                     </Link>
                     <Link href="/about-us" className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group" id="nav-link">
