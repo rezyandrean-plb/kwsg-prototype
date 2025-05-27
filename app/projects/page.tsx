@@ -30,6 +30,23 @@ import {
   DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu"
 import { Slider } from "@/components/ui/slider"
+import Link from "next/link"
+import { Clock } from "lucide-react"
+
+// Animation variants
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5 }
+}
+
+const staggerContainer = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+}
 
 // Add type definition for Project
 type Project = {
@@ -1126,6 +1143,147 @@ export default function NewLaunchDirectory() {
               <p className="text-gray-400">Try adjusting your filters or search terms</p>
             </motion.div>
           )}
+        </div>
+      </motion.section>
+
+      {/* Latest Articles Section */}
+      <motion.section 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="py-16 bg-gray-900"
+      >
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-3xl font-bold mb-2 text-white">Latest Articles</h2>
+            <p className="text-lg text-gray-300 mb-12">Stay updated with the newest insights and trends in real estate</p>
+          </motion.div>
+
+          <motion.div 
+            className="grid md:grid-cols-3 gap-8"
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            {/* Article 1 */}
+            <motion.div 
+              className="bg-black rounded-lg overflow-hidden shadow-md border border-gray-800"
+              variants={fadeInUp}
+            >
+              <div className="relative h-48">
+                <Image src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80" alt="Luxury Condominium Trends" fill className="object-cover" />
+                <div className="absolute top-3 left-3 bg-primary-red text-white px-3 py-1 rounded-full text-xs font-medium">
+                  Market Trends
+                </div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold mb-2 text-white">5 Luxury Condominium Trends to Watch in 2024</h3>
+                <p className="text-gray-300 mb-4 line-clamp-3">
+                  From smart home integration to wellness-focused amenities, discover the top trends shaping luxury
+                  condominiums this year.
+                </p>
+                <div className="flex items-center text-gray-400 mb-4 text-xs">
+                  <div className="flex items-center mr-3">
+                    <Calendar className="h-3 w-3 mr-1" />
+                    <span>Apr 28, 2024</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Clock className="h-3 w-3 mr-1" />
+                    <span>5 min read</span>
+                  </div>
+                </div>
+                <Link href="#" className="text-primary-red font-medium hover:underline text-sm inline-flex items-center">
+                  Read More <ArrowRight className="ml-1 h-3 w-3" />
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Article 2 */}
+            <motion.div 
+              className="bg-black rounded-lg overflow-hidden shadow-md border border-gray-800"
+              variants={fadeInUp}
+            >
+              <div className="relative h-48">
+                <Image src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80" alt="Investment Strategies" fill className="object-cover" />
+                <div className="absolute top-3 left-3 bg-primary-red text-white px-3 py-1 rounded-full text-xs font-medium">
+                  Investment
+                </div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold mb-2 text-white">Investment Strategies for New Launch Properties</h3>
+                <p className="text-gray-300 mb-4 line-clamp-3">
+                  Expert advice on how to maximize returns when investing in pre-construction properties, including
+                  timing, location selection, and negotiation tactics.
+                </p>
+                <div className="flex items-center text-gray-400 mb-4 text-xs">
+                  <div className="flex items-center mr-3">
+                    <Calendar className="h-3 w-3 mr-1" />
+                    <span>Apr 22, 2024</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Clock className="h-3 w-3 mr-1" />
+                    <span>7 min read</span>
+                  </div>
+                </div>
+                <Link href="#" className="text-primary-red font-medium hover:underline text-sm inline-flex items-center">
+                  Read More <ArrowRight className="ml-1 h-3 w-3" />
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Article 3 */}
+            <motion.div 
+              className="bg-black rounded-lg overflow-hidden shadow-md border border-gray-800"
+              variants={fadeInUp}
+            >
+              <div className="relative h-48">
+                <Image src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80" alt="Sustainable Development" fill className="object-cover" />
+                <div className="absolute top-3 left-3 bg-primary-red text-white px-3 py-1 rounded-full text-xs font-medium">
+                  Sustainability
+                </div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold mb-2 text-white">The Rise of Sustainable New Developments</h3>
+                <p className="text-gray-300 mb-4 line-clamp-3">
+                  How eco-friendly features are becoming standard in new launches and why buyers are willing to pay a
+                  premium for sustainable living spaces.
+                </p>
+                <div className="flex items-center text-gray-400 mb-4 text-xs">
+                  <div className="flex items-center mr-3">
+                    <Calendar className="h-3 w-3 mr-1" />
+                    <span>Apr 15, 2024</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Clock className="h-3 w-3 mr-1" />
+                    <span>6 min read</span>
+                  </div>
+                </div>
+                <Link href="#" className="text-primary-red font-medium hover:underline text-sm inline-flex items-center">
+                  Read More <ArrowRight className="ml-1 h-3 w-3" />
+                </Link>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          <motion.div 
+            className="text-center mt-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <Button variant="outline" className="border-primary-red text-primary-red hover:bg-primary-red hover:text-white">
+              View All Articles
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </motion.div>
         </div>
       </motion.section>
     </main>

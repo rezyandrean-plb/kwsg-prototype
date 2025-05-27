@@ -139,274 +139,75 @@ export default function AboutUsPage() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* First Row - 3 cards (Mission, Vision, Values) */}
-            <motion.div 
-              className="bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-700"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {[
+              {
+                icon: <Target className="h-6 w-6 text-primary-red" />,
+                title: "Mission",
+                description: "Build careers worth having, businesses worth owning, lives worth living, experiences worth giving, and legacies worth leaving."
+              },
+              {
+                icon: <Lightbulb className="h-6 w-6 text-primary-red" />,
+                title: "Vision",
+                description: "To be the real estate company of choice for consultants and their clients in Singapore."
+              },
+              {
+                icon: <Heart className="h-6 w-6 text-primary-red" />,
+                title: "Values",
+                description: "God, family, then business."
+              }
+            ].map((item, idx) => (
               <motion.div
-                className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
-                initial={{ scale: 1 }}
-                whileInView={{ scale: [1, 1.15, 1] }}
-                transition={{ duration: 0.8, repeat: Infinity, repeatType: 'loop' }}
-                viewport={{ once: true }}
-              >
-                <Target className="h-8 w-8 text-primary-red" />
-              </motion.div>
-              <h3 className="text-xl font-bold mb-2 text-center text-white">Mission</h3>
-              <p className="text-gray-300 text-center">
-                Build careers worth having, businesses worth owning, lives worth living, experiences worth giving, and legacies worth leaving.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-700"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <motion.div
-                className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
-                initial={{ opacity: 0.5 }}
-                whileInView={{ opacity: [0.5, 1, 0.7, 1] }}
-                transition={{ duration: 0.8, repeat: Infinity, repeatType: 'loop' }}
-                viewport={{ once: true }}
-              >
-                <Lightbulb className="h-8 w-8 text-primary-red" />
-              </motion.div>
-              <h3 className="text-xl font-bold mb-2 text-center text-white">Vision</h3>
-              <p className="text-gray-300 text-center">
-                To be the real estate company of choice for consultants and their clients in Singapore.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-700"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              <motion.div
-                className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
-                initial={{ scale: 1 }}
-                whileInView={{ scale: [1, 1.18, 1] }}
-                transition={{ duration: 0.7, repeat: Infinity, repeatType: 'loop' }}
-                viewport={{ once: true }}
-              >
-                <Heart className="h-8 w-8 text-primary-red" />
-              </motion.div>
-              <h3 className="text-xl font-bold mb-2 text-center text-white">Values</h3>
-              <p className="text-gray-300 text-center">
-                God, family, then business.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-700"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <motion.div
-                className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
-                initial={{ rotate: 0 }}
-                whileInView={{ rotate: [0, 10, -10, 0] }}
-                transition={{ duration: 0.8, repeat: Infinity, repeatType: 'loop' }}
-                viewport={{ once: true }}
-              >
-                <Brain className="h-8 w-8 text-primary-red" />
-              </motion.div>
-              <h3 className="text-xl font-bold mb-2 text-center text-white">Beliefs</h3>
-              <p className="text-gray-300 text-center">
-                WI4C2TES – Win-Win, Integrity, Clients First, Commitment, Communication, Creativity, Teamwork, Trust, Equity, Success.
-              </p>
-            </motion.div>
-
-            {/* Fifth card: Perspective, centered on md, normal on lg+ */}
-            <motion.div 
-              className="bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-700 md:col-span-2 md:mx-auto md:w-1/2 lg:col-span-1 lg:mx-0 lg:w-auto"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-            >
-              <motion.div
-                className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
-                initial={{ y: 0 }}
-                whileInView={{ y: [0, -10, 0] }}
-                transition={{ duration: 0.7, repeat: Infinity, repeatType: 'loop' }}
-                viewport={{ once: true }}
-              >
-                <Users2 className="h-8 w-8 text-primary-red" />
-              </motion.div>
-              <h3 className="text-xl font-bold mb-2 text-center text-white">Perspective</h3>
-              <p className="text-gray-300 text-center">
-                We are a tech company that provides a real estate platform preferred by clients — thinking like top producers, consulting like coaches, and focusing on productivity, service, and profitability.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Core Team Section */}
-      <section className="py-20 bg-black text-white">
-        <div className="container mx-auto px-4">
-          <motion.div 
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Meet the Core Team</h2>
-            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-              Our leadership isn't just operational — it's transformational. Each core leader at KW Singapore is handpicked for domain expertise, business acumen, and a commitment to building a scalable, consultant-first ecosystem.
-            </p>
-          </motion.div>
-
-          <div className="space-y-16">
-            {team.map((member, idx) => (
-              <motion.div
-                key={member.key}
-                className="flex flex-col md:flex-row items-center md:items-start bg-white rounded-2xl shadow-lg border border-gray-200 p-8 gap-8"
+                key={item.title}
+                className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-6 hover:bg-white/10 transition-colors duration-300"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
               >
-                <div className="relative w-40 h-40 md:w-[220px] md:h-[220px] mb-6 md:mb-0 md:mr-10 flex-shrink-0 rounded-2xl overflow-hidden border-4 border-gray-100 bg-gray-100">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover"
-                  />
+                <div className="bg-primary-red/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                  {item.icon}
                 </div>
-                <div className="flex-1 flex flex-col justify-center">
-                  <h3 className="text-3xl font-bold mb-2 text-black">{member.name}</h3>
-                  <p className="text-lg font-semibold mb-4 text-primary-red">{member.position}</p>
-                  <div className="space-y-3 text-gray-700 text-base leading-relaxed">
-                    {member.bio.map((b, i) => <p key={i}>{b}</p>)}
-                  </div>
-                </div>
+                <h3 className="text-xl font-bold mb-2 text-white">{item.title}</h3>
+                <p className="text-gray-300 text-sm leading-relaxed">{item.description}</p>
               </motion.div>
             ))}
           </div>
 
-          {/* Modal */}
-          {team.map(member => openModal === member.key && (
-            <div
-              key={member.key + '-modal'}
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
-              onClick={() => setOpenModal(null)}
-            >
-              <div
-                className="bg-white text-black rounded-2xl shadow-2xl max-w-2xl w-full mx-4 p-8 relative animate-fadeIn"
-                onClick={e => e.stopPropagation()}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mt-6">
+            {[
+              {
+                icon: <Brain className="h-6 w-6 text-primary-red" />,
+                title: "Beliefs",
+                description: "WI4C2TES – Win-Win, Integrity, Clients First, Commitment, Communication, Creativity, Teamwork, Trust, Equity, Success."
+              },
+              {
+                icon: <Users2 className="h-6 w-6 text-primary-red" />,
+                title: "Perspective",
+                description: "We are a tech company that provides a real estate platform preferred by clients — thinking like top producers, consulting like coaches, and focusing on productivity, service, and profitability."
+              }
+            ].map((item, idx) => (
+              <motion.div
+                key={item.title}
+                className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-6 hover:bg-white/10 transition-colors duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: (idx + 3) * 0.1 }}
               >
-                <button
-                  className="absolute top-4 right-4 text-gray-500 hover:text-primary-red text-2xl font-bold focus:outline-none"
-                  onClick={() => setOpenModal(null)}
-                  aria-label="Close"
-                >
-                  ×
-                </button>
-                <div className="flex flex-col md:flex-row gap-8 items-center mb-2">
-                  <div className="relative w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-primary-red flex-shrink-0">
-                    <Image
-                      src={member.image}
-                      alt={member.name}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="flex-1 flex flex-col items-center md:items-start">
-                    <h3 className="text-2xl font-bold mb-1 text-center md:text-left">{member.name}</h3>
-                    <p className="text-primary-red font-medium mb-4 text-center md:text-left">{member.position}</p>
-                  </div>
+                <div className="bg-primary-red/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                  {item.icon}
                 </div>
-                <div className="space-y-4 text-gray-800 text-sm leading-relaxed mt-4">
-                  {member.bio.map((b, i) => <p key={i}>{b}</p>)}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Sales Leadership Team Section */}
-      <section className="py-20 bg-gray-900 text-white">
-        <div className="container mx-auto px-4">
-          <motion.div 
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Sales Leadership Team</h2>
-            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-              Our sales leadership drives performance across growth, training, and retention. Each leader is measured not just by numbers, but by how many consultants they elevate. They train. They coach. They recruit — strategically.<br />
-              Meet the minds behind the market center's productivity engine. Every metric we hit begins with them.
-            </p>
-          </motion.div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-            {[1,2,3].map(i => (
-              <div key={i} className="bg-gray-800 rounded-2xl shadow-xl border border-gray-700 flex flex-col items-center p-8 h-full">
-                <div className="relative w-28 h-28 mb-4 rounded-full overflow-hidden border-4 border-primary-red">
-                  <img
-                    src={`https://randomuser.me/api/portraits/men/${i+20}.jpg`}
-                    alt="Sales Leader Avatar"
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-                <h3 className="text-xl font-bold mb-1 text-white">Leader Name {i}</h3>
-                <p className="text-primary-red font-medium mb-2">Sales Leader Position</p>
-                <p className="text-gray-300 text-center text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod, nisi eu consectetur.</p>
-              </div>
+                <h3 className="text-xl font-bold mb-2 text-white">{item.title}</h3>
+                <p className="text-gray-300 text-sm leading-relaxed">{item.description}</p>
+              </motion.div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Meet Our Sales Consultants Section */}
-      <section className="py-20 bg-black text-white">
-        <div className="container mx-auto px-4">
-          <motion.div 
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Meet Our Sales Consultants</h2>
-            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-              We don't recruit realtors. We develop real estate consultants. Our network comprises high-performing professionals focused on serving clients with precision, integrity, and market intelligence. Meet the individuals reshaping what it means to be a trusted advisor in real estate.
-            </p>
-          </motion.div>
-          <div className="flex justify-center">
-            <motion.img
-              src="https://plb-integrity1-media.propertylimbrothers.com/wp-content/uploads/2023/04/10100316/0.-PLB-Team_1.jpg"
-              alt="Group of Sales Consultants"
-              className="rounded-2xl shadow-lg border border-gray-700 w-full max-w-3xl object-cover"
-              initial={{ opacity: 0, scale: 0.96 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            />
           </div>
         </div>
       </section>
 
       {/* Careers Section */}
-      <section className="py-20 bg-gray-900 text-white">
+      <section className="py-20 bg-black text-white">
         <div className="container mx-auto px-4">
           <motion.div 
             className="text-center mb-12"
@@ -473,6 +274,125 @@ export default function AboutUsPage() {
         </div>
       </section>
 
+      {/* Core Team Section */}
+      <section className="py-20 bg-gray-900 text-white">
+        <div className="container mx-auto px-4">
+          <motion.div 
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Meet the Core Team</h2>
+            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+              Our leadership isn't just operational — it's transformational. Each core leader at KW Singapore is handpicked for domain expertise, business acumen, and a commitment to building a scalable, consultant-first ecosystem.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {team.slice(0, 3).map((member, idx) => (
+              <motion.div
+                key={member.key}
+                className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden cursor-pointer group max-w-[280px] mx-auto w-full"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                onClick={() => setOpenModal(member.key)}
+              >
+                <div className="relative w-full aspect-[3/4] overflow-hidden">
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                </div>
+                <div className="p-3">
+                  <h3 className="text-lg font-bold mb-0.5 text-black group-hover:text-primary-red transition-colors duration-300">{member.name}</h3>
+                  <p className="text-xs text-primary-red line-clamp-2">{member.position}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="flex justify-center mt-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[600px]">
+              {team.slice(3).map((member, idx) => (
+                <motion.div
+                  key={member.key}
+                  className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden cursor-pointer group max-w-[280px] mx-auto w-full"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: (idx + 3) * 0.1 }}
+                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                  onClick={() => setOpenModal(member.key)}
+                >
+                  <div className="relative w-full aspect-[3/4] overflow-hidden">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                  </div>
+                  <div className="p-3">
+                    <h3 className="text-lg font-bold mb-0.5 text-black group-hover:text-primary-red transition-colors duration-300">{member.name}</h3>
+                    <p className="text-xs text-primary-red line-clamp-2">{member.position}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Modal */}
+          {team.map(member => openModal === member.key && (
+            <div
+              key={member.key + '-modal'}
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+              onClick={() => setOpenModal(null)}
+            >
+              <div
+                className="bg-white text-black rounded-xl shadow-2xl max-w-2xl w-full mx-auto relative animate-fadeIn overflow-y-auto max-h-[90vh]"
+                onClick={e => e.stopPropagation()}
+              >
+                <button
+                  className="absolute top-4 right-4 text-gray-500 hover:text-primary-red text-2xl font-bold focus:outline-none z-10"
+                  onClick={() => setOpenModal(null)}
+                  aria-label="Close"
+                >
+                  ×
+                </button>
+                <div className="p-6">
+                  <div className="flex flex-col md:flex-row gap-6 items-center mb-6">
+                    <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-xl overflow-hidden border-4 border-primary-red flex-shrink-0">
+                      <Image
+                        src={member.image}
+                        alt={member.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex-1 text-center md:text-left">
+                      <h3 className="text-2xl font-bold mb-1">{member.name}</h3>
+                      <p className="text-primary-red font-medium">{member.position}</p>
+                    </div>
+                  </div>
+                  <div className="space-y-4 text-gray-800 text-base leading-relaxed">
+                    {member.bio.map((b, i) => <p key={i}>{b}</p>)}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 bg-black text-white">
         <div className="container mx-auto px-4">
@@ -483,12 +403,12 @@ export default function AboutUsPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Get to Know Us</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Be Part of the Winning Team</h2>
             <p className="text-lg text-gray-300 mb-8">
               Explore our platform, plug in, and grow at your pace with exponential potential.
             </p>
             <motion.div 
-              className="flex flex-col sm:flex-row gap-4 justify-center"
+              className="flex justify-center"
               variants={staggerContainer}
               initial="initial"
               whileInView="animate"
@@ -497,15 +417,9 @@ export default function AboutUsPage() {
               <motion.div variants={fadeInUp}>
                 <Button 
                   className="bg-primary-red text-white hover:bg-primary-red/90 px-8 py-6 text-lg font-semibold"
+                  onClick={() => window.location.href = '/join-kw'}
                 >
-                  Join KW Singapore
-                </Button>
-              </motion.div>
-              <motion.div variants={fadeInUp}>
-                <Button 
-                  className="bg-white text-primary-red hover:bg-white/90 px-8 py-6 text-lg font-semibold"
-                >
-                  Learn More
+                  Let's Connect
                 </Button>
               </motion.div>
             </motion.div>
