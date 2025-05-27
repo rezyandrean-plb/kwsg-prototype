@@ -19,6 +19,7 @@ interface ProjectCardProps extends Project {
   pricePerSqFt?: string
   features?: string[]
   status?: 'upcoming' | 'ongoing' | 'completed'
+  ctaText?: string
 }
 
 export default function ProjectCard({
@@ -38,7 +39,8 @@ export default function ProjectCard({
   description,
   pricePerSqFt,
   features,
-  status = 'upcoming'
+  status = 'upcoming',
+  ctaText = "View Details"
 }: ProjectCardProps) {
   const statusConfig = {
     upcoming: {
@@ -102,7 +104,7 @@ export default function ProjectCard({
           <div className="text-lg font-bold text-gray-900">{priceRange || price}</div>
           <Link href={`/projects/${slug}`} className="mt-3">
             <Button variant="default" className="w-full flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white">
-              View Details
+              {ctaText}
               <ChevronRight className="h-4 w-4" />
             </Button>
           </Link>

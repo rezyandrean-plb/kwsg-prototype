@@ -96,101 +96,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured New Launches Section - Enhanced with better card design */}
-      {/* Original Section - Commented for future reference
-      <section className="relative py-16 md:py-20 bg-gray-900 text-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-4xl mx-auto mb-10">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">Featured New Launches</h2>
-            <p className="text-xl text-gray-300 leading-relaxed">
-              Discover the most exclusive new property launches in prime locations
-            </p>
-            <div className="mt-6">
-              <Link href="/projects">
-                <Button className="group px-8 sm:px-10 py-4 sm:py-6 text-lg sm:text-xl bg-primary-red text-white hover:bg-primary-red/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]">
-                  Browse New Launch Condos
-                  <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
-                </Button>
-              </Link>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-            {projects.map((project) => (
-              <ProjectCard
-                key={project.slug}
-                {...project}
-                className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-      */}
-
-      {/* New Launch Dominance Section */}
-      <section className="relative py-16 md:py-20 bg-gray-900 text-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-4xl mx-auto mb-10">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-              Where Developers Trust—and Consultants Win.
-            </h2>
-            <p className="text-xl text-gray-300 leading-relaxed">
-              KW Singapore is the only platform in the country with a dedicated New Launch Host Division, direct 0.5–1% developer commissions (not split with consultants), and early access to launch mandates.
-            </p>
-          </div>
-
-          {/* Feature Slider: Upcoming Projects */}
-          <div className="mb-12">
-            <h3 className="text-2xl font-bold mb-6 text-center">Upcoming Projects</h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-              {projects.map((project) => (
-                <ProjectCard
-                  key={project.slug}
-                  {...project}
-                  className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Visual Map: Project Launch Territories */}
-          <div className="mb-12">
-            <h3 className="text-2xl font-bold mb-6 text-center">Project Launch Territories</h3>
-            <div className="max-w-4xl mx-auto bg-black/30 rounded-xl p-4">
-              <ProjectMap />
-            </div>
-            <div className="mt-4 text-center text-gray-400 text-sm">
-              Click on markers to view project details
-            </div>
-          </div>
-
-          {/* Developer Logos */}
-          <div className="mb-12">
-            <h3 className="text-2xl font-bold mb-6 text-center">Brands That Trust KW</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-              {/* Replace these with actual developer logos */}
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="bg-white/10 rounded-lg p-6 flex items-center justify-center">
-                  <div className="text-gray-400 text-sm">Developer Logo {i}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* CTA Button */}
-          <div className="text-center">
-            <Link href="/new-launch-access">
-              <Button className="group px-8 sm:px-10 py-4 sm:py-6 text-lg sm:text-xl bg-primary-red text-white hover:bg-primary-red/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]">
-                Get New Launch Access
-                <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Why KW Singapore Section */}
+      {/* The KW Advantage Section */}
       <section className="relative py-16 md:py-20 bg-black text-white overflow-hidden">
         {/* Background with subtle gradient */}
         <div className="absolute inset-0 z-0">
@@ -202,7 +108,7 @@ export default function Home() {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-8">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-4">
-                Why KW Singapore?
+                The KW Advantage
               </h2>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto">
                 Empowering real estate professionals with cutting-edge tools and strategies
@@ -210,7 +116,25 @@ export default function Home() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-6">
-              {/* Card 1: Media-Led */}
+              {/* Card 1: Dominate New Launches */}
+              <div className="group relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-red/20 to-transparent rounded-2xl transform transition-transform group-hover:scale-105"></div>
+                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 group-hover:-translate-y-2">
+                  <div className="mb-4">
+                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4 transform transition-transform group-hover:scale-110 animate-spin-slow">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-2">Dominate New Launches</h3>
+                    <p className="text-gray-300 leading-relaxed text-sm">
+                      Get exclusive access to new launch projects with direct developer commissions and early mandate opportunities. Be the first to market with prime properties.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 2: Scale with Media */}
               <div className="group relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-red/20 to-transparent rounded-2xl transform transition-transform group-hover:scale-105"></div>
                 <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 group-hover:-translate-y-2">
@@ -220,15 +144,15 @@ export default function Home() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                       </svg>
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">Media-Led, Brand-Driven Consultants</h3>
+                    <h3 className="text-xl font-bold text-white mb-2">Scale with Media</h3>
                     <p className="text-gray-300 leading-relaxed text-sm">
-                      KW Singapore empowers consultants with in-house media, content strategy, and branding support—built to amplify personal presence, generate leads, and close faster in a media-first market.
+                      Leverage our in-house media production team and content strategy to build your personal brand, generate leads, and close deals faster in today's media-first market.
                     </p>
                   </div>
                 </div>
               </div>
 
-              {/* Card 2: AI-Powered */}
+              {/* Card 3: Win with AI */}
               <div className="group relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-red/20 to-transparent rounded-2xl transform transition-transform group-hover:scale-105"></div>
                 <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 group-hover:-translate-y-2">
@@ -238,27 +162,9 @@ export default function Home() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                       </svg>
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">AI-Powered, Precision-Driven</h3>
+                    <h3 className="text-xl font-bold text-white mb-2">Win with AI</h3>
                     <p className="text-gray-300 leading-relaxed text-sm">
-                      Consultants leverage Command by KW—an AI-powered, all-in-one platform that automates lead gen, marketing, and deal tracking. Designed for speed, structure, and scale.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card 3: Insight-Led */}
-              <div className="group relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-red/20 to-transparent rounded-2xl transform transition-transform group-hover:scale-105"></div>
-                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 group-hover:-translate-y-2">
-                  <div className="mb-4">
-                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4 transform transition-transform group-hover:scale-110 animate-spin-slow">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold text-white mb-2">Insight-Led, Research-Focused</h3>
-                    <p className="text-gray-300 leading-relaxed text-sm">
-                      Every consultant is equipped with KW's market research tools and training to advise clients with confidence—using live pricing trends, demand forecasts, and investment analytics.
+                      Access Command by KW—our AI-powered platform that automates lead generation, marketing, and deal tracking. Stay ahead with intelligent insights and automation.
                     </p>
                   </div>
                 </div>
@@ -267,15 +173,9 @@ export default function Home() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-              <Link href="/join" className="w-full sm:w-auto">
+              <Link href="/contact" className="w-full sm:w-auto">
                 <Button className="w-full group px-8 sm:px-10 py-4 sm:py-6 text-lg sm:text-xl bg-primary-red text-white hover:bg-primary-red/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]">
-                  Join KW Singapore
-                  <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
-                </Button>
-              </Link>
-              <Link href="/join#tech-tools" className="w-full sm:w-auto">
-                <Button className="w-full group px-8 sm:px-10 py-4 sm:py-6 text-lg sm:text-xl bg-white text-primary-red hover:bg-white/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]">
-                  Explore Our PropTech Platform
+                  Speak to our Team
                   <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
                 </Button>
               </Link>
@@ -284,7 +184,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* KW Advantage Section */}
+      {/* Why KW Singapore Section */}
       <section className="relative py-16 md:py-20 bg-black text-white overflow-hidden">
         {/* Background Image with Parallax-like Effect */}
         <div className="absolute inset-0 z-0">
@@ -305,84 +205,152 @@ export default function Home() {
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             {/* Header Content */}
-            <div className="text-center mb-8">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
-                The KW Advantage
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight mb-4">
+                Why KW Singapore?
               </h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                Built for Consultants. Backed by Systems.
+              </p>
             </div>
 
-            {/* Technology Cards Grid */}
-            <div className="grid md:grid-cols-3 gap-6 mb-8">
-              {/* KW Global Brand Card */}
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-red/20 to-transparent rounded-2xl transform transition-transform group-hover:scale-105"></div>
-                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 group-hover:-translate-y-2">
-                  <div className="mb-4">
-                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4 transform transition-transform group-hover:scale-110">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold text-white mb-2">KW Global Brand & Trust</h3>
-                    <p className="text-gray-300 leading-relaxed text-sm">
-                      Backed by 200,000+ professionals in 60+ countries, Keller Williams is the world's most trusted realty network. In Singapore, that trust becomes your competitive edge.
-                    </p>
+            {/* Feature Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              {/* First Row - 4 Cards */}
+              {/* Global Brand & Trust */}
+              <Link href="/global-brand" className="group">
+                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
+                  <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                   </div>
+                  <h3 className="text-xl font-bold text-white mb-2">Global Brand & Trust</h3>
+                  <p className="text-gray-300 text-sm">Join the world's most trusted real estate network with 200,000+ professionals across 60+ countries.</p>
                 </div>
-              </div>
-
-              {/* KW PropTech Card */}
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-red/20 to-transparent rounded-2xl transform transition-transform group-hover:scale-105"></div>
-                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 group-hover:-translate-y-2">
-                  <div className="mb-4">
-                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4 transform transition-transform group-hover:scale-110">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold text-white mb-2">KW PropTech: Command</h3>
-                    <p className="text-gray-300 leading-relaxed text-sm">
-                      Our proprietary system streamlines every part of your business—from CRM to closing—on a single, mobile-optimized interface tailored to the Singapore market.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* KW Research Hub Card */}
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-red/20 to-transparent rounded-2xl transform transition-transform group-hover:scale-105"></div>
-                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 group-hover:-translate-y-2">
-                  <div className="mb-4">
-                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4 transform transition-transform group-hover:scale-110">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold text-white mb-2">KW Research Hub</h3>
-                    <p className="text-gray-300 leading-relaxed text-sm">
-                      AI-enhanced data, market trends, and district insights—at your fingertips. It's the intelligence behind better advice, faster deals, and lasting client trust.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/about-us" className="w-full sm:w-auto">
-                <Button className="w-full group px-8 sm:px-10 py-4 sm:py-6 text-lg sm:text-xl bg-primary-red text-white hover:bg-primary-red/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]">
-                  Explore KW Singapore
-                  <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
-                </Button>
               </Link>
+
+              {/* Custom CRM - Command */}
+              <Link href="/command" className="group">
+                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
+                  <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">Custom CRM - Command</h3>
+                  <p className="text-gray-300 text-sm">Our proprietary system streamlines your entire business on a single, mobile-optimized platform.</p>
+                </div>
+              </Link>
+
+              {/* PropTech Stack */}
+              <Link href="/proptech" className="group">
+                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
+                  <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">PropTech Stack</h3>
+                  <p className="text-gray-300 text-sm">Access cutting-edge tools and technologies designed specifically for Singapore's market.</p>
+                </div>
+              </Link>
+
+              {/* Research Hub */}
+              <Link href="/research" className="group">
+                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
+                  <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">Research Hub</h3>
+                  <p className="text-gray-300 text-sm">AI-enhanced market data and insights to make informed decisions and build client trust.</p>
+                </div>
+              </Link>
+            </div>
+
+            {/* Second Row - 3 Centered Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
+              {/* Media Support */}
+              <Link href="/media" className="group">
+                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
+                  <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">Media Support</h3>
+                  <p className="text-gray-300 text-sm">Professional media production and content strategy to build your personal brand.</p>
+                </div>
+              </Link>
+
+              {/* Training System */}
+              <Link href="/training" className="group">
+                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
+                  <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">Training System</h3>
+                  <p className="text-gray-300 text-sm">Comprehensive training programs to develop your skills and grow your business.</p>
+                </div>
+              </Link>
+
+              {/* Growth Share Model */}
+              <Link href="/growth-share" className="group">
+                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
+                  <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">Growth Share Model</h3>
+                  <p className="text-gray-300 text-sm">Build wealth through our unique profit-sharing system as you grow your business.</p>
+                </div>
+              </Link>
+            </div>
+
+            {/* CTA Button */}
+            <div className="flex justify-center">
               <Link href="/join" className="w-full sm:w-auto">
-                <Button className="w-full group px-8 sm:px-10 py-4 sm:py-6 text-lg sm:text-xl bg-white text-primary-red hover:bg-white/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]">
-                  Join Us Today
+                <Button className="w-full group px-8 sm:px-10 py-4 sm:py-6 text-lg sm:text-xl bg-primary-red text-white hover:bg-primary-red/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]">
+                  Revolutionise Your Business
                   <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
                 </Button>
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* New Launch Condo Section */}
+      <section className="relative py-16 md:py-20 bg-gray-900 text-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center max-w-4xl mx-auto mb-10">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">New Launch Condo</h2>
+            <p className="text-xl text-gray-300 leading-relaxed">Discover the latest property launches in Singapore</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto mb-12">
+              {projects.map((project) => (
+                <ProjectCard
+                  key={project.slug}
+                  {...project}
+                  className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+                ctaText="Find out more"
+                />
+              ))}
+          </div>
+
+          <div className="text-center">
+            <Link href="/projects">
+              <Button className="group px-8 sm:px-10 py-4 sm:py-6 text-lg sm:text-xl bg-primary-red text-white hover:bg-primary-red/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]">
+                Explore New Launch Condo
+                <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
