@@ -4,48 +4,39 @@ import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
 
 interface CountdownTimerProps {
-  targetDate: string
+  targetDate?: string // Making it optional since we'll use a fixed date
 }
 
 export default function CountdownTimer({ targetDate }: CountdownTimerProps) {
   const [timeLeft, setTimeLeft] = useState({
-    days: 12,
-    hours: 12,
-    minutes: 10,
-    seconds: 10
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
   })
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(prevTime => {
-        let { days, hours, minutes, seconds } = prevTime
+    const target = new Date('2025-07-01T00:00:00')
 
-        // Decrease seconds
-        if (seconds > 0) {
-          seconds -= 1
-        } else {
-          seconds = 59
-          // Decrease minutes
-          if (minutes > 0) {
-            minutes -= 1
-          } else {
-            minutes = 59
-            // Decrease hours
-            if (hours > 0) {
-              hours -= 1
-            } else {
-              hours = 23
-              // Decrease days
-              if (days > 0) {
-                days -= 1
-              }
-            }
-          }
-        }
+    const calculateTimeLeft = () => {
+      const now = new Date()
+      const difference = target.getTime() - now.getTime()
 
-        return { days, hours, minutes, seconds }
-      })
-    }, 1000)
+      if (difference > 0) {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24))
+        const hours = Math.floor((difference / (1000 * 60 * 60)) % 24)
+        const minutes = Math.floor((difference / 1000 / 60) % 60)
+        const seconds = Math.floor((difference / 1000) % 60)
+
+        setTimeLeft({ days, hours, minutes, seconds })
+      }
+    }
+
+    // Calculate immediately
+    calculateTimeLeft()
+
+    // Update every second
+    const timer = setInterval(calculateTimeLeft, 1000)
 
     return () => clearInterval(timer)
   }, [])

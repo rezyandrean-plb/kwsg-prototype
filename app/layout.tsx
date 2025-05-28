@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-import { Inter } from "next/font/google"
 import "./globals.css"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -10,8 +9,6 @@ import TransparentHeader from "@/components/transparent-header"
 import MobileMenu from "@/components/mobile-menu"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-
-const inter = Inter({ subsets: ["latin"] })
 
 export default function RootLayout({
   children,
@@ -27,7 +24,7 @@ export default function RootLayout({
         <title>KW Singapore</title>
         <link rel="icon" href="/images/kwsg-logo.png" type="image/png" />
       </head>
-      <body className={inter.className}>
+      <body>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           {!isAdminPage && <TransparentHeader />}
           <div className="flex min-h-screen flex-col">
