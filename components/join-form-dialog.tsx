@@ -87,7 +87,7 @@ export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProp
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Full Name */}
           <div className="space-y-2">
-            <Label htmlFor="fullName">Full Name</Label>
+            <Label htmlFor="fullName">Full Name <span className="text-red-500">*</span></Label>
             <Input
               id="fullName"
               value={formData.fullName}
@@ -99,7 +99,7 @@ export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProp
 
           {/* Email Address */}
           <div className="space-y-2">
-            <Label htmlFor="email">Email Address</Label>
+            <Label htmlFor="email">Email Address <span className="text-red-500">*</span></Label>
             <Input
               id="email"
               type="email"
@@ -112,7 +112,7 @@ export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProp
 
           {/* Mobile Number */}
           <div className="space-y-2">
-            <Label htmlFor="mobile">Mobile Number</Label>
+            <Label htmlFor="mobile">Mobile Number <span className="text-red-500">*</span></Label>
             <Input
               id="mobile"
               type="tel"
@@ -193,7 +193,7 @@ export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProp
               required
             />
             <Label htmlFor="consent" className="font-normal">
-              I consent to be contacted by KW Singapore about joining as a consultant and related opportunities.
+              I consent to be contacted by KW Singapore about joining as a consultant and related opportunities. <span className="text-red-500">*</span>
             </Label>
           </div>
 
