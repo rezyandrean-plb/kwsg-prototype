@@ -101,7 +101,7 @@ export default function RootLayout({
                       </li>
                       <li>
                         <Link href="/projects" className="hover:text-white">
-                          New Launch
+                          New Launch Condo
                         </Link>
                       </li>
                       <li>

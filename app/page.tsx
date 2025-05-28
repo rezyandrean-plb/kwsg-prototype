@@ -143,9 +143,14 @@ export default function Home() {
                       </svg>
                     </div>
                     <h3 className="text-xl font-bold text-white mb-2">Dominate New Launches</h3>
-                    <p className="text-gray-300 leading-relaxed text-sm">
-                      Get exclusive access to new launch projects with direct developer commissions and early mandate opportunities. Be the first to market with prime properties.
-                    </p>
+                    <div className="relative w-full h-48 rounded-lg overflow-hidden">
+                      <Image
+                        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80"
+                        alt="New Launch Property"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -161,9 +166,14 @@ export default function Home() {
                       </svg>
                     </div>
                     <h3 className="text-xl font-bold text-white mb-2">Scale with Media</h3>
-                    <p className="text-gray-300 leading-relaxed text-sm">
-                      Leverage our in-house media production team and content strategy to build your personal brand, generate leads, and close deals faster in today's media-first market.
-                    </p>
+                    <div className="relative w-full h-48 rounded-lg overflow-hidden">
+                      <Image
+                        src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80"
+                        alt="Media Production"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -179,9 +189,14 @@ export default function Home() {
                       </svg>
                     </div>
                     <h3 className="text-xl font-bold text-white mb-2">Win with AI</h3>
-                    <p className="text-gray-300 leading-relaxed text-sm">
-                      Access Command by KW—our AI-powered platform that automates lead generation, marketing, and deal tracking. Stay ahead with intelligent insights and automation.
-                    </p>
+                    <div className="relative w-full h-48 rounded-lg overflow-hidden">
+                      <Image
+                        src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80"
+                        alt="AI Technology"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -422,7 +437,7 @@ export default function Home() {
                   The Future of Real Estate in Singapore is Here. Are You Ready?
                 </h2>
                 <p className="text-base sm:text-lg md:text-xl text-gray-200 leading-relaxed">
-                  Get ready to experience a new era of real estate with the upcoming launch of Keller Williams Singapore. Be among the first to join a revolutionary platform designed to elevate your career with unparalleled support, cutting-edge technology, and a global network. The countdown has begun!
+                Join us for the most anticipated real estate launch of 2025!
                 </p>
               </div>
 
@@ -440,10 +455,6 @@ export default function Home() {
                     <CountdownTimer targetDate="2025-07-01T00:00:00" />
                   </div>
                 </div>
-                {/* Additional Info */}
-                <p className="text-center text-gray-300 text-base">
-                  Join us for the most anticipated real estate launch of July 1st 2025  
-                </p>
               </div>
 
               {/* CTA Button */}
@@ -474,291 +485,6 @@ export default function Home() {
         onClose={() => setIsWebinarDialogOpen(false)}
         onSubmit={handleWebinarSubmit}
       />
-
-      {/* New Section - Video Showcase */}
-      <section className="relative py-16 md:py-20 bg-black text-white overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-black" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.05),transparent_70%)]" />
-        </div>
-
-        <div className="relative z-10 container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-4">
-                Experience KW Singapore
-              </h2>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                Watch how we're revolutionizing real estate in Singapore
-              </p>
-            </div>
-
-            <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl">
-              <iframe
-                className="absolute inset-0 w-full h-full"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                title="KW Singapore Overview"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Animated Statistics Section - Enhanced with animations */}
-      <section className="relative py-16 md:py-20">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80"
-            alt="Luxury Real Estate"
-            fill
-            className="object-cover brightness-[0.3]"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/80" />
-        </div>
-
-        <div className="relative z-10 container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-4">
-                Our Impact in Numbers
-              </h2>
-              <p className="text-xl text-gray-200 max-w-3xl mx-auto">
-                Join a network that's transforming real estate in Singapore
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {[
-                { value: 200000, label: "Global Agents", suffix: "+", icon: "👥" },
-                { value: 60, label: "Countries", suffix: "+", icon: "🌍" },
-                { value: 1000, label: "Annual Transactions", suffix: "+", icon: "💼" },
-                { value: 98, label: "Client Satisfaction", suffix: "%", icon: "⭐" }
-              ].map((stat, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  whileHover={{ scale: 1.05 }}
-                  className="text-center p-6 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 cursor-pointer group"
-                >
-                  <div className="text-4xl mb-4 transform group-hover:scale-110 transition-transform duration-300">
-                    {stat.icon}
-                  </div>
-                  <div className="text-4xl md:text-5xl font-bold text-primary-red mb-2">
-                    <CountUp
-                      end={stat.value}
-                      duration={2.5}
-                      separator=","
-                      suffix={stat.suffix}
-                      enableScrollSpy
-                      scrollSpyOnce
-                      scrollSpyDelay={200}
-                    />
-                  </div>
-                  <div className="text-gray-200 font-medium">{stat.label}</div>
-                  <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="h-1 w-12 bg-primary-red mx-auto rounded-full" />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Interactive Progress Bar */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-12 bg-white/10 backdrop-blur-sm rounded-xl p-6"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-white">Global Growth Trajectory</h3>
-                <span className="text-primary-red font-semibold">2024</span>
-              </div>
-              <div className="h-2 bg-white/20 rounded-full overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: "75%" }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1.5, ease: "easeOut" }}
-                  className="h-full bg-primary-red rounded-full"
-                />
-              </div>
-              <div className="flex justify-between mt-2 text-sm text-gray-300">
-                <span>2020</span>
-                <span>2025</span>
-              </div>
-            </motion.div>
-
-            {/* Interactive Map Preview */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-8 bg-white/10 backdrop-blur-sm rounded-xl p-6"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-white">Global Presence</h3>
-                <span className="text-primary-red font-semibold">60+ Countries</span>
-              </div>
-              <div className="relative h-40 rounded-lg overflow-hidden">
-                <Image
-                  src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&q=80"
-                  alt="World Map"
-                  fill
-                  className="object-cover brightness-[0.4]"
-                />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5 }}
-                    className="text-white text-center"
-                  >
-                    <div className="text-2xl font-bold mb-2">Global Network</div>
-                    <div className="text-sm text-gray-300">Expanding our reach worldwide</div>
-                  </motion.div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section - Updated with background image */}
-      <section className="relative py-16 md:py-20">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80"
-            alt="Luxury Interior"
-            fill
-            className="object-cover brightness-[0.3]"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/80" />
-        </div>
-
-        <div className="relative z-10 container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-4">
-                Success Stories
-              </h2>
-              <p className="text-xl text-gray-200 max-w-3xl mx-auto">
-                Hear from our consultants about their journey with KW Singapore
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              {[
-                {
-                  name: "Sarah Chen",
-                  role: "Top Producer",
-                  image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80",
-                  quote: "KW Singapore's platform has transformed my business. The technology and support are unmatched in the industry."
-                },
-                {
-                  name: "Michael Wong",
-                  role: "Team Leader",
-                  image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80",
-                  quote: "The training and resources provided have helped me build a successful team and scale my business effectively."
-                },
-                {
-                  name: "Priya Sharma",
-                  role: "New Consultant",
-                  image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80",
-                  quote: "Starting my career with KW Singapore was the best decision. The mentorship and tools are invaluable."
-                }
-              ].map((testimonial, index) => (
-                <div key={index} className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-white/20">
-                  <div className="flex items-center mb-4">
-                    <div className="relative w-12 h-12 rounded-full overflow-hidden mr-4 ring-2 ring-primary-red">
-                      <Image
-                        src={testimonial.image}
-                        alt={testimonial.name}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-white">{testimonial.name}</div>
-                      <div className="text-sm text-gray-300">{testimonial.role}</div>
-                    </div>
-                  </div>
-                  <p className="text-gray-200 italic">"{testimonial.quote}"</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Interactive Features Section - Updated with background image */}
-      <section className="relative py-16 md:py-20">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80"
-            alt="Technology Background"
-            fill
-            className="object-cover brightness-[0.3]"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/80" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.1),transparent_70%)]" />
-        </div>
-
-        <div className="relative z-10 container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-4">
-                Interactive Tools & Features
-              </h2>
-              <p className="text-xl text-gray-200 max-w-3xl mx-auto">
-                Experience our cutting-edge technology firsthand
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-1">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-primary-red/20 rounded-xl flex items-center justify-center mr-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-xl font-bold text-white">Market Analytics</h3>
-                </div>
-                <p className="text-gray-200">Real-time market data and trends analysis to help you make informed decisions.</p>
-              </div>
-
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-1">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-primary-red/20 rounded-xl flex items-center justify-center mr-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                    </svg>
-                  </div>
-                  <h3 className="text-xl font-bold text-white">Lead Management</h3>
-                </div>
-                <p className="text-gray-200">Advanced CRM system to track and manage your leads effectively.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
   )
 }

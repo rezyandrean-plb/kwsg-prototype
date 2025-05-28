@@ -294,7 +294,7 @@ export default function AboutUsPage() {
             {team.slice(0, 3).map((member, idx) => (
               <motion.div
                 key={member.key}
-                className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden cursor-pointer group max-w-[280px] mx-auto w-full"
+                className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden cursor-pointer group max-w-[240px] mx-auto w-full"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -302,14 +302,18 @@ export default function AboutUsPage() {
                 whileHover={{ y: -5, transition: { duration: 0.2 } }}
                 onClick={() => setOpenModal(member.key)}
               >
-                <div className="relative w-full aspect-[3/4] overflow-hidden">
+                <div className="relative w-full aspect-[4/5] overflow-hidden">
                   <Image
                     src={member.image}
                     alt={member.name}
                     fill
                     className="object-cover transition-transform duration-300 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
+                    <span className="text-white font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      View Profile
+                    </span>
+                  </div>
                 </div>
                 <div className="p-3">
                   <h3 className="text-lg font-bold mb-0.5 text-black group-hover:text-primary-red transition-colors duration-300">{member.name}</h3>
@@ -320,11 +324,11 @@ export default function AboutUsPage() {
           </div>
 
           <div className="flex justify-center mt-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[600px]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[520px]">
               {team.slice(3).map((member, idx) => (
                 <motion.div
                   key={member.key}
-                  className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden cursor-pointer group max-w-[280px] mx-auto w-full"
+                  className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden cursor-pointer group max-w-[240px] mx-auto w-full"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -332,14 +336,18 @@ export default function AboutUsPage() {
                   whileHover={{ y: -5, transition: { duration: 0.2 } }}
                   onClick={() => setOpenModal(member.key)}
                 >
-                  <div className="relative w-full aspect-[3/4] overflow-hidden">
+                  <div className="relative w-full aspect-[4/5] overflow-hidden">
                     <Image
                       src={member.image}
                       alt={member.name}
                       fill
                       className="object-cover transition-transform duration-300 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
+                      <span className="text-white font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        View Profile
+                      </span>
+                    </div>
                   </div>
                   <div className="p-3">
                     <h3 className="text-lg font-bold mb-0.5 text-black group-hover:text-primary-red transition-colors duration-300">{member.name}</h3>

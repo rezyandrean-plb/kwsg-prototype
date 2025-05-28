@@ -21,7 +21,7 @@ const AREAS_OF_INTEREST = [
   "AI + PropTech Tools",
   "Media & Personal Branding Support",
   "KW Research Platform",
-  "World-Class Training & Certifications"
+  "World-Class Training"
 ]
 
 export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProps) {
@@ -38,6 +38,11 @@ export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProp
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    // Validate areas of interest
+    if (formData.areasOfInterest.length === 0) {
+      alert("Please select at least one area of interest")
+      return
+    }
     onSubmit(formData)
     setFormData({
       fullName: "",
@@ -113,7 +118,7 @@ export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProp
               type="tel"
               value={formData.mobile}
               onChange={(e) => setFormData(prev => ({ ...prev, mobile: e.target.value }))}
-              placeholder="For call-back and WhatsApp follow-up by our recruitment team"
+              placeholder="For call-back and WhatsApp follow-up by our Growth Team"
               required
             />
           </div>
@@ -151,7 +156,7 @@ export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProp
 
           {/* Areas of Interest */}
           <div className="space-y-2">
-            <Label>Which areas of KW Singapore interest you most?</Label>
+            <Label>Which areas of KW Singapore interest you most? <span className="text-red-500">*</span></Label>
             <div className="space-y-2">
               {AREAS_OF_INTEREST.map((area) => (
                 <div key={area} className="flex items-center space-x-2">
@@ -159,6 +164,7 @@ export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProp
                     id={area}
                     checked={formData.areasOfInterest.includes(area)}
                     onCheckedChange={() => handleAreaToggle(area)}
+                    required={formData.areasOfInterest.length === 0}
                   />
                   <Label htmlFor={area} className="font-normal">{area}</Label>
                 </div>
