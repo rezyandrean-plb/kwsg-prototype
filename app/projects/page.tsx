@@ -608,7 +608,7 @@ export default function NewLaunchDirectory() {
       </section>
 
       {/* Featured Projects Section */}
-      {featuredProjects.length > 0 && !searchQuery && !searchInput && (
+      {featuredProjects.length > 0 && !searchQuery && (
         <motion.section 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
