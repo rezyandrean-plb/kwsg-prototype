@@ -477,14 +477,6 @@ export default function NewLaunchDirectory() {
       }
     })
 
-  // Get featured projects (first 3 projects)
-  const featuredProjects = [
-    projects[0], // Lentor Modern
-    projects[2], // The Reserve Residences
-    projects[3], // Tembusu Grand
-    projects[6], // The Continuum
-  ]
-
   // Update all filter arrays to handle undefined values
   const districts = Array.from(new Set(projects.map(p => p.district).filter((d): d is number => d !== undefined))).sort((a, b) => a - b)
   const tenures = Array.from(new Set(projects.map(p => p.tenure).filter((t): t is string => t !== undefined)))
@@ -606,62 +598,6 @@ export default function NewLaunchDirectory() {
           </motion.div>
         </motion.div>
       </section>
-
-      {/* Featured Projects Section */}
-      {featuredProjects.length > 0 && !searchQuery && (
-        <motion.section 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="py-12 bg-gray-900"
-        >
-          <div className="container mx-auto px-4">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="text-center max-w-4xl mx-auto mb-12"
-            >
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured New Launches</h2>
-              <p className="text-xl text-gray-300">Exclusive preview of our most anticipated developments</p>
-            </motion.div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {featuredProjects.map((project, index) => (
-                <motion.div
-                  key={project.slug}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <ProjectCard
-                    name={project.name}
-                    location={project.location}
-                    price={project.price}
-                    priceRange={project.priceRange || ''}
-                    image={project.image}
-                    units={project.units || ''}
-                    unitsAvailable={project.unitsAvailable || ''}
-                    propertySizeRange={project.propertySizeRange || ''}
-                    developer={project.developer || ''}
-                    completion={project.completion || ''}
-                    slug={project.slug}
-                    description={project.description || ''}
-                    pricePerSqFt={project.pricePerSqFt || ''}
-                    features={project.features || []}
-                    status={project.status || 'upcoming'}
-                    type={project.type || project.propertyType || ''}
-                    coordinates={project.coordinates || { lat: 1.3521, lng: 103.8198 }}
-                    className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
-                  />
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.section>
-      )}
 
       {/* Main Content Section */}
       <motion.section 
