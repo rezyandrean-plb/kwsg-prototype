@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle, Building2, Users, Award, Brain, Share2, Video, BarChart3, Target, Heart, Lightbulb, Users2, Briefcase } from "lucide-react"
 import { motion } from "framer-motion"
 import { useState } from "react"
+import { JoinFormDialog } from "@/components/join-form-dialog"
 
 // Animation variants
 const fadeInUp = {
@@ -24,6 +25,12 @@ const staggerContainer = {
 
 export default function AboutUsPage() {
   const [openModal, setOpenModal] = useState<string | null>(null)
+  const [isJoinFormOpen, setIsJoinFormOpen] = useState(false)
+
+  const handleJoinFormSubmit = (data: any) => {
+    console.log('Form submitted:', data)
+    setIsJoinFormOpen(false)
+  }
 
   const team = [
     {
@@ -425,7 +432,7 @@ export default function AboutUsPage() {
               <motion.div variants={fadeInUp}>
                 <Button 
                   className="bg-primary-red text-white hover:bg-primary-red/90 px-8 py-6 text-lg font-semibold"
-                  onClick={() => window.location.href = '/join-kw'}
+                  onClick={() => setIsJoinFormOpen(true)}
                 >
                   Let's Connect
                 </Button>
@@ -434,6 +441,13 @@ export default function AboutUsPage() {
           </motion.div>
         </div>
       </section>
+
+      {/* Join Form Dialog */}
+      <JoinFormDialog 
+        isOpen={isJoinFormOpen}
+        onClose={() => setIsJoinFormOpen(false)}
+        onSubmit={handleJoinFormSubmit}
+      />
     </motion.main>
   )
 }
