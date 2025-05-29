@@ -224,6 +224,44 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         </div>
       </section>
 
+      {/* Experience the Space Section */}
+      <section className="bg-white py-10">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold mb-3">Experience the Space</h2>
+            <p className="text-gray-600">Walk through every corner, just like you're there.</p>
+          </div>
+          
+          <div className="relative w-full aspect-[16/9] bg-gray-100 rounded-lg overflow-hidden border border-gray-200">
+            {/* Initial state with play button */}
+            <div className="absolute inset-0 flex items-center justify-center bg-black/5 hover:bg-black/10 transition-colors cursor-pointer group" 
+                 onClick={(e) => {
+                   const iframe = e.currentTarget.nextElementSibling as HTMLIFrameElement;
+                   iframe.style.display = 'block';
+                   e.currentTarget.style.display = 'none';
+                 }}>
+              <div className="flex flex-col items-center gap-4">
+                <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center group-hover:bg-primary transition-colors">
+                  <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 5.14v14l11-7-11-7z" fill="currentColor"/>
+                  </svg>
+                </div>
+                <span className="text-gray-700 font-medium">Click to Experience 3D Tour</span>
+              </div>
+            </div>
+            
+            {/* 3D Tour iframe - hidden initially */}
+            <iframe 
+              src="https://www.propertylimbrothers.com/3d-tour/parc-esta-2br/fullscreen/#"
+              className="w-full h-full hidden"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Development Site Plan Section */}
       <section className="bg-white py-10">
         <div className="container mx-auto px-4">
