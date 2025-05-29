@@ -35,15 +35,15 @@ export default function EditorialPage() {
       className="min-h-screen flex flex-col"
     >
       {/* Hero Section */}
-      <section className="relative h-[60vh] w-full">
+      <section className="relative h-screen w-full">
         <Image
           src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80"
           alt="KW Blog Coming Soon"
           fill
-          className="object-cover brightness-50"
+          className="object-cover brightness-[0.4]"
           priority
         />
-        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/20 flex items-center justify-center">
           <motion.div 
             className="container mx-auto px-4 text-center"
             initial={{ opacity: 0, y: 20 }}

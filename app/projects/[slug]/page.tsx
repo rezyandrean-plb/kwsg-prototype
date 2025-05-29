@@ -146,14 +146,21 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                 src={project.images[0]}
                 alt={project.title}
                 fill
-                className="object-cover"
+                className="object-cover brightness-[0.4]"
                 priority
               />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/20" />
             </div>
             <div className="flex gap-2 w-full justify-center">
               {project.images.map((img, idx) => (
                 <div key={idx} className="w-20 h-14 relative rounded overflow-hidden border border-gray-200">
-                  <Image src={img} alt={`${project.title} thumb ${idx+1}`} fill className="object-cover" />
+                  <Image 
+                    src={img} 
+                    alt={`${project.title} thumb ${idx+1}`} 
+                    fill 
+                    className="object-cover brightness-[0.4]" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/20" />
                 </div>
               ))}
             </div>

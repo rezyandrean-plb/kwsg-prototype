@@ -137,19 +137,16 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-red/20 to-transparent rounded-2xl transform transition-transform group-hover:scale-105"></div>
                 <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 group-hover:-translate-y-2">
                   <div className="mb-4">
-                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4 transform transition-transform group-hover:scale-110 animate-spin-slow">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold text-white mb-2">Dominate New Launches</h3>
                     <div className="relative w-full h-48 rounded-lg overflow-hidden">
                       <Image
-                        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80"
+                        src="/images/homepage/dominate-new-launches.jpg"
                         alt="New Launch Property"
                         fill
                         className="object-cover"
                       />
+                      <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
+                        <h3 className="text-xl font-bold text-white text-center">Dominate New Launches</h3>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -160,19 +157,16 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-red/20 to-transparent rounded-2xl transform transition-transform group-hover:scale-105"></div>
                 <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 group-hover:-translate-y-2">
                   <div className="mb-4">
-                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4 transform transition-transform group-hover:scale-110 animate-spin-slow">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold text-white mb-2">Scale with Media</h3>
                     <div className="relative w-full h-48 rounded-lg overflow-hidden">
                       <Image
-                        src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80"
+                        src="/images/homepage/scale-with-media.jpg"
                         alt="Media Production"
                         fill
                         className="object-cover"
                       />
+                      <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
+                        <h3 className="text-xl font-bold text-white text-center">Scale with Media</h3>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -183,19 +177,16 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-red/20 to-transparent rounded-2xl transform transition-transform group-hover:scale-105"></div>
                 <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 group-hover:-translate-y-2">
                   <div className="mb-4">
-                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4 transform transition-transform group-hover:scale-110 animate-spin-slow">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold text-white mb-2">Win with AI</h3>
                     <div className="relative w-full h-48 rounded-lg overflow-hidden">
                       <Image
-                        src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80"
+                        src="/images/homepage/win-with-ai.jpg"
                         alt="AI Technology"
                         fill
                         className="object-cover"
                       />
+                      <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
+                        <h3 className="text-xl font-bold text-white text-center">Win with AI</h3>
+                      </div>
                     </div>
                   </div>
                 </div>

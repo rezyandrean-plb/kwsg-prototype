@@ -23,16 +23,16 @@ export default function JoinKW() {
 
   return (
     <main className="min-h-screen bg-black text-white">
-      <section className="relative min-h-[80vh] flex items-center justify-center">
+      <section className="relative h-screen flex items-center justify-center">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80"
+            src="/images/join-kw/join-kw-header.jpg"
             alt="Join KW Singapore"
             fill
-            className="object-cover brightness-[0.3]"
+            className="object-cover brightness-[0.4]"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/20" />
         </div>
         <motion.div 
           className="relative container mx-auto px-4 text-center"

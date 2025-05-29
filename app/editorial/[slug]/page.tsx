@@ -159,9 +159,10 @@ export default function BlogPostPage() {
               src={articleData.featuredImage}
               alt={articleData.title}
               fill
-              className="object-cover"
+              className="object-cover brightness-[0.4]"
               priority
             />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/20" />
           </div>
 
           {/* Article Actions */}

@@ -562,32 +562,26 @@ export default function NewLaunchDirectory() {
   return (
     <main className="min-h-screen flex flex-col bg-black text-white">
       {/* Hero Section */}
-      <section className="relative h-[60vh] flex items-center">
-        <div className="absolute inset-0">
-          <Image
-            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80"
-            alt="New Launch Condos"
-            fill
-            className="object-cover brightness-[0.3]"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60" />
-        </div>
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="relative container mx-auto px-4 text-center"
-        >
-          <motion.h1 
+      <section className="relative h-screen w-full">
+        <Image
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80"
+          alt="New Launch Properties"
+          fill
+          className="object-cover brightness-[0.4]"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/20 flex items-center justify-center">
+          <motion.div 
+            className="container mx-auto px-4 text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white"
+            transition={{ duration: 0.8 }}
           >
-            The Launchpad for Smart Buyers
-          </motion.h1>
-        </motion.div>
+            <h1 className="text-5xl md:text-7xl font-bold text-white inline-block tracking-tight">
+              New Launch Properties
+            </h1>
+          </motion.div>
+        </div>
       </section>
 
       {/* Form Section */}
