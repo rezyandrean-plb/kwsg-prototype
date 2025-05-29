@@ -6,6 +6,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Mail, Phone, Clock } from "lucide-react"
 import Image from "next/image"
 import { motion } from "framer-motion"
+import Lottie from "lottie-react"
+import contactAnimation from "../../public/animation/contact-us.json"
 
 export default function ContactPage() {
   return (
@@ -63,6 +65,19 @@ export default function ContactPage() {
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.1 }}
+                  className="w-full max-w-[400px] mx-auto mb-8"
+                >
+                  <Lottie
+                    animationData={contactAnimation}
+                    loop={true}
+                    className="w-full h-auto"
+                  />
+                </motion.div>
+
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.2 }}
                   className="flex items-start space-x-4"
                 >
@@ -104,8 +119,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-white mb-1">Call Us</h3>
-                    <a href="tel:+6561234567" className="text-gray-300 hover:text-primary-red transition-colors">
-                      +65 6123 4567
+                    <a href="tel:+6586111703" className="text-gray-300 hover:text-primary-red transition-colors">
+                      +65 8611 1703
                     </a>
                   </div>
                 </motion.div>

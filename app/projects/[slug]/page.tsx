@@ -224,84 +224,6 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         </div>
       </section>
 
-      {/* Experience the Space Section */}
-      <section className="bg-white py-10">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold mb-3">Experience the Space</h2>
-            <p className="text-gray-600">Walk through every corner, just like you're there.</p>
-          </div>
-          
-          <div className="relative w-full aspect-[16/9] bg-gray-100 rounded-lg overflow-hidden border border-gray-200">
-            {/* Initial state with play button */}
-            <div className="absolute inset-0 flex items-center justify-center bg-black/5 hover:bg-black/10 transition-colors cursor-pointer group" 
-                 onClick={(e) => {
-                   const iframe = e.currentTarget.nextElementSibling as HTMLIFrameElement;
-                   iframe.style.display = 'block';
-                   e.currentTarget.style.display = 'none';
-                 }}>
-              <div className="flex flex-col items-center gap-4">
-                <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center group-hover:bg-primary transition-colors">
-                  <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 5.14v14l11-7-11-7z" fill="currentColor"/>
-                  </svg>
-                </div>
-                <span className="text-gray-700 font-medium">Click to Experience 3D Tour</span>
-              </div>
-            </div>
-            
-            {/* 3D Tour iframe - hidden initially */}
-            <iframe 
-              src="https://www.propertylimbrothers.com/3d-tour/parc-esta-2br/fullscreen/#"
-              className="w-full h-full hidden"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              loading="lazy"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Development Site Plan Section */}
-      <section className="bg-white py-10">
-        <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold mb-6">Development Site Plan</h2>
-          <div className="w-full max-w-3xl mx-auto rounded-lg overflow-hidden border">
-            <Image src="/siteplan-dummy.jpg" alt="Site Plan" width={900} height={600} className="object-contain w-full h-auto" />
-          </div>
-        </div>
-      </section>
-
-      {/* Unit Analysis Section */}
-      <section className="bg-gray-50 py-10">
-        <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold mb-6">Unit Analysis</h2>
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white rounded-lg shadow">
-              <thead>
-                <tr className="bg-primary text-white">
-                  <th className="px-4 py-2 text-left">Unit Description</th>
-                  <th className="px-4 py-2 text-left">Area (sq ft)</th>
-                  <th className="px-4 py-2 text-left">Unit Distribution</th>
-                  <th className="px-4 py-2 text-left">Price (Available Units)</th>
-                  <th className="px-4 py-2 text-left">Balance Units</th>
-                </tr>
-              </thead>
-              <tbody>
-                {/* Example row, replace with real data if available */}
-                <tr>
-                  <td className="border px-4 py-2">2 Bedroom + Study</td>
-                  <td className="border px-4 py-2">1234-1322</td>
-                  <td className="border px-4 py-2">03-01/03-10</td>
-                  <td className="border px-4 py-2">$2.1M</td>
-                  <td className="border px-4 py-2">4</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
       {/* Main Content */}
       <section className="py-12">
         <div className="container mx-auto px-4">
@@ -324,7 +246,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                 </div>
 
                 <h3 className="text-xl font-semibold mb-4">Project Details</h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <div className="text-sm text-gray-500">Tenure</div>
                     <div className="font-semibold">{project.tenure}</div>
@@ -340,6 +262,42 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <div className="text-sm text-gray-500">Project Type</div>
                     <div className="font-semibold">{project.propertyType}</div>
+                  </div>
+                </div>
+
+                {/* Experience the Space Section */}
+                <div className="mb-12">
+                  <div className="text-center mb-8">
+                    <h3 className="text-xl font-semibold mb-3">Experience the Space</h3>
+                    <p className="text-gray-600">Walk through every corner, just like you're there.</p>
+                  </div>
+                  
+                  <div className="relative w-full aspect-[16/9] bg-gray-100 rounded-lg overflow-hidden border border-gray-200">
+                    {/* Initial state with play button */}
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/5 hover:bg-black/10 transition-colors cursor-pointer group" 
+                         onClick={(e) => {
+                           const iframe = e.currentTarget.nextElementSibling as HTMLIFrameElement;
+                           iframe.style.display = 'block';
+                           e.currentTarget.style.display = 'none';
+                         }}>
+                      <div className="flex flex-col items-center gap-4">
+                        <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center group-hover:bg-primary transition-colors">
+                          <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 5.14v14l11-7-11-7z" fill="currentColor"/>
+                          </svg>
+                        </div>
+                        <span className="text-gray-700 font-medium">Click to Experience 3D Tour</span>
+                      </div>
+                    </div>
+                    
+                    {/* 3D Tour iframe - hidden initially */}
+                    <iframe 
+                      src="https://www.propertylimbrothers.com/3d-tour/parc-esta-2br/fullscreen/#"
+                      className="w-full h-full hidden"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      loading="lazy"
+                    />
                   </div>
                 </div>
               </div>
