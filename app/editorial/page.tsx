@@ -7,15 +7,24 @@ import { Input } from "@/components/ui/input"
 import { motion } from "framer-motion"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useState } from "react"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 export default function EditorialPage() {
   const [email, setEmail] = useState("")
   const [consent, setConsent] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // Handle form submission logic here
     console.log({ email, consent })
+    setIsOpen(false)
   }
 
   return (
@@ -41,9 +50,6 @@ export default function EditorialPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <p className="text-2xl md:text-3xl text-gray-100 mb-6 tracking-wide">
-              KW Blog – Coming Soon
-            </p>
             <h1 className="text-5xl md:text-7xl font-bold text-white inline-block tracking-tight">
               Inside KW Singapore
             </h1>
@@ -51,8 +57,8 @@ export default function EditorialPage() {
         </div>
       </section>
 
-      {/* Coming Soon Content */}
-      <section className="py-16 bg-black">
+      {/* Content Section */}
+      <section className="py-20 bg-black">
         <div className="container mx-auto px-4">
           <motion.div 
             className="max-w-3xl mx-auto text-center"
@@ -67,53 +73,70 @@ export default function EditorialPage() {
               to know who we are beyond the business.
             </p>
 
-            {/* Subscription Form */}
-            <div className="bg-gray-900 rounded-lg p-8 shadow-lg">
-              <h2 className="text-2xl font-bold text-white mb-2">Stay Connected with KW Singapore</h2>
-              <p className="text-gray-300 mb-6">
-                Our blog is almost ready. Want to know when we go live? Drop your email and we'll give you a heads-up.
-              </p>
-
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <Input
-                    type="email"
-                    placeholder="Email Address"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400"
-                  />
-                  <p className="text-sm text-gray-400 mt-2">
-                    We'll send you one update when the blog launches. That's it.
-                  </p>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="consent"
-                    checked={consent}
-                    onCheckedChange={(checked) => setConsent(checked as boolean)}
-                    required
-                    className="border-gray-400 data-[state=checked]:bg-primary-red data-[state=checked]:border-primary-red"
-                  />
-                  <label
-                    htmlFor="consent"
-                    className="text-sm text-white"
-                  >
-                    I agree to receive updates from KW Singapore.
-                  </label>
-                </div>
-
+            <Dialog open={isOpen} onOpenChange={setIsOpen}>
+              <DialogTrigger asChild>
                 <Button 
-                  type="submit"
-                  className="w-full bg-primary-red text-white hover:bg-primary-red/90"
+                  className="bg-primary-red text-white hover:bg-primary-red/90 px-8 py-6 text-lg"
                 >
-                  Notify Me
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  Get Notified When We Go Live
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-              </form>
-            </div>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[600px] bg-white border-gray-200">
+                <DialogHeader>
+                  <div className="flex justify-center mb-4">
+                    <Image
+                      src="/images/kwsg-logo.png"
+                      alt="KW Singapore"
+                      width={200}
+                      height={60}
+                      className="h-12 w-auto"
+                      priority
+                    />
+                  </div>
+                  <DialogTitle className="text-2xl font-bold text-center text-gray-900">Stay Connected with KW Singapore</DialogTitle>
+                </DialogHeader>
+                <form onSubmit={handleSubmit} className="space-y-6 mt-4">
+                  <div>
+                    <Input
+                      type="email"
+                      placeholder="Email Address"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400"
+                    />
+                    <p className="text-sm text-gray-500 mt-2">
+                      We'll send you one update when the blog launches. That's it.
+                    </p>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="consent"
+                      checked={consent}
+                      onCheckedChange={(checked) => setConsent(checked as boolean)}
+                      required
+                      className="border-gray-400 data-[state=checked]:bg-primary-red data-[state=checked]:border-primary-red"
+                    />
+                    <label
+                      htmlFor="consent"
+                      className="text-sm text-gray-900"
+                    >
+                      I agree to receive updates from KW Singapore.
+                    </label>
+                  </div>
+
+                  <Button 
+                    type="submit"
+                    className="w-full bg-primary-red text-white hover:bg-primary-red/90"
+                  >
+                    Notify Me
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </form>
+              </DialogContent>
+            </Dialog>
           </motion.div>
         </div>
       </section>

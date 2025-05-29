@@ -3,6 +3,8 @@
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 import Image from "next/image"
+import { useState } from "react"
+import { JoinFormDialog } from "@/components/join-form-dialog"
 
 // Animation variants
 const fadeInUp = {
@@ -12,6 +14,13 @@ const fadeInUp = {
 }
 
 export default function JoinKW() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+
+  const handleSubmit = (data: any) => {
+    console.log("Form submitted:", data)
+    setIsDialogOpen(false)
+  }
+
   return (
     <main className="min-h-screen bg-black text-white">
       <section className="relative min-h-[80vh] flex items-center justify-center">
@@ -44,12 +53,19 @@ export default function JoinKW() {
           >
             <Button 
               className="bg-primary-red text-white hover:bg-primary-red/90 px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              onClick={() => setIsDialogOpen(true)}
             >
               Register Your Interest →
             </Button>
           </motion.div>
         </motion.div>
       </section>
+
+      <JoinFormDialog 
+        isOpen={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+        onSubmit={handleSubmit}
+      />
     </main>
   )
 }

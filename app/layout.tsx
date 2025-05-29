@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { ThemeProvider } from "@/components/theme-provider"
 import TransparentHeader from "@/components/transparent-header"
 import MobileMenu from "@/components/mobile-menu"
+import FloatingWhatsApp from "@/components/floating-whatsapp"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 
@@ -70,58 +71,69 @@ export default function RootLayout({
             )}
             {children}
             {!isAdminPage && (
-              <footer className="border-t py-8 md:py-12 bg-black text-white">
-                <div className="container grid gap-8 md:grid-cols-3">
-                  <div className="space-y-4">
-                    <Image
-                      src="/images/kwsg-logo.png"
-                      alt="KW Logo"
-                      width={180}
-                      height={90}
-                    />
-                    <p className="text-sm text-gray-300">
-                      The Real Estate Model of the Future. Built Today.
-                    </p>
-                  </div>
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-bold text-white">Quick Links</h3>
-                    <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm text-gray-300">
-                      <div className="space-y-2">
-                        <Link href="/" className="hover:text-white block">
-                          Home
-                        </Link>
-                        <Link href="/editorial" className="hover:text-white block">
-                          KW Blog
-                        </Link>
-                        <Link href="/projects" className="hover:text-white block">
-                          New Launch Condo
-                        </Link>
+              <>
+                <FloatingWhatsApp />
+                <footer className="border-t py-8 md:py-12 bg-black text-white">
+                  <div className="container grid gap-8 md:grid-cols-3">
+                    <div className="space-y-4">
+                      <Image
+                        src="/images/kwsg-logo.png"
+                        alt="KW Logo"
+                        width={180}
+                        height={90}
+                      />
+                      <p className="text-sm text-gray-300">
+                        The Real Estate Model of the Future. Built Today.
+                      </p>
+                    </div>
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-bold text-white">Quick Links</h3>
+                      <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm text-gray-300">
+                        <div className="space-y-2">
+                          <Link href="/" className="hover:text-white block">
+                            Home
+                          </Link>
+                          <Link href="/editorial" className="hover:text-white block">
+                            KW Blog
+                          </Link>
+                          <Link href="/projects" className="hover:text-white block">
+                            New Launch Condo
+                          </Link>
+                        </div>
+                        <div className="space-y-2">
+                          <Link href="/about-us" className="hover:text-white block">
+                            About Us
+                          </Link>
+                          <Link href="/contact" className="hover:text-white block">
+                            Contact
+                          </Link>
+                          <Link href="/join" className="hover:text-white block">
+                            Join KW Singapore
+                          </Link>
+                        </div>
                       </div>
-                      <div className="space-y-2">
-                        <Link href="/about-us" className="hover:text-white block">
-                          About Us
-                        </Link>
-                        <Link href="/contact" className="hover:text-white block">
-                          Contact
-                        </Link>
-                        <Link href="/join" className="hover:text-white block">
-                          Join KW Singapore
-                        </Link>
+                    </div>
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-bold text-white">Contact</h3>
+                      <div className="space-y-2 text-sm text-gray-300">
+                        <p>
+                          <a href="mailto:hello@kwsingapore.com" className="hover:text-white">
+                            Email: hello@kwsingapore.com
+                          </a>
+                        </p>
+                        <p>
+                          <a href="https://wa.me/6586111703" target="_blank" rel="noopener noreferrer" className="hover:text-white">
+                            Phone: +65 8611 1703
+                          </a>
+                        </p>
                       </div>
                     </div>
                   </div>
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-bold text-white">Contact</h3>
-                    <div className="space-y-2 text-sm text-gray-300">
-                      <p>Email: hello@kwsingapore.com</p>
-                      <p>Phone: +65 8611 1703</p>
-                    </div>
+                  <div className="container mt-8 border-t border-gray-800 pt-8 text-center text-sm text-gray-300">
+                    <p>&copy; {new Date().getFullYear()} KW New Launches. All rights reserved.</p>
                   </div>
-                </div>
-                <div className="container mt-8 border-t border-gray-800 pt-8 text-center text-sm text-gray-300">
-                  <p>&copy; {new Date().getFullYear()} KW New Launches. All rights reserved.</p>
-                </div>
-              </footer>
+                </footer>
+              </>
             )}
           </div>
         </ThemeProvider>
