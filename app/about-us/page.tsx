@@ -96,7 +96,7 @@ export default function AboutUsPage() {
       className="min-h-screen flex flex-col"
     >
       {/* Hero Section */}
-      <section className="relative h-[60vh] w-full">
+      <section className="relative h-screen w-full">
         <Image
           src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80"
           alt="About KW Singapore"
@@ -106,8 +106,10 @@ export default function AboutUsPage() {
         />
         <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
           <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">About KW Singapore</h1>
-            <p className="text-xl text-gray-100 max-w-3xl mx-auto">
+            <h1 className="text-5xl md:text-7xl font-bold text-white inline-block tracking-tight">
+              About KW Singapore
+            </h1>
+            <p className="text-xl text-gray-100 max-w-3xl mx-auto mt-6">
               Keller Williams Singapore is more than a realty — it's a launchpad for real estate entrepreneurs. We are the strategic intersection of performance, consulting, and innovation.
             </p>
           </div>

@@ -30,7 +30,7 @@ export default function ContactPage() {
       className="min-h-screen flex flex-col"
     >
       {/* Hero Section */}
-      <section className="relative h-[40vh] w-full">
+      <section className="relative h-screen w-full">
         <Image
           src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80"
           alt="Contact Us"
@@ -38,13 +38,13 @@ export default function ContactPage() {
           className="object-cover brightness-50"
           priority
         />
-        <div className="absolute inset-0 bg-black/40 flex items-end">
-          <div className="container mx-auto px-4 pb-16 text-center">
+        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+          <div className="container mx-auto px-4 text-center">
             <motion.h1 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="text-4xl md:text-5xl font-bold text-white mb-4"
+              className="text-5xl md:text-7xl font-bold text-white inline-block tracking-tight"
             >
               Contact Us
             </motion.h1>
@@ -52,7 +52,7 @@ export default function ContactPage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              className="text-xl text-gray-100 max-w-3xl mx-auto"
+              className="text-xl text-gray-100 max-w-3xl mx-auto mt-6"
             >
               Get in touch with our team for any inquiries about new launches, partnerships, or career opportunities.
             </motion.p>
