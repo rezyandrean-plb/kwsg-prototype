@@ -106,7 +106,6 @@ export default function ContactPage() {
                   <div>
                     <h3 className="text-lg font-semibold text-white mb-1">Business Hours</h3>
                     <p className="text-gray-300">Monday - Friday: 9:00 AM - 6:00 PM</p>
-                    <p className="text-gray-300">Saturday: 10:00 AM - 4:00 PM</p>
                   </div>
                 </motion.div>
 

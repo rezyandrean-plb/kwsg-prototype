@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle, Building2, Users, Award, Brain, Share2, Video, BarChart3, Target, Heart, Lightbulb, Users2, Briefcase } from "lucide-react"
-import { motion } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
 import { useState } from "react"
 import { JoinFormDialog } from "@/components/join-form-dialog"
 
@@ -26,6 +26,8 @@ const staggerContainer = {
 export default function AboutUsPage() {
   const [openModal, setOpenModal] = useState<string | null>(null)
   const [isJoinFormOpen, setIsJoinFormOpen] = useState(false)
+  const { scrollYProgress } = useScroll()
+  const pathLength = useTransform(scrollYProgress, [0, 1], [0, 1])
 
   const handleJoinFormSubmit = (data: any) => {
     console.log('Form submitted:', data)
@@ -126,13 +128,62 @@ export default function AboutUsPage() {
             <p className="text-lg text-gray-300 mb-8">
               As the local embodiment of the world's largest real estate brand, we are built to empower Singapore's top realtors through elite systems, technology, and training.
             </p>
+            <motion.div 
+              className="relative w-full h-24 overflow-hidden"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: false }}
+              transition={{ duration: 0.5 }}
+            >
+              <svg
+                className="w-full h-full"
+                viewBox="0 0 400 100"
+                preserveAspectRatio="none"
+              >
+                <motion.path
+                  d="M0,50 C100,0 200,100 300,50 C400,0 500,100 600,50"
+                  fill="none"
+                  stroke="url(#gradient)"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: false }}
+                  style={{ pathLength }}
+                  transition={{ duration: 0.1 }}
+                />
+                <defs>
+                  <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#FF0000" />
+                    <stop offset="100%" stopColor="#FFFFFF" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </motion.div>
           </motion.div>
         </div>
       </section>
 
       {/* MVVBP Section */}
-      <section className="py-20 bg-gray-900 text-white">
-        <div className="container mx-auto px-4">
+      <section className="relative py-20 text-white overflow-hidden">
+        <div className="absolute inset-0">
+          <motion.div
+            initial={{ scale: 1.1 }}
+            whileInView={{ scale: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="w-full h-full"
+          >
+            <Image
+              src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&q=80"
+              alt="MVVBP Background"
+              fill
+              className="object-cover brightness-[0.2]"
+              style={{ transform: 'translateZ(-1px) scale(2)' }}
+            />
+          </motion.div>
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div 
             className="text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
@@ -166,7 +217,7 @@ export default function AboutUsPage() {
             ].map((item, idx) => (
               <motion.div
                 key={item.title}
-                className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-6 hover:bg-white/10 transition-colors duration-300"
+                className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-6 hover:bg-black/60 transition-all duration-300"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -196,7 +247,7 @@ export default function AboutUsPage() {
             ].map((item, idx) => (
               <motion.div
                 key={item.title}
-                className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-6 hover:bg-white/10 transition-colors duration-300"
+                className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-6 hover:bg-black/60 transition-all duration-300"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -213,77 +264,26 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-      {/* Careers Section */}
-      <section className="py-20 bg-black text-white">
-        <div className="container mx-auto px-4">
-          <motion.div 
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Careers @ KW</h2>
-            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-              We don't offer jobs — we offer business models. Whether you're starting out or scaling a high-performance team, KW Singapore equips you with tools, coaching, and systems to build a legacy business.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <motion.div 
-              className="bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-700"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <div className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="h-8 w-8 text-primary-red" />
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-center text-white">Solo Consultant to Capper</h3>
-              <p className="text-gray-300 text-center">
-                Start your journey as an independent consultant and grow into a top producer.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-700"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <div className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users2 className="h-8 w-8 text-primary-red" />
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-center text-white">Team Leader to Expansion Director</h3>
-              <p className="text-gray-300 text-center">
-                Scale your success by building and leading high-performance teams.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-700"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              <div className="bg-primary-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Briefcase className="h-8 w-8 text-primary-red" />
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-center text-white">Support Roles</h3>
-              <p className="text-gray-300 text-center">
-                Creative, Media, Tech, Training, and Ops roles for non-sales talents.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* Core Team Section */}
-      <section className="py-20 bg-gray-900 text-white">
-        <div className="container mx-auto px-4">
+      <section className="relative py-20 text-white overflow-hidden">
+        <div className="absolute inset-0">
+          <motion.div
+            initial={{ scale: 1.1 }}
+            whileInView={{ scale: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="w-full h-full"
+          >
+            <Image
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80"
+              alt="Core Team Background"
+              fill
+              className="object-cover brightness-[0.2]"
+              style={{ transform: 'translateZ(-1px) scale(2)' }}
+            />
+          </motion.div>
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div 
             className="text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
@@ -301,7 +301,7 @@ export default function AboutUsPage() {
             {team.slice(0, 3).map((member, idx) => (
               <motion.div
                 key={member.key}
-                className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden cursor-pointer group max-w-[240px] mx-auto w-full"
+                className="bg-black/40 backdrop-blur-sm rounded-xl shadow-lg border border-white/10 overflow-hidden cursor-pointer group max-w-[240px] mx-auto w-full"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -323,8 +323,8 @@ export default function AboutUsPage() {
                   </div>
                 </div>
                 <div className="p-3">
-                  <h3 className="text-lg font-bold mb-0.5 text-black group-hover:text-primary-red transition-colors duration-300">{member.name}</h3>
-                  <p className="text-xs text-primary-red line-clamp-2">{member.position}</p>
+                  <h3 className="text-lg font-bold mb-0.5 text-white group-hover:text-primary-red transition-colors duration-300">{member.name}</h3>
+                  <p className="text-xs text-white/80 line-clamp-2">{member.position}</p>
                 </div>
               </motion.div>
             ))}
@@ -335,7 +335,7 @@ export default function AboutUsPage() {
               {team.slice(3).map((member, idx) => (
                 <motion.div
                   key={member.key}
-                  className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden cursor-pointer group max-w-[240px] mx-auto w-full"
+                  className="bg-black/40 backdrop-blur-sm rounded-xl shadow-lg border border-white/10 overflow-hidden cursor-pointer group max-w-[240px] mx-auto w-full"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -357,8 +357,8 @@ export default function AboutUsPage() {
                     </div>
                   </div>
                   <div className="p-3">
-                    <h3 className="text-lg font-bold mb-0.5 text-black group-hover:text-primary-red transition-colors duration-300">{member.name}</h3>
-                    <p className="text-xs text-primary-red line-clamp-2">{member.position}</p>
+                    <h3 className="text-lg font-bold mb-0.5 text-white group-hover:text-primary-red transition-colors duration-300">{member.name}</h3>
+                    <p className="text-xs text-white/80 line-clamp-2">{member.position}</p>
                   </div>
                 </motion.div>
               ))}
@@ -373,11 +373,11 @@ export default function AboutUsPage() {
               onClick={() => setOpenModal(null)}
             >
               <div
-                className="bg-white text-black rounded-xl shadow-2xl max-w-2xl w-full mx-auto relative animate-fadeIn overflow-y-auto max-h-[90vh]"
+                className="bg-white rounded-xl shadow-2xl max-w-2xl w-full mx-auto relative animate-fadeIn overflow-y-auto max-h-[90vh]"
                 onClick={e => e.stopPropagation()}
               >
                 <button
-                  className="absolute top-4 right-4 text-gray-500 hover:text-primary-red text-2xl font-bold focus:outline-none z-10"
+                  className="absolute top-4 right-4 text-gray-600 hover:text-primary-red text-2xl font-bold focus:outline-none z-10"
                   onClick={() => setOpenModal(null)}
                   aria-label="Close"
                 >
@@ -394,11 +394,11 @@ export default function AboutUsPage() {
                       />
                     </div>
                     <div className="flex-1 text-center md:text-left">
-                      <h3 className="text-2xl font-bold mb-1">{member.name}</h3>
-                      <p className="text-primary-red font-medium">{member.position}</p>
+                      <h3 className="text-xl font-bold mb-1 text-gray-900">{member.name}</h3>
+                      <p className="text-sm text-gray-600 font-medium">{member.position}</p>
                     </div>
                   </div>
-                  <div className="space-y-4 text-gray-800 text-base leading-relaxed">
+                  <div className="space-y-3 text-gray-700 text-sm leading-relaxed">
                     {member.bio.map((b, i) => <p key={i}>{b}</p>)}
                   </div>
                 </div>
