@@ -140,19 +140,22 @@ export default function Home() {
               KW Singapore is the next-generation real estate model for tomorrow's consultants. We empower ambitious professionals with world-class media production, AI automation, and training systems—so they can build brands, grow businesses, and scale sustainably.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <Link href="/join">
-                <Button className="group px-[clamp(2rem,4vw,2.5rem)] py-[clamp(1rem,2vw,1.5rem)] text-[clamp(1rem,1.5vw,1.25rem)] bg-primary-red text-white hover:bg-primary-red/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]">
-                  Join KW Singapore
-                  <ArrowRight className="ml-3 h-[clamp(1.25rem,1.5vw,1.5rem)] w-[clamp(1.25rem,1.5vw,1.5rem)] transform transition-transform duration-300 group-hover:translate-x-1" />
-                </Button>
-              </Link>
+              <Button 
+                onClick={() => {
+                  document.getElementById('kw-advantage')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="group px-[clamp(2rem,4vw,2.5rem)] py-[clamp(1rem,2vw,1.5rem)] text-[clamp(1rem,1.5vw,1.25rem)] bg-primary-red text-white hover:bg-primary-red/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]"
+              >
+                Learn More
+                <ArrowRight className="ml-3 h-[clamp(1.25rem,1.5vw,1.5rem)] w-[clamp(1.25rem,1.5vw,1.5rem)] transform transition-transform duration-300 group-hover:translate-x-1" />
+              </Button>
             </div>
           </div>
         </div>
       </section>
 
       {/* The KW Advantage Section */}
-      <section className="relative py-16 md:py-20 bg-black text-white overflow-hidden">
+      <section id="kw-advantage" className="relative py-16 md:py-20 bg-black text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-black" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.05),transparent_70%)]" />
