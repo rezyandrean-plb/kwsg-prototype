@@ -26,6 +26,19 @@ export default function Home() {
   const [isWebinarDialogOpen, setIsWebinarDialogOpen] = useState(false)
   const [isJoinFormOpen, setIsJoinFormOpen] = useState(false)
 
+  // Animation controls for sections
+  const [advantageRef, advantageInView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  })
+  const [whyKWRef, whyKWInView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  })
+
+  const advantageControls = useAnimation()
+  const whyKWControls = useAnimation()
+
   const heroImages = [
     "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80",
     "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80",
@@ -39,6 +52,40 @@ export default function Home() {
 
     return () => clearInterval(interval)
   }, [])
+
+  useEffect(() => {
+    if (advantageInView) {
+      advantageControls.start("visible")
+    }
+  }, [advantageInView, advantageControls])
+
+  useEffect(() => {
+    if (whyKWInView) {
+      whyKWControls.start("visible")
+    }
+  }, [whyKWInView, whyKWControls])
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  }
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -70,29 +117,21 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col bg-white">
-      {/* Hero Section - Updated with slideshow */}
-      <section className="relative w-full overflow-hidden">
+      {/* Hero Section - Updated with video */}
+      <section className="relative w-full min-h-[100vh] overflow-hidden">
         <div className="absolute inset-0 z-0">
-          {heroImages.map((src, index) => (
-            <div
-              key={src}
-              className={`absolute inset-0 transition-opacity duration-1000 ${
-                index === currentImageIndex ? "opacity-100" : "opacity-0"
-              }`}
-            >
-              <Image
-                src={src}
-                alt="Luxury Singapore Property"
-                fill
-                className="object-cover brightness-[0.3]"
-                priority={index === 0}
-                quality={100}
-              />
-            </div>
-          ))}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/50" />
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover brightness-[0.7]"
+          >
+            <source src="/hero-section-video.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/15 to-black/20" />
         </div>
-        <div className="relative z-10 flex flex-col items-center justify-center text-white p-4 sm:p-6 md:p-8 py-16 md:py-24">
+        <div className="relative z-10 flex flex-col items-center justify-center text-white p-4 sm:p-6 md:p-8 py-16 md:py-24 min-h-[100vh]">
           <div className="max-w-4xl mx-auto text-center space-y-4 sm:space-y-6">
             <h1 className="text-[clamp(2rem,5vw,4.5rem)] font-bold tracking-tight text-white leading-[1.1]">
               The Real Estate Model of the Future. Built Today.
@@ -114,30 +153,35 @@ export default function Home() {
 
       {/* The KW Advantage Section */}
       <section className="relative py-16 md:py-20 bg-black text-white overflow-hidden">
-        {/* Background with subtle gradient */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-black" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.05),transparent_70%)]" />
         </div>
 
         <div className="relative z-10 container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-8">
+          <motion.div 
+            ref={advantageRef}
+            initial="hidden"
+            animate={advantageControls}
+            variants={containerVariants}
+            className="max-w-6xl mx-auto"
+          >
+            <motion.div variants={itemVariants} className="text-center mb-8">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-4">
                 The KW Advantage
               </h2>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto">
                 Empowering real estate professionals with cutting-edge tools and strategies
               </p>
-            </div>
+            </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-6">
+            <motion.div variants={containerVariants} className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
               {/* Card 1: Dominate New Launches */}
-              <div className="group relative">
+              <motion.div variants={itemVariants} className="group relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-red/20 to-transparent rounded-2xl transform transition-transform group-hover:scale-105"></div>
-                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 group-hover:-translate-y-2">
-                  <div className="mb-4">
-                    <div className="relative w-full h-48 rounded-lg overflow-hidden">
+                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-8 h-full transform transition-all duration-300 group-hover:-translate-y-2">
+                  <div className="mb-6">
+                    <div className="relative w-full h-64 rounded-lg overflow-hidden">
                       <Image
                         src="/images/homepage/dominate-new-launches.jpg"
                         alt="New Launch Property"
@@ -145,19 +189,19 @@ export default function Home() {
                         className="object-cover"
                       />
                       <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
-                        <h3 className="text-xl font-bold text-white text-center">Dominate New Launches</h3>
+                        <h3 className="text-2xl font-bold text-white text-center">Dominate New Launches</h3>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Card 2: Scale with Media */}
-              <div className="group relative">
+              <motion.div variants={itemVariants} className="group relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-red/20 to-transparent rounded-2xl transform transition-transform group-hover:scale-105"></div>
-                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 group-hover:-translate-y-2">
-                  <div className="mb-4">
-                    <div className="relative w-full h-48 rounded-lg overflow-hidden">
+                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-8 h-full transform transition-all duration-300 group-hover:-translate-y-2">
+                  <div className="mb-6">
+                    <div className="relative w-full h-64 rounded-lg overflow-hidden">
                       <Image
                         src="/images/homepage/scale-with-media.jpg"
                         alt="Media Production"
@@ -165,19 +209,19 @@ export default function Home() {
                         className="object-cover"
                       />
                       <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
-                        <h3 className="text-xl font-bold text-white text-center">Scale with Media</h3>
+                        <h3 className="text-2xl font-bold text-white text-center">Scale with Media</h3>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Card 3: Win with AI */}
-              <div className="group relative">
+              <motion.div variants={itemVariants} className="group relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-red/20 to-transparent rounded-2xl transform transition-transform group-hover:scale-105"></div>
-                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 group-hover:-translate-y-2">
-                  <div className="mb-4">
-                    <div className="relative w-full h-48 rounded-lg overflow-hidden">
+                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-8 h-full transform transition-all duration-300 group-hover:-translate-y-2">
+                  <div className="mb-6">
+                    <div className="relative w-full h-64 rounded-lg overflow-hidden">
                       <Image
                         src="/images/homepage/win-with-ai.jpg"
                         alt="AI Technology"
@@ -185,13 +229,13 @@ export default function Home() {
                         className="object-cover"
                       />
                       <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
-                        <h3 className="text-xl font-bold text-white text-center">Win with AI</h3>
+                        <h3 className="text-2xl font-bold text-white text-center">Win with AI</h3>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
@@ -203,13 +247,12 @@ export default function Home() {
                 <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Why KW Singapore Section */}
       <section className="relative py-16 md:py-20 bg-black text-white overflow-hidden">
-        {/* Background Image with Parallax-like Effect */}
         <div className="absolute inset-0 z-0">
           <Image
             src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80"
@@ -220,141 +263,185 @@ export default function Home() {
             className="object-cover object-center brightness-[0.5]"
             quality={100}
           />
-          {/* Enhanced Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/40" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.05),transparent_20%)]" />
         </div>
 
         <div className="relative z-10 container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            {/* Header Content */}
-            <div className="text-center mb-12">
+          <motion.div 
+            ref={whyKWRef}
+            initial="hidden"
+            animate={whyKWControls}
+            variants={containerVariants}
+            className="max-w-6xl mx-auto"
+          >
+            <motion.div variants={itemVariants} className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight mb-4">
                 Why KW Singapore?
               </h2>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                Built for Consultants. Backed by Systems.
-              </p>
-            </div>
+              <div className="flex flex-col items-center gap-6">
+                <motion.p 
+                  variants={itemVariants}
+                  className="text-xl text-white max-w-3xl mx-auto"
+                >
+                  Built for Consultants. Backed by Systems.
+                </motion.p>
+                
+                <div className="relative w-full max-w-3xl h-[2px] overflow-hidden">
+                  <motion.div
+                    initial={{ x: "100%" }}
+                    animate={{ x: "-100%" }}
+                    transition={{ 
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                    className="absolute top-0 left-0 h-full w-full bg-gradient-to-r from-transparent via-primary-red to-transparent"
+                  />
+                  <motion.div
+                    initial={{ x: "100%" }}
+                    animate={{ x: "-100%" }}
+                    transition={{ 
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                    className="absolute -top-1 -right-2 w-2 h-2 rounded-full bg-primary-red"
+                  />
+                  <motion.div
+                    initial={{ x: "100%" }}
+                    animate={{ x: "-100%" }}
+                    transition={{ 
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                    className="absolute -top-1 -right-6 w-2 h-2 rounded-full bg-primary-red/70"
+                  />
+                  <motion.div
+                    initial={{ x: "100%" }}
+                    animate={{ x: "-100%" }}
+                    transition={{ 
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                    className="absolute -top-1 -right-10 w-2 h-2 rounded-full bg-primary-red/40"
+                  />
+                </div>
+              </div>
+            </motion.div>
 
-            {/* Feature Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <motion.div variants={containerVariants} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
               {/* First Row - 4 Cards */}
               {/* Global Brand & Trust */}
-              <Link href="/global-brand" className="group">
-                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
-                  <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+              <motion.div variants={itemVariants}>
+                <Link href="/global-brand" className="group">
+                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
+                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-2">Built by the World. Powered for You.</h3>
+                    <p className="text-gray-300 text-sm mb-4">60+ countries. 200,000 consultants. KW Singapore unlocks global referrals and instant credibility with developers.</p>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2">Built by the World. Powered for You.</h3>
-                  <p className="text-gray-300 text-sm mb-4">60+ countries. 200,000 consultants. KW Singapore unlocks global referrals and instant credibility with developers.</p>
-                  <div className="text-primary-red font-medium flex items-center group-hover:translate-x-1 transition-transform duration-300">
-                    Why It Matters →
-                  </div>
-                </div>
-              </Link>
+                </Link>
+              </motion.div>
 
               {/* Custom CRM - Command */}
-              <Link href="/command" className="group">
-                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
-                  <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
+              <motion.div variants={itemVariants}>
+                <Link href="/command" className="group">
+                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
+                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-2">Your All-In-One Control Panel.</h3>
+                    <p className="text-gray-300 text-sm mb-4">Run your leads, campaigns, and closings from a single AI-powered dashboard—desktop or app.</p>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2">Your All-In-One Control Panel.</h3>
-                  <p className="text-gray-300 text-sm mb-4">Run your leads, campaigns, and closings from a single AI-powered dashboard—desktop or app.</p>
-                  <div className="text-primary-red font-medium flex items-center group-hover:translate-x-1 transition-transform duration-300">
-                    Try the Tech →
-                  </div>
-                </div>
-              </Link>
+                </Link>
+              </motion.div>
 
               {/* PropTech Stack */}
-              <Link href="/proptech" className="group">
-                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
-                  <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
+              <motion.div variants={itemVariants}>
+                <Link href="/proptech" className="group">
+                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
+                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-2">Tech That Closes.</h3>
+                    <p className="text-gray-300 text-sm mb-4">Asset tools, PSF trackers, dashboards & more—designed to help you win high-value clients.</p>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2">Tech That Closes.</h3>
-                  <p className="text-gray-300 text-sm mb-4">Asset tools, PSF trackers, dashboards & more—designed to help you win high-value clients.</p>
-                  <div className="text-primary-red font-medium flex items-center group-hover:translate-x-1 transition-transform duration-300">
-                    See Tools →
-                  </div>
-                </div>
-              </Link>
+                </Link>
+              </motion.div>
 
               {/* Research Hub */}
-              <Link href="/research" className="group">
-                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
-                  <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
+              <motion.div variants={itemVariants}>
+                <Link href="/research" className="group">
+                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
+                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-2">Insights That Convert.</h3>
+                    <p className="text-gray-300 text-sm mb-4">Plug into smart charts, disparity maps & launch decks. Know what to say—every month.</p>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2">Insights That Convert.</h3>
-                  <p className="text-gray-300 text-sm mb-4">Plug into smart charts, disparity maps & launch decks. Know what to say—every month.</p>
-                  <div className="text-primary-red font-medium flex items-center group-hover:translate-x-1 transition-transform duration-300">
-                    Get the Data →
-                  </div>
-                </div>
-              </Link>
-            </div>
+                </Link>
+              </motion.div>
+            </motion.div>
 
             {/* Second Row - 3 Centered Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
+            <motion.div variants={containerVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
               {/* Media Support */}
-              <Link href="/media" className="group">
-                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
-                  <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                    </svg>
+              <motion.div variants={itemVariants}>
+                <Link href="/media" className="group">
+                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
+                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-2">Look Pro. Sell More.</h3>
+                    <p className="text-gray-300 text-sm mb-4">KW-exclusive video shoots, reels, and scripts to grow your brand—at startup-friendly prices.</p>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2">Look Pro. Sell More.</h3>
-                  <p className="text-gray-300 text-sm mb-4">KW-exclusive video shoots, reels, and scripts to grow your brand—at startup-friendly prices.</p>
-                  <div className="text-primary-red font-medium flex items-center group-hover:translate-x-1 transition-transform duration-300">
-                    Book a Shoot →
-                  </div>
-                </div>
-              </Link>
+                </Link>
+              </motion.div>
 
               {/* Training System */}
-              <Link href="/training" className="group">
-                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
-                  <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                    </svg>
+              <motion.div variants={itemVariants}>
+                <Link href="/training" className="group">
+                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
+                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-2">Learn Fast. Earn Fast.</h3>
+                    <p className="text-gray-300 text-sm mb-4">You get weekly coaching, expert-led playbooks, and a launch plan that works.</p>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2">Learn Fast. Earn Fast.</h3>
-                  <p className="text-gray-300 text-sm mb-4">You get weekly coaching, expert-led playbooks, and a launch plan that works.</p>
-                  <div className="text-primary-red font-medium flex items-center group-hover:translate-x-1 transition-transform duration-300">
-                    View Training →
-                  </div>
-                </div>
-              </Link>
+                </Link>
+              </motion.div>
 
               {/* Growth Share Model */}
-              <Link href="/growth-share" className="group">
-                <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
-                  <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
+              <motion.div variants={itemVariants}>
+                <Link href="/growth-share" className="group">
+                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
+                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-2">Earn Beyond Closings.</h3>
+                    <p className="text-gray-300 text-sm mb-4">2% from every deal in your 7-tier tree. Passive. Global.</p>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2">Earn Beyond Closings.</h3>
-                  <p className="text-gray-300 text-sm mb-4">2% from every deal in your 7-tier tree. Passive. Global. Forever.</p>
-                  <div className="text-primary-red font-medium flex items-center group-hover:translate-x-1 transition-transform duration-300">
-                    How It Works →
-                  </div>
-                </div>
-              </Link>
-            </div>
+                </Link>
+              </motion.div>
+            </motion.div>
 
             {/* CTA Button */}
             <div className="flex justify-center">
@@ -366,11 +453,11 @@ export default function Home() {
                 <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* New Launch Condo Section */}
+      {/* New Launch Condo Section - Hidden
       <section className="relative py-16 md:py-20 bg-gray-900 text-white">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-4xl mx-auto mb-10">
@@ -399,6 +486,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      */}
 
       {/* New Section - Launch Countdown */}
       <section className="relative py-10 sm:py-14 md:py-20 bg-black text-white overflow-hidden">
@@ -412,44 +500,87 @@ export default function Home() {
             quality={100}
             priority
           />
-          {/* Enhanced Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/30" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.05),transparent_20%)]" />
         </div>
 
         {/* Content Container */}
         <div className="relative z-10 container mx-auto px-4 sm:px-6">
-          <div className="max-w-4xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="max-w-4xl mx-auto"
+          >
             {/* Main Content */}
             <div className="space-y-6">
               {/* Text Content */}
-              <div className="space-y-3 text-center">
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                className="space-y-3 text-center"
+              >
                 <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
                   The Future of Real Estate in Singapore is Here. Are You Ready?
                 </h2>
                 <p className="text-base sm:text-lg md:text-xl text-gray-200 leading-relaxed">
-                Join us for the most anticipated real estate launch of 2025!
+                  Join us for the most anticipated real estate launch of 2025!
                 </p>
-              </div>
+              </motion.div>
 
               {/* Countdown Timer */}
-              <div className="flex flex-col items-center space-y-4">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+                className="flex flex-col items-center space-y-4"
+              >
                 <div className="flex items-center justify-center gap-3">
-                  <div className="p-2 rounded-full bg-primary-red/10">
+                  <motion.div 
+                    initial={{ rotate: -180, opacity: 0 }}
+                    whileInView={{ rotate: 0, opacity: 1 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+                    className="p-2 rounded-full bg-primary-red/10"
+                  >
                     <Calendar className="h-6 w-6 text-primary-red" />
-                  </div>
-                  <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white">Launch Countdown</h3>
+                  </motion.div>
+                  <motion.h3 
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.6, delay: 0.7, ease: "easeOut" }}
+                    className="text-xl sm:text-2xl font-bold tracking-tight text-white"
+                  >
+                    Launch Countdown
+                  </motion.h3>
                 </div>
                 {/* Enhanced Countdown Timer */}
-                <div className="w-full flex justify-center">
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
+                  className="w-full flex justify-center"
+                >
                   <div className="transform scale-100 sm:scale-105 w-full max-w-xs">
                     <CountdownTimer targetDate="2025-07-01T00:00:00" />
                   </div>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
               {/* CTA Button */}
-              <div className="flex justify-center">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: 1, ease: "easeOut" }}
+                className="flex justify-center"
+              >
                 <Button 
                   onClick={() => setIsWebinarDialogOpen(true)}
                   className="group px-8 sm:px-10 py-4 sm:py-6 text-lg sm:text-xl bg-primary-red text-white hover:bg-primary-red/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]"
@@ -457,9 +588,9 @@ export default function Home() {
                   Join the Webinar
                   <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
                 </Button>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 

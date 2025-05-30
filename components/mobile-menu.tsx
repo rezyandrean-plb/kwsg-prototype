@@ -23,16 +23,8 @@ export default function MobileMenu() {
       {/* Mobile and Tablet menu overlay */}
       {isOpen && (
         <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur supports-[backdrop-filter]:bg-black/60">
-          <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 md:max-w-md">
-            <div className="flex items-center justify-between">
-              <Link href="/" className="-m-1.5 p-1.5">
-                <span className="sr-only">KW Singapore</span>
-                <img
-                  className="h-8 w-auto"
-                  src="/images/kwsg-logo.png"
-                  alt="KW Logo"
-                />
-              </Link>
+          <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 md:max-w-md animate-in slide-in-from-right duration-300">
+            <div className="flex items-center justify-end">
               <Button
                 variant="ghost"
                 size="icon"
@@ -45,10 +37,10 @@ export default function MobileMenu() {
             </div>
             <div className="mt-6 flow-root">
               <div className="-my-6 divide-y divide-gray-800">
-                <div className="space-y-2 py-6">
+                <div className="space-y-4 py-6">
                   <Link
                     href="/projects"
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
+                    className="block text-lg font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
                     onClick={() => setIsOpen(false)}
                   >
                     New Launch Condo
@@ -56,7 +48,7 @@ export default function MobileMenu() {
                   </Link>
                   <Link
                     href="/join"
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
+                    className="block text-lg font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
                     onClick={() => setIsOpen(false)}
                   >
                     Join KW Singapore
@@ -64,7 +56,7 @@ export default function MobileMenu() {
                   </Link>
                   <Link
                     href="/about-us"
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
+                    className="block text-lg font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
                     onClick={() => setIsOpen(false)}
                   >
                     About Us
@@ -72,7 +64,7 @@ export default function MobileMenu() {
                   </Link>
                   <Link
                     href="/editorial"
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
+                    className="block text-lg font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
                     onClick={() => setIsOpen(false)}
                   >
                     KW Blog
@@ -80,7 +72,7 @@ export default function MobileMenu() {
                   </Link>
                   <Link
                     href="/contact"
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
+                    className="block text-lg font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
                     onClick={() => setIsOpen(false)}
                   >
                     Contact
