@@ -38,7 +38,7 @@ export default function AboutUsPage() {
     {
       key: 'melvin',
       name: 'Melvin Lim',
-      position: 'Founder & Operating Principal, Keller Williams Singapore',
+      position: 'Founder & Operating Principal',
       image: '/images/core-team/melvin-lim.jpg',
       bio: [
         "Melvin Lim is the Founder and Operating Principal of Keller Williams Singapore, where he stands at the forefront of a transformative movement in Singapore's real estate landscape. As the driving force behind this venture, Melvin brings a unique combination of visionary leadership, deep industry insight, and an extensive professional network, positioning Keller Williams Singapore as a new benchmark for excellence, collaboration, and innovation in real estate.",
@@ -50,7 +50,7 @@ export default function AboutUsPage() {
     {
       key: 'grayce',
       name: 'Grayce Tan',
-      position: 'Director of Growth, Keller Williams Singapore',
+      position: 'Director of Growth',
       image: '/images/core-team/grayce-tan.jpg',
       bio: [
         "As Director of Growth at Keller Williams Singapore, Grayce works closely with Melvin Lim and the core team in building the company from the ground up — shaping the strategic vision, assembling the founding team, and laying the operational groundwork to scale a next-generation real estate organisation. Her focus is not just on growth, but on building a company culture defined by empowered agents, shared leadership, and a deep commitment to long-term business success.",
@@ -58,10 +58,24 @@ export default function AboutUsPage() {
         "With a deep-rooted passion for coaching, learning, and self-development, Grayce brings a multidisciplinary lens to her work. Her academic background spans Sociology, Educational Pedagogy, and Real Estate Investment — reflecting her lifelong curiosity about how people think, grow, and connect. A voracious reader and critical thinker, Grayce thrives on exploring ideas across disciplines and translating them into meaningful strategies for business and team development. This commitment to learning and service continues to define her approach as she helps lead the transformative movement in Singapore's real estate landscape through Keller Williams Singapore."
       ]
     },
+
+    {
+      key: 'carrie',
+      name: 'Carrie Teoh',
+      position: 'HR & Finance Director',
+      image: '/images/core-team/carrie-teoh.png',
+      bio: [
+        "Carrie is the systems architect behind KW Singapore's platform operations. As HR & Finance Director, she plans, builds, and scales the infrastructure that powers our consultants—from finance and compliance to HR systems, recruitment, and onboarding.",
+        "With a strong belief in fairness and structure, Carrie ensures that every process is thoughtfully designed to balance people needs with operational standards. Her approach is both strategic and grounded—bringing clarity to complexity while never losing sight of the human experience.",
+        "She's not here to manage agents. She's here to empower builders. Every consultant who joins KW Singapore touches a process she's crafted: structured, compliant, and performance-ready. From hiring playbooks to financial discipline, Carrie ensures our backend runs with the same clarity and scalability as our consultants' front-end brand engines.",
+        "And while her systems run lean, her leadership is deeply human. Carrie leads by showing up—whether it's through onboarding sessions, supporting teammates through challenges, or even cooking for the team from the office kitchen that now proudly bears her name. For Carrie, wellness isn't a perk. It's a baseline for performance.",
+        "KW Singapore doesn't run like a brokerage. It runs like a platform—and Carrie is the anchor who keeps that platform steady, fair, and future-ready."
+      ]
+    },
     {
       key: 'siewmin',
       name: 'Siew Min Choong',
-      position: 'Regional Tech Trainer & Administrator, Keller Williams Singapore',
+      position: 'Regional Tech Trainer & Administrator',
       image: '/images/core-team/siew-min-choong.jpg',
       bio: [
         "Siew Min brings over a decade of experience at the intersection of real estate and technology. She joined the KW ecosystem in 2019 through KW Malaysia and later worked closely with KW Worldwide via Command Labs—gathering ground-level feedback from consultants to shape how Command is built, localized, and optimized for real-world market needs.",
@@ -71,7 +85,7 @@ export default function AboutUsPage() {
     {
       key: 'marie',
       name: 'Marie Abalos',
-      position: 'Market Center Administrator & Executive Assistant to OP, Keller Williams Singapore',
+      position: 'Market Center Administrator & Executive Assistant to OP',
       image: '/images/core-team/marie-abalos.jpg',
       bio: [
         "Marie serves as both Market Center Administrator and Executive Assistant to the Operating Principal—leading with precision, clarity, and operational discipline. She oversees financials, compliance, and market center systems while supporting top-level strategy and execution. With prior HR experience at PropertyLimBrothers and a track record in executive support, Marie bridges leadership and operations with focus and reliability. Her background in medical technology and business management adds depth to her role in managing both people and process."
@@ -80,7 +94,7 @@ export default function AboutUsPage() {
     {
       key: 'nyshan',
       name: 'Nyshan Tabbay',
-      position: 'Assistant to OP & MCA, Keller Williams Singapore',
+      position: 'Assistant to OP & MCA',
       image: '/images/core-team/nyshan-tabbay.jpg',
       bio: [
         "Nyshan supports the day-to-day operations of KW Singapore by assisting the OP and MCA in executing key administrative and business functions. Detail-oriented and dependable, she ensures operational flow, calendar management, and team coordination stay sharp and consistent. Her strength lies in creating structure behind the scenes, so leadership and consultants can stay focused on performance and growth."
@@ -98,7 +112,7 @@ export default function AboutUsPage() {
       {/* Hero Section */}
       <section className="relative h-screen w-full">
         <Image
-          src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80"
+          src="/images/about-us/about-us-section.jpg"
           alt="About KW Singapore"
           fill
           className="object-cover brightness-50"
@@ -177,7 +191,7 @@ export default function AboutUsPage() {
             className="w-full h-full"
           >
             <Image
-              src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&q=80"
+              src="/images/about-us/about-us-section-2.jpg"
               alt="MVVBP Background"
               fill
               className="object-cover brightness-[0.2]"
@@ -277,7 +291,7 @@ export default function AboutUsPage() {
             className="w-full h-full"
           >
             <Image
-              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80"
+              src="/images/about-us/about-us-section-3.jpg"
               alt="Core Team Background"
               fill
               className="object-cover brightness-[0.2]"
@@ -333,7 +347,7 @@ export default function AboutUsPage() {
           </div>
 
           <div className="flex justify-center mt-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[520px]">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl">
               {team.slice(3).map((member, idx) => (
                 <motion.div
                   key={member.key}

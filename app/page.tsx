@@ -258,7 +258,7 @@ export default function Home() {
       <section className="relative py-16 md:py-20 bg-black text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80"
+            src="/images/homepage/why-kw-section.jpg"
             alt="Technology Background"
             fill
             sizes="100vw"
@@ -496,7 +496,7 @@ export default function Home() {
         {/* Background Image with Parallax-like Effect */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80"
+            src="/images/homepage/launch-countdown.jpg"
             alt="Luxury Singapore Property"
             fill
             className="object-cover object-center scale-105 brightness-[0.15]"

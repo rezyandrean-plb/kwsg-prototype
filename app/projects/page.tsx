@@ -564,7 +564,7 @@ export default function NewLaunchDirectory() {
       {/* Hero Section */}
       <section className="relative h-screen w-full">
         <Image
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80"
+          src="/images/new-launch/new-launch-section.jpg"
           alt="New Launch Properties"
           fill
           className="object-cover brightness-[0.4]"
