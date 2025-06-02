@@ -240,7 +240,7 @@ export default function Home() {
               </motion.div>
             </motion.div>
 
-            {/* CTA Buttons */}
+            {/* CTA Buttons
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
               <Button 
                 onClick={() => setIsJoinFormOpen(true)}
@@ -249,7 +249,7 @@ export default function Home() {
                 Speak to our Team
                 <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
-            </div>
+            </div> */}
           </motion.div>
         </div>
       </section>

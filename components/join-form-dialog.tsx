@@ -43,7 +43,11 @@ export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProp
       alert("Please select at least one area of interest")
       return
     }
-    onSubmit(formData)
+
+    // Just log the form data for now
+    console.log('Form submitted:', formData)
+    
+    // Reset form
     setFormData({
       fullName: "",
       email: "",
@@ -54,6 +58,9 @@ export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProp
       linkedinUrl: "",
       consent: false
     })
+    
+    // Close the dialog
+    onClose()
   }
 
   const handleAreaToggle = (area: string) => {
