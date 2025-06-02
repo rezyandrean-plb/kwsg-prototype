@@ -4,7 +4,13 @@ import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { useState } from "react"
-import { JoinFormDialog } from "@/components/join-form-dialog"
+import dynamic from "next/dynamic"
+
+// Dynamically import non-critical components
+const JoinFormDialog = dynamic(() => import("@/components/join-form-dialog").then(mod => mod.JoinFormDialog), {
+  loading: () => <div className="h-0" />,
+  ssr: false
+})
 
 // Animation variants
 const fadeInUp = {
@@ -26,11 +32,14 @@ export default function JoinKW() {
       <section className="relative h-screen flex items-center justify-center">
         <div className="absolute inset-0">
           <Image
-            src="/images/join-kw/join-kw-header.jpg"
+            src="/images/join-kw/join-kw-header.webp"
             alt="Join KW Singapore"
             fill
             className="object-cover brightness-[0.4]"
             priority
+            fetchPriority="high"
+            sizes="100vw"
+            style={{ contentVisibility: 'auto' }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/20" />
         </div>
@@ -40,10 +49,16 @@ export default function JoinKW() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
+          <h1 
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white"
+            style={{ contentVisibility: 'auto' }}
+          >
             Your Future, Our Platform
           </h1>
-          <p className="text-lg sm:text-xl max-w-3xl mx-auto mb-12 text-gray-200">
+          <p 
+            className="text-lg sm:text-xl max-w-3xl mx-auto mb-12 text-gray-200"
+            style={{ contentVisibility: 'auto' }}
+          >
             We're preparing something special — a new way to explore what it means to build your real estate business with KW Singapore. No fluff, no gatekeeping — just the tools, training, and a team that help you scale your career on your terms.
           </p>
           <motion.div 

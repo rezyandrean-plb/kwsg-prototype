@@ -19,6 +19,33 @@ const nextConfig = {
       }
     ],
   },
+  webpack: (config, { dev, isServer }) => {
+    // Production optimizations
+    if (!dev) {
+      config.optimization = {
+        ...config.optimization,
+        minimize: true,
+        minimizer: [
+          ...config.optimization.minimizer,
+          // Add terser options for better minification
+          new (require('terser-webpack-plugin'))({
+            terserOptions: {
+              compress: {
+                drop_console: true, // Remove console.logs in production
+                drop_debugger: true,
+                pure_funcs: ['console.log', 'console.info', 'console.debug'],
+              },
+              mangle: true,
+              format: {
+                comments: false,
+              },
+            },
+          }),
+        ],
+      }
+    }
+    return config
+  },
 }
 
 export default nextConfig

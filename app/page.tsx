@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Search, ArrowRight, Calendar } from "lucide-react"
@@ -13,11 +13,23 @@ import ProjectCard from "@/components/project-card"
 import ProjectMap from "@/components/project-map"
 import CountUp from "react-countup"
 import { projects } from "@/data/projects"
-import { ContactDialog } from "@/components/contact-dialog"
 import { useInView } from "react-intersection-observer"
 import { motion, useAnimation } from "framer-motion"
-import { WebinarDialog } from "@/components/webinar-dialog"
-import { JoinFormDialog } from "@/components/join-form-dialog"
+import dynamic from 'next/dynamic'
+
+// Dynamically import dialogs
+const ContactDialog = dynamic(() => import("@/components/contact-dialog").then(mod => mod.ContactDialog), {
+  loading: () => <div>Loading...</div>,
+  ssr: false
+})
+const WebinarDialog = dynamic(() => import("@/components/webinar-dialog").then(mod => mod.WebinarDialog), {
+  loading: () => <div>Loading...</div>,
+  ssr: false
+})
+const JoinFormDialog = dynamic(() => import("@/components/join-form-dialog").then(mod => mod.JoinFormDialog), {
+  loading: () => <div>Loading...</div>,
+  ssr: false
+})
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState(0)
@@ -26,19 +38,70 @@ export default function Home() {
   const [isWebinarDialogOpen, setIsWebinarDialogOpen] = useState(false)
   const [isJoinFormOpen, setIsJoinFormOpen] = useState(false)
 
-  // Animation controls for sections
+  // Memoize handlers
+  const handleSearch = useCallback((e: React.FormEvent) => {
+    e.preventDefault()
+    console.log(`Searching in category: ${["New Launches", "Resale", "Rent"][activeTab]}`)
+  }, [activeTab])
+
+  const handleNewLaunchSearch = useCallback((e: React.FormEvent) => {
+    e.preventDefault()
+    console.log("Searching new launches:", searchQuery)
+  }, [searchQuery])
+
+  const handleFormSubmit = useCallback((data: any) => {
+    console.log("Form submitted:", data)
+  }, [])
+
+  const handleWebinarSubmit = useCallback((data: { email: string }) => {
+    console.log("Webinar registration:", data)
+    setIsWebinarDialogOpen(false)
+  }, [])
+
+  const handleJoinSubmit = useCallback((data: any) => {
+    console.log("Join form submitted:", data)
+    setIsJoinFormOpen(false)
+  }, [])
+
+  // Optimize animation controls
   const [advantageRef, advantageInView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
+    rootMargin: '50px'
   })
   const [whyKWRef, whyKWInView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
+    rootMargin: '50px'
   })
 
   const advantageControls = useAnimation()
   const whyKWControls = useAnimation()
 
+  // Simplified animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.3,
+        ease: "easeOut",
+      },
+    },
+  }
+
+  // Optimize image loading
   const heroImages = [
     "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80",
     "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80",
@@ -46,12 +109,14 @@ export default function Home() {
   ]
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length)
-    }, 5000)
-
-    return () => clearInterval(interval)
-  }, [])
+    let timeoutId: NodeJS.Timeout
+    if (typeof window !== 'undefined') {
+      timeoutId = setTimeout(() => {
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length)
+      }, 5000)
+    }
+    return () => clearTimeout(timeoutId)
+  }, [currentImageIndex])
 
   useEffect(() => {
     if (advantageInView) {
@@ -65,56 +130,6 @@ export default function Home() {
     }
   }, [whyKWInView, whyKWControls])
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    },
-  }
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    // In a real application, this would redirect to search results
-    console.log(`Searching in category: ${["New Launches", "Resale", "Rent"][activeTab]}`)
-  }
-
-  const handleNewLaunchSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("Searching new launches:", searchQuery)
-  }
-
-  const handleFormSubmit = (data: any) => {
-    console.log("Form submitted:", data)
-    // Here you would typically send the data to your backend
-  }
-
-  const handleWebinarSubmit = (data: { email: string }) => {
-    console.log("Webinar registration:", data)
-    setIsWebinarDialogOpen(false)
-    // Here you would typically send the data to your backend
-  }
-
-  const handleJoinSubmit = (data: any) => {
-    console.log("Join form submitted:", data)
-    setIsJoinFormOpen(false)
-    // Here you would typically send the data to your backend
-  }
-
   return (
     <main className="flex min-h-screen flex-col bg-white">
       {/* Hero Section - Updated with video */}
@@ -125,7 +140,12 @@ export default function Home() {
             loop
             muted
             playsInline
+            preload="metadata"
             className="absolute inset-0 w-full h-full object-cover brightness-[0.7]"
+            style={{ 
+              willChange: 'transform',
+              contentVisibility: 'auto'
+            }}
           >
             <source src="/hero-section-video.mp4" type="video/mp4" />
           </video>
@@ -145,9 +165,10 @@ export default function Home() {
                   document.getElementById('kw-advantage')?.scrollIntoView({ behavior: 'smooth' });
                 }}
                 className="group px-[clamp(2rem,4vw,2.5rem)] py-[clamp(1rem,2vw,1.5rem)] text-[clamp(1rem,1.5vw,1.25rem)] bg-primary-red text-white hover:bg-primary-red/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]"
+                aria-label="Learn more about KW Singapore"
               >
                 Learn More
-                <ArrowRight className="ml-3 h-[clamp(1.25rem,1.5vw,1.5rem)] w-[clamp(1.25rem,1.5vw,1.5rem)] transform transition-transform duration-300 group-hover:translate-x-1" />
+                <ArrowRight className="ml-3 h-[clamp(1.25rem,1.5vw,1.5rem)] w-[clamp(1.25rem,1.5vw,1.5rem)] transform transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
               </Button>
             </div>
           </div>
@@ -186,10 +207,14 @@ export default function Home() {
                   <div className="mb-6">
                     <div className="relative w-full h-64 rounded-lg overflow-hidden">
                       <Image
-                        src="/images/homepage/dominate-new-launches.jpg"
+                        src="/images/homepage/dominate-new-launches.webp"
                         alt="New Launch Property"
                         fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="object-cover"
+                        quality={85}
+                        loading="lazy"
+                        style={{ willChange: 'transform' }}
                       />
                       <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
                         <h3 className="text-2xl font-bold text-white text-center">Dominate New Launches</h3>
@@ -206,10 +231,14 @@ export default function Home() {
                   <div className="mb-6">
                     <div className="relative w-full h-64 rounded-lg overflow-hidden">
                       <Image
-                        src="/images/homepage/scale-with-media.jpg"
+                        src="/images/homepage/scale-with-media.webp"
                         alt="Media Production"
                         fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="object-cover"
+                        quality={85}
+                        loading="lazy"
+                        style={{ willChange: 'transform' }}
                       />
                       <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
                         <h3 className="text-2xl font-bold text-white text-center">Scale with Media</h3>
@@ -226,10 +255,14 @@ export default function Home() {
                   <div className="mb-6">
                     <div className="relative w-full h-64 rounded-lg overflow-hidden">
                       <Image
-                        src="/images/homepage/win-with-ai.jpg"
+                        src="/images/homepage/win-with-ai.webp"
                         alt="AI Technology"
                         fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="object-cover"
+                        quality={85}
+                        loading="lazy"
+                        style={{ willChange: 'transform' }}
                       />
                       <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
                         <h3 className="text-2xl font-bold text-white text-center">Win with AI</h3>
@@ -258,13 +291,14 @@ export default function Home() {
       <section className="relative py-16 md:py-20 bg-black text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/homepage/why-kw-section.jpg"
+            src="/images/homepage/why-kw-section.webp"
             alt="Technology Background"
             fill
             sizes="100vw"
-            priority
+            loading="lazy"
             className="object-cover object-center brightness-[0.5]"
-            quality={100}
+            quality={75}
+            style={{ willChange: 'transform' }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/40" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.05),transparent_20%)]" />
@@ -451,9 +485,10 @@ export default function Home() {
               <Button 
                 onClick={() => setIsJoinFormOpen(true)}
                 className="w-full sm:w-auto group px-8 sm:px-10 py-4 sm:py-6 text-lg sm:text-xl bg-primary-red text-white hover:bg-primary-red/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]"
+                aria-label="Revolutionise your business with KW Singapore"
               >
                 Revolutionise Your Business
-                <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
+                <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
               </Button>
             </div>
           </motion.div>
@@ -496,12 +531,13 @@ export default function Home() {
         {/* Background Image with Parallax-like Effect */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/homepage/launch-countdown.jpg"
+            src="/images/homepage/launch-countdown.webp"
             alt="Luxury Singapore Property"
             fill
             className="object-cover object-center scale-105 brightness-[0.15]"
-            quality={100}
-            priority
+            quality={75}
+            loading="lazy"
+            style={{ willChange: 'transform' }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/30" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.05),transparent_20%)]" />
@@ -566,9 +602,10 @@ export default function Home() {
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.3, delay: 0.2, ease: "easeOut" }}
                   className="w-full flex justify-center"
+                  style={{ willChange: 'transform, opacity' }}
                 >
                   <div className="transform scale-100 sm:scale-105 w-full max-w-xs">
                     <CountdownTimer targetDate="2025-07-01T00:00:00" />
@@ -587,9 +624,10 @@ export default function Home() {
                 <Button 
                   onClick={() => setIsWebinarDialogOpen(true)}
                   className="group px-8 sm:px-10 py-4 sm:py-6 text-lg sm:text-xl bg-primary-red text-white hover:bg-primary-red/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]"
+                  aria-label="Join the KW Singapore webinar"
                 >
                   Join the Webinar
-                  <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight className="ml-3 h-6 w-6 transform transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
                 </Button>
               </motion.div>
             </div>

@@ -16,6 +16,7 @@ export default function MobileMenu() {
         className="text-white hover:text-white/80"
         onClick={() => setIsOpen(!isOpen)}
         data-mobile-menu-button
+        aria-label={isOpen ? "Close menu" : "Open menu"}
       >
         {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
       </Button>
@@ -31,6 +32,7 @@ export default function MobileMenu() {
                 onClick={() => setIsOpen(false)}
                 data-mobile-menu-button
                 className="text-white hover:text-white/80"
+                aria-label="Close menu"
               >
                 <X className="h-6 w-6" />
               </Button>

@@ -7,13 +7,29 @@ import { Input } from "@/components/ui/input"
 import { motion } from "framer-motion"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useState } from "react"
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+import dynamic from "next/dynamic"
+
+// Dynamically import non-critical components
+const Dialog = dynamic(() => import("@/components/ui/dialog").then(mod => mod.Dialog), {
+  loading: () => <div className="h-0" />,
+  ssr: false
+})
+const DialogContent = dynamic(() => import("@/components/ui/dialog").then(mod => mod.DialogContent), {
+  loading: () => <div className="h-0" />,
+  ssr: false
+})
+const DialogHeader = dynamic(() => import("@/components/ui/dialog").then(mod => mod.DialogHeader), {
+  loading: () => <div className="h-0" />,
+  ssr: false
+})
+const DialogTitle = dynamic(() => import("@/components/ui/dialog").then(mod => mod.DialogTitle), {
+  loading: () => <div className="h-0" />,
+  ssr: false
+})
+const DialogTrigger = dynamic(() => import("@/components/ui/dialog").then(mod => mod.DialogTrigger), {
+  loading: () => <div className="h-0" />,
+  ssr: false
+})
 
 export default function EditorialPage() {
   const [email, setEmail] = useState("")
@@ -22,7 +38,6 @@ export default function EditorialPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission logic here
     console.log({ email, consent })
     setIsOpen(false)
   }
@@ -37,7 +52,7 @@ export default function EditorialPage() {
       {/* Hero Section */}
       <section className="relative h-screen w-full">
         <Image
-          src="/images/kw-blog/kw-blog-section.jpg"
+          src="/images/kw-blog/kw-blog-section.webp"
           alt="KW Blog Coming Soon"
           fill
           className="object-cover brightness-[0.4]"
@@ -50,7 +65,7 @@ export default function EditorialPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-5xl md:text-7xl font-bold text-white inline-block tracking-tight">
+            <h1 className="text-3xl md:text-5xl font-bold text-white inline-block tracking-tight">
               Inside KW Singapore
             </h1>
           </motion.div>
@@ -86,7 +101,7 @@ export default function EditorialPage() {
                 <DialogHeader>
                   <div className="flex justify-center mb-4">
                     <Image
-                      src="/images/kwsg-logo.png"
+                      src="/images/kwsg-logo.webp"
                       alt="KW Singapore"
                       width={200}
                       height={60}

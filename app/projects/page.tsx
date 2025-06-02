@@ -564,7 +564,7 @@ export default function NewLaunchDirectory() {
       {/* Hero Section */}
       <section className="relative h-screen w-full">
         <Image
-          src="/images/new-launch/new-launch-section.jpg"
+          src="/images/new-launch/new-launch-section.webp"
           alt="New Launch Properties"
           fill
           className="object-cover brightness-[0.4]"
@@ -611,7 +611,7 @@ export default function NewLaunchDirectory() {
                 <DialogHeader>
                   <div className="flex justify-center mb-4">
                     <Image
-                      src="/images/kwsg-logo.png"
+                      src="/images/kwsg-logo.webp"
                       alt="KW Singapore"
                       width={200}
                       height={60}

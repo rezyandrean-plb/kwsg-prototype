@@ -6,9 +6,31 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import dynamic from "next/dynamic"
 import { useState } from "react"
 import Image from "next/image"
+
+// Dynamically import non-critical components
+const Select = dynamic(() => import("@/components/ui/select").then(mod => mod.Select), {
+  loading: () => <div className="h-10" />,
+  ssr: false
+})
+const SelectContent = dynamic(() => import("@/components/ui/select").then(mod => mod.SelectContent), {
+  loading: () => <div className="h-0" />,
+  ssr: false
+})
+const SelectItem = dynamic(() => import("@/components/ui/select").then(mod => mod.SelectItem), {
+  loading: () => <div className="h-0" />,
+  ssr: false
+})
+const SelectTrigger = dynamic(() => import("@/components/ui/select").then(mod => mod.SelectTrigger), {
+  loading: () => <div className="h-10" />,
+  ssr: false
+})
+const SelectValue = dynamic(() => import("@/components/ui/select").then(mod => mod.SelectValue), {
+  loading: () => <div className="h-0" />,
+  ssr: false
+})
 
 interface JoinFormDialogProps {
   isOpen: boolean
@@ -78,12 +100,13 @@ export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProp
         <DialogHeader>
           <div className="flex justify-center mb-4">
             <Image
-              src="/images/kwsg-logo.png"
+              src="/images/kwsg-logo.webp"
               alt="KW Singapore"
               width={200}
               height={60}
               className="h-12 w-auto"
               priority
+              fetchPriority="high"
             />
           </div>
           <DialogTitle className="text-2xl font-bold text-center">Join KW Singapore</DialogTitle>

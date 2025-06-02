@@ -1,157 +1,91 @@
-"use client"
-
 import type React from "react"
 import "./globals.css"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ThemeProvider } from "@/components/theme-provider"
-import TransparentHeader from "@/components/transparent-header"
-import MobileMenu from "@/components/mobile-menu"
-import FloatingWhatsApp from "@/components/floating-whatsapp"
-import Image from "next/image"
-import { usePathname } from "next/navigation"
+import LayoutContent from "./components/layout-content"
+import Script from "next/script"
+import CSSLoader from "./components/css-loader"
+
+export const generateMetadata = () => {
+  return {
+    title: 'KW Singapore',
+    description: 'The Real Estate Model of the Future. Built Today.',
+    other: {
+      'Cache-Control': 'public, max-age=31536000, immutable',
+      'Surrogate-Control': 'public, max-age=31536000, immutable',
+      'Surrogate-Key': 'static',
+    },
+  }
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const pathname = usePathname()
-  const isAdminPage = pathname?.startsWith('/admin')
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <title>KW Singapore</title>
-        <link rel="icon" href="/images/kwsg-logo.png" type="image/png" />
-        <script
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#ffffff" />
+        {/* Preload critical assets */}
+        <link 
+          rel="preload" 
+          href="/images/kwsg-logo.webp" 
+          as="image" 
+          type="image/webp" 
+        />
+        <link 
+          rel="icon" 
+          href="/images/kwsg-logo.webp" 
+          type="image/webp" 
+        />
+        {/* Preconnect to external domains */}
+        <link 
+          rel="preconnect" 
+          href="https://static.hotjar.com" 
+          crossOrigin="anonymous" 
+        />
+        {/* Performance hints */}
+        <meta httpEquiv="x-dns-prefetch-control" content="on" />
+        <link rel="dns-prefetch" href="https://static.hotjar.com" />
+        {/* Inline critical CSS */}
+        <style
           dangerouslySetInnerHTML={{
             __html: `
-              (function(h,o,t,j,a,r){
-                h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-                h._hjSettings={hjid:6420441,hjsv:6};
-                a=o.getElementsByTagName('head')[0];
-                r=o.createElement('script');r.async=1;
-                r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-                a.appendChild(r);
-              })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+              /* Critical CSS for initial render */
+              body { margin: 0; }
+              .flex { display: flex; }
+              .min-h-screen { min-height: 100vh; }
+              .flex-col { flex-direction: column; }
             `,
           }}
         />
       </head>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          {!isAdminPage && <TransparentHeader />}
-          <div className="flex min-h-screen flex-col">
-            {!isAdminPage && (
-              <header className="fixed top-0 z-50 w-full transition-all duration-300" id="main-header">
-                <div className="container flex h-16 items-center justify-between">
-                  <Link href="/" className="flex items-center space-x-2">
-                    <Image
-                      src="/images/kwsg-logo.png"
-                      alt="KW Logo"
-                      width={120}
-                      height={60}
-                      priority
-                    />
-                  </Link>
-                  {/* Desktop Navigation */}
-                  <nav className="hidden lg:flex gap-4 lg:gap-6">
-                    <Link href="/editorial" className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group" id="nav-link">
-                      KW Blog
-                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
-                    </Link>
-                    <Link href="/projects" className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group" id="nav-link">
-                      New Launch Condo
-                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
-                    </Link>
-                    <Link href="/about-us" className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group" id="nav-link">
-                      About Us
-                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
-                    </Link>
-                    <Link href="/contact" className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group" id="nav-link">
-                      Contact
-                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
-                    </Link>
-                    <Link href="/join" className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group" id="nav-link">
-                      Join KW Singapore
-                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
-                    </Link>
-                  </nav>
-                  {/* Mobile and Tablet Menu */}
-                  <MobileMenu />
-                </div>
-              </header>
-            )}
-            {children}
-            {!isAdminPage && (
-              <>
-                <FloatingWhatsApp />
-                <footer className="border-t py-8 md:py-12 bg-black text-white">
-                  <div className="container grid gap-8 md:grid-cols-3">
-                    <div className="space-y-4">
-                      <Image
-                        src="/images/kwsg-logo.png"
-                        alt="KW Logo"
-                        width={180}
-                        height={90}
-                      />
-                      <p className="text-sm text-gray-300">
-                        The Real Estate Model of the Future. Built Today.
-                      </p>
-                    </div>
-                    <div className="space-y-4">
-                      <h3 className="text-lg font-bold text-white">Quick Links</h3>
-                      <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm text-gray-300">
-                        <div className="space-y-2">
-                          <Link href="/" className="hover:text-white block">
-                            Home
-                          </Link>
-                          <Link href="/editorial" className="hover:text-white block">
-                            KW Blog
-                          </Link>
-                          <Link href="/projects" className="hover:text-white block">
-                            New Launch Condo
-                          </Link>
-                        </div>
-                        <div className="space-y-2">
-                          <Link href="/about-us" className="hover:text-white block">
-                            About Us
-                          </Link>
-                          <Link href="/contact" className="hover:text-white block">
-                            Contact
-                          </Link>
-                          <Link href="/join" className="hover:text-white block">
-                            Join KW Singapore
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="space-y-4">
-                      <h3 className="text-lg font-bold text-white">Contact</h3>
-                      <div className="space-y-2 text-sm text-gray-300">
-                        <p>
-                          <a href="mailto:hello@kwsingapore.com" className="hover:text-white">
-                            Email: hello@kwsingapore.com
-                          </a>
-                        </p>
-                        <p>
-                          <a href="https://wa.me/6586111703" target="_blank" rel="noopener noreferrer" className="hover:text-white">
-                            Phone: +65 8611 1703
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="container mt-8 border-t border-gray-800 pt-8 text-center text-sm text-gray-300">
-                    <p>&copy; {new Date().getFullYear()} Kairos World Real Estate Inc Pte. Ltd. | All rights reserved.</p>
-                    <p className="mt-1">CEA License Number: L3011034Z</p>
-                  </div>
-                </footer>
-              </>
-            )}
-          </div>
-        </ThemeProvider>
+        <CSSLoader />
+        <LayoutContent>{children}</LayoutContent>
+        {/* Load Hotjar with optimized strategy and cache control */}
+        <Script
+          id="hotjar"
+          strategy="lazyOnload"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(h,o,t,j,a,r){
+                // Only load Hotjar over HTTPS
+                if (window.location.protocol !== 'https:') return;
+                
+                h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+                h._hjSettings={hjid:6420441,hjsv:6};
+                a=o.getElementsByTagName('head')[0];
+                r=o.createElement('script');
+                r.async=1;
+                r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+                // Add cache control headers
+                r.setAttribute('data-cache-control', 'public, max-age=31536000, immutable');
+                a.appendChild(r);
+              })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+            `,
+          }}
+        />
       </body>
     </html>
   )

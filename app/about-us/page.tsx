@@ -112,7 +112,7 @@ export default function AboutUsPage() {
       {/* Hero Section */}
       <section className="relative h-screen w-full">
         <Image
-          src="/images/about-us/about-us-section.jpg"
+          src="/images/about-us/about-us-section..webp"
           alt="About KW Singapore"
           fill
           className="object-cover brightness-50"
@@ -191,7 +191,7 @@ export default function AboutUsPage() {
             className="w-full h-full"
           >
             <Image
-              src="/images/about-us/about-us-section-2.jpg"
+              src="/images/about-us/about-us-section-2..webp"
               alt="MVVBP Background"
               fill
               className="object-cover brightness-[0.2]"
@@ -291,7 +291,7 @@ export default function AboutUsPage() {
             className="w-full h-full"
           >
             <Image
-              src="/images/about-us/about-us-section-3.jpg"
+              src="/images/about-us/about-us-section-3..webp"
               alt="Core Team Background"
               fill
               className="object-cover brightness-[0.2]"
