@@ -31,6 +31,12 @@ const DialogTrigger = dynamic(() => import("@/components/ui/dialog").then(mod =>
   ssr: false
 })
 
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5 }
+}
+
 export default function EditorialPage() {
   const [email, setEmail] = useState("")
   const [consent, setConsent] = useState(false)
@@ -65,30 +71,26 @@ export default function EditorialPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-3xl md:text-5xl font-bold text-white inline-block tracking-tight">
+            <h1 
+              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white"
+              style={{ contentVisibility: 'auto' }}
+            >
               Inside KW Singapore
             </h1>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Content Section */}
-      <section className="py-20 bg-black">
-        <div className="container mx-auto px-4">
-          <motion.div 
-            className="max-w-3xl mx-auto text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <p className="text-lg text-gray-300 mb-12">
+              <p 
+              className="text-lg sm:text-xl max-w-3xl mx-auto mb-12 text-gray-200"
+              style={{ contentVisibility: 'auto' }}
+            >
               We're putting the finishing touches on our blog — a behind-the-scenes look at life inside KW Singapore. 
               From team moments and cultural highlights to the stories that shape our brand, this is where you'll get 
               to know who we are beyond the business.
             </p>
-
-            <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <motion.div 
+              variants={fadeInUp}
+              initial="initial"
+              animate="animate"
+            >
+              <Dialog open={isOpen} onOpenChange={setIsOpen}>
               <DialogTrigger asChild>
                 <Button 
                   className="bg-primary-red text-white hover:bg-primary-red/90 px-8 py-6 text-lg"
@@ -98,19 +100,17 @@ export default function EditorialPage() {
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[600px] bg-white border-gray-200">
-                <DialogHeader>
-                  <div className="flex justify-center mb-4">
-                    <Image
-                      src="/images/kwsg-logo.webp"
-                      alt="KW Singapore"
-                      width={200}
-                      height={60}
-                      className="h-12 w-auto"
-                      priority
-                    />
-                  </div>
-                  <DialogTitle className="text-2xl font-bold text-center text-gray-900">Stay Connected with KW Singapore</DialogTitle>
-                </DialogHeader>
+                <div className="flex justify-center mb-4">
+                  <Image
+                    src="/images/kwsg-logo.webp"
+                    alt="KW Singapore"
+                    width={200}
+                    height={60}
+                    className="h-12 w-auto"
+                    priority
+                  />
+                </div>
+                <DialogTitle className="text-2xl font-bold text-center text-gray-900">Stay Connected with KW Singapore</DialogTitle>
                 <form onSubmit={handleSubmit} className="space-y-6 mt-4">
                   <div>
                     <Input
@@ -152,6 +152,7 @@ export default function EditorialPage() {
                 </form>
               </DialogContent>
             </Dialog>
+            </motion.div>
           </motion.div>
         </div>
       </section>

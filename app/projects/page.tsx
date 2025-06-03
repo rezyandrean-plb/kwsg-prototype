@@ -577,133 +577,130 @@ export default function NewLaunchDirectory() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-5xl md:text-7xl font-bold text-white inline-block tracking-tight">
+            <h1 
+              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white"
+              style={{ contentVisibility: 'auto' }}
+            >
               New Launch Properties
             </h1>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Form Section */}
-      <section className="py-20 bg-black">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="max-w-3xl mx-auto text-center"
-          >
-            <p className="text-lg text-gray-300 mb-12">
+            <p 
+              className="text-lg sm:text-xl max-w-3xl mx-auto mb-12 text-gray-200"
+              style={{ contentVisibility: 'auto' }}
+            >
               We're building a better way to discover Singapore's latest new launch condos — clear, consultant-led, and built around your buying goals. Stay tuned for a launch experience designed to inform and empower your next move.
             </p>
-
-            <Dialog open={isOpen} onOpenChange={setIsOpen}>
-              <DialogTrigger asChild>
-                <Button 
-                  className="bg-primary-red text-white hover:bg-primary-red/90 px-8 py-6 text-lg"
-                >
-                  Get Notified When We Go Live
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[600px] bg-white border-gray-200">
-                <DialogHeader>
-                  <div className="flex justify-center mb-4">
-                    <Image
-                      src="/images/kwsg-logo.webp"
-                      alt="KW Singapore"
-                      width={200}
-                      height={60}
-                      className="h-12 w-auto"
-                      priority
-                    />
-                  </div>
-                  <DialogTitle className="text-2xl font-bold text-center text-gray-900">Get Early Access to New Launch Projects</DialogTitle>
-                </DialogHeader>
-                <form onSubmit={handleSubmit} className="space-y-6 mt-4">
-                  <div>
-                    <Label htmlFor="fullName" className="text-gray-900 mb-2 block">
-                      Full Name <span className="text-primary-red">*</span>
-                    </Label>
-                    <Input
-                      id="fullName"
-                      required
-                      className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400"
-                      placeholder="We'd like to address you properly"
-                      value={formData.fullName}
-                      onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="email" className="text-gray-900 mb-2 block">
-                      Email Address <span className="text-primary-red">*</span>
-                    </Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      required
-                      className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400"
-                      placeholder="For exclusive updates and launch alerts"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    />
-                    <p className="text-sm text-gray-500 mt-2">
-                      We'll send you one update when the page launches. That's it.
-                    </p>
-                  </div>
-
-                  <div>
-                    <Label htmlFor="mobile" className="text-gray-900 mb-2 block">
-                      Mobile Number
-                    </Label>
-                    <Input
-                      id="mobile"
-                      type="tel"
-                      className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400"
-                      placeholder="Only if you'd like a KW consultant to reach out directly"
-                      value={formData.mobile}
-                      onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="preferences" className="text-gray-900 mb-2 block">
-                      Preferred Districts or Projects
-                    </Label>
-                    <Textarea
-                      id="preferences"
-                      className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400"
-                      placeholder="Let us know if there are areas you're watching"
-                      value={formData.preferences}
-                      onChange={(e) => setFormData({ ...formData, preferences: e.target.value })}
-                    />
-                  </div>
-
-                  <div className="flex items-start space-x-3">
-                    <Checkbox
-                      id="consent"
-                      required
-                      checked={formData.consent}
-                      onCheckedChange={(checked) => setFormData({ ...formData, consent: checked as boolean })}
-                      className="border-gray-400 data-[state=checked]:bg-primary-red data-[state=checked]:border-primary-red"
-                    />
-                    <Label htmlFor="consent" className="text-sm text-gray-900">
-                      I agree to be contacted by KW Singapore regarding new launch projects and updates.
-                    </Label>
-                  </div>
-
-                  <Button
-                    type="submit"
-                    className="w-full bg-primary-red hover:bg-primary-red/90 text-white"
+            <motion.div 
+              variants={fadeInUp}
+              initial="initial"
+              animate="animate"
+            >
+              <Dialog open={isOpen} onOpenChange={setIsOpen}>
+                <DialogTrigger asChild>
+                  <Button 
+                    className="bg-primary-red text-white hover:bg-primary-red/90 px-8 py-6 text-lg"
                   >
-                    Notify Me First
-                    <ArrowRight className="ml-2 h-4 w-4" />
+                    Get Notified When We Go Live
+                    <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
-                </form>
-              </DialogContent>
-            </Dialog>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[600px] bg-white border-gray-200">
+                  <DialogHeader>
+                    <div className="flex justify-center mb-4">
+                      <Image
+                        src="/images/kwsg-logo.webp"
+                        alt="KW Singapore"
+                        width={200}
+                        height={60}
+                        className="h-12 w-auto"
+                        priority
+                      />
+                    </div>
+                    <DialogTitle className="text-2xl font-bold text-center text-gray-900">Get Early Access to New Launch Projects</DialogTitle>
+                  </DialogHeader>
+                  <form onSubmit={handleSubmit} className="space-y-6 mt-4">
+                    <div>
+                      <Label htmlFor="fullName" className="text-gray-900 mb-2 block">
+                        Full Name <span className="text-primary-red">*</span>
+                      </Label>
+                      <Input
+                        id="fullName"
+                        required
+                        className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400"
+                        placeholder="We'd like to address you properly"
+                        value={formData.fullName}
+                        onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="email" className="text-gray-900 mb-2 block">
+                        Email Address <span className="text-primary-red">*</span>
+                      </Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        required
+                        className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400"
+                        placeholder="For exclusive updates and launch alerts"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      />
+                      <p className="text-sm text-gray-500 mt-2">
+                        We'll send you one update when the page launches. That's it.
+                      </p>
+                    </div>
+
+                    <div>
+                      <Label htmlFor="mobile" className="text-gray-900 mb-2 block">
+                        Mobile Number
+                      </Label>
+                      <Input
+                        id="mobile"
+                        type="tel"
+                        className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400"
+                        placeholder="Only if you'd like a KW consultant to reach out directly"
+                        value={formData.mobile}
+                        onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="preferences" className="text-gray-900 mb-2 block">
+                        Preferred Districts or Projects
+                      </Label>
+                      <Textarea
+                        id="preferences"
+                        className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400"
+                        placeholder="Let us know if there are areas you're watching"
+                        value={formData.preferences}
+                        onChange={(e) => setFormData({ ...formData, preferences: e.target.value })}
+                      />
+                    </div>
+
+                    <div className="flex items-start space-x-3">
+                      <Checkbox
+                        id="consent"
+                        required
+                        checked={formData.consent}
+                        onCheckedChange={(checked) => setFormData({ ...formData, consent: checked as boolean })}
+                        className="border-gray-400 data-[state=checked]:bg-primary-red data-[state=checked]:border-primary-red"
+                      />
+                      <Label htmlFor="consent" className="text-sm text-gray-900">
+                        I agree to be contacted by KW Singapore regarding new launch projects and updates.
+                      </Label>
+                    </div>
+
+                    <Button
+                      type="submit"
+                      className="w-full bg-primary-red hover:bg-primary-red/90 text-white"
+                    >
+                      Notify Me First
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </form>
+                </DialogContent>
+              </Dialog>
+            </motion.div>
           </motion.div>
         </div>
       </section>
