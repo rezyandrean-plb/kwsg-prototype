@@ -4,13 +4,9 @@ import { usePathname } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
 import dynamic from 'next/dynamic'
+import { useState, useEffect } from 'react'
 
 // Dynamically import components that are not immediately visible
-const TransparentHeader = dynamic(() => import("@/components/transparent-header"), {
-  ssr: false,
-  loading: () => <div className="h-16" />
-})
-
 const MobileMenu = dynamic(() => import("@/components/mobile-menu"), {
   ssr: false,
   loading: () => <div className="w-8 h-8" />
@@ -32,46 +28,57 @@ const navItems = [
 export function Header() {
   const pathname = usePathname()
   const isAdminPage = pathname?.startsWith('/admin')
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   if (isAdminPage) return null
 
   return (
-    <>
-      <TransparentHeader />
-      <header className="fixed top-0 z-50 w-full transition-all duration-300" id="main-header">
-        <div className="container flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2">
-            <Image
-              src="/images/kwsg-logo.webp"
-              alt="KW Logo"
-              width={120}
-              height={60}
-              priority
-              loading="eager"
-              fetchPriority="high"
-              className="w-auto h-auto"
-              style={{ contentVisibility: 'auto' }}
-            />
-          </Link>
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex gap-4 lg:gap-6">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group"
-                id="nav-link"
-              >
-                {item.label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-            ))}
-          </nav>
-          {/* Mobile and Tablet Menu */}
-          <MobileMenu />
-        </div>
-      </header>
-    </>
+    <header 
+      id="main-header" 
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-colors duration-300 ${
+        isScrolled ? 'bg-black' : 'bg-transparent'
+      }`}
+    >
+      <div className="container flex h-16 items-center justify-between">
+        <Link href="/" className="flex items-center space-x-2">
+          <Image
+            src="/images/kwsg-logo.webp"
+            alt="KW Logo"
+            width={120}
+            height={60}
+            priority
+            loading="eager"
+            fetchPriority="high"
+            className="w-auto h-auto"
+          />
+        </Link>
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex gap-4 lg:gap-6">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              id="nav-link"
+              className="text-sm font-medium text-white transition-colors duration-300 rounded px-2 py-1 relative group"
+            >
+              {item.label}
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
+            </Link>
+          ))}
+        </nav>
+        {/* Mobile and Tablet Menu */}
+        <MobileMenu />
+      </div>
+    </header>
   )
 }
 
@@ -108,7 +115,6 @@ export function Footer() {
               height={90}
               loading="lazy"
               className="w-auto h-auto"
-              style={{ contentVisibility: 'auto' }}
             />
             <p className="text-sm text-gray-300">
               The Real Estate Model of the Future. Built Today.

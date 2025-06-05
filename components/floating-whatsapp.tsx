@@ -6,7 +6,8 @@ export default function FloatingWhatsApp() {
       href="https://wa.me/6586111703"
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-[#075E54] text-white px-4 py-2 rounded-full shadow-lg hover:bg-[#054D44] transition-colors duration-300"
+      className="fixed bottom-6 right-6 z-40 flex items-center gap-2 bg-[#075E54] text-white px-4 py-2 rounded-full shadow-lg hover:bg-[#054D44] transition-colors duration-300"
+      aria-label="Contact us on WhatsApp"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

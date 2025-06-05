@@ -24,9 +24,9 @@ const ThemeProvider = lazy(() =>
   }))
 )
 
-// Memoized loading fallback component with minimal DOM
+// Memoized loading fallback component
 const LoadingFallback = memo(() => (
-  <div className="flex min-h-screen flex-col" style={{ contentVisibility: 'auto' }}>
+  <div className="flex min-h-screen flex-col">
     <div className="h-16" /> {/* Header placeholder */}
     <div className="flex-1" /> {/* Content placeholder */}
     <div className="h-64" /> {/* Footer placeholder */}
@@ -34,15 +34,9 @@ const LoadingFallback = memo(() => (
 ))
 LoadingFallback.displayName = 'LoadingFallback'
 
-// Memoized main content wrapper to prevent unnecessary re-renders
+// Memoized main content wrapper
 const MainContent = memo(({ children, className }: { children: React.ReactNode, className?: string }) => (
-  <main 
-    className={cn("flex-1", className)}
-    style={{ 
-      contentVisibility: 'auto',
-      containIntrinsicSize: '0 500px'
-    }}
-  >
+  <main className={cn("flex-1", className)}>
     {children}
   </main>
 ))
@@ -64,13 +58,7 @@ export default function LayoutContent({
   return (
     <Suspense fallback={<LoadingFallback />}>
       <ThemeProvider {...themeProviderProps()}>
-        <div 
-          className="flex min-h-screen flex-col"
-          style={{ 
-            contentVisibility: 'auto',
-            containIntrinsicSize: '0 100vh'
-          }}
-        >
+        <div className="flex min-h-screen flex-col">
           <Header />
           <MainContent>{children}</MainContent>
           <Footer />
