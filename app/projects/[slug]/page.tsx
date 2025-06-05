@@ -336,11 +336,11 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                   {project.unitTypes.map((unit, index) => (
                     <Card key={index} className="bg-[#242728] border-gray-800">
                       <CardContent className="p-6">
-                        <div className="flex flex-col md:flex-row justify-between items-start gap-4">
-                          <div className="space-y-2">
+                        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                          <div className="flex-1 space-y-3">
                             <h3 className="text-xl font-semibold text-white">{unit.type}</h3>
                             <div className="flex items-center text-gray-300">
-                              <Home className="h-4 w-4 mr-2" />
+                              <Home className="h-4 w-4 mr-2 flex-shrink-0" />
                               <span>{unit.size}</span>
                             </div>
                             <div className="flex flex-wrap gap-2">
@@ -348,10 +348,12 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                               <Badge variant="outline" className="border-gray-700 text-gray-300">{unit.price}</Badge>
                             </div>
                           </div>
-                          <div className="text-right space-y-2">
-                            <div className="text-xl font-bold text-red-500">{unit.price}</div>
-                            <div className="text-sm text-gray-400">Starting Price</div>
-                            <Button variant="outline" className="mt-2 border-gray-700 text-gray-300 hover:bg-gray-800">
+                          <div className="w-full md:w-auto flex flex-col items-start md:items-end gap-3">
+                            <div>
+                              <div className="text-xl font-bold text-red-500">{unit.price}</div>
+                              <div className="text-sm text-gray-400">Starting Price</div>
+                            </div>
+                            <Button variant="outline" className="w-full md:w-auto border-gray-700 text-gray-300 hover:bg-gray-800">
                               View Floor Plan
                             </Button>
                           </div>
