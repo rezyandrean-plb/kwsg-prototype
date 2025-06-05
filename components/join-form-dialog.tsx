@@ -96,7 +96,7 @@ export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProp
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto bg-white">
         <DialogHeader>
           <div className="flex justify-center mb-4">
             <Image

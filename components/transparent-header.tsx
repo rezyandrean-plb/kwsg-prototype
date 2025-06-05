@@ -27,65 +27,49 @@ export default function TransparentHeader() {
 
   useEffect(() => {
     const header = document.getElementById("main-header")
-    const logoText = document.getElementById("logo-text")
     const navLinks = document.querySelectorAll("#nav-link")
-    const joinButton = document.querySelector("#join-webinar-button")
     const mobileMenuButton = document.querySelector("[data-mobile-menu-button]")
 
     if (scrolled) {
-      // When scrolled, make header solid black
+      // When scrolled, make header solid black with blur effect
       header?.classList.remove("bg-transparent")
       header?.classList.add(
-        "bg-black",
-        "backdrop-blur",
-        "supports-[backdrop-filter]:bg-black/60",
+        "bg-black/90",
+        "backdrop-blur-md",
+        "shadow-lg",
         "border-b",
         "border-gray-800"
       )
 
-      // Change text color
-      logoText?.classList.remove("text-white")
-      logoText?.classList.add("text-white")
-
+      // Update navigation links
       navLinks.forEach((link) => {
-        link.classList.remove("text-white", "hover:text-white/80")
-        link.classList.add("text-white", "hover:text-white/80")
+        link.classList.remove("text-white/90")
+        link.classList.add("text-white")
       })
 
-      // Use red color for button
-      joinButton?.classList.remove("bg-white", "text-primary", "hover:bg-white/90")
-      joinButton?.classList.add("bg-primary-red", "text-white", "hover:bg-primary-red/90")
-
-      // Update mobile menu button color
-      mobileMenuButton?.classList.remove("text-white", "hover:text-white/80")
-      mobileMenuButton?.classList.add("text-white", "hover:text-white/80")
+      // Update mobile menu button
+      mobileMenuButton?.classList.remove("text-white/90")
+      mobileMenuButton?.classList.add("text-white")
     } else {
       // When at top, make header transparent
       header?.classList.remove(
-        "bg-black",
-        "backdrop-blur",
-        "supports-[backdrop-filter]:bg-black/60",
+        "bg-black/90",
+        "backdrop-blur-md",
+        "shadow-lg",
         "border-b",
         "border-gray-800"
       )
       header?.classList.add("bg-transparent")
 
-      // Change text color
-      logoText?.classList.remove("text-white")
-      logoText?.classList.add("text-white")
-
+      // Update navigation links
       navLinks.forEach((link) => {
-        link.classList.remove("text-white", "hover:text-white/80")
-        link.classList.add("text-white", "hover:text-white/80")
+        link.classList.remove("text-white")
+        link.classList.add("text-white/90")
       })
 
-      // Use red color for button
-      joinButton?.classList.remove("bg-white", "text-primary", "hover:bg-white/90")
-      joinButton?.classList.add("bg-primary-red", "text-white", "hover:bg-primary-red/90")
-
-      // Update mobile menu button color
-      mobileMenuButton?.classList.remove("text-white", "hover:text-white/80")
-      mobileMenuButton?.classList.add("text-white", "hover:text-white/80")
+      // Update mobile menu button
+      mobileMenuButton?.classList.remove("text-white")
+      mobileMenuButton?.classList.add("text-white/90")
     }
   }, [scrolled])
 

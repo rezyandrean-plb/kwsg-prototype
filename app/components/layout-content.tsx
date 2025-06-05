@@ -2,6 +2,7 @@
 
 import { Suspense, lazy, useCallback, memo } from 'react'
 import dynamic from 'next/dynamic'
+import { cn } from '@/lib/utils'
 
 // Dynamically import layout components with loading fallbacks
 const Header = dynamic(() => import("./layout-client").then(mod => ({ default: mod.Header })), {
@@ -34,9 +35,9 @@ const LoadingFallback = memo(() => (
 LoadingFallback.displayName = 'LoadingFallback'
 
 // Memoized main content wrapper to prevent unnecessary re-renders
-const MainContent = memo(({ children }: { children: React.ReactNode }) => (
+const MainContent = memo(({ children, className }: { children: React.ReactNode, className?: string }) => (
   <main 
-    className="flex-1"
+    className={cn("flex-1", className)}
     style={{ 
       contentVisibility: 'auto',
       containIntrinsicSize: '0 500px'

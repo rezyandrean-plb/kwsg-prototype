@@ -24,7 +24,7 @@ export function WebinarDialog({ isOpen, onClose, onSubmit }: WebinarDialogProps)
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] bg-white">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-center">Join Our Webinar</DialogTitle>
           <DialogDescription className="text-center">
