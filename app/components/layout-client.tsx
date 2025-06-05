@@ -4,9 +4,13 @@ import { usePathname } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
 import dynamic from 'next/dynamic'
-import { useState, useEffect } from 'react'
 
 // Dynamically import components that are not immediately visible
+const TransparentHeader = dynamic(() => import("@/components/transparent-header"), {
+  ssr: false,
+  loading: () => <div className="h-16" />
+})
+
 const MobileMenu = dynamic(() => import("@/components/mobile-menu"), {
   ssr: false,
   loading: () => <div className="w-8 h-8" />
@@ -18,9 +22,8 @@ const FloatingWhatsApp = dynamic(() => import("@/components/floating-whatsapp"),
 
 // Memoize the navigation items to prevent unnecessary re-renders
 const navItems = [
-  { href: "/model", label: "KW Income Model" },
-  { href: "/events", label: "Events" },
-  { href: "/press", label: "Press" },
+  { href: "/editorial", label: "KW Blog" },
+  { href: "/projects", label: "New Launch Condo" },
   { href: "/about-us", label: "About Us" },
   { href: "/contact", label: "Contact" },
   { href: "/join", label: "Join KW Singapore" }
@@ -29,65 +32,46 @@ const navItems = [
 export function Header() {
   const pathname = usePathname()
   const isAdminPage = pathname?.startsWith('/admin')
-  const isSpringleafPage = pathname?.startsWith('/springleaf-residence')
-  const isSpringleafBackupPage = pathname?.startsWith('/springleaf-backup')
-  const [isScrolled, setIsScrolled] = useState(false)
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  if (isAdminPage || isSpringleafPage || isSpringleafBackupPage) return null
+  if (isAdminPage) return null
 
   return (
-    <header 
-      id="main-header" 
-      className={`fixed top-0 left-0 right-0 z-50 w-full transition-colors duration-300 ${
-        isScrolled ? 'bg-black' : 'bg-transparent'
-      }`}
-    >
-      <div className="container flex h-16 items-center justify-between">
-        <Link href="/" className="flex items-center space-x-2">
-          <Image
-            src="/images/kwsingapore-logo.webp"
-            alt="KW Logo"
-            width={60}
-            height={30}
-            priority
-            loading="eager"
-            fetchPriority="high"
-            className="w-auto h-auto"
-          />
-        </Link>
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex gap-4 lg:gap-6">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              id="nav-link"
-              className={`text-sm font-semibold transition-colors duration-300 rounded px-2 py-2 relative group ${
-                item.label === "Join KW Singapore" 
-                  ? "bg-red-600 text-white hover:bg-red-700" 
-                  : "text-white"
-              }`}
-            >
-              {item.label}
-              {item.label !== "Join KW Singapore" && (
+    <>
+      <TransparentHeader />
+      <header className="fixed top-0 left-0 right-0 z-[100] w-full transition-all duration-300" id="main-header">
+        <div className="container flex h-16 items-center justify-between">
+          <Link href="/" className="flex items-center space-x-2">
+            <Image
+              src="/images/kwsg-logo.webp"
+              alt="KW Logo"
+              width={120}
+              height={60}
+              priority
+              loading="eager"
+              fetchPriority="high"
+              className="w-auto h-auto"
+              style={{ contentVisibility: 'auto' }}
+            />
+          </Link>
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex gap-4 lg:gap-6">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-sm font-medium text-white hover:text-primary-red transition-colors duration-300 rounded px-2 py-1 relative group"
+                id="nav-link"
+              >
+                {item.label}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
-              )}
-            </Link>
-          ))}
-        </nav>
-        {/* Mobile and Tablet Menu */}
-        <MobileMenu />
-      </div>
-    </header>
+              </Link>
+            ))}
+          </nav>
+          {/* Mobile and Tablet Menu */}
+          <MobileMenu />
+        </div>
+      </header>
+    </>
   )
 }
 
@@ -95,9 +79,8 @@ export function Header() {
 const footerLinks = {
   column1: [
     { href: "/", label: "Home" },
-    { href: "/model", label: "KW Income Model" },
-    { href: "/events", label: "Events" },
-    { href: "/press", label: "Press" },
+    { href: "/editorial", label: "KW Blog" },
+    { href: "/projects", label: "New Launch Condo" }
   ],
   column2: [
     { href: "/about-us", label: "About Us" },
@@ -109,27 +92,26 @@ const footerLinks = {
 export function Footer() {
   const pathname = usePathname()
   const isAdminPage = pathname?.startsWith('/admin')
-  const isSpringleafPage = pathname?.startsWith('/springleaf-residence')
-  const isSpringleafBackupPage = pathname?.startsWith('/springleaf-backup')
 
   if (isAdminPage) return null
 
   return (
     <>
-      {!isSpringleafPage && !isSpringleafBackupPage && <FloatingWhatsApp />}
+      <FloatingWhatsApp />
       <footer className="border-t py-8 md:py-12 bg-black text-white">
         <div className="container grid gap-8 md:grid-cols-3">
           <div className="space-y-4">
             <Image
-              src="/images/kwsingapore-logo.webp"
+              src="/images/kwsg-logo.webp"
               alt="KW Logo"
-              width={60}
-              height={30}
+              width={180}
+              height={90}
               loading="lazy"
               className="w-auto h-auto"
+              style={{ contentVisibility: 'auto' }}
             />
             <p className="text-sm text-gray-300">
-              Realtors to Real Estate Entrepreneurs
+              The Real Estate Model of the Future. Built Today.
             </p>
           </div>
           <div className="space-y-4">
@@ -160,20 +142,15 @@ export function Footer() {
                 </a>
               </p>
               <p>
-                <a href="https://wa.me/6587996569" target="_blank" rel="noopener noreferrer" className="hover:text-white">
-                  Phone: +65 8799 6569
-                </a>
-              </p>
-              <p>
-                <a rel="noopener noreferrer" className="hover:text-white">
-                  Address: Oxley Bizhub 2, 62 Ubi Road 1 #01-19 <br /> Singapore 408734
+                <a href="https://wa.me/6586111703" target="_blank" rel="noopener noreferrer" className="hover:text-white">
+                  Phone: +65 8611 1703
                 </a>
               </p>
             </div>
           </div>
         </div>
         <div className="container mt-8 border-t border-gray-800 pt-8 text-center text-sm text-gray-300">
-          <p>&copy; {new Date().getFullYear()} KW Singapore Real Estate Pte. Ltd. | All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Kairos World Real Estate Inc Pte. Ltd. | All rights reserved.</p>
           <p className="mt-1">CEA License Number: L3011034Z</p>
         </div>
       </footer>
