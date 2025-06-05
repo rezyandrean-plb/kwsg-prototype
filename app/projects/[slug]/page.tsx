@@ -201,43 +201,45 @@ export default function ProjectPage({ params }: ProjectPageProps) {
               });
             }
           }}>
-            <TabsList className="w-full justify-start bg-transparent border-b-0 p-0">
-              <TabsTrigger 
-                value="overview" 
-                className="data-[state=active]:bg-transparent data-[state=active]:text-red-500 data-[state=active]:border-b-2 data-[state=active]:border-red-500 rounded-none px-6 py-4 text-gray-400 hover:text-white flex items-center gap-2"
-              >
-                <FileText className="h-4 w-4 data-[state=active]:text-red-500" />
-                Project Overview
-              </TabsTrigger>
-              <TabsTrigger 
-                value="pricing" 
-                className="data-[state=active]:bg-transparent data-[state=active]:text-red-500 data-[state=active]:border-b-2 data-[state=active]:border-red-500 rounded-none px-6 py-4 text-gray-400 hover:text-white flex items-center gap-2"
-              >
-                <DollarSign className="h-4 w-4 data-[state=active]:text-red-500" />
-                Unit Types & Pricing
-              </TabsTrigger>
-              <TabsTrigger 
-                value="floorplans" 
-                className="data-[state=active]:bg-transparent data-[state=active]:text-red-500 data-[state=active]:border-b-2 data-[state=active]:border-red-500 rounded-none px-6 py-4 text-gray-400 hover:text-white flex items-center gap-2"
-              >
-                <LayoutGrid className="h-4 w-4 data-[state=active]:text-red-500" />
-                Floor Plans
-              </TabsTrigger>
-              <TabsTrigger 
-                value="location" 
-                className="data-[state=active]:bg-transparent data-[state=active]:text-red-500 data-[state=active]:border-b-2 data-[state=active]:border-red-500 rounded-none px-6 py-4 text-gray-400 hover:text-white flex items-center gap-2"
-              >
-                <MapPinned className="h-4 w-4 data-[state=active]:text-red-500" />
-                Location
-              </TabsTrigger>
-              <TabsTrigger 
-                value="reviews" 
-                className="data-[state=active]:bg-transparent data-[state=active]:text-red-500 data-[state=active]:border-b-2 data-[state=active]:border-red-500 rounded-none px-6 py-4 text-gray-400 hover:text-white flex items-center gap-2"
-              >
-                <Newspaper className="h-4 w-4 data-[state=active]:text-red-500" />
-                Media Reviews
-              </TabsTrigger>
-            </TabsList>
+            <div className="overflow-x-auto">
+              <TabsList className="w-full justify-start bg-transparent border-b-0 p-0 min-w-max">
+                <TabsTrigger 
+                  value="overview" 
+                  className="data-[state=active]:bg-transparent data-[state=active]:text-red-500 data-[state=active]:border-b-2 data-[state=active]:border-red-500 rounded-none px-4 sm:px-6 py-3 sm:py-4 text-gray-400 hover:text-white flex items-center gap-2 whitespace-nowrap"
+                >
+                  <FileText className="h-4 w-4 data-[state=active]:text-red-500" />
+                  <span className="text-sm sm:text-base">Project Overview</span>
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="pricing" 
+                  className="data-[state=active]:bg-transparent data-[state=active]:text-red-500 data-[state=active]:border-b-2 data-[state=active]:border-red-500 rounded-none px-4 sm:px-6 py-3 sm:py-4 text-gray-400 hover:text-white flex items-center gap-2 whitespace-nowrap"
+                >
+                  <DollarSign className="h-4 w-4 data-[state=active]:text-red-500" />
+                  <span className="text-sm sm:text-base">Unit Types & Pricing</span>
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="floorplans" 
+                  className="data-[state=active]:bg-transparent data-[state=active]:text-red-500 data-[state=active]:border-b-2 data-[state=active]:border-red-500 rounded-none px-4 sm:px-6 py-3 sm:py-4 text-gray-400 hover:text-white flex items-center gap-2 whitespace-nowrap"
+                >
+                  <LayoutGrid className="h-4 w-4 data-[state=active]:text-red-500" />
+                  <span className="text-sm sm:text-base">Floor Plans</span>
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="location" 
+                  className="data-[state=active]:bg-transparent data-[state=active]:text-red-500 data-[state=active]:border-b-2 data-[state=active]:border-red-500 rounded-none px-4 sm:px-6 py-3 sm:py-4 text-gray-400 hover:text-white flex items-center gap-2 whitespace-nowrap"
+                >
+                  <MapPinned className="h-4 w-4 data-[state=active]:text-red-500" />
+                  <span className="text-sm sm:text-base">Location</span>
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="reviews" 
+                  className="data-[state=active]:bg-transparent data-[state=active]:text-red-500 data-[state=active]:border-b-2 data-[state=active]:border-red-500 rounded-none px-4 sm:px-6 py-3 sm:py-4 text-gray-400 hover:text-white flex items-center gap-2 whitespace-nowrap"
+                >
+                  <Newspaper className="h-4 w-4 data-[state=active]:text-red-500" />
+                  <span className="text-sm sm:text-base">Media Reviews</span>
+                </TabsTrigger>
+              </TabsList>
+            </div>
           </Tabs>
         </div>
       </div>

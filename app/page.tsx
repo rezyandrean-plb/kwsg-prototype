@@ -19,16 +19,13 @@ import dynamic from 'next/dynamic'
 
 // Dynamically import dialogs
 const ContactDialog = dynamic(() => import("@/components/contact-dialog").then(mod => mod.ContactDialog), {
-  loading: () => <div>Loading...</div>,
-  ssr: false
+  loading: () => <div className="w-full h-full flex items-center justify-center">Loading...</div>
 })
 const WebinarDialog = dynamic(() => import("@/components/webinar-dialog").then(mod => mod.WebinarDialog), {
-  loading: () => <div>Loading...</div>,
-  ssr: false
+  loading: () => <div className="w-full h-full flex items-center justify-center">Loading...</div>
 })
 const JoinFormDialog = dynamic(() => import("@/components/join-form-dialog").then(mod => mod.JoinFormDialog), {
-  loading: () => <div>Loading...</div>,
-  ssr: false
+  loading: () => <div className="w-full h-full flex items-center justify-center">Loading...</div>
 })
 
 export default function Home() {
