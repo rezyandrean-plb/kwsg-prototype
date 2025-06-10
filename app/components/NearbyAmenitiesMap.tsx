@@ -1,9 +1,10 @@
 "use client"
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Project } from "@/lib/data";
-import { GoogleMap, Marker, useJsApiLoader, DirectionsRenderer } from "@react-google-maps/api";
-import { useMemo } from "react";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 
 interface Props {
   project: Project;
@@ -26,30 +27,25 @@ const CATEGORIES = [
   { key: 'park', label: 'Park', types: ['park'], icon: '/map-markers/map/park.svg' },
 ];
 
-const loadScript = (src: string): Promise<void> => {
-  return new Promise<void>((resolve) => {
-    if (document.querySelector(`script[src="${src}"]`)) {
-      resolve();
-      return;
-    }
-    const script = document.createElement('script');
-    script.src = src;
-    script.onload = () => resolve();
-    script.onerror = () => resolve();
-    document.body.appendChild(script);
-  });
-};
-
-async function fetchNearbyAmenities(lat: number, lng: number, radius: number, categories: typeof CATEGORIES): Promise<any[]> {
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_KEY || (typeof window !== 'undefined' ? (window as any).NEXT_PUBLIC_GOOGLE_KEY : '');
-  if (!apiKey) {
-    console.error('Google Maps API key not found');
-    return [];
-  }
-  const allResults: any[] = [];
-  // ... rest of the function implementation
-  return allResults;
+// Dummy fetchNearbyAmenities for now (replace with your real fetch logic)
+async function fetchNearbyAmenities(lat: number, lng: number, radius: number, categories: typeof CATEGORIES): Promise<Amenity[]> {
+  // Return a few dummy amenities for demonstration
+  return [
+    { name: 'Amenity 1', lat: lat + 0.001, lng: lng + 0.001, type: 'school' },
+    { name: 'Amenity 2', lat: lat - 0.001, lng: lng - 0.001, type: 'park' },
+  ];
 }
+
+// Fix for default marker icon in Leaflet
+const DefaultIcon = L.icon({
+  iconUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png',
+  shadowSize: [41, 41],
+});
+L.Marker.prototype.options.icon = DefaultIcon;
 
 export default function HybridMapAmenities({ project }: Props) {
   if (!project.latitude || !project.longitude) {
@@ -61,113 +57,38 @@ export default function HybridMapAmenities({ project }: Props) {
     );
   }
 
-  const projectCoords = { 
-    lat: Number(project.latitude), 
-    lng: Number(project.longitude) 
+  const projectCoords = {
+    lat: Number(project.latitude),
+    lng: Number(project.longitude)
   };
-
-  const containerStyle = {
-    width: "100%",
-    height: "100%",
-  };
-
-  const API_KEY = "AIzaSyATaKZX6SiWUM43vZletpWeI1KPLo2Hftw";
-
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: API_KEY,
-  });
 
   const [amenities, setAmenities] = useState<Amenity[]>([]);
-  const [selectedAmenity, setSelectedAmenity] = useState<Amenity | null>(null);
-  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
-    // Fetch amenities when component mounts
     fetchNearbyAmenities(projectCoords.lat, projectCoords.lng, 1000, CATEGORIES)
-      .then(results => {
-        const formattedAmenities: Amenity[] = results.flatMap(category => 
-          category.places.map((place: any) => ({
-            name: place.name,
-            lat: place.lat,
-            lng: place.lon,
-            type: place.type
-          }))
-        );
-        setAmenities(formattedAmenities);
-      });
+      .then(setAmenities);
   }, [projectCoords.lat, projectCoords.lng]);
 
-  // Find the selected (nearest) amenity
-  const selectedAmenityMemo = useMemo(
-    () => amenities.find((a) => a.isNearest),
-    [amenities]
-  );
-
-  // Center on selected amenity if exists, else project center
-  const mapCenter = selectedAmenityMemo
-    ? { lat: selectedAmenityMemo.lat, lng: selectedAmenityMemo.lng }
-    : projectCoords;
-
-  // Directions state
-  const [directions, setDirections] = useState<google.maps.DirectionsResult | null>(null);
-
-  useEffect(() => {
-    if (isLoaded && selectedAmenityMemo) {
-      const directionsService = new window.google.maps.DirectionsService();
-      directionsService.route(
-        {
-          origin: projectCoords,
-          destination: { lat: selectedAmenityMemo.lat, lng: selectedAmenityMemo.lng },
-          travelMode: window.google.maps.TravelMode.DRIVING,
-        },
-        (result, status) => {
-          if (status === window.google.maps.DirectionsStatus.OK) {
-            setDirections(result);
-          } else {
-            setDirections(null);
-          }
-        }
-      );
-    } else {
-      setDirections(null);
-    }
-  }, [isLoaded, selectedAmenityMemo, projectCoords]);
-
-  return isLoaded ? (
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={mapCenter}
-      zoom={15}
-      options={{ mapTypeControl: false, streetViewControl: false }}
-    >
+  return (
+    <MapContainer center={projectCoords} zoom={15} style={{ width: '100%', height: '100%' }} scrollWheelZoom={true}>
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
       {/* Project Marker */}
-      <Marker position={projectCoords} label="P" />
-
+      <Marker position={projectCoords}>
+        <Popup>
+          Project Location
+        </Popup>
+      </Marker>
       {/* Amenity Markers */}
       {amenities.map((amenity, idx) => (
-        <Marker
-          key={idx}
-          position={{ lat: amenity.lat, lng: amenity.lng }}
-          label={amenity.isNearest ? "★" : amenity.name[0]}
-          title={amenity.name}
-          icon={
-            amenity.isNearest
-              ? {
-                  url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-                }
-              : undefined
-          }
-        />
+        <Marker key={idx} position={{ lat: amenity.lat, lng: amenity.lng }}>
+          <Popup>
+            {amenity.name} ({amenity.type})
+          </Popup>
+        </Marker>
       ))}
-
-      {/* Directions */}
-      {directions && <DirectionsRenderer directions={directions} />}
-    </GoogleMap>
-  ) : (
-    <div className="flex items-center justify-center h-full bg-gray-800 text-gray-400">
-      Loading map...
-    </div>
+    </MapContainer>
   );
 } 
