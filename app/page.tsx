@@ -156,7 +156,7 @@ export default function Home() {
             <p className="text-[clamp(1rem,2.5vw,1.5rem)] text-gray-100 max-w-6xl mx-auto leading-relaxed">
               KW Singapore is the next-generation real estate model for tomorrow's consultants. We empower ambitious professionals with world-class media production, AI automation, and training systems—so they can build brands, grow businesses, and scale sustainably.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+            <div className="inline-flex justify-center pt-4">
               <Button 
                 onClick={() => {
                   document.getElementById('kw-advantage')?.scrollIntoView({ behavior: 'smooth' });

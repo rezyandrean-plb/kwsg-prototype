@@ -261,30 +261,30 @@ export default function EditorialPage() {
           <div className="max-w-7xl mx-auto">
             {/* Search and Filters */}
             <div className="mb-8">
-              <div className="flex flex-col md:flex-row md:items-stretch gap-4">
+              <div className="flex items-center gap-4">
                 {/* Search Bar */}
                 <div className="relative flex-1">
                   <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                   <Input
                     type="search"
                     placeholder="Search articles by title, content, or category..."
-                    className="pl-12 h-[52px] text-lg bg-white/10 border-gray-600 text-white placeholder:text-gray-400 focus:border-primary-red focus:ring-primary-red/20 backdrop-blur-sm"
+                    className="w-full pl-12 h-[52px] text-lg bg-gray-800/50 border-gray-600 text-white placeholder:text-gray-400 focus:border-primary-red focus:ring-primary-red/20 backdrop-blur-sm rounded-md"
                     value={filters.searchQuery}
                     onChange={(e) => setFilters(prev => ({ ...prev, searchQuery: e.target.value }))}
                   />
                 </div>
 
                 {/* Filter Controls */}
-                <div className="flex items-center gap-3 shrink-0">
+                <div className="flex items-center gap-3">
                   <Button 
                     variant="outline" 
-                    className="h-[52px] flex items-center gap-2 border-gray-600 text-gray-300 hover:bg-white/10 hover:text-white hover:border-gray-500"
+                    className="h-[52px] px-4 flex items-center gap-2 border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 rounded-md transition-colors whitespace-nowrap"
                     onClick={() => setIsYearFilterOpen(true)}
                   >
                     <Calendar className="h-4 w-4" />
                     Date Range
                     {(filters.yearRange.start !== "2024" || filters.yearRange.end !== "2024") && (
-                      <Badge variant="secondary" className="bg-primary-red/20 text-primary-red">
+                      <Badge variant="secondary" className="ml-1 bg-primary-red/20 text-primary-red rounded-full">
                         {filters.yearRange.start === filters.yearRange.end ? "1" : "2"}
                       </Badge>
                     )}
@@ -292,13 +292,13 @@ export default function EditorialPage() {
 
                   <Button 
                     variant="outline" 
-                    className="h-[52px] flex items-center gap-2 border-gray-600 text-gray-300 hover:bg-white/10 hover:text-white hover:border-gray-500"
+                    className="h-[52px] px-4 flex items-center gap-2 border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 rounded-md transition-colors whitespace-nowrap"
                     onClick={() => setIsFilterOpen(true)}
                   >
                     <Filter className="h-4 w-4" />
                     Filter & Sort
                     {filters.categories.length > 0 && (
-                      <Badge variant="secondary" className="bg-primary-red/20 text-primary-red">
+                      <Badge variant="secondary" className="ml-1 bg-primary-red/20 text-primary-red rounded-full">
                         {filters.categories.length}
                       </Badge>
                     )}
@@ -313,7 +313,7 @@ export default function EditorialPage() {
                   {filters.searchQuery && (
                     <Badge 
                       variant="secondary" 
-                      className="bg-white/10 text-gray-300 hover:bg-white/20 cursor-pointer border border-gray-600"
+                      className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-3 py-1 transition-colors"
                       onClick={() => setFilters(prev => ({ ...prev, searchQuery: "" }))}
                     >
                       Search: {filters.searchQuery}
@@ -324,7 +324,7 @@ export default function EditorialPage() {
                     <Badge 
                       key={category}
                       variant="secondary" 
-                      className="bg-white/10 text-gray-300 hover:bg-white/20 cursor-pointer border border-gray-600"
+                      className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-3 py-1 transition-colors"
                       onClick={() => toggleCategory(category)}
                     >
                       {category}
@@ -334,7 +334,7 @@ export default function EditorialPage() {
                   {(filters.yearRange.start !== "2024" || filters.yearRange.end !== "2024") && (
                     <Badge 
                       variant="secondary" 
-                      className="bg-white/10 text-gray-300 hover:bg-white/20 cursor-pointer border border-gray-600"
+                      className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-3 py-1 transition-colors"
                       onClick={() => setFilters(prev => ({ 
                         ...prev, 
                         yearRange: { start: "2024", end: "2024" } 
@@ -348,7 +348,7 @@ export default function EditorialPage() {
                   )}
                   <Button
                     variant="ghost"
-                    className="text-gray-400 hover:text-white text-sm"
+                    className="text-gray-400 hover:text-white text-sm transition-colors"
                     onClick={clearFilters}
                   >
                     Clear all
@@ -405,7 +405,7 @@ export default function EditorialPage() {
 
       {/* Year Filter Dialog */}
       <Dialog open={isYearFilterOpen} onOpenChange={setIsYearFilterOpen}>
-        <DialogContent className="bg-gray-900 border-gray-700 text-white">
+        <DialogContent className="bg-gray-900 border-gray-700 text-white rounded-lg shadow-lg">
           <DialogHeader>
             <DialogTitle>Filter by Date Range</DialogTitle>
             <DialogDescription className="text-sm text-gray-400">
@@ -485,7 +485,7 @@ export default function EditorialPage() {
 
       {/* Categories and Sort Dialog */}
       <Dialog open={isFilterOpen} onOpenChange={setIsFilterOpen}>
-        <DialogContent className="bg-gray-900 border-gray-700 text-white max-w-2xl">
+        <DialogContent className="bg-gray-900 border-gray-700 text-white max-w-2xl rounded-lg shadow-lg">
           <DialogHeader>
             <DialogTitle>Filter & Sort Articles</DialogTitle>
             <DialogDescription className="text-sm text-gray-400">
