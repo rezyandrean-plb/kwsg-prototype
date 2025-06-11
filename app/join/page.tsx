@@ -400,15 +400,15 @@ export default function JoinKW() {
             <h2 className="text-3xl md:text-4xl font-bold mb-8 text-white">
               Ready to Build Your Business With KW Singapore?
             </h2>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-row gap-4 justify-center">
               <Button 
-                className="bg-primary-red text-white hover:bg-primary-red/90 px-6 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[48px]"
+                className="bg-primary-red text-white hover:bg-primary-red/90 px-6 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[48px] min-w-[200px]"
                 onClick={() => setIsDialogOpen(true)}
               >
                 Become a KW Realtor →
               </Button>
               <Button 
-                className="bg-white text-black hover:bg-white/90 px-6 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[48px]"
+                className="bg-white text-black hover:bg-white/90 px-6 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[48px] min-w-[200px]"
               >
                 Book a Discovery Call
               </Button>
