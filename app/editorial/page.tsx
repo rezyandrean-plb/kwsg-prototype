@@ -237,62 +237,94 @@ export default function EditorialPage() {
         </div>
       </section>
 
-      <section className="py-12 bg-black text-white">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
-            <div>
-              <h2 className="text-2xl font-bold text-white">Latest Articles</h2>
-              <p className="text-gray-300">Discover insights and stories from KW Singapore</p>
-            </div>
-            <div className="mt-4 md:mt-0 flex items-center gap-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <Input
-                  type="search"
-                  placeholder="Search articles by title, content, or category..."
-                  className="pl-10 bg-gray-900 border-gray-700 text-gray-300 placeholder:text-gray-500"
-                  value={filters.searchQuery}
-                  onChange={(e) => setFilters(prev => ({ ...prev, searchQuery: e.target.value }))}
-                />
+      <section className="relative py-16">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80"
+            alt="Background"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-black/80" />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          {/* Section Header */}
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Latest Articles</h2>
+            <p className="text-lg text-gray-300">Discover insights and stories from KW Singapore's real estate experts</p>
+          </div>
+
+          {/* Search, Filters, and Articles Container */}
+          <div className="max-w-7xl mx-auto">
+            {/* Search and Filters */}
+            <div className="mb-8">
+              <div className="flex flex-col md:flex-row md:items-stretch gap-4">
+                {/* Search Bar */}
+                <div className="relative flex-1">
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <Input
+                    type="search"
+                    placeholder="Search articles by title, content, or category..."
+                    className="pl-12 h-[52px] text-lg bg-white/10 border-gray-600 text-white placeholder:text-gray-400 focus:border-primary-red focus:ring-primary-red/20 backdrop-blur-sm"
+                    value={filters.searchQuery}
+                    onChange={(e) => setFilters(prev => ({ ...prev, searchQuery: e.target.value }))}
+                  />
+                </div>
+
+                {/* Filter Controls */}
+                <div className="flex items-center gap-3 shrink-0">
+                  <Button 
+                    variant="outline" 
+                    className="h-[52px] flex items-center gap-2 border-gray-600 text-gray-300 hover:bg-white/10 hover:text-white hover:border-gray-500"
+                    onClick={() => setIsYearFilterOpen(true)}
+                  >
+                    <Calendar className="h-4 w-4" />
+                    Date Range
+                    {(filters.yearRange.start !== "2024" || filters.yearRange.end !== "2024") && (
+                      <Badge variant="secondary" className="bg-primary-red/20 text-primary-red">
+                        {filters.yearRange.start === filters.yearRange.end ? "1" : "2"}
+                      </Badge>
+                    )}
+                  </Button>
+
+                  <Button 
+                    variant="outline" 
+                    className="h-[52px] flex items-center gap-2 border-gray-600 text-gray-300 hover:bg-white/10 hover:text-white hover:border-gray-500"
+                    onClick={() => setIsFilterOpen(true)}
+                  >
+                    <Filter className="h-4 w-4" />
+                    Filter & Sort
+                    {filters.categories.length > 0 && (
+                      <Badge variant="secondary" className="bg-primary-red/20 text-primary-red">
+                        {filters.categories.length}
+                      </Badge>
+                    )}
+                  </Button>
+                </div>
               </div>
-              <div className="flex gap-2">
-                <Button 
-                  variant="outline" 
-                  className="flex items-center border-gray-700 text-gray-300 hover:bg-gray-800"
-                  onClick={() => setIsYearFilterOpen(true)}
-                >
-                  <Calendar className="h-4 w-4 mr-2" />
-                  Date Range
-                  {(filters.yearRange.start !== "2024" || filters.yearRange.end !== "2024") && (
-                    <Badge variant="secondary" className="ml-2 bg-primary-red/20 text-primary-red">
-                      {filters.yearRange.start === filters.yearRange.end ? "1" : "2"}
+
+              {/* Active Filters */}
+              {(filters.categories.length > 0 || filters.yearRange.start !== "2024" || filters.yearRange.end !== "2024" || filters.searchQuery) && (
+                <div className="flex flex-wrap items-center gap-2 mt-4">
+                  <span className="text-sm text-gray-400">Active filters:</span>
+                  {filters.searchQuery && (
+                    <Badge 
+                      variant="secondary" 
+                      className="bg-white/10 text-gray-300 hover:bg-white/20 cursor-pointer border border-gray-600"
+                      onClick={() => setFilters(prev => ({ ...prev, searchQuery: "" }))}
+                    >
+                      Search: {filters.searchQuery}
+                      <X className="ml-1 h-3 w-3" />
                     </Badge>
                   )}
-                </Button>
-
-                <Button 
-                  variant="outline" 
-                  className="flex items-center border-gray-700 text-gray-300 hover:bg-gray-800"
-                  onClick={() => setIsFilterOpen(true)}
-                >
-                  <Filter className="h-4 w-4 mr-2" />
-                  Filter & Sort
-                  {filters.categories.length > 0 && (
-                    <Badge variant="secondary" className="ml-2 bg-primary-red/20 text-primary-red">
-                      {filters.categories.length}
-                    </Badge>
-                  )}
-                </Button>
-              </div>
-
-              {/* Active filters display */}
-              {(filters.categories.length > 0 || filters.yearRange.start !== "2024" || filters.yearRange.end !== "2024") && (
-                <div className="flex flex-wrap gap-2 mt-4">
                   {filters.categories.map(category => (
                     <Badge 
                       key={category}
                       variant="secondary" 
-                      className="bg-gray-800 text-gray-300 hover:bg-gray-700 cursor-pointer"
+                      className="bg-white/10 text-gray-300 hover:bg-white/20 cursor-pointer border border-gray-600"
                       onClick={() => toggleCategory(category)}
                     >
                       {category}
@@ -302,7 +334,7 @@ export default function EditorialPage() {
                   {(filters.yearRange.start !== "2024" || filters.yearRange.end !== "2024") && (
                     <Badge 
                       variant="secondary" 
-                      className="bg-gray-800 text-gray-300 hover:bg-gray-700 cursor-pointer"
+                      className="bg-white/10 text-gray-300 hover:bg-white/20 cursor-pointer border border-gray-600"
                       onClick={() => setFilters(prev => ({ 
                         ...prev, 
                         yearRange: { start: "2024", end: "2024" } 
@@ -316,7 +348,7 @@ export default function EditorialPage() {
                   )}
                   <Button
                     variant="ghost"
-                    className="text-gray-400 hover:text-gray-300 text-sm"
+                    className="text-gray-400 hover:text-white text-sm"
                     onClick={clearFilters}
                   >
                     Clear all
@@ -324,42 +356,49 @@ export default function EditorialPage() {
                 </div>
               )}
             </div>
-          </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredArticles.length > 0 ? (
-              filteredArticles.map((article) => (
-                <EditorialCard
-                  key={article.slug}
-                  title={article.title}
-                  excerpt={article.excerpt}
-                  image={article.image}
-                  date={article.date}
-                  readTime={article.readTime}
-                  category={article.category}
-                  slug={article.slug}
-                />
-              ))
-            ) : (
-              <div className="col-span-full text-center py-12">
-                <p className="text-gray-400 text-lg">No articles found matching your criteria.</p>
+            {/* Articles Grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredArticles.length > 0 ? (
+                filteredArticles.map((article) => (
+                  <EditorialCard
+                    key={article.slug}
+                    title={article.title}
+                    excerpt={article.excerpt}
+                    image={article.image}
+                    date={article.date}
+                    readTime={article.readTime}
+                    category={article.category}
+                    slug={article.slug}
+                  />
+                ))
+              ) : (
+                <div className="col-span-full text-center py-16 bg-white/5 backdrop-blur-sm rounded-lg border border-gray-600">
+                  <p className="text-gray-300 text-lg mb-2">No articles found matching your criteria</p>
+                  <p className="text-gray-400">Try adjusting your filters or search terms</p>
+                </div>
+              )}
+            </div>
+
+            {/* Pagination */}
+            {filteredArticles.length > 0 && (
+              <div className="flex justify-center mt-12">
+                <div className="flex items-center gap-2">
+                  <Button variant="outline" className="px-4 border-gray-600 text-gray-300 hover:bg-white/10 hover:text-white hover:border-gray-500">
+                    1
+                  </Button>
+                  <Button variant="outline" className="px-4 border-gray-600 text-gray-300 hover:bg-white/10 hover:text-white hover:border-gray-500">
+                    2
+                  </Button>
+                  <Button variant="outline" className="px-4 border-gray-600 text-gray-300 hover:bg-white/10 hover:text-white hover:border-gray-500">
+                    3
+                  </Button>
+                  <Button variant="outline" className="px-4 border-gray-600 text-gray-300 hover:bg-white/10 hover:text-white hover:border-gray-500">
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
             )}
-          </div>
-
-          <div className="flex justify-center mt-12">
-            <Button variant="outline" className="mx-1 px-4 border-gray-700 text-gray-300 hover:bg-gray-800">
-              1
-            </Button>
-            <Button variant="outline" className="mx-1 px-4 border-gray-700 text-gray-300 hover:bg-gray-800">
-              2
-            </Button>
-            <Button variant="outline" className="mx-1 px-4 border-gray-700 text-gray-300 hover:bg-gray-800">
-              3
-            </Button>
-            <Button variant="outline" className="mx-1 border-gray-700 text-gray-300 hover:bg-gray-800">
-              <ArrowRight className="h-4 w-4" />
-            </Button>
           </div>
         </div>
       </section>

@@ -161,11 +161,11 @@ export default function Home() {
                 onClick={() => {
                   document.getElementById('kw-advantage')?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="group px-[clamp(2rem,4vw,2.5rem)] py-[clamp(1rem,2vw,1.5rem)] text-[clamp(1rem,1.5vw,1.25rem)] bg-primary-red text-white hover:bg-primary-red/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]"
+                className="group px-[clamp(1.5rem,3vw,2rem)] py-[clamp(0.75rem,1.5vw,1.25rem)] text-[clamp(0.875rem,1.25vw,1.125rem)] bg-primary-red text-white hover:bg-primary-red/90 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]"
                 aria-label="Learn more about KW Singapore"
               >
                 Learn More
-                <ArrowRight className="ml-3 h-[clamp(1.25rem,1.5vw,1.5rem)] w-[clamp(1.25rem,1.5vw,1.5rem)] transform transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+                <ArrowRight className="ml-2 h-[clamp(1rem,1.25vw,1.25rem)] w-[clamp(1rem,1.25vw,1.25rem)] transform transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
               </Button>
             </div>
           </div>
