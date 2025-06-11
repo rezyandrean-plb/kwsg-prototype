@@ -151,7 +151,7 @@ export default function JoinKW() {
             className="w-full h-full"
           >
             <Image
-              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=2000"
+              src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=2000"
               alt="Growth Share Model Background"
               fill
               className="object-cover brightness-[0.2]"
@@ -169,7 +169,7 @@ export default function JoinKW() {
           >
             <div className="relative h-[400px] rounded-lg overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=2000"
+                src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=2000"
                 alt="Growth Share Model"
                 fill
                 className="object-cover"
@@ -355,7 +355,7 @@ export default function JoinKW() {
                 </TypingText>
               </div>
               <ParallaxImage
-                src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=2000"
+                src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=2000"
                 alt="KW Media Hub"
               />
             </motion.div>
