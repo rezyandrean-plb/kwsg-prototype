@@ -639,7 +639,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
       <section className="py-12 bg-[#1c1c1d]">
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row gap-12">
-            {/* Left Column - Main Content */}
+            {/* Main Content Column */}
             <div className="lg:w-2/3 space-y-12">
               {/* Overview Section */}
               <div id="overview">
@@ -687,8 +687,118 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                   </div>
                 </div>
               </div>
+
+              {/* Location Section */}
+              <div id="location" className="space-y-8">
+                <h2 className="text-2xl font-bold mb-4 text-white">Location</h2>
+                
+                {/* Map and Amenities Section */}
+                <div className="bg-[#242728] rounded-lg p-6">
+                  <Tabs defaultValue={selectedAmenityType} className="w-full" onValueChange={setSelectedAmenityType}>
+                    <TabsList className="mb-6 overflow-x-auto flex flex-wrap">
+                      {amenityTabs.map((tab) => (
+                        <TabsTrigger
+                          key={tab.key}
+                          value={tab.key}
+                          className="data-[state=active]:bg-red-500 data-[state=active]:text-white px-4 py-2 flex items-center gap-2 whitespace-nowrap"
+                        >
+                          <tab.icon className="h-4 w-4" />
+                          <span>{tab.label}</span>
+                        </TabsTrigger>
+                      ))}
+                    </TabsList>
+                    
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                      {/* Map Component */}
+                      <div className="h-[500px] rounded-lg overflow-hidden border border-gray-700">
+                        <NearbyAmenitiesMap
+                          project={{
+                            ...project,
+                            latitude: projectLocation.lat,
+                            longitude: projectLocation.lng
+                          }}
+                        />
+                      </div>
+
+                      {/* Amenities List */}
+                      <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
+                        {isLoadingAmenities ? (
+                          <div className="flex items-center justify-center h-full">
+                            <div className="text-gray-400">Loading amenities...</div>
+                          </div>
+                        ) : uniqueAmenities.length > 0 ? (
+                          uniqueAmenities.map((place, index) => (
+                            <div
+                              key={place.placeId}
+                              className={`p-4 rounded-lg cursor-pointer transition-colors ${
+                                selectedAmenity?.placeId === place.placeId
+                                  ? 'bg-red-500/10 border border-red-500/20'
+                                  : 'bg-gray-800/50 border border-gray-700 hover:bg-gray-800'
+                              }`}
+                              onClick={() => {
+                                setSelectedAmenity(place);
+                                setSelectedAmenityClick(prev => prev + 1);
+                              }}
+                            >
+                              <div className="flex items-start justify-between">
+                                <div>
+                                  <h4 className="font-medium text-white mb-1">{place.name}</h4>
+                                  <p className="text-sm text-gray-400 mb-2">{place.address}</p>
+                                  <div className="flex items-center gap-4 text-sm">
+                                    <span className="text-gray-300 flex items-center gap-1">
+                                      <MapPin className="h-4 w-4 text-red-500" />
+                                      {place.distance}
+                                    </span>
+                                    <span className="text-gray-300 flex items-center gap-1">
+                                      <Clock className="h-4 w-4 text-red-500" />
+                                      {place.duration}
+                                    </span>
+                                    <span className="text-gray-300 flex items-center gap-1">
+                                      <Train className="h-4 w-4 text-red-500" />
+                                      {place.transportMode}
+                                    </span>
+                                  </div>
+                                </div>
+                                {place.isNearest && (
+                                  <Badge className="bg-red-500/10 text-red-500 border border-red-500/20">
+                                    Nearest
+                                  </Badge>
+                                )}
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="text-center text-gray-400 py-8">
+                            No amenities found in this category
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </Tabs>
+                </div>
+
+                {/* Location Highlights */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {Object.entries(project.locationAnalytics).map(([category, items]) => (
+                    <Card key={category} className="bg-[#242728] border-gray-700">
+                      <CardContent className="p-4">
+                        <h3 className="font-semibold text-white mb-3 capitalize">{category}</h3>
+                        <ul className="space-y-2">
+                          {items.map((item, idx) => (
+                            <li key={idx} className="flex items-center justify-between text-sm">
+                              <span className="text-gray-300">{item.name}</span>
+                              <span className="text-gray-400">{item.distance}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </div>
             </div>
-            {/* Right Column - Contact Form and Brochure */}
+
+            {/* Price Guide and Contact Form Column */}
             <div className="lg:w-1/3">
               {/* Brochure Card */}
               <div className="bg-[#242728] text-white rounded-lg p-6 shadow-lg flex flex-col gap-3 mb-6">
@@ -715,116 +825,115 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                   </Button>
                 </div>
               </div>
+
               {/* Contact Form */}
-              <div>
-                <div className="bg-[#242728] rounded-lg shadow-lg p-6">
-                  <div className="mb-6">
-                    <h3 className="text-xl font-semibold mb-2 text-white">Interested in {project.title}?</h3>
-                    <p className="text-gray-400 text-sm">Fill in the form below and our property specialist will get back to you within 24 hours.</p>
+              <div className="bg-[#242728] rounded-lg shadow-lg p-6">
+                <div className="mb-6">
+                  <h3 className="text-xl font-semibold mb-2 text-white">Interested in {project.title}?</h3>
+                  <p className="text-gray-400 text-sm">Fill in the form below and our property specialist will get back to you within 24 hours.</p>
+                </div>
+                <form className="space-y-4">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1">
+                      Name
+                    </label>
+                    <Input
+                      id="name"
+                      type="text"
+                      placeholder="Your name"
+                      className="w-full bg-gray-800 border-gray-700 text-white placeholder-gray-500"
+                    />
                   </div>
-                  <form className="space-y-4">
-                    <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1">
-                        Name
-                      </label>
-                      <Input
-                        id="name"
-                        type="text"
-                        placeholder="Your name"
-                        className="w-full bg-gray-800 border-gray-700 text-white placeholder-gray-500"
-                      />
-                    </div>
 
-                    <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
-                        Email
-                      </label>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="Your email"
-                        className="w-full bg-gray-800 border-gray-700 text-white placeholder-gray-500"
-                      />
-                    </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
+                      Email
+                    </label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="Your email"
+                      className="w-full bg-gray-800 border-gray-700 text-white placeholder-gray-500"
+                    />
+                  </div>
 
-                    <div>
-                      <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-1">
-                        Phone
-                      </label>
-                      <Input
-                        id="phone"
-                        type="tel"
-                        placeholder="Your phone number"
-                        className="w-full bg-gray-800 border-gray-700 text-white placeholder-gray-500"
-                      />
-                    </div>
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-1">
+                      Phone
+                    </label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="Your phone number"
+                      className="w-full bg-gray-800 border-gray-700 text-white placeholder-gray-500"
+                    />
+                  </div>
 
-                    <div>
-                      <label htmlFor="unit-type" className="block text-sm font-medium text-gray-300 mb-1">
-                        Interested Unit Type
-                      </label>
-                      <Select>
-                        <SelectTrigger className="bg-gray-800 border-gray-700 text-white">
-                          <SelectValue placeholder="Select unit type" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-gray-900 border-gray-700">
-                          {project.unitTypes.map((unit, index) => (
-                            <SelectItem key={index} value={unit.type} className="text-gray-300 hover:bg-gray-800">
-                              {unit.type} - {unit.price}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
+                  <div>
+                    <label htmlFor="unit-type" className="block text-sm font-medium text-gray-300 mb-1">
+                      Interested Unit Type
+                    </label>
+                    <Select>
+                      <SelectTrigger className="bg-gray-800 border-gray-700 text-white">
+                        <SelectValue placeholder="Select unit type" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-gray-900 border-gray-700">
+                        {project.unitTypes.map((unit, index) => (
+                          <SelectItem key={index} value={unit.type} className="text-gray-300 hover:bg-gray-800">
+                            {unit.type} - {unit.price}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-                    <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-1">
-                        Message
-                      </label>
-                      <textarea
-                        id="message"
-                        rows={4}
-                        placeholder="I'm interested in this project..."
-                        className="w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-                      ></textarea>
-                    </div>
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-1">
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      rows={4}
+                      placeholder="I'm interested in this project..."
+                      className="w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                    ></textarea>
+                  </div>
 
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        id="newsletter"
-                        className="rounded border-gray-700 bg-gray-800 text-primary focus:ring-primary"
-                      />
-                      <label htmlFor="newsletter" className="text-sm text-gray-300">
-                        Subscribe to our newsletter for updates on new launches
-                      </label>
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      id="newsletter"
+                      className="rounded border-gray-700 bg-gray-800 text-primary focus:ring-primary"
+                    />
+                    <label htmlFor="newsletter" className="text-sm text-gray-300">
+                      Subscribe to our newsletter for updates on new launches
+                    </label>
+                  </div>
 
-                    <Button className="w-full bg-primary text-white hover:bg-primary/90">
-                      Inquire Now
-                    </Button>
-                  </form>
+                  <Button className="w-full bg-primary text-white hover:bg-primary/90">
+                    Inquire Now
+                  </Button>
+                </form>
 
-                  <div className="mt-6 pt-6 border-t border-gray-800">
-                    <h4 className="font-semibold mb-3 text-white">Contact our specialist directly:</h4>
-                    <div className="space-y-3">
-                      <div className="flex items-center">
-                        <div className="w-8 h-8 rounded-full bg-red-500/10 flex items-center justify-center mr-3">
-                          <Phone className="h-4 w-4 text-red-500" />
-                        </div>
-                        <div>
-                          <div className="text-sm text-gray-400">Phone</div>
-                          <div className="font-medium text-white">+65 8123 4567</div>
-                        </div>
+                <div className="mt-6 pt-6 border-t border-gray-800">
+                  <h4 className="font-semibold mb-3 text-white">Contact our specialist directly:</h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center">
+                      <div className="w-8 h-8 rounded-full bg-red-500/10 flex items-center justify-center mr-3">
+                        <Phone className="h-4 w-4 text-red-500" />
                       </div>
-                      <div className="flex items-center">
-                        <div className="w-8 h-8 rounded-full bg-red-500/10 flex items-center justify-center mr-3">
-                          <Mail className="h-4 w-4 text-red-500" />
-                        </div>
-                        <div>
-                          <div className="text-sm text-gray-400">Email</div>
-                          <div className="font-medium text-white">newlaunches@example.com</div>
-                        </div>
+                      <div>
+                        <div className="text-sm text-gray-400">Phone</div>
+                        <div className="font-medium text-white">+65 8123 4567</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="w-8 h-8 rounded-full bg-red-500/10 flex items-center justify-center mr-3">
+                        <Mail className="h-4 w-4 text-red-500" />
+                      </div>
+                      <div>
+                        <div className="text-sm text-gray-400">Email</div>
+                        <div className="font-medium text-white">newlaunches@example.com</div>
                       </div>
                     </div>
                   </div>

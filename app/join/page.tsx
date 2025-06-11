@@ -1,9 +1,9 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { motion } from "framer-motion"
+import { motion, useScroll, useTransform, Variants } from "framer-motion"
 import Image from "next/image"
-import { useState } from "react"
+import { useState, useRef } from "react"
 import dynamic from "next/dynamic"
 import { ArrowRight, Brain, Share2, Video, BarChart3, Users, Building2, Award } from "lucide-react"
 
@@ -34,8 +34,69 @@ const sectionVariants = {
   viewport: { once: true, margin: "-100px" }
 }
 
+// Add these variants before the ParallaxImage component
+const typingVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 20
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const typingTextVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 20
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut"
+    }
+  }
+};
+
+const TypingText = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {
+  return (
+    <motion.div
+      variants={typingVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      className={className}
+    >
+      {typeof children === 'string' ? (
+        children.split(' ').map((word, i) => (
+          <motion.span
+            key={i}
+            variants={typingTextVariants}
+            className="inline-block mr-1.5"
+          >
+            {word}
+          </motion.span>
+        ))
+      ) : (
+        <motion.div variants={typingTextVariants}>
+          {children}
+        </motion.div>
+      )}
+    </motion.div>
+  );
+};
+
 export default function JoinKW() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const { scrollYProgress } = useScroll()
+  const pathLength = useTransform(scrollYProgress, [0, 1], [0, 1])
 
   const handleSubmit = (data: any) => {
     console.log("Form submitted:", data)
@@ -43,21 +104,23 @@ export default function JoinKW() {
   }
 
   return (
-    <main className="min-h-screen bg-black text-white">
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      className="min-h-screen bg-black text-white"
+    >
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=2000"
+            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2000"
             alt="Join KW Singapore"
             fill
-            className="object-cover brightness-[0.4]"
+            className="object-cover brightness-50"
             priority
-            fetchPriority="high"
-            sizes="100vw"
-            style={{ contentVisibility: 'auto' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/20" />
+          <div className="absolute inset-0 bg-black/40" />
         </div>
         <motion.div 
           className="relative container mx-auto px-4 text-center"
@@ -65,27 +128,38 @@ export default function JoinKW() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white/90"
-            style={{ contentVisibility: 'auto' }}
-          >
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white tracking-tight">
             KW Singapore
           </h1>
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold mb-6 text-white/90">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold mb-6 text-white">
             Built for Realtors. Backed by Innovation.
           </h2>
-          <p 
-            className="text-lg sm:text-xl max-w-3xl mx-auto mb-12 text-gray-100/90"
-            style={{ contentVisibility: 'auto' }}
-          >
+          <p className="text-xl max-w-3xl mx-auto mb-12 text-gray-100">
             KW Singapore is where real estate consultants grow scalable, sustainable businesses. Backed by world-class systems, PropTech, and a performance-driven culture, we equip you with the tools, training, and platforms to lead in today's market.
           </p>
         </motion.div>
       </section>
 
       {/* Growth Share Model Section */}
-      <section className="py-24 bg-gradient-to-b from-black to-gray-900">
-        <div className="container mx-auto px-4">
+      <section className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0">
+          <motion.div
+            initial={{ scale: 1.1 }}
+            whileInView={{ scale: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="w-full h-full"
+          >
+            <Image
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=2000"
+              alt="Growth Share Model Background"
+              fill
+              className="object-cover brightness-[0.2]"
+              style={{ transform: 'translateZ(-1px) scale(2)' }}
+            />
+          </motion.div>
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div 
             className="grid md:grid-cols-2 gap-12 items-center"
             variants={sectionVariants}
@@ -102,7 +176,7 @@ export default function JoinKW() {
               />
             </div>
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
                 Growth Share Model
               </h2>
               <h3 className="text-xl md:text-2xl text-primary-red mb-6">
@@ -120,8 +194,25 @@ export default function JoinKW() {
       </section>
 
       {/* AI & Tech Tools Section */}
-      <section className="py-24 bg-gray-900">
-        <div className="container mx-auto px-4">
+      <section className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0">
+          <motion.div
+            initial={{ scale: 1.1 }}
+            whileInView={{ scale: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="w-full h-full"
+          >
+            <Image
+              src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000"
+              alt="AI & Tech Tools Background"
+              fill
+              className="object-cover brightness-[0.2]"
+              style={{ transform: 'translateZ(-1px) scale(2)' }}
+            />
+          </motion.div>
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div 
             className="text-center mb-16"
             variants={sectionVariants}
@@ -129,7 +220,7 @@ export default function JoinKW() {
             whileInView="whileInView"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
               AI & Tech Tools
             </h2>
             <h3 className="text-xl md:text-2xl text-primary-red mb-6">
@@ -144,31 +235,37 @@ export default function JoinKW() {
             viewport={{ once: true, margin: "-100px" }}
           >
             <motion.div 
-              className="bg-gray-800 p-8 rounded-lg"
+              className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
               variants={fadeInUp}
             >
-              <Brain className="w-12 h-12 text-primary-red mb-6" />
-              <h4 className="text-xl font-semibold mb-4">KW Command</h4>
+              <div className="bg-primary-red/10 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
+                <Brain className="w-6 h-6 text-primary-red" />
+              </div>
+              <h4 className="text-xl font-bold mb-4 text-white">KW Command</h4>
               <p className="text-gray-300">
                 Your business operations hub—built to scale consultants and teams. From lead capture to closing, every function runs through one AI-driven platform.
               </p>
             </motion.div>
             <motion.div 
-              className="bg-gray-800 p-8 rounded-lg"
+              className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
               variants={fadeInUp}
             >
-              <Share2 className="w-12 h-12 text-primary-red mb-6" />
-              <h4 className="text-xl font-semibold mb-4">Smart Automation</h4>
+              <div className="bg-primary-red/10 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
+                <Share2 className="w-6 h-6 text-primary-red" />
+              </div>
+              <h4 className="text-xl font-bold mb-4 text-white">Smart Automation</h4>
               <p className="text-gray-300">
                 Automate follow-ups. Launch smart campaigns. Track your pipeline in real time. Manage it all on the go with full visibility, anywhere you are.
               </p>
             </motion.div>
             <motion.div 
-              className="bg-gray-800 p-8 rounded-lg"
+              className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
               variants={fadeInUp}
             >
-              <BarChart3 className="w-12 h-12 text-primary-red mb-6" />
-              <h4 className="text-xl font-semibold mb-4">Systemized Growth</h4>
+              <div className="bg-primary-red/10 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
+                <BarChart3 className="w-6 h-6 text-primary-red" />
+              </div>
+              <h4 className="text-xl font-bold mb-4 text-white">Systemized Growth</h4>
               <p className="text-gray-300">
                 Top consultants don't work more—they systemize better. Our tools help you build efficient, scalable processes.
               </p>
@@ -177,110 +274,122 @@ export default function JoinKW() {
         </div>
       </section>
 
-      {/* KW Training Section */}
-      <section className="py-24 bg-black">
-        <div className="container mx-auto px-4">
+      {/* KW Services Section */}
+      <section className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0">
+          <motion.div
+            initial={{ scale: 1.1 }}
+            whileInView={{ scale: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="w-full h-full"
+          >
+            <Image
+              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=2000"
+              alt="KW Services Background"
+              fill
+              className="object-cover brightness-[0.2]"
+              style={{ transform: 'translateZ(-1px) scale(2)' }}
+            />
+          </motion.div>
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div 
-            className="grid md:grid-cols-2 gap-12 items-center"
+            className="text-center mb-16"
             variants={sectionVariants}
             initial="initial"
             whileInView="whileInView"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                KW Training
-              </h2>
-              <h3 className="text-xl md:text-2xl text-primary-red mb-6">
-                Model-Driven. Results-Focused.
-              </h3>
-              <p className="text-gray-300 mb-6">
-                Training at KW Singapore is built on proven models, not theory. Grounded in the MREA playbook, every session is designed to help consultants generate leads, close more deals, and scale with structure.
-              </p>
-              <p className="text-gray-300">
-                From new consultants to experienced teams, the focus is the same—business growth through systems that work. No fluff. Just frameworks that deliver.
-              </p>
-            </div>
-            <div className="relative h-[400px] rounded-lg overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=2000"
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+              KW Services
+            </h2>
+            <h3 className="text-xl md:text-2xl text-primary-red mb-6">
+              Comprehensive Support for Your Success
+            </h3>
+          </motion.div>
+
+          <div className="space-y-24">
+            {/* Training Section - Image on Left */}
+            <motion.div 
+              className="grid md:grid-cols-2 gap-12 items-center"
+              variants={fadeInUp}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+            >
+              <ParallaxImage
+                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=2000"
                 alt="KW Training"
-                fill
-                className="object-cover"
               />
-            </div>
-          </motion.div>
-        </div>
-      </section>
+              <div className="space-y-6">
+                <TypingText>
+                  <h3 className="text-2xl font-bold text-white">KW Training</h3>
+                </TypingText>
+                <TypingText>
+                  <h4 className="text-xl text-primary-red">Model-Driven. Results-Focused.</h4>
+                </TypingText>
+                <TypingText className="text-gray-300 text-lg">
+                  Training built on proven models, not theory. Grounded in the MREA playbook, every session is designed to help consultants generate leads, close more deals, and scale with structure.
+                </TypingText>
+              </div>
+            </motion.div>
 
-      {/* KW Media Hub Section */}
-      <section className="py-24 bg-gray-900">
-        <div className="container mx-auto px-4">
-          <motion.div 
-            className="grid md:grid-cols-2 gap-12 items-center"
-            variants={sectionVariants}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <div className="relative h-[400px] rounded-lg overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=2000"
+            {/* Media Hub Section - Image on Right */}
+            <motion.div 
+              className="grid md:grid-cols-2 gap-12 items-center"
+              variants={fadeInUp}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+            >
+              <div className="space-y-6">
+                <TypingText>
+                  <h3 className="text-2xl font-bold text-white">KW Media Hub</h3>
+                </TypingText>
+                <TypingText>
+                  <h4 className="text-xl text-primary-red">Elevate Your Presence</h4>
+                </TypingText>
+                <TypingText className="text-gray-300 text-lg">
+                  Our in-house media team helps you stand out with professional visuals, social content, and listing marketing that drives engagement and trust. From brand videos to digital ads—it's all under one roof.
+                </TypingText>
+              </div>
+              <ParallaxImage
+                src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=2000"
                 alt="KW Media Hub"
-                fill
-                className="object-cover"
               />
-            </div>
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                KW Media Hub for Realtors
-              </h2>
-              <h3 className="text-xl md:text-2xl text-primary-red mb-6">
-                Elevate Your Presence. Market with Precision.
-              </h3>
-              <p className="text-gray-300">
-                Our in-house media team helps you stand out with professional visuals, social content, and listing marketing that drives engagement and trust. From brand videos to digital ads—it's all under one roof.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+            </motion.div>
 
-      {/* KW Research Platform Section */}
-      <section className="py-24 bg-black">
-        <div className="container mx-auto px-4">
-          <motion.div 
-            className="grid md:grid-cols-2 gap-12 items-center"
-            variants={sectionVariants}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                KW Research Platform
-              </h2>
-              <h3 className="text-xl md:text-2xl text-primary-red mb-6">
-                Market Intelligence. Real-Time Advantage.
-              </h3>
-              <p className="text-gray-300">
-                Access exclusive pricing trends, district analytics, and investor-ready insights. Make smarter decisions and guide your clients with confidence—powered by real-time data that moves with the market.
-              </p>
-            </div>
-            <div className="relative h-[400px] rounded-lg overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2000"
+            {/* Research Platform Section - Image on Left */}
+            <motion.div 
+              className="grid md:grid-cols-2 gap-12 items-center"
+              variants={fadeInUp}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+            >
+              <ParallaxImage
+                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=2000"
                 alt="KW Research Platform"
-                fill
-                className="object-cover"
               />
-            </div>
-          </motion.div>
+              <div className="space-y-6">
+                <TypingText>
+                  <h3 className="text-2xl font-bold text-white">KW Research Platform</h3>
+                </TypingText>
+                <TypingText>
+                  <h4 className="text-xl text-primary-red">Market Intelligence</h4>
+                </TypingText>
+                <TypingText className="text-gray-300 text-lg">
+                  Access exclusive pricing trends, district analytics, and investor-ready insights. Make smarter decisions and guide your clients with confidence—powered by real-time data that moves with the market.
+                </TypingText>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-24 bg-gradient-to-b from-gray-900 to-black">
+      <section className="py-24 bg-black">
         <div className="container mx-auto px-4 text-center">
           <motion.div 
             variants={sectionVariants}
@@ -288,7 +397,7 @@ export default function JoinKW() {
             whileInView="whileInView"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-white">
               Ready to Build Your Business With KW Singapore?
             </h2>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -313,9 +422,40 @@ export default function JoinKW() {
         onClose={() => setIsDialogOpen(false)}
         onSubmit={handleSubmit}
       />
-    </main>
+    </motion.main>
   )
 }
+
+const ParallaxImage = ({ src, alt }: { src: string; alt: string }) => {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
+
+  return (
+    <div ref={ref} className="relative h-[400px] rounded-xl overflow-hidden">
+      <motion.div
+        style={{ 
+          y, 
+          scale,
+          transformOrigin: "center center"
+        }}
+        className="absolute inset-0"
+      >
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-cover"
+        />
+      </motion.div>
+    </div>
+  );
+};
 
 /*
 Original code preserved below for future use:
