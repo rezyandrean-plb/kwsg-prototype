@@ -285,7 +285,7 @@ export default function JoinKW() {
             className="w-full h-full"
           >
             <Image
-              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=2000"
+              src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=2000"
               alt="KW Services Background"
               fill
               className="object-cover brightness-[0.2]"
