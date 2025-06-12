@@ -611,232 +611,288 @@ export default function NewLaunchDirectory() {
         </div>
       </section>
 
-      {/* Listing Section */}
-      <section className="py-16 bg-black">
-        <div className="container mx-auto px-4">
-          {/* Search and Filter Bar */}
-          <div ref={searchSectionRef} className="bg-white/5 rounded-lg shadow-sm p-4 mb-8">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-                  <Input
-                    type="text"
-                    placeholder="Search by project name, location, or developer..."
-                    className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-gray-400"
-                    value={searchInput}
-                    onChange={(e) => setSearchInput(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        setSearchQuery(searchInput)
-                      }
-                    }}
-                  />
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <Sheet>
-                  <SheetTrigger asChild>
-                    <Button variant="outline" className="gap-2 border-white/10 text-white hover:bg-white/10">
-                      <Filter className="h-4 w-4" />
-                      Filters
-                    </Button>
-                  </SheetTrigger>
-                  <SheetContent className="w-[300px] sm:w-[400px] bg-black border-white/10">
-                    <SheetHeader>
-                      <SheetTitle className="text-white">Filter Projects</SheetTitle>
-                    </SheetHeader>
-                    <div className="mt-6 space-y-6">
-                      {/* District Filter */}
-                      <div>
-                        <h3 className="font-medium mb-3 text-white">District</h3>
-                        <div className="grid grid-cols-2 gap-2">
-                          {districts.map((district) => (
-                            <Button
-                              key={district}
-                              variant={selectedDistricts.includes(district) ? "default" : "outline"}
-                              className="w-full justify-start border-white/10 text-white hover:bg-white/10"
-                              onClick={() => handleDistrictChange(district)}
-                            >
-                              {selectedDistricts.includes(district) && <Check className="mr-2 h-4 w-4" />}
-                              District {district}
-                            </Button>
-                          ))}
-                        </div>
+      {/* Search and Filters Row */}
+      <section className="container mx-auto px-4 mt-[-4rem] mb-12 relative z-10">
+        <div className="bg-[#242728] rounded-2xl shadow-lg p-6">
+          <div className="flex items-center gap-4">
+            {/* Search Bar */}
+            <div className="relative flex-1">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Input
+                type="search"
+                placeholder="Search projects by name, location, or developer..."
+                className="w-full pl-12 h-[52px] text-lg bg-[#242728] border-gray-600 text-white placeholder:text-gray-400 focus:border-primary-red focus:ring-primary-red/20 backdrop-blur-sm rounded-md"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    setSearchQuery(searchInput)
+                  }
+                }}
+              />
+            </div>
+            {/* Filter Controls */}
+            <div className="flex items-center gap-3">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    className="h-[52px] px-4 flex items-center gap-2 border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 rounded-md transition-colors whitespace-nowrap"
+                  >
+                    <Filter className="h-4 w-4" />
+                    Filter & Sort
+                    {(selectedDistricts.length > 0 || selectedTenures.length > 0 || selectedPropertyTypes.length > 0 || 
+                      selectedStatus.length > 0 || selectedBedrooms.length > 0 || priceMin > 0 || priceMax < 5000000) && (
+                      <Badge variant="secondary" className="ml-1 bg-primary-red/20 text-primary-red rounded-full">
+                        {selectedDistricts.length + selectedTenures.length + selectedPropertyTypes.length + 
+                         selectedStatus.length + selectedBedrooms.length + (priceMin > 0 || priceMax < 5000000 ? 1 : 0)}
+                      </Badge>
+                    )}
+                  </Button>
+                </SheetTrigger>
+                <SheetContent className="w-[300px] sm:w-[400px] bg-[#242728] border-gray-700 text-white">
+                  <SheetHeader>
+                    <SheetTitle className="text-white">Filter Projects</SheetTitle>
+                  </SheetHeader>
+                  <div className="mt-6 space-y-6">
+                    {/* District Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">District</h3>
+                      <div className="grid grid-cols-2 gap-2">
+                        {districts.map((district) => (
+                          <Button
+                            key={district}
+                            variant={selectedDistricts.includes(district) ? "default" : "outline"}
+                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                            onClick={() => handleDistrictChange(district)}
+                          >
+                            {selectedDistricts.includes(district) && <Check className="mr-2 h-4 w-4" />}
+                            District {district}
+                          </Button>
+                        ))}
                       </div>
+                    </div>
 
-                      {/* Tenure Filter */}
-                      <div>
-                        <h3 className="font-medium mb-3 text-white">Tenure</h3>
-                        <div className="space-y-2">
-                          {tenures.map((tenure) => (
-                            <Button
-                              key={tenure}
-                              variant={selectedTenures.includes(tenure) ? "default" : "outline"}
-                              className="w-full justify-start border-white/10 text-white hover:bg-white/10"
-                              onClick={() => handleTenureChange(tenure)}
-                            >
-                              {selectedTenures.includes(tenure) && <Check className="mr-2 h-4 w-4" />}
-                              {tenure}
-                            </Button>
-                          ))}
-                        </div>
+                    {/* Tenure Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">Tenure</h3>
+                      <div className="space-y-2">
+                        {tenures.map((tenure) => (
+                          <Button
+                            key={tenure}
+                            variant={selectedTenures.includes(tenure) ? "default" : "outline"}
+                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                            onClick={() => handleTenureChange(tenure)}
+                          >
+                            {selectedTenures.includes(tenure) && <Check className="mr-2 h-4 w-4" />}
+                            {tenure}
+                          </Button>
+                        ))}
                       </div>
+                    </div>
 
-                      {/* Property Type Filter */}
-                      <div>
-                        <h3 className="font-medium mb-3 text-white">Property Type</h3>
-                        <div className="space-y-2">
-                          {propertyTypes.map((type) => (
-                            <Button
-                              key={type}
-                              variant={selectedPropertyTypes.includes(type) ? "default" : "outline"}
-                              className="w-full justify-start border-white/10 text-white hover:bg-white/10"
-                              onClick={() => handlePropertyTypeChange(type)}
-                            >
-                              {selectedPropertyTypes.includes(type) && <Check className="mr-2 h-4 w-4" />}
-                              {type}
-                            </Button>
-                          ))}
-                        </div>
+                    {/* Property Type Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">Property Type</h3>
+                      <div className="space-y-2">
+                        {propertyTypes.map((type) => (
+                          <Button
+                            key={type}
+                            variant={selectedPropertyTypes.includes(type) ? "default" : "outline"}
+                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                            onClick={() => handlePropertyTypeChange(type)}
+                          >
+                            {selectedPropertyTypes.includes(type) && <Check className="mr-2 h-4 w-4" />}
+                            {type}
+                          </Button>
+                        ))}
                       </div>
+                    </div>
 
-                      {/* Status Filter */}
-                      <div>
-                        <h3 className="font-medium mb-3 text-white">Status</h3>
-                        <div className="space-y-2">
-                          {statuses.map((status) => (
-                            <Button
-                              key={status}
-                              variant={selectedStatus.includes(status) ? "default" : "outline"}
-                              className="w-full justify-start border-white/10 text-white hover:bg-white/10 capitalize"
-                              onClick={() => handleStatusChange(status)}
-                            >
-                              {selectedStatus.includes(status) && <Check className="mr-2 h-4 w-4" />}
-                              {status}
-                            </Button>
-                          ))}
-                        </div>
+                    {/* Status Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">Status</h3>
+                      <div className="space-y-2">
+                        {statuses.map((status) => (
+                          <Button
+                            key={status}
+                            variant={selectedStatus.includes(status) ? "default" : "outline"}
+                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 capitalize"
+                            onClick={() => handleStatusChange(status)}
+                          >
+                            {selectedStatus.includes(status) && <Check className="mr-2 h-4 w-4" />}
+                            {status}
+                          </Button>
+                        ))}
                       </div>
+                    </div>
 
-                      {/* Bedroom Filter */}
-                      <div>
-                        <h3 className="font-medium mb-3 text-white">Bedrooms</h3>
-                        <div className="space-y-2">
-                          {bedrooms.map((bedroom) => (
-                            <Button
-                              key={bedroom}
-                              variant={selectedBedrooms.includes(bedroom) ? "default" : "outline"}
-                              className="w-full justify-start border-white/10 text-white hover:bg-white/10"
-                              onClick={() => handleBedroomChange(bedroom)}
-                            >
-                              {selectedBedrooms.includes(bedroom) && <Check className="mr-2 h-4 w-4" />}
-                              {bedroom}
-                            </Button>
-                          ))}
-                        </div>
+                    {/* Bedroom Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">Bedrooms</h3>
+                      <div className="space-y-2">
+                        {bedrooms.map((bedroom) => (
+                          <Button
+                            key={bedroom}
+                            variant={selectedBedrooms.includes(bedroom) ? "default" : "outline"}
+                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                            onClick={() => handleBedroomChange(bedroom)}
+                          >
+                            {selectedBedrooms.includes(bedroom) && <Check className="mr-2 h-4 w-4" />}
+                            {bedroom}
+                          </Button>
+                        ))}
                       </div>
+                    </div>
 
-                      {/* Price Range Filter */}
-                      <div>
-                        <h3 className="font-medium mb-3 text-white">Price Range</h3>
-                        <div className="px-2">
-                          <Slider
-                            defaultValue={[priceMin, priceMax]}
-                            max={5000000}
-                            step={100000}
-                            onValueChange={(value) => {
-                              setPriceMin(value[0])
-                              setPriceMax(value[1])
-                            }}
-                            className="mb-4"
-                          />
-                          <div className="flex justify-between text-sm text-gray-400">
-                            <span>${priceMin.toLocaleString()}</span>
-                            <span>${priceMax.toLocaleString()}</span>
-                          </div>
+                    {/* Price Range Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">Price Range</h3>
+                      <div className="px-2">
+                        <Slider
+                          defaultValue={[priceMin, priceMax]}
+                          max={5000000}
+                          step={100000}
+                          onValueChange={(value) => {
+                            setPriceMin(value[0])
+                            setPriceMax(value[1])
+                          }}
+                          className="mb-4"
+                        />
+                        <div className="flex justify-between text-sm text-gray-400">
+                          <span>${priceMin.toLocaleString()}</span>
+                          <span>${priceMax.toLocaleString()}</span>
                         </div>
                       </div>
                     </div>
-                  </SheetContent>
-                </Sheet>
+                  </div>
+                </SheetContent>
+              </Sheet>
 
-                <Select value={sortBy} onValueChange={setSortBy}>
-                  <SelectTrigger className="w-[180px] bg-white/5 border-white/10 text-white">
-                    <SelectValue placeholder="Sort by" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-black border-white/10">
-                    <SelectItem value="latest" className="text-white">Latest</SelectItem>
-                    <SelectItem value="price-low-high" className="text-white">Price: Low to High</SelectItem>
-                    <SelectItem value="price-high-low" className="text-white">Price: High to Low</SelectItem>
-                    <SelectItem value="completion" className="text-white">Completion Date</SelectItem>
-                  </SelectContent>
-                </Select>
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger className="h-[52px] px-4 bg-[#242728] border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 rounded-md">
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#242728] border-gray-700 text-white">
+                  <SelectItem value="latest" className="text-white">Latest</SelectItem>
+                  <SelectItem value="price-low-high" className="text-white">Price: Low to High</SelectItem>
+                  <SelectItem value="price-high-low" className="text-white">Price: High to Low</SelectItem>
+                  <SelectItem value="completion" className="text-white">Completion Date</SelectItem>
+                </SelectContent>
+              </Select>
 
-                <Button
-                  variant={viewMode === "grid" ? "default" : "outline"}
-                  onClick={() => setViewMode("grid")}
-                  className={viewMode === "grid" ? "bg-white text-black hover:bg-white/90" : "border-white/10 text-white hover:bg-white/10"}
-                >
-                  <LayoutGrid className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant={viewMode === "map" ? "default" : "outline"}
-                  onClick={() => setViewMode("map")}
-                  className={viewMode === "map" ? "bg-white text-black hover:bg-white/90" : "border-white/10 text-white hover:bg-white/10"}
-                >
-                  <Map className="h-4 w-4" />
-                </Button>
-              </div>
+              <Button
+                variant={viewMode === "grid" ? "default" : "outline"}
+                onClick={() => setViewMode("grid")}
+                className={`h-[52px] px-4 ${viewMode === "grid" ? "bg-primary-red text-white hover:bg-primary-red/90" : "border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"}`}
+              >
+                <LayoutGrid className="h-4 w-4" />
+              </Button>
+              <Button
+                variant={viewMode === "map" ? "default" : "outline"}
+                onClick={() => setViewMode("map")}
+                className={`h-[52px] px-4 ${viewMode === "map" ? "bg-primary-red text-white hover:bg-primary-red/90" : "border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"}`}
+              >
+                <Map className="h-4 w-4" />
+              </Button>
             </div>
           </div>
-
           {/* Active Filters */}
           {(selectedDistricts.length > 0 || selectedTenures.length > 0 || selectedPropertyTypes.length > 0 || 
             selectedStatus.length > 0 || selectedBedrooms.length > 0 || priceMin > 0 || priceMax < 5000000) && (
-            <div className="flex flex-wrap gap-2 mb-8">
+            <div className="flex flex-wrap items-center gap-2 mt-4">
+              <span className="text-sm text-gray-400">Active filters:</span>
               {selectedDistricts.map((district) => (
-                <Badge key={district} variant="secondary" className="gap-1 bg-white/10 text-white hover:bg-white/20">
+                <Badge 
+                  key={district}
+                  variant="secondary" 
+                  className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-3 py-1 transition-colors"
+                  onClick={() => handleDistrictChange(district)}
+                >
                   District {district}
-                  <X className="h-3 w-3 cursor-pointer" onClick={() => handleDistrictChange(district)} />
+                  <X className="ml-1 h-3 w-3" />
                 </Badge>
               ))}
               {selectedTenures.map((tenure) => (
-                <Badge key={tenure} variant="secondary" className="gap-1 bg-white/10 text-white hover:bg-white/20">
+                <Badge 
+                  key={tenure}
+                  variant="secondary" 
+                  className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-3 py-1 transition-colors"
+                  onClick={() => handleTenureChange(tenure)}
+                >
                   {tenure}
-                  <X className="h-3 w-3 cursor-pointer" onClick={() => handleTenureChange(tenure)} />
+                  <X className="ml-1 h-3 w-3" />
                 </Badge>
               ))}
               {selectedPropertyTypes.map((type) => (
-                <Badge key={type} variant="secondary" className="gap-1 bg-white/10 text-white hover:bg-white/20">
+                <Badge 
+                  key={type}
+                  variant="secondary" 
+                  className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-3 py-1 transition-colors"
+                  onClick={() => handlePropertyTypeChange(type)}
+                >
                   {type}
-                  <X className="h-3 w-3 cursor-pointer" onClick={() => handlePropertyTypeChange(type)} />
+                  <X className="ml-1 h-3 w-3" />
                 </Badge>
               ))}
               {selectedStatus.map((status) => (
-                <Badge key={status} variant="secondary" className="gap-1 bg-white/10 text-white hover:bg-white/20 capitalize">
+                <Badge 
+                  key={status}
+                  variant="secondary" 
+                  className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-3 py-1 transition-colors capitalize"
+                  onClick={() => handleStatusChange(status)}
+                >
                   {status}
-                  <X className="h-3 w-3 cursor-pointer" onClick={() => handleStatusChange(status)} />
+                  <X className="ml-1 h-3 w-3" />
                 </Badge>
               ))}
               {selectedBedrooms.map((bedroom) => (
-                <Badge key={bedroom} variant="secondary" className="gap-1 bg-white/10 text-white hover:bg-white/20">
+                <Badge 
+                  key={bedroom}
+                  variant="secondary" 
+                  className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-3 py-1 transition-colors"
+                  onClick={() => handleBedroomChange(bedroom)}
+                >
                   {bedroom}
-                  <X className="h-3 w-3 cursor-pointer" onClick={() => handleBedroomChange(bedroom)} />
+                  <X className="ml-1 h-3 w-3" />
                 </Badge>
               ))}
               {(priceMin > 0 || priceMax < 5000000) && (
-                <Badge variant="secondary" className="gap-1 bg-white/10 text-white hover:bg-white/20">
-                  ${priceMin.toLocaleString()} - ${priceMax.toLocaleString()}
-                  <X className="h-3 w-3 cursor-pointer" onClick={() => {
+                <Badge 
+                  variant="secondary" 
+                  className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-3 py-1 transition-colors"
+                  onClick={() => {
                     setPriceMin(0)
                     setPriceMax(5000000)
-                  }} />
+                  }}
+                >
+                  ${priceMin.toLocaleString()} - ${priceMax.toLocaleString()}
+                  <X className="ml-1 h-3 w-3" />
                 </Badge>
               )}
+              <Button
+                variant="ghost"
+                className="text-gray-400 hover:text-white text-sm transition-colors"
+                onClick={() => {
+                  setSelectedDistricts([])
+                  setSelectedTenures([])
+                  setSelectedPropertyTypes([])
+                  setSelectedStatus([])
+                  setSelectedBedrooms([])
+                  setPriceMin(0)
+                  setPriceMax(5000000)
+                }}
+              >
+                Clear all
+              </Button>
             </div>
           )}
+        </div>
+      </section>
 
+      {/* Listing Section */}
+      <section className="py-16 bg-black">
+        <div className="container mx-auto px-4">
           {/* Projects Grid */}
           {viewMode === "grid" ? (
             <motion.div

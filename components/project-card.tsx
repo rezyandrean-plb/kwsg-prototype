@@ -61,7 +61,7 @@ export default function ProjectCard({
   } as const
 
   return (
-    <div className={`group relative bg-gray-900 border border-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${className}`}>
+    <div className={`group relative bg-[#242728] border border-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${className}`}>
       {/* Image Container */}
       <div className="relative aspect-[4/3] overflow-hidden">
         <Image

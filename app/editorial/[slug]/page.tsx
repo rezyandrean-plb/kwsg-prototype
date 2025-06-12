@@ -113,32 +113,23 @@ export default function BlogPostPage() {
       }))
     setHeadings(toc)
 
-    // Add IDs to the headings in the DOM after a short delay to ensure content is rendered
-    setTimeout(() => {
-      const headingElements = document.querySelectorAll('h2')
-      headingElements.forEach((heading, index) => {
-        heading.id = `heading-${index}`
-      })
-
-      // Set up Intersection Observer for active heading
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setActiveId(entry.target.id)
-            }
-          })
-        },
-        { 
-          rootMargin: "-20% 0px -80% 0px",
-          threshold: 0
-        }
-      )
-
-      headingElements.forEach((heading) => observer.observe(heading))
-
-      return () => observer.disconnect()
-    }, 100)
+    // Set up Intersection Observer for active heading
+    const headingElements = Array.from(document.querySelectorAll('h2[id^="heading-"]'));
+    const observer = new window.IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id)
+          }
+        })
+      },
+      {
+        rootMargin: "-20% 0px -80% 0px",
+        threshold: 0
+      }
+    )
+    headingElements.forEach((heading) => observer.observe(heading))
+    return () => observer.disconnect()
   }, [])
 
   const scrollToHeading = (id: string) => {
@@ -162,8 +153,47 @@ export default function BlogPostPage() {
       transition={{ duration: 0.8 }}
       className="min-h-screen flex flex-col bg-black text-white"
     >
-      {/* Article Header */}
+      {/* Back Button at the very top */}
+      <div className="max-w-7xl mx-auto w-full px-4 pt-8">
+        <Link href="/editorial" className="inline-flex items-center text-gray-400 hover:text-white mb-8 group">
+          <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+          Back
+        </Link>
+      </div>
+
       <article className="max-w-7xl mx-auto w-full px-4 py-12 relative">
+        {/* Centered Title, Meta, and Tags above the image */}
+        <div className="flex flex-col items-center mb-8">
+          <h1 className="text-4xl md:text-5xl font-bold mb-2 text-center">
+            {articleData.title}
+          </h1>
+          <div className="flex justify-center items-center text-gray-400 mb-4 text-sm gap-2">
+            <Calendar className="h-4 w-4 mr-1" />
+            <span>{articleData.date}</span>
+            <span>•</span>
+            <Clock className="h-4 w-4 mr-1" />
+            <span>08.45 AM</span>
+          </div>
+          <div className="flex flex-wrap gap-2 justify-center">
+            {articleData.tags.map((tag, index) => (
+              <span key={index} className="bg-white text-primary-red px-3 py-1 rounded-full text-sm font-medium">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+        {/* Featured Image - now full width */}
+        <div className="relative w-full aspect-[16/9] mb-12 rounded-xl overflow-hidden">
+          <Image
+            src={articleData.featuredImage}
+            alt={articleData.title}
+            fill
+            className="object-cover brightness-[0.4]"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/20" />
+        </div>
+        {/* Content and TOC below image */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -172,8 +202,8 @@ export default function BlogPostPage() {
         >
           {/* Table of Contents */}
           {headings.length > 0 && (
-            <div className="hidden lg:block w-[30%] shrink-0 sticky top-24 h-[calc(100vh-8rem)]">
-              <div className="bg-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-800/50">
+            <div className="hidden lg:block w-[30%] shrink-0">
+              <div className="bg-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-800/50 flex flex-col h-full">
                 {/* Table of Contents Header */}
                 <div className="px-4 py-3 border-b border-gray-800/50">
                   <div className="flex items-center gap-2">
@@ -181,9 +211,8 @@ export default function BlogPostPage() {
                     <h2 className="text-sm font-semibold text-white">Contents</h2>
                   </div>
                 </div>
-
                 {/* Table of Contents List */}
-                <ScrollArea className="h-[calc(100vh-14rem)]">
+                <ScrollArea className="h-[calc(100vh-18rem)]">
                   <nav className="px-2 py-3">
                     {headings.map((heading, index) => (
                       <div key={heading.id} className="relative">
@@ -191,7 +220,6 @@ export default function BlogPostPage() {
                         {activeId === heading.id && (
                           <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-primary-red rounded-full" />
                         )}
-                        
                         <button
                           onClick={() => scrollToHeading(heading.id)}
                           className={`w-full text-left px-3 py-2 text-sm rounded-md transition-all duration-200 ${
@@ -199,96 +227,43 @@ export default function BlogPostPage() {
                               ? "bg-primary-red/10 text-primary-red font-medium"
                               : "text-gray-400 hover:text-white hover:bg-gray-800/50"
                           }`}
-                          style={{ 
+                          style={{
                             paddingLeft: `${(heading.level - 1) * 12 + 12}px`,
                             fontSize: `${16 - (heading.level - 1) * 2}px`
                           }}
                         >
-                          {/* Add numbering for main sections */}
-                          {heading.level === 2 && (
-                            <span className="text-gray-500 mr-2 text-xs">
-                              {String(index + 1).padStart(2, '0')}.
-                            </span>
-                          )}
                           {heading.text}
                         </button>
                       </div>
                     ))}
                   </nav>
                 </ScrollArea>
-
                 {/* Table of Contents Footer */}
                 <div className="px-4 py-2 border-t border-gray-800/50">
                   <p className="text-xs text-gray-500">
                     {headings.length} sections
                   </p>
                 </div>
+                {/* Share Article Section */}
+                <div className="px-4 py-4 border-t border-gray-800/50 mt-auto">
+                  <p className="text-xs text-gray-500 mb-2">Share Article</p>
+                  <div className="flex gap-2">
+                    <a href="#" className="text-gray-400 hover:text-white" aria-label="Share on LinkedIn">
+                      <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.025-3.063-1.868-3.063-1.868 0-2.154 1.459-2.154 2.968v5.699h-3v-10h2.881v1.367h.041c.401-.761 1.379-1.563 2.838-1.563 3.036 0 3.6 2.001 3.6 4.601v5.595z"/></svg>
+                    </a>
+                    <a href="#" className="text-gray-400 hover:text-white" aria-label="Share on Twitter">
+                      <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557a9.93 9.93 0 0 1-2.828.775 4.932 4.932 0 0 0 2.165-2.724c-.951.564-2.005.974-3.127 1.195a4.916 4.916 0 0 0-8.38 4.482c-4.083-.205-7.697-2.162-10.125-5.134a4.822 4.822 0 0 0-.664 2.475c0 1.708.87 3.216 2.188 4.099a4.904 4.904 0 0 1-2.229-.616c-.054 2.281 1.581 4.415 3.949 4.89a4.936 4.936 0 0 1-2.224.084c.627 1.956 2.444 3.377 4.6 3.417a9.867 9.867 0 0 1-6.102 2.104c-.396 0-.787-.023-1.175-.069a13.945 13.945 0 0 0 7.548 2.212c9.057 0 14.009-7.514 14.009-14.009 0-.213-.005-.425-.014-.636a10.012 10.012 0 0 0 2.457-2.548z"/></svg>
+                    </a>
+                    <a href="#" className="text-gray-400 hover:text-white" aria-label="Share on Facebook">
+                      <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.733 0-1.325.592-1.325 1.326v21.348c0 .733.592 1.326 1.325 1.326h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.312h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.326v-21.349c0-.734-.593-1.326-1.324-1.326z"/></svg>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           )}
-
           {/* Main Content */}
           <div className="flex-1 w-[70%]">
-            {/* Back Button */}
-            <Link href="/editorial" className="inline-flex items-center text-gray-400 hover:text-white mb-8 group">
-              <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-              Back to Articles
-            </Link>
-
-            {/* Article Meta */}
-            <div className="flex items-center text-gray-400 mb-6 text-sm">
-              <div className="flex items-center mr-4">
-                <Calendar className="h-4 w-4 mr-1" />
-                <span>{articleData.date}</span>
-              </div>
-              <div className="flex items-center mr-4">
-                <Clock className="h-4 w-4 mr-1" />
-                <span>{articleData.readTime}</span>
-              </div>
-              <div className="flex items-center">
-                <User className="h-4 w-4 mr-1" />
-                <span>By {articleData.author.name}</span>
-              </div>
-            </div>
-
-            {/* Article Title */}
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              {articleData.title}
-            </h1>
-
-            {/* Article Tags */}
-            <div className="flex flex-wrap gap-2 mb-8">
-              {articleData.tags.map((tag, index) => (
-                <span key={index} className="bg-primary-red/10 text-primary-red px-3 py-1 rounded-full text-sm font-medium">
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            {/* Featured Image */}
-            <div className="relative w-full aspect-[16/9] mb-12 rounded-xl overflow-hidden">
-              <Image
-                src={articleData.featuredImage}
-                alt={articleData.title}
-                fill
-                className="object-cover brightness-[0.4]"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/20" />
-            </div>
-
-            {/* Article Actions */}
-            <div className="flex items-center justify-between mb-12 pb-6 border-b border-gray-800">
-              <div className="flex items-center gap-4">
-                <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
-                  <Share2 className="h-5 w-5" />
-                </Button>
-                <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
-                  <BookmarkPlus className="h-5 w-5" />
-                </Button>
-              </div>
-            </div>
-
             {/* Article Content */}
             <div className="prose prose-invert prose-lg max-w-none">
               {articleData.content.map((section, index) => {
@@ -296,7 +271,7 @@ export default function BlogPostPage() {
                   case "paragraph":
                     return <p key={index} className="text-gray-300 mb-6">{section.text}</p>
                   case "heading":
-                    return <h2 key={index} className="text-2xl font-bold mt-12 mb-6">{section.text}</h2>
+                    return <h2 key={index} id={`heading-${index}`} className="text-2xl font-bold mt-12 mb-6">{section.text}</h2>
                   case "image":
                     return (
                       <div key={index} className="relative w-full aspect-[16/9] my-12 rounded-xl overflow-hidden">
@@ -319,7 +294,6 @@ export default function BlogPostPage() {
                 }
               })}
             </div>
-
             {/* Author Bio */}
             <div className="mt-16 p-6 bg-gray-900 rounded-xl">
               <div className="flex items-center gap-4 mb-4">
@@ -340,7 +314,6 @@ export default function BlogPostPage() {
                 {articleData.author.bio}
               </p>
             </div>
-
             {/* Related Articles */}
             <div className="mt-16">
               <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
@@ -363,7 +336,6 @@ export default function BlogPostPage() {
                     </div>
                   </div>
                 </Link>
-
                 <Link href="#" className="group">
                   <div className="bg-gray-900 rounded-xl overflow-hidden">
                     <div className="relative h-48">

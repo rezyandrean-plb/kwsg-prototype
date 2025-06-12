@@ -110,7 +110,7 @@ export default function JoinKW() {
       transition={{ duration: 0.8 }}
       className="min-h-screen bg-black text-white"
     >
-      {/* Hero Section */}
+      {/* Hero Section - Enhanced for Real Estate Agents */}
       <section className="relative h-screen flex items-center justify-center">
         <div className="absolute inset-0">
           <Image
@@ -120,7 +120,7 @@ export default function JoinKW() {
             className="object-cover brightness-50"
             priority
           />
-          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 bg-black/60" />
         </div>
         <motion.div 
           className="relative container mx-auto px-4 text-center"
@@ -128,16 +128,106 @@ export default function JoinKW() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
+          <div className="inline-block px-4 py-2 bg-primary-red/20 rounded-full mb-6 border border-primary-red/30">
+            <span className="text-white font-semibold">Exclusive Opportunity for Real Estate Professionals</span>
+          </div>
           <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white tracking-tight">
-            KW Singapore
+            Elevate Your Real Estate Career
           </h1>
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold mb-6 text-white">
-            Built for Realtors. Backed by Innovation.
+            Join Singapore's Most Innovative Real Estate Platform
           </h2>
-          <p className="text-xl max-w-3xl mx-auto mb-12 text-gray-100">
-            KW Singapore is where real estate consultants grow scalable, sustainable businesses. Backed by world-class systems, PropTech, and a performance-driven culture, we equip you with the tools, training, and platforms to lead in today's market.
+          <p className="text-xl max-w-3xl mx-auto mb-8 text-gray-100">
+            KW Singapore is where ambitious real estate professionals transform their careers. With our proprietary systems, cutting-edge technology, and proven growth models, we're building the future of real estate in Singapore.
           </p>
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
+            <div className="flex items-center gap-2 text-gray-200">
+              <Building2 className="w-5 h-5 text-primary-red" />
+              <span>Established 2023</span>
+            </div>
+            <div className="flex items-center gap-2 text-gray-200">
+              <Users className="w-5 h-5 text-primary-red" />
+              <span>Growing Community</span>
+            </div>
+            <div className="flex items-center gap-2 text-gray-200">
+              <Award className="w-5 h-5 text-primary-red" />
+              <span>Industry Recognition</span>
+            </div>
+          </div>
+          <Button 
+            className="bg-primary-red text-white hover:bg-primary-red/90 px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[56px] min-w-[240px]"
+            onClick={() => setIsDialogOpen(true)}
+          >
+            Apply to Join KW Singapore →
+          </Button>
         </motion.div>
+      </section>
+
+      {/* Why KW Singapore Section - New */}
+      <section className="relative py-24 bg-black/90">
+        <div className="container mx-auto px-4">
+          <motion.div 
+            className="text-center mb-16"
+            variants={sectionVariants}
+            initial="initial"
+            whileInView="whileInView"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+              Why KW Singapore?
+            </h2>
+            <h3 className="text-xl md:text-2xl text-primary-red mb-6">
+              The Competitive Edge for Modern Real Estate Professionals
+            </h3>
+          </motion.div>
+
+          <motion.div 
+            className="grid md:grid-cols-3 gap-8"
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <motion.div 
+              className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
+              variants={fadeInUp}
+            >
+              <div className="bg-primary-red/10 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
+                <Award className="w-6 h-6 text-primary-red" />
+              </div>
+              <h4 className="text-xl font-bold mb-4 text-white">Industry Leadership</h4>
+              <p className="text-gray-300">
+                Join a globally recognized brand with a proven track record of success. KW's systems and methodologies are trusted by top performers worldwide.
+              </p>
+            </motion.div>
+
+            <motion.div 
+              className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
+              variants={fadeInUp}
+            >
+              <div className="bg-primary-red/10 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
+                <Brain className="w-6 h-6 text-primary-red" />
+              </div>
+              <h4 className="text-xl font-bold mb-4 text-white">Innovation First</h4>
+              <p className="text-gray-300">
+                Access cutting-edge technology and AI tools designed specifically for real estate professionals. Stay ahead of market trends and client expectations.
+              </p>
+            </motion.div>
+
+            <motion.div 
+              className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
+              variants={fadeInUp}
+            >
+              <div className="bg-primary-red/10 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
+                <Users className="w-6 h-6 text-primary-red" />
+              </div>
+              <h4 className="text-xl font-bold mb-4 text-white">Community Growth</h4>
+              <p className="text-gray-300">
+                Be part of a collaborative environment where success is shared. Our Growth Share model rewards both individual achievement and community building.
+              </p>
+            </motion.div>
+          </motion.div>
+        </div>
       </section>
 
       {/* Growth Share Model Section */}
@@ -388,7 +478,7 @@ export default function JoinKW() {
         </div>
       </section>
 
-      {/* Final CTA Section */}
+      {/* Update the Final CTA Section */}
       <section className="py-24 bg-black">
         <div className="container mx-auto px-4 text-center">
           <motion.div 
@@ -398,19 +488,19 @@ export default function JoinKW() {
             viewport={{ once: true, margin: "-100px" }}
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-8 text-white">
-              Ready to Build Your Business With KW Singapore?
+              Ready to Transform Your Real Estate Career?
             </h2>
             <div className="flex flex-row gap-4 justify-center">
               <Button 
                 className="bg-primary-red text-white hover:bg-primary-red/90 px-6 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[48px] min-w-[200px]"
                 onClick={() => setIsDialogOpen(true)}
               >
-                Become a KW Realtor →
+                Apply Now →
               </Button>
               <Button 
                 className="bg-white text-black hover:bg-white/90 px-6 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[48px] min-w-[200px]"
               >
-                Book a Discovery Call
+                Schedule a Consultation
               </Button>
             </div>
           </motion.div>

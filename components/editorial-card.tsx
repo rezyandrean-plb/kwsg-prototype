@@ -29,7 +29,7 @@ export default function EditorialCard({
 }: EditorialCardProps) {
   return (
     <article className={cn(
-      "group relative bg-gray-900 border border-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1",
+      "group relative bg-[#242728]/80 border border-[#2e3133] rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 backdrop-blur-sm",
       className
     )}>
       {/* Image Container */}
