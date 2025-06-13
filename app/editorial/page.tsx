@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Filter, Search, Calendar } from "lucide-react"
+import { ArrowRight, Filter, Search, Calendar, ArrowUpDown } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { motion } from "framer-motion"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -97,7 +97,7 @@ const articlesData: Article[] = [
 ]
 
 // Define sort options
-type SortOption = "newest" | "oldest" | "title-asc" | "title-desc" | "category"
+type SortOption = "latest" | "oldest" | "a-z" | "popular"
 
 // Define filter state type
 type FilterState = {
@@ -111,12 +111,12 @@ type FilterState = {
 const categories = Array.from(new Set(articlesData.map(article => article.category)))
 
 export default function EditorialPage() {
-  const [isYearFilterOpen, setIsYearFilterOpen] = useState(false)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
+  const [isSortOpen, setIsSortOpen] = useState(false)
   const [filters, setFilters] = useState<FilterState>({
     yearRange: { start: "2024", end: "2024" },
     categories: [],
-    sortBy: "newest",
+    sortBy: "latest",
     searchQuery: ""
   })
 
@@ -143,16 +143,15 @@ export default function EditorialPage() {
       })
       .sort((a, b) => {
         switch (filters.sortBy) {
-          case "newest":
+          case "latest":
             return new Date(b.date).getTime() - new Date(a.date).getTime()
           case "oldest":
             return new Date(a.date).getTime() - new Date(b.date).getTime()
-          case "title-asc":
+          case "a-z":
             return a.title.localeCompare(b.title)
-          case "title-desc":
-            return b.title.localeCompare(a.title)
-          case "category":
-            return a.category.localeCompare(b.category)
+          case "popular":
+            // For now, we'll use date as a proxy for popularity
+            return new Date(b.date).getTime() - new Date(a.date).getTime()
           default:
             return 0
         }
@@ -172,7 +171,7 @@ export default function EditorialPage() {
     setFilters({
       yearRange: { start: "2024", end: "2024" },
       categories: [],
-      sortBy: "newest",
+      sortBy: "latest",
       searchQuery: ""
     })
   }
@@ -256,29 +255,22 @@ export default function EditorialPage() {
             <div className="flex items-center gap-3">
               <Button 
                 variant="outline" 
-                className="h-[52px] px-4 flex items-center gap-2 border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 rounded-md transition-colors whitespace-nowrap"
-                onClick={() => setIsYearFilterOpen(true)}
+                className="h-[52px] w-[52px] p-0 flex items-center justify-center border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 rounded-md transition-colors"
+                onClick={() => setIsFilterOpen(true)}
               >
-                <Calendar className="h-4 w-4" />
-                Date Range
-                {(filters.yearRange.start !== "2024" || filters.yearRange.end !== "2024") && (
-                  <Badge variant="secondary" className="ml-1 bg-primary-red/20 text-primary-red rounded-full">
-                    {filters.yearRange.start === filters.yearRange.end ? "1" : "2"}
+                <Filter className="h-5 w-5" />
+                {(filters.categories.length > 0 || filters.yearRange.start !== "2024" || filters.yearRange.end !== "2024") && (
+                  <Badge variant="secondary" className="absolute -top-1 -right-1 bg-primary-red/20 text-primary-red rounded-full">
+                    {(filters.categories.length > 0 ? 1 : 0) + (filters.yearRange.start !== "2024" || filters.yearRange.end !== "2024" ? 1 : 0)}
                   </Badge>
                 )}
               </Button>
               <Button 
                 variant="outline" 
-                className="h-[52px] px-4 flex items-center gap-2 border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 rounded-md transition-colors whitespace-nowrap"
-                onClick={() => setIsFilterOpen(true)}
+                className="h-[52px] w-[52px] p-0 flex items-center justify-center border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 rounded-md transition-colors"
+                onClick={() => setIsSortOpen(true)}
               >
-                <Filter className="h-4 w-4" />
-                Filter & Sort
-                {filters.categories.length > 0 && (
-                  <Badge variant="secondary" className="ml-1 bg-primary-red/20 text-primary-red rounded-full">
-                    {filters.categories.length}
-                  </Badge>
-                )}
+                <ArrowUpDown className="h-5 w-5" />
               </Button>
             </div>
           </div>
@@ -334,105 +326,72 @@ export default function EditorialPage() {
         </div>
       </section>
 
-      {/* Search & Filter Modal/Dialog */}
+      {/* Filter Dialog */}
       <Dialog open={isFilterOpen} onOpenChange={setIsFilterOpen}>
-        <DialogContent className="bg-[#242728] border-gray-700 text-white max-w-2xl rounded-lg shadow-lg">
+        <DialogContent className="bg-[#1a1b1e] border-gray-700 text-white max-w-2xl rounded-lg shadow-lg">
           <DialogHeader>
-            <DialogTitle>Search & Filter Articles</DialogTitle>
+            <DialogTitle className="text-xl font-semibold">Filter Articles</DialogTitle>
             <DialogDescription className="text-sm text-gray-400">
-              Use the search and filters below to find articles.
+              Filter articles by date range and category.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-6 py-4">
-            {/* Search Bar */}
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-              <Input
-                type="search"
-                placeholder="Search articles by title, content, or category..."
-                className="w-full pl-12 h-[52px] text-lg bg-[#242728] border-gray-600 text-white placeholder:text-gray-400 focus:border-primary-red focus:ring-primary-red/20 backdrop-blur-sm rounded-md"
-                value={filters.searchQuery}
-                onChange={(e) => setFilters(prev => ({ ...prev, searchQuery: e.target.value }))}
-              />
-            </div>
-            {/* Filter Controls */}
-            <div className="flex flex-col md:flex-row gap-4">
-              <Button 
-                variant="outline" 
-                className="h-[52px] px-4 flex items-center gap-2 border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 rounded-md transition-colors whitespace-nowrap"
-                onClick={() => setIsYearFilterOpen(true)}
-              >
-                <Calendar className="h-4 w-4" />
-                Date Range
-                {(filters.yearRange.start !== "2024" || filters.yearRange.end !== "2024") && (
-                  <Badge variant="secondary" className="ml-1 bg-primary-red/20 text-primary-red rounded-full">
-                    {filters.yearRange.start === filters.yearRange.end ? "1" : "2"}
-                  </Badge>
-                )}
-              </Button>
-              <Button 
-                variant="outline" 
-                className="h-[52px] px-4 flex items-center gap-2 border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 rounded-md transition-colors whitespace-nowrap"
-                onClick={() => setIsFilterOpen(true)}
-              >
-                <Filter className="h-4 w-4" />
-                Filter & Sort
-                {filters.categories.length > 0 && (
-                  <Badge variant="secondary" className="ml-1 bg-primary-red/20 text-primary-red rounded-full">
-                    {filters.categories.length}
-                  </Badge>
-                )}
-              </Button>
-            </div>
-            {/* Active Filters */}
-            {(filters.categories.length > 0 || filters.yearRange.start !== "2024" || filters.yearRange.end !== "2024" || filters.searchQuery) && (
-              <div className="flex flex-wrap items-center gap-2 mt-4">
-                <span className="text-sm text-gray-400">Active filters:</span>
-                {filters.searchQuery && (
-                  <Badge 
-                    variant="secondary" 
-                    className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-3 py-1 transition-colors"
-                    onClick={() => setFilters(prev => ({ ...prev, searchQuery: "" }))}
-                  >
-                    Search: {filters.searchQuery}
-                    <X className="ml-1 h-3 w-3" />
-                  </Badge>
-                )}
-                {filters.categories.map(category => (
-                  <Badge 
-                    key={category}
-                    variant="secondary" 
-                    className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-3 py-1 transition-colors"
-                    onClick={() => toggleCategory(category)}
-                  >
-                    {category}
-                    <X className="ml-1 h-3 w-3" />
-                  </Badge>
-                ))}
-                {(filters.yearRange.start !== "2024" || filters.yearRange.end !== "2024") && (
-                  <Badge 
-                    variant="secondary" 
-                    className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-3 py-1 transition-colors"
-                    onClick={() => setFilters(prev => ({ 
-                      ...prev, 
-                      yearRange: { start: "2024", end: "2024" } 
-                    }))}
-                  >
-                    {filters.yearRange.start === filters.yearRange.end 
-                      ? `Year: ${filters.yearRange.start}`
-                      : `Years: ${filters.yearRange.start}-${filters.yearRange.end}`}
-                    <X className="ml-1 h-3 w-3" />
-                  </Badge>
-                )}
-                <Button
-                  variant="ghost"
-                  className="text-gray-400 hover:text-white text-sm transition-colors"
-                  onClick={clearFilters}
+            {/* Date Range */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-gray-200">Date Range</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <Select
+                  value={filters.yearRange.start}
+                  onValueChange={(value) => setFilters(prev => ({ 
+                    ...prev, 
+                    yearRange: { ...prev.yearRange, start: value } 
+                  }))}
                 >
-                  Clear all
-                </Button>
+                  <SelectTrigger className="bg-[#242728] border-gray-600 text-gray-200">
+                    <SelectValue placeholder="Start Year" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-[#242728] border-gray-600">
+                    {years.map(year => (
+                      <SelectItem key={`start-${year}`} value={year} className="text-gray-200 hover:bg-gray-700">{year}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Select
+                  value={filters.yearRange.end}
+                  onValueChange={(value) => setFilters(prev => ({ 
+                    ...prev, 
+                    yearRange: { ...prev.yearRange, end: value } 
+                  }))}
+                >
+                  <SelectTrigger className="bg-[#242728] border-gray-600 text-gray-200">
+                    <SelectValue placeholder="End Year" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-[#242728] border-gray-600">
+                    {years.map(year => (
+                      <SelectItem key={`end-${year}`} value={year} className="text-gray-200 hover:bg-gray-700">{year}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
-            )}
+            </div>
+
+            {/* Categories */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-gray-200">Categories</h3>
+              <div className="grid grid-cols-2 gap-4">
+                {categories.map(category => (
+                  <div key={category} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={category}
+                      checked={filters.categories.includes(category)}
+                      onCheckedChange={() => toggleCategory(category)}
+                      className="border-gray-600 data-[state=checked]:bg-primary-red data-[state=checked]:border-primary-red"
+                    />
+                    <Label htmlFor={category} className="text-gray-300">{category}</Label>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
           <div className="flex justify-end gap-2 mt-6">
             <Button
@@ -452,38 +411,72 @@ export default function EditorialPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Articles Grid with Sticky Blog Title */}
-      <section className="container mx-auto px-4 mb-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Sticky Left Column */}
-          <div className="md:col-span-1 hidden md:block">
-            <div className="sticky top-32">
-              <h2 className="text-3xl font-bold text-white mb-4">Blog</h2>
-              <p className="text-gray-400 text-base">Explore insights, trends, and tips in our engaging blog posts.</p>
-            </div>
-          </div>
-          {/* Card Grid Right Column */}
-          <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8">
-            {filteredArticles.length > 0 ? (
-              filteredArticles.map((article) => (
-                <EditorialCard
-                  key={article.slug}
-                  title={article.title}
-                  excerpt={article.excerpt}
-                  image={article.image}
-                  date={article.date}
-                  readTime={article.readTime}
-                  category={article.category}
-                  slug={article.slug}
-                />
-              ))
-            ) : (
-              <div className="col-span-full text-center py-16 bg-white/5 backdrop-blur-sm rounded-lg border border-gray-600">
-                <p className="text-gray-300 text-lg mb-2">No articles found matching your criteria</p>
-                <p className="text-gray-400">Try adjusting your filters or search terms</p>
+      {/* Sort Dialog */}
+      <Dialog open={isSortOpen} onOpenChange={setIsSortOpen}>
+        <DialogContent className="bg-[#1a1b1e] border-gray-700 text-white max-w-md rounded-lg shadow-lg">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-semibold">Sort Articles</DialogTitle>
+            <DialogDescription className="text-sm text-gray-400">
+              Choose how to sort the articles.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4">
+            <RadioGroup
+              value={filters.sortBy}
+              onValueChange={(value) => setFilters(prev => ({ ...prev, sortBy: value as SortOption }))}
+              className="space-y-4"
+            >
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="latest" id="latest" className="border-gray-600 data-[state=checked]:bg-primary-red data-[state=checked]:border-primary-red" />
+                <Label htmlFor="latest" className="text-gray-300">Latest Articles</Label>
               </div>
-            )}
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="oldest" id="oldest" className="border-gray-600 data-[state=checked]:bg-primary-red data-[state=checked]:border-primary-red" />
+                <Label htmlFor="oldest" className="text-gray-300">Oldest Articles</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="a-z" id="a-z" className="border-gray-600 data-[state=checked]:bg-primary-red data-[state=checked]:border-primary-red" />
+                <Label htmlFor="a-z" className="text-gray-300">A-Z</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="popular" id="popular" className="border-gray-600 data-[state=checked]:bg-primary-red data-[state=checked]:border-primary-red" />
+                <Label htmlFor="popular" className="text-gray-300">Most Popular</Label>
+              </div>
+            </RadioGroup>
           </div>
+          <div className="flex justify-end gap-2 mt-6">
+            <Button
+              className="bg-primary-red text-white hover:bg-primary-red/90"
+              onClick={() => setIsSortOpen(false)}
+            >
+              Apply
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Articles Grid */}
+      <section className="container mx-auto px-4 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredArticles.length > 0 ? (
+            filteredArticles.map((article) => (
+              <EditorialCard
+                key={article.slug}
+                title={article.title}
+                excerpt={article.excerpt}
+                image={article.image}
+                date={article.date}
+                readTime={article.readTime}
+                category={article.category}
+                slug={article.slug}
+              />
+            ))
+          ) : (
+            <div className="col-span-full text-center py-16 bg-white/5 backdrop-blur-sm rounded-lg border border-gray-600">
+              <p className="text-gray-300 text-lg mb-2">No articles found matching your criteria</p>
+              <p className="text-gray-400">Try adjusting your filters or search terms</p>
+            </div>
+          )}
         </div>
         {/* Pagination */}
         {filteredArticles.length > 0 && (

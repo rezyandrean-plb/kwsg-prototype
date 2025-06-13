@@ -154,7 +154,7 @@ export default function BlogPostPage() {
       className="min-h-screen flex flex-col bg-black text-white"
     >
       {/* Back Button at the very top */}
-      <div className="max-w-7xl mx-auto w-full px-4 pt-8">
+      <div className="max-w-7xl mx-auto w-full px-4 pt-16">
         <Link href="/editorial" className="inline-flex items-center text-gray-400 hover:text-white mb-8 group">
           <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
           Back
@@ -198,25 +198,22 @@ export default function BlogPostPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="flex gap-8"
+          className="grid grid-cols-1 lg:grid-cols-4 gap-8"
         >
           {/* Table of Contents */}
           {headings.length > 0 && (
-            <div className="hidden lg:block w-[30%] shrink-0">
-              <div className="bg-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-800/50 flex flex-col h-full">
-                {/* Table of Contents Header */}
-                <div className="px-4 py-3 border-b border-gray-800/50">
+            <div className="hidden lg:block lg:col-span-1">
+              <div className="sticky top-32 flex flex-col px-2">
+                <div className="mb-4">
                   <div className="flex items-center gap-2">
-                    <List className="h-4 w-4 text-primary-red" />
-                    <h2 className="text-sm font-semibold text-white">Contents</h2>
+                  <List className="h-4 w-4 text-primary-red" />
+                  <h2 className="text-sm font-semibold text-white">Contents</h2>
                   </div>
                 </div>
-                {/* Table of Contents List */}
                 <ScrollArea className="h-[calc(100vh-18rem)]">
                   <nav className="px-2 py-3">
                     {headings.map((heading, index) => (
                       <div key={heading.id} className="relative">
-                        {/* Active indicator line */}
                         {activeId === heading.id && (
                           <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-primary-red rounded-full" />
                         )}
@@ -234,36 +231,31 @@ export default function BlogPostPage() {
                         >
                           {heading.text}
                         </button>
+                        {index === 3 && (
+                          <div className="my-8">
+                            <p className="text-gray-400 text-base font-semibold mb-2">Share Article</p>
+                            <div className="flex gap-3">
+                              <a href="#" className="text-gray-400 hover:text-white" aria-label="Share on LinkedIn">
+                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.025-3.063-1.868-3.063-1.868 0-2.154 1.459-2.154 2.968v5.699h-3v-10h2.881v1.367h.041c.401-.761 1.379-1.563 2.838-1.563 3.036 0 3.6 2.001 3.6 4.601v5.595z"/></svg>
+                              </a>
+                              <a href="#" className="text-gray-400 hover:text-white" aria-label="Share on Twitter">
+                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557a9.93 9.93 0 0 1-2.828.775 4.932 4.932 0 0 0 2.165-2.724c-.951.564-2.005.974-3.127 1.195a4.916 4.916 0 0 0-8.38 4.482c-4.083-.205-7.697-2.162-10.125-5.134a4.822 4.822 0 0 0-.664 2.475c0 1.708.87 3.216 2.188 4.099a4.904 4.904 0 0 1-2.229-.616c-.054 2.281 1.581 4.415 3.949 4.89a4.936 4.936 0 0 1-2.224.084c.627 1.956 2.444 3.377 4.6 3.417a9.867 9.867 0 0 1-6.102 2.104c-.396 0-.787-.023-1.175-.069a13.945 13.945 0 0 0 7.548 2.212c9.057 0 14.009-7.514 14.009-14.009 0-.213-.005-.425-.014-.636a10.012 10.012 0 0 0 2.457-2.548z"/></svg>
+                              </a>
+                              <a href="#" className="text-gray-400 hover:text-white" aria-label="Share on Facebook">
+                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.733 0-1.325.592-1.325 1.326v21.348c0 .733.592 1.326 1.325 1.326h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.312h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.326v-21.349c0-.734-.593-1.326-1.324-1.326z"/></svg>
+                              </a>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     ))}
                   </nav>
                 </ScrollArea>
-                {/* Table of Contents Footer */}
-                <div className="px-4 py-2 border-t border-gray-800/50">
-                  <p className="text-xs text-gray-500">
-                    {headings.length} sections
-                  </p>
-                </div>
-                {/* Share Article Section */}
-                <div className="px-4 py-4 border-t border-gray-800/50 mt-auto">
-                  <p className="text-xs text-gray-500 mb-2">Share Article</p>
-                  <div className="flex gap-2">
-                    <a href="#" className="text-gray-400 hover:text-white" aria-label="Share on LinkedIn">
-                      <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.025-3.063-1.868-3.063-1.868 0-2.154 1.459-2.154 2.968v5.699h-3v-10h2.881v1.367h.041c.401-.761 1.379-1.563 2.838-1.563 3.036 0 3.6 2.001 3.6 4.601v5.595z"/></svg>
-                    </a>
-                    <a href="#" className="text-gray-400 hover:text-white" aria-label="Share on Twitter">
-                      <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557a9.93 9.93 0 0 1-2.828.775 4.932 4.932 0 0 0 2.165-2.724c-.951.564-2.005.974-3.127 1.195a4.916 4.916 0 0 0-8.38 4.482c-4.083-.205-7.697-2.162-10.125-5.134a4.822 4.822 0 0 0-.664 2.475c0 1.708.87 3.216 2.188 4.099a4.904 4.904 0 0 1-2.229-.616c-.054 2.281 1.581 4.415 3.949 4.89a4.936 4.936 0 0 1-2.224.084c.627 1.956 2.444 3.377 4.6 3.417a9.867 9.867 0 0 1-6.102 2.104c-.396 0-.787-.023-1.175-.069a13.945 13.945 0 0 0 7.548 2.212c9.057 0 14.009-7.514 14.009-14.009 0-.213-.005-.425-.014-.636a10.012 10.012 0 0 0 2.457-2.548z"/></svg>
-                    </a>
-                    <a href="#" className="text-gray-400 hover:text-white" aria-label="Share on Facebook">
-                      <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.733 0-1.325.592-1.325 1.326v21.348c0 .733.592 1.326 1.325 1.326h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.312h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.326v-21.349c0-.734-.593-1.326-1.324-1.326z"/></svg>
-                    </a>
-                  </div>
-                </div>
               </div>
             </div>
           )}
           {/* Main Content */}
-          <div className="flex-1 w-[70%]">
+          <div className="lg:col-span-3">
             {/* Article Content */}
             <div className="prose prose-invert prose-lg max-w-none">
               {articleData.content.map((section, index) => {
@@ -314,50 +306,68 @@ export default function BlogPostPage() {
                 {articleData.author.bio}
               </p>
             </div>
-            {/* Related Articles */}
-            <div className="mt-16">
-              <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
-              <div className="grid md:grid-cols-2 gap-8">
-                <Link href="#" className="group">
-                  <div className="bg-gray-900 rounded-xl overflow-hidden">
-                    <div className="relative h-48">
-                      <Image
-                        src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80"
-                        alt="Investment Strategies"
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold mb-2 group-hover:text-primary-red transition-colors">
-                        Investment Strategies for New Launch Properties
-                      </h3>
-                      <p className="text-gray-400 text-sm">Apr 22, 2024 • 7 min read</p>
-                    </div>
-                  </div>
-                </Link>
-                <Link href="#" className="group">
-                  <div className="bg-gray-900 rounded-xl overflow-hidden">
-                    <div className="relative h-48">
-                      <Image
-                        src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80"
-                        alt="Sustainable Development"
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold mb-2 group-hover:text-primary-red transition-colors">
-                        The Rise of Sustainable New Developments
-                      </h3>
-                      <p className="text-gray-400 text-sm">Apr 15, 2024 • 6 min read</p>
-                    </div>
-                  </div>
-                </Link>
-              </div>
-            </div>
           </div>
         </motion.div>
+        {/* Related Articles - new full width section */}
+        <section className="max-w-7xl mx-auto w-full px-4 mt-24">
+          <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <Link href="#" className="group">
+              <div className="bg-gray-900 rounded-xl overflow-hidden">
+                <div className="relative h-48">
+                  <Image
+                    src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80"
+                    alt="Investment Strategies"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-2 group-hover:text-primary-red transition-colors">
+                    Investment Strategies for New Launch Properties
+                  </h3>
+                  <p className="text-gray-400 text-sm">Apr 22, 2024 • 7 min read</p>
+                </div>
+              </div>
+            </Link>
+            <Link href="#" className="group">
+              <div className="bg-gray-900 rounded-xl overflow-hidden">
+                <div className="relative h-48">
+                  <Image
+                    src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80"
+                    alt="Sustainable Development"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-2 group-hover:text-primary-red transition-colors">
+                    The Rise of Sustainable New Developments
+                  </h3>
+                  <p className="text-gray-400 text-sm">Apr 15, 2024 • 6 min read</p>
+                </div>
+              </div>
+            </Link>
+            <Link href="#" className="group">
+              <div className="bg-gray-900 rounded-xl overflow-hidden">
+                <div className="relative h-48">
+                  <Image
+                    src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80"
+                    alt="Luxury Living"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-2 group-hover:text-primary-red transition-colors">
+                    The Future of Luxury Living in Singapore
+                  </h3>
+                  <p className="text-gray-400 text-sm">Mar 15, 2024 • 5 min read</p>
+                </div>
+              </div>
+            </Link>
+          </div>
+        </section>
       </article>
     </motion.main>
   )
