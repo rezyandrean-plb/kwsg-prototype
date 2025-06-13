@@ -370,7 +370,7 @@ export default function Home() {
               {/* First Row - 4 Cards */}
               {/* Global Brand & Trust */}
               <motion.div variants={itemVariants}>
-                <Link href="/global-brand" className="group">
+                <Link href="/why-kw/global-brand" className="group">
                   <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
                     <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -385,7 +385,7 @@ export default function Home() {
 
               {/* Custom CRM - Command */}
               <motion.div variants={itemVariants}>
-                <Link href="/command" className="group">
+                <Link href="/why-kw/command" className="group">
                   <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
                     <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -400,7 +400,7 @@ export default function Home() {
 
               {/* PropTech Stack */}
               <motion.div variants={itemVariants}>
-                <Link href="/proptech" className="group">
+                <Link href="/why-kw/proptech" className="group">
                   <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
                     <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -415,7 +415,7 @@ export default function Home() {
 
               {/* Research Hub */}
               <motion.div variants={itemVariants}>
-                <Link href="/research" className="group">
+                <Link href="/why-kw/research" className="group">
                   <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
                     <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -433,7 +433,7 @@ export default function Home() {
             <motion.div variants={containerVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
               {/* Media Support */}
               <motion.div variants={itemVariants}>
-                <Link href="/media" className="group">
+                <Link href="/why-kw/media" className="group">
                   <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
                     <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -448,7 +448,7 @@ export default function Home() {
 
               {/* Training System */}
               <motion.div variants={itemVariants}>
-                <Link href="/training" className="group">
+                <Link href="/why-kw/training" className="group">
                   <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
                     <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -463,7 +463,7 @@ export default function Home() {
 
               {/* Growth Share Model */}
               <motion.div variants={itemVariants}>
-                <Link href="/growth-share" className="group">
+                <Link href="/why-kw/growth-share" className="group">
                   <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
                     <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
