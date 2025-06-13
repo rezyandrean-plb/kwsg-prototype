@@ -35,7 +35,7 @@ export default function RootLayout({
         />
         <link 
           rel="icon" 
-          href="/images/kwsg-logo.webp" 
+          href="/images/kw-icon.webp" 
           type="image/webp" 
         />
         {/* Preconnect to external domains */}

@@ -106,9 +106,10 @@ export default function GlobalBrandPage() {
 
       {/* Global Network Section */}
       <section className="relative py-24 bg-black/90">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-start">
+          {/* Left column: Heading and subheading at the top */}
           <motion.div 
-            className="text-center mb-16"
+            className="mb-12 md:mb-0 mt-6 md:sticky md:top-24 md:z-10 md:bg-black/90"
             variants={sectionVariants}
             initial="initial"
             whileInView="whileInView"
@@ -122,13 +123,15 @@ export default function GlobalBrandPage() {
             </h3>
           </motion.div>
 
+          {/* Right column: Feature cards stacked vertically */}
           <motion.div 
-            className="grid md:grid-cols-3 gap-8"
+            className="flex flex-col gap-8"
             variants={staggerContainer}
             initial="initial"
             whileInView="animate"
             viewport={{ once: true, margin: "-100px" }}
           >
+            {/* Card 1 */}
             <motion.div 
               className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
               variants={fadeInUp}
@@ -142,6 +145,7 @@ export default function GlobalBrandPage() {
               </p>
             </motion.div>
 
+            {/* Card 2 */}
             <motion.div 
               className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
               variants={fadeInUp}
@@ -155,6 +159,7 @@ export default function GlobalBrandPage() {
               </p>
             </motion.div>
 
+            {/* Card 3 */}
             <motion.div 
               className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
               variants={fadeInUp}
