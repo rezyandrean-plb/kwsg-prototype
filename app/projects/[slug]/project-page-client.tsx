@@ -81,6 +81,20 @@ interface ProjectPageClientProps {
   slug: string
 }
 
+interface Agent {
+  name: string;
+  role: string;
+  phone: string;
+  whatsapp: string;
+  email: string;
+  image: string;
+  company: string;
+  license: string;
+  experience: string;
+  languages: string[];
+  specialties: string[];
+}
+
 interface Project {
   id: number
   name: string
@@ -129,6 +143,7 @@ interface Project {
     balasCurveEffect: number
     landsizeDensity: number
   }
+  agent?: Agent;  // Optional agent property
 }
 
 interface UnitType {
@@ -403,7 +418,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
     developer: "Amara Holdings",
     completion: "2025",
     description:
-      "Luxury freehold development in the heart of Newton, offering exclusive living spaces with premium finishes.",
+      "10 Evelyn is a prestigious freehold development nestled in the heart of Newton, Singapore's prime District 11. This exclusive residential project offers a collection of meticulously designed living spaces ranging from 1 to 5 bedrooms, each crafted with premium finishes and thoughtful layouts. Residents will enjoy a sophisticated lifestyle with a comprehensive suite of facilities including a 50-meter lap pool, state-of-the-art fitness center, and beautifully landscaped gardens. The development's prime location provides unparalleled connectivity, with Newton MRT Station just a 3-minute walk away, and easy access to Orchard Road's shopping and dining precinct. Families will appreciate the proximity to prestigious educational institutions such as Anglo-Chinese School (Junior) and St. Margaret's Primary School. The development's strategic position also offers convenient access to medical facilities, including Mount Elizabeth Hospital, and is surrounded by an array of dining options, shopping centers, and recreational facilities. With its combination of luxury living, prime location, and excellent connectivity, 10 Evelyn represents an exceptional investment opportunity in one of Singapore's most sought-after residential districts.",
     features: ["Freehold", "Luxury finishes", "Prime location", "Full facilities"],
     district: "11",
     tenure: "Freehold",
@@ -1195,6 +1210,48 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
         </div>
       </div>
 
+      {/* Contact Agent - Full Width */}
+      <div className="w-full py-8 mb-8">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-2xl font-bold text-left text-white mb-2">Contact Agent</h2>
+          <div className="border-b border-gray-600 mb-6 w-full" />
+          
+          {project.agent ? (
+            // Agent Profile Card
+            <div className="bg-[#242728] border border-gray-700 rounded-lg overflow-hidden">
+              {/* ... agent profile content ... */}
+            </div>
+          ) : (
+            // No Agent - CTA Card
+            <div className="bg-[#242728] border border-gray-700 rounded-lg p-8 text-center">
+              <div className="max-w-2xl mx-auto space-y-6">
+                <div className="w-20 h-20 mx-auto rounded-full bg-red-500/10 flex items-center justify-center">
+                  <Users className="h-10 w-10 text-red-500" />
+                </div>
+                <h3 className="text-2xl font-bold text-white">Looking for a Property Agent?</h3>
+                <p className="text-gray-400">
+                  Our team of experienced property consultants is ready to assist you with your property needs. 
+                  Get in touch with us to discuss your requirements and find the perfect property.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button
+                    className="bg-red-500 hover:bg-red-600 text-white px-8"
+                    onClick={() => window.open(`https://wa.me/6591234567?text=Hi, I'm interested in ${project.name}`, '_blank')}
+                  >
+                    <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                    Contact via WhatsApp
+                  </Button>
+                  <Button variant="outline" className="border-gray-700 text-white hover:bg-gray-800 px-8">
+                    Find an Agent
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
     </main>
   )
 } 
