@@ -1,33 +1,20 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { MapPin, Clock, Train, MapPinned, School, Train as TrainIcon, ShoppingBag, Utensils, ShoppingCart, Trees } from "lucide-react"
 import dynamic from 'next/dynamic'
 import { Project } from "@/lib/data"
+import { GooglePlace } from '@/app/types/place'
+import NearbyAmenitiesMap from '@/app/components/NearbyAmenitiesMap'
 
 // Dynamically import the map component with no SSR
-const NearbyAmenitiesMap = dynamic(
+const NearbyAmenitiesMapComponent = dynamic(
   () => import('@/app/components/NearbyAmenitiesMap'),
   { ssr: false }
 )
-
-interface GooglePlace {
-  placeId: string
-  name: string
-  address: string
-  location: {
-    lat: number
-    lng: number
-  }
-  type: string
-  distance: string
-  duration: string
-  transportMode: string
-  isNearest?: boolean
-}
 
 interface LocationAnalytics {
   mrt: Array<{ name: string; distance: string }>
@@ -61,12 +48,45 @@ export default function ProjectLocation({
 }: ProjectLocationProps) {
   const [selectedAmenityType, setSelectedAmenityType] = useState<string>("schools")
   const [selectedAmenity, setSelectedAmenity] = useState<GooglePlace | null>(null)
+  const [amenities, setAmenities] = useState<GooglePlace[]>([])
+
+  // Fetch amenities data
+  useEffect(() => {
+    async function fetchAmenities() {
+      if (!project.latitude || !project.longitude) return;
+      const categories = [
+        { key: 'schools', type: 'school' },
+        { key: 'transport', type: 'transit_station' },
+        { key: 'shopping', type: 'shopping_mall' },
+        { key: 'food', type: 'restaurant' },
+        { key: 'groceries', type: 'supermarket' },
+        { key: 'recreation', type: 'park' },
+      ];
+      
+      try {
+        const results = await Promise.all(
+          categories.map(async (cat) => {
+            const res = await fetch(`/api/places?lat=${project.latitude}&lng=${project.longitude}&type=${cat.type}`);
+            if (res.ok) {
+              return await res.json();
+            }
+            return [];
+          })
+        );
+        
+        // Flatten and combine all amenities
+        const allAmenities = results.flat();
+        setAmenities(allAmenities);
+      } catch (error) {
+        console.error('Error fetching amenities:', error);
+        setAmenities([]);
+      }
+    }
+
+    fetchAmenities();
+  }, [project.latitude, project.longitude]);
 
   // Get unique amenities for the selected type
-  const amenities = selectedAmenityType === "all"
-    ? Object.values(realAmenitiesData).flat()
-    : realAmenitiesData[selectedAmenityType] || []
-
   const uniqueAmenities = Array.from(
     new Map(amenities.map((item: GooglePlace) => [item.placeId, item])).values()
   )
@@ -94,7 +114,11 @@ export default function ProjectLocation({
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Map Component */}
             <div className="h-[500px] rounded-lg overflow-hidden border border-gray-700">
-              <NearbyAmenitiesMap project={project} />
+              <NearbyAmenitiesMap 
+                project={project}
+                amenities={amenities}
+                selectedAmenity={selectedAmenity}
+              />
             </div>
 
             {/* Amenities List */}
