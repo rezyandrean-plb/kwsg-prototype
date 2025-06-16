@@ -190,15 +190,15 @@ export default function JoinKW() {
               <span className="font-medium">90-94% Commission</span>
             </motion.div>
           </div>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-wrap justify-center gap-4">
             <Button 
-              className="bg-primary-red text-white hover:bg-primary-red/90 px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[56px] min-w-[240px]"
+              className="bg-primary-red text-white hover:bg-primary-red/90 px-6 py-2 text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
               onClick={() => setIsDialogOpen(true)}
             >
               Book a Discovery Call →
             </Button>
             <Button 
-              className="bg-white/10 text-white hover:bg-white/20 px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[56px] min-w-[240px] backdrop-blur-sm"
+              className="bg-white/10 text-white hover:bg-white/20 px-6 py-2 text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 backdrop-blur-sm"
             >
               Learn More
             </Button>
@@ -233,17 +233,18 @@ export default function JoinKW() {
             viewport={{ once: true }}
           >
             <motion.div 
-              className="relative h-[500px] min-w-[350px] w-full rounded-2xl overflow-hidden bg-gray-700"
+              className="relative h-[400px] min-w-[350px] w-full rounded-2xl overflow-hidden bg-gray-800"
               variants={slideInLeft}
             >
               <Image
-                src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=2000"
+                src="/images/office-building.jpg"
                 alt="Brand Trust & Awareness - Modern office building representing global presence"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority
                 className="object-cover"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
                 <h3 className="text-2xl font-bold text-white mb-2">Global Network</h3>
                 <p className="text-white">200,000+ consultants across 60+ countries</p>
@@ -318,18 +319,18 @@ export default function JoinKW() {
               </div>
             </div>
             <motion.div 
-              className="relative h-[500px] rounded-2xl overflow-hidden order-1 md:order-2"
+              className="relative h-[400px] rounded-2xl overflow-hidden order-1 md:order-2"
               variants={slideInRight}
             >
               <Image
-                src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=2000"
+                src="/images/training-session.jpg"
                 alt="Training & Development - Professional business training session"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-black/60" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
                 <h3 className="text-2xl font-bold text-white mb-2">World-Class Training</h3>
                 <p className="text-white">From sales beginners to C-suite-calibre entrepreneurs</p>
@@ -346,18 +347,18 @@ export default function JoinKW() {
             viewport={{ once: true }}
           >
             <motion.div 
-              className="relative h-[500px] rounded-2xl overflow-hidden"
+              className="relative h-[400px] rounded-2xl overflow-hidden"
               variants={slideInLeft}
             >
               <Image
-                src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=2000"
+                src="/images/tech-office.jpg"
                 alt="Technology & Innovation - Modern office with advanced technology"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-black/60" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
                 <h3 className="text-2xl font-bold text-white mb-2">AI-Powered Platform</h3>
                 <p className="text-white">Unmatched efficiency and competitive edge</p>
@@ -433,18 +434,18 @@ export default function JoinKW() {
               </div>
             </div>
             <motion.div 
-              className="relative h-[500px] rounded-2xl overflow-hidden order-1 md:order-2"
+              className="relative h-[400px] rounded-2xl overflow-hidden order-1 md:order-2"
               variants={slideInRight}
             >
               <Image
-                src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=2000"
+                src="/images/business-district.jpg"
                 alt="Growth Share Model - Modern business district representing financial growth"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-black/60" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
                 <h3 className="text-2xl font-bold text-white mb-2">Growth Share Model</h3>
                 <p className="text-white">Build wealth beyond transactions</p>
@@ -470,15 +471,15 @@ export default function JoinKW() {
             <p className="text-xl text-gray-300 mb-12">
               Plug into the KW Singapore platform and take your career from closings to equity, visibility, and brand ownership. We invite you to lead in the next era of real estate.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-wrap justify-center gap-4">
               <Button 
-                className="bg-primary-red text-white hover:bg-primary-red/90 px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[56px] min-w-[240px]"
+                className="bg-primary-red text-white hover:bg-primary-red/90 px-6 py-2 text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
                 onClick={() => setIsDialogOpen(true)}
               >
                 Book a Discovery Call →
               </Button>
               <Button 
-                className="bg-white/10 text-white hover:bg-white/20 px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[56px] min-w-[240px] backdrop-blur-sm"
+                className="bg-white/10 text-white hover:bg-white/20 px-6 py-2 text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 backdrop-blur-sm"
               >
                 Download Brochure
               </Button>

@@ -1,39 +1,35 @@
 "use client"
 
-import React, { useEffect, useState } from 'react';
-import { Project } from "@/lib/data";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import React, { useEffect, useRef } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-interface Props {
-  project: Project;
+interface Project {
+  latitude?: number;
+  longitude?: number;
+  title?: string;
 }
 
 interface Amenity {
+  placeId: string;
   name: string;
-  lat: number;
-  lng: number;
+  address: string;
+  location: {
+    lat: number;
+    lng: number;
+  };
   type: string;
+  distance: string;
+  duration: string;
+  transportMode: string;
   isNearest?: boolean;
 }
 
-const CATEGORIES = [
-  { key: 'transport', label: 'Transport', types: ['bus_station', 'subway_station', 'transit_station'], icon: '/map-markers/map/train.svg' },
-  { key: 'school', label: 'School', types: ['primary_school', 'secondary_school', 'university'], icon: '/map-markers/map/school.svg' },
-  { key: 'shopping_mall', label: 'Shopping Mall', types: ['shopping_mall'], icon: '/map-markers/map/shopping_bag.svg' },
-  { key: 'supermarket', label: 'Supermarket', types: ['supermarket', 'grocery_store'], icon: '/map-markers/map/shopping_cart.svg' },
-  { key: 'food_centre', label: 'Food Centre / Restaurant', types: ['restaurant', 'food_court', 'cafe', 'meal_takeaway'], icon: '/map-markers/map/utensils.svg' },
-  { key: 'park', label: 'Park', types: ['park'], icon: '/map-markers/map/park.svg' },
-];
-
-// Dummy fetchNearbyAmenities for now (replace with your real fetch logic)
-async function fetchNearbyAmenities(lat: number, lng: number, radius: number, categories: typeof CATEGORIES): Promise<Amenity[]> {
-  // Return a few dummy amenities for demonstration
-  return [
-    { name: 'Amenity 1', lat: lat + 0.001, lng: lng + 0.001, type: 'school' },
-    { name: 'Amenity 2', lat: lat - 0.001, lng: lng - 0.001, type: 'park' },
-  ];
+interface Props {
+  project: Project;
+  amenities: Amenity[];
+  selectedAmenity: Amenity | null;
 }
 
 // Fix for default marker icon in Leaflet
@@ -47,48 +43,78 @@ const DefaultIcon = L.icon({
 });
 L.Marker.prototype.options.icon = DefaultIcon;
 
-export default function HybridMapAmenities({ project }: Props) {
-  if (!project.latitude || !project.longitude) {
-    return (
-      <div id="hybrid-nearby-amenities" className="mt-20 mb-20">
-        <h2 className="text-3xl font-bold mb-8">Nearby Amenities</h2>
-        <p>Location data not available for this project.</p>
-      </div>
-    );
-  }
+// Custom icon mapping for amenity types
+const amenityIconMap: Record<string, string> = {
+  'Primary School': '/map-markers/school.png',
+  'Secondary School': '/map-markers/school.png',
+  'School': '/map-markers/school.png',
+  'MRT Station': '/map-markers/mrt.png',
+  'Shopping Mall': '/map-markers/shopping.png',
+  'Food Centre': '/map-markers/food.png',
+  'Supermarket': '/map-markers/groceries.png',
+  'Park': '/map-markers/recreation.png',
+  // Add more mappings as needed
+};
 
-  const projectCoords = {
-    lat: Number(project.latitude),
-    lng: Number(project.longitude)
-  };
-
-  const [amenities, setAmenities] = useState<Amenity[]>([]);
-
+function MapAutoCenter({ project, selectedAmenity }: { project: Project; selectedAmenity: Amenity | null }) {
+  const map = useMap();
   useEffect(() => {
-    fetchNearbyAmenities(projectCoords.lat, projectCoords.lng, 1000, CATEGORIES)
-      .then(setAmenities);
-  }, [projectCoords.lat, projectCoords.lng]);
+    if (selectedAmenity) {
+      map.setView([selectedAmenity.location.lat, selectedAmenity.location.lng], 15, { animate: true });
+    } else {
+      map.setView([project.latitude ?? 0, project.longitude ?? 0], 15, { animate: true });
+    }
+  }, [selectedAmenity, project.latitude, project.longitude, map]);
+  return null;
+}
+
+export default function NearbyAmenitiesMap({ project, amenities, selectedAmenity }: Props) {
+  if (!project.latitude || !project.longitude) {
+    return <div className="h-full flex items-center justify-center text-gray-400">Location data not available.</div>;
+  }
+  const projectCoords = [project.latitude ?? 0, project.longitude ?? 0] as [number, number];
+  const selectedCoords = selectedAmenity ? [selectedAmenity.location.lat, selectedAmenity.location.lng] as [number, number] : null;
 
   return (
     <MapContainer center={projectCoords} zoom={15} style={{ width: '100%', height: '100%' }} scrollWheelZoom={true}>
+      <MapAutoCenter project={project} selectedAmenity={selectedAmenity} />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {/* Project Marker */}
       <Marker position={projectCoords}>
-        <Popup>
-          Project Location
-        </Popup>
+        <Popup>{project.title ? project.title : 'Project Location'}</Popup>
       </Marker>
       {/* Amenity Markers */}
-      {amenities.map((amenity, idx) => (
-        <Marker key={idx} position={{ lat: amenity.lat, lng: amenity.lng }}>
-          <Popup>
-            {amenity.name} ({amenity.type})
-          </Popup>
-        </Marker>
-      ))}
+      {amenities.map((amenity) => {
+        const iconUrl = amenityIconMap[amenity.type] || DefaultIcon.options.iconUrl;
+        const icon = L.icon({
+          ...DefaultIcon.options,
+          iconUrl: amenity.placeId === selectedAmenity?.placeId
+            ? '/map-markers/selected.png' // Optional: special icon for selected
+            : iconUrl,
+        });
+        return (
+          <Marker
+            key={amenity.placeId}
+            position={[amenity.location.lat, amenity.location.lng]}
+            icon={icon}
+          >
+            <Popup>
+              <div>
+                <div className="font-bold">{amenity.name}</div>
+                <div className="text-xs text-gray-500">{amenity.address}</div>
+                <div className="text-xs">{amenity.type}</div>
+              </div>
+            </Popup>
+          </Marker>
+        );
+      })}
+      {/* Polyline from project to selected amenity */}
+      {selectedCoords && (
+        <Polyline positions={[projectCoords, selectedCoords]} color="#ef4444" weight={4} />
+      )}
     </MapContainer>
   );
 } 
