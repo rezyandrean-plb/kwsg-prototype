@@ -20,6 +20,11 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog"
+import { Calendar as CalendarComponent } from "@/components/ui/calendar"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { format } from "date-fns"
+import { cn } from "@/lib/utils"
+import { CalendarIcon } from "lucide-react"
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -101,7 +106,10 @@ type SortOption = "latest" | "oldest" | "a-z" | "popular"
 
 // Define filter state type
 type FilterState = {
-  yearRange: { start: string; end: string }
+  dateRange: {
+    from: Date | undefined
+    to: Date | undefined
+  }
   categories: string[]
   sortBy: SortOption
   searchQuery: string
@@ -110,11 +118,36 @@ type FilterState = {
 // Get unique categories from articles
 const categories = Array.from(new Set(articlesData.map(article => article.category)))
 
+// Generate months array
+const months = [
+  { value: "01", label: "January" },
+  { value: "02", label: "February" },
+  { value: "03", label: "March" },
+  { value: "04", label: "April" },
+  { value: "05", label: "May" },
+  { value: "06", label: "June" },
+  { value: "07", label: "July" },
+  { value: "08", label: "August" },
+  { value: "09", label: "September" },
+  { value: "10", label: "October" },
+  { value: "11", label: "November" },
+  { value: "12", label: "December" }
+]
+
+// Generate days array (1-31)
+const days = Array.from({ length: 31 }, (_, i) => ({
+  value: (i + 1).toString().padStart(2, '0'),
+  label: (i + 1).toString()
+}))
+
 export default function EditorialPage() {
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const [isSortOpen, setIsSortOpen] = useState(false)
   const [filters, setFilters] = useState<FilterState>({
-    yearRange: { start: "2024", end: "2024" },
+    dateRange: {
+      from: new Date(2024, 0, 1), // January 1, 2024
+      to: new Date(2024, 11, 31)  // December 31, 2024
+    },
     categories: [],
     sortBy: "latest",
     searchQuery: ""
@@ -126,8 +159,9 @@ export default function EditorialPage() {
   const filteredArticles = useMemo(() => {
     return articlesData
       .filter(article => {
-        const articleYear = new Date(article.date).getFullYear().toString()
-        const yearInRange = articleYear >= filters.yearRange.start && articleYear <= filters.yearRange.end
+        const articleDate = new Date(article.date)
+        const dateInRange = (!filters.dateRange.from || articleDate >= filters.dateRange.from) && 
+                           (!filters.dateRange.to || articleDate <= filters.dateRange.to)
         
         const categoryMatch = filters.categories.length === 0 || 
           filters.categories.includes(article.category)
@@ -139,7 +173,7 @@ export default function EditorialPage() {
           article.category.toLowerCase().includes(term)
         )
 
-        return yearInRange && categoryMatch && matchesSearch
+        return dateInRange && categoryMatch && matchesSearch
       })
       .sort((a, b) => {
         switch (filters.sortBy) {
@@ -169,7 +203,10 @@ export default function EditorialPage() {
 
   const clearFilters = () => {
     setFilters({
-      yearRange: { start: "2024", end: "2024" },
+      dateRange: {
+        from: new Date(2024, 0, 1),
+        to: new Date(2024, 11, 31)
+      },
       categories: [],
       sortBy: "latest",
       searchQuery: ""
@@ -259,9 +296,13 @@ export default function EditorialPage() {
                 onClick={() => setIsFilterOpen(true)}
               >
                 <Filter className="h-5 w-5" />
-                {(filters.categories.length > 0 || filters.yearRange.start !== "2024" || filters.yearRange.end !== "2024") && (
+                {(filters.categories.length > 0 || 
+                  (filters.dateRange.from && filters.dateRange.from.getTime() !== new Date(2024, 0, 1).getTime()) || 
+                  (filters.dateRange.to && filters.dateRange.to.getTime() !== new Date(2024, 11, 31).getTime())) && (
                   <Badge variant="secondary" className="absolute -top-1 -right-1 bg-primary-red/20 text-primary-red rounded-full">
-                    {(filters.categories.length > 0 ? 1 : 0) + (filters.yearRange.start !== "2024" || filters.yearRange.end !== "2024" ? 1 : 0)}
+                    {(filters.categories.length > 0 ? 1 : 0) + 
+                     ((filters.dateRange.from && filters.dateRange.from.getTime() !== new Date(2024, 0, 1).getTime()) || 
+                      (filters.dateRange.to && filters.dateRange.to.getTime() !== new Date(2024, 11, 31).getTime()) ? 1 : 0)}
                   </Badge>
                 )}
               </Button>
@@ -275,7 +316,10 @@ export default function EditorialPage() {
             </div>
           </div>
           {/* Active Filters */}
-          {(filters.categories.length > 0 || filters.yearRange.start !== "2024" || filters.yearRange.end !== "2024" || filters.searchQuery) && (
+          {(filters.categories.length > 0 || 
+            (filters.dateRange.from && filters.dateRange.from.getTime() !== new Date(2024, 0, 1).getTime()) || 
+            (filters.dateRange.to && filters.dateRange.to.getTime() !== new Date(2024, 11, 31).getTime()) || 
+            filters.searchQuery) && (
             <div className="flex flex-wrap items-center gap-2 mt-4">
               <span className="text-sm text-gray-400">Active filters:</span>
               {filters.searchQuery && (
@@ -299,18 +343,23 @@ export default function EditorialPage() {
                   <X className="ml-1 h-3 w-3" />
                 </Badge>
               ))}
-              {(filters.yearRange.start !== "2024" || filters.yearRange.end !== "2024") && (
+              {((filters.dateRange.from && filters.dateRange.from.getTime() !== new Date(2024, 0, 1).getTime()) || 
+                (filters.dateRange.to && filters.dateRange.to.getTime() !== new Date(2024, 11, 31).getTime())) && (
                 <Badge 
                   variant="secondary" 
                   className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-3 py-1 transition-colors"
                   onClick={() => setFilters(prev => ({ 
                     ...prev, 
-                    yearRange: { start: "2024", end: "2024" } 
+                    dateRange: { 
+                      from: new Date(2024, 0, 1),
+                      to: new Date(2024, 11, 31)
+                    } 
                   }))}
                 >
-                  {filters.yearRange.start === filters.yearRange.end 
-                    ? `Year: ${filters.yearRange.start}`
-                    : `Years: ${filters.yearRange.start}-${filters.yearRange.end}`}
+                  {filters.dateRange.from && filters.dateRange.to && 
+                   filters.dateRange.from.getTime() === filters.dateRange.to.getTime()
+                    ? `Date: ${format(filters.dateRange.from, "PPP")}`
+                    : `Date Range: ${filters.dateRange.from ? format(filters.dateRange.from, "PPP") : "Any"} - ${filters.dateRange.to ? format(filters.dateRange.to, "PPP") : "Any"}`}
                   <X className="ml-1 h-3 w-3" />
                 </Badge>
               )}
@@ -336,6 +385,86 @@ export default function EditorialPage() {
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-6 py-4">
+            {/* Date Range */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-gray-200">Date Range</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-sm text-gray-400">From</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <div
+                        role="button"
+                        tabIndex={0}
+                        className={cn(
+                          "w-full justify-start text-left font-normal bg-[#242728] border border-gray-600 text-gray-200 hover:bg-gray-800/50 rounded-md px-3 py-2 cursor-pointer",
+                          !filters.dateRange.from && "text-gray-400"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4 inline" />
+                        {filters.dateRange.from ? (
+                          format(filters.dateRange.from, "PPP")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                      </div>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0 bg-[#242728] border-gray-600" align="start">
+                      <CalendarComponent
+                        mode="single"
+                        selected={filters.dateRange.from}
+                        onSelect={(date: Date | undefined) => setFilters(prev => ({
+                          ...prev,
+                          dateRange: { ...prev.dateRange, from: date }
+                        }))}
+                        initialFocus
+                        className="bg-[#242728] text-gray-200"
+                        disabled={(date: Date) => date > new Date()}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm text-gray-400">To</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <div
+                        role="button"
+                        tabIndex={0}
+                        className={cn(
+                          "w-full justify-start text-left font-normal bg-[#242728] border border-gray-600 text-gray-200 hover:bg-gray-800/50 rounded-md px-3 py-2 cursor-pointer",
+                          !filters.dateRange.to && "text-gray-400"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4 inline" />
+                        {filters.dateRange.to ? (
+                          format(filters.dateRange.to, "PPP")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                      </div>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0 bg-[#242728] border-gray-600" align="start">
+                      <CalendarComponent
+                        mode="single"
+                        selected={filters.dateRange.to}
+                        onSelect={(date: Date | undefined) => setFilters(prev => ({
+                          ...prev,
+                          dateRange: { ...prev.dateRange, to: date }
+                        }))}
+                        initialFocus
+                        className="bg-[#242728] text-gray-200"
+                        disabled={(date: Date) => 
+                          (filters.dateRange.from ? date < filters.dateRange.from : false) || 
+                          date > new Date()
+                        }
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              </div>
+            </div>
+
             {/* Categories */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-gray-200">Categories</h3>
