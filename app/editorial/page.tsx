@@ -246,7 +246,7 @@ export default function EditorialPage() {
               <Input
                 type="search"
                 placeholder="Search articles by title, content, or category..."
-                className="w-full pl-12 h-[52px] text-lg bg-[#242728] border-gray-600 text-white placeholder:text-gray-400 focus:border-primary-red focus:ring-primary-red/20 backdrop-blur-sm rounded-md"
+                className="w-full pl-8 sm:pl-12 h-[52px] text-base sm:text-lg bg-[#242728] border-gray-600 text-white placeholder:text-[11px] sm:placeholder:text-base placeholder:text-left text-left focus:border-primary-red focus:ring-primary-red/20 backdrop-blur-sm rounded-md"
                 value={filters.searchQuery}
                 onChange={(e) => setFilters(prev => ({ ...prev, searchQuery: e.target.value }))}
               />
@@ -336,45 +336,6 @@ export default function EditorialPage() {
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-6 py-4">
-            {/* Date Range */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-gray-200">Date Range</h3>
-              <div className="grid grid-cols-2 gap-4">
-                <Select
-                  value={filters.yearRange.start}
-                  onValueChange={(value) => setFilters(prev => ({ 
-                    ...prev, 
-                    yearRange: { ...prev.yearRange, start: value } 
-                  }))}
-                >
-                  <SelectTrigger className="bg-[#242728] border-gray-600 text-gray-200">
-                    <SelectValue placeholder="Start Year" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[#242728] border-gray-600">
-                    {years.map(year => (
-                      <SelectItem key={`start-${year}`} value={year} className="text-gray-200 hover:bg-gray-700">{year}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Select
-                  value={filters.yearRange.end}
-                  onValueChange={(value) => setFilters(prev => ({ 
-                    ...prev, 
-                    yearRange: { ...prev.yearRange, end: value } 
-                  }))}
-                >
-                  <SelectTrigger className="bg-[#242728] border-gray-600 text-gray-200">
-                    <SelectValue placeholder="End Year" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[#242728] border-gray-600">
-                    {years.map(year => (
-                      <SelectItem key={`end-${year}`} value={year} className="text-gray-200 hover:bg-gray-700">{year}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
             {/* Categories */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-gray-200">Categories</h3>
