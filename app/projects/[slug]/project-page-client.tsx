@@ -368,7 +368,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
   // State management
   const [galleryOpen, setGalleryOpen] = useState(false)
   const [galleryIdx, setGalleryIdx] = useState(0)
-  const [activeTab, setActiveTab] = useState("overview")
+  const [activeTab, setActiveTab] = useState<number>(0)
   const [selectedPlan, setSelectedPlan] = useState<{ type: string; image: string } | null>(null)
   const [selectedAmenityType, setSelectedAmenityType] = useState("schools")
   const [selectedAmenity, setSelectedAmenity] = useState<GooglePlace | null>(null)
@@ -541,7 +541,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset
       window.scrollTo({ top: offsetPosition, behavior: "smooth" })
     }
-    setActiveTab(sectionId)
+    setActiveTab(Number(sectionId))
   }
 
   // Tab configuration
@@ -698,7 +698,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               {/* Address and Key Info */}
               <div className="flex items-center gap-2 text-gray-200 mb-2">
                 <MapPin className="h-5 w-5 text-red-500" />
-                <span className="text-lg">{project.address}</span>
+                <span className="text-lg">{project.address.replace(/,?\s*\d{6}$/, '')}</span>
               </div>
 
               <div className="flex flex-wrap gap-4 text-gray-200 text-base">
@@ -760,7 +760,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 <button
                   key={tab.id}
                   className={`flex items-center gap-2 px-4 py-4 border-b-2 whitespace-nowrap transition-colors ${
-                    activeTab === tab.id
+                    activeTab === Number(tab.id)
                       ? "border-red-500 text-red-500"
                       : "border-transparent text-gray-400 hover:text-white"
                   }`}
@@ -779,425 +779,547 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="bg-[#1c1c1d] py-8">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-row gap-6">
-            {/* Main Content Column */}
-            <div className="lg:w-8/12">
-              {/* Project Overview Section (Revamped) */}
-              <div id="overview" className="mb-8">
-                {/* Section Title with horizontal line */}
-                <h2 className="text-3xl font-bold text-left text-white mb-2">Project Overview</h2>
-                <div className="border-b border-gray-600 mb-6 w-full" />
-
-                {/* Project Details Section (with icons, two-column grid) */}
-                <div className="bg-[#242728] border border-gray-700 rounded-lg p-6 mb-6">
-                  <h4 className="text-xl font-bold text-left text-white mb-4">Project Details</h4>
-                  <div className="border-b border-gray-600 mb-4 w-full" />
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
-                    {/* Left column */}
-                    <div className="space-y-5">
-                      <div className="flex items-start gap-3">
-                        <MapPin className="h-6 w-6 text-red-500 mt-1" />
-                        <div>
-                          <div className="font-semibold text-red-500">Address</div>
-                          <div className="text-white">{project.address}</div>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <Building2 className="h-6 w-6 text-red-500 mt-1" />
-                        <div>
-                          <div className="font-semibold text-red-500">Developer</div>
-                          <div className="text-white">{project.developer}</div>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <Calendar className="h-6 w-6 text-red-500 mt-1" />
-                        <div>
-                          <div className="font-semibold text-red-500">Tenure</div>
-                          <div className="text-white">{project.tenure}</div>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <Home className="h-6 w-6 text-red-500 mt-1" />
-                        <div>
-                          <div className="font-semibold text-red-500">Total Units</div>
-                          <div className="text-white">{project.totalUnits}</div>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <Clock className="h-6 w-6 text-red-500 mt-1" />
-                        <div>
-                          <div className="font-semibold text-red-500">Expected TOP</div>
-                          <div className="text-white">{project.completion}</div>
-                        </div>
-                      </div>
-                    </div>
-                    {/* Right column */}
-                    <div className="space-y-5">
-                      <div className="flex items-start gap-3">
-                        <Layout className="h-6 w-6 text-red-500 mt-1" />
-                        <div>
-                          <div className="font-semibold text-red-500">Site Area</div>
-                          <div className="text-white">{project.siteArea}</div>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <MapPinned className="h-6 w-6 text-red-500 mt-1" />
-                        <div>
-                          <div className="font-semibold text-red-500">District</div>
-                          <div className="text-white">{project.district}</div>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <Train className="h-6 w-6 text-red-500 mt-1" />
-                        <div>
-                          <div className="font-semibold text-red-500">Nearest MRT</div>
-                          <div className="text-white">{project.locationAnalytics.mrt[0]?.name}</div>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <Home className="h-6 w-6 text-red-500 mt-1" />
-                        <div>
-                          <div className="font-semibold text-red-500">Bedrooms</div>
-                          <div className="text-white">{project.bedrooms}</div>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <FileText className="h-6 w-6 text-red-500 mt-1" />
-                        <div>
-                          <div className="font-semibold text-red-500">Property Type</div>
-                          <div className="text-white">{project.propertyType}</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* About Section inside card */}
-                  <div className="mt-8">
-                    <h4 className="text-xl font-bold text-left text-white mb-2">About {project.title}</h4>
-                    <div className="border-b border-gray-600 mb-4 w-full" />
-                    <p className="text-gray-300 leading-relaxed mb-0">{project.description}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Sidebar */}
-            <div className="lg:w-4/12 space-y-6 sticky top-[120px]">
-              {/* Price Guide Widget */}
-              <div className="bg-[#242728] border border-gray-700 rounded-lg overflow-hidden">
-                <div className="bg-red-500/10 border-b border-red-500/20 p-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <BadgeDollarSign className="h-5 w-5 text-red-500" />
-                    <h3 className="text-lg font-bold text-red-500">Find out your home worth now!</h3>
-                  </div>
-                </div>
-                <div className="p-4">
-                  
-                  <Button className="w-full bg-red-500 hover:bg-red-600">Download Brochure</Button>
-                </div>
-              </div>
-
-              {/* Contact Form */}
-              <div className="bg-[#242728] border border-gray-700 rounded-lg p-4">
-                <h3 className="font-bold mb-4 text-white">Interested in {project.title}?</h3>
-                <form className="space-y-4">
-                  <Input
-                    placeholder="Your name"
-                    className="bg-gray-800 border-gray-700 text-white placeholder-gray-500"
-                  />
-                  <Input
-                    placeholder="Your email"
-                    className="bg-gray-800 border-gray-700 text-white placeholder-gray-500"
-                  />
-                  <Input
-                    placeholder="Your phone"
-                    className="bg-gray-800 border-gray-700 text-white placeholder-gray-500"
-                  />
-
-                  <Select>
-                    <SelectTrigger className="bg-gray-800 border-gray-700 text-white">
-                      <SelectValue placeholder="Select unit type" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-gray-900 border-gray-700">
-                      {project.unitTypes.map((unit, index) => (
-                        <SelectItem key={index} value={unit.type} className="text-gray-300 hover:bg-gray-800">
-                          {unit.type} - {unit.price}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-
-                  <textarea
-                    rows={4}
-                    placeholder="I'm interested in this project..."
-                    className="w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
-                  />
-
-                  <Button className="w-full bg-red-500 hover:bg-red-600">Get in touch</Button>
-                </form>
-
-                <div className="mt-4 pt-4 border-t border-gray-700">
-                  <div className="flex items-center mb-2">
-                    <div className="w-8 h-8 rounded-full bg-red-500/10 flex items-center justify-center mr-3">
-                      <Phone className="h-4 w-4 text-red-500" />
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-400">Call</div>
-                      <div className="font-medium text-white">+65 8123 4567</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center">
-                    <div className="w-8 h-8 rounded-full bg-red-500/10 flex items-center justify-center mr-3">
-                      <Mail className="h-4 w-4 text-red-500" />
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-400">Email</div>
-                      <div className="font-medium text-white">newlaunches@example.com</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+      {/* Project Overview */}
+      <div className="w-full bg-[#1c1c1d] py-8">
+        <div className="container mx-auto px-4 max-w-screen-xl">
+          <h2 className="text-3xl font-light mb-6 text-white text-center tracking-wide">Project Overview</h2>
+          <div className="flex justify-center mb-8">
+            <div className="w-16 h-1 bg-red-500 rounded" />
           </div>
-        </div>
-      </div>
+          <div className="flex flex-col md:flex-row gap-8 items-stretch min-h-[400px]">
+            
+            {/* Left Section */}
+            <div className="w-full md:w-6/12 min-w-0 flex flex-col gap-6 min-h-[400px]">
+              <div className="text-2xl font-semibold text-red-500 mb-2">{project.title}</div>
+              <div className="text-gray-200 text-sm md:text-base whitespace-pre-line leading-relaxed">
+                {project.description}
+              </div>
+              <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-6 mt-4">
+                <span className="text-red-400 italic text-lg">
+                  {"Where modern architecture meets timeless elegance, creating homes that inspire and endure."}
+                </span>
+              </div>
+            </div>
 
-      {/* Site Plan & Facilities Section - Full Width, Two Columns */}
-      <div className="w-full py-8 mb-8">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-2xl font-bold text-left text-white mb-2">Site Plan & Facilities</h2>
-          <div className="border-b border-gray-600 mb-6 w-full" />
-          <div className="flex flex-row gap-8">
-            {/* Site Plan Left */}
-            <div className="md:w-7/12 w-full">
-              <div className="bg-[#242728] border border-gray-700 rounded-lg p-6 flex flex-col items-center">
-                <h4 className="text-xl font-bold text-left text-white mb-4 w-full">Site Plan</h4>
+            {/* Right Section */}
+            <div className="w-full md:w-6/12 min-w-0 flex flex-col items-center gap-4 min-h-[400px]">
+              <div className="relative w-full aspect-[4/3] bg-[#e5e5e5] rounded-xl overflow-hidden flex items-center justify-center">
                 <img
-                  src="/siteplan-dummy.jpg"
-                  alt="Site Plan"
-                  className="w-full max-w-2xl rounded-lg object-contain"
+                  src={project.images[0] || '/placeholder.svg'}
+                  alt={project.title}
+                  className="object-cover w-full max-w-full rounded-xl"
                 />
-              </div>
-            </div>
-            {/* Facilities Right */}
-            <div className="md:w-5/12 w-full">
-              <div className="bg-[#242728] border border-gray-700 rounded-lg p-6">
-                <h4 className="text-xl font-bold text-left text-white mb-4 w-full">Facilities</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
-                  {facilities.map((facility: string, idx: number) => (
-                    <div key={idx} className="flex items-center gap-4">
-                      <span>
-                        {facilityIconMap[facility] || <Layout className="h-6 w-6 text-red-500" />}
-                      </span>
-                      <span className="text-white text-base">{facility}</span>
-                    </div>
-                  ))}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-4 bg-black/70 rounded-lg px-6 py-3 border border-gray-700 backdrop-blur-sm">
+                  <div className="flex flex-col items-center min-w-[100px]">
+                    <span className="text-2xl font-bold text-red-400">{project.totalUnits.replace(/[^0-9]/g, '')}</span>
+                    <span className="text-xs text-gray-300 mt-1">Total Units</span>
+                  </div>
+                  <div className="flex flex-col items-center min-w-[100px]">
+                    <span className="text-2xl font-bold text-red-400">{project.completion}</span>
+                    <span className="text-xs text-gray-300 mt-1">Expected TOP</span>
+                  </div>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
 
-      {/* Unit Listing Section - Full Width */}
-      <div id="unit-listing" className="w-full py-8 mb-8">
+      {/* Project Details Section - Full Width */}
+      <div id="project-details" className="w-full py-8 mb-8">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-2xl font-bold mb-2 text-white">Unit Types & Pricing</h2>
-          <div className="border-b border-gray-600 mb-6 w-full" />
-          <div className="text-gray-300 mb-4">Overview of unit types, sizes, and availability</div>
-          {/* Tab-like header */}
-          <div className="flex mb-4">
-            <button className="flex-1 py-2 rounded-tl-lg rounded-bl-lg font-semibold border border-red-500 bg-[#242728] text-red-500">Unit Availability</button>
-            <button className="flex-1 py-2 rounded-tr-lg rounded-br-lg font-semibold border border-gray-700 bg-[#18191b] text-gray-400">Unit Distribution Chart</button>
+          <h2 className="text-3xl font-light mb-6 text-white text-center tracking-wide">Project Details</h2>
+          <div className="flex justify-center mb-8">
+            <div className="w-16 h-1 bg-red-500 rounded" />
           </div>
-          {/* Table using shadcn/ui Table components and project.unitTypes */}
-          <div className="bg-[#242728] rounded-lg overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-[#18191b] text-white text-left">
-                  <TableHead className="px-4 py-3 font-semibold text-white">Unit Type</TableHead>
-                  <TableHead className="px-4 py-3 font-semibold text-white">Size Range</TableHead>
-                  <TableHead className="px-4 py-3 font-semibold text-white">Price</TableHead>
-                  <TableHead className="px-4 py-3 font-semibold text-white">Total Units</TableHead>
-                  <TableHead className="px-4 py-3 font-semibold text-white">Units Available</TableHead>
-                  <TableHead className="px-4 py-3 font-semibold text-white">Status</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {project.unitTypes.map((unit, idx) => {
-                  // Dummy values for demo
-                  const total = 20 + idx * 10;
-                  const available = 5 + idx * 3;
-                  const percent = Math.round((available / total) * 100);
-                  return (
-                    <TableRow key={unit.type} className="border-t border-gray-700 bg-[#1c1c1d]">
-                      <TableCell className="px-4 py-3 align-top font-bold text-white">{unit.type}</TableCell>
-                      <TableCell className="px-4 py-3 align-top text-gray-300">{unit.size}</TableCell>
-                      <TableCell className="px-4 py-3 align-top text-red-400">{unit.price}</TableCell>
-                      <TableCell className="px-4 py-3 align-top text-gray-300">{total}</TableCell>
-                      <TableCell className="px-4 py-3 align-top text-gray-300">{available}</TableCell>
-                      <TableCell className="px-4 py-3 align-top">
-                        <span className={percent > 0 ? 'text-green-400 font-semibold' : 'text-gray-500 font-semibold'}>
-                          {percent}% Available
-                        </span>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-            <div className="text-xs text-gray-400 px-4 py-2 border-t border-gray-700">
-              * Price ranges are only shown for available units<br />
-              * Size ranges represent the smallest and largest units in each category
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Address */}
+            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-2 border border-gray-700">
+              <MapPin className="h-7 w-7 text-red-500" />
+              <div>
+                <div className="text-gray-400 text-sm">Address</div>
+                <div className="text-white font-light">{project.address.replace(/,?\s*\d{6}$/, '')}</div>
+              </div>
+            </div>
+            {/* Site Area */}
+            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-2 border border-gray-700">
+              <Layout className="h-7 w-7 text-red-500" />
+              <div>
+                <div className="text-gray-400 text-sm">Site Area</div>
+                <div className="text-white font-light">{project.siteArea}</div>
+              </div>
+            </div>
+            {/* Developer */}
+            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+              <Building2 className="h-7 w-7 text-red-500" />
+              <div>
+                <div className="text-gray-400 text-sm">Developer</div>
+                <div className="text-white font-light">{project.developer}</div>
+              </div>
+            </div>
+            {/* District */}
+            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+              <MapPin className="h-7 w-7 text-red-500" />
+              <div>
+                <div className="text-gray-400 text-sm">District</div>
+                <div className="text-white font-light">District {project.district}</div>
+              </div>
+            </div>
+            {/* Tenure */}
+            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+              <Calendar className="h-7 w-7 text-red-500" />
+              <div>
+                <div className="text-gray-400 text-sm">Tenure</div>
+                <div className="text-white font-light">{project.tenure}</div>
+              </div>
+            </div>
+            {/* Nearest MRT */}
+            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+              <Train className="h-7 w-7 text-red-500" />
+              <div>
+                <div className="text-gray-400 text-sm">Nearest MRT</div>
+                <div className="text-white font-light">{project.locationAnalytics.mrt[0]?.name} ({project.locationAnalytics.mrt[0]?.distance})</div>
+              </div>
+            </div>
+            {/* Total Units */}
+            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+              <Home className="h-7 w-7 text-red-500" />
+              <div>
+                <div className="text-gray-400 text-sm">Total Units</div>
+                <div className="text-white font-light">{project.totalUnits}</div>
+              </div>
+            </div>
+            {/* Bedrooms */}
+            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+              <Home className="h-7 w-7 text-red-500" />
+              <div>
+                <div className="text-gray-400 text-sm">Bedrooms</div>
+                <div className="text-white font-light">{project.bedrooms} bedrooms</div>
+              </div>
+            </div>
+            {/* Expected TOP */}
+            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+              <Calendar className="h-7 w-7 text-red-500" />
+              <div>
+                <div className="text-gray-400 text-sm">Expected TOP</div>
+                <div className="text-white font-light">Q{project.completion?.slice(0,1) === '2' ? '2' : '1'} {project.completion}</div>
+              </div>
+            </div>
+            {/* Property Type */}
+            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+              <Building2 className="h-7 w-7 text-red-500" />
+              <div>
+                <div className="text-gray-400 text-sm">Property Type</div>
+                <div className="text-white font-light">{project.propertyType}</div>
+              </div>
+            </div>
+            {/* Floor Size */}
+            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+              <Layout className="h-7 w-7 text-red-500" />
+              <div>
+                <div className="text-gray-400 text-sm">Floor Size</div>
+                <div className="text-white font-light">{project.size}</div>
+              </div>
+            </div>
+            {/* Average PSF */}
+            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+              <BadgeDollarSign className="h-7 w-7 text-red-500" />
+              <div>
+                <div className="text-gray-400 text-sm">Average PSF</div>
+                <div className="text-white font-light">{project.pricePerSqFt ? `From ${project.pricePerSqFt}` : '-'}</div>
+              </div>
+            </div>
+            {/* Blocks */}
+            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+              <Building2 className="h-7 w-7 text-red-500" />
+              <div>
+                <div className="text-gray-400 text-sm">Blocks</div>
+                <div className="text-white font-light">{project.totalUnits ? Math.ceil(Number(project.totalUnits.replace(/[^0-9]/g, '')) / 7) + ' blocks' : '-'}</div>
+              </div>
+            </div>
+            {/* Floors */}
+            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+              <Building2 className="h-7 w-7 text-red-500" />
+              <div>
+                <div className="text-gray-400 text-sm">Floors</div>
+                <div className="text-white font-light">{project.totalFloors}</div>
+              </div>
+            </div>
+            {/* Car Park Lots */}
+            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+              <Home className="h-7 w-7 text-red-500" />
+              <div>
+                <div className="text-gray-400 text-sm">Car Park Lots</div>
+                <div className="text-white font-light">{project.totalUnits ? project.totalUnits.replace(/[^0-9]/g, '') + ' lots' : '-'}</div>
+              </div>
+            </div>
+            {/* Zoning */}
+            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+              <Building2 className="h-7 w-7 text-red-500" />
+              <div>
+                <div className="text-gray-400 text-sm">Zoning</div>
+                <div className="text-white font-light">Residential</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Floor Plan Section - Full Width (Revamped) */}
-      <div id="floor-plan" className="w-full py-8 mb-8">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-2xl font-bold mb-6 text-white">Floor Plans</h2>
-          <div className="border-b border-gray-600 mb-6 w-full" />
-          {/* Bedroom Tabs (full width) */}
-          <div className="flex gap-2 mb-4">
-            {floorPlanBedroomTabs.map(tab => (
-              <button
-                key={tab.key}
-                onClick={() => handleBedroomTab(tab.key as BedroomTabKey)}
-                className={`flex-1 px-4 py-2 rounded font-semibold text-sm transition-colors border ${bedroomTab === tab.key ? 'bg-[#18191b] border-red-500 text-red-500' : 'bg-[#242728] border-gray-700 text-gray-300 hover:bg-red-500/10 hover:text-red-500'}`}
-              >
-                {tab.label}
-              </button>
-            ))}
+      {/* Unit Mix Section */}
+      <div className="w-full flex flex-col items-center py-8">
+        <div className="max-w-7xl w-full bg-[#18191b] rounded-2xl py-10 px-4 flex flex-col items-center">
+          <h3 className="text-xl font-light text-red-400 mb-8 text-center tracking-wide">Unit Mix</h3>
+          <div className="w-full flex flex-row gap-6 overflow-x-auto sm:overflow-x-visible scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent px-2" style={{ WebkitOverflowScrolling: 'touch' }}>
+            {/* 1-Bedroom */}
+            <div className="flex-1 bg-[#232324] rounded-xl py-8 flex flex-col items-center justify-center">
+              <span className="text-3xl font-light text-white mb-2">85</span>
+              <span className="text-gray-400 font-light">1-Bedroom</span>
+            </div>
+            {/* 2-Bedroom */}
+            <div className="flex-1 bg-[#232324] rounded-xl py-8 flex flex-col items-center justify-center">
+              <span className="text-3xl font-light text-white mb-2">180</span>
+              <span className="text-gray-400 font-light">2-Bedroom</span>
+            </div>
+            {/* 3-Bedroom */}
+            <div className="flex-1 bg-[#232324] rounded-xl py-8 flex flex-col items-center justify-center">
+              <span className="text-3xl font-light text-white mb-2">220</span>
+              <span className="text-gray-400 font-light">3-Bedroom</span>
+            </div>
+            {/* 4-Bedroom */}
+            <div className="flex-1 bg-[#232324] rounded-xl py-8 flex flex-col items-center justify-center">
+              <span className="text-3xl font-light text-white mb-2">95</span>
+              <span className="text-gray-400 font-light">4-Bedroom</span>
+            </div>
+            {/* 5-Bedroom */}
+            <div className="flex-1 bg-[#232324] rounded-xl py-8 flex flex-col items-center justify-center">
+              <span className="text-3xl font-light text-white mb-2">25</span>
+              <span className="text-gray-400 font-light">5-Bedroom</span>
+            </div>
           </div>
-          {/* Subtype Tabs (full width) */}
-          <div className="flex gap-2 mb-6">
-            {(floorPlanSubtypes[bedroomTab as keyof typeof floorPlanSubtypes] || []).map((st: string) => (
-              <button
-                key={st}
-                onClick={() => handleSubtype(st)}
-                className={`px-4 py-2 rounded font-semibold text-sm transition-colors ${subtype === st ? 'bg-red-500 text-white' : 'bg-[#242728] text-gray-400 hover:bg-red-500/10 hover:text-red-500'}`}
-              >
-                {st}
-              </button>
-            ))}
+        </div>
+      </div>
+
+      {/* Site Plan Section - Full Width with Legend */}
+      <div className="w-full py-8 mb-8">
+        <div className="max-w-screen-xl mx-auto px-4">
+          <h2 className="text-3xl font-light mb-6 text-white text-center tracking-wide">Site Plan</h2>
+          <div className="flex justify-center mb-8">
+            <div className="w-16 h-1 bg-red-500 rounded" />
           </div>
-          {/* Full width floor plan image */}
-          <div className="bg-[#18191b] rounded-lg flex flex-col items-center justify-center p-6">
-            <img
-              src={floorPlanImages[(floorPlanCodes[subtype as keyof typeof floorPlanCodes] || [])[0] as keyof typeof floorPlanImages]}
-              alt={`Floor Plan for ${subtype}`}
-              className="object-contain max-h-[500px] w-full rounded"
-            />
+
+          {/* Two Column Flex Container */}
+          <div className="flex flex-col md:flex-row md:items-stretch md:flex-nowrap gap-8 min-h-[400px]">
+            {/* Site Plan Left */}
+            <div className="md:basis-2/3 min-w-0 bg-[#242728] border border-gray-700 rounded-lg p-6 flex flex-col items-center min-h-[400px]">
+              <img
+                src="/siteplan-dummy.jpg"
+                alt="Site Plan"
+                className="w-full max-w-full rounded-lg object-contain"
+              />
+            </div>
+            {/* Legend Right */}
+            <div className="md:basis-1/3 min-w-0 bg-[#242728] border border-gray-700 rounded-lg p-6 flex flex-col justify-between min-h-[400px]">
+              <div>
+                <h4 className="text-xl font-light text-left text-red-400 mb-4">Map Legend</h4>
+                <ul className="space-y-4">
+                  <li className="flex items-start gap-3">
+                    <span className="inline-block w-3 h-3 rounded-full bg-red-500 mt-1" />
+                    <div>
+                      <span className="text-white font-light">Main Entrance</span>
+                      <div className="text-xs text-gray-400">North Gate</div>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="inline-block w-3 h-3 rounded-full bg-blue-500 mt-1" />
+                    <div>
+                      <span className="text-white font-light">Clubhouse</span>
+                      <div className="text-xs text-gray-400">Central</div>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="inline-block w-3 h-3 rounded-full bg-cyan-400 mt-1" />
+                    <div>
+                      <span className="text-white font-light">Swimming Pool</span>
+                      <div className="text-xs text-gray-400">South Wing</div>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="inline-block w-3 h-3 rounded-full bg-green-500 mt-1" />
+                    <div>
+                      <span className="text-white font-light">Tennis Court</span>
+                      <div className="text-xs text-gray-400">East Side</div>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="inline-block w-3 h-3 rounded-full bg-yellow-400 mt-1" />
+                    <div>
+                      <span className="text-white font-light">Children's Playground</span>
+                      <div className="text-xs text-gray-400">West Garden</div>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="inline-block w-3 h-3 rounded-full bg-purple-500 mt-1" />
+                    <div>
+                      <span className="text-white font-light">Parking Entrance</span>
+                      <div className="text-xs text-gray-400">Underground</div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <button className="mt-8 w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-full text-lg transition-colors">
+                Download Site Plan
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Facilities Section - Full Width */}
+      <div className="w-full py-16 mb-8 bg-[#1c1c1d]">
+        <div className="max-w-4xl mx-auto px-4">
+          {/* Title and Subtitle */}
+          <h2 className="text-3xl font-light mb-6 text-white text-center tracking-wide">Facilities</h2>
+          <div className="flex justify-center mb-8">
+            <div className="w-16 h-1 bg-red-500 rounded" />
+          </div>
+          <p className="text-center font-light text-gray-400 mb-10">
+            Premium amenities designed for modern luxury living
+          </p>
+          {/* Facilities Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {facilities.map((facility: string, idx: number) => (
+              <div
+                key={idx}
+                className="flex items-center gap-3 bg-[#232324] rounded-lg px-4 py-4 shadow-sm"
+              >
+                <span className="flex items-center justify-center w-10 h-10 rounded-full bg-red-900/60">
+                  {facilityIconMap[facility] || (
+                    <Layout className="h-5 w-5 text-red-400" />
+                  )}
+                </span>
+                <span className="text-white font-light">{facility}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
       {/* Location Section - Full Width */}
-      <div id="location" className="w-full py-12 mb-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-2xl font-bold mb-6 text-white">Nearby Amenities</h2>
+      <div id="location" className="w-full py-16 mb-4 bg-[#1c1c1d]">
+        <div className="max-w-screen-xl mx-auto px-4">
+          {/* Title and Subtitle */}
+          <div className="text-center mb-10">
+            <h2 className="text-4xl font-light text-white mb-2 tracking-wide">Location & Connectivity</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-red-500 rounded" />
+            </div>
+            <p className="text-gray-400 text-base font-light">Premium living in Singapore's most connected district</p>
+          </div>
           {/* Map and Amenities Section */}
-          <div className="bg-[#242728] border border-gray-700 rounded-lg p-6 mb-8">
-            <Tabs value={selectedAmenityType} onValueChange={setSelectedAmenityType} className="w-full">
-              <TabsList className="mb-6 overflow-x-auto flex flex-wrap bg-gray-800">
+          <div className="bg-[#242728] border border-gray-700 rounded-lg p-0 flex flex-col gap-0 overflow-hidden mb-10">
+            {/* Tabs as Pills - Full width, above both columns */}
+            <div className="w-full px-6 pt-6 pb-2 border-b border-gray-700 bg-[#232324]">
+              <div className="flex flex-nowrap gap-2 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent" style={{ WebkitOverflowScrolling: 'touch' }}>
                 {amenityTabs.map((tab) => (
-                  <TabsTrigger
+                  <button
                     key={tab.key}
-                    value={tab.key}
-                    className="data-[state=active]:bg-red-500 data-[state=active]:text-white px-4 py-2 flex items-center gap-2 whitespace-nowrap text-gray-300"
+                    onClick={() => setSelectedAmenityType(tab.key)}
+                    className={`px-4 py-2 rounded-full font-light flex items-center gap-2 text-sm transition-colors border focus:outline-none whitespace-nowrap ${selectedAmenityType === tab.key ? 'bg-gray-800 border-red-500 text-white' : 'bg-[#18191b] border-gray-700 text-gray-300 hover:bg-red-500/10 hover:text-red-500'}`}
                   >
                     <tab.icon className="h-4 w-4" />
-                    <span>{tab.label}</span>
-                  </TabsTrigger>
+                    {tab.label}
+                  </button>
                 ))}
-              </TabsList>
-              {amenityTabs.map((tab) => (
-                <TabsContent key={tab.key} value={tab.key}>
-                  <div className="flex flex-row gap-6">
-                    {/* Left: Amenity List */}
-                    <div className="md:w-5/12 w-full max-h-[400px] overflow-y-auto pr-2">
-                      <div className="space-y-4">
-                        {isLoadingAmenities ? (
-                          <div className="flex items-center justify-center h-full">
-                            <div className="text-gray-400">Loading amenities...</div>
-                          </div>
-                        ) : amenitiesArray.length > 0 ? (
-                          amenitiesArray.map((place) => (
-                            <div
-                              key={place.placeId}
-                              className={`p-4 rounded-lg cursor-pointer transition-colors ${
-                                selectedAmenity?.placeId === place.placeId
-                                  ? "bg-red-500/10 border border-red-500/20"
-                                  : "bg-gray-800/50 border border-gray-700 hover:bg-gray-800"
-                              }`}
-                              onClick={() => setSelectedAmenity(place)}
-                            >
-                              <div className="flex items-start justify-between">
-                                <div>
-                                  <h4 className="font-medium text-white mb-1">{place.name}</h4>
-                                  <p className="text-sm text-gray-400 mb-2">{place.address}</p>
-                                  <div className="flex items-center gap-4 text-sm">
-                                    <span className="text-gray-300 flex items-center gap-1">
-                                      <MapPin className="h-4 w-4 text-red-500" />
-                                      {place.distance}
-                                    </span>
-                                    <span className="text-gray-300 flex items-center gap-1">
-                                      <Clock className="h-4 w-4 text-red-500" />
-                                      {place.duration}
-                                    </span>
-                                    <span className="text-gray-300 flex items-center gap-1">
-                                      <Train className="h-4 w-4 text-red-500" />
-                                      {place.transportMode}
-                                    </span>
-                                  </div>
-                                </div>
-                                {place.isNearest && (
-                                  <Badge className="bg-red-500/10 text-red-500 border border-red-500/20">
-                                    Nearest
-                                  </Badge>
-                                )}
+              </div>
+            </div>
+            {/* Two-column layout below tabs */}
+            <div className="w-full flex flex-col md:flex-row md:gap-0 gap-8 min-h-[500px]">
+              {/* Left: Amenity List */}
+              <div className="w-full md:w-4/12 min-w-0 bg-[#232324] p-6 flex flex-col border-r border-gray-700 h-[500px] md:h-[500px] order-1 md:order-1">
+                {/* Amenity List */}
+                <div className="flex-1 overflow-y-auto pr-2">
+                  <div className="space-y-4">
+                    {isLoadingAmenities ? (
+                      <div className="flex items-center justify-center h-full">
+                        <div className="text-gray-400">Loading amenities...</div>
+                      </div>
+                    ) : amenitiesArray.length > 0 ? (
+                      amenitiesArray.map((place) => (
+                        <div
+                          key={place.placeId}
+                          className={`p-4 rounded-lg cursor-pointer transition-colors ${selectedAmenity?.placeId === place.placeId ? "bg-red-500/10 border border-red-500/20" : "bg-gray-800/50 border border-gray-700 hover:bg-gray-800"}`}
+                          onClick={() => setSelectedAmenity(place)}
+                        >
+                          <div className="flex items-start justify-between">
+                            <div>
+                              <h4 className="font-light text-white mb-1">{place.name}</h4>
+                              <p className="text-sm text-gray-400 mb-2">{place.address}</p>
+                              <div className="flex items-center gap-4 text-sm">
+                                <span className="text-gray-300 flex items-center gap-1">
+                                  <MapPin className="h-4 w-4 text-red-500" />
+                                  {place.distance}
+                                </span>
+                                <span className="text-gray-300 flex items-center gap-1">
+                                  <Clock className="h-4 w-4 text-red-500" />
+                                  {place.duration}
+                                </span>
+                                <span className="text-gray-300 flex items-center gap-1">
+                                  <Train className="h-4 w-4 text-red-500" />
+                                  {place.transportMode}
+                                </span>
                               </div>
                             </div>
-                          ))
-                        ) : (
-                          <div className="text-center text-gray-400 py-8">No amenities found in this category</div>
-                        )}
-                      </div>
-                    </div>
-                    {/* Right: Map */}
-                    <div className="md:w-7/12 w-full h-[400px] rounded-lg overflow-hidden border border-gray-600">
-                      <NearbyAmenitiesMap
-                        project={project}
-                        amenities={amenitiesArray}
-                        selectedAmenity={selectedAmenity}
-                      />
-                    </div>
+                            {place.isNearest && (
+                              <Badge className="bg-red-500/10 text-red-500 border border-red-500/20">Nearest</Badge>
+                            )}
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="text-center text-gray-400 py-8">No amenities found in this category</div>
+                    )}
                   </div>
-                </TabsContent>
-              ))}
-            </Tabs>
+                </div>
+              </div>
+              {/* Right: Map */}
+              <div className="w-full md:w-8/12 min-w-0 flex flex-col h-[500px] md:h-[500px] order-2 md:order-2">
+                <div className="flex-1 w-full h-full min-h-[500px]">
+                  <NearbyAmenitiesMap
+                    project={project}
+                    amenities={amenitiesArray}
+                    selectedAmenity={selectedAmenity}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* Prime Connectivity Section */}
+          <div className="w-full flex justify-center">
+            <div className="max-w-3xl w-full bg-[#18191b] rounded-xl p-8 border border-gray-800 text-center mt-2">
+              <div className="text-lg text-red-400 font-light mb-2 tracking-wide">Prime Connectivity</div>
+              <div className="text-gray-300 text-light font-light">
+                Experience unparalleled connectivity with direct access to Newton MRT station, major expressways including the Central Expressway (CTE) and Pan Island Expressway (PIE), and seamless connections to Orchard Road, Marina Bay, and Changi Airport within 30 minutes.
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* AI MOAT, TDSR Calculator - Full Width, Two Columns */}
+      {/* AI MOAT - Full Width */}
       <div className="w-full py-8 mb-8">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-2xl font-bold text-left text-white mb-2">AI MOAT Analysis & TDSR Calculator</h2>
-          <div className="border-b border-gray-600 mb-6 w-full" />
-          <div className="flex flex-row gap-8">
-            {/* Left: AI MOAT */}
-            <div className="w-7/12">
-              <div className="bg-[#242728] border border-gray-700 rounded-lg p-6">
+        <div className="max-w-screen-xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-light text-white mb-2 tracking-wide">AI MOAT Analysis</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-red-500 rounded" />
+            </div>
+          <div className="flex flex-col items-center md:items-center md:justify-center">
+            {/* AI MOAT */}
+            <div className="w-full md:w-7/12 min-w-0 mx-auto">
+              <div className="bg-[#242728] border border-gray-700 rounded-lg p-6 text-center">
                 <MoatRadarChart moat={project.moat} />
               </div>
             </div>
-            {/* Right: TDSR Calculator */}
-            <div className="w-5/12">
+          </div>
+        </div>
+      </div>
+
+      {/* Units & Pricing Section - Full Width */}
+      <div id="units-pricing" className="w-full py-8 mb-8">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-4xl font-light mb-6 text-white text-center tracking-wide">Units & Pricing</h2>
+          <div className="flex justify-center mb-8">
+            <div className="w-16 h-1 bg-red-500 rounded" />
+          </div>
+          <p className="text-gray-400 text-base font-light text-center mb-8">Discover your perfect home from our collection of meticulously designed residences</p>
+
+          {/* Tabs for unit types */}
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
+            {unitAvailabilityData.map((unit, idx) => (
+              <button
+                key={unit.unitType}
+                onClick={() => setActiveTab(idx)}
+                className={`px-6 py-2 rounded-full font-medium text-base transition-colors focus:outline-none ${activeTab === idx ? 'bg-red-500 text-white' : 'bg-[#18191b] text-white hover:bg-red-500/10'}`}
+              >
+                {unit.unitType.replace(' Units', '')}
+              </button>
+            ))}
+          </div>
+
+          {/* Card layout for selected unit type */}
+          <div className="flex flex-col md:flex-row gap-8 justify-center items-stretch bg-[#111] rounded-xl p-8 max-w-5xl mx-auto shadow-lg">
+            {/* Left: Floor plan image */}
+            <div className="flex-1 flex flex-col items-center justify-center min-w-[280px] max-w-[420px]">
+              <div className="w-full aspect-[4/3] bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden mb-4">
+                {/* Placeholder image icon */}
+                <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5V8.25A2.25 2.25 0 0 1 5.25 6h13.5A2.25 2.25 0 0 1 21 8.25v8.25M3 16.5l3.72-3.72a2.25 2.25 0 0 1 3.18 0l2.4 2.4m-9.3 1.32 3.72-3.72a2.25 2.25 0 0 1 3.18 0l2.4 2.4m0 0 2.4-2.4a2.25 2.25 0 0 1 3.18 0l3.72 3.72M12 11.25a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
+                </svg>
+              </div>
+              <div className="flex gap-2 mt-2">
+                <button className="bg-[#232324] text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm"><span>👁️</span> View</button>
+                <button className="bg-[#232324] text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm"><span>⬇️</span> Download</button>
+              </div>
+            </div>
+            {/* Right: Unit details */}
+            <div className="flex-1 flex flex-col justify-between min-w-[280px] text-left">
+              {/* Top: Unit type and availability */}
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-2xl font-semibold text-white">{unitAvailabilityData[activeTab].unitType.replace(' Units', '')}</span>
+                <span className="text-green-400 font-semibold text-sm">Available {unitAvailabilityData[activeTab].subtypes[0].available} of {unitAvailabilityData[activeTab].subtypes[0].total}</span>
+              </div>
+              {/* Description */}
+              <div className="text-gray-300 text-sm mb-4">Perfect for young professionals and couples seeking modern urban living with premium finishes and thoughtful design.</div>
+              {/* Features row */}
+              <div className="flex gap-8 mb-4">
+                <div className="flex flex-col items-center">
+                  <span className="text-red-500 text-2xl">🛏️</span>
+                  <span className="text-white text-sm mt-1">1 Bedrooms</span>
+                </div>
+                <div className="flex flex-col items-center">
+                  <span className="text-red-500 text-2xl">🛁</span>
+                  <span className="text-white text-sm mt-1">1 Bathrooms</span>
+                </div>
+                <div className="flex flex-col items-center">
+                  <span className="text-red-500 text-2xl">📏</span>
+                  <span className="text-white text-sm mt-1">{unitAvailabilityData[activeTab].subtypes[0].size}</span>
+                </div>
+              </div>
+              {/* Price range */}
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-red-400 text-lg font-semibold">$</span>
+                <span className="text-white text-lg font-semibold">Price Range</span>
+                <span className="text-white text-lg font-semibold">{unitAvailabilityData[activeTab].subtypes[0].price}</span>
+              </div>
+              {/* Key Features */}
+              <div className="mb-4">
+                <div className="text-red-400 font-semibold mb-1">Key Features</div>
+                <div className="flex flex-wrap gap-4 text-sm">
+                  <span className="text-white">Open Concept Kitchen</span>
+                  <span className="text-white">City Views</span>
+                  <span className="text-white">Premium Fixtures</span>
+                  <span className="text-white">Built-in Storage</span>
+                </div>
+              </div>
+              {/* CTA Button */}
+              <div className="flex justify-end mt-6">
+                <button className="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-8 rounded-full text-lg transition-colors">Enquire About This Unit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* TDSR Calculator - Full Width */}
+      <div className="w-full py-8 mb-8">
+        <div className="max-w-screen-xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-light text-white mb-2 tracking-wide">Mortage Calculator</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-red-500 rounded" />
+            </div>
+          <div className="flex flex-col items-center md:items-center md:justify-center">
+            {/* TDSR Calculator */}
+            <div className="w-full md:w-5/12 min-w-0 mx-auto">
               <div className="bg-[#242728] border border-gray-700 rounded-lg p-6">
                 <TdsrCalculator 
                   propertyPrice={parseFloat(project.priceFrom.replace(/[^0-9]/g, ''))}
@@ -1211,45 +1333,90 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       </div>
 
       {/* Contact Agent - Full Width */}
-      <div className="w-full py-8 mb-8">
+      <div className="w-full py-16 mb-8 bg-[#18191b]">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-2xl font-bold text-left text-white mb-2">Contact Agent</h2>
-          <div className="border-b border-gray-600 mb-6 w-full" />
-          
-          {project.agent ? (
-            // Agent Profile Card
-            <div className="bg-[#242728] border border-gray-700 rounded-lg overflow-hidden">
-              {/* ... agent profile content ... */}
-            </div>
-          ) : (
-            // No Agent - CTA Card
-            <div className="bg-[#242728] border border-gray-700 rounded-lg p-8 text-center">
-              <div className="max-w-2xl mx-auto space-y-6">
-                <div className="w-20 h-20 mx-auto rounded-full bg-red-500/10 flex items-center justify-center">
-                  <Users className="h-10 w-10 text-red-500" />
+          <h2 className="text-4xl font-light text-white text-center mb-2 tracking-wide">Contact Our Expert Agents</h2>
+          <div className="flex justify-center mb-4">
+            <div className="w-16 h-1 bg-red-500 rounded" />
+          </div>
+          <p className="text-gray-400 text-base font-light text-center mb-12">Get personalized assistance from our experienced property consultants</p>
+          <div className="flex flex-col lg:flex-row gap-8 justify-center items-stretch"> {/* 3 columns in a row on desktop */}
+            {/* Agent 1 */}
+            <div className="flex-1 flex flex-col items-center max-w-full">
+              <div className="bg-[#23232a] rounded-2xl p-8 flex flex-col items-center shadow-md h-full">
+                <div className="w-20 h-20 rounded-full bg-gray-300 mb-4 flex items-center justify-center">
+                  <span className="text-3xl text-gray-400">👤</span>
                 </div>
-                <h3 className="text-2xl font-bold text-white">Looking for a Property Agent?</h3>
-                <p className="text-gray-400">
-                  Our team of experienced property consultants is ready to assist you with your property needs. 
-                  Get in touch with us to discuss your requirements and find the perfect property.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button
-                    className="bg-red-500 hover:bg-red-600 text-white px-8"
-                    onClick={() => window.open(`https://wa.me/6591234567?text=Hi, I'm interested in ${project.name}`, '_blank')}
-                  >
-                    <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                    </svg>
-                    Contact via WhatsApp
-                  </Button>
-                  <Button variant="outline" className="border-gray-700 text-white hover:bg-gray-800 px-8">
-                    Find an Agent
-                  </Button>
+                <div className="text-white text-xl font-semibold mb-1">Sarah Chen</div>
+                <div className="text-red-400 text-sm font-medium mb-1">Senior Property Consultant</div>
+                <div className="text-gray-400 text-xs mb-4 text-center">Luxury Condominiums & New Launches</div>
+                <div className="flex gap-2 mb-4 w-full justify-center">
+                  <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
+                    <span className="text-yellow-400 font-bold flex items-center gap-1">★ 4.9</span>
+                    <span className="text-xs text-gray-400">127 reviews</span>
+                  </div>
+                  <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
+                    <span className="text-white font-bold">8 years</span>
+                    <span className="text-xs text-gray-400">Experience</span>
+                  </div>
+                  <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
+                    <span className="text-white font-bold">Top 10%</span>
+                    <span className="text-xs text-gray-400">Performer</span>
+                  </div>
                 </div>
+                <button className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-full text-lg mb-2 transition-colors flex items-center justify-center gap-2"><span>📞</span> Call Now</button>
+                <div className="w-full flex flex-col gap-2 mb-2">
+                  <input className="w-full rounded-full bg-[#18191b] text-white px-4 py-2 text-sm border-none" placeholder="WhatsApp" disabled />
+                  <input className="w-full rounded-full bg-[#18191b] text-white px-4 py-2 text-sm border-none" placeholder="Email" disabled />
+                </div>
+                <div className="text-xs text-gray-500 w-full text-center mt-2">Available Mon-Sun, 9AM-9PM</div>
               </div>
             </div>
-          )}
+            {/* Agent 2 */}
+            <div className="flex-1 flex flex-col items-center max-w-full">
+              <div className="bg-[#23232a] rounded-2xl p-8 flex flex-col items-center shadow-md h-full">
+                <div className="w-20 h-20 rounded-full bg-gray-300 mb-4 flex items-center justify-center">
+                  <span className="text-3xl text-gray-400">👤</span>
+                </div>
+                <div className="text-white text-xl font-semibold mb-1">Marcus Lim</div>
+                <div className="text-red-400 text-sm font-medium mb-1">Property Investment Specialist</div>
+                <div className="text-gray-400 text-xs mb-4 text-center">Investment Properties & Portfolio Management</div>
+                <div className="flex gap-2 mb-4 w-full justify-center">
+                  <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
+                    <span className="text-yellow-400 font-bold flex items-center gap-1">★ 4.8</span>
+                    <span className="text-xs text-gray-400">89 reviews</span>
+                  </div>
+                  <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
+                    <span className="text-white font-bold">6 years</span>
+                    <span className="text-xs text-gray-400">Experience</span>
+                  </div>
+                  <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
+                    <span className="text-white font-bold">Top 10%</span>
+                    <span className="text-xs text-gray-400">Performer</span>
+                  </div>
+                </div>
+                <button className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-full text-lg mb-2 transition-colors flex items-center justify-center gap-2"><span>📞</span> Call Now</button>
+                <div className="w-full flex flex-col gap-2 mb-2">
+                  <input className="w-full rounded-full bg-[#18191b] text-white px-4 py-2 text-sm border-none" placeholder="WhatsApp" disabled />
+                  <input className="w-full rounded-full bg-[#18191b] text-white px-4 py-2 text-sm border-none" placeholder="Email" disabled />
+                </div>
+                <div className="text-xs text-gray-500 w-full text-center mt-2">Available Mon-Sun, 9AM-9PM</div>
+              </div>
+            </div>
+            {/* Contact Form */}
+            <div className="flex-1 flex flex-col items-center max-w-full">
+              <form className="bg-[#23232a] rounded-2xl p-8 w-full shadow-md flex flex-col gap-4 h-full">
+                <div className="text-white text-lg font-semibold mb-2">Send Us a Message</div>
+                <div className="text-gray-400 text-xs mb-4">Get personalized assistance for Lentor Modern</div>
+                <input className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border-none" placeholder="Full Name" required />
+                <input className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border-none" placeholder="Email Address" type="email" required />
+                <input className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border-none" placeholder="Phone Number" type="tel" required />
+                <textarea className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border-none min-h-[100px]" placeholder="Message" required defaultValue={"I'm interested in Lentor Modern. Please provide more information about unit availability and pricing."} />
+                <button type="submit" className="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-full text-lg transition-colors mt-2">Send Message</button>
+                <div className="text-xs text-gray-500 text-center mt-2">By submitting this form, you agree to our <a href="#" className="underline text-red-400">Privacy Policy</a></div>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </main>

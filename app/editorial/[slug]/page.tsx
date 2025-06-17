@@ -7,6 +7,7 @@ import { ArrowLeft, Calendar, Clock, User, Tag, Share2, BookmarkPlus, List } fro
 import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import './page.css';
 
 // Add TableOfContents type
 type TableOfContents = {

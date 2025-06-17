@@ -238,7 +238,7 @@ const MoatRadarChart: React.FC<MoatRadarChartProps> = ({ moat }) => {
 
   return (
     <div>
-      <h2 id="moat-analysis" className="mb-2 sm:mb-3 md:mb-4 text-2xl sm:text-3xl font-bold scroll-mt-40 text-left">MOAT Analysis</h2>
+      <h2 id="moat-analysis" className="mb-2 sm:mb-3 md:mb-4 text-2xl sm:text-3xl font-light scroll-mt-40 text-center"></h2>
       <div
         ref={chartRef}
         style={{
