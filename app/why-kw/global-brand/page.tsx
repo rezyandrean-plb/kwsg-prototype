@@ -81,20 +81,6 @@ export default function GlobalBrandPage() {
           <p className="text-xl max-w-3xl mx-auto mb-8 text-gray-100">
             With a presence in 60+ countries and over 200,000 consultants worldwide, KW Singapore gives you instant credibility and access to a global network of opportunities.
           </p>
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            <div className="flex items-center gap-2 text-gray-200">
-              <Globe className="w-5 h-5 text-primary-red" />
-              <span>60+ Countries</span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-200">
-              <Users className="w-5 h-5 text-primary-red" />
-              <span>200,000+ Consultants</span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-200">
-              <Award className="w-5 h-5 text-primary-red" />
-              <span>Global Recognition</span>
-            </div>
-          </div>
           <Button 
             className="bg-primary-red text-white hover:bg-primary-red/90 px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[56px] min-w-[240px]"
             onClick={() => setIsJoinFormOpen(true)}

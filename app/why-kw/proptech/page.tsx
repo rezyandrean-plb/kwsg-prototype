@@ -81,20 +81,6 @@ export default function PropTechPage() {
           <p className="text-xl max-w-3xl mx-auto mb-8 text-gray-100">
             Access a suite of cutting-edge tools designed to help you win high-value clients and close more deals. From market analysis to client engagement, our PropTech stack gives you the edge.
           </p>
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            <div className="flex items-center gap-2 text-gray-200">
-              <Cpu className="w-5 h-5 text-primary-red" />
-              <span>AI-Powered</span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-200">
-              <Zap className="w-5 h-5 text-primary-red" />
-              <span>Real-Time Data</span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-200">
-              <Smartphone className="w-5 h-5 text-primary-red" />
-              <span>Mobile Ready</span>
-            </div>
-          </div>
           <Button 
             className="bg-primary-red text-white hover:bg-primary-red/90 px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[56px] min-w-[240px]"
             onClick={() => setIsJoinFormOpen(true)}

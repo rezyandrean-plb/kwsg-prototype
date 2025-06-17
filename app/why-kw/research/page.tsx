@@ -81,20 +81,6 @@ export default function ResearchPage() {
           <p className="text-xl max-w-3xl mx-auto mb-8 text-gray-100">
             Access exclusive pricing trends, district analytics, and investor-ready insights. Make smarter decisions and guide your clients with confidence—powered by real-time data that moves with the market.
           </p>
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            <div className="flex items-center gap-2 text-gray-200">
-              <Search className="w-5 h-5 text-primary-red" />
-              <span>Real-Time Data</span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-200">
-              <LineChart className="w-5 h-5 text-primary-red" />
-              <span>Market Trends</span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-200">
-              <Target className="w-5 h-5 text-primary-red" />
-              <span>Smart Insights</span>
-            </div>
-          </div>
           <Button 
             className="bg-primary-red text-white hover:bg-primary-red/90 px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[56px] min-w-[240px]"
             onClick={() => setIsJoinFormOpen(true)}

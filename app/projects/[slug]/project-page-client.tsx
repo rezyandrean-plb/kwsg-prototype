@@ -365,10 +365,33 @@ const facilities: string[] = [
 ];
 
 export function ProjectPageClient({ slug }: ProjectPageClientProps) {
+  const [project, setProject] = useState<Project | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false)
+  const [activeTab, setActiveTab] = useState("overview")
+  const [selectedBedroom, setSelectedBedroom] = useState<BedroomTabKey>('1')
+  const [selectedSubtype, setSelectedSubtype] = useState<string>('')
+  const [amenities, setAmenities] = useState<GooglePlace[]>([])
+  const [isLayoutHorizontal, setIsLayoutHorizontal] = useState(false)
+  const [unitsActiveTab, setUnitsActiveTab] = useState(0)
+
+  // Handle responsive layout with JavaScript fallback
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLayoutHorizontal(window.innerWidth >= 1280) // xl breakpoint
+    }
+    
+    handleResize() // Set initial state
+    window.addEventListener('resize', handleResize)
+    
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   // State management
   const [galleryOpen, setGalleryOpen] = useState(false)
   const [galleryIdx, setGalleryIdx] = useState(0)
-  const [activeTab, setActiveTab] = useState<number>(0)
   const [selectedPlan, setSelectedPlan] = useState<{ type: string; image: string } | null>(null)
   const [selectedAmenityType, setSelectedAmenityType] = useState("schools")
   const [selectedAmenity, setSelectedAmenity] = useState<GooglePlace | null>(null)
@@ -394,7 +417,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
   }
 
   // Mock project data - replace with actual data fetching based on slug
-  const project: Project = {
+  const mockProject: Project = {
     id: 1,
     name: "10 Evelyn",
     project_name: "10 Evelyn",
@@ -519,18 +542,28 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
     }
   }
 
+  // Set project data on component mount
+  useEffect(() => {
+    setProject(mockProject)
+    setLoading(false)
+  }, [])
+
   // Calculate units left percentage
-  const totalUnits = Number.parseInt((project.totalUnits || "0").replace(/[^0-9]/g, ""))
-  const unitsAvailable = Number.parseInt((project.units || "0").replace(/[^0-9]/g, ""))
+  const totalUnits = Number.parseInt((project?.totalUnits || "0").replace(/[^0-9]/g, ""))
+  const unitsAvailable = Number.parseInt((project?.units || "0").replace(/[^0-9]/g, ""))
   const unitsLeftPercent = totalUnits > 0 ? Math.round((unitsAvailable / totalUnits) * 100) : 0
 
   // Navigation functions
   const nextImage = () => {
-    setGalleryIdx((prev) => (prev + 1) % project.images.length)
+    if (project) {
+      setGalleryIdx((prev) => (prev + 1) % project.images.length)
+    }
   }
 
   const prevImage = () => {
-    setGalleryIdx((prev) => (prev - 1 + project.images.length) % project.images.length)
+    if (project) {
+      setGalleryIdx((prev) => (prev - 1 + project.images.length) % project.images.length)
+    }
   }
 
   const scrollToSection = (sectionId: string) => {
@@ -541,7 +574,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset
       window.scrollTo({ top: offsetPosition, behavior: "smooth" })
     }
-    setActiveTab(Number(sectionId))
+    setActiveTab(sectionId)
   }
 
   // Tab configuration
@@ -568,7 +601,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
   // Replace mock amenities data loading with real data fetching
   useEffect(() => {
     async function fetchAmenities() {
-      if (!project.latitude || !project.longitude) return;
+      if (!project?.latitude || !project?.longitude) return;
       setIsLoadingAmenities(true);
       const categories = [
         { key: 'schools', type: 'school' },
@@ -595,8 +628,10 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       setRealAmenitiesData(results);
       setIsLoadingAmenities(false);
     }
-    fetchAmenities();
-  }, [project.latitude, project.longitude]);
+    if (project) {
+      fetchAmenities();
+    }
+  }, [project?.latitude, project?.longitude]);
 
   const amenitiesArray =
     selectedAmenityType === "all"
@@ -760,7 +795,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 <button
                   key={tab.id}
                   className={`flex items-center gap-2 px-4 py-4 border-b-2 whitespace-nowrap transition-colors ${
-                    activeTab === Number(tab.id)
+                    activeTab === tab.id
                       ? "border-red-500 text-red-500"
                       : "border-transparent text-gray-400 hover:text-white"
                   }`}
@@ -786,13 +821,32 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
           <div className="flex justify-center mb-8">
             <div className="w-16 h-1 bg-red-500 rounded" />
           </div>
-          <div className="flex flex-col md:flex-row gap-8 items-stretch min-h-[400px]">
+          <div 
+            className="flex flex-col xl:flex-row gap-8 items-stretch min-h-[400px]"
+            style={{
+              display: 'flex',
+              flexDirection: isLayoutHorizontal ? 'row' : 'column',
+              gap: '2rem',
+              alignItems: 'stretch',
+              minHeight: '400px'
+            }}
+          >
             
             {/* Left Section */}
-            <div className="w-full md:w-6/12 min-w-0 flex flex-col gap-6 min-h-[400px]">
-              <div className="text-2xl font-semibold text-red-500 mb-2">{project.title}</div>
+            <div 
+              className="w-full xl:w-1/2 min-w-0 flex flex-col gap-6 min-h-[400px]"
+              style={{
+                width: isLayoutHorizontal ? '50%' : '100%',
+                minWidth: '0',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1.5rem',
+                minHeight: '400px'
+              }}
+            >
+              <div className="text-2xl font-semibold text-red-500 mb-2">{project?.title}</div>
               <div className="text-gray-200 text-sm md:text-base whitespace-pre-line leading-relaxed">
-                {project.description}
+                {project?.description}
               </div>
               <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-6 mt-4">
                 <span className="text-red-400 italic text-lg">
@@ -802,20 +856,31 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             </div>
 
             {/* Right Section */}
-            <div className="w-full md:w-6/12 min-w-0 flex flex-col items-center gap-4 min-h-[400px]">
+            <div 
+              className="w-full xl:w-1/2 min-w-0 flex flex-col items-center gap-4 min-h-[400px]"
+              style={{
+                width: isLayoutHorizontal ? '50%' : '100%',
+                minWidth: '0',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '1rem',
+                minHeight: '400px'
+              }}
+            >
               <div className="relative w-full aspect-[4/3] bg-[#e5e5e5] rounded-xl overflow-hidden flex items-center justify-center">
                 <img
-                  src={project.images[0] || '/placeholder.svg'}
-                  alt={project.title}
+                  src={project?.images[0] || '/placeholder.svg'}
+                  alt={project?.title || 'Project Image'}
                   className="object-cover w-full max-w-full rounded-xl"
                 />
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-4 bg-black/70 rounded-lg px-6 py-3 border border-gray-700 backdrop-blur-sm">
                   <div className="flex flex-col items-center min-w-[100px]">
-                    <span className="text-2xl font-bold text-red-400">{project.totalUnits.replace(/[^0-9]/g, '')}</span>
+                    <span className="text-2xl font-bold text-red-400">{project?.totalUnits.replace(/[^0-9]/g, '') || '0'}</span>
                     <span className="text-xs text-gray-300 mt-1">Total Units</span>
                   </div>
                   <div className="flex flex-col items-center min-w-[100px]">
-                    <span className="text-2xl font-bold text-red-400">{project.completion}</span>
+                    <span className="text-2xl font-bold text-red-400">{project?.completion || 'N/A'}</span>
                     <span className="text-xs text-gray-300 mt-1">Expected TOP</span>
                   </div>
                 </div>
@@ -1238,8 +1303,8 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             {unitAvailabilityData.map((unit, idx) => (
               <button
                 key={unit.unitType}
-                onClick={() => setActiveTab(idx)}
-                className={`px-6 py-2 rounded-full font-medium text-base transition-colors focus:outline-none ${activeTab === idx ? 'bg-red-500 text-white' : 'bg-[#18191b] text-white hover:bg-red-500/10'}`}
+                onClick={() => setUnitsActiveTab(idx)}
+                className={`px-6 py-2 rounded-full font-medium text-base transition-colors focus:outline-none ${unitsActiveTab === idx ? 'bg-red-500 text-white' : 'bg-[#18191b] text-white hover:bg-red-500/10'}`}
               >
                 {unit.unitType.replace(' Units', '')}
               </button>
@@ -1265,8 +1330,8 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             <div className="flex-1 flex flex-col justify-between min-w-[280px] text-left">
               {/* Top: Unit type and availability */}
               <div className="flex items-center justify-between mb-2">
-                <span className="text-2xl font-semibold text-white">{unitAvailabilityData[activeTab].unitType.replace(' Units', '')}</span>
-                <span className="text-green-400 font-semibold text-sm">Available {unitAvailabilityData[activeTab].subtypes[0].available} of {unitAvailabilityData[activeTab].subtypes[0].total}</span>
+                <span className="text-2xl font-semibold text-white">{unitAvailabilityData[unitsActiveTab].unitType.replace(' Units', '')}</span>
+                <span className="text-green-400 font-semibold text-sm">Available {unitAvailabilityData[unitsActiveTab].subtypes[0].available} of {unitAvailabilityData[unitsActiveTab].subtypes[0].total}</span>
               </div>
               {/* Description */}
               <div className="text-gray-300 text-sm mb-4">Perfect for young professionals and couples seeking modern urban living with premium finishes and thoughtful design.</div>
@@ -1282,14 +1347,14 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 </div>
                 <div className="flex flex-col items-center">
                   <span className="text-red-500 text-2xl">📏</span>
-                  <span className="text-white text-sm mt-1">{unitAvailabilityData[activeTab].subtypes[0].size}</span>
+                  <span className="text-white text-sm mt-1">{unitAvailabilityData[unitsActiveTab].subtypes[0].size}</span>
                 </div>
               </div>
               {/* Price range */}
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-red-400 text-lg font-semibold">$</span>
                 <span className="text-white text-lg font-semibold">Price Range</span>
-                <span className="text-white text-lg font-semibold">{unitAvailabilityData[activeTab].subtypes[0].price}</span>
+                <span className="text-white text-lg font-semibold">{unitAvailabilityData[unitsActiveTab].subtypes[0].price}</span>
               </div>
               {/* Key Features */}
               <div className="mb-4">

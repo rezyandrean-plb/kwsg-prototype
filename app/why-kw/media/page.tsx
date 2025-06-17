@@ -81,20 +81,6 @@ export default function MediaPage() {
           <p className="text-xl max-w-3xl mx-auto mb-8 text-gray-100">
             Our in-house media team helps you stand out with professional visuals, social content, and listing marketing that drives engagement and trust. From brand videos to digital ads—it's all under one roof.
           </p>
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            <div className="flex items-center gap-2 text-gray-200">
-              <Camera className="w-5 h-5 text-primary-red" />
-              <span>Professional Shoots</span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-200">
-              <Film className="w-5 h-5 text-primary-red" />
-              <span>Video Production</span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-200">
-              <Mic className="w-5 h-5 text-primary-red" />
-              <span>Content Creation</span>
-            </div>
-          </div>
           <Button 
             className="bg-primary-red text-white hover:bg-primary-red/90 px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[56px] min-w-[240px]"
             onClick={() => setIsJoinFormOpen(true)}
