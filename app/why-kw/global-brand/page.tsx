@@ -115,7 +115,7 @@ export default function GlobalBrandPage() {
             whileInView="whileInView"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+            <h2 className="text-5xl md:text-6xl font-medium mb-6 text-white">
               Global Network, Local Expertise
             </h2>
             <h3 className="text-xl md:text-2xl text-primary-red mb-6">
@@ -136,11 +136,11 @@ export default function GlobalBrandPage() {
               className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
               variants={fadeInUp}
             >
-              <div className="bg-primary-red/10 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
-                <Globe className="w-6 h-6 text-primary-red" />
+              <div className="mb-6">
+                <Globe className="w-10 h-10 text-primary-red" />
               </div>
-              <h4 className="text-xl font-bold mb-4 text-white">Global Referrals</h4>
-              <p className="text-gray-300">
+              <h4 className="text-2xl md:text-3xl mb-4 text-white">Global Referrals</h4>
+              <p className="text-gray-200">
                 Access a worldwide network of real estate professionals. Connect with clients and opportunities across borders through our established referral system.
               </p>
             </motion.div>
@@ -150,11 +150,11 @@ export default function GlobalBrandPage() {
               className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
               variants={fadeInUp}
             >
-              <div className="bg-primary-red/10 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
-                <Building2 className="w-6 h-6 text-primary-red" />
+              <div className="mb-6">
+                <Building2 className="w-10 h-10 text-primary-red" />
               </div>
-              <h4 className="text-xl font-bold mb-4 text-white">Developer Relations</h4>
-              <p className="text-gray-300">
+              <h4 className="text-2xl md:text-3xl mb-4 text-white">Developer Relations</h4>
+              <p className="text-gray-200">
                 Leverage KW's global reputation to build strong relationships with developers and secure exclusive project access.
               </p>
             </motion.div>
@@ -164,11 +164,11 @@ export default function GlobalBrandPage() {
               className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
               variants={fadeInUp}
             >
-              <div className="bg-primary-red/10 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
-                <Award className="w-6 h-6 text-primary-red" />
+              <div className="mb-6">
+                <Award className="w-10 h-10 text-primary-red" />
               </div>
-              <h4 className="text-xl font-bold mb-4 text-white">Brand Trust</h4>
-              <p className="text-gray-300">
+              <h4 className="text-2xl md:text-3xl mb-4 text-white">Brand Trust</h4>
+              <p className="text-gray-200">
                 Build instant credibility with clients through KW's globally recognized brand and proven track record of excellence.
               </p>
             </motion.div>
@@ -195,7 +195,7 @@ export default function GlobalBrandPage() {
             whileInView="whileInView"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+            <h2 className="text-5xl md:text-6xl font-medium mb-6 text-white">
               Global Success Stories
             </h2>
             <h3 className="text-xl md:text-2xl text-primary-red mb-6">
@@ -214,34 +214,26 @@ export default function GlobalBrandPage() {
               className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
               variants={fadeInUp}
             >
-              <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-primary-red/10 rounded-full flex items-center justify-center">
-                    <Target className="w-6 h-6 text-primary-red" />
-                  </div>
-                  <h4 className="text-xl font-bold text-white">International Expansion</h4>
-                </div>
-                <p className="text-gray-300">
-                  "KW's global network helped me expand my business beyond Singapore. I now handle international clients and properties with confidence."
-                </p>
+              <div className="mb-6">
+                <Target className="w-10 h-10 text-primary-red" />
               </div>
+              <h4 className="text-2xl md:text-3xl mb-4 text-white">International Expansion</h4>
+              <p className="text-gray-200">
+                "KW's global network helped me expand my business beyond Singapore. I now handle international clients and properties with confidence."
+              </p>
             </motion.div>
 
             <motion.div 
               className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
               variants={fadeInUp}
             >
-              <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-primary-red/10 rounded-full flex items-center justify-center">
-                    <Heart className="w-6 h-6 text-primary-red" />
-                  </div>
-                  <h4 className="text-xl font-bold text-white">Client Trust</h4>
-                </div>
-                <p className="text-gray-300">
-                  "The KW brand gives my clients confidence. They know they're working with a globally recognized real estate professional."
-                </p>
+              <div className="mb-6">
+                <Heart className="w-10 h-10 text-primary-red" />
               </div>
+              <h4 className="text-2xl md:text-3xl mb-4 text-white">Client Trust</h4>
+              <p className="text-gray-200">
+                "The KW brand gives my clients confidence. They know they're working with a globally recognized real estate professional."
+              </p>
             </motion.div>
           </motion.div>
         </div>
@@ -256,9 +248,9 @@ export default function GlobalBrandPage() {
             whileInView="whileInView"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-white">
+            <h3 className="text-5xl md:text-6xl font-medium mb-8 text-white">
               Ready to Join the Global Real Estate Leader?
-            </h2>
+            </h3>
             <div className="flex flex-row gap-4 justify-center">
               <Button 
                 className="bg-primary-red text-white hover:bg-primary-red/90 px-6 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[48px] min-w-[200px]"

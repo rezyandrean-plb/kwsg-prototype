@@ -115,7 +115,7 @@ export default function ResearchPage() {
             whileInView="whileInView"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+            <h2 className="text-5xl md:text-6xl font-medium mb-6 text-white">
               Comprehensive Research Tools
             </h2>
             <h3 className="text-xl md:text-2xl text-primary-red mb-6">
@@ -136,11 +136,11 @@ export default function ResearchPage() {
               className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
               variants={fadeInUp}
             >
-              <div className="bg-primary-red/10 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
-                <LineChart className="w-6 h-6 text-primary-red" />
+              <div className="mb-6">
+                <LineChart className="w-10 h-10 text-primary-red" />
               </div>
-              <h4 className="text-xl font-bold mb-4 text-white">Market Trends</h4>
-              <p className="text-gray-300">
+              <h4 className="text-2xl md:text-3xl mb-4 text-white">Market Trends</h4>
+              <p className="text-gray-200">
                 Track PSF movements, transaction volumes, and market indicators across all districts in real-time.
               </p>
             </motion.div>
@@ -150,11 +150,11 @@ export default function ResearchPage() {
               className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
               variants={fadeInUp}
             >
-              <div className="bg-primary-red/10 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
-                <Globe className="w-6 h-6 text-primary-red" />
+              <div className="mb-6">
+                <Globe className="w-10 h-10 text-primary-red" />
               </div>
-              <h4 className="text-xl font-bold mb-4 text-white">District Analytics</h4>
-              <p className="text-gray-300">
+              <h4 className="text-2xl md:text-3xl mb-4 text-white">District Analytics</h4>
+              <p className="text-gray-200">
                 Deep dive into district performance, amenities, and development plans with our comprehensive analytics.
               </p>
             </motion.div>
@@ -164,11 +164,11 @@ export default function ResearchPage() {
               className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
               variants={fadeInUp}
             >
-              <div className="bg-primary-red/10 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
-                <PieChart className="w-6 h-6 text-primary-red" />
+              <div className="mb-6">
+                <PieChart className="w-10 h-10 text-primary-red" />
               </div>
-              <h4 className="text-xl font-bold mb-4 text-white">Investment Insights</h4>
-              <p className="text-gray-300">
+              <h4 className="text-2xl md:text-3xl mb-4 text-white">Investment Insights</h4>
+              <p className="text-gray-200">
                 Access ROI calculators, yield analysis, and investment opportunity reports for informed decision-making.
               </p>
             </motion.div>
@@ -241,9 +241,9 @@ export default function ResearchPage() {
             whileInView="whileInView"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-white">
+            <h3 className="text-5xl md:text-6xl font-medium mb-8 text-white">
               Ready to Access Premium Market Intelligence?
-            </h2>
+            </h3>
             <div className="flex flex-row gap-4 justify-center">
               <Button 
                 className="bg-primary-red text-white hover:bg-primary-red/90 px-6 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[48px] min-w-[200px]"

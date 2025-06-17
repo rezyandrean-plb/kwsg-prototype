@@ -115,7 +115,7 @@ export default function MediaPage() {
             whileInView="whileInView"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+            <h2 className="text-5xl md:text-6xl font-medium mb-6 text-white">
               Professional Media Services
             </h2>
             <h3 className="text-xl md:text-2xl text-primary-red mb-6">
@@ -136,11 +136,11 @@ export default function MediaPage() {
               className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
               variants={fadeInUp}
             >
-              <div className="bg-primary-red/10 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
-                <Camera className="w-6 h-6 text-primary-red" />
+              <div className="mb-6">
+                <Camera className="w-10 h-10 text-primary-red" />
               </div>
-              <h4 className="text-xl font-bold mb-4 text-white">Property Photography</h4>
-              <p className="text-gray-300">
+              <h4 className="text-2xl md:text-3xl mb-4 text-white">Property Photography</h4>
+              <p className="text-gray-200">
                 High-quality property photos and virtual tours that showcase listings in their best light.
               </p>
             </motion.div>
@@ -150,11 +150,11 @@ export default function MediaPage() {
               className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
               variants={fadeInUp}
             >
-              <div className="bg-primary-red/10 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
-                <Film className="w-6 h-6 text-primary-red" />
+              <div className="mb-6">
+                <Film className="w-10 h-10 text-primary-red" />
               </div>
-              <h4 className="text-xl font-bold mb-4 text-white">Video Production</h4>
-              <p className="text-gray-300">
+              <h4 className="text-2xl md:text-3xl mb-4 text-white">Video Production</h4>
+              <p className="text-gray-200">
                 Professional property videos, agent profiles, and social media content that engages and converts.
               </p>
             </motion.div>
@@ -164,11 +164,11 @@ export default function MediaPage() {
               className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
               variants={fadeInUp}
             >
-              <div className="bg-primary-red/10 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
-                <Mic className="w-6 h-6 text-primary-red" />
+              <div className="mb-6">
+                <Mic className="w-10 h-10 text-primary-red" />
               </div>
-              <h4 className="text-xl font-bold mb-4 text-white">Content Creation</h4>
-              <p className="text-gray-300">
+              <h4 className="text-2xl md:text-3xl mb-4 text-white">Content Creation</h4>
+              <p className="text-gray-200">
                 Engaging social media content, blog posts, and marketing materials that build your brand.
               </p>
             </motion.div>
@@ -241,9 +241,9 @@ export default function MediaPage() {
             whileInView="whileInView"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-white">
+            <h3 className="text-5xl md:text-6xl font-medium mb-8 text-white">
               Ready to Elevate Your Brand?
-            </h2>
+            </h3>
             <div className="flex flex-row gap-4 justify-center">
               <Button 
                 className="bg-primary-red text-white hover:bg-primary-red/90 px-6 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[48px] min-w-[200px]"

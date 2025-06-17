@@ -115,7 +115,7 @@ export default function CommandPage() {
             whileInView="whileInView"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+            <h2 className="text-5xl md:text-6xl font-medium mb-6 text-white">
               Everything You Need
             </h2>
             <h3 className="text-xl md:text-2xl text-primary-red mb-6">
@@ -136,11 +136,11 @@ export default function CommandPage() {
               className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
               variants={fadeInUp}
             >
-              <div className="bg-primary-red/10 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
-                <Brain className="w-6 h-6 text-primary-red" />
+              <div className="mb-6">
+                <Brain className="w-10 h-10 text-primary-red" />
               </div>
-              <h4 className="text-xl font-bold mb-4 text-white">AI Lead Management</h4>
-              <p className="text-gray-300">
+              <h4 className="text-2xl md:text-3xl mb-4 text-white">AI Lead Management</h4>
+              <p className="text-gray-200">
                 Automatically capture, qualify, and nurture leads with AI-powered insights and smart follow-ups.
               </p>
             </motion.div>
@@ -150,11 +150,11 @@ export default function CommandPage() {
               className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
               variants={fadeInUp}
             >
-              <div className="bg-primary-red/10 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
-                <BarChart3 className="w-6 h-6 text-primary-red" />
+              <div className="mb-6">
+                <BarChart3 className="w-10 h-10 text-primary-red" />
               </div>
-              <h4 className="text-xl font-bold mb-4 text-white">Smart Analytics</h4>
-              <p className="text-gray-300">
+              <h4 className="text-2xl md:text-3xl mb-4 text-white">Smart Analytics</h4>
+              <p className="text-gray-200">
                 Track your performance, pipeline, and growth with real-time analytics and predictive insights.
               </p>
             </motion.div>
@@ -164,11 +164,11 @@ export default function CommandPage() {
               className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
               variants={fadeInUp}
             >
-              <div className="bg-primary-red/10 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
-                <Share2 className="w-6 h-6 text-primary-red" />
+              <div className="mb-6">
+                <Share2 className="w-10 h-10 text-primary-red" />
               </div>
-              <h4 className="text-xl font-bold mb-4 text-white">Automated Marketing</h4>
-              <p className="text-gray-300">
+              <h4 className="text-2xl md:text-3xl mb-4 text-white">Automated Marketing</h4>
+              <p className="text-gray-200">
                 Launch targeted campaigns, manage social media, and track ROI—all from one place.
               </p>
             </motion.div>
@@ -241,9 +241,9 @@ export default function CommandPage() {
             whileInView="whileInView"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-white">
+            <h3 className="text-5xl md:text-6xl font-medium mb-8 text-white">
               Ready to Transform Your Business?
-            </h2>
+            </h3>
             <div className="flex flex-row gap-4 justify-center">
               <Button 
                 className="bg-primary-red text-white hover:bg-primary-red/90 px-6 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[48px] min-w-[200px]"
