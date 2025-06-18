@@ -1,3 +1,5 @@
+import TerserPlugin from 'terser-webpack-plugin';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
@@ -28,7 +30,7 @@ const nextConfig = {
         minimizer: [
           ...config.optimization.minimizer,
           // Add terser options for better minification
-          new (require('terser-webpack-plugin'))({
+          new TerserPlugin({
             terserOptions: {
               compress: {
                 drop_console: true, // Remove console.logs in production
