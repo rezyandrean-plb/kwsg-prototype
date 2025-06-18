@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { motion, useScroll, useTransform } from "framer-motion"
 import Image from "next/image"
 import { useState } from "react"
+import HorizontalScroll from "./horizontal-scroll"
 import { ArrowRight, Globe, Building2, Users, Award, Target, Heart, Lightbulb } from "lucide-react"
 import dynamic from "next/dynamic"
 
@@ -163,66 +164,9 @@ export default function GlobalBrandPage() {
       </section>
 
       {/* Global Success Stories */}
-      <section className="relative py-24 overflow-hidden">
-        <div className="absolute inset-0">
-          <Image
-            src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=2000"
-            alt="Global Success Stories"
-            fill
-            className="object-cover brightness-[0.2]"
-            style={{ transform: 'translateZ(-1px) scale(2)' }}
-          />
-        </div>
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div 
-            className="text-center mb-16"
-            variants={sectionVariants}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <h2 className="text-5xl md:text-6xl font-medium mb-6 text-white">
-              Global Success Stories
-            </h2>
-            <h3 className="text-xl md:text-2xl text-primary-red mb-6">
-              Real Results from Real Consultants
-            </h3>
-          </motion.div>
+      <section>
 
-          <motion.div 
-            className="grid md:grid-cols-2 gap-12"
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <motion.div 
-              className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
-              variants={fadeInUp}
-            >
-              <div className="mb-6">
-                <Target className="w-10 h-10 text-primary-red" />
-              </div>
-              <h4 className="text-2xl md:text-3xl mb-4 text-white">International Expansion</h4>
-              <p className="text-gray-200">
-                "KW's global network helped me expand my business beyond Singapore. I now handle international clients and properties with confidence."
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="bg-black/40 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:bg-black/60 transition-all duration-300"
-              variants={fadeInUp}
-            >
-              <div className="mb-6">
-                <Heart className="w-10 h-10 text-primary-red" />
-              </div>
-              <h4 className="text-2xl md:text-3xl mb-4 text-white">Client Trust</h4>
-              <p className="text-gray-200">
-                "The KW brand gives my clients confidence. They know they're working with a globally recognized real estate professional."
-              </p>
-            </motion.div>
-          </motion.div>
-        </div>
+        <HorizontalScroll />
       </section>
 
       {/* Final CTA Section */}

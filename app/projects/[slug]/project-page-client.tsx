@@ -33,6 +33,7 @@ import {
   BadgeDollarSign,
   Phone,
   Mail,
+  MessageSquare,
   Dumbbell,
   Flame,
   Flower,
@@ -1073,58 +1074,58 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             <div className="w-16 h-1 bg-red-500 rounded" />
           </div>
 
-          {/* Two Column Flex Container */}
-          <div className="flex flex-col md:flex-row md:items-stretch md:flex-nowrap gap-8 min-h-[400px]">
+          {/* Two Column Flex Container - Always Side by Side */}
+          <div className="flex flex-row gap-8 min-h-[400px]">
             {/* Site Plan Left */}
-            <div className="md:basis-2/3 min-w-0 bg-[#242728] border border-gray-700 rounded-lg p-6 flex flex-col items-center min-h-[400px]">
+            <div className="flex-1 bg-[#242728] border border-gray-700 rounded-lg p-6 flex flex-col items-center justify-center min-h-[400px]">
               <img
                 src="/siteplan-dummy.jpg"
                 alt="Site Plan"
-                className="w-full max-w-full rounded-lg object-contain"
+                className="w-full h-auto max-w-full rounded-lg object-contain"
               />
             </div>
             {/* Legend Right */}
-            <div className="md:basis-1/3 min-w-0 bg-[#242728] border border-gray-700 rounded-lg p-6 flex flex-col justify-between min-h-[400px]">
+            <div className="w-80 bg-[#242728] border border-gray-700 rounded-lg p-6 flex flex-col justify-between min-h-[400px]">
               <div>
                 <h4 className="text-xl font-light text-left text-red-400 mb-4">Map Legend</h4>
                 <ul className="space-y-4">
                   <li className="flex items-start gap-3">
-                    <span className="inline-block w-3 h-3 rounded-full bg-red-500 mt-1" />
+                    <span className="inline-block w-3 h-3 rounded-full bg-red-500 mt-1 flex-shrink-0" />
                     <div>
                       <span className="text-white font-light">Main Entrance</span>
                       <div className="text-xs text-gray-400">North Gate</div>
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
-                    <span className="inline-block w-3 h-3 rounded-full bg-blue-500 mt-1" />
+                    <span className="inline-block w-3 h-3 rounded-full bg-blue-500 mt-1 flex-shrink-0" />
                     <div>
                       <span className="text-white font-light">Clubhouse</span>
                       <div className="text-xs text-gray-400">Central</div>
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
-                    <span className="inline-block w-3 h-3 rounded-full bg-cyan-400 mt-1" />
+                    <span className="inline-block w-3 h-3 rounded-full bg-cyan-400 mt-1 flex-shrink-0" />
                     <div>
                       <span className="text-white font-light">Swimming Pool</span>
                       <div className="text-xs text-gray-400">South Wing</div>
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
-                    <span className="inline-block w-3 h-3 rounded-full bg-green-500 mt-1" />
+                    <span className="inline-block w-3 h-3 rounded-full bg-green-500 mt-1 flex-shrink-0" />
                     <div>
                       <span className="text-white font-light">Tennis Court</span>
                       <div className="text-xs text-gray-400">East Side</div>
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
-                    <span className="inline-block w-3 h-3 rounded-full bg-yellow-400 mt-1" />
+                    <span className="inline-block w-3 h-3 rounded-full bg-yellow-400 mt-1 flex-shrink-0" />
                     <div>
                       <span className="text-white font-light">Children's Playground</span>
                       <div className="text-xs text-gray-400">West Garden</div>
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
-                    <span className="inline-block w-3 h-3 rounded-full bg-purple-500 mt-1" />
+                    <span className="inline-block w-3 h-3 rounded-full bg-purple-500 mt-1 flex-shrink-0" />
                     <div>
                       <span className="text-white font-light">Parking Entrance</span>
                       <div className="text-xs text-gray-400">Underground</div>
@@ -1182,9 +1183,9 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             <p className="text-gray-400 text-base font-light">Premium living in Singapore's most connected district</p>
           </div>
           {/* Map and Amenities Section */}
-          <div className="bg-[#242728] border border-gray-700 rounded-lg p-0 flex flex-col gap-0 overflow-hidden mb-10">
+          <div className="flex flex-col gap-0 overflow-hidden mb-10">
             {/* Tabs as Pills - Full width, above both columns */}
-            <div className="w-full px-6 pt-6 pb-2 border-b border-gray-700 bg-[#232324]">
+            <div className="w-full px-6 pt-6 pb-2 border-b border-gray-700 mb-4">
               <div className="flex flex-nowrap gap-2 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent" style={{ WebkitOverflowScrolling: 'touch' }}>
                 {amenityTabs.map((tab) => (
                   <button
@@ -1199,9 +1200,9 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               </div>
             </div>
             {/* Two-column layout below tabs */}
-            <div className="w-full flex flex-col md:flex-row md:gap-0 gap-8 min-h-[500px]">
+            <div className="w-full flex flex-row gap-8 min-h-[500px]">
               {/* Left: Amenity List */}
-              <div className="w-full md:w-4/12 min-w-0 bg-[#232324] p-6 flex flex-col border-r border-gray-700 h-[500px] md:h-[500px] order-1 md:order-1">
+              <div className="w-4/12 min-w-0 p-6 flex flex-col h-[500px]">
                 {/* Amenity List */}
                 <div className="flex-1 overflow-y-auto pr-2">
                   <div className="space-y-4">
@@ -1248,7 +1249,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 </div>
               </div>
               {/* Right: Map */}
-              <div className="w-full md:w-8/12 min-w-0 flex flex-col h-[500px] md:h-[500px] order-2 md:order-2">
+              <div className="w-8/12 min-w-0 flex flex-col h-[500px]">
                 <div className="flex-1 w-full h-full min-h-[500px]">
                   <NearbyAmenitiesMap
                     project={project}
@@ -1281,7 +1282,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
           <div className="flex flex-col items-center md:items-center md:justify-center">
             {/* AI MOAT */}
             <div className="w-full md:w-7/12 min-w-0 mx-auto">
-              <div className="bg-[#242728] border border-gray-700 rounded-lg p-6 text-center">
+              <div className="bg-[#242728] border border-gray-700 rounded-lg text-center">
                 <MoatRadarChart moat={project.moat} />
               </div>
             </div>
@@ -1312,7 +1313,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
           </div>
 
           {/* Card layout for selected unit type */}
-          <div className="flex flex-col md:flex-row gap-8 justify-center items-stretch bg-[#111] rounded-xl p-8 max-w-5xl mx-auto shadow-lg">
+          <div className="flex flex-row gap-8 justify-center items-stretch bg-[#111] rounded-xl p-8 max-w-5xl mx-auto shadow-lg">
             {/* Left: Floor plan image */}
             <div className="flex-1 flex flex-col items-center justify-center min-w-[280px] max-w-[420px]">
               <div className="w-full aspect-[4/3] bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden mb-4">
@@ -1322,8 +1323,14 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 </svg>
               </div>
               <div className="flex gap-2 mt-2">
-                <button className="bg-[#232324] text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm"><span>👁️</span> View</button>
-                <button className="bg-[#232324] text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm"><span>⬇️</span> Download</button>
+                <button className="bg-[#232324] text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm">
+                  <Search className="h-4 w-4 text-red-400" />
+                  View
+                </button>
+                <button className="bg-[#232324] text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm">
+                  <ChevronDown className="h-4 w-4 text-red-400" />
+                  Download
+                </button>
               </div>
             </div>
             {/* Right: Unit details */}
@@ -1338,15 +1345,21 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               {/* Features row */}
               <div className="flex gap-8 mb-4">
                 <div className="flex flex-col items-center">
-                  <span className="text-red-500 text-2xl">🛏️</span>
+                  <span className="flex items-center justify-center w-10 h-10 rounded-full bg-red-900/60">
+                    <Home className="h-5 w-5 text-red-400" />
+                  </span>
                   <span className="text-white text-sm mt-1">1 Bedrooms</span>
                 </div>
                 <div className="flex flex-col items-center">
-                  <span className="text-red-500 text-2xl">🛁</span>
+                  <span className="flex items-center justify-center w-10 h-10 rounded-full bg-red-900/60">
+                    <Home className="h-5 w-5 text-red-400" />
+                  </span>
                   <span className="text-white text-sm mt-1">1 Bathrooms</span>
                 </div>
                 <div className="flex flex-col items-center">
-                  <span className="text-red-500 text-2xl">📏</span>
+                  <span className="flex items-center justify-center w-10 h-10 rounded-full bg-red-900/60">
+                    <Layout className="h-5 w-5 text-red-400" />
+                  </span>
                   <span className="text-white text-sm mt-1">{unitAvailabilityData[unitsActiveTab].subtypes[0].size}</span>
                 </div>
               </div>
@@ -1375,7 +1388,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
         </div>
       </div>
 
-      {/* TDSR Calculator - Full Width */}
+      {/* Mortage Calculator - Full Width */}
       <div className="w-full py-8 mb-8">
         <div className="max-w-screen-xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-light text-white mb-2 tracking-wide">Mortage Calculator</h2>
@@ -1383,8 +1396,8 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               <div className="w-16 h-1 bg-red-500 rounded" />
             </div>
           <div className="flex flex-col items-center md:items-center md:justify-center">
-            {/* TDSR Calculator */}
-            <div className="w-full md:w-5/12 min-w-0 mx-auto">
+            {/* Mortage Calculator */}
+            <div className="w-full md:w-3/4 min-w-0 mx-auto">
               <div className="bg-[#242728] border border-gray-700 rounded-lg p-6">
                 <TdsrCalculator 
                   propertyPrice={parseFloat(project.priceFrom.replace(/[^0-9]/g, ''))}
@@ -1405,10 +1418,10 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             <div className="w-16 h-1 bg-red-500 rounded" />
           </div>
           <p className="text-gray-400 text-base font-light text-center mb-12">Get personalized assistance from our experienced property consultants</p>
-          <div className="flex flex-col lg:flex-row gap-8 justify-center items-stretch"> {/* 3 columns in a row on desktop */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"> {/* Changed to grid for better side-by-side layout */}
             {/* Agent 1 */}
-            <div className="flex-1 flex flex-col items-center max-w-full">
-              <div className="bg-[#23232a] rounded-2xl p-8 flex flex-col items-center shadow-md h-full">
+            <div className="flex flex-col items-center">
+              <div className="bg-[#23232a] rounded-2xl p-8 flex flex-col items-center shadow-md h-full w-full">
                 <div className="w-20 h-20 rounded-full bg-gray-300 mb-4 flex items-center justify-center">
                   <span className="text-3xl text-gray-400">👤</span>
                 </div>
@@ -1429,54 +1442,104 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                     <span className="text-xs text-gray-400">Performer</span>
                   </div>
                 </div>
-                <button className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-full text-lg mb-2 transition-colors flex items-center justify-center gap-2"><span>📞</span> Call Now</button>
                 <div className="w-full flex flex-col gap-2 mb-2">
-                  <input className="w-full rounded-full bg-[#18191b] text-white px-4 py-2 text-sm border-none" placeholder="WhatsApp" disabled />
-                  <input className="w-full rounded-full bg-[#18191b] text-white px-4 py-2 text-sm border-none" placeholder="Email" disabled />
+                  <button className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-full text-sm transition-colors flex items-center justify-center gap-2">
+                    <MessageSquare className="h-6 w-6 text-white" />
+                    WhatsApp
+                  </button>
+                  <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-full text-sm transition-colors flex items-center justify-center gap-2">
+                    <Mail className="h-6 w-6 text-white" />
+                    Email
+                  </button>
                 </div>
                 <div className="text-xs text-gray-500 w-full text-center mt-2">Available Mon-Sun, 9AM-9PM</div>
               </div>
             </div>
-            {/* Agent 2 */}
-            <div className="flex-1 flex flex-col items-center max-w-full">
-              <div className="bg-[#23232a] rounded-2xl p-8 flex flex-col items-center shadow-md h-full">
-                <div className="w-20 h-20 rounded-full bg-gray-300 mb-4 flex items-center justify-center">
-                  <span className="text-3xl text-gray-400">👤</span>
-                </div>
-                <div className="text-white text-xl font-semibold mb-1">Marcus Lim</div>
-                <div className="text-red-400 text-sm font-medium mb-1">Property Investment Specialist</div>
-                <div className="text-gray-400 text-xs mb-4 text-center">Investment Properties & Portfolio Management</div>
-                <div className="flex gap-2 mb-4 w-full justify-center">
-                  <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
-                    <span className="text-yellow-400 font-bold flex items-center gap-1">★ 4.8</span>
-                    <span className="text-xs text-gray-400">89 reviews</span>
-                  </div>
-                  <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
-                    <span className="text-white font-bold">6 years</span>
-                    <span className="text-xs text-gray-400">Experience</span>
-                  </div>
-                  <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
-                    <span className="text-white font-bold">Top 10%</span>
-                    <span className="text-xs text-gray-400">Performer</span>
-                  </div>
-                </div>
-                <button className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-full text-lg mb-2 transition-colors flex items-center justify-center gap-2"><span>📞</span> Call Now</button>
-                <div className="w-full flex flex-col gap-2 mb-2">
-                  <input className="w-full rounded-full bg-[#18191b] text-white px-4 py-2 text-sm border-none" placeholder="WhatsApp" disabled />
-                  <input className="w-full rounded-full bg-[#18191b] text-white px-4 py-2 text-sm border-none" placeholder="Email" disabled />
-                </div>
-                <div className="text-xs text-gray-500 w-full text-center mt-2">Available Mon-Sun, 9AM-9PM</div>
+            {/* Agent 2 - Conditional styling based on project agent */}
+            <div className="flex flex-col items-center">
+              <div className="bg-[#23232a] rounded-2xl p-8 flex flex-col items-center shadow-md h-full w-full">
+                {project?.agent ? (
+                  // Show agent info if project has an agent
+                  <>
+                    <div className="w-20 h-20 rounded-full bg-gray-300 mb-4 flex items-center justify-center">
+                      <span className="text-3xl text-gray-400">👤</span>
+                    </div>
+                    <div className="text-white text-xl font-semibold mb-1">{project.agent.name}</div>
+                    <div className="text-red-400 text-sm font-medium mb-1">{project.agent.role}</div>
+                    <div className="text-gray-400 text-xs mb-4 text-center">{project.agent.specialties.join(', ')}</div>
+                    <div className="flex gap-2 mb-4 w-full justify-center">
+                      <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
+                        <span className="text-yellow-400 font-bold flex items-center gap-1">★ 4.8</span>
+                        <span className="text-xs text-gray-400">89 reviews</span>
+                      </div>
+                      <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
+                        <span className="text-white font-bold">{project.agent.experience}</span>
+                        <span className="text-xs text-gray-400">Experience</span>
+                      </div>
+                      <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
+                        <span className="text-white font-bold">Top 10%</span>
+                        <span className="text-xs text-gray-400">Performer</span>
+                      </div>
+                    </div>
+                    <div className="w-full flex flex-col gap-2 mb-2">
+                      <button className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-full text-sm transition-colors flex items-center justify-center gap-2">
+                        <MessageSquare className="h-6 w-6 text-white" />
+                        WhatsApp
+                      </button>
+                      <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-full text-sm transition-colors flex items-center justify-center gap-2">
+                        <Mail className="h-6 w-6 text-white" />
+                        Email
+                      </button>
+                    </div>
+                    <div className="text-xs text-gray-500 w-full text-center mt-2">Available Mon-Sun, 9AM-9PM</div>
+                  </>
+                ) : (
+                  // Show different content when no agent assigned
+                  <>
+                    <div className="w-20 h-20 rounded-full bg-gray-300 mb-4 flex items-center justify-center">
+                      <span className="text-3xl text-gray-400">🏢</span>
+                    </div>
+                    <div className="text-white text-xl font-semibold mb-1">Project Team</div>
+                    <div className="text-red-400 text-sm font-medium mb-1">Dedicated Support</div>
+                    <div className="text-gray-400 text-xs mb-4 text-center">Our expert team is here to assist you</div>
+                    <div className="flex gap-2 mb-4 w-full justify-center">
+                      <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
+                        <span className="text-yellow-400 font-bold flex items-center gap-1">★ 4.9</span>
+                        <span className="text-xs text-gray-400">Team rating</span>
+                      </div>
+                      <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
+                        <span className="text-white font-bold">24/7</span>
+                        <span className="text-xs text-gray-400">Support</span>
+                      </div>
+                      <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
+                        <span className="text-white font-bold">Fast</span>
+                        <span className="text-xs text-gray-400">Response</span>
+                      </div>
+                    </div>
+                    <div className="w-full flex flex-col gap-2 mb-2">
+                      <button className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-full text-sm transition-colors flex items-center justify-center gap-2">
+                        <MessageSquare className="h-6 w-6 text-white" />
+                        WhatsApp
+                      </button>
+                      <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-full text-sm transition-colors flex items-center justify-center gap-2">
+                        <Mail className="h-6 w-6 text-white" />
+                        Email
+                      </button>
+                    </div>
+                    <div className="text-xs text-gray-500 w-full text-center mt-2">Available Mon-Sun, 9AM-9PM</div>
+                  </>
+                )}
               </div>
             </div>
             {/* Contact Form */}
-            <div className="flex-1 flex flex-col items-center max-w-full">
+            <div className="flex flex-col items-center">
               <form className="bg-[#23232a] rounded-2xl p-8 w-full shadow-md flex flex-col gap-4 h-full">
                 <div className="text-white text-lg font-semibold mb-2">Send Us a Message</div>
-                <div className="text-gray-400 text-xs mb-4">Get personalized assistance for Lentor Modern</div>
+                <div className="text-gray-400 text-xs mb-4">Get personalized assistance for {project?.title}</div>
                 <input className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border-none" placeholder="Full Name" required />
                 <input className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border-none" placeholder="Email Address" type="email" required />
                 <input className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border-none" placeholder="Phone Number" type="tel" required />
-                <textarea className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border-none min-h-[100px]" placeholder="Message" required defaultValue={"I'm interested in Lentor Modern. Please provide more information about unit availability and pricing."} />
+                <textarea className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border-none min-h-[100px]" placeholder="Message" required defaultValue={`I'm interested in ${project?.title}. Please provide more information about unit availability and pricing.`} />
                 <button type="submit" className="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-full text-lg transition-colors mt-2">Send Message</button>
                 <div className="text-xs text-gray-500 text-center mt-2">By submitting this form, you agree to our <a href="#" className="underline text-red-400">Privacy Policy</a></div>
               </form>

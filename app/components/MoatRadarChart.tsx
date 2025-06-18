@@ -238,11 +238,13 @@ const MoatRadarChart: React.FC<MoatRadarChartProps> = ({ moat }) => {
 
   return (
     <div>
-      <h2 id="moat-analysis" className="mb-2 sm:mb-3 md:mb-4 text-2xl sm:text-3xl font-light scroll-mt-40 text-center"></h2>
       <div
         ref={chartRef}
         style={{
           minHeight: 550,
+          width: '100%',
+          maxWidth: '1200px',
+          margin: '0 auto',
           background: 'linear-gradient(135deg, #07254a 0%, #0a3c72 100%)',
           borderRadius: 16,
           padding: 10,
