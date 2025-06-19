@@ -3,6 +3,7 @@
 import { Suspense, lazy, useCallback, memo } from 'react'
 import dynamic from 'next/dynamic'
 import { cn } from '@/lib/utils'
+import { Toaster } from '@/components/ui/toaster'
 
 // Dynamically import layout components with loading fallbacks
 const Header = dynamic(() => import("./layout-client").then(mod => ({ default: mod.Header })), {
@@ -63,6 +64,7 @@ export default function LayoutContent({
           <MainContent>{children}</MainContent>
           <Footer />
         </div>
+        <Toaster />
       </ThemeProvider>
     </Suspense>
   )
