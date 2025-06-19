@@ -1682,8 +1682,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                     value={formData.message || `I'm interested in ${project?.title}. Please provide more information about unit availability and pricing.`}
                     onChange={handleFormChange}
                     className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border border-gray-700 focus:border-[#ce001f] focus:outline-none transition-colors min-h-[100px] resize-none" 
-                    placeholder="Message" 
-                    required 
+                    placeholder="Message"
                     disabled={isSubmitting}
                   />
                   <button 
