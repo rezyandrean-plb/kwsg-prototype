@@ -45,6 +45,7 @@ import {
   ChevronDown,
   Search,
   CheckCircle,
+  Download,
 } from "lucide-react"
 import dynamic from "next/dynamic"
 import {
@@ -380,6 +381,18 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
   const [isLayoutHorizontal, setIsLayoutHorizontal] = useState(false)
   const [unitsActiveTab, setUnitsActiveTab] = useState(0)
   const [showFullDescription, setShowFullDescription] = useState(false)
+  
+  // Contact form state
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  
   const { toast } = useToast()
 
   // Handle responsive layout with JavaScript fallback
@@ -651,6 +664,88 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       title: "Site Plan will be downloaded...",
       description: "Your site plan is being prepared for download.",
     })
+  }
+
+  // Handle download brochure
+  const handleDownloadBrochure = () => {
+    toast({
+      title: "Brochure will be downloaded...",
+      description: "Your project brochure is being prepared for download.",
+    })
+  }
+
+  // Handle form input changes
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  // Handle form submission
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    // Validate form
+    if (!formData.name.trim() || !formData.email.trim() || !formData.phone.trim() || !formData.message.trim()) {
+      setSubmitError('Please fill in all required fields')
+      return
+    }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(formData.email)) {
+      setSubmitError('Please enter a valid email address')
+      return
+    }
+
+    setIsSubmitting(true)
+    setSubmitError(null)
+
+    try {
+      const response = await fetch('/api/contact-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          projectTitle: project?.title || 'Project'
+        }),
+      })
+
+      const result = await response.json()
+
+      if (response.ok && result.success) {
+        setSubmitSuccess(true)
+        setFormData({ name: '', email: '', phone: '', message: '' })
+        
+        toast({
+          title: "Message sent successfully!",
+          description: result.message,
+        })
+        
+        // Reset success state after 5 seconds
+        setTimeout(() => setSubmitSuccess(false), 5000)
+      } else {
+        throw new Error(result.error || 'Failed to send message')
+      }
+    } catch (error) {
+      console.error('Form submission error:', error)
+      setSubmitError(error instanceof Error ? error.message : 'Failed to send message. Please try again.')
+      
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (!project) {
@@ -1132,6 +1227,9 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               <button className="mt-8 w-full bg-[#ce001f] hover:bg-[#b3001a] text-white font-light py-3 rounded-full text-lg transition-colors" onClick={handleDownloadSitePlan}>
                 Download Site Plan
               </button>
+              <button className="mt-4 w-full bg-[#b3001a] hover:bg-[#ce001f] text-white font-light py-3 rounded-full text-lg transition-colors" onClick={handleDownloadBrochure}>
+                Download Brochure
+              </button>
             </div>
           </div>
         </div>
@@ -1397,9 +1495,9 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               </div>
               {/* Price range */}
               <div className="flex items-center gap-2 mb-4">
-                <span className="text-red-400 text-lg font-semibold">$</span>
-                <span className="text-white text-lg font-semibold">Price Range</span>
-                <span className="text-white text-lg font-semibold">{unitAvailabilityData[unitsActiveTab].subtypes[0].price}</span>
+                <span className="text-red-400 text-lg font-medium">$</span>
+                <span className="text-white text-lg font-medium">Price Range</span>
+                <span className="text-white text-lg font-medium">{unitAvailabilityData[unitsActiveTab].subtypes[0].price}</span>
               </div>
               {/* Key Features */}
               <div className="mb-4">
@@ -1455,131 +1553,156 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             <div className="w-16 h-1 bg-[#ce001f] rounded" />
           </div>
           <p className="text-gray-400 text-base font-light text-center mb-12">Get personalized assistance from our experienced property consultants</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"> {/* Changed to grid for better side-by-side layout */}
-            {/* Agent 1 */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Download Brochure Card */}
             <div className="flex flex-col items-center">
               <div className="bg-[#23232a] rounded-2xl p-8 flex flex-col items-center shadow-md h-full w-full">
-                <div className="w-20 h-20 rounded-full bg-gray-300 mb-4 flex items-center justify-center">
-                  <span className="text-3xl text-gray-400">👤</span>
+                {/* Project Images Gallery */}
+                <div className="w-full mb-6">
+                  <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden mb-4">
+                    <Image
+                      src={project?.images[0] || "/placeholder.svg"}
+                      alt={project?.title || "Project Image"}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="absolute bottom-3 left-3 text-white">
+                      <div className="text-sm font-light">{project?.title}</div>
+                      <div className="text-xs text-gray-300">{project?.location}</div>
+                    </div>
+                  </div>
+                  {/* Image indicators */}
+                  <div className="flex justify-center gap-2">
+                    {project?.images.slice(0, 3).map((_, idx) => (
+                      <div
+                        key={idx}
+                        className={`w-2 h-2 rounded-full ${
+                          idx === 0 ? 'bg-[#ce001f]' : 'bg-gray-600'
+                        }`}
+                      />
+                    ))}
+                  </div>
                 </div>
-                <div className="text-white text-xl font-semibold mb-1">Sarah Chen</div>
-                <div className="text-red-400 text-sm font-medium mb-1">Senior Property Consultant</div>
-                <div className="text-gray-400 text-xs mb-4 text-center">Luxury Condominiums & New Launches</div>
-                <div className="flex gap-2 mb-4 w-full justify-center">
-                  <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
-                    <span className="text-yellow-400 font-bold flex items-center gap-1">★ 4.9</span>
-                    <span className="text-xs text-gray-400">127 reviews</span>
-                  </div>
-                  <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
-                    <span className="text-white font-bold">8 years</span>
-                    <span className="text-xs text-gray-400">Experience</span>
-                  </div>
-                  <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
-                    <span className="text-white font-bold">Top 10%</span>
-                    <span className="text-xs text-gray-400">Performer</span>
+                {/* Project Info */}
+                <div className="text-center mb-6">
+                  <div className="text-white text-xl font-semibold mb-2">{project?.title}</div>
+                  <div className="text-red-400 text-sm font-medium mb-1">Project Brochure</div>
+                  <div className="text-gray-400 text-xs mb-4 text-center">Complete project information and floor plans</div>
+                  {/* Key Project Stats */}
+                  <div className="flex gap-4 mb-4 w-full justify-center">
+                    <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
+                      <span className="text-white font-bold">{project?.totalUnits}</span>
+                      <span className="text-xs text-gray-400">Units</span>
+                    </div>
+                    <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
+                      <span className="text-white font-bold">{project?.completion}</span>
+                      <span className="text-xs text-gray-400">TOP</span>
+                    </div>
+                    <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
+                      <span className="text-white font-bold">{project?.priceFrom ? `$${(parseInt(project.priceFrom.replace(/[^0-9]/g, '')) / 1000000).toFixed(1)}M` : 'N/A'}</span>
+                      <span className="text-xs text-gray-400">From</span>
+                    </div>
                   </div>
                 </div>
-                <div className="w-full flex flex-col gap-2 mb-2">
-                  <button className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-full text-sm transition-colors flex items-center justify-center gap-2">
-                    <MessageSquare className="h-6 w-6 text-white" />
-                    WhatsApp
+                {/* Download Button */}
+                <div className="w-full">
+                  <button 
+                    onClick={handleDownloadBrochure}
+                    className="w-full bg-[#ce001f] hover:bg-[#b3001a] text-white font-semibold py-3 rounded-full text-lg transition-colors flex items-center justify-center gap-2"
+                  >
+                    <Download className="h-5 w-5" />
+                    Download Brochure
                   </button>
-                  <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-full text-sm transition-colors flex items-center justify-center gap-2">
-                    <Mail className="h-6 w-6 text-white" />
-                    Email
-                  </button>
                 </div>
-                <div className="text-xs text-gray-500 w-full text-center mt-2">Available Mon-Sun, 9AM-9PM</div>
+                <div className="text-xs text-gray-500 w-full text-center mt-4">PDF format • 2.5MB • Updated weekly</div>
               </div>
             </div>
-            {/* Agent 2 - Conditional styling based on project agent */}
-            <div className="flex flex-col items-center">
-              <div className="bg-[#23232a] rounded-2xl p-8 flex flex-col items-center shadow-md h-full w-full">
-                {project?.agent ? (
-                  // Show agent info if project has an agent
-                  <>
-                    <div className="w-20 h-20 rounded-full bg-gray-300 mb-4 flex items-center justify-center">
-                      <span className="text-3xl text-gray-400">👤</span>
-                    </div>
-                    <div className="text-white text-xl font-semibold mb-1">{project.agent.name}</div>
-                    <div className="text-red-400 text-sm font-medium mb-1">{project.agent.role}</div>
-                    <div className="text-gray-400 text-xs mb-4 text-center">{project.agent.specialties.join(', ')}</div>
-                    <div className="flex gap-2 mb-4 w-full justify-center">
-                      <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
-                        <span className="text-yellow-400 font-bold flex items-center gap-1">★ 4.8</span>
-                        <span className="text-xs text-gray-400">89 reviews</span>
-                      </div>
-                      <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
-                        <span className="text-white font-bold">{project.agent.experience}</span>
-                        <span className="text-xs text-gray-400">Experience</span>
-                      </div>
-                      <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
-                        <span className="text-white font-bold">Top 10%</span>
-                        <span className="text-xs text-gray-400">Performer</span>
-                      </div>
-                    </div>
-                    <div className="w-full flex flex-col gap-2 mb-2">
-                      <button className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-full text-sm transition-colors flex items-center justify-center gap-2">
-                        <MessageSquare className="h-6 w-6 text-white" />
-                        WhatsApp
-                      </button>
-                      <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-full text-sm transition-colors flex items-center justify-center gap-2">
-                        <Mail className="h-6 w-6 text-white" />
-                        Email
-                      </button>
-                    </div>
-                    <div className="text-xs text-gray-500 w-full text-center mt-2">Available Mon-Sun, 9AM-9PM</div>
-                  </>
-                ) : (
-                  // Show different content when no agent assigned
-                  <>
-                    <div className="w-20 h-20 rounded-full bg-gray-300 mb-4 flex items-center justify-center">
-                      <span className="text-3xl text-gray-400">🏢</span>
-                    </div>
-                    <div className="text-white text-xl font-semibold mb-1">Project Team</div>
-                    <div className="text-red-400 text-sm font-medium mb-1">Dedicated Support</div>
-                    <div className="text-gray-400 text-xs mb-4 text-center">Our expert team is here to assist you</div>
-                    <div className="flex gap-2 mb-4 w-full justify-center">
-                      <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
-                        <span className="text-yellow-400 font-bold flex items-center gap-1">★ 4.9</span>
-                        <span className="text-xs text-gray-400">Team rating</span>
-                      </div>
-                      <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
-                        <span className="text-white font-bold">24/7</span>
-                        <span className="text-xs text-gray-400">Support</span>
-                      </div>
-                      <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
-                        <span className="text-white font-bold">Fast</span>
-                        <span className="text-xs text-gray-400">Response</span>
-                      </div>
-                    </div>
-                    <div className="w-full flex flex-col gap-2 mb-2">
-                      <button className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-full text-sm transition-colors flex items-center justify-center gap-2">
-                        <MessageSquare className="h-6 w-6 text-white" />
-                        WhatsApp
-                      </button>
-                      <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-full text-sm transition-colors flex items-center justify-center gap-2">
-                        <Mail className="h-6 w-6 text-white" />
-                        Email
-                      </button>
-                    </div>
-                    <div className="text-xs text-gray-500 w-full text-center mt-2">Available Mon-Sun, 9AM-9PM</div>
-                  </>
-                )}
-              </div>
-            </div>
+            
             {/* Contact Form */}
             <div className="flex flex-col items-center">
-              <form className="bg-[#23232a] rounded-2xl p-8 w-full shadow-md flex flex-col gap-4 h-full">
-                <div className="text-white text-lg font-semibold mb-2">Send Us a Message</div>
-                <div className="text-gray-400 text-xs mb-4">Get personalized assistance for {project?.title}</div>
-                <input className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border-none" placeholder="Full Name" required />
-                <input className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border-none" placeholder="Email Address" type="email" required />
-                <input className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border-none" placeholder="Phone Number" type="tel" required />
-                <textarea className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border-none min-h-[100px]" placeholder="Message" required defaultValue={`I'm interested in ${project?.title}. Please provide more information about unit availability and pricing.`} />
-                <button type="submit" className="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-full text-lg transition-colors mt-2">Send Message</button>
-                <div className="text-xs text-gray-500 text-center mt-2">By submitting this form, you agree to our <a href="#" className="underline text-red-400">Privacy Policy</a></div>
-              </form>
+              {submitSuccess ? (
+                <div className="bg-[#23232a] rounded-2xl p-8 w-full shadow-md flex flex-col items-center justify-center h-full">
+                  <div className="text-center">
+                    <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+                    <h3 className="text-white text-xl font-semibold mb-2">Message Sent Successfully!</h3>
+                    <p className="text-gray-400 text-sm mb-4">
+                      Thank you for your enquiry. We have sent you a confirmation email and our team will get back to you within 24 business hours.
+                    </p>
+                    <button 
+                      onClick={() => setSubmitSuccess(false)}
+                      className="bg-[#ce001f] hover:bg-[#b3001a] text-white font-semibold py-3 px-6 rounded-full text-sm transition-colors"
+                    >
+                      Send Another Message
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <form onSubmit={handleFormSubmit} className="bg-[#23232a] rounded-2xl p-8 w-full shadow-md flex flex-col gap-4 h-full">
+                  <div className="text-white text-lg font-semibold mb-2">Send Us a Message</div>
+                  <div className="text-gray-400 text-xs mb-4">Get personalized assistance for {project?.title}</div>
+                  
+                  {submitError && (
+                    <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3 text-red-400 text-sm">
+                      {submitError}
+                    </div>
+                  )}
+                  
+                  <input 
+                    name="name"
+                    value={formData.name}
+                    onChange={handleFormChange}
+                    className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border border-gray-700 focus:border-[#ce001f] focus:outline-none transition-colors" 
+                    placeholder="Full Name" 
+                    required 
+                    disabled={isSubmitting}
+                  />
+                  <input 
+                    name="email"
+                    value={formData.email}
+                    onChange={handleFormChange}
+                    className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border border-gray-700 focus:border-[#ce001f] focus:outline-none transition-colors" 
+                    placeholder="Email Address" 
+                    type="email" 
+                    required 
+                    disabled={isSubmitting}
+                  />
+                  <input 
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleFormChange}
+                    className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border border-gray-700 focus:border-[#ce001f] focus:outline-none transition-colors" 
+                    placeholder="Phone Number" 
+                    type="tel" 
+                    required 
+                    disabled={isSubmitting}
+                  />
+                  <textarea 
+                    name="message"
+                    value={formData.message || `I'm interested in ${project?.title}. Please provide more information about unit availability and pricing.`}
+                    onChange={handleFormChange}
+                    className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border border-gray-700 focus:border-[#ce001f] focus:outline-none transition-colors min-h-[100px] resize-none" 
+                    placeholder="Message" 
+                    required 
+                    disabled={isSubmitting}
+                  />
+                  <button 
+                    type="submit" 
+                    disabled={isSubmitting}
+                    className="bg-red-500 hover:bg-red-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-full text-lg transition-colors mt-2 flex items-center justify-center gap-2"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      'Send Message'
+                    )}
+                  </button>
+                  <div className="text-xs text-gray-500 text-center mt-2">By submitting this form, you agree to our <a href="#" className="underline text-red-400">Privacy Policy</a></div>
+                </form>
+              )}
             </div>
           </div>
         </div>
