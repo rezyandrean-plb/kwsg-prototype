@@ -9,11 +9,16 @@ export interface FloorPlan {
   image: string
 }
 
+export interface LocationItem {
+  name: string
+  distance: string
+}
+
 export interface LocationAnalytics {
-  mrt: Array<{ name: string; distance: string }>
-  schools: Array<{ name: string; distance: string }>
-  amenities: Array<{ name: string; distance: string }>
-  parks: Array<{ name: string; distance: string }>
+  mrt: LocationItem[]
+  schools: LocationItem[]
+  amenities: LocationItem[]
+  parks: LocationItem[]
 }
 
 export interface MediaReview {
@@ -25,15 +30,62 @@ export interface MediaReview {
 }
 
 export interface SimilarProject {
-  id: string
-  slug: string
-  title: string
+  name: string
   location: string
   price: string
+  priceRange: string
   image: string
-  beds: number
-  baths: number
-  size: string
+  units: string
+  unitsAvailable: string
+  propertySizeRange: string
+  developer: string
+  completion: string
+  slug: string
+  type: string
+  coordinates: { lat: number; lng: number }
+}
+
+export interface Agent {
+  name: string
+  role: string
+  phone: string
+  whatsapp: string
+  email: string
+  image: string
+  company: string
+  license: string
+  experience: string
+  languages: string[]
+  specialties: string[]
+}
+
+export interface MoatData {
+  project: string
+  exitAudience: number
+  districtDisparityEffect: number
+  mrtProximity: number
+  parentsAttractionEffect: number
+  quantumEffect: number
+  rentalDemand: number
+  regionDisparityEffect: number
+  volumeEffect: number
+  balasCurveEffect: number
+  landsizeDensity: number
+}
+
+export interface GooglePlace {
+  placeId: string
+  name: string
+  address: string
+  location: {
+    lat: number
+    lng: number
+  }
+  type: string
+  distance: string
+  duration: string
+  transportMode: string
+  isNearest?: boolean
 }
 
 export interface Project {
@@ -71,4 +123,30 @@ export interface Project {
   locationAnalytics: LocationAnalytics
   mediaReviews: MediaReview[]
   similarProjects: SimilarProject[]
+  moat?: MoatData
+  agent?: Agent
+}
+
+// Additional types for project listing/overview
+export interface ProjectOverview {
+  slug: string
+  name: string
+  location: string
+  price: string
+  type: string
+  image: string
+  coordinates: {
+    lat: number
+    lng: number
+  }
+  priceRange?: string
+  units?: string
+  unitsAvailable?: string
+  propertySizeRange?: string
+  developer?: string
+  completion?: string
+  description?: string
+  pricePerSqFt?: string
+  features?: string[]
+  status?: 'upcoming' | 'ongoing' | 'completed'
 } 

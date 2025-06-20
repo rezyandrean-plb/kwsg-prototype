@@ -1,4 +1,7 @@
 -- Drop existing tables and extensions
+DROP TABLE IF EXISTS unit_availability CASCADE;
+DROP TABLE IF EXISTS moat_data CASCADE;
+DROP TABLE IF EXISTS agents CASCADE;
 DROP TABLE IF EXISTS similar_projects CASCADE;
 DROP TABLE IF EXISTS media_reviews CASCADE;
 DROP TABLE IF EXISTS location_points CASCADE;
@@ -59,26 +62,54 @@ CREATE TABLE facilities (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- Projects table
+-- Agents table
+CREATE TABLE agents (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    role VARCHAR(100) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    whatsapp VARCHAR(20) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    image_url TEXT,
+    company VARCHAR(100) NOT NULL,
+    license VARCHAR(50) NOT NULL,
+    experience VARCHAR(100) NOT NULL,
+    languages TEXT[], -- Array of languages
+    specialties TEXT[], -- Array of specialties
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Projects table (enhanced with additional fields)
 CREATE TABLE projects (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    title VARCHAR(200) NOT NULL,
+    name VARCHAR(200) NOT NULL,
+    project_name VARCHAR(200) NOT NULL,
     slug VARCHAR(200) NOT NULL UNIQUE,
+    title VARCHAR(200) NOT NULL,
     location VARCHAR(200) NOT NULL,
-    district INTEGER NOT NULL,
+    address TEXT NOT NULL,
+    type VARCHAR(100) NOT NULL,
     price VARCHAR(50) NOT NULL,
-    price_range VARCHAR(100) NOT NULL,
+    price_from VARCHAR(50) NOT NULL,
     price_per_sqft VARCHAR(100) NOT NULL,
-    property_size_range VARCHAR(100) NOT NULL,
+    bedrooms VARCHAR(50) NOT NULL,
+    bathrooms VARCHAR(50) NOT NULL,
+    size VARCHAR(100) NOT NULL,
+    units VARCHAR(50) NOT NULL,
     developer_id INTEGER REFERENCES developers(id),
-    completion_year VARCHAR(4) NOT NULL,
+    completion VARCHAR(10) NOT NULL,
+    description TEXT NOT NULL,
+    district VARCHAR(10) NOT NULL,
     tenure VARCHAR(50) NOT NULL,
     property_type_id INTEGER REFERENCES property_types(id),
     status_id INTEGER REFERENCES project_statuses(id),
     total_units VARCHAR(50) NOT NULL,
     total_floors VARCHAR(50) NOT NULL,
     site_area VARCHAR(100) NOT NULL,
-    description TEXT NOT NULL,
+    latitude DECIMAL(10, 8) NOT NULL,
+    longitude DECIMAL(11, 8) NOT NULL,
+    agent_id INTEGER REFERENCES agents(id),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -88,7 +119,7 @@ CREATE TABLE project_images (
     id SERIAL PRIMARY KEY,
     project_id UUID REFERENCES projects(id) ON DELETE CASCADE,
     image_url TEXT NOT NULL,
-    display_order INTEGER NOT NULL,
+    display_order INTEGER NOT NULL DEFAULT 0,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -120,11 +151,31 @@ CREATE TABLE unit_types (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- Floor Plans table
+-- Unit Availability table (detailed unit pricing and availability)
+CREATE TABLE unit_availability (
+    id SERIAL PRIMARY KEY,
+    project_id UUID REFERENCES projects(id) ON DELETE CASCADE,
+    unit_type VARCHAR(100) NOT NULL,
+    subtype VARCHAR(100) NOT NULL,
+    size VARCHAR(100) NOT NULL,
+    price VARCHAR(100) NOT NULL,
+    total_units INTEGER NOT NULL,
+    available_units INTEGER NOT NULL,
+    status_percentage INTEGER NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Floor Plans table (enhanced)
 CREATE TABLE floor_plans (
     id SERIAL PRIMARY KEY,
     project_id UUID REFERENCES projects(id) ON DELETE CASCADE,
     unit_type_id INTEGER REFERENCES unit_types(id) ON DELETE CASCADE,
+    plan_code VARCHAR(20) NOT NULL,
+    plan_label VARCHAR(50) NOT NULL,
+    size VARCHAR(100) NOT NULL,
+    bedrooms INTEGER NOT NULL,
+    bathrooms INTEGER NOT NULL,
     image_url TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
@@ -150,6 +201,25 @@ CREATE TABLE media_reviews (
     title VARCHAR(200) NOT NULL,
     excerpt TEXT NOT NULL,
     rating DECIMAL(3,1) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Moat Data table (AI MOAT analysis)
+CREATE TABLE moat_data (
+    id SERIAL PRIMARY KEY,
+    project_id UUID REFERENCES projects(id) ON DELETE CASCADE,
+    project_name VARCHAR(200) NOT NULL,
+    exit_audience DECIMAL(4,1) NOT NULL,
+    district_disparity_effect DECIMAL(4,1) NOT NULL,
+    mrt_proximity DECIMAL(4,1) NOT NULL,
+    parents_attraction_effect DECIMAL(4,1) NOT NULL,
+    quantum_effect DECIMAL(4,1) NOT NULL,
+    rental_demand DECIMAL(4,1) NOT NULL,
+    region_disparity_effect DECIMAL(4,1) NOT NULL,
+    volume_effect DECIMAL(4,1) NOT NULL,
+    balas_curve_effect DECIMAL(4,1) NOT NULL,
+    landsize_density DECIMAL(4,1) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -197,6 +267,11 @@ CREATE TRIGGER update_facilities_updated_at
     FOR EACH ROW
     EXECUTE FUNCTION update_updated_at_column();
 
+CREATE TRIGGER update_agents_updated_at
+    BEFORE UPDATE ON agents
+    FOR EACH ROW
+    EXECUTE FUNCTION update_updated_at_column();
+
 CREATE TRIGGER update_projects_updated_at
     BEFORE UPDATE ON projects
     FOR EACH ROW
@@ -209,6 +284,11 @@ CREATE TRIGGER update_project_images_updated_at
 
 CREATE TRIGGER update_unit_types_updated_at
     BEFORE UPDATE ON unit_types
+    FOR EACH ROW
+    EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_unit_availability_updated_at
+    BEFORE UPDATE ON unit_availability
     FOR EACH ROW
     EXECUTE FUNCTION update_updated_at_column();
 
@@ -227,15 +307,23 @@ CREATE TRIGGER update_media_reviews_updated_at
     FOR EACH ROW
     EXECUTE FUNCTION update_updated_at_column();
 
--- Create indexes for better query performance
+CREATE TRIGGER update_moat_data_updated_at
+    BEFORE UPDATE ON moat_data
+    FOR EACH ROW
+    EXECUTE FUNCTION update_updated_at_column();
+
+-- Create indexes for better performance
 CREATE INDEX idx_projects_slug ON projects(slug);
 CREATE INDEX idx_projects_location ON projects(location);
 CREATE INDEX idx_projects_district ON projects(district);
 CREATE INDEX idx_projects_property_type ON projects(property_type_id);
 CREATE INDEX idx_projects_status ON projects(status_id);
+CREATE INDEX idx_projects_agent ON projects(agent_id);
 CREATE INDEX idx_location_points_project ON location_points(project_id);
 CREATE INDEX idx_unit_types_project ON unit_types(project_id);
+CREATE INDEX idx_unit_availability_project ON unit_availability(project_id);
 CREATE INDEX idx_media_reviews_project ON media_reviews(project_id);
+CREATE INDEX idx_moat_data_project ON moat_data(project_id);
 CREATE INDEX idx_similar_projects_project ON similar_projects(project_id);
 CREATE INDEX idx_similar_projects_similar ON similar_projects(similar_project_id);
 
@@ -259,13 +347,25 @@ INSERT INTO developers (name) VALUES
     ('Far East Organization'),
     ('CapitaLand Development'),
     ('GuocoLand'),
-    ('Hong Leong Holdings');
+    ('Hong Leong Group'),
+    ('CDL & CapitaLand'),
+    ('Japura Development'),
+    ('Tong Eng Group & Yeap Holdings'),
+    ('Allgreen Properties & Kerry Properties'),
+    ('CDL & MCL Land'),
+    ('Sing Holdings');
 
 INSERT INTO features (name) VALUES
     ('Freehold'),
     ('Luxury finishes'),
     ('Prime location'),
-    ('Full facilities');
+    ('Full facilities'),
+    ('Smart home features'),
+    ('Eco-friendly design'),
+    ('Panoramic views'),
+    ('Integrated development'),
+    ('Direct MRT access'),
+    ('Waterfront living');
 
 INSERT INTO facilities (name) VALUES
     ('Arrival Lobby'),
@@ -274,233 +374,227 @@ INSERT INTO facilities (name) VALUES
     ('BBQ Pavilion'),
     ('Playground'),
     ('Function Room'),
-    ('Garden');
+    ('Garden'),
+    ('Tennis Court'),
+    ('Swimming Pool'),
+    ('Children''s Playground'),
+    ('Parking Entrance');
 
--- Insert project data
+INSERT INTO agents (name, role, phone, whatsapp, email, image_url, company, license, experience, languages, specialties) VALUES
+    ('Sarah Chen', 'Senior Property Consultant', '+65 9123 4567', '+65 9123 4567', 'sarah.chen@kwsg.com', '/images/agents/sarah-chen.jpg', 'KW Singapore', 'R123456A', '8 years', ARRAY['English', 'Mandarin', 'Cantonese'], ARRAY['Luxury Properties', 'New Launches', 'Investment Properties']),
+    ('Michael Tan', 'Property Investment Specialist', '+65 9234 5678', '+65 9234 5678', 'michael.tan@kwsg.com', '/images/agents/michael-tan.jpg', 'KW Singapore', 'R234567B', '12 years', ARRAY['English', 'Mandarin'], ARRAY['Investment Properties', 'Commercial Properties', 'Landed Homes']),
+    ('Lisa Wong', 'New Launch Specialist', '+65 9345 6789', '+65 9345 6789', 'lisa.wong@kwsg.com', '/images/agents/lisa-wong.jpg', 'KW Singapore', 'R345678C', '6 years', ARRAY['English', 'Mandarin', 'Hokkien'], ARRAY['New Launches', 'Mass Market Properties', 'First-time Buyers']);
+
+-- Insert project data (10 Evelyn - main project from the client)
 INSERT INTO projects (
     id,
-    title,
+    name,
+    project_name,
     slug,
+    title,
     location,
-    district,
+    address,
+    type,
     price,
-    price_range,
+    price_from,
     price_per_sqft,
-    property_size_range,
+    bedrooms,
+    bathrooms,
+    size,
+    units,
     developer_id,
-    completion_year,
+    completion,
+    description,
+    district,
     tenure,
     property_type_id,
     status_id,
     total_units,
     total_floors,
     site_area,
-    description
+    latitude,
+    longitude,
+    agent_id
 ) VALUES 
     (
         '123e4567-e89b-12d3-a456-426614174000',
         '10 Evelyn',
+        '10 Evelyn',
         '10-evelyn',
+        '10 Evelyn',
         'Newton, District 11',
-        11,
+        '10 Evelyn Road, Singapore 308318',
+        'Condominium',
         'From $1.2M',
-        '$1.2M - $4.2M',
+        '1200000',
         '$2,100 - $2,400 psf',
+        '1-4',
+        '1-3',
         '484 - 1,636 sq ft',
+        '56 Units',
         1,
         '2025',
+        '10 Evelyn is a prestigious freehold development nestled in the heart of Newton, Singapore''s prime District 11. This exclusive residential project offers a collection of meticulously designed living spaces ranging from 1 to 5 bedrooms, each crafted with premium finishes and thoughtful layouts. Residents will enjoy a sophisticated lifestyle with a comprehensive suite of facilities including a 50-meter lap pool, state-of-the-art fitness center, and beautifully landscaped gardens. The development''s prime location provides unparalleled connectivity, with Newton MRT Station just a 3-minute walk away, and easy access to Orchard Road''s shopping and dining precinct. Families will appreciate the proximity to prestigious educational institutions such as Anglo-Chinese School (Junior) and St. Margaret''s Primary School. The development''s strategic position also offers convenient access to medical facilities, including Mount Elizabeth Hospital, and is surrounded by an array of dining options, shopping centers, and recreational facilities. With its combination of luxury living, prime location, and excellent connectivity, 10 Evelyn represents an exceptional investment opportunity in one of Singapore''s most sought-after residential districts.',
+        '11',
         'Freehold',
         1,
         1,
         '56 Units',
         '24 Floors',
         '12,000 sq ft',
-        'Luxury freehold development in the heart of Newton, offering exclusive living spaces with premium finishes.'
+        1.2834,
+        103.8598,
+        1
     ),
     (
         '223e4567-e89b-12d3-a456-426614174001',
-        'The Landmark',
-        'the-landmark',
-        'Orchard, District 9',
-        9,
+        'The Avenir',
+        'The Avenir',
+        'the-avenir',
+        'The Avenir',
+        'River Valley',
+        '1 River Valley Road, Singapore 238801',
+        'Luxury Condominium',
         'From $2.5M',
-        '$2.5M - $8.5M',
+        '2500000',
         '$3,200 - $3,500 psf',
-        '700 - 2,400 sq ft',
-        2,
-        '2026',
+        '1-5',
+        '1-4',
+        '614 - 1,862 sqft',
+        '376 Units',
+        5,
+        '2025',
+        'The Avenir is a luxury residential development in the heart of River Valley, offering sophisticated living spaces with panoramic city views.',
+        '9',
         'Freehold',
         4,
-        2,
-        '180 Units',
+        3,
+        '376 Units',
         '36 Floors',
         '25,000 sq ft',
-        'Luxury residential development in the heart of Orchard Road, offering panoramic city views and exclusive amenities.'
+        1.3521,
+        103.8198,
+        2
     ),
     (
         '323e4567-e89b-12d3-a456-426614174002',
-        'Marina Bay Residences',
-        'marina-bay-residences',
-        'Marina Bay, District 1',
-        1,
-        'From $3.8M',
-        '$3.8M - $12M',
-        '$3,500 - $3,800 psf',
-        '850 - 3,000 sq ft',
-        3,
-        '2027',
-        '99 Years',
-        3,
-        3,
-        '250 Units',
-        '45 Floors',
-        '35,000 sq ft',
-        'Waterfront living at its finest, with stunning views of Marina Bay and the city skyline.'
-    ),
-    (
-        '423e4567-e89b-12d3-a456-426614174003',
-        'The Woodleigh Residences',
-        'the-woodleigh-residences',
-        'Bidadari, District 13',
-        13,
-        'From $1.5M',
-        '$1.5M - $4.5M',
-        '$1,800 - $2,100 psf',
-        '600 - 1,800 sq ft',
+        'Midtown Modern',
+        'Midtown Modern',
+        'midtown-modern',
+        'Midtown Modern',
+        'Bugis',
+        '1 Tan Quee Lan Street, Singapore 188098',
+        'Mixed Development',
+        'From $1.8M',
+        '1800000',
+        '$2,800 - $3,100 psf',
+        '1-4',
+        '1-3',
+        '678 - 1,862 sqft',
+        '558 Units',
         4,
-        '2025',
-        '99 Years',
+        '2024',
+        'Midtown Modern is an integrated development in the vibrant Bugis district, offering modern urban living with retail and dining options.',
+        '7',
+        '99-year Leasehold',
         2,
         4,
-        '300 Units',
+        '558 Units',
         '30 Floors',
         '40,000 sq ft',
-        'Integrated development with direct access to Woodleigh MRT station and a vibrant retail mall.'
+        1.3521,
+        103.8198,
+        3
     );
 
--- Insert project features
+-- Insert project features for 10 Evelyn
 INSERT INTO project_features (project_id, feature_id)
 SELECT 
     '123e4567-e89b-12d3-a456-426614174000',
     id
-FROM features;
+FROM features
+WHERE name IN ('Freehold', 'Luxury finishes', 'Prime location', 'Full facilities');
 
-INSERT INTO project_features (project_id, feature_id)
-SELECT 
-    '223e4567-e89b-12d3-a456-426614174001',
-    id
-FROM features;
-
-INSERT INTO project_features (project_id, feature_id)
-SELECT 
-    '323e4567-e89b-12d3-a456-426614174002',
-    id
-FROM features;
-
-INSERT INTO project_features (project_id, feature_id)
-SELECT 
-    '423e4567-e89b-12d3-a456-426614174003',
-    id
-FROM features;
-
--- Insert project facilities
+-- Insert project facilities for 10 Evelyn
 INSERT INTO project_facilities (project_id, facility_id)
 SELECT 
     '123e4567-e89b-12d3-a456-426614174000',
     id
-FROM facilities;
+FROM facilities
+WHERE name IN ('Arrival Lobby', 'Pool Lounge', 'Gym', 'BBQ Pavilion', 'Playground', 'Function Room', 'Garden');
 
-INSERT INTO project_facilities (project_id, facility_id)
-SELECT 
-    '223e4567-e89b-12d3-a456-426614174001',
-    id
-FROM facilities;
+-- Insert project images for 10 Evelyn
+INSERT INTO project_images (project_id, image_url, display_order) VALUES
+    ('123e4567-e89b-12d3-a456-426614174000', 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80', 1),
+    ('123e4567-e89b-12d3-a456-426614174000', 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80', 2),
+    ('123e4567-e89b-12d3-a456-426614174000', 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80', 3);
 
-INSERT INTO project_facilities (project_id, facility_id)
-SELECT 
-    '323e4567-e89b-12d3-a456-426614174002',
-    id
-FROM facilities;
-
-INSERT INTO project_facilities (project_id, facility_id)
-SELECT 
-    '423e4567-e89b-12d3-a456-426614174003',
-    id
-FROM facilities;
-
--- Insert unit types
+-- Insert unit types for 10 Evelyn
 INSERT INTO unit_types (project_id, type, size, price) VALUES
     ('123e4567-e89b-12d3-a456-426614174000', '1 Bedroom', '484 - 527 sq ft', 'From $1.2M'),
     ('123e4567-e89b-12d3-a456-426614174000', '2 Bedroom', '678 - 753 sq ft', 'From $1.8M'),
     ('123e4567-e89b-12d3-a456-426614174000', '3 Bedroom', '1,076 - 1,184 sq ft', 'From $2.8M'),
-    ('123e4567-e89b-12d3-a456-426614174000', '4 Bedroom', '1,518 - 1,636 sq ft', 'From $4.2M'),
-    
-    ('223e4567-e89b-12d3-a456-426614174001', '2 Bedroom', '700 - 850 sq ft', 'From $2.5M'),
-    ('223e4567-e89b-12d3-a456-426614174001', '3 Bedroom', '1,200 - 1,500 sq ft', 'From $4.2M'),
-    ('223e4567-e89b-12d3-a456-426614174001', '4 Bedroom', '1,800 - 2,400 sq ft', 'From $6.5M'),
-    ('223e4567-e89b-12d3-a456-426614174001', 'Penthouse', '2,800 - 3,200 sq ft', 'From $8.5M'),
-    
-    ('323e4567-e89b-12d3-a456-426614174002', '2 Bedroom', '850 - 1,000 sq ft', 'From $3.8M'),
-    ('323e4567-e89b-12d3-a456-426614174002', '3 Bedroom', '1,500 - 1,800 sq ft', 'From $5.5M'),
-    ('323e4567-e89b-12d3-a456-426614174002', '4 Bedroom', '2,000 - 2,500 sq ft', 'From $8.2M'),
-    ('323e4567-e89b-12d3-a456-426614174002', 'Penthouse', '3,000 - 3,500 sq ft', 'From $12M'),
-    
-    ('423e4567-e89b-12d3-a456-426614174003', '1 Bedroom', '600 - 700 sq ft', 'From $1.5M'),
-    ('423e4567-e89b-12d3-a456-426614174003', '2 Bedroom', '850 - 1,000 sq ft', 'From $2.2M'),
-    ('423e4567-e89b-12d3-a456-426614174003', '3 Bedroom', '1,200 - 1,500 sq ft', 'From $3.2M'),
-    ('423e4567-e89b-12d3-a456-426614174003', '4 Bedroom', '1,800 - 2,000 sq ft', 'From $4.5M');
+    ('123e4567-e89b-12d3-a456-426614174000', '4 Bedroom', '1,518 - 1,636 sq ft', 'From $4.2M');
 
--- Insert location points
+-- Insert unit availability data for 10 Evelyn (from the client mock data)
+INSERT INTO unit_availability (project_id, unit_type, subtype, size, price, total_units, available_units, status_percentage) VALUES
+    ('123e4567-e89b-12d3-a456-426614174000', '1 Bedroom Units', '1 BEDROOM+STUDY', '560 sqft', '$1,510,000 - $1,721,000', 68, 56, 82),
+    ('123e4567-e89b-12d3-a456-426614174000', '2 Bedroom Units', '2 BEDROOM', '646 sqft - 807 sqft', '$1,993,000 - $2,210,000', 170, 2, 1),
+    ('123e4567-e89b-12d3-a456-426614174000', '2 Bedroom Units', '2 BEDROOM+STUDY', '700 sqft - 721 sqft', 'Not Applicable', 136, 0, 0),
+    ('123e4567-e89b-12d3-a456-426614174000', '3 Bedroom Units', '3 BEDROOM', '872 sqft - 1,141 sqft', '$2,966,000 - $3,120,000', 102, 6, 6),
+    ('123e4567-e89b-12d3-a456-426614174000', '3 Bedroom Units', '3 BEDROOM PREMIER', '1,066 sqft - 1,302 sqft', '$3,047,000 - $3,735,000', 136, 33, 24),
+    ('123e4567-e89b-12d3-a456-426614174000', '3 Bedroom Units', '3 BEDROOM+STUDY', '1,227 sqft - 1,464 sqft', '$3,452,000 - $4,336,000', 72, 60, 83),
+    ('123e4567-e89b-12d3-a456-426614174000', '4 Bedroom Units', '4 BEDROOM', '1,227 sqft - 1,518 sqft', '$3,593,000 - $4,209,000', 68, 10, 15),
+    ('123e4567-e89b-12d3-a456-426614174000', '4 Bedroom Units', '4 BEDROOM PREMIER', '1,690 sqft - 2,034 sqft', '$4,759,000 - $5,879,000', 32, 29, 91),
+    ('123e4567-e89b-12d3-a456-426614174000', '5 Bedroom Units', '5 BEDROOM', '1,905 sqft - 2,260 sqft', '$5,567,000 - $6,669,000', 32, 29, 91);
+
+-- Insert floor plans for 10 Evelyn
+INSERT INTO floor_plans (project_id, unit_type_id, plan_code, plan_label, size, bedrooms, bathrooms, image_url) VALUES
+    ('123e4567-e89b-12d3-a456-426614174000', 1, 'A', '1 Bedroom', '484 - 527 sq ft', 1, 1, '/floorplan-dummy.png'),
+    ('123e4567-e89b-12d3-a456-426614174000', 2, 'B', '2 Bedroom', '678 - 753 sq ft', 2, 2, '/floorplan-dummy.png'),
+    ('123e4567-e89b-12d3-a456-426614174000', 3, 'C', '3 Bedroom', '1,076 - 1,184 sq ft', 3, 2, '/floorplan-dummy.png'),
+    ('123e4567-e89b-12d3-a456-426614174000', 4, 'D', '4 Bedroom', '1,518 - 1,636 sq ft', 4, 3, '/floorplan-dummy.png');
+
+-- Insert location points for 10 Evelyn
 INSERT INTO location_points (project_id, name, distance, type) VALUES
-    -- 10 Evelyn
-    ('123e4567-e89b-12d3-a456-426614174000', 'Newton MRT', '3 min walk', 'mrt'),
-    ('123e4567-e89b-12d3-a456-426614174000', 'Orchard MRT', '10 min walk', 'mrt'),
-    ('123e4567-e89b-12d3-a456-426614174000', 'Anglo-Chinese School (Junior)', '5 min walk', 'school'),
-    ('123e4567-e89b-12d3-a456-426614174000', 'St. Margaret''s Primary School', '8 min walk', 'school'),
-    ('123e4567-e89b-12d3-a456-426614174000', 'United Square', '3 min walk', 'amenity'),
-    ('123e4567-e89b-12d3-a456-426614174000', 'Goldhill Plaza', '5 min walk', 'amenity'),
-    ('123e4567-e89b-12d3-a456-426614174000', 'Newton Green', '2 min walk', 'park'),
-    
-    -- The Landmark
-    ('223e4567-e89b-12d3-a456-426614174001', 'Orchard MRT', '2 min walk', 'mrt'),
-    ('223e4567-e89b-12d3-a456-426614174001', 'Somerset MRT', '5 min walk', 'mrt'),
-    ('223e4567-e89b-12d3-a456-426614174001', 'ION Orchard', '1 min walk', 'amenity'),
-    ('223e4567-e89b-12d3-a456-426614174001', 'Takashimaya', '3 min walk', 'amenity'),
-    ('223e4567-e89b-12d3-a456-426614174001', 'Orchard Central', '2 min walk', 'amenity'),
-    ('223e4567-e89b-12d3-a456-426614174001', 'Fort Canning Park', '10 min walk', 'park'),
-    
-    -- Marina Bay Residences
-    ('323e4567-e89b-12d3-a456-426614174002', 'Marina Bay MRT', '3 min walk', 'mrt'),
-    ('323e4567-e89b-12d3-a456-426614174002', 'Raffles Place MRT', '8 min walk', 'mrt'),
-    ('323e4567-e89b-12d3-a456-426614174002', 'Marina Bay Sands', '5 min walk', 'amenity'),
-    ('323e4567-e89b-12d3-a456-426614174002', 'The Shoppes at Marina Bay Sands', '5 min walk', 'amenity'),
-    ('323e4567-e89b-12d3-a456-426614174002', 'Gardens by the Bay', '8 min walk', 'park'),
-    
-    -- The Woodleigh Residences
-    ('423e4567-e89b-12d3-a456-426614174003', 'Woodleigh MRT', 'Direct Access', 'mrt'),
-    ('423e4567-e89b-12d3-a456-426614174003', 'Potong Pasir MRT', '8 min walk', 'mrt'),
-    ('423e4567-e89b-12d3-a456-426614174003', 'Woodleigh Mall', 'Direct Access', 'amenity'),
-    ('423e4567-e89b-12d3-a456-426614174003', 'NEX Shopping Mall', '10 min walk', 'amenity'),
-    ('423e4567-e89b-12d3-a456-426614174003', 'Bidadari Park', '5 min walk', 'park');
+    ('123e4567-e89b-12d3-a456-426614174000', 'Newton MRT', '300m', 'mrt'),
+    ('123e4567-e89b-12d3-a456-426614174000', 'Orchard MRT', '800m', 'mrt'),
+    ('123e4567-e89b-12d3-a456-426614174000', 'Anglo-Chinese School (Junior)', '400m', 'school'),
+    ('123e4567-e89b-12d3-a456-426614174000', 'St. Margaret''s Primary School', '600m', 'school'),
+    ('123e4567-e89b-12d3-a456-426614174000', 'United Square', '250m', 'amenity'),
+    ('123e4567-e89b-12d3-a456-426614174000', 'Goldhill Plaza', '400m', 'amenity'),
+    ('123e4567-e89b-12d3-a456-426614174000', 'Newton Green', '150m', 'park');
 
--- Insert media reviews
+-- Insert media reviews for 10 Evelyn
 INSERT INTO media_reviews (project_id, source, review_date, title, excerpt, rating) VALUES
-    ('123e4567-e89b-12d3-a456-426614174000', 'The Edge Property', '2024-02-15', '10 Evelyn: A Rare Freehold Gem in Newton', 'The development offers a unique opportunity...', 4.5),
-    
-    ('223e4567-e89b-12d3-a456-426614174001', 'PropertyGuru', '2024-02-20', 'The Landmark: Luxury Living in Orchard', 'A prestigious address in Singapore''s premier shopping district...', 4.8),
-    ('223e4567-e89b-12d3-a456-426614174001', 'EdgeProp', '2024-02-18', 'The Landmark: A New Icon in Orchard', 'Setting new standards for luxury living...', 4.7),
-    
-    ('323e4567-e89b-12d3-a456-426614174002', 'PropertyGuru', '2024-02-22', 'Marina Bay Residences: Waterfront Luxury', 'Unparalleled views and exclusive waterfront living...', 4.9),
-    ('323e4567-e89b-12d3-a456-426614174002', 'EdgeProp', '2024-02-21', 'Marina Bay Residences: The Epitome of Luxury', 'Redefining luxury waterfront living...', 4.8),
-    
-    ('423e4567-e89b-12d3-a456-426614174003', 'PropertyGuru', '2024-02-25', 'The Woodleigh Residences: Integrated Living', 'Perfect blend of convenience and comfort...', 4.6),
-    ('423e4567-e89b-12d3-a456-426614174003', 'EdgeProp', '2024-02-24', 'The Woodleigh Residences: A Smart Investment', 'Excellent location with great potential...', 4.5);
+    ('123e4567-e89b-12d3-a456-426614174000', 'The Edge Property', '2024-02-15', '10 Evelyn: A Rare Freehold Gem in Newton', 'The development offers a unique opportunity for investors and homeowners alike...', 4.5),
+    ('123e4567-e89b-12d3-a456-426614174000', 'PropertyGuru', '2024-02-10', 'Why 10 Evelyn is the Talk of Newton', 'With its prime location and luxury finishes, 10 Evelyn stands out...', 4.8);
 
--- Insert similar projects relationships
-INSERT INTO similar_projects (project_id, similar_project_id) VALUES
-    ('123e4567-e89b-12d3-a456-426614174000', '223e4567-e89b-12d3-a456-426614174001'),
-    ('123e4567-e89b-12d3-a456-426614174000', '323e4567-e89b-12d3-a456-426614174002'),
-    ('223e4567-e89b-12d3-a456-426614174001', '323e4567-e89b-12d3-a456-426614174002'),
-    ('223e4567-e89b-12d3-a456-426614174001', '423e4567-e89b-12d3-a456-426614174003'),
-    ('323e4567-e89b-12d3-a456-426614174002', '223e4567-e89b-12d3-a456-426614174001'),
-    ('423e4567-e89b-12d3-a456-426614174003', '123e4567-e89b-12d3-a456-426614174000'); 
+-- Insert moat data for 10 Evelyn
+INSERT INTO moat_data (
+    project_id,
+    project_name,
+    exit_audience,
+    district_disparity_effect,
+    mrt_proximity,
+    parents_attraction_effect,
+    quantum_effect,
+    rental_demand,
+    region_disparity_effect,
+    volume_effect,
+    balas_curve_effect,
+    landsize_density
+) VALUES (
+    '123e4567-e89b-12d3-a456-426614174000',
+    '10 Evelyn',
+    4.2,
+    3.8,
+    4.5,
+    3.9,
+    4.1,
+    4.3,
+    4.0,
+    3.7,
+    4.4,
+    3.6
+);
