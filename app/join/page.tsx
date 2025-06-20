@@ -191,7 +191,7 @@ export default function JoinKW() {
             whileInView="whileInView"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white">
+            <h2 className="text-6xl md:text-5xl font-light mb-8 text-white">
               Your Ambition. Our Platform.<br />Unlocked.
             </h2>
             <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto">
@@ -218,7 +218,6 @@ export default function JoinKW() {
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority
                 className="object-cover"
-                unoptimized
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
@@ -230,7 +229,7 @@ export default function JoinKW() {
               <div className="inline-block px-4 py-2 bg-primary-red/20 rounded-full mb-4">
                 <span className="text-primary-red font-semibold">Brand Trust & Awareness</span>
               </div>
-              <h3 className="text-3xl font-bold text-white">
+              <h3 className="text-4xl font-light text-white">
                 "Consumers haven't heard of KW Singapore before. How will you build brand awareness and establish trust?"
               </h3>
               <p className="text-gray-300 text-lg leading-relaxed mb-6">
@@ -268,7 +267,7 @@ export default function JoinKW() {
               <div className="inline-block px-4 py-2 bg-primary-red/20 rounded-full mb-4">
                 <span className="text-primary-red font-semibold">Training & Development</span>
               </div>
-              <h3 className="text-3xl font-bold text-white">
+              <h3 className="text-4xl font-light text-white">
                 "Who will conduct training, coach on apps, and provide subject expertise?"
               </h3>
               <p className="text-gray-300 text-lg leading-relaxed mb-6">
@@ -303,7 +302,6 @@ export default function JoinKW() {
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority
                 className="object-cover"
-                unoptimized
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
@@ -332,7 +330,6 @@ export default function JoinKW() {
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority
                 className="object-cover"
-                unoptimized
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
@@ -344,7 +341,7 @@ export default function JoinKW() {
               <div className="inline-block px-4 py-2 bg-primary-red/20 rounded-full mb-4">
                 <span className="text-primary-red font-semibold">Technology & Innovation</span>
               </div>
-              <h3 className="text-3xl font-bold text-white">
+              <h3 className="text-4xl font-light text-white">
                 "Tell me more about KW Tech and what's available?"
               </h3>
               <p className="text-gray-300 text-lg leading-relaxed mb-6">
@@ -387,7 +384,7 @@ export default function JoinKW() {
             viewport={{ once: true }}
           >
             <div className="text-center mb-12">
-              <h3 className="text-3xl font-bold text-white mb-4">Show Command video:</h3>
+              <h3 className="text-4xl font-light text-white mb-4">Show Command video:</h3>
               <p className="text-xl text-gray-300">Save Time, Save Money and Get More Leads With Command</p>
             </div>
             <div className="max-w-4xl mx-auto">
@@ -419,7 +416,7 @@ export default function JoinKW() {
               <div className="inline-block px-4 py-2 bg-primary-red/20 rounded-full mb-4">
                 <span className="text-primary-red font-semibold">Media Services</span>
               </div>
-              <h3 className="text-3xl font-bold text-white">
+              <h3 className="text-4xl font-light text-white">
                 "Will in-house media offer more competitive prices, and how will it help agents establish brand positioning?"
               </h3>
               <p className="text-gray-300 text-lg leading-relaxed mb-6">
@@ -458,7 +455,6 @@ export default function JoinKW() {
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority
                 className="object-cover"
-                unoptimized
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
@@ -487,7 +483,6 @@ export default function JoinKW() {
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority
                 className="object-cover"
-                unoptimized
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
@@ -499,7 +494,7 @@ export default function JoinKW() {
               <div className="inline-block px-4 py-2 bg-primary-red/20 rounded-full mb-4">
                 <span className="text-primary-red font-semibold">Financial Growth</span>
               </div>
-              <h3 className="text-3xl font-bold text-white">
+              <h3 className="text-4xl font-light text-white">
                 "What will I actually take home after all the splits? How does the Growth Share system work?"
               </h3>
               <p className="text-gray-300 text-lg leading-relaxed mb-6">
@@ -533,7 +528,7 @@ export default function JoinKW() {
               <div className="inline-block px-4 py-2 bg-primary-red/20 rounded-full mb-4">
                 <span className="text-primary-red font-semibold">Financial Status</span>
               </div>
-              <h3 className="text-3xl font-bold text-white">
+              <h3 className="text-4xl font-light text-white">
                 "What is the financial status of KW SG and its sustainability for growth?"
               </h3>
               <p className="text-gray-300 text-lg leading-relaxed mb-6">
@@ -568,7 +563,6 @@ export default function JoinKW() {
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority
                 className="object-cover"
-                unoptimized
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
@@ -590,7 +584,7 @@ export default function JoinKW() {
             viewport={{ once: true, margin: "-100px" }}
             className="max-w-4xl mx-auto"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white">
+            <h2 className="text-6xl md:text-5xl font-light mb-8 text-white">
               The Future of Real Estate is Here.<br />Will You Lead It?
             </h2>
             <p className="text-xl text-gray-300 mb-8">
