@@ -151,15 +151,15 @@ export default function JoinKW() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <motion.div 
+          {/* <motion.div 
             className="inline-block px-6 py-3 bg-primary-red/20 rounded-full mb-8 border border-primary-red/30"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
             <span className="text-white font-semibold text-lg">Why KW Singapore: Your Future in Real Estate, Reimagined</span>
-          </motion.div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-8 text-white tracking-tight leading-tight">
+          </motion.div> */}
+          <h1 className="text-5xl md:text-7xl font-light mb-8 text-white tracking-tight leading-tight">
             Your Future in Real Estate,<br />Reimagined
           </h1>
           <p className="text-xl md:text-2xl max-w-4xl mx-auto mb-12 text-gray-100 leading-relaxed">
