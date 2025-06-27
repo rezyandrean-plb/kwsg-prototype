@@ -1,499 +1,281 @@
-# KWSG Project Database Documentation
+# KWSG Property Projects Database
 
-## Overview
+This PostgreSQL database is designed specifically for the KWSG property projects platform, based on the actual TypeScript interfaces from the Next.js project. The schema accurately reflects the data structures used in the frontend components.
 
-This PostgreSQL database is designed to handle comprehensive real estate project data for the KWSG (KW Singapore) platform. It includes support for project details, unit availability, AI MOAT analysis, agent information, and related data structures.
+## Database Overview
 
-## Database Schema
+The database contains comprehensive information about property developments in Singapore, including project details, unit types, floor plans, location analytics, media reviews, AI MOAT analysis, agents, and nearby amenities.
+
+## Schema Structure
 
 ### Core Tables
 
-#### 1. **projects** - Main project information
-- `id` (UUID) - Primary key
-- `name`, `project_name`, `title` - Project names
-- `slug` - URL-friendly identifier
-- `location`, `address` - Location details
-- `price`, `price_from`, `price_per_sqft` - Pricing information
-- `bedrooms`, `bathrooms`, `size` - Unit specifications
-- `developer_id` - Reference to developers table
-- `completion` - Expected completion date
-- `description` - Detailed project description
-- `district` - Singapore district number
-- `tenure` - Property tenure (Freehold/Leasehold)
-- `total_units`, `total_floors`, `site_area` - Project specifications
-- `latitude`, `longitude` - GPS coordinates
-- `agent_id` - Reference to assigned agent
+#### `projects` - Main project information
+- **Primary key**: `id` (SERIAL)
+- **Key fields**: 
+  - `slug` (UNIQUE) - URL-friendly identifier
+  - `title`, `location`, `address` - Basic project info
+  - `price_from`, `price_per_sqft` - Pricing information
+  - `latitude`, `longitude` - Geographic coordinates
+  - `features` (TEXT[]) - Array of project features
+  - `status` - Project status (Launching Soon, Available, etc.)
 
-#### 2. **agents** - Property agent information
-- `name`, `role` - Agent details
-- `phone`, `whatsapp`, `email` - Contact information
-- `image_url` - Agent photo
-- `company`, `license` - Professional details
-- `experience` - Years of experience
-- `languages[]` - Array of spoken languages
-- `specialties[]` - Array of specializations
+#### `project_images` - Project image gallery
+- Links to `projects` via `project_id`
+- Supports multiple images per project with display order
+- Includes alt text for accessibility
 
-#### 3. **unit_availability** - Detailed unit pricing and availability
-- `unit_type` - Type of unit (1 Bedroom, 2 Bedroom, etc.)
-- `subtype` - Specific subtype (e.g., "1 BEDROOM+STUDY")
-- `size` - Unit size range
-- `price` - Price range
-- `total_units` - Total units of this type
-- `available_units` - Currently available units
-- `status_percentage` - Availability percentage
+#### `unit_types` - Available unit configurations
+- Links to `projects` via `project_id`
+- Contains type, size range, and pricing information
+- Matches the `UnitType` interface from the frontend
 
-#### 4. **moat_data** - AI MOAT analysis scores
-- `exit_audience` - Exit audience score (1-5)
-- `district_disparity_effect` - District disparity effect
-- `mrt_proximity` - MRT proximity score
-- `parents_attraction_effect` - Parents attraction effect
-- `quantum_effect` - Quantum effect score
-- `rental_demand` - Rental demand score
-- `region_disparity_effect` - Region disparity effect
-- `volume_effect` - Volume effect score
-- `balas_curve_effect` - Balas curve effect
-- `landsize_density` - Land size density score
+#### `floor_plans` - Floor plan images
+- Links to `projects` via `project_id`
+- Organized by unit type with display order
+- Matches the `FloorPlan` interface from the frontend
 
-### Supporting Tables
+#### `location_analytics` - Location-based information
+- Links to `projects` via `project_id`
+- Categorized by type: 'mrt', 'schools', 'amenities', 'parks'
+- Contains name and distance information
+- Matches the `LocationAnalytics` interface from the frontend
 
-- **developers** - Developer companies
-- **property_types** - Property types (Condominium, Mixed Development, etc.)
-- **project_statuses** - Project statuses (Launching Soon, New Launch, etc.)
-- **features** - Project features (Freehold, Luxury finishes, etc.)
-- **facilities** - Project facilities (Gym, Pool, etc.)
-- **project_images** - Project gallery images
-- **unit_types** - Basic unit type information
-- **floor_plans** - Detailed floor plan data
-- **location_points** - Nearby amenities (MRT, schools, etc.)
-- **media_reviews** - Media reviews and ratings
-- **similar_projects** - Similar project relationships
+#### `media_reviews` - Media coverage and reviews
+- Links to `projects` via `project_id`
+- Includes source, date, title, excerpt, and rating
+- Matches the `MediaReview` interface from the frontend
 
-## Setup Instructions
+#### `similar_projects` - Related project recommendations
+- Links to `projects` via `project_id`
+- Contains comprehensive project comparison data
+- Includes coordinates for mapping
+- Matches the `SimilarProject` interface from the frontend
 
-### 1. Install PostgreSQL
-```bash
-# Ubuntu/Debian
-sudo apt-get install postgresql postgresql-contrib
+#### `ai_moat_analysis` - AI-powered market analysis
+- Links to `projects` via `project_id`
+- Contains 11 different MOAT metrics (0-5 scale)
+- Used for the radar chart visualization
+- Matches the `moat` object from the `Project` interface
 
-# macOS (using Homebrew)
-brew install postgresql
+#### `agents` - Property agent information
+- Contains comprehensive agent profiles
+- Includes contact details, experience, languages, and specialties
+- Matches the `Agent` interface from the frontend
 
-# Windows
-# Download from https://www.postgresql.org/download/windows/
-```
+#### `project_agents` - Project-agent relationships
+- Many-to-many relationship between projects and agents
+- Supports primary and secondary agent assignments
 
-### 2. Create Database
-```bash
-# Connect to PostgreSQL
-sudo -u postgres psql
+#### `unit_availability` - Detailed unit availability data
+- Links to `projects` via `project_id`
+- Contains unit subtypes, availability counts, and status percentages
+- Matches the `unitAvailabilityData` structure from the frontend
 
-# Create database
-CREATE DATABASE kwsg_projects;
+#### `nearby_amenities` - Google Places integration
+- Links to `projects` via `project_id`
+- Contains place details, distances, and transport information
+- Supports multiple amenity types (schools, transport, shopping, etc.)
+- Matches the `GooglePlace` interface from the frontend
 
-# Create user (optional)
-CREATE USER kwsg_user WITH PASSWORD 'your_password';
-GRANT ALL PRIVILEGES ON DATABASE kwsg_projects TO kwsg_user;
+#### `contact_submissions` - Contact form data
+- Stores user inquiries about projects
+- Includes project title for tracking
+- Captures IP address and user agent for analytics
 
-# Exit
-\q
-```
+## Data Types and Constraints
 
-### 3. Run Schema
-```bash
-# Connect to the database
-psql -U kwsg_user -d kwsg_projects -f schema.sql
-```
+### Enums
+- `property_type_enum`: Condominium, Apartment, Mixed Development, Luxury Condominium
+- `tenure_enum`: Freehold, 99-year Leasehold, 999-year Leasehold
+- `status_enum`: Launching Soon, Available, Sold Out, Under Construction, Completed
+- `transport_mode_enum`: walking, driving, transit
 
-### 4. Verify Setup
-```bash
-# Connect to database
-psql -U kwsg_user -d kwsg_projects
+### Arrays
+- `features` (TEXT[]) - Project features
+- `languages` (TEXT[]) - Agent languages
+- `specialties` (TEXT[]) - Agent specialties
 
-# Check tables
-\dt
+### Constraints
+- Rating values: 0-5 scale for reviews and MOAT analysis
+- Status percentages: 0-100 for unit availability
+- Geographic coordinates: Proper decimal precision for lat/lng
 
-# Check sample data
-SELECT name, slug, location, price FROM projects LIMIT 5;
-```
+## Sample Data
 
-## Usage Examples
+The database includes comprehensive sample data for 4 projects:
 
-### Basic Project Queries
+1. **10 Evelyn** - Newton, District 11 (Freehold Condominium)
+2. **The Avenir** - River Valley, District 9 (Luxury Condominium)
+3. **Midtown Modern** - Bugis, District 7 (Mixed Development)
+4. **Marina One Residences** - Marina Bay, District 1 (Luxury Condominium)
 
-#### Get project by slug
+Each project includes:
+- Multiple high-quality images
+- Complete unit type information
+- Floor plans for all unit types
+- Location analytics (MRT, schools, amenities, parks)
+- Media reviews with ratings
+- AI MOAT analysis scores
+- Similar project recommendations
+- Unit availability data
+- Assigned agents
+- Nearby amenities from Google Places
+- Sample contact submissions
+
+## Common Queries
+
+### Get Project by Slug
 ```sql
-SELECT * FROM projects WHERE slug = '10-evelyn';
+SELECT p.*, 
+       array_agg(DISTINCT pi.image_url) as images,
+       array_agg(DISTINCT ut.type) as unit_types
+FROM projects p
+LEFT JOIN project_images pi ON p.id = pi.project_id
+LEFT JOIN unit_types ut ON p.id = ut.project_id
+WHERE p.slug = '10-evelyn'
+GROUP BY p.id;
 ```
 
-#### Get project with all related data
+### Get Project with All Related Data
 ```sql
 SELECT 
     p.*,
-    d.name as developer_name,
-    a.name as agent_name,
-    a.phone as agent_phone
+    json_agg(DISTINCT jsonb_build_object(
+        'type', ut.type,
+        'size', ut.size,
+        'price', ut.price
+    )) as unit_types,
+    json_agg(DISTINCT jsonb_build_object(
+        'category', la.category,
+        'name', la.name,
+        'distance', la.distance
+    )) as location_analytics,
+    json_agg(DISTINCT jsonb_build_object(
+        'source', mr.source,
+        'title', mr.title,
+        'rating', mr.rating
+    )) as media_reviews
 FROM projects p
-LEFT JOIN developers d ON p.developer_id = d.id
-LEFT JOIN agents a ON p.agent_id = a.id
-WHERE p.slug = '10-evelyn';
+LEFT JOIN unit_types ut ON p.id = ut.project_id
+LEFT JOIN location_analytics la ON p.id = la.project_id
+LEFT JOIN media_reviews mr ON p.id = mr.project_id
+WHERE p.slug = '10-evelyn'
+GROUP BY p.id;
 ```
 
-#### Get project images
+### Get AI MOAT Analysis
 ```sql
-SELECT image_url, display_order 
-FROM project_images 
-WHERE project_id = (SELECT id FROM projects WHERE slug = '10-evelyn')
-ORDER BY display_order;
-```
-
-### Unit Availability Queries
-
-#### Get available units
-```sql
-SELECT 
-    unit_type,
-    subtype,
-    size,
-    price,
-    available_units,
-    ROUND((available_units::DECIMAL / total_units * 100), 1) as availability_percentage
-FROM unit_availability
-WHERE project_id = (SELECT id FROM projects WHERE slug = '10-evelyn')
-AND available_units > 0
-ORDER BY unit_type;
-```
-
-#### Get unit mix summary
-```sql
-SELECT 
-    unit_type,
-    SUM(total_units) as total_units,
-    SUM(available_units) as available_units,
-    ROUND((SUM(available_units)::DECIMAL / SUM(total_units) * 100), 1) as availability_percentage
-FROM unit_availability
-WHERE project_id = (SELECT id FROM projects WHERE slug = '10-evelyn')
-GROUP BY unit_type
-ORDER BY unit_type;
-```
-
-### AI MOAT Analysis Queries
-
-#### Get MOAT scores
-```sql
-SELECT 
-    project_name,
-    exit_audience,
-    mrt_proximity,
-    rental_demand,
-    ROUND((exit_audience + district_disparity_effect + mrt_proximity + 
-           parents_attraction_effect + quantum_effect + rental_demand + 
-           region_disparity_effect + volume_effect + balas_curve_effect + 
-           landsize_density) / 10, 2) as overall_moat_score
-FROM moat_data
+SELECT * FROM ai_moat_analysis 
 WHERE project_id = (SELECT id FROM projects WHERE slug = '10-evelyn');
 ```
 
-#### Get projects with high MOAT scores
+### Get Nearby Amenities by Type
 ```sql
-SELECT 
-    p.name,
-    p.slug,
-    p.location,
-    ROUND((md.exit_audience + md.district_disparity_effect + md.mrt_proximity + 
-           md.parents_attraction_effect + md.quantum_effect + md.rental_demand + 
-           md.region_disparity_effect + md.volume_effect + md.balas_curve_effect + 
-           md.landsize_density) / 10, 2) as overall_moat_score
-FROM projects p
-JOIN moat_data md ON p.id = md.project_id
-WHERE (md.exit_audience + md.district_disparity_effect + md.mrt_proximity + 
-       md.parents_attraction_effect + md.quantum_effect + md.rental_demand + 
-       md.region_disparity_effect + md.volume_effect + md.balas_curve_effect + 
-       md.landsize_density) / 10 >= 4.0
-ORDER BY overall_moat_score DESC;
-```
-
-### Location and Amenity Queries
-
-#### Get nearby amenities
-```sql
-SELECT 
-    name,
-    distance,
-    type,
-    CASE type
-        WHEN 'mrt' THEN '🚇'
-        WHEN 'school' THEN '🏫'
-        WHEN 'amenity' THEN '🏪'
-        WHEN 'park' THEN '🌳'
-        ELSE '📍'
-    END as icon
-FROM location_points
+SELECT * FROM nearby_amenities 
 WHERE project_id = (SELECT id FROM projects WHERE slug = '10-evelyn')
-ORDER BY type, name;
+AND type = 'transit_station'
+ORDER BY distance;
 ```
 
-#### Get projects near MRT
+### Get Unit Availability
 ```sql
-SELECT 
-    p.name,
-    p.slug,
-    p.location,
-    lp.name as nearest_mrt,
-    lp.distance
-FROM projects p
-JOIN location_points lp ON p.id = lp.project_id
-WHERE lp.type = 'mrt' 
-AND (lp.distance LIKE '%300m%' OR lp.distance LIKE '%400m%' OR lp.distance LIKE '%500m%')
-ORDER BY p.name;
+SELECT * FROM unit_availability 
+WHERE project_id = (SELECT id FROM projects WHERE slug = '10-evelyn')
+ORDER BY unit_type, subtype;
 ```
 
-### Search and Filter Queries
-
-#### Search by price range
+### Get Project Agents
 ```sql
-SELECT 
-    name,
-    slug,
-    location,
-    price,
-    price_per_sqft
-FROM projects
-WHERE CAST(REPLACE(REPLACE(price_from, ',', ''), '$', '') AS INTEGER) 
-BETWEEN 1000000 AND 3000000
-ORDER BY CAST(REPLACE(REPLACE(price_from, ',', ''), '$', '') AS INTEGER);
-```
-
-#### Search by district
-```sql
-SELECT 
-    name,
-    slug,
-    location,
-    price,
-    total_units
-FROM projects
-WHERE district = '11'
-ORDER BY name;
-```
-
-#### Search by property type
-```sql
-SELECT 
-    p.name,
-    p.slug,
-    p.location,
-    p.price,
-    pt.name as property_type
-FROM projects p
-JOIN property_types pt ON p.property_type_id = pt.id
-WHERE pt.name = 'Condominium'
-ORDER BY p.name;
-```
-
-### Agent and Contact Queries
-
-#### Get agent details
-```sql
-SELECT 
-    a.name,
-    a.role,
-    a.phone,
-    a.email,
-    a.whatsapp,
-    a.company,
-    a.languages,
-    a.specialties,
-    COUNT(p.id) as assigned_projects
+SELECT a.*, pa.is_primary
 FROM agents a
-LEFT JOIN projects p ON a.id = p.agent_id
-GROUP BY a.id, a.name, a.role, a.phone, a.email, a.whatsapp, a.company, a.languages, a.specialties
-ORDER BY a.name;
-```
-
-#### Get projects by agent
-```sql
-SELECT 
-    p.name,
-    p.slug,
-    p.location,
-    p.price,
-    a.name as agent_name,
-    a.phone as agent_phone
-FROM projects p
-JOIN agents a ON p.agent_id = a.id
-WHERE a.name = 'Sarah Chen'
-ORDER BY p.name;
+JOIN project_agents pa ON a.id = pa.agent_id
+WHERE pa.project_id = (SELECT id FROM projects WHERE slug = '10-evelyn')
+ORDER BY pa.is_primary DESC;
 ```
 
 ## API Integration
 
-### Example Node.js/Express Integration
+The database schema is designed to work seamlessly with the Next.js API routes:
 
-```javascript
-const { Pool } = require('pg');
+### `/api/projects/[slug]`
+Returns complete project data including all related information.
 
-const pool = new Pool({
-  user: 'kwsg_user',
-  host: 'localhost',
-  database: 'kwsg_projects',
-  password: 'your_password',
-  port: 5432,
-});
+### `/api/places`
+Returns nearby amenities based on project coordinates and amenity type.
 
-// Get project by slug
-async function getProjectBySlug(slug) {
-  const query = `
-    SELECT 
-      p.*,
-      d.name as developer_name,
-      pt.name as property_type,
-      ps.name as status,
-      a.name as agent_name,
-      a.phone as agent_phone,
-      a.email as agent_email
-    FROM projects p
-    LEFT JOIN developers d ON p.developer_id = d.id
-    LEFT JOIN property_types pt ON p.property_type_id = pt.id
-    LEFT JOIN project_statuses ps ON p.status_id = ps.id
-    LEFT JOIN agents a ON p.agent_id = a.id
-    WHERE p.slug = $1
-  `;
-  
-  const result = await pool.query(query, [slug]);
-  return result.rows[0];
-}
-
-// Get unit availability
-async function getUnitAvailability(projectId) {
-  const query = `
-    SELECT 
-      unit_type,
-      subtype,
-      size,
-      price,
-      total_units,
-      available_units,
-      status_percentage
-    FROM unit_availability
-    WHERE project_id = $1
-    ORDER BY unit_type
-  `;
-  
-  const result = await pool.query(query, [projectId]);
-  return result.rows;
-}
-
-// Get MOAT data
-async function getMoatData(projectId) {
-  const query = `
-    SELECT * FROM moat_data WHERE project_id = $1
-  `;
-  
-  const result = await pool.query(query, [projectId]);
-  return result.rows[0];
-}
-```
-
-## Data Maintenance
-
-### Adding New Projects
-
-```sql
--- Insert new project
-INSERT INTO projects (
-    name, project_name, slug, title, location, address, type,
-    price, price_from, price_per_sqft, bedrooms, bathrooms, size,
-    units, developer_id, completion, description, district,
-    tenure, property_type_id, status_id, total_units, total_floors,
-    site_area, latitude, longitude, agent_id
-) VALUES (
-    'New Project', 'New Project', 'new-project', 'New Project',
-    'District 9', '123 New Street, Singapore 123456', 'Condominium',
-    'From $2.0M', '2000000', '$2,500 - $3,000 psf', '1-4', '1-3',
-    '500 - 1,500 sq ft', '200 Units', 1, '2026',
-    'New luxury development...', '9', 'Freehold', 1, 1,
-    '200 Units', '25 Floors', '15,000 sq ft', 1.3000, 103.8000, 1
-);
-```
-
-### Updating Project Data
-
-```sql
--- Update project price
-UPDATE projects 
-SET price = 'From $2.2M', price_from = '2200000'
-WHERE slug = '10-evelyn';
-
--- Update unit availability
-UPDATE unit_availability 
-SET available_units = 45, status_percentage = 66
-WHERE project_id = (SELECT id FROM projects WHERE slug = '10-evelyn')
-AND unit_type = '1 Bedroom Units';
-```
-
-### Backup and Restore
-
-```bash
-# Create backup
-pg_dump -U kwsg_user -d kwsg_projects > kwsg_backup.sql
-
-# Restore from backup
-psql -U kwsg_user -d kwsg_projects < kwsg_backup.sql
-```
+### `/api/contact-form`
+Stores contact form submissions with project association.
 
 ## Performance Optimization
 
 ### Indexes
-The database includes indexes on frequently queried columns:
-- `projects.slug` - For project lookups
-- `projects.location` - For location-based searches
-- `projects.district` - For district filtering
-- `unit_availability.project_id` - For unit availability queries
-- `moat_data.project_id` - For MOAT analysis queries
+- Primary keys on all tables
+- Foreign key indexes for all relationships
+- Slug index for fast project lookups
+- Geographic indexes for location-based queries
+- Full-text search index on project descriptions
 
-### Query Optimization Tips
+### Query Optimization
+- Use appropriate JOINs for related data
+- Leverage array operations for features and languages
+- Utilize geographic functions for distance calculations
+- Implement pagination for large result sets
 
-1. **Use indexes**: Always query on indexed columns when possible
-2. **Limit results**: Use `LIMIT` for large result sets
-3. **Select specific columns**: Avoid `SELECT *` for large tables
-4. **Use JOINs efficiently**: Ensure proper foreign key relationships
-5. **Monitor query performance**: Use `EXPLAIN ANALYZE` for slow queries
+## Maintenance
+
+### Regular Tasks
+1. **Data Updates**: Keep project information current
+2. **Image Management**: Ensure image URLs are valid
+3. **Amenity Updates**: Refresh nearby amenities data
+4. **Contact Cleanup**: Archive old contact submissions
+5. **Performance Monitoring**: Monitor query performance
+
+### Backup Strategy
+- Daily automated backups
+- Point-in-time recovery capability
+- Test restore procedures regularly
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **Connection refused**: Check if PostgreSQL service is running
-2. **Permission denied**: Verify user permissions and database access
-3. **UUID extension missing**: Ensure `uuid-ossp` extension is installed
-4. **Foreign key violations**: Check referential integrity when inserting data
+1. **Missing Project Data**
+   - Check if project exists in `projects` table
+   - Verify slug format matches frontend expectations
+   - Ensure all required fields are populated
 
-### Useful Commands
+2. **Image Loading Issues**
+   - Verify image URLs in `project_images` table
+   - Check image accessibility and permissions
+   - Ensure proper alt text for accessibility
 
-```sql
--- Check database size
-SELECT pg_size_pretty(pg_database_size('kwsg_projects'));
+3. **Location Data Problems**
+   - Verify coordinate accuracy in `projects` table
+   - Check `nearby_amenities` data freshness
+   - Validate distance calculations
 
--- Check table sizes
-SELECT 
-    schemaname,
-    tablename,
-    pg_size_pretty(pg_total_relation_size(schemaname||'.'||tablename)) as size
-FROM pg_tables
-WHERE schemaname = 'public'
-ORDER BY pg_total_relation_size(schemaname||'.'||tablename) DESC;
+4. **Performance Issues**
+   - Review query execution plans
+   - Check index usage
+   - Monitor database connection pool
 
--- Check slow queries
-SELECT query, calls, total_time, mean_time
-FROM pg_stat_statements
-ORDER BY mean_time DESC
-LIMIT 10;
-```
+### Support
 
-## Support
+For database-related issues:
+1. Check the application logs for error messages
+2. Verify database connectivity
+3. Review query performance with EXPLAIN ANALYZE
+4. Contact the development team with specific error details
 
-For database-related issues or questions:
-1. Check the PostgreSQL documentation
-2. Review the query examples in `database_queries.sql`
-3. Monitor database logs for errors
-4. Use `EXPLAIN ANALYZE` for query performance analysis 
+## Future Enhancements
+
+### Planned Features
+1. **Real-time Updates**: WebSocket integration for live data
+2. **Advanced Analytics**: Enhanced reporting and insights
+3. **Multi-language Support**: Internationalization for project data
+4. **Image Optimization**: Automated image processing and optimization
+5. **Search Enhancement**: Advanced full-text search capabilities
+
+### Schema Evolution
+The database schema is designed to be extensible for future requirements while maintaining backward compatibility with existing applications. 

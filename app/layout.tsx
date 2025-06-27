@@ -60,7 +60,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <CSSLoader />
         <LayoutContent>{children}</LayoutContent>
         {/* Load Hotjar with optimized strategy and cache control */}

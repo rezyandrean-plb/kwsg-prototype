@@ -378,7 +378,6 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
   const [selectedBedroom, setSelectedBedroom] = useState<BedroomTabKey>('1')
   const [selectedSubtype, setSelectedSubtype] = useState<string>('')
   const [amenities, setAmenities] = useState<GooglePlace[]>([])
-  const [isLayoutHorizontal, setIsLayoutHorizontal] = useState(false)
   const [unitsActiveTab, setUnitsActiveTab] = useState(0)
   const [showFullDescription, setShowFullDescription] = useState(false)
   
@@ -394,18 +393,6 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
   const [submitError, setSubmitError] = useState<string | null>(null)
   
   const { toast } = useToast()
-
-  // Handle responsive layout with JavaScript fallback
-  useEffect(() => {
-    const handleResize = () => {
-      setIsLayoutHorizontal(window.innerWidth >= 1280) // xl breakpoint
-    }
-    
-    handleResize() // Set initial state
-    window.addEventListener('resize', handleResize)
-    
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
 
   // State management
   const [galleryOpen, setGalleryOpen] = useState(false)
@@ -434,7 +421,182 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
     setCode(floorPlanCodes[st as keyof typeof floorPlanCodes][0])
   }
 
-  // Mock project data - replace with actual data fetching based on slug
+  // Function to fetch project data from Strapi API
+  const fetchProject = async (projectSlug: string): Promise<Project | null> => {
+    try {
+      console.log('Fetching project with slug:', projectSlug)
+      
+      // Fetch all projects and find the one with matching slug
+      const response = await fetch('https://striking-hug-052e89dfad.strapiapp.com/api/projects')
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch projects')
+      }
+      
+      const data = await response.json()
+      console.log('API Response:', data)
+      
+      // Find the project with matching slug
+      const matchingProject = data.data?.find((project: any) => 
+        project.slug === projectSlug
+      )
+      
+      if (!matchingProject) {
+        console.log('No project found with slug:', projectSlug)
+        return null
+      }
+      
+      console.log('Found matching project:', matchingProject)
+      
+      const apiProject = matchingProject
+      console.log('API Project data:', apiProject)
+      
+      if (!apiProject) {
+        console.log('No project data found')
+        return null
+      }
+
+      // Transform API data to match our Project interface
+      const transformedProject: Project = {
+        id: apiProject.id,
+        name: apiProject.name || apiProject.project_name || '',
+        project_name: apiProject.project_name || apiProject.name || '',
+        slug: apiProject.slug || '',
+        title: apiProject.name || apiProject.project_name || '',
+        location: apiProject.location || '',
+        address: apiProject.address || '',
+        type: apiProject.type || apiProject.property_type || '',
+        price: apiProject.price_from ? `From $${apiProject.price_from}M` : 'Price on request',
+        priceFrom: apiProject.price_from || '',
+        pricePerSqFt: apiProject.price_per_sqft || '',
+        bedrooms: apiProject.bedrooms || '',
+        bathrooms: apiProject.bathrooms || '',
+        size: apiProject.size || '',
+        // Use placeholder images for now since API doesn't provide images
+        images: [
+          "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80",
+        ],
+        units: apiProject.units ? `${apiProject.units} Units` : '',
+        developer: apiProject.developer || '',
+        completion: apiProject.completion || '',
+        description: apiProject.description || '',
+        features: apiProject.features || [],
+        district: apiProject.district || '',
+        tenure: apiProject.tenure || '',
+        propertyType: apiProject.property_type || apiProject.type || '',
+        status: apiProject.status || '',
+        totalUnits: apiProject.total_units ? `${apiProject.total_units} Units` : '',
+        totalFloors: apiProject.total_floors ? `${apiProject.total_floors} Floors` : '',
+        siteArea: apiProject.site_area || '',
+        latitude: apiProject.latitude || 1.2834,
+        longitude: apiProject.longitude || 103.8598,
+        // Keep dummy data for sections not covered by API
+        unitTypes: [
+          { type: "1 Bedroom", size: "484 - 527 sq ft", price: "From $1.2M" },
+          { type: "2 Bedroom", size: "678 - 753 sq ft", price: "From $1.8M" },
+          { type: "3 Bedroom", size: "1,076 - 1,184 sq ft", price: "From $2.8M" },
+          { type: "4 Bedroom", size: "1,518 - 1,636 sq ft", price: "From $4.2M" },
+        ],
+        floorPlans: [
+          { type: "1 Bedroom", image: "/placeholder.svg?height=400&width=600&text=1+Bedroom+Floor+Plan" },
+          { type: "2 Bedroom", image: "/placeholder.svg?height=400&width=600&text=2+Bedroom+Floor+Plan" },
+          { type: "3 Bedroom", image: "/placeholder.svg?height=400&width=600&text=3+Bedroom+Floor+Plan" },
+          { type: "4 Bedroom", image: "/placeholder.svg?height=400&width=600&text=4+Bedroom+Floor+Plan" },
+        ],
+        locationAnalytics: {
+          mrt: [
+            { name: "Newton MRT", distance: "300m" },
+            { name: "Orchard MRT", distance: "800m" },
+          ],
+          schools: [
+            { name: "Anglo-Chinese School (Junior)", distance: "400m" },
+            { name: "St. Margaret's Primary School", distance: "600m" },
+          ],
+          amenities: [
+            { name: "United Square", distance: "250m" },
+            { name: "Goldhill Plaza", distance: "400m" },
+          ],
+          parks: [{ name: "Newton Green", distance: "150m" }],
+        },
+        mediaReviews: [
+          {
+            source: "The Edge Property",
+            date: "2024-02-15",
+            title: "10 Evelyn: A Rare Freehold Gem in Newton",
+            excerpt: "The development offers a unique opportunity for investors and homeowners alike...",
+            rating: 4.5,
+          },
+          {
+            source: "PropertyGuru",
+            date: "2024-02-10",
+            title: "Why 10 Evelyn is the Talk of Newton",
+            excerpt: "With its prime location and luxury finishes, 10 Evelyn stands out...",
+            rating: 4.8,
+          },
+        ],
+        similarProjects: [
+          {
+            name: "The Avenir",
+            location: "River Valley",
+            price: "From $2.5M",
+            priceRange: "$2.5M - $4.8M",
+            image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80",
+            units: "376 Units",
+            unitsAvailable: "376 Units",
+            propertySizeRange: "614 - 1,862 sqft",
+            developer: "Hong Leong Group",
+            completion: "2025",
+            slug: "the-avenir",
+            type: "Luxury Condominium",
+            coordinates: { lat: 1.3521, lng: 103.8198 },
+          },
+          {
+            name: "Midtown Modern",
+            location: "Bugis",
+            price: "From $1.8M",
+            priceRange: "$1.8M - $3.8M",
+            image: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80",
+            units: "558 Units",
+            unitsAvailable: "558 Units",
+            propertySizeRange: "678 - 1,862 sqft",
+            developer: "GuocoLand",
+            completion: "2024",
+            slug: "midtown-modern",
+            type: "Mixed Development",
+            coordinates: { lat: 1.3521, lng: 103.8198 },
+          },
+        ],
+        moat: {
+          project: apiProject.name || apiProject.project_name || '',
+          exitAudience: 4.2,
+          districtDisparityEffect: 3.8,
+          mrtProximity: 4.5,
+          parentsAttractionEffect: 3.9,
+          quantumEffect: 4.1,
+          rentalDemand: 4.3,
+          regionDisparityEffect: 4.0,
+          volumeEffect: 3.7,
+          balasCurveEffect: 4.4,
+          landsizeDensity: 3.6
+        }
+      }
+
+      return transformedProject
+    } catch (error) {
+      console.error('Error fetching project:', error)
+      return null
+    }
+  }
+
+  // Helper function to display "n/a" for empty values
+  const displayValue = (value: string | undefined | null): string => {
+    if (!value || value.trim() === '') return 'n/a'
+    return value
+  }
+
+  // Mock project data - fallback when API doesn't return data
   const mockProject: Project = {
     id: 1,
     name: "10 Evelyn",
@@ -560,11 +722,32 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
     }
   }
 
-  // Set project data on component mount
+  // Fetch project data on component mount
   useEffect(() => {
-    setProject(mockProject)
-    setLoading(false)
-  }, [])
+    const loadProject = async () => {
+      setLoading(true)
+      setError(null)
+      
+      try {
+        const projectData = await fetchProject(slug)
+        if (projectData) {
+          console.log('Using API data for project')
+          setProject(projectData)
+        } else {
+          console.log('API returned no data, using mock data as fallback')
+          setProject(mockProject)
+        }
+      } catch (error) {
+        console.error('Error loading project:', error)
+        console.log('Error occurred, using mock data as fallback')
+        setProject(mockProject)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadProject()
+  }, [slug])
 
   // Calculate units left percentage
   const totalUnits = Number.parseInt((project?.totalUnits || "0").replace(/[^0-9]/g, ""))
@@ -748,6 +931,35 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
     }
   }
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#1c1c1d] text-white">
+        <div className="text-center">
+          <div className="w-8 h-8 border-2 border-[#ce001f] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <h1 className="text-xl font-semibold mb-2">Loading project...</h1>
+          <p className="text-gray-400">Please wait while we fetch the project details.</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#1c1c1d] text-white">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Error loading project</h1>
+          <p className="text-gray-400 mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-4 py-2 rounded-lg transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   if (!project) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#1c1c1d] text-white">
@@ -900,21 +1112,64 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       <div className="sticky top-16 z-50 bg-[#1c1c1d] border-b border-gray-800">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
-            <div className="overflow-x-auto flex">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  className={`flex items-center gap-2 px-4 py-4 border-b-2 whitespace-nowrap transition-colors ${
-                    activeTab === tab.id
-                      ? "border-[#ce001f] text-[#ce001f]"
-                      : "border-transparent text-gray-400 hover:text-white"
-                  }`}
-                  onClick={() => scrollToSection(tab.id)}
-                >
-                  <tab.icon className="h-4 w-4" />
-                  <span className="text-sm sm:text-base">{tab.label}</span>
-                </button>
-              ))}
+            <div className="w-full">
+              {/* Mobile: 2 rows layout */}
+              <div className="block lg:hidden">
+                <div className="grid grid-cols-4 gap-1 py-2">
+                  {tabs.slice(0, 4).map((tab) => (
+                    <button
+                      key={tab.id}
+                      className={`flex flex-col items-center gap-1 px-2 py-2 border-b-2 transition-colors ${
+                        activeTab === tab.id
+                          ? "border-[#ce001f] text-[#ce001f]"
+                          : "border-transparent text-gray-400 hover:text-white"
+                      }`}
+                      onClick={() => scrollToSection(tab.id)}
+                    >
+                      <tab.icon className="h-4 w-4" />
+                      <span className="text-xs font-medium text-center leading-tight">{tab.label}</span>
+                    </button>
+                  ))}
+                </div>
+                <div className="grid grid-cols-4 gap-1 py-2">
+                  {tabs.slice(4, 8).map((tab) => (
+                    <button
+                      key={tab.id}
+                      className={`flex flex-col items-center gap-1 px-2 py-2 border-b-2 transition-colors ${
+                        activeTab === tab.id
+                          ? "border-[#ce001f] text-[#ce001f]"
+                          : "border-transparent text-gray-400 hover:text-white"
+                      }`}
+                      onClick={() => scrollToSection(tab.id)}
+                    >
+                      <tab.icon className="h-4 w-4" />
+                      <span className="text-xs font-medium text-center leading-tight">{tab.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Desktop: Single row with smaller font */}
+              <div className="hidden lg:block">
+                <div className="overflow-x-auto flex w-full" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                  <div className="flex min-w-full">
+                    {tabs.map((tab) => (
+                      <button
+                        key={tab.id}
+                        className={`flex items-center gap-2 px-4 py-3 border-b-2 whitespace-nowrap transition-colors flex-shrink-0 ${
+                          activeTab === tab.id
+                            ? "border-[#ce001f] text-[#ce001f]"
+                            : "border-transparent text-gray-400 hover:text-white"
+                        }`}
+                        onClick={() => scrollToSection(tab.id)}
+                      >
+                        <tab.icon className="h-4 w-4" />
+                        <span className="text-sm font-medium">{tab.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -927,29 +1182,10 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
           <div className="flex justify-center mb-4">
             <div className="w-16 h-1 bg-[#ce001f] rounded" />
           </div>
-          <div 
-            className="flex flex-col xl:flex-row gap-8 items-stretch min-h-[400px]"
-            style={{
-              display: 'flex',
-              flexDirection: isLayoutHorizontal ? 'row' : 'column',
-              gap: '2rem',
-              alignItems: 'stretch',
-              minHeight: '400px'
-            }}
-          >
+          <div className="flex flex-col xl:flex-row gap-8 items-stretch min-h-[400px]">
             
             {/* Left Section */}
-            <div 
-              className="w-full xl:w-1/2 min-w-0 flex flex-col gap-6 min-h-[400px]"
-              style={{
-                width: isLayoutHorizontal ? '50%' : '100%',
-                minWidth: '0',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '1.5rem',
-                minHeight: '400px'
-              }}
-            >
+            <div className="w-full xl:w-1/2 min-w-0 flex flex-col gap-6 min-h-[400px]">
               <div className="text-2xl font-semibold text-[#ce001f] mb-2">{project?.title}</div>
               <div className="text-gray-200 text-sm md:text-base leading-relaxed">
                 <div 
@@ -982,18 +1218,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             </div>
 
             {/* Right Section */}
-            <div 
-              className="w-full xl:w-1/2 min-w-0 flex flex-col items-center gap-4 min-h-[400px]"
-              style={{
-                width: isLayoutHorizontal ? '50%' : '100%',
-                minWidth: '0',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '1rem',
-                minHeight: '400px'
-              }}
-            >
+            <div className="w-full xl:w-1/2 min-w-0 flex flex-col items-center gap-4 min-h-[400px]">
               <div className="relative w-full aspect-[4/3] bg-[#e5e5e5] rounded-xl overflow-hidden flex items-center justify-center">
                 <img
                   src={project?.images[0] || '/placeholder.svg'}
@@ -1002,11 +1227,11 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 />
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-4 bg-black/70 rounded-lg px-6 py-3 border border-gray-700 backdrop-blur-sm">
                   <div className="flex flex-col items-center min-w-[100px]">
-                    <span className="text-2xl font-bold text-[#ce001f]">{project?.totalUnits.replace(/[^0-9]/g, '') || '0'}</span>
+                    <span className="text-xl lg:text-2xl font-bold text-[#ce001f]">{project?.totalUnits.replace(/[^0-9]/g, '') || '0'}</span>
                     <span className="text-xs text-gray-300 mt-1">Total Units</span>
                   </div>
                   <div className="flex flex-col items-center min-w-[100px]">
-                    <span className="text-2xl font-bold text-[#ce001f]">{project?.completion || 'N/A'}</span>
+                    <span className="text-xl lg:text-2xl font-bold text-[#ce001f]">{project?.completion || 'N/A'}</span>
                     <span className="text-xs text-gray-300 mt-1">Expected TOP</span>
                   </div>
                 </div>
@@ -1030,7 +1255,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               <MapPin className="h-7 w-7" style={{ color: '#ce001f' }} />
               <div>
                 <div className="text-gray-400 text-sm">Address</div>
-                <div className="text-white font-light">{project.address.replace(/,?\s*\d{6}$/, '')}</div>
+                <div className="text-white font-light">{displayValue(project?.address?.replace(/,?\s*\d{6}$/, ''))}</div>
               </div>
             </div>
             {/* Site Area */}
@@ -1038,7 +1263,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               <Layout className="h-7 w-7" style={{ color: '#ce001f' }} />
               <div>
                 <div className="text-gray-400 text-sm">Site Area</div>
-                <div className="text-white font-light">{project.siteArea}</div>
+                <div className="text-white font-light">{displayValue(project?.siteArea)}</div>
               </div>
             </div>
             {/* Developer */}
@@ -1046,7 +1271,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
               <div>
                 <div className="text-gray-400 text-sm">Developer</div>
-                <div className="text-white font-light">{project.developer}</div>
+                <div className="text-white font-light">{displayValue(project?.developer)}</div>
               </div>
             </div>
             {/* District */}
@@ -1054,7 +1279,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               <MapPin className="h-7 w-7" style={{ color: '#ce001f' }} />
               <div>
                 <div className="text-gray-400 text-sm">District</div>
-                <div className="text-white font-light">District {project.district}</div>
+                <div className="text-white font-light">{project?.district ? `District ${displayValue(project.district)}` : 'n/a'}</div>
               </div>
             </div>
             {/* Tenure */}
@@ -1062,7 +1287,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               <Calendar className="h-7 w-7" style={{ color: '#ce001f' }} />
               <div>
                 <div className="text-gray-400 text-sm">Tenure</div>
-                <div className="text-white font-light">{project.tenure}</div>
+                <div className="text-white font-light">{displayValue(project?.tenure)}</div>
               </div>
             </div>
             {/* Nearest MRT */}
@@ -1070,7 +1295,12 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               <Train className="h-7 w-7" style={{ color: '#ce001f' }} />
               <div>
                 <div className="text-gray-400 text-sm">Nearest MRT</div>
-                <div className="text-white font-light">{project.locationAnalytics.mrt[0]?.name} ({project.locationAnalytics.mrt[0]?.distance})</div>
+                <div className="text-white font-light">
+                  {project?.locationAnalytics?.mrt[0]?.name 
+                    ? `${project.locationAnalytics.mrt[0].name} (${project.locationAnalytics.mrt[0].distance})`
+                    : 'n/a'
+                  }
+                </div>
               </div>
             </div>
             {/* Total Units */}
@@ -1078,7 +1308,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               <Home className="h-7 w-7" style={{ color: '#ce001f' }} />
               <div>
                 <div className="text-gray-400 text-sm">Total Units</div>
-                <div className="text-white font-light">{project.totalUnits}</div>
+                <div className="text-white font-light">{displayValue(project?.totalUnits)}</div>
               </div>
             </div>
             {/* Bedrooms */}
@@ -1086,7 +1316,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               <Home className="h-7 w-7" style={{ color: '#ce001f' }} />
               <div>
                 <div className="text-gray-400 text-sm">Bedrooms</div>
-                <div className="text-white font-light">{project.bedrooms} bedrooms</div>
+                <div className="text-white font-light">{project?.bedrooms ? `${displayValue(project.bedrooms)} bedrooms` : 'n/a'}</div>
               </div>
             </div>
             {/* Expected TOP */}
@@ -1094,7 +1324,12 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               <Calendar className="h-7 w-7" style={{ color: '#ce001f' }} />
               <div>
                 <div className="text-gray-400 text-sm">Expected TOP</div>
-                <div className="text-white font-light">Q{project.completion?.slice(0,1) === '2' ? '2' : '1'} {project.completion}</div>
+                <div className="text-white font-light">
+                  {project?.completion 
+                    ? `Q${project.completion?.slice(0,1) === '2' ? '2' : '1'} ${displayValue(project.completion)}`
+                    : 'n/a'
+                  }
+                </div>
               </div>
             </div>
             {/* Property Type */}
@@ -1102,7 +1337,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
               <div>
                 <div className="text-gray-400 text-sm">Property Type</div>
-                <div className="text-white font-light">{project.propertyType}</div>
+                <div className="text-white font-light">{displayValue(project?.propertyType)}</div>
               </div>
             </div>
             {/* Floor Size */}
@@ -1110,7 +1345,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               <Layout className="h-7 w-7" style={{ color: '#ce001f' }} />
               <div>
                 <div className="text-gray-400 text-sm">Floor Size</div>
-                <div className="text-white font-light">{project.size}</div>
+                <div className="text-white font-light">{displayValue(project?.size)}</div>
               </div>
             </div>
             {/* Average PSF */}
@@ -1118,7 +1353,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               <BadgeDollarSign className="h-7 w-7" style={{ color: '#ce001f' }} />
               <div>
                 <div className="text-gray-400 text-sm">Average PSF</div>
-                <div className="text-white font-light">{project.pricePerSqFt ? `From ${project.pricePerSqFt}` : '-'}</div>
+                <div className="text-white font-light">{project?.pricePerSqFt ? `From ${displayValue(project.pricePerSqFt)}` : 'n/a'}</div>
               </div>
             </div>
             {/* Blocks */}
@@ -1126,7 +1361,12 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
               <div>
                 <div className="text-gray-400 text-sm">Blocks</div>
-                <div className="text-white font-light">{project.totalUnits ? Math.ceil(Number(project.totalUnits.replace(/[^0-9]/g, '')) / 7) + ' blocks' : '-'}</div>
+                <div className="text-white font-light">
+                  {project?.totalUnits 
+                    ? Math.ceil(Number(project.totalUnits.replace(/[^0-9]/g, '')) / 7) + ' blocks'
+                    : 'n/a'
+                  }
+                </div>
               </div>
             </div>
             {/* Floors */}
@@ -1134,7 +1374,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
               <div>
                 <div className="text-gray-400 text-sm">Floors</div>
-                <div className="text-white font-light">{project.totalFloors}</div>
+                <div className="text-white font-light">{displayValue(project?.totalFloors)}</div>
               </div>
             </div>
             {/* Car Park Lots */}
@@ -1142,7 +1382,12 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               <Home className="h-7 w-7" style={{ color: '#ce001f' }} />
               <div>
                 <div className="text-gray-400 text-sm">Car Park Lots</div>
-                <div className="text-white font-light">{project.totalUnits ? project.totalUnits.replace(/[^0-9]/g, '') + ' lots' : '-'}</div>
+                <div className="text-white font-light">
+                  {project?.totalUnits 
+                    ? project.totalUnits.replace(/[^0-9]/g, '') + ' lots'
+                    : 'n/a'
+                  }
+                </div>
               </div>
             </div>
             {/* Zoning */}
@@ -1165,10 +1410,10 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             <div className="w-16 h-1 bg-[#ce001f] rounded" />
           </div>
 
-          {/* Two Column Flex Container - Always Side by Side */}
-          <div className="flex flex-row gap-8 min-h-[400px]">
+          {/* Responsive Flex Container */}
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 min-h-[400px]">
             {/* Site Plan Left */}
-            <div className="flex-1 bg-[#242728] rounded-lg flex flex-col items-center justify-center min-h-[400px]">
+            <div className="flex-1 bg-[#242728] rounded-lg flex flex-col items-center justify-center min-h-[300px] lg:min-h-[400px]">
               <img
                 src="/siteplan-dummy.jpg"
                 alt="Site Plan"
@@ -1176,59 +1421,56 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               />
             </div>
             {/* Legend Right */}
-            <div className="w-80 bg-[#242728] border border-gray-700 rounded-lg p-6 flex flex-col justify-between min-h-[400px]">
+            <div className="w-full lg:w-80 bg-[#242728] border border-gray-700 rounded-lg p-4 lg:p-6 flex flex-col justify-between min-h-[300px] lg:min-h-[400px]">
               <div>
-                <h4 className="text-xl font-light text-left text-[#ce001f] mb-4">Map Legend</h4>
-                <ul className="space-y-4">
+                <h4 className="text-lg lg:text-xl font-light text-left text-[#ce001f] mb-4">Map Legend</h4>
+                <ul className="space-y-3 lg:space-y-4">
                   <li className="flex items-start gap-3">
                     <span className="inline-block w-3 h-3 rounded-full bg-[#ce001f] mt-1 flex-shrink-0" />
                     <div>
-                      <span className="text-white font-light">Main Entrance</span>
+                      <span className="text-white font-light text-sm lg:text-base">Main Entrance</span>
                       <div className="text-xs text-gray-400">North Gate</div>
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="inline-block w-3 h-3 rounded-full bg-blue-500 mt-1 flex-shrink-0" />
                     <div>
-                      <span className="text-white font-light">Clubhouse</span>
+                      <span className="text-white font-light text-sm lg:text-base">Clubhouse</span>
                       <div className="text-xs text-gray-400">Central</div>
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="inline-block w-3 h-3 rounded-full bg-cyan-400 mt-1 flex-shrink-0" />
                     <div>
-                      <span className="text-white font-light">Swimming Pool</span>
+                      <span className="text-white font-light text-sm lg:text-base">Swimming Pool</span>
                       <div className="text-xs text-gray-400">South Wing</div>
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="inline-block w-3 h-3 rounded-full bg-green-500 mt-1 flex-shrink-0" />
                     <div>
-                      <span className="text-white font-light">Tennis Court</span>
+                      <span className="text-white font-light text-sm lg:text-base">Tennis Court</span>
                       <div className="text-xs text-gray-400">East Side</div>
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="inline-block w-3 h-3 rounded-full bg-yellow-400 mt-1 flex-shrink-0" />
                     <div>
-                      <span className="text-white font-light">Children's Playground</span>
+                      <span className="text-white font-light text-sm lg:text-base">Children's Playground</span>
                       <div className="text-xs text-gray-400">West Garden</div>
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="inline-block w-3 h-3 rounded-full bg-purple-500 mt-1 flex-shrink-0" />
                     <div>
-                      <span className="text-white font-light">Parking Entrance</span>
+                      <span className="text-white font-light text-sm lg:text-base">Parking Entrance</span>
                       <div className="text-xs text-gray-400">Underground</div>
                     </div>
                   </li>
                 </ul>
               </div>
-              <button className="mt-8 w-full bg-[#ce001f] hover:bg-[#b3001a] text-white font-light py-3 rounded-full text-lg transition-colors" onClick={handleDownloadSitePlan}>
+              <button className="mt-6 lg:mt-8 w-full bg-[#ce001f] hover:bg-[#b3001a] text-white font-light py-3 rounded-full text-base lg:text-lg transition-colors" onClick={handleDownloadSitePlan}>
                 Download Site Plan
-              </button>
-              <button className="mt-4 w-full bg-[#b3001a] hover:bg-[#ce001f] text-white font-light py-3 rounded-full text-lg transition-colors" onClick={handleDownloadBrochure}>
-                Download Brochure
               </button>
             </div>
           </div>
@@ -1294,12 +1536,12 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               </div>
             </div>
             {/* Two-column layout below tabs */}
-            <div className="w-full flex flex-row gap-8 min-h-[500px]">
+            <div className="w-full flex flex-col lg:flex-row gap-4 lg:gap-8 min-h-[500px]">
               {/* Left: Amenity List */}
-              <div className="w-4/12 min-w-0 p-6 flex flex-col h-[500px]">
+              <div className="w-full lg:w-4/12 min-w-0 p-4 lg:p-6 flex flex-col h-[300px] lg:h-[500px]">
                 {/* Amenity List */}
                 <div className="flex-1 overflow-y-auto pr-2">
-                  <div className="space-y-4">
+                  <div className="space-y-3 lg:space-y-4">
                     {isLoadingAmenities ? (
                       <div className="flex items-center justify-center h-full">
                         <div className="text-gray-400">Loading amenities...</div>
@@ -1308,30 +1550,30 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                       amenitiesArray.map((place) => (
                         <div
                           key={place.placeId}
-                          className={`p-4 rounded-lg cursor-pointer transition-colors ${selectedAmenity?.placeId === place.placeId ? "bg-[#ce001f]/10 border border-[#ce001f]/20" : "bg-gray-800/50 border border-gray-700 hover:bg-gray-800"}`}
+                          className={`p-3 lg:p-4 rounded-lg cursor-pointer transition-colors ${selectedAmenity?.placeId === place.placeId ? "bg-[#ce001f]/10 border border-[#ce001f]/20" : "bg-gray-800/50 border border-gray-700 hover:bg-gray-800"}`}
                           onClick={() => setSelectedAmenity(place)}
                         >
                           <div className="flex items-start justify-between">
-                            <div>
-                              <h4 className="font-light text-white mb-1">{place.name}</h4>
-                              <p className="text-sm text-gray-400 mb-2">{place.address}</p>
-                              <div className="flex items-center gap-4 text-sm">
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-light text-white mb-1 text-sm lg:text-base truncate">{place.name}</h4>
+                              <p className="text-xs lg:text-sm text-gray-400 mb-2 line-clamp-2">{place.address}</p>
+                              <div className="flex flex-col sm:flex-row sm:items-center gap-2 lg:gap-4 text-xs lg:text-sm">
                                 <span className="text-gray-300 flex items-center gap-1">
-                                  <MapPin className="h-4 w-4" style={{ color: '#ce001f' }} />
+                                  <MapPin className="h-3 w-3 lg:h-4 lg:w-4" style={{ color: '#ce001f' }} />
                                   {place.distance}
                                 </span>
                                 <span className="text-gray-300 flex items-center gap-1">
-                                  <Clock className="h-4 w-4" style={{ color: '#ce001f' }} />
+                                  <Clock className="h-3 w-3 lg:h-4 lg:w-4" style={{ color: '#ce001f' }} />
                                   {place.duration}
                                 </span>
                                 <span className="text-gray-300 flex items-center gap-1">
-                                  <Train className="h-4 w-4" style={{ color: '#ce001f' }} />
+                                  <Train className="h-3 w-3 lg:h-4 lg:w-4" style={{ color: '#ce001f' }} />
                                   {place.transportMode}
                                 </span>
                               </div>
                             </div>
                             {place.isNearest && (
-                              <Badge className="bg-[#ce001f]/10 text-[#ce001f] border border-[#ce001f]/20">Nearest</Badge>
+                              <Badge className="bg-[#ce001f]/10 text-[#ce001f] border border-[#ce001f]/20 text-xs lg:text-sm ml-2 flex-shrink-0">Nearest</Badge>
                             )}
                           </div>
                         </div>
@@ -1343,8 +1585,8 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 </div>
               </div>
               {/* Right: Map */}
-              <div className="w-8/12 min-w-0 flex flex-col h-[500px]">
-                <div className="flex-1 w-full h-full min-h-[500px]">
+              <div className="w-full lg:w-8/12 min-w-0 flex flex-col h-[300px] lg:h-[500px]">
+                <div className="flex-1 w-full h-full min-h-[300px] lg:min-h-[500px]">
                   <NearbyAmenitiesMap
                     project={project}
                     amenities={amenitiesArray}
@@ -1443,66 +1685,66 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
           </div>
 
           {/* Card layout for selected unit type */}
-          <div className="flex flex-row gap-8 justify-center items-stretch bg-[#111] rounded-xl p-8 max-w-5xl mx-auto shadow-lg">
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 justify-center items-stretch bg-[#111] rounded-xl p-4 lg:p-8 max-w-5xl mx-auto shadow-lg">
             {/* Left: Floor plan image */}
-            <div className="flex-1 flex flex-col items-center justify-center min-w-[280px] max-w-[420px]">
+            <div className="w-full lg:flex-1 flex flex-col items-center justify-center min-w-0 lg:min-w-[280px] lg:max-w-[420px]">
               <div className="w-full aspect-[4/3] bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden mb-4">
                 {/* Placeholder image icon */}
-                <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                <svg className="w-12 h-12 lg:w-16 lg:h-16 text-gray-400" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5V8.25A2.25 2.25 0 0 1 5.25 6h13.5A2.25 2.25 0 0 1 21 8.25v8.25M3 16.5l3.72-3.72a2.25 2.25 0 0 1 3.18 0l2.4 2.4m-9.3 1.32 3.72-3.72a2.25 2.25 0 0 1 3.18 0l2.4 2.4m0 0 2.4-2.4a2.25 2.25 0 0 1 3.18 0l3.72 3.72M12 11.25a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
                 </svg>
               </div>
               <div className="flex gap-2 mt-2">
-                <button className="bg-[#232324] text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm">
-                  <Search className="h-4 w-4 text-red-400" />
+                <button className="bg-[#232324] text-white px-3 lg:px-4 py-2 rounded-lg flex items-center gap-2 text-xs lg:text-sm">
+                  <Search className="h-3 w-3 lg:h-4 lg:w-4 text-red-400" />
                   View
                 </button>
-                <button className="bg-[#232324] text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm">
-                  <ChevronDown className="h-4 w-4 text-red-400" />
+                <button className="bg-[#232324] text-white px-3 lg:px-4 py-2 rounded-lg flex items-center gap-2 text-xs lg:text-sm">
+                  <ChevronDown className="h-3 w-3 lg:h-4 lg:w-4 text-red-400" />
                   Download
                 </button>
               </div>
             </div>
             {/* Right: Unit details */}
-            <div className="flex-1 flex flex-col justify-between min-w-[280px] text-left">
+            <div className="w-full lg:flex-1 flex flex-col justify-between min-w-0 lg:min-w-[280px] text-left">
               {/* Top: Unit type and availability */}
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-2xl font-semibold text-white">{unitAvailabilityData[unitsActiveTab].unitType.replace(' Units', '')}</span>
-                <span className="text-green-400 font-semibold text-sm">Available {unitAvailabilityData[unitsActiveTab].subtypes[0].available} of {unitAvailabilityData[unitsActiveTab].subtypes[0].total}</span>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
+                <span className="text-xl lg:text-2xl font-semibold text-white">{unitAvailabilityData[unitsActiveTab].unitType.replace(' Units', '')}</span>
+                <span className="text-green-400 font-semibold text-xs lg:text-sm">Available {unitAvailabilityData[unitsActiveTab].subtypes[0].available} of {unitAvailabilityData[unitsActiveTab].subtypes[0].total}</span>
               </div>
               {/* Description */}
-              <div className="text-gray-300 text-sm mb-4">Perfect for young professionals and couples seeking modern urban living with premium finishes and thoughtful design.</div>
+              <div className="text-gray-300 text-xs lg:text-sm mb-4">Perfect for young professionals and couples seeking modern urban living with premium finishes and thoughtful design.</div>
               {/* Features row */}
-              <div className="flex gap-8 mb-4">
+              <div className="flex gap-4 lg:gap-8 mb-4">
                 <div className="flex flex-col items-center">
-                  <span className="flex items-center justify-center w-10 h-10 rounded-full bg-red-900/60">
-                    <Home className="h-5 w-5 text-red-400" />
+                  <span className="flex items-center justify-center w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-red-900/60">
+                    <Home className="h-4 w-4 lg:h-5 lg:w-5 text-red-400" />
                   </span>
-                  <span className="text-white text-sm mt-1">1 Bedrooms</span>
+                  <span className="text-white text-xs lg:text-sm mt-1">1 Bedrooms</span>
                 </div>
                 <div className="flex flex-col items-center">
-                  <span className="flex items-center justify-center w-10 h-10 rounded-full bg-red-900/60">
-                    <Home className="h-5 w-5 text-red-400" />
+                  <span className="flex items-center justify-center w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-red-900/60">
+                    <Home className="h-4 w-4 lg:h-5 lg:w-5 text-red-400" />
                   </span>
-                  <span className="text-white text-sm mt-1">1 Bathrooms</span>
+                  <span className="text-white text-xs lg:text-sm mt-1">1 Bathrooms</span>
                 </div>
                 <div className="flex flex-col items-center">
-                  <span className="flex items-center justify-center w-10 h-10 rounded-full bg-red-900/60">
-                    <Layout className="h-5 w-5 text-red-400" />
+                  <span className="flex items-center justify-center w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-red-900/60">
+                    <Layout className="h-4 w-4 lg:h-5 lg:w-5 text-red-400" />
                   </span>
-                  <span className="text-white text-sm mt-1">{unitAvailabilityData[unitsActiveTab].subtypes[0].size}</span>
+                  <span className="text-white text-xs lg:text-sm mt-1">{unitAvailabilityData[unitsActiveTab].subtypes[0].size}</span>
                 </div>
               </div>
               {/* Price range */}
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-red-400 text-lg font-medium">$</span>
-                <span className="text-white text-lg font-medium">Price Range</span>
-                <span className="text-white text-lg font-medium">{unitAvailabilityData[unitsActiveTab].subtypes[0].price}</span>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-4">
+                <span className="text-red-400 text-base lg:text-lg font-medium">$</span>
+                <span className="text-white text-base lg:text-lg font-medium">Price Range</span>
+                <span className="text-white text-base lg:text-lg font-medium">{unitAvailabilityData[unitsActiveTab].subtypes[0].price}</span>
               </div>
               {/* Key Features */}
               <div className="mb-4">
-                <div className="text-red-400 font-semibold mb-1">Key Features</div>
-                <div className="flex flex-wrap gap-4 text-sm">
+                <div className="text-red-400 font-semibold mb-1 text-sm lg:text-base">Key Features</div>
+                <div className="flex flex-wrap gap-2 lg:gap-4 text-xs lg:text-sm">
                   <span className="text-white">Open Concept Kitchen</span>
                   <span className="text-white">City Views</span>
                   <span className="text-white">Premium Fixtures</span>
@@ -1510,10 +1752,10 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 </div>
               </div>
               {/* CTA Button */}
-              <div className="flex justify-end mt-6">
+              <div className="flex justify-center lg:justify-end mt-6">
                 <button 
                   onClick={() => scrollToSection('contact')}
-                  className="bg-red-500 hover:bg-red-600 text-white font-light py-3 px-8 rounded-full text-md transition-colors"
+                  className="bg-red-500 hover:bg-red-600 text-white font-light py-3 px-6 lg:px-8 rounded-full text-sm lg:text-md transition-colors w-full sm:w-auto"
                 >
                   Enquire About This Unit
                 </button>
@@ -1535,7 +1777,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             <div className="w-full md:w-3/4 min-w-0 mx-auto">
               <div className="bg-[#23232a] rounded-lg p-6">
                 <TdsrCalculator 
-                  propertyPrice={parseFloat(project.priceFrom.replace(/[^0-9]/g, ''))}
+                  propertyPrice={parseFloat(project?.priceFrom?.replace(/[^0-9]/g, '') || '0')}
                   loanTenure={30}
                   interestRate={3.5}
                 />

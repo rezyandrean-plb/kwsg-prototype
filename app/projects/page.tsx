@@ -1,9 +1,9 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Search, Filter, ArrowRight, X, MapPin, Building2, Calendar, DollarSign, LayoutGrid, Map, Bed, SlidersHorizontal, Check } from "lucide-react"
+import { Search, Filter, ArrowRight, X, MapPin, Building2, Calendar, DollarSign, Bed, SlidersHorizontal, Check } from "lucide-react"
 import ProjectCard from "@/components/project-card"
 import Image from "next/image"
 import {
@@ -58,6 +58,41 @@ const staggerContainer = {
   }
 }
 
+// API Project type
+type ApiProject = {
+  id: number
+  name: string
+  project_name: string
+  slug: string
+  title: string
+  location: string
+  address: string
+  type: string
+  price: string
+  price_from: string
+  display_price: string
+  price_per_sqft: string
+  bedrooms: string
+  bathrooms: string
+  size: string
+  units: string
+  developer: string
+  completion: string
+  description: string
+  features: string[]
+  district: string
+  tenure: string
+  property_type: string
+  status: string
+  total_units: string
+  total_floors: string
+  site_area: string
+  latitude: number | null
+  longitude: number | null
+  created_at: string
+  updated_at: string
+}
+
 // Add type definition for Project
 type Project = {
   slug: string
@@ -86,346 +121,86 @@ type Project = {
   bedrooms?: string[]
 }
 
-// Project data
-const projects: Project[] = [
-  {
-    name: "Lentor Modern",
-    location: "Lentor",
-    price: "From $1.28M",
-    priceRange: "$1.28M - $2.88M",
-    pricePerSqFt: "$1,800 - $2,100 psf",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80",
-    units: "605 Units",
-    unitsAvailable: "605 Units",
-    propertySizeRange: "527 - 1,302 sqft",
-    developer: "GuocoLand & Hong Leong",
-    completion: "2026",
-    slug: "lentor-modern",
-    description: "Integrated development featuring residential units, retail spaces, and direct MRT connectivity at Lentor Station.",
-    features: ["99-year leasehold", "Integrated development", "Direct MRT access", "Full facilities"],
-    type: "Mixed Development",
-    status: "upcoming",
-    coordinates: { lat: 1.3521, lng: 103.8198 }
-  },
-  {
-    name: "The Landmark",
-    location: "Changi",
-    price: "From $1.15M",
-    priceRange: "$1.15M - $2.45M",
-    pricePerSqFt: "$1,600 - $1,900 psf",
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80",
-    units: "396 Units",
-    unitsAvailable: "396 Units",
-    propertySizeRange: "484 - 1,259 sqft",
-    developer: "Hong Leong Group",
-    completion: "2026",
-    slug: "the-landmark",
-    description: "Waterfront living with panoramic sea views and exclusive marina access in the upcoming Changi Bay area.",
-    features: ["99-year leasehold", "Waterfront living", "Marina access", "Full facilities"],
-    type: "Waterfront Condominium",
-    status: "ongoing",
-    coordinates: { lat: 1.3521, lng: 103.8198 }
-  },
-  {
-    name: "The Reserve Residences",
-    location: "Bukit Timah",
-    price: "From $1.88M",
-    priceRange: "$1.88M - $4.28M",
-    pricePerSqFt: "$2,200 - $2,600 psf",
-    image: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80",
-    units: "732 Units",
-    unitsAvailable: "732 Units",
-    propertySizeRange: "614 - 1,862 sqft",
-    developer: "Far East Organization",
-    completion: "2026",
-    slug: "the-reserve-residences",
-    description: "Luxury integrated development in the prestigious Bukit Timah area, offering exclusive living spaces with premium finishes.",
-    features: ["99-year leasehold", "Integrated development", "Luxury finishes", "Full facilities"],
-    district: 21,
-    tenure: "99-year Leasehold",
-    propertyType: "Luxury Condominium",
-    status: "completed",
-    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"],
-    type: "Luxury Condominium",
-    coordinates: { lat: 1.3521, lng: 103.8198 }
-  },
-  {
-    name: "Tembusu Grand",
-    location: "Tembusu",
-    price: "From $1.48M",
-    priceRange: "$1.48M - $3.28M",
-    pricePerSqFt: "$1,900 - $2,200 psf",
-    image: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&q=80",
-    units: "638 Units",
-    unitsAvailable: "638 Units",
-    propertySizeRange: "527 - 1,485 sqft",
-    developer: "CDL & MCL Land",
-    completion: "2026",
-    slug: "tembusu-grand",
-    description: "Family-friendly development in the established Tembusu neighborhood with excellent connectivity and amenities.",
-    features: ["99-year leasehold", "Family-oriented", "Near MRT", "Good schools"],
-    district: 14,
-    tenure: "99-year Leasehold",
-    propertyType: "Mass Market Condominium",
-    status: "upcoming",
-    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms"],
-    type: "Mass Market Condominium",
-    coordinates: { lat: 1.3521, lng: 103.8198 }
-  },
-  {
-    name: "Sceneca Residence",
-    location: "Tanah Merah",
-    price: "From $1.18M",
-    priceRange: "$1.18M - $2.68M",
-    pricePerSqFt: "$1,700 - $2,000 psf",
-    image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80",
-    units: "268 Units",
-    unitsAvailable: "268 Units",
-    propertySizeRange: "484 - 1,259 sqft",
-    developer: "MCC Land",
-    completion: "2026",
-    slug: "sceneca-residence",
-    description: "Integrated development offering a perfect blend of residential comfort and retail convenience in the heart of Tanah Merah.",
-    features: ["99-year leasehold", "Integrated development", "Near MRT", "Shopping mall"],
-    district: 16,
-    tenure: "99-year Leasehold",
-    propertyType: "Mixed Development",
-    status: "ongoing",
-    bedrooms: ["1 Bedroom", "2 Bedrooms", "3 Bedrooms", "4 Bedrooms"],
-    type: "Mixed Development",
-    coordinates: { lat: 1.3521, lng: 103.8198 }
-  },
-  {
-    name: "Pinetree Hill",
-    location: "Dunearn",
-    price: "From $1.98M",
-    priceRange: "$1.98M - $4.58M",
-    pricePerSqFt: "$2,300 - $2,700 psf",
-    image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80",
-    units: "520 Units",
-    unitsAvailable: "520 Units",
-    propertySizeRange: "678 - 1,862 sqft",
-    developer: "Hong Leong Group",
-    completion: "2026",
-    slug: "pinetree-hill",
-    description: "Luxury freehold development in the prestigious Dunearn area, offering exclusive living spaces with premium finishes.",
-    features: ["Freehold", "Luxury finishes", "Prime location", "Full facilities"],
-    district: 21,
-    tenure: "Freehold",
-    propertyType: "Luxury Condominium",
-    status: "completed",
-    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"],
-    type: "Luxury Condominium",
-    coordinates: { lat: 1.3521, lng: 103.8198 }
-  },
-  {
-    name: "The Continuum",
-    location: "Thiam Siew",
-    price: "From $1.68M",
-    priceRange: "$1.68M - $3.88M",
-    pricePerSqFt: "$2,000 - $2,400 psf",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80",
-    units: "816 Units",
-    unitsAvailable: "816 Units",
-    propertySizeRange: "592 - 1,722 sqft",
-    developer: "Hoi Hup & Sunway",
-    completion: "2027",
-    slug: "the-continuum",
-    description: "Premium development in the heart of District 15, offering sophisticated living spaces with panoramic city views.",
-    features: ["99-year leasehold", "City views", "Premium finishes", "Full facilities"],
-    district: 15,
-    tenure: "99-year Leasehold",
-    propertyType: "Premium Condominium",
-    status: "upcoming",
-    bedrooms: ["1 Bedroom", "2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"],
-    type: "Premium Condominium",
-    coordinates: { lat: 1.3521, lng: 103.8198 }
-  },
-  {
-    name: "Lentor Hills Residences",
-    location: "Lentor",
-    price: "From $1.38M",
-    priceRange: "$1.38M - $2.98M",
-    pricePerSqFt: "$1,900 - $2,200 psf",
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80",
-    units: "598 Units",
-    unitsAvailable: "598 Units",
-    propertySizeRange: "538 - 1,335 sqft",
-    developer: "GuocoLand",
-    completion: "2026",
-    slug: "lentor-hills-residences",
-    description: "Family-oriented development in the upcoming Lentor Hills precinct, offering modern living spaces with nature-inspired amenities.",
-    features: ["99-year leasehold", "Nature-inspired", "Family-friendly", "Full facilities"],
-    district: 26,
-    tenure: "99-year Leasehold",
-    propertyType: "Mass Market Condominium",
-    status: "ongoing",
-    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms"],
-    type: "Mass Market Condominium",
-    coordinates: { lat: 1.3521, lng: 103.8198 }
-  },
-  {
-    name: "Marina View Residences",
-    location: "Marina Bay",
-    price: "From $2.88M",
-    priceRange: "$2.88M - $5.88M",
-    pricePerSqFt: "$3,200 - $3,800 psf",
-    image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80",
-    units: "450 Units",
-    unitsAvailable: "450 Units",
-    propertySizeRange: "678 - 2,152 sqft",
-    developer: "CapitaLand",
-    completion: "2027",
-    slug: "marina-view-residences",
-    description: "Luxury waterfront living in the heart of Marina Bay, offering panoramic views of the city skyline and waterfront.",
-    features: ["99-year leasehold", "Waterfront living", "City views", "Premium facilities"],
-    district: 1,
-    tenure: "99-year Leasehold",
-    propertyType: "Luxury Waterfront Condominium",
-    status: "upcoming",
-    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms", "Penthouse"],
-    type: "Luxury Waterfront Condominium",
-    coordinates: { lat: 1.3521, lng: 103.8198 }
-  },
-  {
-    name: "Orchard Residences",
-    location: "Orchard",
-    price: "From $3.28M",
-    priceRange: "$3.28M - $6.88M",
-    pricePerSqFt: "$3,500 - $4,000 psf",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80",
-    units: "380 Units",
-    unitsAvailable: "380 Units",
-    propertySizeRange: "592 - 2,152 sqft",
-    developer: "Far East Organization",
-    completion: "2027",
-    slug: "orchard-residences",
-    description: "Ultra-luxury living in the heart of Orchard Road, Singapore's premier shopping and lifestyle district.",
-    features: ["Freehold", "Prime location", "Luxury finishes", "Full facilities"],
-    district: 9,
-    tenure: "Freehold",
-    propertyType: "Luxury Condominium",
-    status: "upcoming",
-    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms", "Penthouse"],
-    type: "Luxury Condominium",
-    coordinates: { lat: 1.3521, lng: 103.8198 }
-  },
-  {
-    name: "Sentosa Cove Villas",
-    location: "Sentosa Cove",
-    price: "From $4.88M",
-    priceRange: "$4.88M - $8.88M",
-    pricePerSqFt: "$4,200 - $4,800 psf",
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80",
-    units: "120 Units",
-    unitsAvailable: "120 Units",
-    propertySizeRange: "1,200 - 3,000 sqft",
-    developer: "CDL",
-    completion: "2027",
-    slug: "sentosa-cove-villas",
-    description: "Exclusive waterfront living in Sentosa Cove, offering private marina access and luxury amenities.",
-    features: ["Freehold", "Waterfront living", "Marina access", "Private facilities"],
-    district: 4,
-    tenure: "Freehold",
-    propertyType: "Luxury Waterfront Villas",
-    status: "upcoming",
-    bedrooms: ["4 Bedrooms", "5 Bedrooms", "6 Bedrooms", "Penthouse"],
-    type: "Luxury Waterfront Villas",
-    coordinates: { lat: 1.3521, lng: 103.8198 }
-  },
-  {
-    name: "Newton Edge",
-    location: "Newton",
-    price: "From $2.18M",
-    priceRange: "$2.18M - $4.18M",
-    pricePerSqFt: "$2,800 - $3,200 psf",
-    image: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80",
-    units: "280 Units",
-    unitsAvailable: "280 Units",
-    propertySizeRange: "592 - 1,722 sqft",
-    developer: "Hong Leong Group",
-    completion: "2027",
-    slug: "newton-edge",
-    description: "Sophisticated living in the prestigious Newton area, offering modern luxury with excellent connectivity.",
-    features: ["99-year leasehold", "Prime location", "Luxury finishes", "Full facilities"],
-    district: 11,
-    tenure: "99-year Leasehold",
-    propertyType: "Luxury Condominium",
-    status: "upcoming",
-    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"],
-    type: "Luxury Condominium",
-    coordinates: { lat: 1.3521, lng: 103.8198 }
-  },
-  {
-    name: "Holland Village Residences",
-    location: "Holland Village",
-    price: "From $2.48M",
-    priceRange: "$2.48M - $4.88M",
-    pricePerSqFt: "$2,900 - $3,400 psf",
-    image: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&q=80",
-    units: "320 Units",
-    unitsAvailable: "320 Units",
-    propertySizeRange: "592 - 1,862 sqft",
-    developer: "GuocoLand",
-    completion: "2027",
-    slug: "holland-village-residences",
-    description: "Contemporary living in the vibrant Holland Village area, offering a perfect blend of lifestyle and convenience.",
-    features: ["99-year leasehold", "Lifestyle location", "Modern design", "Full facilities"],
-    district: 10,
-    tenure: "99-year Leasehold",
-    propertyType: "Luxury Condominium",
-    status: "upcoming",
-    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms", "5 Bedrooms"],
-    type: "Luxury Condominium",
-    coordinates: { lat: 1.3521, lng: 103.8198 }
-  },
-  {
-    name: "East Coast Residences",
-    location: "East Coast",
-    price: "From $1.88M",
-    priceRange: "$1.88M - $3.88M",
-    pricePerSqFt: "$2,200 - $2,600 psf",
-    image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80",
-    units: "420 Units",
-    unitsAvailable: "420 Units",
-    propertySizeRange: "592 - 1,722 sqft",
-    developer: "MCC Land",
-    completion: "2027",
-    slug: "east-coast-residences",
-    description: "Seaside living in the popular East Coast area, offering a relaxed lifestyle with excellent amenities.",
-    features: ["99-year leasehold", "Seaside living", "Family-friendly", "Full facilities"],
-    district: 15,
-    tenure: "99-year Leasehold",
-    propertyType: "Mass Market Condominium",
-    status: "upcoming",
-    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms"],
-    type: "Mass Market Condominium",
-    coordinates: { lat: 1.3521, lng: 103.8198 }
-  },
-  {
-    name: "Jurong Lake Residences",
-    location: "Jurong Lake",
-    price: "From $1.28M",
-    priceRange: "$1.28M - $2.88M",
-    pricePerSqFt: "$1,800 - $2,200 psf",
-    image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80",
-    units: "580 Units",
-    unitsAvailable: "580 Units",
-    propertySizeRange: "527 - 1,302 sqft",
-    developer: "CDL",
-    completion: "2027",
-    slug: "jurong-lake-residences",
-    description: "Lakeside living in the upcoming Jurong Lake District, offering modern comfort with nature-inspired amenities.",
-    features: ["99-year leasehold", "Lakeside living", "Nature-inspired", "Full facilities"],
-    district: 22,
-    tenure: "99-year Leasehold",
-    propertyType: "Mass Market Condominium",
-    status: "upcoming",
-    bedrooms: ["2 Bedrooms", "3 Bedrooms", "4 Bedrooms"],
-    type: "Mass Market Condominium",
-    coordinates: { lat: 1.3521, lng: 103.8198 }
+// Function to fetch projects from API
+const fetchProjects = async (): Promise<Project[]> => {
+  try {
+    const response = await fetch('https://striking-hug-052e89dfad.strapiapp.com/api/projects/')
+    if (!response.ok) {
+      throw new Error('Failed to fetch projects')
+    }
+    
+    const data = await response.json()
+    const apiProjects: ApiProject[] = data.data || []
+    
+    // Transform API data to match our Project type
+    return apiProjects.map((apiProject): Project => {
+      // Extract district number from district string (e.g., "D05" -> 5)
+      const districtNumber = apiProject.district ? parseInt(apiProject.district.replace('D', '')) : undefined
+      
+      // Map status to our enum
+      const mapStatus = (status: string | null | undefined): 'upcoming' | 'ongoing' | 'completed' => {
+        if (!status) return 'upcoming' // Default to upcoming if status is null/undefined
+        
+        const statusLower = status.toLowerCase()
+        if (statusLower.includes('launching soon') || statusLower.includes('coming soon')) {
+          return 'upcoming'
+        } else if (statusLower.includes('under construction') || statusLower.includes('ongoing')) {
+          return 'ongoing'
+        } else {
+          return 'completed'
+        }
+      }
+      
+      // Generate price range from display_price if available
+      const priceRange = apiProject.display_price ? 
+        apiProject.display_price : 
+        undefined
+      
+      // Generate price display
+      const price = apiProject.price_from ? `From $${apiProject.price_from}M` : 'Price on request'
+      
+      // Generate image URL (using placeholder for now since API doesn't provide images)
+      const image = `https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80`
+      
+      // Generate coordinates (using placeholder if not available)
+      const coordinates = apiProject.latitude && apiProject.longitude ? 
+        { lat: apiProject.latitude, lng: apiProject.longitude } : 
+        { lat: 1.3521, lng: 103.8198 }
+      
+      // Generate bedrooms array from bedrooms string
+      const bedrooms = apiProject.bedrooms ? 
+        apiProject.bedrooms.split(',').map(b => b.trim()).filter(b => b) : 
+        undefined
+      
+      return {
+        slug: apiProject.slug,
+        name: apiProject.name || apiProject.project_name,
+        location: apiProject.location,
+        price,
+        priceRange,
+        pricePerSqFt: apiProject.price_per_sqft,
+        image,
+        units: apiProject.units ? `${apiProject.units} Units` : undefined,
+        unitsAvailable: apiProject.total_units ? `${apiProject.total_units} Units` : undefined,
+        propertySizeRange: apiProject.size,
+        developer: apiProject.developer,
+        completion: apiProject.completion,
+        description: apiProject.description,
+        features: apiProject.features || [],
+        type: apiProject.type || apiProject.property_type,
+        status: mapStatus(apiProject.status),
+        district: districtNumber,
+        tenure: apiProject.tenure,
+        propertyType: apiProject.property_type,
+        bedrooms,
+        coordinates
+      }
+    })
+  } catch (error) {
+    console.error('Error fetching projects:', error)
+    return []
   }
-]
+}
 
 export default function NewLaunchDirectory() {
   const [searchInput, setSearchInput] = useState("")
@@ -437,7 +212,6 @@ export default function NewLaunchDirectory() {
   const [selectedStatus, setSelectedStatus] = useState<("upcoming" | "ongoing" | "completed")[]>([])
   const [selectedBedrooms, setSelectedBedrooms] = useState<string[]>([])
   const [selectedPriceRange, setSelectedPriceRange] = useState<string[]>([])
-  const [viewMode, setViewMode] = useState<"grid" | "map">("grid")
   const [currentPage, setCurrentPage] = useState(1)
   const projectsPerPage = 8
   const [priceMin, setPriceMin] = useState(0)
@@ -451,6 +225,30 @@ export default function NewLaunchDirectory() {
   })
   const [isOpen, setIsOpen] = useState(false)
   const searchSectionRef = useRef<HTMLDivElement>(null)
+  
+  // State for projects data
+  const [projects, setProjects] = useState<Project[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [isClient, setIsClient] = useState(false)
+
+  // Ensure we're on the client side
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  // Fetch projects on component mount (client-side only)
+  useEffect(() => {
+    if (!isClient) return
+    
+    const loadProjects = async () => {
+      setIsLoading(true)
+      const fetchedProjects = await fetchProjects()
+      setProjects(fetchedProjects)
+      setIsLoading(false)
+    }
+    
+    loadProjects()
+  }, [isClient])
 
   const scrollToSearch = () => {
     searchSectionRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -468,7 +266,7 @@ export default function NewLaunchDirectory() {
   ]
 
   // Filter and sort projects
-  const filteredProjects = projects
+  const filteredProjects = isClient ? projects
     .filter((project) => {
       const matchesSearch = project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         project.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -494,18 +292,21 @@ export default function NewLaunchDirectory() {
         case "price-high-low":
           return parseInt(b.price.replace(/[^0-9]/g, "")) - parseInt(a.price.replace(/[^0-9]/g, ""))
         case "completion":
-          return new Date(a.completion || '').getTime() - new Date(b.completion || '').getTime()
+          // Use string comparison for dates to avoid hydration issues
+          const dateA = a.completion || ''
+          const dateB = b.completion || ''
+          return dateA.localeCompare(dateB)
         default:
           return 0
       }
-    })
+    }) : []
 
   // Update all filter arrays to handle undefined values
-  const districts = Array.from(new Set(projects.map(p => p.district).filter((d): d is number => d !== undefined))).sort((a, b) => a - b)
-  const tenures = Array.from(new Set(projects.map(p => p.tenure).filter((t): t is string => t !== undefined)))
-  const propertyTypes = Array.from(new Set(projects.map(p => p.propertyType).filter((t): t is string => t !== undefined)))
+  const districts = isClient ? Array.from(new Set(projects.map(p => p.district).filter((d): d is number => d !== undefined))).sort((a, b) => a - b) : []
+  const tenures = isClient ? Array.from(new Set(projects.map(p => p.tenure).filter((t): t is string => t !== undefined))) : []
+  const propertyTypes = isClient ? Array.from(new Set(projects.map(p => p.propertyType).filter((t): t is string => t !== undefined))) : []
   const statuses: ("upcoming" | "ongoing" | "completed")[] = ["upcoming", "ongoing", "completed"]
-  const bedrooms = Array.from(new Set(projects.flatMap(p => p.bedrooms || [])))
+  const bedrooms = isClient ? Array.from(new Set(projects.flatMap(p => p.bedrooms || []))) : []
 
   // Calculate pagination
   const indexOfLastProject = currentPage * projectsPerPage
@@ -612,9 +413,181 @@ export default function NewLaunchDirectory() {
       </section>
 
       {/* Search and Filters Row */}
-      <section className="container mx-auto px-4 mt-[-4rem] mb-12 relative z-10">
-        <div className="bg-[#242728] rounded-2xl shadow-lg p-6">
-          <div className="flex items-center gap-4">
+      <section ref={searchSectionRef} className="container mx-auto px-4 mt-[-4rem] mb-12 relative z-10">
+        <div className="bg-[#242728] rounded-2xl shadow-lg p-4 sm:p-6">
+          {/* Mobile Layout - Stacked */}
+          <div className="block sm:hidden">
+            {/* Search Bar - Full width on mobile */}
+            <div className="relative mb-4">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Input
+                type="search"
+                placeholder="Search projects by name, location, or developer..."
+                className="w-full pl-12 h-[52px] text-base bg-[#242728] border-gray-600 text-white placeholder:text-gray-400 focus:border-primary-red focus:ring-primary-red/20 backdrop-blur-sm rounded-md"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    setSearchQuery(searchInput)
+                  }
+                }}
+              />
+            </div>
+            
+            {/* Filter Controls - Stack on mobile */}
+            <div className="flex flex-col items-stretch gap-3">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    className="h-[52px] px-4 flex items-center justify-center gap-2 border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 rounded-md transition-colors whitespace-nowrap text-sm"
+                  >
+                    <Filter className="h-4 w-4" />
+                    <span>Filters</span>
+                    {(selectedDistricts.length > 0 || selectedTenures.length > 0 || selectedPropertyTypes.length > 0 || 
+                      selectedStatus.length > 0 || selectedBedrooms.length > 0 || priceMin > 0 || priceMax < 5000000) && (
+                      <Badge variant="secondary" className="ml-1 bg-primary-red/20 text-primary-red rounded-full text-xs">
+                        {selectedDistricts.length + selectedTenures.length + selectedPropertyTypes.length + 
+                         selectedStatus.length + selectedBedrooms.length + (priceMin > 0 || priceMax < 5000000 ? 1 : 0)}
+                      </Badge>
+                    )}
+                  </Button>
+                </SheetTrigger>
+                <SheetContent className="w-full bg-[#242728] border-gray-700 text-white">
+                  <SheetHeader>
+                    <SheetTitle className="text-white">Filter Projects</SheetTitle>
+                  </SheetHeader>
+                  <div className="mt-6 space-y-6 max-h-[calc(100vh-200px)] overflow-y-auto">
+                    {/* District Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">District</h3>
+                      <div className="grid grid-cols-2 gap-2">
+                        {districts.map((district) => (
+                          <Button
+                            key={district}
+                            variant={selectedDistricts.includes(district) ? "default" : "outline"}
+                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 text-sm py-2"
+                            onClick={() => handleDistrictChange(district)}
+                          >
+                            {selectedDistricts.includes(district) && <Check className="mr-2 h-4 w-4" />}
+                            D{district}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Tenure Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">Tenure</h3>
+                      <div className="space-y-2">
+                        {tenures.map((tenure) => (
+                          <Button
+                            key={tenure}
+                            variant={selectedTenures.includes(tenure) ? "default" : "outline"}
+                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 text-sm py-2"
+                            onClick={() => handleTenureChange(tenure)}
+                          >
+                            {selectedTenures.includes(tenure) && <Check className="mr-2 h-4 w-4" />}
+                            {tenure}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Property Type Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">Property Type</h3>
+                      <div className="space-y-2">
+                        {propertyTypes.map((type) => (
+                          <Button
+                            key={type}
+                            variant={selectedPropertyTypes.includes(type) ? "default" : "outline"}
+                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 text-sm py-2"
+                            onClick={() => handlePropertyTypeChange(type)}
+                          >
+                            {selectedPropertyTypes.includes(type) && <Check className="mr-2 h-4 w-4" />}
+                            {type}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Status Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">Status</h3>
+                      <div className="space-y-2">
+                        {statuses.map((status) => (
+                          <Button
+                            key={status}
+                            variant={selectedStatus.includes(status) ? "default" : "outline"}
+                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 capitalize text-sm py-2"
+                            onClick={() => handleStatusChange(status)}
+                          >
+                            {selectedStatus.includes(status) && <Check className="mr-2 h-4 w-4" />}
+                            {status}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Bedroom Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">Bedrooms</h3>
+                      <div className="grid grid-cols-2 gap-2">
+                        {bedrooms.map((bedroom) => (
+                          <Button
+                            key={bedroom}
+                            variant={selectedBedrooms.includes(bedroom) ? "default" : "outline"}
+                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 text-sm py-2"
+                            onClick={() => handleBedroomChange(bedroom)}
+                          >
+                            {selectedBedrooms.includes(bedroom) && <Check className="mr-2 h-4 w-4" />}
+                            {bedroom}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Price Range Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">Price Range</h3>
+                      <div className="px-2">
+                        <Slider
+                          defaultValue={[priceMin, priceMax]}
+                          max={5000000}
+                          step={100000}
+                          onValueChange={(value) => {
+                            setPriceMin(value[0])
+                            setPriceMax(value[1])
+                          }}
+                          className="mb-4"
+                        />
+                        <div className="flex justify-between text-sm text-gray-400">
+                          <span>${priceMin.toLocaleString()}</span>
+                          <span>${priceMax.toLocaleString()}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </SheetContent>
+              </Sheet>
+
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger className="h-[52px] px-4 bg-[#242728] border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 rounded-md text-sm">
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#242728] border-gray-700 text-white">
+                  <SelectItem value="latest" className="text-white">Latest</SelectItem>
+                  <SelectItem value="price-low-high" className="text-white">Price: Low to High</SelectItem>
+                  <SelectItem value="price-high-low" className="text-white">Price: High to Low</SelectItem>
+                  <SelectItem value="completion" className="text-white">Completion Date</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* Desktop Layout - Horizontal Row */}
+          <div className="hidden sm:flex items-center gap-4">
             {/* Search Bar */}
             <div className="relative flex-1">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -650,7 +623,7 @@ export default function NewLaunchDirectory() {
                     )}
                   </Button>
                 </SheetTrigger>
-                <SheetContent className="w-[300px] sm:w-[400px] bg-[#242728] border-gray-700 text-white">
+                <SheetContent className="w-[400px] bg-[#242728] border-gray-700 text-white">
                   <SheetHeader>
                     <SheetTitle className="text-white">Filter Projects</SheetTitle>
                   </SheetHeader>
@@ -658,7 +631,7 @@ export default function NewLaunchDirectory() {
                     {/* District Filter */}
                     <div>
                       <h3 className="font-medium mb-3 text-white">District</h3>
-                      <div className="grid grid-cols-2 gap-2">
+                      <div className="grid grid-cols-3 gap-2">
                         {districts.map((district) => (
                           <Button
                             key={district}
@@ -730,7 +703,7 @@ export default function NewLaunchDirectory() {
                     {/* Bedroom Filter */}
                     <div>
                       <h3 className="font-medium mb-3 text-white">Bedrooms</h3>
-                      <div className="space-y-2">
+                      <div className="grid grid-cols-3 gap-2">
                         {bedrooms.map((bedroom) => (
                           <Button
                             key={bedroom}
@@ -780,111 +753,102 @@ export default function NewLaunchDirectory() {
                   <SelectItem value="completion" className="text-white">Completion Date</SelectItem>
                 </SelectContent>
               </Select>
-
-              <Button
-                variant={viewMode === "grid" ? "default" : "outline"}
-                onClick={() => setViewMode("grid")}
-                className={`h-[52px] px-4 ${viewMode === "grid" ? "bg-primary-red text-white hover:bg-primary-red/90" : "border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"}`}
-              >
-                <LayoutGrid className="h-4 w-4" />
-              </Button>
-              <Button
-                variant={viewMode === "map" ? "default" : "outline"}
-                onClick={() => setViewMode("map")}
-                className={`h-[52px] px-4 ${viewMode === "map" ? "bg-primary-red text-white hover:bg-primary-red/90" : "border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"}`}
-              >
-                <Map className="h-4 w-4" />
-              </Button>
             </div>
           </div>
-          {/* Active Filters */}
+          
+          {/* Active Filters - Responsive layout */}
           {(selectedDistricts.length > 0 || selectedTenures.length > 0 || selectedPropertyTypes.length > 0 || 
             selectedStatus.length > 0 || selectedBedrooms.length > 0 || priceMin > 0 || priceMax < 5000000) && (
-            <div className="flex flex-wrap items-center gap-2 mt-4">
-              <span className="text-sm text-gray-400">Active filters:</span>
-              {selectedDistricts.map((district) => (
-                <Badge 
-                  key={district}
-                  variant="secondary" 
-                  className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-3 py-1 transition-colors"
-                  onClick={() => handleDistrictChange(district)}
-                >
-                  District {district}
-                  <X className="ml-1 h-3 w-3" />
-                </Badge>
-              ))}
-              {selectedTenures.map((tenure) => (
-                <Badge 
-                  key={tenure}
-                  variant="secondary" 
-                  className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-3 py-1 transition-colors"
-                  onClick={() => handleTenureChange(tenure)}
-                >
-                  {tenure}
-                  <X className="ml-1 h-3 w-3" />
-                </Badge>
-              ))}
-              {selectedPropertyTypes.map((type) => (
-                <Badge 
-                  key={type}
-                  variant="secondary" 
-                  className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-3 py-1 transition-colors"
-                  onClick={() => handlePropertyTypeChange(type)}
-                >
-                  {type}
-                  <X className="ml-1 h-3 w-3" />
-                </Badge>
-              ))}
-              {selectedStatus.map((status) => (
-                <Badge 
-                  key={status}
-                  variant="secondary" 
-                  className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-3 py-1 transition-colors capitalize"
-                  onClick={() => handleStatusChange(status)}
-                >
-                  {status}
-                  <X className="ml-1 h-3 w-3" />
-                </Badge>
-              ))}
-              {selectedBedrooms.map((bedroom) => (
-                <Badge 
-                  key={bedroom}
-                  variant="secondary" 
-                  className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-3 py-1 transition-colors"
-                  onClick={() => handleBedroomChange(bedroom)}
-                >
-                  {bedroom}
-                  <X className="ml-1 h-3 w-3" />
-                </Badge>
-              ))}
-              {(priceMin > 0 || priceMax < 5000000) && (
-                <Badge 
-                  variant="secondary" 
-                  className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-3 py-1 transition-colors"
+            <div className="mt-4 space-y-3">
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-400 whitespace-nowrap">Active filters:</span>
+                <Button
+                  variant="ghost"
+                  className="text-gray-400 hover:text-white text-xs sm:text-sm transition-colors"
                   onClick={() => {
+                    setSelectedDistricts([])
+                    setSelectedTenures([])
+                    setSelectedPropertyTypes([])
+                    setSelectedStatus([])
+                    setSelectedBedrooms([])
                     setPriceMin(0)
                     setPriceMax(5000000)
                   }}
                 >
-                  ${priceMin.toLocaleString()} - ${priceMax.toLocaleString()}
-                  <X className="ml-1 h-3 w-3" />
-                </Badge>
-              )}
-              <Button
-                variant="ghost"
-                className="text-gray-400 hover:text-white text-sm transition-colors"
-                onClick={() => {
-                  setSelectedDistricts([])
-                  setSelectedTenures([])
-                  setSelectedPropertyTypes([])
-                  setSelectedStatus([])
-                  setSelectedBedrooms([])
-                  setPriceMin(0)
-                  setPriceMax(5000000)
-                }}
-              >
-                Clear all
-              </Button>
+                  Clear all
+                </Button>
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                {selectedDistricts.map((district) => (
+                  <Badge 
+                    key={district}
+                    variant="secondary" 
+                    className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-2 sm:px-3 py-1 transition-colors text-xs sm:text-sm"
+                    onClick={() => handleDistrictChange(district)}
+                  >
+                    <span className="sm:hidden">D{district}</span>
+                    <span className="hidden sm:inline">District {district}</span>
+                    <X className="ml-1 h-3 w-3" />
+                  </Badge>
+                ))}
+                {selectedTenures.map((tenure) => (
+                  <Badge 
+                    key={tenure}
+                    variant="secondary" 
+                    className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-2 sm:px-3 py-1 transition-colors text-xs sm:text-sm"
+                    onClick={() => handleTenureChange(tenure)}
+                  >
+                    {tenure}
+                    <X className="ml-1 h-3 w-3" />
+                  </Badge>
+                ))}
+                {selectedPropertyTypes.map((type) => (
+                  <Badge 
+                    key={type}
+                    variant="secondary" 
+                    className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-2 sm:px-3 py-1 transition-colors text-xs sm:text-sm"
+                    onClick={() => handlePropertyTypeChange(type)}
+                  >
+                    {type}
+                    <X className="ml-1 h-3 w-3" />
+                  </Badge>
+                ))}
+                {selectedStatus.map((status) => (
+                  <Badge 
+                    key={status}
+                    variant="secondary" 
+                    className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-2 sm:px-3 py-1 transition-colors capitalize text-xs sm:text-sm"
+                    onClick={() => handleStatusChange(status)}
+                  >
+                    {status}
+                    <X className="ml-1 h-3 w-3" />
+                  </Badge>
+                ))}
+                {selectedBedrooms.map((bedroom) => (
+                  <Badge 
+                    key={bedroom}
+                    variant="secondary" 
+                    className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-2 sm:px-3 py-1 transition-colors text-xs sm:text-sm"
+                    onClick={() => handleBedroomChange(bedroom)}
+                  >
+                    {bedroom}
+                    <X className="ml-1 h-3 w-3" />
+                  </Badge>
+                ))}
+                {(priceMin > 0 || priceMax < 5000000) && (
+                  <Badge 
+                    variant="secondary" 
+                    className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-2 sm:px-3 py-1 transition-colors text-xs sm:text-sm"
+                    onClick={() => {
+                      setPriceMin(0)
+                      setPriceMax(5000000)
+                    }}
+                  >
+                    ${priceMin.toLocaleString()} - ${priceMax.toLocaleString()}
+                    <X className="ml-1 h-3 w-3" />
+                  </Badge>
+                )}
+              </div>
             </div>
           )}
         </div>
@@ -893,8 +857,15 @@ export default function NewLaunchDirectory() {
       {/* Listing Section */}
       <section className="py-16 bg-black">
         <div className="container mx-auto px-4">
+          {/* Loading State */}
+          {(!isClient || isLoading) && (
+            <div className="flex justify-center items-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-red"></div>
+            </div>
+          )}
+
           {/* Projects Grid */}
-          {viewMode === "grid" ? (
+          {isClient && !isLoading && (
             <motion.div
               variants={staggerContainer}
               initial="initial"
@@ -911,14 +882,34 @@ export default function NewLaunchDirectory() {
                 </motion.div>
               ))}
             </motion.div>
-          ) : (
-            <div className="h-[600px] bg-white/5 rounded-lg flex items-center justify-center">
-              <p className="text-gray-400">Map view coming soon</p>
+          )}
+
+          {/* No Results */}
+          {isClient && !isLoading && filteredProjects.length === 0 && (
+            <div className="text-center py-16">
+              <p className="text-gray-400 text-lg">No projects found matching your criteria.</p>
+              <Button 
+                variant="outline" 
+                className="mt-4 border-gray-600 text-gray-300 hover:bg-gray-800/50"
+                onClick={() => {
+                  setSelectedDistricts([])
+                  setSelectedTenures([])
+                  setSelectedPropertyTypes([])
+                  setSelectedStatus([])
+                  setSelectedBedrooms([])
+                  setPriceMin(0)
+                  setPriceMax(5000000)
+                  setSearchQuery("")
+                  setSearchInput("")
+                }}
+              >
+                Clear all filters
+              </Button>
             </div>
           )}
 
           {/* Pagination */}
-          {totalPages > 1 && (
+          {isClient && !isLoading && totalPages > 1 && (
             <div className="flex justify-center mt-8 gap-2">
               <Button
                 variant="outline"

@@ -40,7 +40,7 @@ export default function ProjectCard({
   pricePerSqFt,
   features,
   status = 'upcoming',
-  ctaText = "View Details"
+  ctaText = "View Project"
 }: ProjectCardProps) {
   const statusConfig = {
     upcoming: {
