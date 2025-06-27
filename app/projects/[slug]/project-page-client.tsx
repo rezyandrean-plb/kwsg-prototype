@@ -973,6 +973,28 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
 
   return (
     <main className="min-h-screen flex flex-col bg-[#1c1c1d] text-white">
+      {/* 
+        Responsive Breakpoint Strategy:
+        - Mobile: < 1024px (lg) - Stacked layout
+        - Desktop: >= 1024px (lg) - Side-by-side layout
+        - Using lg: breakpoint (1024px) for consistent desktop experience
+        - Added min-width constraints to prevent layout issues
+      */}
+      <style jsx>{`
+        @media (min-width: 1024px) {
+          .overview-container {
+            flex-direction: row !important;
+          }
+          .overview-left {
+            width: 50% !important;
+            min-width: 400px !important;
+          }
+          .overview-right {
+            width: 50% !important;
+            min-width: 400px !important;
+          }
+        }
+      `}</style>
       {/* Header Spacing */}
       <div className="w-full bg-[#1c1c1d] h-16" />
 
@@ -1182,10 +1204,28 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
           <div className="flex justify-center mb-4">
             <div className="w-16 h-1 bg-[#ce001f] rounded" />
           </div>
-          <div className="flex flex-col xl:flex-row gap-8 items-stretch min-h-[400px]">
+          <div 
+            className="flex flex-col gap-8 items-stretch min-h-[400px] overview-container"
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '2rem',
+              alignItems: 'stretch',
+              minHeight: '400px'
+            }}
+          >
             
             {/* Left Section */}
-            <div className="w-full xl:w-1/2 min-w-0 flex flex-col gap-6 min-h-[400px]">
+            <div 
+              className="w-full flex flex-col gap-6 min-h-[400px] overview-left"
+              style={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1.5rem',
+                minHeight: '400px'
+              }}
+            >
               <div className="text-2xl font-semibold text-[#ce001f] mb-2">{project?.title}</div>
               <div className="text-gray-200 text-sm md:text-base leading-relaxed">
                 <div 
@@ -1218,7 +1258,17 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             </div>
 
             {/* Right Section */}
-            <div className="w-full xl:w-1/2 min-w-0 flex flex-col items-center gap-4 min-h-[400px]">
+            <div 
+              className="w-full flex flex-col items-center gap-4 min-h-[400px] overview-right"
+              style={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '1rem',
+                minHeight: '400px'
+              }}
+            >
               <div className="relative w-full aspect-[4/3] bg-[#e5e5e5] rounded-xl overflow-hidden flex items-center justify-center">
                 <img
                   src={project?.images[0] || '/placeholder.svg'}
@@ -1227,7 +1277,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 />
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-4 bg-black/70 rounded-lg px-6 py-3 border border-gray-700 backdrop-blur-sm">
                   <div className="flex flex-col items-center min-w-[100px]">
-                    <span className="text-xl lg:text-2xl font-bold text-[#ce001f]">{project?.totalUnits.replace(/[^0-9]/g, '') || '0'}</span>
+                    <span className="text-xl lg:text-2xl font-bold text-[#ce001f]">{project?.totalUnits?.replace(/[^0-9]/g, '') || '0'}</span>
                     <span className="text-xs text-gray-300 mt-1">Total Units</span>
                   </div>
                   <div className="flex flex-col items-center min-w-[100px]">
@@ -1411,9 +1461,9 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
           </div>
 
           {/* Responsive Flex Container */}
-          <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 min-h-[400px]">
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 min-h-[400px] site-plan-container">
             {/* Site Plan Left */}
-            <div className="flex-1 bg-[#242728] rounded-lg flex flex-col items-center justify-center min-h-[300px] lg:min-h-[400px]">
+            <div className="flex-1 bg-[#242728] rounded-lg flex flex-col items-center justify-center min-h-[300px] lg:min-h-[400px] site-plan-left">
               <img
                 src="/siteplan-dummy.jpg"
                 alt="Site Plan"
@@ -1421,7 +1471,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               />
             </div>
             {/* Legend Right */}
-            <div className="w-full lg:w-80 bg-[#242728] border border-gray-700 rounded-lg p-4 lg:p-6 flex flex-col justify-between min-h-[300px] lg:min-h-[400px]">
+            <div className="w-full lg:w-80 bg-[#242728] border border-gray-700 rounded-lg p-4 lg:p-6 flex flex-col justify-between min-h-[300px] lg:min-h-[400px] site-plan-right">
               <div>
                 <h4 className="text-lg lg:text-xl font-light text-left text-[#ce001f] mb-4">Map Legend</h4>
                 <ul className="space-y-3 lg:space-y-4">
@@ -1522,12 +1572,16 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
           <div className="flex flex-col gap-0 overflow-hidden mb-4">
             {/* Tabs as Pills - Full width, above both columns */}
             <div className="w-full px-6 pt-6 pb-2 border-b border-gray-700 mb-4">
-              <div className="flex flex-nowrap gap-2 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent" style={{ WebkitOverflowScrolling: 'touch' }}>
+              <div className="flex flex-nowrap gap-3 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent" style={{ WebkitOverflowScrolling: 'touch' }}>
                 {amenityTabs.map((tab) => (
                   <button
                     key={tab.key}
                     onClick={() => setSelectedAmenityType(tab.key)}
-                    className={`px-4 py-2 rounded-full font-light flex items-center gap-2 text-sm transition-colors border focus:outline-none whitespace-nowrap ${selectedAmenityType === tab.key ? 'bg-gray-800 border-[#ce001f] text-white' : 'bg-[#18191b] border-gray-700 text-gray-300 hover:bg-[#ce001f]/10 hover:text-[#ce001f]'}`}
+                    className={`px-6 py-3 rounded-full font-medium flex items-center gap-2 text-sm transition-all duration-200 border-2 focus:outline-none whitespace-nowrap ${
+                      selectedAmenityType === tab.key 
+                        ? 'bg-[#ce001f] border-[#ce001f] text-white shadow-lg' 
+                        : 'bg-transparent border-gray-600 text-gray-300 hover:bg-gray-800 hover:border-gray-500 hover:text-white'
+                    }`}
                   >
                     <tab.icon className="h-4 w-4" />
                     {tab.label}
@@ -1536,9 +1590,9 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               </div>
             </div>
             {/* Two-column layout below tabs */}
-            <div className="w-full flex flex-col lg:flex-row gap-4 lg:gap-8 min-h-[500px]">
+            <div className="w-full flex flex-col lg:flex-row gap-4 lg:gap-8 min-h-[500px] location-container">
               {/* Left: Amenity List */}
-              <div className="w-full lg:w-4/12 min-w-0 p-4 lg:p-6 flex flex-col h-[300px] lg:h-[500px]">
+              <div className="w-full lg:w-4/12 min-w-0 p-4 lg:p-6 flex flex-col h-[300px] lg:h-[500px] location-left">
                 {/* Amenity List */}
                 <div className="flex-1 overflow-y-auto pr-2">
                   <div className="space-y-3 lg:space-y-4">
@@ -1553,11 +1607,32 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                           className={`p-3 lg:p-4 rounded-lg cursor-pointer transition-colors ${selectedAmenity?.placeId === place.placeId ? "bg-[#ce001f]/10 border border-[#ce001f]/20" : "bg-gray-800/50 border border-gray-700 hover:bg-gray-800"}`}
                           onClick={() => setSelectedAmenity(place)}
                         >
-                          <div className="flex items-start justify-between">
+                          <div className="flex items-start gap-3">
+                            {/* Icon */}
+                            <div className="flex-shrink-0 mt-1">
+                              {selectedAmenityType === 'schools' && <School className="h-4 w-4 lg:h-5 lg:w-5" style={{ color: '#ce001f' }} />}
+                              {selectedAmenityType === 'transport' && <Train className="h-4 w-4 lg:h-5 lg:w-5" style={{ color: '#ce001f' }} />}
+                              {selectedAmenityType === 'shopping' && <ShoppingBag className="h-4 w-4 lg:h-5 lg:w-5" style={{ color: '#ce001f' }} />}
+                              {selectedAmenityType === 'food' && <Utensils className="h-4 w-4 lg:h-5 lg:w-5" style={{ color: '#ce001f' }} />}
+                              {selectedAmenityType === 'groceries' && <ShoppingCart className="h-4 w-4 lg:h-5 lg:w-5" style={{ color: '#ce001f' }} />}
+                              {selectedAmenityType === 'recreation' && <Trees className="h-4 w-4 lg:h-5 lg:w-5" style={{ color: '#ce001f' }} />}
+                              {selectedAmenityType === 'all' && <MapPinned className="h-4 w-4 lg:h-5 lg:w-5" style={{ color: '#ce001f' }} />}
+                            </div>
+                            
+                            {/* Content */}
                             <div className="flex-1 min-w-0">
-                              <h4 className="font-light text-white mb-1 text-sm lg:text-base truncate">{place.name}</h4>
-                              <p className="text-xs lg:text-sm text-gray-400 mb-2 line-clamp-2">{place.address}</p>
-                              <div className="flex flex-col sm:flex-row sm:items-center gap-2 lg:gap-4 text-xs lg:text-sm">
+                              <div className="flex items-start justify-between gap-2">
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="font-light text-white mb-1 text-sm lg:text-base truncate">{place.name}</h4>
+                                  <p className="text-xs lg:text-sm text-gray-400 mb-2 line-clamp-2">{place.address}</p>
+                                </div>
+                                {place.isNearest && (
+                                  <Badge className="bg-[#ce001f]/10 text-[#ce001f] border border-[#ce001f]/20 text-xs lg:text-sm flex-shrink-0">Nearest</Badge>
+                                )}
+                              </div>
+                              
+                              {/* Distance and transport info in one row on desktop */}
+                              <div className="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-4 text-xs lg:text-sm amenity-distance-info">
                                 <span className="text-gray-300 flex items-center gap-1">
                                   <MapPin className="h-3 w-3 lg:h-4 lg:w-4" style={{ color: '#ce001f' }} />
                                   {place.distance}
@@ -1572,9 +1647,6 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                                 </span>
                               </div>
                             </div>
-                            {place.isNearest && (
-                              <Badge className="bg-[#ce001f]/10 text-[#ce001f] border border-[#ce001f]/20 text-xs lg:text-sm ml-2 flex-shrink-0">Nearest</Badge>
-                            )}
                           </div>
                         </div>
                       ))
@@ -1585,7 +1657,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 </div>
               </div>
               {/* Right: Map */}
-              <div className="w-full lg:w-8/12 min-w-0 flex flex-col h-[300px] lg:h-[500px]">
+              <div className="w-full lg:w-8/12 min-w-0 flex flex-col h-[300px] lg:h-[500px] location-right">
                 <div className="flex-1 w-full h-full min-h-[300px] lg:min-h-[500px]">
                   <NearbyAmenitiesMap
                     project={project}

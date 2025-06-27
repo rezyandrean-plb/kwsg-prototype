@@ -146,3 +146,49 @@ img {
 .leaflet-control {
   z-index: 10 !important;
 }
+
+/* Project page responsive layout fixes for production */
+@media (min-width: 1024px) {
+  .overview-container {
+    flex-direction: row !important;
+  }
+  .overview-left {
+    width: 50% !important;
+    min-width: 400px !important;
+  }
+  .overview-right {
+    width: 50% !important;
+    min-width: 400px !important;
+  }
+  
+  /* Site Plan section */
+  .site-plan-container {
+    flex-direction: row !important;
+  }
+  .site-plan-left {
+    flex: 1 !important;
+  }
+  .site-plan-right {
+    width: 320px !important;
+    min-width: 320px !important;
+  }
+  
+  /* Location section */
+  .location-container {
+    flex-direction: row !important;
+  }
+  .location-left {
+    width: 33.333333% !important;
+    min-width: 300px !important;
+  }
+  .location-right {
+    width: 66.666667% !important;
+    min-width: 500px !important;
+  }
+  
+  /* Amenities distance info - force one row on desktop */
+  .amenity-distance-info {
+    flex-direction: row !important;
+    align-items: center !important;
+  }
+}
