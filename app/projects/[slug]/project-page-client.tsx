@@ -1757,9 +1757,9 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
           </div>
 
           {/* Card layout for selected unit type */}
-          <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 justify-center items-stretch bg-[#111] rounded-xl p-4 lg:p-8 max-w-5xl mx-auto shadow-lg">
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 justify-center items-stretch bg-[#111] rounded-xl p-4 lg:p-8 max-w-5xl mx-auto shadow-lg pricing-container">
             {/* Left: Floor plan image */}
-            <div className="w-full lg:flex-1 flex flex-col items-center justify-center min-w-0 lg:min-w-[280px] lg:max-w-[420px]">
+            <div className="w-full lg:flex-1 flex flex-col items-center justify-center min-w-0 lg:min-w-[280px] lg:max-w-[420px] pricing-left">
               <div className="w-full aspect-[4/3] bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden mb-4">
                 {/* Placeholder image icon */}
                 <svg className="w-12 h-12 lg:w-16 lg:h-16 text-gray-400" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -1778,7 +1778,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               </div>
             </div>
             {/* Right: Unit details */}
-            <div className="w-full lg:flex-1 flex flex-col justify-between min-w-0 lg:min-w-[280px] text-left">
+            <div className="w-full lg:flex-1 flex flex-col justify-between min-w-0 lg:min-w-[280px] text-left pricing-right">
               {/* Top: Unit type and availability */}
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
                 <span className="text-xl lg:text-2xl font-semibold text-white">{unitAvailabilityData[unitsActiveTab].unitType.replace(' Units', '')}</span>

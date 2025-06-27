@@ -191,4 +191,18 @@ img {
     flex-direction: row !important;
     align-items: center !important;
   }
+  
+  /* Unit & Pricing section */
+  .pricing-container {
+    flex-direction: row !important;
+  }
+  .pricing-left {
+    width: 50% !important;
+    min-width: 280px !important;
+    max-width: 420px !important;
+  }
+  .pricing-right {
+    width: 50% !important;
+    min-width: 280px !important;
+  }
 }
