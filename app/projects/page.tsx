@@ -106,6 +106,7 @@ type Project = {
     lng: number
   }
   priceRange?: string
+  lowerPrice?: string
   units?: string
   unitsAvailable?: string
   propertySizeRange?: string
@@ -156,8 +157,34 @@ const fetchProjects = async (): Promise<Project[]> => {
         apiProject.display_price : 
         undefined
       
-      // Generate price display
-      const price = apiProject.price_from ? `From $${apiProject.price_from}M` : 'Price on request'
+      // Generate price display - prioritize lower price for better UX
+      let price = 'Price on request'
+      let lowerPrice: string | undefined = undefined
+      
+      if (apiProject.price_from) {
+        // Use price_from as the primary lower price
+        lowerPrice = apiProject.price_from
+        price = `From $${apiProject.price_from}M`
+      } else if (apiProject.display_price) {
+        // Extract lower price from display_price if available
+        const priceMatch = apiProject.display_price.match(/From\s+\$?([\d,]+\.?\d*)M?/i)
+        if (priceMatch) {
+          lowerPrice = priceMatch[1]
+          price = `From $${lowerPrice}M`
+        } else {
+          // If display_price doesn't match expected format, use it as is
+          price = apiProject.display_price
+        }
+      } else if (apiProject.price) {
+        // Fallback to price field if available
+        const priceMatch = apiProject.price.match(/From\s+\$?([\d,]+\.?\d*)M?/i)
+        if (priceMatch) {
+          lowerPrice = priceMatch[1]
+          price = `From $${lowerPrice}M`
+        } else {
+          price = apiProject.price
+        }
+      }
       
       // Generate image URL (using placeholder for now since API doesn't provide images)
       const image = `https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80`
@@ -193,7 +220,8 @@ const fetchProjects = async (): Promise<Project[]> => {
         tenure: apiProject.tenure,
         propertyType: apiProject.property_type,
         bedrooms,
-        coordinates
+        coordinates,
+        lowerPrice
       }
     })
   } catch (error) {
@@ -215,7 +243,7 @@ export default function NewLaunchDirectory() {
   const [currentPage, setCurrentPage] = useState(1)
   const projectsPerPage = 8
   const [priceMin, setPriceMin] = useState(0)
-  const [priceMax, setPriceMax] = useState(0)
+  const [priceMax, setPriceMax] = useState(5000000)
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -280,7 +308,7 @@ export default function NewLaunchDirectory() {
       
       // Price range filter (use priceMin and priceMax)
       const [projectMin, projectMax] = (project.priceRange || '').split(" - ").map(price => parseInt(price.replace(/[^0-9]/g, "")))
-      const matchesPriceRange = (priceMin === 0 && priceMax === 0) ||
+      const matchesPriceRange = (priceMin === 0 && priceMax === 5000000) ||
         (projectMax >= priceMin && projectMin <= priceMax)
 
       return matchesSearch && matchesDistrict && matchesTenure && matchesPropertyType && matchesStatus && matchesBedrooms && matchesPriceRange
@@ -288,9 +316,65 @@ export default function NewLaunchDirectory() {
     .sort((a, b) => {
       switch (sortBy) {
         case "price-low-high":
-          return parseInt(a.price.replace(/[^0-9]/g, "")) - parseInt(b.price.replace(/[^0-9]/g, ""))
+          // Use display_price (priceRange) for sorting, with fallbacks
+          const getSortPrice = (project: Project): number => {
+            if (project.priceRange) {
+              // Extract numeric value from display_price
+              const priceMatch = project.priceRange.match(/From\s+\$?([\d,]+\.?\d*)M?/i)
+              if (priceMatch) {
+                return parseFloat(priceMatch[1].replace(/,/g, ''))
+              }
+              // Try to extract any numeric value
+              const anyPriceMatch = project.priceRange.match(/([\d,]+\.?\d*)/)
+              if (anyPriceMatch) {
+                return parseFloat(anyPriceMatch[1].replace(/,/g, ''))
+              }
+            }
+            // Fallback to lowerPrice if available
+            if (project.lowerPrice) {
+              return parseFloat(project.lowerPrice)
+            }
+            // Fallback to pricePerSqFt if available
+            if (project.pricePerSqFt) {
+              return parseFloat(project.pricePerSqFt)
+            }
+            return 0
+          }
+          
+          const priceALow = getSortPrice(a)
+          const priceBLow = getSortPrice(b)
+          return priceALow - priceBLow
+          
         case "price-high-low":
-          return parseInt(b.price.replace(/[^0-9]/g, "")) - parseInt(a.price.replace(/[^0-9]/g, ""))
+          // Use display_price (priceRange) for sorting, with fallbacks
+          const getSortPriceHigh = (project: Project): number => {
+            if (project.priceRange) {
+              // Extract numeric value from display_price
+              const priceMatch = project.priceRange.match(/From\s+\$?([\d,]+\.?\d*)M?/i)
+              if (priceMatch) {
+                return parseFloat(priceMatch[1].replace(/,/g, ''))
+              }
+              // Try to extract any numeric value
+              const anyPriceMatch = project.priceRange.match(/([\d,]+\.?\d*)/)
+              if (anyPriceMatch) {
+                return parseFloat(anyPriceMatch[1].replace(/,/g, ''))
+              }
+            }
+            // Fallback to lowerPrice if available
+            if (project.lowerPrice) {
+              return parseFloat(project.lowerPrice)
+            }
+            // Fallback to pricePerSqFt if available
+            if (project.pricePerSqFt) {
+              return parseFloat(project.pricePerSqFt)
+            }
+            return 0
+          }
+          
+          const priceAHigh = getSortPriceHigh(a)
+          const priceBHigh = getSortPriceHigh(b)
+          return priceBHigh - priceAHigh
+          
         case "completion":
           // Use string comparison for dates to avoid hydration issues
           const dateA = a.completion || ''
@@ -358,11 +442,54 @@ export default function NewLaunchDirectory() {
     )
   }
 
+  const handleSelectAllDistricts = () => {
+    if (selectedDistricts.length === districts.length) {
+      setSelectedDistricts([])
+    } else {
+      setSelectedDistricts([...districts])
+    }
+  }
+
+  const handleSelectAllTenures = () => {
+    if (selectedTenures.length === tenures.length) {
+      setSelectedTenures([])
+    } else {
+      setSelectedTenures([...tenures])
+    }
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // Handle form submission logic here
     console.log(formData)
     setIsOpen(false)
+  }
+
+  // Helper function to generate pagination range with ellipsis
+  const getPaginationRange = (currentPage: number, totalPages: number) => {
+    const delta = 2 // Number of pages to show on each side of current page
+    const range = []
+    const rangeWithDots = []
+
+    for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
+      range.push(i)
+    }
+
+    if (currentPage - delta > 2) {
+      rangeWithDots.push(1, '...')
+    } else {
+      rangeWithDots.push(1)
+    }
+
+    rangeWithDots.push(...range)
+
+    if (currentPage + delta < totalPages - 1) {
+      rangeWithDots.push('...', totalPages)
+    } else {
+      rangeWithDots.push(totalPages)
+    }
+
+    return rangeWithDots
   }
 
   return (
@@ -445,10 +572,10 @@ export default function NewLaunchDirectory() {
                     <Filter className="h-4 w-4" />
                     <span>Filters</span>
                     {(selectedDistricts.length > 0 || selectedTenures.length > 0 || selectedPropertyTypes.length > 0 || 
-                      selectedStatus.length > 0 || selectedBedrooms.length > 0 || priceMin > 0 || priceMax < 5000000) && (
+                      selectedStatus.length > 0 || selectedBedrooms.length > 0 || (priceMin > 0 || priceMax < 5000000)) && (
                       <Badge variant="secondary" className="ml-1 bg-primary-red/20 text-primary-red rounded-full text-xs">
                         {selectedDistricts.length + selectedTenures.length + selectedPropertyTypes.length + 
-                         selectedStatus.length + selectedBedrooms.length + (priceMin > 0 || priceMax < 5000000 ? 1 : 0)}
+                         selectedStatus.length + selectedBedrooms.length + ((priceMin > 0 || priceMax < 5000000) ? 1 : 0)}
                       </Badge>
                     )}
                   </Button>
@@ -457,22 +584,32 @@ export default function NewLaunchDirectory() {
                   <SheetHeader>
                     <SheetTitle className="text-white">Filter Projects</SheetTitle>
                   </SheetHeader>
-                  <div className="mt-6 space-y-6 max-h-[calc(100vh-200px)] overflow-y-auto">
+                  <div className="mt-6 space-y-6 max-h-[calc(100vh-200px)] overflow-y-auto pr-2">
                     {/* District Filter */}
                     <div>
                       <h3 className="font-medium mb-3 text-white">District</h3>
-                      <div className="grid grid-cols-2 gap-2">
-                        {districts.map((district) => (
-                          <Button
-                            key={district}
-                            variant={selectedDistricts.includes(district) ? "default" : "outline"}
-                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 text-sm py-2"
-                            onClick={() => handleDistrictChange(district)}
-                          >
-                            {selectedDistricts.includes(district) && <Check className="mr-2 h-4 w-4" />}
-                            D{district}
-                          </Button>
-                        ))}
+                      <div className="space-y-3">
+                        <Button
+                          variant={selectedDistricts.length === districts.length ? "default" : "outline"}
+                          className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 text-sm py-2"
+                          onClick={handleSelectAllDistricts}
+                        >
+                          {selectedDistricts.length === districts.length && <Check className="mr-2 h-4 w-4" />}
+                          {selectedDistricts.length === districts.length ? "Deselect All" : "Select All"}
+                        </Button>
+                        <div className="grid grid-cols-4 gap-1.5 max-h-48 overflow-y-auto pr-2">
+                          {districts.map((district) => (
+                            <Button
+                              key={district}
+                              variant={selectedDistricts.includes(district) ? "default" : "outline"}
+                              className="w-full justify-center border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 text-xs py-1.5 px-2 min-h-[32px]"
+                              onClick={() => handleDistrictChange(district)}
+                            >
+                              {selectedDistricts.includes(district) && <Check className="mr-1 h-3 w-3" />}
+                              D{district}
+                            </Button>
+                          ))}
+                        </div>
                       </div>
                     </div>
 
@@ -480,6 +617,14 @@ export default function NewLaunchDirectory() {
                     <div>
                       <h3 className="font-medium mb-3 text-white">Tenure</h3>
                       <div className="space-y-2">
+                        <Button
+                          variant={selectedTenures.length === tenures.length ? "default" : "outline"}
+                          className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                          onClick={handleSelectAllTenures}
+                        >
+                          {selectedTenures.length === tenures.length && <Check className="mr-2 h-4 w-4" />}
+                          {selectedTenures.length === tenures.length ? "Deselect All" : "Select All"}
+                        </Button>
                         {tenures.map((tenure) => (
                           <Button
                             key={tenure}
@@ -550,21 +695,82 @@ export default function NewLaunchDirectory() {
 
                     {/* Price Range Filter */}
                     <div>
-                      <h3 className="font-medium mb-3 text-white">Price Range</h3>
-                      <div className="px-2">
-                        <Slider
-                          defaultValue={[priceMin, priceMax]}
-                          max={5000000}
-                          step={100000}
-                          onValueChange={(value) => {
-                            setPriceMin(value[0])
-                            setPriceMax(value[1])
-                          }}
-                          className="mb-4"
-                        />
-                        <div className="flex justify-between text-sm text-gray-400">
-                          <span>${priceMin.toLocaleString()}</span>
-                          <span>${priceMax.toLocaleString()}</span>
+                      <h3 className="font-medium mb-4 text-white">Price Range</h3>
+                      <div className="space-y-4">
+                        <div className="px-1">
+                          <Slider
+                            defaultValue={[priceMin, priceMax]}
+                            max={5000000}
+                            step={100000}
+                            onValueChange={(value) => {
+                              setPriceMin(value[0])
+                              setPriceMax(value[1])
+                            }}
+                            className="mb-6"
+                          />
+                        </div>
+                        
+                        {/* Price Display Cards */}
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="bg-gray-800/50 border border-gray-600 rounded-lg p-3">
+                            <div className="text-xs text-gray-400 mb-1">Min Price</div>
+                            <div className="text-white font-semibold">${priceMin.toLocaleString()}</div>
+                          </div>
+                          <div className="bg-gray-800/50 border border-gray-600 rounded-lg p-3">
+                            <div className="text-xs text-gray-400 mb-1">Max Price</div>
+                            <div className="text-white font-semibold">${priceMax.toLocaleString()}</div>
+                          </div>
+                        </div>
+                        
+                        {/* Quick Price Presets */}
+                        <div className="space-y-2">
+                          <div className="text-xs text-gray-400 font-medium">Quick Presets</div>
+                          <div className="grid grid-cols-2 gap-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="text-xs border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                              onClick={() => {
+                                setPriceMin(0)
+                                setPriceMax(1000000)
+                              }}
+                            >
+                              Under $1M
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="text-xs border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                              onClick={() => {
+                                setPriceMin(1000000)
+                                setPriceMax(2000000)
+                              }}
+                            >
+                              $1M - $2M
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="text-xs border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                              onClick={() => {
+                                setPriceMin(2000000)
+                                setPriceMax(3000000)
+                              }}
+                            >
+                              $2M - $3M
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="text-xs border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                              onClick={() => {
+                                setPriceMin(3000000)
+                                setPriceMax(5000000)
+                              }}
+                            >
+                              $3M - $5M
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -613,12 +819,12 @@ export default function NewLaunchDirectory() {
                     className="h-[52px] px-4 flex items-center gap-2 border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 rounded-md transition-colors whitespace-nowrap"
                   >
                     <Filter className="h-4 w-4" />
-                    Filter & Sort
+                    Filter
                     {(selectedDistricts.length > 0 || selectedTenures.length > 0 || selectedPropertyTypes.length > 0 || 
-                      selectedStatus.length > 0 || selectedBedrooms.length > 0 || priceMin > 0 || priceMax < 5000000) && (
+                      selectedStatus.length > 0 || selectedBedrooms.length > 0 || (priceMin > 0 || priceMax < 5000000)) && (
                       <Badge variant="secondary" className="ml-1 bg-primary-red/20 text-primary-red rounded-full">
                         {selectedDistricts.length + selectedTenures.length + selectedPropertyTypes.length + 
-                         selectedStatus.length + selectedBedrooms.length + (priceMin > 0 || priceMax < 5000000 ? 1 : 0)}
+                         selectedStatus.length + selectedBedrooms.length + ((priceMin > 0 || priceMax < 5000000) ? 1 : 0)}
                       </Badge>
                     )}
                   </Button>
@@ -627,22 +833,32 @@ export default function NewLaunchDirectory() {
                   <SheetHeader>
                     <SheetTitle className="text-white">Filter Projects</SheetTitle>
                   </SheetHeader>
-                  <div className="mt-6 space-y-6">
+                  <div className="mt-6 space-y-6 max-h-[calc(100vh-200px)] overflow-y-auto pr-2">
                     {/* District Filter */}
                     <div>
                       <h3 className="font-medium mb-3 text-white">District</h3>
-                      <div className="grid grid-cols-3 gap-2">
-                        {districts.map((district) => (
-                          <Button
-                            key={district}
-                            variant={selectedDistricts.includes(district) ? "default" : "outline"}
-                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
-                            onClick={() => handleDistrictChange(district)}
-                          >
-                            {selectedDistricts.includes(district) && <Check className="mr-2 h-4 w-4" />}
-                            District {district}
-                          </Button>
-                        ))}
+                      <div className="space-y-3">
+                        <Button
+                          variant={selectedDistricts.length === districts.length ? "default" : "outline"}
+                          className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                          onClick={handleSelectAllDistricts}
+                        >
+                          {selectedDistricts.length === districts.length && <Check className="mr-2 h-4 w-4" />}
+                          {selectedDistricts.length === districts.length ? "Deselect All" : "Select All"}
+                        </Button>
+                        <div className="grid grid-cols-5 gap-2 max-h-64 overflow-y-auto pr-2">
+                          {districts.map((district) => (
+                            <Button
+                              key={district}
+                              variant={selectedDistricts.includes(district) ? "default" : "outline"}
+                              className="w-full justify-center border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 text-sm py-2 px-1 min-h-[36px]"
+                              onClick={() => handleDistrictChange(district)}
+                            >
+                              {selectedDistricts.includes(district) && <Check className="mr-1 h-3 w-3" />}
+                              D{district}
+                            </Button>
+                          ))}
+                        </div>
                       </div>
                     </div>
 
@@ -650,11 +866,19 @@ export default function NewLaunchDirectory() {
                     <div>
                       <h3 className="font-medium mb-3 text-white">Tenure</h3>
                       <div className="space-y-2">
+                        <Button
+                          variant={selectedTenures.length === tenures.length ? "default" : "outline"}
+                          className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                          onClick={handleSelectAllTenures}
+                        >
+                          {selectedTenures.length === tenures.length && <Check className="mr-2 h-4 w-4" />}
+                          {selectedTenures.length === tenures.length ? "Deselect All" : "Select All"}
+                        </Button>
                         {tenures.map((tenure) => (
                           <Button
                             key={tenure}
                             variant={selectedTenures.includes(tenure) ? "default" : "outline"}
-                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 text-sm py-2"
                             onClick={() => handleTenureChange(tenure)}
                           >
                             {selectedTenures.includes(tenure) && <Check className="mr-2 h-4 w-4" />}
@@ -672,7 +896,7 @@ export default function NewLaunchDirectory() {
                           <Button
                             key={type}
                             variant={selectedPropertyTypes.includes(type) ? "default" : "outline"}
-                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 text-sm py-2"
                             onClick={() => handlePropertyTypeChange(type)}
                           >
                             {selectedPropertyTypes.includes(type) && <Check className="mr-2 h-4 w-4" />}
@@ -720,21 +944,82 @@ export default function NewLaunchDirectory() {
 
                     {/* Price Range Filter */}
                     <div>
-                      <h3 className="font-medium mb-3 text-white">Price Range</h3>
-                      <div className="px-2">
-                        <Slider
-                          defaultValue={[priceMin, priceMax]}
-                          max={5000000}
-                          step={100000}
-                          onValueChange={(value) => {
-                            setPriceMin(value[0])
-                            setPriceMax(value[1])
-                          }}
-                          className="mb-4"
-                        />
-                        <div className="flex justify-between text-sm text-gray-400">
-                          <span>${priceMin.toLocaleString()}</span>
-                          <span>${priceMax.toLocaleString()}</span>
+                      <h3 className="font-medium mb-4 text-white">Price Range</h3>
+                      <div className="space-y-4">
+                        <div className="px-1">
+                          <Slider
+                            defaultValue={[priceMin, priceMax]}
+                            max={5000000}
+                            step={100000}
+                            onValueChange={(value) => {
+                              setPriceMin(value[0])
+                              setPriceMax(value[1])
+                            }}
+                            className="mb-6"
+                          />
+                        </div>
+                        
+                        {/* Price Display Cards */}
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="bg-gray-800/50 border border-gray-600 rounded-lg p-3">
+                            <div className="text-xs text-gray-400 mb-1">Min Price</div>
+                            <div className="text-white font-semibold">${priceMin.toLocaleString()}</div>
+                          </div>
+                          <div className="bg-gray-800/50 border border-gray-600 rounded-lg p-3">
+                            <div className="text-xs text-gray-400 mb-1">Max Price</div>
+                            <div className="text-white font-semibold">${priceMax.toLocaleString()}</div>
+                          </div>
+                        </div>
+                        
+                        {/* Quick Price Presets */}
+                        <div className="space-y-2">
+                          <div className="text-xs text-gray-400 font-medium">Quick Presets</div>
+                          <div className="grid grid-cols-2 gap-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="text-xs border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                              onClick={() => {
+                                setPriceMin(0)
+                                setPriceMax(1000000)
+                              }}
+                            >
+                              Under $1M
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="text-xs border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                              onClick={() => {
+                                setPriceMin(1000000)
+                                setPriceMax(2000000)
+                              }}
+                            >
+                              $1M - $2M
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="text-xs border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                              onClick={() => {
+                                setPriceMin(2000000)
+                                setPriceMax(3000000)
+                              }}
+                            >
+                              $2M - $3M
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="text-xs border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                              onClick={() => {
+                                setPriceMin(3000000)
+                                setPriceMax(5000000)
+                              }}
+                            >
+                              $3M - $5M
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -758,7 +1043,7 @@ export default function NewLaunchDirectory() {
           
           {/* Active Filters - Responsive layout */}
           {(selectedDistricts.length > 0 || selectedTenures.length > 0 || selectedPropertyTypes.length > 0 || 
-            selectedStatus.length > 0 || selectedBedrooms.length > 0 || priceMin > 0 || priceMax < 5000000) && (
+            selectedStatus.length > 0 || selectedBedrooms.length > 0 || (priceMin > 0 || priceMax < 5000000)) && (
             <div className="mt-4 space-y-3">
               <div className="flex items-center gap-2">
                 <span className="text-sm text-gray-400 whitespace-nowrap">Active filters:</span>
@@ -910,33 +1195,58 @@ export default function NewLaunchDirectory() {
 
           {/* Pagination */}
           {isClient && !isLoading && totalPages > 1 && (
-            <div className="flex justify-center mt-8 gap-2">
-              <Button
-                variant="outline"
-                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                disabled={currentPage === 1}
-                className="border-white/10 text-white hover:bg-white/10"
-              >
-                Previous
-              </Button>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <div className="flex flex-col items-center mt-12 gap-4">
+              {/* Page Info */}
+              <div className="text-sm text-gray-400">
+                Showing {indexOfFirstProject + 1} to {Math.min(indexOfLastProject, filteredProjects.length)} of {filteredProjects.length} projects
+              </div>
+              
+              {/* Pagination Controls */}
+              <div className="flex items-center gap-2">
                 <Button
-                  key={page}
-                  variant={currentPage === page ? "default" : "outline"}
-                  onClick={() => setCurrentPage(page)}
-                  className={currentPage === page ? "bg-white text-black hover:bg-white/90" : "border-white/10 text-white hover:bg-white/10"}
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                  className="border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {page}
+                  Previous
                 </Button>
-              ))}
-              <Button
-                variant="outline"
-                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                disabled={currentPage === totalPages}
-                className="border-white/10 text-white hover:bg-white/10"
-              >
-                Next
-              </Button>
+                
+                <div className="flex items-center gap-1">
+                  {getPaginationRange(currentPage, totalPages).map((page, index) => (
+                    page === '...' ? (
+                      <span key={`ellipsis-${index}`} className="px-3 py-2 text-gray-400">
+                        ...
+                      </span>
+                    ) : (
+                      <Button
+                        key={page}
+                        variant={currentPage === page ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => typeof page === 'number' && setCurrentPage(page)}
+                        className={
+                          currentPage === page 
+                            ? "bg-primary-red text-white hover:bg-primary-red/90 border-primary-red" 
+                            : "border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                        }
+                      >
+                        {page}
+                      </Button>
+                    )
+                  ))}
+                </div>
+                
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                  className="border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Next
+                </Button>
+              </div>
             </div>
           )}
         </div>

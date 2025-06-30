@@ -205,4 +205,32 @@ img {
     width: 50% !important;
     min-width: 280px !important;
   }
+  
+  /* More specific alignment fixes for production */
+  @media (min-width: 640px) {
+    .unit-type-section {
+      justify-content: flex-start !important;
+    }
+    .price-range-section {
+      justify-content: flex-start !important;
+    }
+  }
+  
+  /* Direct targeting for Unit & Pricing sections */
+  .pricing-right > div:first-child,
+  .pricing-right > div:nth-child(4) {
+    justify-content: flex-start !important;
+  }
+  
+  /* New specific class targeting */
+  .unit-type-section,
+  .price-range-section {
+    justify-content: flex-start !important;
+  }
+  
+  /* Target by class name patterns */
+  [class*="unit-type"],
+  [class*="price-range"] {
+    justify-content: flex-start !important;
+  }
 }

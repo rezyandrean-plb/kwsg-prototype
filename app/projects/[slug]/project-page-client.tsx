@@ -596,6 +596,18 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
     return value
   }
 
+  // Helper function to check if a value should be displayed (not 'n/a')
+  const shouldDisplayValue = (value: string | undefined | null): boolean => {
+    if (!value || value.trim() === '') return false
+    return true
+  }
+
+  // Helper function to get display value for complex cases
+  const getDisplayValue = (value: string | undefined | null, prefix?: string, suffix?: string): string => {
+    if (!value || value.trim() === '') return 'n/a'
+    return prefix ? `${prefix} ${value}${suffix || ''}` : value
+  }
+
   // Mock project data - fallback when API doesn't return data
   const mockProject: Project = {
     id: 1,
@@ -1301,145 +1313,163 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Address */}
-            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-2 border border-gray-700">
-              <MapPin className="h-7 w-7" style={{ color: '#ce001f' }} />
-              <div>
-                <div className="text-gray-400 text-sm">Address</div>
-                <div className="text-white font-light">{displayValue(project?.address?.replace(/,?\s*\d{6}$/, ''))}</div>
+            {shouldDisplayValue(project?.address) && (
+              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-2 border border-gray-700">
+                <MapPin className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <div>
+                  <div className="text-gray-400 text-sm">Address</div>
+                  <div className="text-white font-light">{displayValue(project?.address?.replace(/,?\s*\d{6}$/, ''))}</div>
+                </div>
               </div>
-            </div>
+            )}
             {/* Site Area */}
-            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-2 border border-gray-700">
-              <Layout className="h-7 w-7" style={{ color: '#ce001f' }} />
-              <div>
-                <div className="text-gray-400 text-sm">Site Area</div>
-                <div className="text-white font-light">{displayValue(project?.siteArea)}</div>
+            {shouldDisplayValue(project?.siteArea) && (
+              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-2 border border-gray-700">
+                <Layout className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <div>
+                  <div className="text-gray-400 text-sm">Site Area</div>
+                  <div className="text-white font-light">{displayValue(project?.siteArea)}</div>
+                </div>
               </div>
-            </div>
+            )}
             {/* Developer */}
-            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-              <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
-              <div>
-                <div className="text-gray-400 text-sm">Developer</div>
-                <div className="text-white font-light">{displayValue(project?.developer)}</div>
+            {shouldDisplayValue(project?.developer) && (
+              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+                <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <div>
+                  <div className="text-gray-400 text-sm">Developer</div>
+                  <div className="text-white font-light">{displayValue(project?.developer)}</div>
+                </div>
               </div>
-            </div>
+            )}
             {/* District */}
-            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-              <MapPin className="h-7 w-7" style={{ color: '#ce001f' }} />
-              <div>
-                <div className="text-gray-400 text-sm">District</div>
-                <div className="text-white font-light">{project?.district ? `District ${displayValue(project.district)}` : 'n/a'}</div>
+            {shouldDisplayValue(project?.district) && (
+              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+                <MapPin className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <div>
+                  <div className="text-gray-400 text-sm">District</div>
+                  <div className="text-white font-light">{`District ${displayValue(project.district)}`}</div>
+                </div>
               </div>
-            </div>
+            )}
             {/* Tenure */}
-            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-              <Calendar className="h-7 w-7" style={{ color: '#ce001f' }} />
-              <div>
-                <div className="text-gray-400 text-sm">Tenure</div>
-                <div className="text-white font-light">{displayValue(project?.tenure)}</div>
+            {shouldDisplayValue(project?.tenure) && (
+              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+                <Calendar className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <div>
+                  <div className="text-gray-400 text-sm">Tenure</div>
+                  <div className="text-white font-light">{displayValue(project?.tenure)}</div>
+                </div>
               </div>
-            </div>
+            )}
             {/* Nearest MRT */}
-            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-              <Train className="h-7 w-7" style={{ color: '#ce001f' }} />
-              <div>
-                <div className="text-gray-400 text-sm">Nearest MRT</div>
-                <div className="text-white font-light">
-                  {project?.locationAnalytics?.mrt[0]?.name 
-                    ? `${project.locationAnalytics.mrt[0].name} (${project.locationAnalytics.mrt[0].distance})`
-                    : 'n/a'
-                  }
+            {project?.locationAnalytics?.mrt[0]?.name && (
+              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+                <Train className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <div>
+                  <div className="text-gray-400 text-sm">Nearest MRT</div>
+                  <div className="text-white font-light">
+                    {`${project.locationAnalytics.mrt[0].name} (${project.locationAnalytics.mrt[0].distance})`}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
             {/* Total Units */}
-            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-              <Home className="h-7 w-7" style={{ color: '#ce001f' }} />
-              <div>
-                <div className="text-gray-400 text-sm">Total Units</div>
-                <div className="text-white font-light">{displayValue(project?.totalUnits)}</div>
+            {shouldDisplayValue(project?.totalUnits) && (
+              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+                <Home className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <div>
+                  <div className="text-gray-400 text-sm">Total Units</div>
+                  <div className="text-white font-light">{displayValue(project?.totalUnits)}</div>
+                </div>
               </div>
-            </div>
+            )}
             {/* Bedrooms */}
-            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-              <Home className="h-7 w-7" style={{ color: '#ce001f' }} />
-              <div>
-                <div className="text-gray-400 text-sm">Bedrooms</div>
-                <div className="text-white font-light">{project?.bedrooms ? `${displayValue(project.bedrooms)} bedrooms` : 'n/a'}</div>
+            {shouldDisplayValue(project?.bedrooms) && (
+              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+                <Home className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <div>
+                  <div className="text-gray-400 text-sm">Bedrooms</div>
+                  <div className="text-white font-light">{`${displayValue(project.bedrooms)} bedrooms`}</div>
+                </div>
               </div>
-            </div>
+            )}
             {/* Expected TOP */}
-            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-              <Calendar className="h-7 w-7" style={{ color: '#ce001f' }} />
-              <div>
-                <div className="text-gray-400 text-sm">Expected TOP</div>
-                <div className="text-white font-light">
-                  {project?.completion 
-                    ? `Q${project.completion?.slice(0,1) === '2' ? '2' : '1'} ${displayValue(project.completion)}`
-                    : 'n/a'
-                  }
+            {shouldDisplayValue(project?.completion) && (
+              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+                <Calendar className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <div>
+                  <div className="text-gray-400 text-sm">Expected TOP</div>
+                  <div className="text-white font-light">
+                    {`Q${project.completion?.slice(0,1) === '2' ? '2' : '1'} ${displayValue(project.completion)}`}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
             {/* Property Type */}
-            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-              <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
-              <div>
-                <div className="text-gray-400 text-sm">Property Type</div>
-                <div className="text-white font-light">{displayValue(project?.propertyType)}</div>
+            {shouldDisplayValue(project?.propertyType) && (
+              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+                <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <div>
+                  <div className="text-gray-400 text-sm">Property Type</div>
+                  <div className="text-white font-light">{displayValue(project?.propertyType)}</div>
+                </div>
               </div>
-            </div>
+            )}
             {/* Floor Size */}
-            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-              <Layout className="h-7 w-7" style={{ color: '#ce001f' }} />
-              <div>
-                <div className="text-gray-400 text-sm">Floor Size</div>
-                <div className="text-white font-light">{displayValue(project?.size)}</div>
+            {shouldDisplayValue(project?.size) && (
+              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+                <Layout className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <div>
+                  <div className="text-gray-400 text-sm">Floor Size</div>
+                  <div className="text-white font-light">{displayValue(project?.size)}</div>
+                </div>
               </div>
-            </div>
+            )}
             {/* Average PSF */}
-            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-              <BadgeDollarSign className="h-7 w-7" style={{ color: '#ce001f' }} />
-              <div>
-                <div className="text-gray-400 text-sm">Average PSF</div>
-                <div className="text-white font-light">{project?.pricePerSqFt ? `From ${displayValue(project.pricePerSqFt)}` : 'n/a'}</div>
+            {shouldDisplayValue(project?.pricePerSqFt) && (
+              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+                <BadgeDollarSign className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <div>
+                  <div className="text-gray-400 text-sm">Average PSF</div>
+                  <div className="text-white font-light">{`From ${displayValue(project.pricePerSqFt)}`}</div>
+                </div>
               </div>
-            </div>
+            )}
             {/* Blocks */}
-            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-              <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
-              <div>
-                <div className="text-gray-400 text-sm">Blocks</div>
-                <div className="text-white font-light">
-                  {project?.totalUnits 
-                    ? Math.ceil(Number(project.totalUnits.replace(/[^0-9]/g, '')) / 7) + ' blocks'
-                    : 'n/a'
-                  }
+            {shouldDisplayValue(project?.totalUnits) && (
+              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+                <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <div>
+                  <div className="text-gray-400 text-sm">Blocks</div>
+                  <div className="text-white font-light">
+                    {`${Math.ceil(Number(project.totalUnits.replace(/[^0-9]/g, '')) / 7)} blocks`}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
             {/* Floors */}
-            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-              <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
-              <div>
-                <div className="text-gray-400 text-sm">Floors</div>
-                <div className="text-white font-light">{displayValue(project?.totalFloors)}</div>
-              </div>
-            </div>
-            {/* Car Park Lots */}
-            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-              <Home className="h-7 w-7" style={{ color: '#ce001f' }} />
-              <div>
-                <div className="text-gray-400 text-sm">Car Park Lots</div>
-                <div className="text-white font-light">
-                  {project?.totalUnits 
-                    ? project.totalUnits.replace(/[^0-9]/g, '') + ' lots'
-                    : 'n/a'
-                  }
+            {shouldDisplayValue(project?.totalFloors) && (
+              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+                <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <div>
+                  <div className="text-gray-400 text-sm">Floors</div>
+                  <div className="text-white font-light">{displayValue(project?.totalFloors)}</div>
                 </div>
               </div>
-            </div>
+            )}
+            {/* Car Park Lots */}
+            {shouldDisplayValue(project?.totalUnits) && (
+              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+                <Home className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <div>
+                  <div className="text-gray-400 text-sm">Car Park Lots</div>
+                  <div className="text-white font-light">
+                    {`${project.totalUnits.replace(/[^0-9]/g, '')} lots`}
+                  </div>
+                </div>
+              </div>
+            )}
             {/* Zoning */}
             <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
               <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
@@ -1780,7 +1810,14 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             {/* Right: Unit details */}
             <div className="w-full lg:flex-1 flex flex-col justify-between min-w-0 lg:min-w-[280px] text-left pricing-right">
               {/* Top: Unit type and availability */}
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
+              <div 
+                className="flex flex-col sm:flex-row sm:items-center sm:justify-start gap-2 mb-2 unit-type-section"
+                style={{ 
+                  justifyContent: 'flex-start !important',
+                  display: 'flex',
+                  flexDirection: 'column'
+                }}
+              >
                 <span className="text-xl lg:text-2xl font-semibold text-white">{unitAvailabilityData[unitsActiveTab].unitType.replace(' Units', '')}</span>
                 <span className="text-green-400 font-semibold text-xs lg:text-sm">Available {unitAvailabilityData[unitsActiveTab].subtypes[0].available} of {unitAvailabilityData[unitsActiveTab].subtypes[0].total}</span>
               </div>
@@ -1808,7 +1845,14 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 </div>
               </div>
               {/* Price range */}
-              <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-4">
+              <div 
+                className="flex flex-col sm:flex-row sm:items-center sm:justify-start gap-2 mb-4 price-range-section"
+                style={{ 
+                  justifyContent: 'flex-start !important',
+                  display: 'flex',
+                  flexDirection: 'column'
+                }}
+              >
                 <span className="text-red-400 text-base lg:text-lg font-medium">$</span>
                 <span className="text-white text-base lg:text-lg font-medium">Price Range</span>
                 <span className="text-white text-base lg:text-lg font-medium">{unitAvailabilityData[unitsActiveTab].subtypes[0].price}</span>

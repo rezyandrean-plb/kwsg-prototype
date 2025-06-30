@@ -10,6 +10,7 @@ import { Project } from "@/data/projects"
 interface ProjectCardProps extends Project {
   className?: string
   priceRange?: string
+  lowerPrice?: string
   units?: string
   unitsAvailable?: string
   propertySizeRange?: string
@@ -31,6 +32,7 @@ export default function ProjectCard({
   image,
   className = "",
   priceRange,
+  lowerPrice,
   units,
   unitsAvailable,
   propertySizeRange,
@@ -107,7 +109,14 @@ export default function ProjectCard({
         {/* Price at the bottom */}
         <div className="mt-auto pt-2 border-t border-gray-800">
           <div className="text-xs text-gray-400 mb-0.5">From</div>
-          <div className="text-lg font-bold text-white">{priceRange || price}</div>
+          <div className="text-lg font-bold text-white">
+            {lowerPrice ? `$${lowerPrice}M` : (priceRange || price)}
+          </div>
+          {pricePerSqFt && (
+            <div className="text-xs text-gray-400 mt-0.5">
+              ${pricePerSqFt} psf
+            </div>
+          )}
           <Link href={`/projects/${slug}`} className="mt-3">
             <Button variant="default" className="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white">
               {ctaText}
