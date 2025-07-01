@@ -170,13 +170,20 @@ export default function JoinKW() {
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div 
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer hover:scale-110 transition-transform"
+          onClick={() => {
+            document.getElementById('why-kw-section')?.scrollIntoView({ 
+              behavior: 'smooth' 
+            });
+          }}
+        >
           <ChevronRight className="h-6 w-6 text-[#B40101] rotate-90" />
         </div>
       </section>
 
       {/* Why KW Singapore */}
-      <section className="relative py-32 overflow-hidden">
+      <section id="why-kw-section" className="relative py-32 overflow-hidden">
         <div className="absolute inset-0 bg-[url('/images/luxury-singapore-properties.png')] bg-cover bg-center opacity-10" />
         <div className="absolute inset-0 bg-black/70" />
         <div className="absolute inset-0 bg-gradient-to-b from-black to-gray-900" />
