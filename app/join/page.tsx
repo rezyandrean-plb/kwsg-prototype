@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform, Variants } from "framer-motion"
 import Image from "next/image"
 import { useState, useRef } from "react"
 import dynamic from "next/dynamic"
-import { ArrowRight, Brain, Share2, Video, BarChart3, Users, Building2, Award } from "lucide-react"
+import { ArrowRight, Brain, Share2, Video, BarChart3, Users, Building2, Award, Globe, TrendingUp, Calculator, Zap, Camera, Star, ChevronRight } from "lucide-react"
 
 // Dynamically import non-critical components
 const JoinFormDialog = dynamic(() => import("@/components/join-form-dialog").then(mod => mod.JoinFormDialog), {
@@ -117,7 +117,7 @@ const slideInRight = {
 
 export default function JoinKW() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const { scrollYProgress } = useScroll()
+  const { scrollYProgress, scrollY } = useScroll()
   const pathLength = useTransform(scrollYProgress, [0, 1], [0, 1])
 
   const handleSubmit = (data: any) => {
@@ -133,478 +133,355 @@ export default function JoinKW() {
       className="min-h-screen bg-black text-white"
     >
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center">
-        <div className="absolute inset-0">
-          <Image
-            src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=2000"
-            alt="Join KW Singapore"
-            fill
-            className="object-cover brightness-50"
-            priority
-            unoptimized
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/80" />
-        </div>
-        <motion.div 
-          className="relative container mx-auto px-4 text-center max-w-5xl"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          {/* <motion.div 
-            className="inline-block px-6 py-3 bg-primary-red/20 rounded-full mb-8 border border-primary-red/30"
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
-            <span className="text-white font-semibold text-lg">Why KW Singapore: Your Future in Real Estate, Reimagined</span>
-          </motion.div> */}
-          <h1 className="text-5xl md:text-7xl font-light mb-8 text-white tracking-tight leading-tight">
-            Your Future in Real Estate,<br />Reimagined
+      <section className="relative min-h-screen flex items-center justify-center pt-20">
+        <div
+          className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"
+          style={{
+            transform: `translateY(${scrollY.get() * 0.5}px)`,
+          }}
+        />
+        <div className="absolute inset-0 bg-[url('/images/join-kw/join-kw-header.webp')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-black/70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
+
+        <div className="relative z-10 text-center max-w-6xl mx-auto px-6">
+          <div className="mb-8"></div>
+
+          <h1 className="text-6xl font-bold mb-8 leading-tight font-sans md:text-7xl">
+            Your Journey to
+            <span className="block text-[#B40101] italic">Real Estate Success</span>
+            <span className="block">Begins Here</span>
           </h1>
-          <p className="text-xl md:text-2xl max-w-4xl mx-auto mb-12 text-gray-100 leading-relaxed">
-            You're a high-performing strategist, confident in your vision, and ambitious in your goals. You operate beyond the status quo, and so do we. At KW Singapore, we understand the critical shifts happening in real estate, and we've built the definitive platform to empower your dominance. This isn't just a brokerage. It's a business system designed for your unstoppable growth and enduring legacy.
+
+          <p className="text-lg md:text-xl text-white/80 mb-12 max-w-4xl mx-auto leading-relaxed">
+            You're a high-performing strategist, confident in your vision, and ambitious in your goals. At KW Singapore,
+            we've built the definitive platform to empower your dominance.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Button 
-              className="bg-primary-red text-white hover:bg-primary-red/90 px-6 py-2 text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
+
+          <div className="flex justify-center items-center">
+            <Button
+              size="lg"
+              className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 py-4 text-lg font-semibold rounded-none border-none transition-all duration-300 hover:scale-105 group"
               onClick={() => setIsDialogOpen(true)}
             >
-              Book a Discovery Call →
-            </Button>
-            <Button 
-              className="bg-white/10 text-white hover:bg-white/20 px-6 py-2 text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 backdrop-blur-sm"
-            >
-              Learn More
+              Join Us Now
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>
-        </motion.div>
-      </section>
+        </div>
 
-      {/* Why KW Singapore Section */}
-      <section className="relative py-32 bg-black/90">
-        <div className="container mx-auto px-4">
-          <motion.div 
-            className="text-center mb-20"
-            variants={sectionVariants}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <h2 className="text-6xl md:text-5xl font-light mb-8 text-white">
-              Your Ambition. Our Platform.<br />Unlocked.
-            </h2>
-            <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto">
-              We recognize the questions that challenge traditional real estate careers. KW Singapore provides the bold, outcome-first solutions you need to scale sustainably.
-            </p>
-          </motion.div>
-
-          {/* Trust & Brand Awareness */}
-          <motion.div 
-            className="grid md:grid-cols-2 gap-16 items-center mb-32"
-            variants={fadeInUp}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-          >
-            <motion.div 
-              className="relative h-[400px] min-w-[350px] w-full rounded-2xl overflow-hidden bg-gray-800"
-              variants={slideInLeft}
-            >
-              <Image
-                src="/images/join-kw/join-kw-header.webp"
-                alt="Brand Trust & Awareness - Modern office building representing global presence"
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                priority
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-8">
-                <h3 className="text-2xl font-bold text-white mb-2">Global Network</h3>
-                <p className="text-white">200,000+ consultants across 60+ countries</p>
-              </div>
-            </motion.div>
-            <div className="space-y-8">
-              <div className="inline-block px-4 py-2 bg-primary-red/20 rounded-full mb-4">
-                <span className="text-primary-red font-semibold">Brand Trust & Awareness</span>
-              </div>
-              <h3 className="text-4xl font-light text-white">
-                "Consumers haven't heard of KW Singapore before. How will you build brand awareness and establish trust?"
-              </h3>
-              <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                We're not just a new name; we're a new era. Our strategy is built on immediate clarity and high-impact narrative. We are Singapore's first real estate operating system for consultants, backed by a global network of over 200,000 consultants in 60+ countries.
-              </p>
-              <div className="space-y-4">
-                <h4 className="text-xl font-bold text-white">Our Strategic Build for Consumer Trust & Dominance:</h4>
-                <ul className="space-y-3 text-gray-300">
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-primary-red mt-2 flex-shrink-0" />
-                    <span><strong>National Awareness Campaigns:</strong> We deploy omnichannel national awareness campaigns using social, influencer, and user-generated content strategies. Our website immediately communicates modernity, performance, and clear differentiation from legacy competitors.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-primary-red mt-2 flex-shrink-0" />
-                    <span><strong>New Launch Dominance:</strong> We are uniquely positioned as the undisputed "New Launch Experts" in Singapore. Our platform secures prime developer partnerships and aims to capture 30-40% of Singapore's new launch volume by 2030. This includes direct 0.5-1% developer commissions that are not split with consultants.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-primary-red mt-2 flex-shrink-0" />
-                    <span><strong>Consultant-First Visibility:</strong> Our integrated media studio and content creation team provide full in-house capabilities. We feature 100+ branded TikTok/IG accounts managed by HQ to amplify your brand and drive organic lead generation, ensuring our consultants attract leads, not chase them.</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Training & Development */}
-          <motion.div 
-            className="grid md:grid-cols-2 gap-16 items-center mb-32"
-            variants={fadeInUp}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-          >
-            <div className="space-y-8 order-2 md:order-1">
-              <div className="inline-block px-4 py-2 bg-primary-red/20 rounded-full mb-4">
-                <span className="text-primary-red font-semibold">Training & Development</span>
-              </div>
-              <h3 className="text-4xl font-light text-white">
-                "Who will conduct training, coach on apps, and provide subject expertise?"
-              </h3>
-              <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                Your growth is our blueprint. We don't just offer training; we provide a structured pathway to entrepreneurial mastery.
-              </p>
-              <div className="space-y-6">
-                <h4 className="text-xl font-bold text-white">World-Class Coaching. Local Market Execution:</h4>
-                <ul className="space-y-4 text-gray-300">
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-primary-red mt-2 flex-shrink-0" />
-                    <span><strong>KW University Singapore:</strong> Access a comprehensive modular training system that fast-tracks consultants from sales beginners to C-suite-calibre entrepreneurs. This includes foundational programs like Ignite (12-week onboarding) and specialized training in New Launch Mastery and Advanced Realtor Series.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-primary-red mt-2 flex-shrink-0" />
-                    <span><strong>Dedicated Lead Trainers:</strong> Learn directly from industry leaders such as Melvin Lim (Founder & Operating Principal), Grayce Tan (Director of Growth), and Rayne Chua (New Launch Division Lead).</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-primary-red mt-2 flex-shrink-0" />
-                    <span><strong>KW Tech Onboarding Coach:</strong> Our tech trainers and systems administrators provide comprehensive onboarding and ongoing support for KW Command and other tech tools.</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <motion.div 
-              className="relative h-[400px] rounded-2xl overflow-hidden order-1 md:order-2"
-              variants={slideInRight}
-            >
-              <Image
-                src="/images/join-kw/join-kw-header.webp"
-                alt="Training & Development - Professional business training session"
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                priority
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-8">
-                <h3 className="text-2xl font-bold text-white mb-2">World-Class Training</h3>
-                <p className="text-white">From sales beginners to C-suite-calibre entrepreneurs</p>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Technology Stack */}
-          <motion.div 
-            className="grid md:grid-cols-2 gap-16 items-center mb-32"
-            variants={fadeInUp}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-          >
-            <motion.div 
-              className="relative h-[400px] rounded-2xl overflow-hidden"
-              variants={slideInLeft}
-            >
-              <Image
-                src="/images/join-kw/join-kw-header.webp"
-                alt="Technology & Innovation - Modern office with advanced technology"
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                priority
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-8">
-                <h3 className="text-2xl font-bold text-white mb-2">AI-Powered Platform</h3>
-                <p className="text-white">Unmatched efficiency and competitive edge</p>
-              </div>
-            </motion.div>
-            <div className="space-y-8">
-              <div className="inline-block px-4 py-2 bg-primary-red/20 rounded-full mb-4">
-                <span className="text-primary-red font-semibold">Technology & Innovation</span>
-              </div>
-              <h3 className="text-4xl font-light text-white">
-                "Tell me more about KW Tech and what's available?"
-              </h3>
-              <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                We operate with full transparency, grounded in credibility and systems. Our AI-powered tech stack is designed for unparalleled efficiency and competitive edge.
-              </p>
-              <div className="space-y-6">
-                <h4 className="text-xl font-bold text-white">Unmatched Technology. Actionable Insights:</h4>
-                <ul className="space-y-4 text-gray-300">
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-primary-red mt-2 flex-shrink-0" />
-                    <span><strong>KW Command CRM:</strong> Our proprietary, full-suite AI-powered CRM is the central hub for your business. It offers predictive lead generation, data visualization, and automated client workflows.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-primary-red mt-2 flex-shrink-0" />
-                    <span><strong>KW Research Suite:</strong> Exclusive to KW Singapore, this suite includes powerful tools like Disparity Tool, Journey Maker, Home Reports, Market Insight Dashboards, and the Nucleus App.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-primary-red mt-2 flex-shrink-0" />
-                    <span><strong>AI Integration:</strong> Our AI accelerates content ideation, enhances performance analytics, streamlines workflows, and expedites visualizations like virtual staging and 3D models. We even offer AI Avatar automated content generation for consistent social media presence.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-primary-red mt-2 flex-shrink-0" />
-                    <span><strong>Comprehensive Calculator Suite:</strong> Access 15 specialized calculators for mortgages, investments, ROI analysis, TDSR, MSR, ABSD, BSD, SSD, and more. These tools provide instant, accurate financial figures for client consultations.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-primary-red mt-2 flex-shrink-0" />
-                    <span><strong>Singpass Integration:</strong> Seamless verification, faster data collection, and reduced paperwork through government-backed authentication.</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Command Video Section */}
-          <motion.div 
-            className="mb-32"
-            variants={fadeInUp}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-          >
-            <div className="text-center mb-12">
-              <h3 className="text-4xl font-light text-white mb-4">Show Command video:</h3>
-              <p className="text-xl text-gray-300">Save Time, Save Money and Get More Leads With Command</p>
-            </div>
-            <div className="max-w-4xl mx-auto">
-              <div className="relative aspect-video rounded-2xl overflow-hidden">
-                <iframe 
-                  width="100%" 
-                  height="100%" 
-                  src="https://www.youtube.com/embed/j6A-g-2dY1U?si=VycAELfncKlRmwmE" 
-                  title="YouTube video player" 
-                  frameBorder="0" 
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                  referrerPolicy="strict-origin-when-cross-origin" 
-                  allowFullScreen
-                  className="absolute inset-0 w-full h-full"
-                />
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Media Services */}
-          <motion.div 
-            className="grid md:grid-cols-2 gap-16 items-center mb-32"
-            variants={fadeInUp}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-          >
-            <div className="space-y-8 order-2 md:order-1">
-              <div className="inline-block px-4 py-2 bg-primary-red/20 rounded-full mb-4">
-                <span className="text-primary-red font-semibold">Media Services</span>
-              </div>
-              <h3 className="text-4xl font-light text-white">
-                "Will in-house media offer more competitive prices, and how will it help agents establish brand positioning?"
-              </h3>
-              <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                Your brand deserves better than DIY. Our media engine is a complete virality infrastructure, designed to turn you into a content powerhouse.
-              </p>
-              <div className="space-y-6">
-                <h4 className="text-xl font-bold text-white">Your Media. Your Advantage:</h4>
-                <ul className="space-y-4 text-gray-300">
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-primary-red mt-2 flex-shrink-0" />
-                    <span><strong>Cost Efficiency & Streamlined Workflow:</strong> Our in-house media division, Chief Media, offers highly competitive pricing due to economies of scale and faster turnaround times compared to external vendors.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-primary-red mt-2 flex-shrink-0" />
-                    <span><strong>Full-Funnel Content Creation:</strong> We transform every consultant into a content creator with professional media production capabilities and generative-AI tooling. This includes branded video, copy, and visuals for all major platforms.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-primary-red mt-2 flex-shrink-0" />
-                    <span><strong>Comprehensive Services:</strong> Access professional copywriting, videos & animations, drone services, and our Realtors Marketing Studio for podcasts and home staging. We provide and subsidize video content engine for listings and branding.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-primary-red mt-2 flex-shrink-0" />
-                    <span><strong>Brand Ownership & Control:</strong> We empower you with white-label brand control and personal branding content, helping you build long-term brand equity. You get to select your specialty area (New Launch, Condo, Landed, HDB, Commercial) for automated, niche content.</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <motion.div 
-              className="relative h-[400px] rounded-2xl overflow-hidden order-1 md:order-2"
-              variants={slideInRight}
-            >
-              <Image
-                src="/images/join-kw/join-kw-header.webp"
-                alt="Media Services - Professional media production studio"
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                priority
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-8">
-                <h3 className="text-2xl font-bold text-white mb-2">Chief Media</h3>
-                <p className="text-white">Complete virality infrastructure</p>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Growth Share & Financials */}
-          <motion.div 
-            className="grid md:grid-cols-2 gap-16 items-center mb-32"
-            variants={fadeInUp}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-          >
-            <motion.div 
-              className="relative h-[400px] rounded-2xl overflow-hidden"
-              variants={slideInLeft}
-            >
-              <Image
-                src="/images/join-kw/join-kw-header.webp"
-                alt="Growth Share Model - Modern business district representing financial growth"
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                priority
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-8">
-                <h3 className="text-2xl font-bold text-white mb-2">Growth Share Model</h3>
-                <p className="text-white">Build wealth beyond transactions</p>
-              </div>
-            </motion.div>
-            <div className="space-y-8">
-              <div className="inline-block px-4 py-2 bg-primary-red/20 rounded-full mb-4">
-                <span className="text-primary-red font-semibold">Financial Growth</span>
-              </div>
-              <h3 className="text-4xl font-light text-white">
-                "What will I actually take home after all the splits? How does the Growth Share system work?"
-              </h3>
-              <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                Clarity and maximum take-home are foundational to our model. We believe in building wealth beyond just transactions.
-              </p>
-              <div className="space-y-6">
-                <h4 className="text-xl font-bold text-white">Unlocking Your True Earning Potential:</h4>
-                <ul className="space-y-4 text-gray-300">
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-primary-red mt-2 flex-shrink-0" />
-                    <span><strong>Highest Commission Retention:</strong> You retain 90-94% of your commissions, one of the highest in the industry in Singapore.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-primary-red mt-2 flex-shrink-0" />
-                    <span><strong>7-Tier Global Growth Share:</strong> Our passive income system allows you to earn 2% of the Gross Commission Income (GCI) from the company split in your 7-tier network. This model offers unlimited width and global eligibility, and is lifetime and transferable to your next-of-kin.</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Financial Status */}
-          <motion.div 
-            className="grid md:grid-cols-2 gap-16 items-center"
-            variants={fadeInUp}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-          >
-            <div className="space-y-8 order-2 md:order-1">
-              <div className="inline-block px-4 py-2 bg-primary-red/20 rounded-full mb-4">
-                <span className="text-primary-red font-semibold">Financial Status</span>
-              </div>
-              <h3 className="text-4xl font-light text-white">
-                "What is the financial status of KW SG and its sustainability for growth?"
-              </h3>
-              <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                KW Singapore is built for longevity and fueled by a clear vision for the future. We are backed by a global powerhouse and strategic revenue streams.
-              </p>
-              <div className="space-y-6">
-                <h4 className="text-xl font-bold text-white">A Financially Viable Future:</h4>
-                <ul className="space-y-4 text-gray-300">
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-primary-red mt-2 flex-shrink-0" />
-                    <span><strong>$10 Million Seed Valuation:</strong> Keller Williams Singapore secured an angel-funded seed round, placing the company at a S$10 million valuation, underscoring investor confidence in our AI-driven, media-first, entrepreneur-first platform.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-primary-red mt-2 flex-shrink-0" />
-                    <span><strong>Multi-Vertical Revenue Streams:</strong> Our revenue is diversified across technology, media, and training, ensuring robust financial viability and sustainable growth.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-primary-red mt-2 flex-shrink-0" />
-                    <span><strong>Global Network Strength:</strong> We are an affiliate of Keller Williams Worldwide, the largest real estate company in the United States, with a proven track record across more than 50 countries and over 145,000 salespersons. This global advantage provides international referrals, cross-border investment clients, and global recognition.</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <motion.div 
-              className="relative h-[400px] rounded-2xl overflow-hidden order-1 md:order-2"
-              variants={slideInRight}
-            >
-              <Image
-                src="/images/join-kw/join-kw-header.webp"
-                alt="Global Network - International business connections"
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                priority
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-8">
-                <h3 className="text-2xl font-bold text-white mb-2">Global Network</h3>
-                <p className="text-white">145,000+ salespersons worldwide</p>
-              </div>
-            </motion.div>
-          </motion.div>
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <ChevronRight className="h-6 w-6 text-[#B40101] rotate-90" />
         </div>
       </section>
 
-      {/* Final CTA Section */}
-      <section className="py-32 bg-gradient-to-b from-black to-black/90">
-        <div className="container mx-auto px-4 text-center">
-          <motion.div 
-            variants={sectionVariants}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true, margin: "-100px" }}
-            className="max-w-4xl mx-auto"
-          >
-            <h2 className="text-6xl md:text-5xl font-light mb-8 text-white">
-              The Future of Real Estate is Here.<br />Will You Lead It?
-            </h2>
-            <p className="text-xl text-gray-300 mb-8">
-              Plug into the KW Singapore platform and take your career from closings to equity, visibility, and brand ownership. We invite you to lead in the next era of real estate.
+      {/* Why KW Singapore */}
+      <section className="relative py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/images/luxury-singapore-properties.png')] bg-cover bg-center opacity-10" />
+        <div className="absolute inset-0 bg-black/70" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black to-gray-900" />
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          <div className="text-center mb-20">
+                          <h2 className="font-bold mb-8 font-sans text-5xl text-white">
+                Your Ambition. Our Platform.
+                <span className="block text-[#B40101] italic">Unlocked.</span>
+              </h2>
+            <p className="text-lg text-white/80 max-w-4xl mx-auto">
+              We recognize the questions that challenge traditional real estate careers. KW Singapore provides the bold,
+              outcome-first solutions you need to scale sustainably.
             </p>
-            <p className="text-lg text-gray-400 mb-12">
-              Join the Platform. Built for Consultants. Backed by Systems. Where Media, Tech, and Talent Collide. One Platform. Unlimited Potential.
-            </p>
-            <p className="text-xl text-primary-red font-semibold mb-12">
-              Your Next Deal is Just the Start.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button 
-                className="bg-primary-red text-white hover:bg-primary-red/90 px-6 py-2 text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
-                onClick={() => setIsDialogOpen(true)}
-              >
-                Book a Discovery Call →
-              </Button>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-12">
+            {[
+              {
+                icon: <Globe className="h-12 w-12" />,
+                title: "Global Network Strength",
+                description:
+                  "145,000+ consultants across 50+ countries. International referrals and cross-border investment opportunities.",
+                stat: "145K+",
+              },
+              {
+                icon: <TrendingUp className="h-12 w-12" />,
+                title: "New Launch Dominance",
+                description:
+                  "Positioned to capture 30-40% of Singapore's new launch volume by 2030 with direct developer partnerships.",
+                stat: "30-40%",
+              },
+              {
+                icon: <Users className="h-12 w-12" />,
+                title: "Consultant-First Visibility",
+                description:
+                  "100+ branded social accounts managed by HQ. We ensure our consultants attract leads, not chase them.",
+                stat: "100+",
+              },
+            ].map((item, index) => (
+              <div key={index} className="group relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#B40101]/10 to-transparent rounded-lg transform group-hover:scale-105 transition-all duration-500" />
+                <div className="relative p-8 h-full">
+                  <div className="text-[#B40101] mb-6 group-hover:scale-110 transition-transform duration-300">
+                    {item.icon}
+                  </div>
+                  <div className="text-4xl font-bold text-[#B40101] mb-4">{item.stat}</div>
+                  <h3 className="text-2xl font-bold mb-4 text-white">{item.title}</h3>
+                  <p className="text-white/80 leading-relaxed">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Technology Section */}
+      <section className="relative py-32">
+        <div className="absolute inset-0 bg-[url('/images/modern-office-tech.png')] bg-cover bg-center opacity-15" />
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-5xl font-bold mb-8 font-sans text-white">
+                Unmatched Technology.
+                <span className="block text-[#B40101] italic">Actionable Insights.</span>
+              </h2>
+              <p className="text-lg text-white/80 mb-12 leading-relaxed">
+                Our AI-powered tech ecosystem delivers unparalleled efficiency and a critical competitive edge. We equip
+                you with the precision and insight to lead the market.
+              </p>
+
+              <h3 className="text-2xl font-bold mb-8 text-white">Key Technology Pillars:</h3>
+
+              <div className="space-y-6">
+                {[
+                  {
+                    icon: <Brain className="h-6 w-6" />,
+                    title: "KW Command Platform",
+                    desc: "Your integrated operating system for real estate. Control leads, manage transactions, and scale your business with smart tools built for growth.",
+                  },
+                  {
+                    icon: <Calculator className="h-6 w-6" />,
+                    title: "PropTech Calculator Suite",
+                    desc: "Specialized calculators for instant financial analysis and client insights.",
+                  },
+                  {
+                    icon: <TrendingUp className="h-6 w-6" />,
+                    title: "PropTech Research & Charts",
+                    desc: "Powerful, integrated platform for dynamic market charts, Disparity Effect, and MOAT analysis.",
+                  },
+                  {
+                    icon: <Zap className="h-6 w-6" />,
+                    title: "AI Integration",
+                    desc: "Beyond CRM, leverage AI for content ideation, performance analytics, and virtual staging.",
+                  },
+                ].map((tech, index) => (
+                  <div key={index} className="flex items-start space-x-4 group">
+                    <div className="text-[#B40101] mt-1 group-hover:scale-110 transition-transform">{tech.icon}</div>
+                    <div>
+                      <h4 className="text-lg font-semibold mb-1">{tech.title}</h4>
+                      <p className="text-white/80">{tech.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-          </motion.div>
+
+            <div className="relative">
+              <div className="relative bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border-[#666666]/30 leading-3 border-0 border-none opacity-100 py-0 px-0">
+                <div className="aspect-video">
+                  <iframe
+                    src="https://www.youtube.com/embed/_H9v-sPdH3o"
+                    title="KW Command in Action"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    className="w-full h-full rounded-lg"
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Media & Branding */}
+      <section className="relative py-32 bg-gradient-to-b from-gray-900 to-black">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl font-bold mb-8 font-sans text-white">
+              Your Media.
+              <span className="block text-[#B40101] italic">Your Advantage.</span>
+            </h2>
+            <p className="text-lg text-white/80 max-w-4xl mx-auto">
+              Your brand deserves better than DIY. Our media engine is a complete virality infrastructure, designed to
+              turn you into a content powerhouse.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                icon: <Camera className="h-8 w-8" />,
+                title: "Professional Media",
+                desc: "Video, drone, photography services",
+              },
+              {
+                icon: <Star className="h-8 w-8" />,
+                title: "Brand Control",
+                desc: "White-label personal branding content",
+              },
+              {
+                icon: <TrendingUp className="h-8 w-8" />,
+                title: "Content Creation",
+                desc: "AI-powered copy and visual generation",
+              },
+              {
+                icon: <Award className="h-8 w-8" />,
+                title: "Marketing Studio",
+                desc: "Podcasts, staging, and branded content",
+              },
+            ].map((service, index) => (
+              <div key={index} className="text-center group">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-[#B40101]/10 rounded-full mb-6 group-hover:bg-[#B40101]/20 transition-colors">
+                  <div className="text-[#B40101]">{service.icon}</div>
+                </div>
+                <h3 className="text-xl font-semibold mb-3 text-white">{service.title}</h3>
+                <p className="text-white/80">{service.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Commission Structure */}
+      <section className="relative py-32">
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-black" />
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="relative">
+              <div className="bg-gradient-to-br from-[#B40101]/10 to-transparent p-12 rounded-lg border border-[#B40101]/20">
+                <div className="text-center">
+                  <div className="text-6xl font-bold text-[#B40101] mb-4">90-94%</div>
+                  <h3 className="text-2xl font-semibold mb-4">Commission Retention</h3>
+                  <p className="text-[#999999] mb-8">One of the highest in Singapore's real estate industry</p>
+
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center py-2 border-b border-[#666666]/30">
+                      <span className="text-white/80">Your Commission</span>
+                      <span className="text-[#B40101] font-semibold">90-94%</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-[#666666]/30">
+                      <span className="text-white/80">Growth Share Bonus</span>
+                      <span className="text-[#B40101] font-semibold">2% GCI</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2">
+                      <span className="text-white/80">7-Tier Network</span>
+                      <span className="text-[#B40101] font-semibold">Lifetime</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h2 className="text-5xl font-bold mb-8 font-sans text-white">
+                Unlocking Your True
+                <span className="block text-[#B40101] italic">Earning Potential</span>
+              </h2>
+              <p className="text-lg text-white/80 mb-8 leading-relaxed">
+                Clarity and maximum take-home are foundational to our model. We believe in building wealth beyond just
+                transactions.
+              </p>
+
+              <div className="space-y-6">
+                <div className="flex items-start space-x-4">
+                  <div className="w-2 h-2 bg-[#B40101] rounded-full mt-3" />
+                  <div>
+                    <h4 className="text-lg font-semibold mb-2">Highest Commission Retention</h4>
+                    <p className="text-white/80">
+                      You retain 90-94% of your commissions, one of the highest in Singapore.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-2 h-2 bg-[#B40101] rounded-full mt-3" />
+                  <div>
+                    <h4 className="text-lg font-semibold mb-2">7-Tier Global Growth Share</h4>
+                    <p className="text-white/80">
+                      Build lasting wealth with passive income. Earn 2% of the company's GCI from your growing global
+                      network, designed for lifetime and inheritable benefits.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Financial Backing */}
+      <section className="relative py-32 bg-gradient-to-b from-black to-gray-900">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <h2 className="text-5xl font-bold mb-8 font-sans text-white">
+            A Financially Viable
+            <span className="block text-[#B40101] italic">Future</span>
+          </h2>
+          <p className="text-lg text-white/80 mb-16 max-w-4xl mx-auto">
+            KW Singapore is built for longevity and fueled by a clear vision for the future. We are backed by a global
+            powerhouse and strategic revenue streams.
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-12">
+            <div className="text-center">
+              <div className="text-5xl font-bold text-[#B40101] mb-4">$10M</div>
+              <h3 className="text-xl font-semibold mb-3 text-white">Seed Valuation</h3>
+              <p className="text-white/80">Angel-funded seed round demonstrating investor confidence</p>
+            </div>
+            <div className="text-center">
+              <div className="text-5xl font-bold text-[#B40101] mb-4">50+</div>
+              <h3 className="text-xl font-semibold mb-3 text-white">Countries</h3>
+              <p className="text-white/80">Global network presence with proven track record</p>
+            </div>
+            <div className="text-center">
+              <div className="text-5xl font-bold text-[#B40101] mb-4">145K+</div>
+              <h3 className="text-xl font-semibold mb-3 text-white">Salespersons</h3>
+              <p className="text-white/80">Salespersons in our global network</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="relative py-32">
+        <div className="absolute inset-0 bg-[url('/images/singapore-skyline-night.png')] bg-cover bg-center opacity-20" />
+        <div className="absolute inset-0 bg-black/70" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#B40101]/20 via-black/80 to-black" />
+        <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
+          <h2 className="text-6xl md:text-7xl font-bold mb-8 font-sans text-white">
+            The Future of Real Estate is Here.
+            <span className="block text-[#B40101] italic">Will You Lead It?</span>
+          </h2>
+          <p className="text-xl text-white/80 mb-12 max-w-4xl mx-auto leading-relaxed">
+            Plug into the KW Singapore platform and take your career from closings to equity, visibility, and brand
+            ownership. We invite you to lead in the next era of real estate.
+          </p>
+
+          <div className="space-y-6">
+            <Button
+              size="lg"
+              className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-sm"
+              onClick={() => setIsDialogOpen(true)}
+            >
+              Book Your Discovery Call
+              <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+            </Button>
+            <p className="text-lg text-white/80 max-w-2xl mx-auto">
+              Your next deal is just the start. Join the platform built for consultants, backed by systems.
+              <span className="block mt-2 text-[#B40101] font-medium">
+                Where Media, Tech, and Talent Collide. One Platform. Unlimited Potential.
+              </span>
+            </p>
+          </div>
         </div>
       </section>
 
