@@ -369,111 +369,111 @@ export default function Home() {
             <motion.div variants={containerVariants} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
               {/* First Row - 4 Cards */}
               {/* Global Brand & Trust */}
-              <motion.div variants={itemVariants}>
-                <Link href="/why-kw/global-brand" className="group">
-                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
-                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
+              <motion.div variants={itemVariants} className="h-full">
+                <div className="group h-full">
+                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1 flex flex-col">
+                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4 flex-shrink-0">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">Built by the World. Powered for You.</h3>
-                    <p className="text-gray-300 text-sm mb-4">60+ countries. 200,000 consultants. KW Singapore unlocks global referrals and instant credibility with developers.</p>
+                    <h3 className="text-xl font-bold text-white mb-2 flex-shrink-0">Built by the World. Powered for You.</h3>
+                    <p className="text-gray-300 text-sm mb-4 flex-grow">60+ countries. 200,000 consultants. KW Singapore unlocks global referrals and instant credibility with developers.</p>
                   </div>
-                </Link>
+                </div>
               </motion.div>
 
               {/* Custom CRM - Command */}
-              <motion.div variants={itemVariants}>
-                <Link href="/why-kw/command" className="group">
-                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
-                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
+              <motion.div variants={itemVariants} className="h-full">
+                <div className="group h-full">
+                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1 flex flex-col">
+                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4 flex-shrink-0">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">Your All-In-One Control Panel.</h3>
-                    <p className="text-gray-300 text-sm mb-4">Run your leads, campaigns, and closings from a single AI-powered dashboard—desktop or app.</p>
+                    <h3 className="text-xl font-bold text-white mb-2 flex-shrink-0">Your All-In-One Control Panel.</h3>
+                    <p className="text-gray-300 text-sm mb-4 flex-grow">Run your leads, campaigns, and closings from a single AI-powered dashboard—desktop or app.</p>
                   </div>
-                </Link>
+                </div>
               </motion.div>
 
               {/* PropTech Stack */}
-              <motion.div variants={itemVariants}>
-                <Link href="/why-kw/proptech" className="group">
-                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
-                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
+              <motion.div variants={itemVariants} className="h-full">
+                <div className="group h-full">
+                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1 flex flex-col">
+                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4 flex-shrink-0">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                       </svg>
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">Tech That Closes.</h3>
-                    <p className="text-gray-300 text-sm mb-4">Asset tools, PSF trackers, dashboards & more—designed to help you win high-value clients.</p>
+                    <h3 className="text-xl font-bold text-white mb-2 flex-shrink-0">Tech That Closes.</h3>
+                    <p className="text-gray-300 text-sm mb-4 flex-grow">Asset tools, PSF trackers, dashboards & more—designed to help you win high-value clients.</p>
                   </div>
-                </Link>
+                </div>
               </motion.div>
 
               {/* Research Hub */}
-              <motion.div variants={itemVariants}>
-                <Link href="/why-kw/research" className="group">
-                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
-                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
+              <motion.div variants={itemVariants} className="h-full">
+                <div className="group h-full">
+                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1 flex flex-col">
+                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4 flex-shrink-0">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                       </svg>
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">Insights That Convert.</h3>
-                    <p className="text-gray-300 text-sm mb-4">Plug into smart charts, disparity maps & launch decks. Know what to say—every month.</p>
+                    <h3 className="text-xl font-bold text-white mb-2 flex-shrink-0">Insights That Convert.</h3>
+                    <p className="text-gray-300 text-sm mb-4 flex-grow">Plug into smart charts, disparity maps & launch decks. Know what to say—every month.</p>
                   </div>
-                </Link>
+                </div>
               </motion.div>
             </motion.div>
 
             {/* Second Row - 3 Centered Cards */}
             <motion.div variants={containerVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
               {/* Media Support */}
-              <motion.div variants={itemVariants}>
-                <Link href="/why-kw/media" className="group">
-                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
-                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
+              <motion.div variants={itemVariants} className="h-full">
+                <div className="group h-full">
+                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1 flex flex-col">
+                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4 flex-shrink-0">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                       </svg>
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">Look Pro. Sell More.</h3>
-                    <p className="text-gray-300 text-sm mb-4">KW-exclusive video shoots, reels, and scripts to grow your brand—at startup-friendly prices.</p>
+                    <h3 className="text-xl font-bold text-white mb-2 flex-shrink-0">Look Pro. Sell More.</h3>
+                    <p className="text-gray-300 text-sm mb-4 flex-grow">KW-exclusive video shoots, reels, and scripts to grow your brand—at startup-friendly prices.</p>
                   </div>
-                </Link>
+                </div>
               </motion.div>
 
               {/* Training System */}
-              <motion.div variants={itemVariants}>
-                <Link href="/why-kw/training" className="group">
-                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
-                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
+              <motion.div variants={itemVariants} className="h-full">
+                <div className="group h-full">
+                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1 flex flex-col">
+                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4 flex-shrink-0">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                       </svg>
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">Learn Fast. Earn Fast.</h3>
-                    <p className="text-gray-300 text-sm mb-4">You get weekly coaching, expert-led playbooks, and a launch plan that works.</p>
+                    <h3 className="text-xl font-bold text-white mb-2 flex-shrink-0">Learn Fast. Earn Fast.</h3>
+                    <p className="text-gray-300 text-sm mb-4 flex-grow">You get weekly coaching, expert-led playbooks, and a launch plan that works.</p>
                   </div>
-                </Link>
+                </div>
               </motion.div>
 
               {/* Growth Share Model */}
-              <motion.div variants={itemVariants}>
-                <Link href="/why-kw/growth-share" className="group">
-                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1">
-                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4">
+              <motion.div variants={itemVariants} className="h-full">
+                <div className="group h-full">
+                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 hover:border-primary-red hover:-translate-y-1 flex flex-col">
+                    <div className="w-14 h-14 bg-primary-red/10 rounded-xl flex items-center justify-center mb-4 flex-shrink-0">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                       </svg>
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">Earn Beyond Closings.</h3>
-                    <p className="text-gray-300 text-sm mb-4">2% from every deal in your 7-tier tree. Passive. Global.</p>
+                    <h3 className="text-xl font-bold text-white mb-2 flex-shrink-0">Earn Beyond Closings.</h3>
+                    <p className="text-gray-300 text-sm mb-4 flex-grow">2% from every deal in your 7-tier tree. Passive. Global.</p>
                   </div>
-                </Link>
+                </div>
               </motion.div>
             </motion.div>
 
@@ -605,7 +605,7 @@ export default function Home() {
                   style={{ willChange: 'transform, opacity' }}
                 >
                   <div className="transform scale-100 sm:scale-105 w-full max-w-xs">
-                    <CountdownTimer targetDate="2025-07-01T00:00:00" />
+                    <CountdownTimer targetDate="2025-07-05T00:00:00" />
                   </div>
                 </motion.div>
               </motion.div>

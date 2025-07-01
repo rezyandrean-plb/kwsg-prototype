@@ -18,6 +18,7 @@ const FloatingWhatsApp = dynamic(() => import("@/components/floating-whatsapp"),
 
 // Memoize the navigation items to prevent unnecessary re-renders
 const navItems = [
+  { href: "/why-kw", label: "KW Model" },
   { href: "/editorial", label: "KW Blog" },
   { href: "/projects", label: "New Launch Condo" },
   { href: "/about-us", label: "About Us" },
@@ -86,6 +87,7 @@ export function Header() {
 const footerLinks = {
   column1: [
     { href: "/", label: "Home" },
+    { href: "/why-kw", label: "KW Model" },
     { href: "/editorial", label: "KW Blog" },
     { href: "/projects", label: "New Launch Condo" }
   ],

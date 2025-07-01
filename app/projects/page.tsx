@@ -136,7 +136,11 @@ const fetchProjects = async (): Promise<Project[]> => {
     // Transform API data to match our Project type
     return apiProjects.map((apiProject): Project => {
       // Extract district number from district string (e.g., "D05" -> 5)
-      const districtNumber = apiProject.district ? parseInt(apiProject.district.replace('D', '')) : undefined
+      const districtNumber = apiProject.district ? 
+        (() => {
+          const match = apiProject.district.match(/D(\d+)/)
+          return match ? parseInt(match[1]) : undefined
+        })() : undefined
       
       // Map status to our enum
       const mapStatus = (status: string | null | undefined): 'upcoming' | 'ongoing' | 'completed' => {
@@ -196,7 +200,7 @@ const fetchProjects = async (): Promise<Project[]> => {
       
       // Generate bedrooms array from bedrooms string
       const bedrooms = apiProject.bedrooms ? 
-        apiProject.bedrooms.split(',').map(b => b.trim()).filter(b => b) : 
+        apiProject.bedrooms.split(',').map(b => b.trim()).filter(b => b && b !== 'N/A') : 
         undefined
       
       return {
@@ -304,7 +308,25 @@ export default function NewLaunchDirectory() {
       const matchesTenure = selectedTenures.length === 0 || (project.tenure && selectedTenures.includes(project.tenure))
       const matchesPropertyType = selectedPropertyTypes.length === 0 || (project.propertyType && selectedPropertyTypes.includes(project.propertyType))
       const matchesStatus = selectedStatus.length === 0 || (project.status && selectedStatus.includes(project.status))
-      const matchesBedrooms = selectedBedrooms.length === 0 || (project.bedrooms && selectedBedrooms.some(bedroom => project.bedrooms?.includes(bedroom)))
+      const matchesBedrooms = selectedBedrooms.length === 0 || (() => {
+        if (!project.bedrooms || project.bedrooms.length === 0) return false
+        
+        return selectedBedrooms.some(selectedBedroom => {
+          if (selectedBedroom === 'Studio') {
+            // Studio matches if project has "Studio" or "0" bedrooms
+            return project.bedrooms?.includes('Studio') || project.bedrooms?.includes('0')
+          } else if (selectedBedroom === '5 or more') {
+            // 5 or more matches if project has 5, 6, 7, 8, 9, 10+ bedrooms
+            return project.bedrooms?.some(bedroom => {
+              const num = parseInt(bedroom)
+              return !isNaN(num) && num >= 5
+            })
+          } else {
+            // Regular bedroom matching
+            return project.bedrooms?.includes(selectedBedroom)
+          }
+        })
+      })()
       
       // Price range filter (use priceMin and priceMax)
       const [projectMin, projectMax] = (project.priceRange || '').split(" - ").map(price => parseInt(price.replace(/[^0-9]/g, "")))
@@ -387,10 +409,27 @@ export default function NewLaunchDirectory() {
 
   // Update all filter arrays to handle undefined values
   const districts = isClient ? Array.from(new Set(projects.map(p => p.district).filter((d): d is number => d !== undefined))).sort((a, b) => a - b) : []
-  const tenures = isClient ? Array.from(new Set(projects.map(p => p.tenure).filter((t): t is string => t !== undefined))) : []
+  const tenures = isClient ? Array.from(new Set(projects.map(p => p.tenure).filter((t): t is string => t != null && t.trim() !== ''))) : []
   const propertyTypes = isClient ? Array.from(new Set(projects.map(p => p.propertyType).filter((t): t is string => t !== undefined))) : []
   const statuses: ("upcoming" | "ongoing" | "completed")[] = ["upcoming", "ongoing", "completed"]
-  const bedrooms = isClient ? Array.from(new Set(projects.flatMap(p => p.bedrooms || []))) : []
+  
+  // Enhanced bedrooms array with Studio and 5+ options
+  const bedrooms = isClient ? (() => {
+    const existingBedrooms = Array.from(new Set(projects.flatMap(p => p.bedrooms || [])))
+    const enhancedBedrooms = [...existingBedrooms]
+    
+    // Add Studio if not present
+    if (!enhancedBedrooms.includes('Studio')) {
+      enhancedBedrooms.unshift('Studio')
+    }
+    
+    // Add "5 or more" if not present
+    if (!enhancedBedrooms.includes('5 or more')) {
+      enhancedBedrooms.push('5 or more')
+    }
+    
+    return enhancedBedrooms
+  })() : []
 
   // Calculate pagination
   const indexOfLastProject = currentPage * projectsPerPage
@@ -550,7 +589,7 @@ export default function NewLaunchDirectory() {
               <Input
                 type="search"
                 placeholder="Search projects by name, location, or developer..."
-                className="w-full pl-12 h-[52px] text-base bg-[#242728] border-gray-600 text-white placeholder:text-gray-400 focus:border-primary-red focus:ring-primary-red/20 backdrop-blur-sm rounded-md"
+                className="w-full pl-4 h-[52px] text-base bg-[#242728] border-gray-600 text-white placeholder:text-gray-400 focus:border-primary-red focus:ring-primary-red/20 backdrop-blur-sm rounded-md"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 onKeyDown={(e) => {
@@ -602,7 +641,11 @@ export default function NewLaunchDirectory() {
                             <Button
                               key={district}
                               variant={selectedDistricts.includes(district) ? "default" : "outline"}
-                              className="w-full justify-center border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 text-xs py-1.5 px-2 min-h-[32px]"
+                              className={`w-full justify-center text-xs py-1.5 px-2 min-h-[32px] transition-all duration-200 ${
+                                selectedDistricts.includes(district)
+                                  ? "bg-primary-red text-white border-primary-red shadow-lg transform scale-105"
+                                  : "border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                              }`}
                               onClick={() => handleDistrictChange(district)}
                             >
                               {selectedDistricts.includes(district) && <Check className="mr-1 h-3 w-3" />}
@@ -629,7 +672,11 @@ export default function NewLaunchDirectory() {
                           <Button
                             key={tenure}
                             variant={selectedTenures.includes(tenure) ? "default" : "outline"}
-                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 text-sm py-2"
+                            className={`w-full justify-start text-sm py-2 transition-all duration-200 ${
+                              selectedTenures.includes(tenure)
+                                ? "bg-primary-red text-white border-primary-red shadow-lg transform scale-[1.02]"
+                                : "border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                            }`}
                             onClick={() => handleTenureChange(tenure)}
                           >
                             {selectedTenures.includes(tenure) && <Check className="mr-2 h-4 w-4" />}
@@ -800,7 +847,7 @@ export default function NewLaunchDirectory() {
               <Input
                 type="search"
                 placeholder="Search projects by name, location, or developer..."
-                className="w-full pl-12 h-[52px] text-lg bg-[#242728] border-gray-600 text-white placeholder:text-gray-400 focus:border-primary-red focus:ring-primary-red/20 backdrop-blur-sm rounded-md"
+                className="w-full pl-4 h-[52px] text-lg bg-[#242728] border-gray-600 text-white placeholder:text-gray-400 focus:border-primary-red focus:ring-primary-red/20 backdrop-blur-sm rounded-md"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 onKeyDown={(e) => {
@@ -851,7 +898,11 @@ export default function NewLaunchDirectory() {
                             <Button
                               key={district}
                               variant={selectedDistricts.includes(district) ? "default" : "outline"}
-                              className="w-full justify-center border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 text-sm py-2 px-1 min-h-[36px]"
+                              className={`w-full justify-center text-sm py-2 px-1 min-h-[36px] transition-all duration-200 ${
+                                selectedDistricts.includes(district)
+                                  ? "bg-primary-red text-white border-primary-red shadow-lg transform scale-105"
+                                  : "border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                              }`}
                               onClick={() => handleDistrictChange(district)}
                             >
                               {selectedDistricts.includes(district) && <Check className="mr-1 h-3 w-3" />}
@@ -878,7 +929,11 @@ export default function NewLaunchDirectory() {
                           <Button
                             key={tenure}
                             variant={selectedTenures.includes(tenure) ? "default" : "outline"}
-                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 text-sm py-2"
+                            className={`w-full justify-start text-sm py-2 transition-all duration-200 ${
+                              selectedTenures.includes(tenure)
+                                ? "bg-primary-red text-white border-primary-red shadow-lg transform scale-[1.02]"
+                                : "border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                            }`}
                             onClick={() => handleTenureChange(tenure)}
                           >
                             {selectedTenures.includes(tenure) && <Check className="mr-2 h-4 w-4" />}
@@ -1149,6 +1204,13 @@ export default function NewLaunchDirectory() {
             </div>
           )}
 
+          {/* Results Count */}
+          {isClient && !isLoading && filteredProjects.length > 0 && (
+            <div className="text-sm text-gray-400 mb-6">
+              Showing {indexOfFirstProject + 1} to {Math.min(indexOfLastProject, filteredProjects.length)} of {filteredProjects.length} projects
+            </div>
+          )}
+
           {/* Projects Grid */}
           {isClient && !isLoading && (
             <motion.div
@@ -1172,7 +1234,7 @@ export default function NewLaunchDirectory() {
           {/* No Results */}
           {isClient && !isLoading && filteredProjects.length === 0 && (
             <div className="text-center py-16">
-              <p className="text-gray-400 text-lg">No projects found matching your criteria.</p>
+              <p className="text-gray-400 text-lg">New Project Coming Soon</p>
               <Button 
                 variant="outline" 
                 className="mt-4 border-gray-600 text-gray-300 hover:bg-gray-800/50"
@@ -1196,11 +1258,6 @@ export default function NewLaunchDirectory() {
           {/* Pagination */}
           {isClient && !isLoading && totalPages > 1 && (
             <div className="flex flex-col items-center mt-12 gap-4">
-              {/* Page Info */}
-              <div className="text-sm text-gray-400">
-                Showing {indexOfFirstProject + 1} to {Math.min(indexOfLastProject, filteredProjects.length)} of {filteredProjects.length} projects
-              </div>
-              
               {/* Pagination Controls */}
               <div className="flex items-center gap-2">
                 <Button

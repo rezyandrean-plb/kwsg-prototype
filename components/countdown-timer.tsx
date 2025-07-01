@@ -16,7 +16,7 @@ export default function CountdownTimer({ targetDate }: CountdownTimerProps) {
   })
 
   useEffect(() => {
-    const target = new Date('2025-07-01T00:00:00')
+    const target = new Date('2025-07-05T00:00:00')
 
     const calculateTimeLeft = () => {
       const now = new Date()

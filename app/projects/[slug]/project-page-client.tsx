@@ -46,6 +46,7 @@ import {
   Search,
   CheckCircle,
   Download,
+  Bath,
 } from "lucide-react"
 import dynamic from "next/dynamic"
 import {
@@ -421,6 +422,47 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
     setCode(floorPlanCodes[st as keyof typeof floorPlanCodes][0])
   }
 
+  // Intersection Observer for scroll-based active tab detection
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -70% 0px', // Trigger when section is 20% from top and 70% from bottom
+      threshold: 0
+    }
+
+    let scrollTimeout: NodeJS.Timeout
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.id
+          // Add a small delay to prevent rapid tab switching during smooth scrolling
+          clearTimeout(scrollTimeout)
+          scrollTimeout = setTimeout(() => {
+            setActiveTab(sectionId)
+          }, 100)
+        }
+      })
+    }, observerOptions)
+
+    // Observe all section elements
+    const sections = tabs.map(tab => document.getElementById(tab.id)).filter(Boolean)
+    sections.forEach(section => {
+      if (section) {
+        observer.observe(section)
+      }
+    })
+
+    return () => {
+      clearTimeout(scrollTimeout)
+      sections.forEach(section => {
+        if (section) {
+          observer.unobserve(section)
+        }
+      })
+    }
+  }, [project]) // Re-run when project loads
+
   // Function to fetch project data from Strapi API
   const fetchProject = async (projectSlug: string): Promise<Project | null> => {
     try {
@@ -787,7 +829,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset
       window.scrollTo({ top: offsetPosition, behavior: "smooth" })
     }
-    setActiveTab(sectionId)
+    // Don't set activeTab here - let the Intersection Observer handle it
   }
 
   // Tab configuration
@@ -1153,7 +1195,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                   {tabs.slice(0, 4).map((tab) => (
                     <button
                       key={tab.id}
-                      className={`flex flex-col items-center gap-1 px-2 py-2 border-b-2 transition-colors ${
+                      className={`flex flex-col items-center gap-1 px-2 py-2 border-b-2 transition-all duration-300 ease-in-out ${
                         activeTab === tab.id
                           ? "border-[#ce001f] text-[#ce001f]"
                           : "border-transparent text-gray-400 hover:text-white"
@@ -1169,7 +1211,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                   {tabs.slice(4, 8).map((tab) => (
                     <button
                       key={tab.id}
-                      className={`flex flex-col items-center gap-1 px-2 py-2 border-b-2 transition-colors ${
+                      className={`flex flex-col items-center gap-1 px-2 py-2 border-b-2 transition-all duration-300 ease-in-out ${
                         activeTab === tab.id
                           ? "border-[#ce001f] text-[#ce001f]"
                           : "border-transparent text-gray-400 hover:text-white"
@@ -1190,7 +1232,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                     {tabs.map((tab) => (
                       <button
                         key={tab.id}
-                        className={`flex items-center gap-2 px-4 py-3 border-b-2 whitespace-nowrap transition-colors flex-shrink-0 ${
+                        className={`flex items-center gap-2 px-4 py-3 border-b-2 whitespace-nowrap transition-all duration-300 ease-in-out flex-shrink-0 ${
                           activeTab === tab.id
                             ? "border-[#ce001f] text-[#ce001f]"
                             : "border-transparent text-gray-400 hover:text-white"
@@ -1281,11 +1323,14 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 minHeight: '400px'
               }}
             >
-              <div className="relative w-full aspect-[4/3] bg-[#e5e5e5] rounded-xl overflow-hidden flex items-center justify-center">
+              <div className="relative w-full aspect-[4/3] bg-[#e5e5e5] rounded-xl overflow-hidden">
                 <img
                   src={project?.images[0] || '/placeholder.svg'}
                   alt={project?.title || 'Project Image'}
-                  className="object-cover w-full max-w-full rounded-xl"
+                  className="object-cover w-full h-full rounded-xl"
+                  style={{
+                    objectPosition: 'center center'
+                  }}
                 />
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-4 bg-black/70 rounded-lg px-6 py-3 border border-gray-700 backdrop-blur-sm">
                   <div className="flex flex-col items-center min-w-[100px]">
@@ -1293,7 +1338,9 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                     <span className="text-xs text-gray-300 mt-1">Total Units</span>
                   </div>
                   <div className="flex flex-col items-center min-w-[100px]">
-                    <span className="text-xl lg:text-2xl font-bold text-[#ce001f]">{project?.completion || 'N/A'}</span>
+                    <span className="text-xl lg:text-2xl font-bold text-[#ce001f]">
+                      {project?.completion ? project.completion.split('-')[0] : 'N/A'}
+                    </span>
                     <span className="text-xs text-gray-300 mt-1">Expected TOP</span>
                   </div>
                 </div>
@@ -1312,6 +1359,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             <div className="w-16 h-1 bg-[#ce001f] rounded" />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* HIGH PRIORITY - Location & Connectivity */}
             {/* Address */}
             {shouldDisplayValue(project?.address) && (
               <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-2 border border-gray-700">
@@ -1322,26 +1370,6 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 </div>
               </div>
             )}
-            {/* Site Area */}
-            {shouldDisplayValue(project?.siteArea) && (
-              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-2 border border-gray-700">
-                <Layout className="h-7 w-7" style={{ color: '#ce001f' }} />
-                <div>
-                  <div className="text-gray-400 text-sm">Site Area</div>
-                  <div className="text-white font-light">{displayValue(project?.siteArea)}</div>
-                </div>
-              </div>
-            )}
-            {/* Developer */}
-            {shouldDisplayValue(project?.developer) && (
-              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-                <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
-                <div>
-                  <div className="text-gray-400 text-sm">Developer</div>
-                  <div className="text-white font-light">{displayValue(project?.developer)}</div>
-                </div>
-              </div>
-            )}
             {/* District */}
             {shouldDisplayValue(project?.district) && (
               <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
@@ -1349,16 +1377,6 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 <div>
                   <div className="text-gray-400 text-sm">District</div>
                   <div className="text-white font-light">{`District ${displayValue(project.district)}`}</div>
-                </div>
-              </div>
-            )}
-            {/* Tenure */}
-            {shouldDisplayValue(project?.tenure) && (
-              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-                <Calendar className="h-7 w-7" style={{ color: '#ce001f' }} />
-                <div>
-                  <div className="text-gray-400 text-sm">Tenure</div>
-                  <div className="text-white font-light">{displayValue(project?.tenure)}</div>
                 </div>
               </div>
             )}
@@ -1374,23 +1392,25 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 </div>
               </div>
             )}
-            {/* Total Units */}
-            {shouldDisplayValue(project?.totalUnits) && (
+            {/* Tenure */}
+            {shouldDisplayValue(project?.tenure) && (
               <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-                <Home className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <Calendar className="h-7 w-7" style={{ color: '#ce001f' }} />
                 <div>
-                  <div className="text-gray-400 text-sm">Total Units</div>
-                  <div className="text-white font-light">{displayValue(project?.totalUnits)}</div>
+                  <div className="text-gray-400 text-sm">Tenure</div>
+                  <div className="text-white font-light">{displayValue(project?.tenure)}</div>
                 </div>
               </div>
             )}
-            {/* Bedrooms */}
-            {shouldDisplayValue(project?.bedrooms) && (
+
+            {/* HIGH PRIORITY - Pricing & Investment */}
+            {/* Average PSF */}
+            {shouldDisplayValue(project?.pricePerSqFt) && (
               <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-                <Home className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <BadgeDollarSign className="h-7 w-7" style={{ color: '#ce001f' }} />
                 <div>
-                  <div className="text-gray-400 text-sm">Bedrooms</div>
-                  <div className="text-white font-light">{`${displayValue(project.bedrooms)} bedrooms`}</div>
+                  <div className="text-gray-400 text-sm">Average PSF</div>
+                  <div className="text-white font-light">{`From ${displayValue(project.pricePerSqFt)}`}</div>
                 </div>
               </div>
             )}
@@ -1416,6 +1436,38 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 </div>
               </div>
             )}
+            {/* Developer */}
+            {shouldDisplayValue(project?.developer) && (
+              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+                <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <div>
+                  <div className="text-gray-400 text-sm">Developer</div>
+                  <div className="text-white font-light">{displayValue(project?.developer)}</div>
+                </div>
+              </div>
+            )}
+
+            {/* MEDIUM PRIORITY - Unit Configuration */}
+            {/* Total Units */}
+            {shouldDisplayValue(project?.totalUnits) && (
+              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+                <Home className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <div>
+                  <div className="text-gray-400 text-sm">Total Units</div>
+                  <div className="text-white font-light">{displayValue(project?.totalUnits)}</div>
+                </div>
+              </div>
+            )}
+            {/* Bedrooms */}
+            {shouldDisplayValue(project?.bedrooms) && (
+              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
+                <Home className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <div>
+                  <div className="text-gray-400 text-sm">Bedrooms</div>
+                  <div className="text-white font-light">{`${displayValue(project.bedrooms)} bedrooms`}</div>
+                </div>
+              </div>
+            )}
             {/* Floor Size */}
             {shouldDisplayValue(project?.size) && (
               <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
@@ -1426,13 +1478,25 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 </div>
               </div>
             )}
-            {/* Average PSF */}
-            {shouldDisplayValue(project?.pricePerSqFt) && (
+            {/* Floors */}
+            {shouldDisplayValue(project?.totalFloors) && (
               <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-                <BadgeDollarSign className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
                 <div>
-                  <div className="text-gray-400 text-sm">Average PSF</div>
-                  <div className="text-white font-light">{`From ${displayValue(project.pricePerSqFt)}`}</div>
+                  <div className="text-gray-400 text-sm">Floors</div>
+                  <div className="text-white font-light">{displayValue(project?.totalFloors)}</div>
+                </div>
+              </div>
+            )}
+
+            {/* LOWER PRIORITY - Technical Details */}
+            {/* Site Area */}
+            {shouldDisplayValue(project?.siteArea) && (
+              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-2 border border-gray-700">
+                <Layout className="h-7 w-7" style={{ color: '#ce001f' }} />
+                <div>
+                  <div className="text-gray-400 text-sm">Site Area</div>
+                  <div className="text-white font-light">{displayValue(project?.siteArea)}</div>
                 </div>
               </div>
             )}
@@ -1445,16 +1509,6 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                   <div className="text-white font-light">
                     {`${Math.ceil(Number(project.totalUnits.replace(/[^0-9]/g, '')) / 7)} blocks`}
                   </div>
-                </div>
-              </div>
-            )}
-            {/* Floors */}
-            {shouldDisplayValue(project?.totalFloors) && (
-              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-                <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
-                <div>
-                  <div className="text-gray-400 text-sm">Floors</div>
-                  <div className="text-white font-light">{displayValue(project?.totalFloors)}</div>
                 </div>
               </div>
             )}
@@ -1730,7 +1784,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
 
       {/* Unit Mix Section */}
       <div className="w-full flex flex-col items-center py-8">
-        <div className="max-w-7xl w-full bg-[#18191b] rounded-2xl py-10 px-4 flex flex-col items-center">
+        <div className="max-w-7xl w-full py-10 px-4 flex flex-col items-center">
           <h3 className="text-xl font-light text-red-400 mb-8 text-center tracking-wide">Unit Mix</h3>
           <div className="w-full flex flex-row gap-6 overflow-x-auto sm:overflow-x-visible scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent px-2" style={{ WebkitOverflowScrolling: 'touch' }}>
             {/* 1-Bedroom */}
@@ -1788,90 +1842,86 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
 
           {/* Card layout for selected unit type */}
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 justify-center items-stretch bg-[#111] rounded-xl p-4 lg:p-8 max-w-5xl mx-auto shadow-lg pricing-container">
-            {/* Left: Floor plan image */}
-            <div className="w-full lg:flex-1 flex flex-col items-center justify-center min-w-0 lg:min-w-[280px] lg:max-w-[420px] pricing-left">
-              <div className="w-full aspect-[4/3] bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden mb-4">
+            {/* Left: Floor plan image with action buttons */}
+            <div className="w-full lg:flex-1 flex flex-col items-center justify-center min-w-0 lg:min-w-[320px] lg:max-w-[420px] pricing-left">
+              <div className="relative w-full aspect-[4/3] bg-[#e5e5e5] rounded-xl flex items-center justify-center overflow-hidden mb-4">
                 {/* Placeholder image icon */}
-                <svg className="w-12 h-12 lg:w-16 lg:h-16 text-gray-400" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5V8.25A2.25 2.25 0 0 1 5.25 6h13.5A2.25 2.25 0 0 1 21 8.25v8.25M3 16.5l3.72-3.72a2.25 2.25 0 0 1 3.18 0l2.4 2.4m-9.3 1.32 3.72-3.72a2.25 2.25 0 0 1 3.18 0l2.4 2.4m0 0 2.4-2.4a2.25 2.25 0 0 1 3.18 0l3.72 3.72M12 11.25a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
                 </svg>
-              </div>
-              <div className="flex gap-2 mt-2">
-                <button className="bg-[#232324] text-white px-3 lg:px-4 py-2 rounded-lg flex items-center gap-2 text-xs lg:text-sm">
-                  <Search className="h-3 w-3 lg:h-4 lg:w-4 text-red-400" />
-                  View
-                </button>
-                <button className="bg-[#232324] text-white px-3 lg:px-4 py-2 rounded-lg flex items-center gap-2 text-xs lg:text-sm">
-                  <ChevronDown className="h-3 w-3 lg:h-4 lg:w-4 text-red-400" />
-                  Download
-                </button>
+                {/* Pill buttons */}
+                <div className="absolute top-4 right-4 flex gap-2 z-10">
+                  <button className="flex items-center gap-2 bg-[#232324] text-white px-4 py-2 rounded-full text-sm font-medium shadow hover:bg-[#18191b] transition-colors">
+                    <Search className="h-4 w-4 text-white" />
+                    View
+                  </button>
+                  <button className="flex items-center gap-2 bg-[#232324] text-white px-4 py-2 rounded-full text-sm font-medium shadow hover:bg-[#18191b] transition-colors">
+                    <ChevronDown className="h-4 w-4 text-white" />
+                    Download
+                  </button>
+                </div>
               </div>
             </div>
             {/* Right: Unit details */}
-            <div className="w-full lg:flex-1 flex flex-col justify-between min-w-0 lg:min-w-[280px] text-left pricing-right">
-              {/* Top: Unit type and availability */}
-              <div 
-                className="flex flex-col sm:flex-row sm:items-center sm:justify-start gap-2 mb-2 unit-type-section"
-                style={{ 
-                  justifyContent: 'flex-start !important',
-                  display: 'flex',
-                  flexDirection: 'column'
-                }}
-              >
-                <span className="text-xl lg:text-2xl font-semibold text-white">{unitAvailabilityData[unitsActiveTab].unitType.replace(' Units', '')}</span>
-                <span className="text-green-400 font-semibold text-xs lg:text-sm">Available {unitAvailabilityData[unitsActiveTab].subtypes[0].available} of {unitAvailabilityData[unitsActiveTab].subtypes[0].total}</span>
+            <div className="w-full lg:flex-1 flex flex-col justify-between min-w-0 lg:min-w-[320px] text-left pricing-right relative">
+              {/* Unit type and availability inline */}
+              <div className="flex items-center justify-between mb-2 w-full">
+                <span className="text-2xl font-semibold text-white">{unitAvailabilityData[unitsActiveTab].unitType.replace(' Units', '')}</span>
+                <span className="flex flex-col items-end ml-auto whitespace-nowrap">
+                  <span className="text-white font-light text-sm">Available</span>
+                  <span className="text-green-400 font-semibold text-lg">{unitAvailabilityData[unitsActiveTab].subtypes[0].available} of {unitAvailabilityData[unitsActiveTab].subtypes[0].total}</span>
+                </span>
               </div>
               {/* Description */}
-              <div className="text-gray-300 text-xs lg:text-sm mb-4">Perfect for young professionals and couples seeking modern urban living with premium finishes and thoughtful design.</div>
+              <div className="text-gray-300 text-sm mb-4">Perfect for young professionals and couples seeking modern urban living with premium finishes and thoughtful design.</div>
               {/* Features row */}
-              <div className="flex gap-4 lg:gap-8 mb-4">
-                <div className="flex flex-col items-center">
-                  <span className="flex items-center justify-center w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-red-900/60">
-                    <Home className="h-4 w-4 lg:h-5 lg:w-5 text-red-400" />
-                  </span>
-                  <span className="text-white text-xs lg:text-sm mt-1">1 Bedrooms</span>
+              <div className="flex w-full mb-4">
+                <div className="flex-1 flex flex-col items-start">
+                  <div className="flex flex-col items-center w-full">
+                    <span className="flex items-center justify-center w-10 h-10 rounded-full bg-red-900/60">
+                      <Home className="h-5 w-5 text-red-400" />
+                    </span>
+                    <span className="text-white text-xs mt-1 text-center w-full">1 Bedrooms</span>
+                  </div>
                 </div>
-                <div className="flex flex-col items-center">
-                  <span className="flex items-center justify-center w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-red-900/60">
-                    <Home className="h-4 w-4 lg:h-5 lg:w-5 text-red-400" />
-                  </span>
-                  <span className="text-white text-xs lg:text-sm mt-1">1 Bathrooms</span>
+                <div className="flex-1 flex flex-col items-center">
+                  <div className="flex flex-col items-center w-full">
+                    <span className="flex items-center justify-center w-10 h-10 rounded-full bg-red-900/60">
+                      <Bath className="h-5 w-5 text-red-400" />
+                    </span>
+                    <span className="text-white text-xs mt-1 text-center w-full">1 Bathrooms</span>
+                  </div>
                 </div>
-                <div className="flex flex-col items-center">
-                  <span className="flex items-center justify-center w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-red-900/60">
-                    <Layout className="h-4 w-4 lg:h-5 lg:w-5 text-red-400" />
-                  </span>
-                  <span className="text-white text-xs lg:text-sm mt-1">{unitAvailabilityData[unitsActiveTab].subtypes[0].size}</span>
+                <div className="flex-1 flex flex-col items-end">
+                  <div className="flex flex-col items-center w-full">
+                    <span className="flex items-center justify-center w-10 h-10 rounded-full bg-red-900/60">
+                      <Layout className="h-5 w-5 text-red-400" />
+                    </span>
+                    <span className="text-white text-xs mt-1 text-center w-full">{unitAvailabilityData[unitsActiveTab].subtypes[0].size}</span>
+                  </div>
                 </div>
               </div>
               {/* Price range */}
-              <div 
-                className="flex flex-col sm:flex-row sm:items-center sm:justify-start gap-2 mb-4 price-range-section"
-                style={{ 
-                  justifyContent: 'flex-start !important',
-                  display: 'flex',
-                  flexDirection: 'column'
-                }}
-              >
-                <span className="text-red-400 text-base lg:text-lg font-medium">$</span>
-                <span className="text-white text-base lg:text-lg font-medium">Price Range</span>
-                <span className="text-white text-base lg:text-lg font-medium">{unitAvailabilityData[unitsActiveTab].subtypes[0].price}</span>
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-red-400 text-lg font-medium">$</span>
+                <span className="text-white text-lg font-medium">Price Range</span>
+                <span className="text-white text-lg font-medium">{unitAvailabilityData[unitsActiveTab].subtypes[0].price}</span>
               </div>
               {/* Key Features */}
               <div className="mb-4">
-                <div className="text-red-400 font-semibold mb-1 text-sm lg:text-base">Key Features</div>
-                <div className="flex flex-wrap gap-2 lg:gap-4 text-xs lg:text-sm">
-                  <span className="text-white">Open Concept Kitchen</span>
-                  <span className="text-white">City Views</span>
-                  <span className="text-white">Premium Fixtures</span>
-                  <span className="text-white">Built-in Storage</span>
+                <div className="text-red-400 font-semibold mb-1 text-base">Key Features</div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-1 text-sm">
+                  <div className="flex items-start gap-2"><span className="text-red-400 mt-1">•</span> <span className="text-white">Open Concept Kitchen</span></div>
+                  <div className="flex items-start gap-2"><span className="text-red-400 mt-1">•</span> <span className="text-white">Premium Fixtures</span></div>
+                  <div className="flex items-start gap-2"><span className="text-red-400 mt-1">•</span> <span className="text-white">City Views</span></div>
+                  <div className="flex items-start gap-2"><span className="text-red-400 mt-1">•</span> <span className="text-white">Built-in Storage</span></div>
                 </div>
               </div>
               {/* CTA Button */}
-              <div className="flex justify-center lg:justify-end mt-6">
+              <div className="flex justify-end mt-6 w-full">
                 <button 
                   onClick={() => scrollToSection('contact')}
-                  className="bg-red-500 hover:bg-red-600 text-white font-light py-3 px-6 lg:px-8 rounded-full text-sm lg:text-md transition-colors w-full sm:w-auto"
+                  className="bg-red-500 hover:bg-red-600 text-white font-light py-3 px-8 rounded-full text-base transition-colors w-full sm:w-auto lg:w-auto"
                 >
                   Enquire About This Unit
                 </button>
@@ -2006,43 +2056,70 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                     </div>
                   )}
                   
-                  <input 
-                    name="name"
-                    value={formData.name}
-                    onChange={handleFormChange}
-                    className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border border-gray-700 focus:border-[#ce001f] focus:outline-none transition-colors" 
-                    placeholder="Full Name" 
-                    required 
-                    disabled={isSubmitting}
-                  />
-                  <input 
-                    name="email"
-                    value={formData.email}
-                    onChange={handleFormChange}
-                    className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border border-gray-700 focus:border-[#ce001f] focus:outline-none transition-colors" 
-                    placeholder="Email Address" 
-                    type="email" 
-                    required 
-                    disabled={isSubmitting}
-                  />
-                  <input 
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleFormChange}
-                    className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border border-gray-700 focus:border-[#ce001f] focus:outline-none transition-colors" 
-                    placeholder="Phone Number" 
-                    type="tel" 
-                    required 
-                    disabled={isSubmitting}
-                  />
-                  <textarea 
-                    name="message"
-                    value={formData.message || `I'm interested in ${project?.title}. Please provide more information about unit availability and pricing.`}
-                    onChange={handleFormChange}
-                    className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border border-gray-700 focus:border-[#ce001f] focus:outline-none transition-colors min-h-[100px] resize-none" 
-                    placeholder="Message"
-                    disabled={isSubmitting}
-                  />
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="name" className="text-white text-sm font-medium">
+                      Full Name *
+                    </label>
+                    <input 
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleFormChange}
+                      className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border border-gray-700 focus:border-[#ce001f] focus:outline-none transition-colors" 
+                      placeholder="Enter your full name" 
+                      required 
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                  
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="email" className="text-white text-sm font-medium">
+                      Email Address *
+                    </label>
+                    <input 
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleFormChange}
+                      className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border border-gray-700 focus:border-[#ce001f] focus:outline-none transition-colors" 
+                      placeholder="Enter your email address" 
+                      type="email" 
+                      required 
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                  
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="phone" className="text-white text-sm font-medium">
+                      Phone Number *
+                    </label>
+                    <input 
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleFormChange}
+                      className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border border-gray-700 focus:border-[#ce001f] focus:outline-none transition-colors" 
+                      placeholder="Enter your phone number" 
+                      type="tel" 
+                      required 
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                  
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="message" className="text-white text-sm font-medium">
+                      Message
+                    </label>
+                    <textarea 
+                      id="message"
+                      name="message"
+                      value={formData.message || `I'm interested in ${project?.title}. Please provide more information about unit availability and pricing.`}
+                      onChange={handleFormChange}
+                      className="rounded-lg bg-[#18191b] text-white px-4 py-3 text-sm border border-gray-700 focus:border-[#ce001f] focus:outline-none transition-colors min-h-[100px] resize-none" 
+                      placeholder="Tell us about your requirements"
+                      disabled={isSubmitting}
+                    />
+                  </div>
                   <button 
                     type="submit" 
                     disabled={isSubmitting}
