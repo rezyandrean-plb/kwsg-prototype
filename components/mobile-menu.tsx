@@ -39,56 +39,56 @@ export default function MobileMenu() {
             </div>
             <div className="mt-6 flow-root">
               <div className="-my-6 divide-y divide-gray-800">
-                <div className="space-y-4 py-6">
-                  <Link
-                    href="/projects"
-                    className="block text-lg font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    New Launch Condo
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
-                  </Link>
-                  <Link
-                    href="/join"
-                    className="block text-lg font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Join KW Singapore
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
-                  </Link>
-                  <Link
-                    href="/about-us"
-                    className="block text-lg font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    About Us
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
-                  </Link>
-                  <Link
-                    href="/why-kw"
-                    className="block text-lg font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    KW Model
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
-                  </Link>
-                  <Link
-                    href="/editorial"
-                    className="block text-lg font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    KW Blog
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
-                  </Link>
-                  <Link
-                    href="/contact"
-                    className="block text-lg font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Contact
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
-                  </Link>
-                </div>
+                            <div className="space-y-4 py-6">
+              <Link
+                href="/model"
+                className="block text-lg font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
+                onClick={() => setIsOpen(false)}
+              >
+                KW Model
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+              <Link
+                href="/projects"
+                className="block text-lg font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
+                onClick={() => setIsOpen(false)}
+              >
+                New Launch Condo
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+              <Link
+                href="/events"
+                className="block text-lg font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
+                onClick={() => setIsOpen(false)}
+              >
+                Events
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+              <Link
+                href="/about-us"
+                className="block text-lg font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
+                onClick={() => setIsOpen(false)}
+              >
+                About Us
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+              <Link
+                href="/contact"
+                className="block text-lg font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
+                onClick={() => setIsOpen(false)}
+              >
+                Contact
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+              <Link
+                href="/join"
+                className="block text-lg font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
+                onClick={() => setIsOpen(false)}
+              >
+                Join KW Singapore
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+            </div>
               </div>
             </div>
           </div>

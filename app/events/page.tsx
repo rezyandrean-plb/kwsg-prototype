@@ -1,0 +1,839 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import { Button } from "@/components/ui/button"
+import {
+  ChevronRight,
+  Calendar,
+  Clock,
+  Users,
+  ArrowRight,
+  BookOpen,
+  Video,
+  Play,
+} from "lucide-react"
+import { motion } from "framer-motion"
+import { BootcampRegistrationDialog } from "@/components/bootcamp-registration-dialog"
+
+export default function EventsPage() {
+  const [scrollY, setScrollY] = useState(0)
+  const [isBootcampDialogOpen, setIsBootcampDialogOpen] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY)
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  return (
+    <main className="min-h-screen bg-black text-white">
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center pt-20">
+        <div
+          className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"
+          style={{
+            transform: `translateY(${scrollY * 0.5}px)`,
+          }}
+        />
+        <div className="absolute inset-0 bg-[url('/images/event/kw-events-hero-new.webp')] bg-cover bg-center brightness-110" />
+        <div className="absolute inset-0 bg-black/65" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
+
+        <div className="relative z-10 text-center max-w-6xl mx-auto px-6">
+          <motion.h1 
+            className="font-bold mb-8 leading-tight font-sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            Exclusive KW Singapore
+            <span className="block text-[#B40101] italic">Events</span>
+          </motion.h1>
+
+          <motion.p 
+            className="text-lg md:text-xl text-white/80 mb-12 max-w-4xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+          >
+            Stay ahead, get inspired, and grow with our upcoming masterclasses, summits, and workshops designed for
+            ambitious real estate professionals.
+          </motion.p>
+        </div>
+
+        <motion.div 
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+          onClick={() => {
+            const mreaSection = document.querySelector('[data-section="mrea-training"]')
+            if (mreaSection) {
+              mreaSection.scrollIntoView({ behavior: 'smooth' })
+            }
+          }}
+        >
+          <ChevronRight className="h-6 w-6 text-[#B40101] rotate-90" />
+        </motion.div>
+      </section>
+
+      {/* MREA Training */}
+      <section className="relative py-32 overflow-hidden" data-section="mrea-training">
+        <div className="absolute inset-0 bg-[url('/images/event/mega-summit.webp')] bg-cover bg-center opacity-15" />
+        <div className="absolute inset-0 bg-black/70" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <motion.h2 
+                className="font-bold mb-6 font-sans text-2xl sm:text-3xl md:text-4xl"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+              >
+                <span className="text-white">MREA Masterclass:</span>
+                <span className="block text-[#B40101] italic">The Blueprint for Exponential Real Estate Growth</span>
+              </motion.h2>
+
+              <motion.p 
+                className="mb-8 leading-relaxed text-lg"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+              >
+                Unlock the blueprint to exponential business growth with our 2-Day Intensive MREA Masterclass. Learn
+                proven models, strategies, and systems from Keller Williams MREA Certified Trainers, Melvin Lim and
+                Grayce Tan to build a sustainable, wealth-building real estate business. Overcome inconsistent income
+                and lead flow, gain actionable insights, and join an exclusive community of ambitious, growth-minded
+                realtors.
+              </motion.p>
+
+              <motion.div 
+                className="space-y-4 mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+              >
+                <div className="flex items-center space-x-3">
+                  <Calendar className="h-5 w-5 text-[#B40101]" />
+                  <span className="text-slate-100">Interactive Sessions</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Clock className="h-5 w-5 text-[#B40101]" />
+                  <span className="text-slate-100">2-Day Intensive</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Users className="h-5 w-5 text-[#B40101]" />
+                  <span className="text-slate-100">Limited Seats</span>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+              >
+                <Button
+                  size="lg"
+                  className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
+                  onClick={() => window.open("https://explore.kwsingapore.com/mrea-masterclass-registration-1", "_blank")}
+                >
+                  Secure your spot now
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </motion.div>
+            </motion.div>
+
+            <motion.div 
+              className="relative"
+              initial={{ opacity: 0, x: 50, scale: 0.9 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-br from-[#B40101]/20 to-transparent rounded-lg transform rotate-3"
+                initial={{ rotate: 0 }}
+                whileInView={{ rotate: 3 }}
+                transition={{ duration: 1, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+              />
+              <motion.div 
+                className="relative bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-[#666666]/30"
+                whileHover={{ scale: 1.02, y: -5 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
+                <div className="text-center">
+                  <motion.div
+                    initial={{ scale: 0, rotate: -180 }}
+                    whileInView={{ scale: 1, rotate: 0 }}
+                    transition={{ duration: 0.6, ease: "backOut" }}
+                    viewport={{ once: true, margin: "-100px" }}
+                  >
+                    <BookOpen className="h-16 w-16 text-[#B40101] mx-auto mb-4" />
+                  </motion.div>
+                  <motion.h3 
+                    className="text-2xl font-bold mb-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                    viewport={{ once: true, margin: "-100px" }}
+                  >
+                    Transform Your Business
+                  </motion.h3>
+                  <motion.p 
+                    className="text-white/80 mb-6"
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+                    viewport={{ once: true, margin: "-100px" }}
+                  >
+                    Learn proven systems and strategies from industry leaders
+                  </motion.p>
+                  <motion.div 
+                    className="grid grid-cols-2 gap-4 text-sm"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+                    viewport={{ once: true, margin: "-100px" }}
+                  >
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-[#B40101]">8+</div>
+                      <div className="text-white/60">Hours Training</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-[#B40101]">50+</div>
+                      <div className="text-white/60">Strategies</div>
+                    </div>
+                  </motion.div>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mega Realtor Summit */}
+      <section className="relative py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+        <div className="absolute inset-0 bg-[url('/images/event/mega-summit.webp')] bg-cover bg-center opacity-15" />
+        <div className="absolute inset-0 bg-black/60" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div 
+              className="relative order-2 lg:order-1"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <div className="relative">
+                <img
+                  src="/images/event/mrea-summit-stage.webp"
+                  alt="MREA Summit 2025 - Industry Leaders Event"
+                  className="w-full h-auto rounded-lg shadow-2xl"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-lg" />
+              </div>
+            </motion.div>
+
+            <motion.div 
+              className="order-1 lg:order-2"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <motion.h2 
+                className="font-bold mb-6 font-sans text-2xl sm:text-3xl md:text-4xl"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+              >
+                <span className="text-white">MREA Summit:</span>
+                <span className="block text-[#B40101] italic">
+                  Scale Your Real Estate Business with Industry Leaders
+                </span>
+              </motion.h2>
+
+              <motion.p 
+                className="text-lg mb-8 leading-relaxed"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+              >
+                Designed for growth-minded real estate consultants, the MREA Summit is your gateway to market dominance.
+                Learn cutting-edge strategies in lead generation, content, social media, team scaling, and new launches
+                directly from KW titans J.P. Lewis, Melvin Lim, Grayce Tan, and Rayne Chua. Gain essential MREA insights
+                to unlock millionaire-level success and accelerate your career.
+              </motion.p>
+
+              <motion.div 
+                className="space-y-4 mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+              >
+                <div className="flex items-center space-x-3">
+                  <Calendar className="h-5 w-5 text-[#B40101]" />
+                  <span className="text-slate-100">August 2025</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Clock className="h-5 w-5 text-[#B40101]" />
+                  <span className="text-white/80">Full-Day Event</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Users className="h-5 w-5 text-[#B40101]" />
+                  <span className="text-slate-100">Limited Seats Available</span>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+              >
+                <Button
+                  size="lg"
+                  className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
+                  onClick={() => window.open("https://explore.kwsingapore.com/mrea-masterclass-registration-1", "_blank")}
+                >
+                  Save My Spot
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Explore Night */}
+      <section className="relative py-32 overflow-hidden">
+        <div className="absolute inset-8 bg-[url('/images/event/melvin-explore.webp')] bg-cover bg-center rounded-lg" />
+        <div className="absolute inset-8 bg-black/60 rounded-lg" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
+
+        <motion.div 
+          className="relative z-10 max-w-6xl mx-auto px-6 text-center border-0"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          <motion.h2 
+            className="font-bold mb-8 font-sans text-3xl sm:text-4xl md:text-5xl"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            Explore Night
+            <span className="block text-[#B40101] italic">Webinar</span>
+          </motion.h2>
+
+          <motion.p 
+            className="text-xl mb-12 max-w-4xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            Discover the KW Difference. Get an inside look at our culture, systems, and opportunities. Perfect for
+            exploring your next career move in real estate.
+          </motion.p>
+
+          <motion.div 
+            className="flex flex-col items-center space-y-8 mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <div className="flex items-center space-x-6 text-white/80">
+              <div className="flex items-center space-x-2">
+                <Clock className="h-5 w-5 text-[#B40101]" />
+                <span className="text-slate-100">1 Hour Interactive</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Video className="h-5 w-5 text-[#B40101]" />
+                <span className="text-slate-100">Online Format</span>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div 
+            className="space-y-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <Button
+              size="lg"
+              className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-12 py-4 text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
+              onClick={() => window.open("https://explore.kwsingapore.com/kw-explore-night-webinar-1", "_blank")}
+            >
+              Watch Now!
+              <Play className="ml-3 h-6 w-6 group-hover:scale-110 transition-transform" />
+            </Button>
+
+            <motion.p 
+              className="text-lg text-white/80 max-w-2xl mx-auto leading-6"
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              Watch our exclusive webinar and discover why top agents choose KW Singapore.
+              <span className="block mt-2 text-[#B40101] font-medium">
+                Sign up for Explore Night after watching to take your next step.
+              </span>
+            </motion.p>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* Bootcamp Series - Redesigned */}
+      <section className="relative py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+        <div className="absolute inset-0 bg-black/40" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          {/* Section Header */}
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <motion.h2 
+              className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 font-sans"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              KW Bootcamp
+              <span className="block text-[#B40101] italic">Series</span>
+            </motion.h2>
+            <motion.p 
+              className="max-w-4xl mx-auto leading-relaxed leading-7 text-lg"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              Master specialized skills with our intensive, hands-on training bootcamps. Each session is designed to
+              deliver immediate, actionable results that transform your real estate practice and accelerate your
+              success.
+            </motion.p>
+          </motion.div>
+
+          {/* Bootcamp Carousel */}
+          <div className="relative">
+            <div className="overflow-hidden">
+              <div
+                className="flex transition-transform duration-500 ease-in-out"
+                id="bootcamp-carousel"
+                style={{ transform: "translateX(0%)" }}
+              >
+                {/* Card 1: Seller Presentation Mastery */}
+                <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
+                  <motion.div 
+                    className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col"
+                    initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    whileHover={{ y: -10, scale: 1.02 }}
+                  >
+                    <h3 className="text-2xl font-bold mb-4">
+                      Training Bootcamp:
+                      <span className="block text-[#B40101]">Seller Presentation Mastery</span>
+                    </h3>
+
+                    <div className="flex-grow">
+                      <p className="mb-6 leading-relaxed h-32">
+                        Command every listing pitch and consistently win mandates. Discover how to craft an undeniable
+                        Unique Selling Proposition (USP) as expert listers, perfect a seamless seller presentation flow,
+                        and deploy tailored strategies for six distinct seller profiles.
+                      </p>
+
+                      <div className="space-y-3 mb-8 text-slate-100">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
+                          <span className="text-sm text-slate-100">Single Session Event</span>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
+                          <span className="text-sm text-slate-100">In-Depth Training Session</span>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
+                          <span className="text-sm text-slate-100">Limited Seats</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <Button 
+                      className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md"
+                      onClick={() => setIsBootcampDialogOpen(true)}
+                    >
+                      Register for Interest
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </motion.div>
+                </div>
+
+                {/* Card 2: High-Conversion Buyer Consultations */}
+                <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
+                  <motion.div 
+                    className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col"
+                    initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    whileHover={{ y: -10, scale: 1.02 }}
+                  >
+                    <h3 className="text-2xl font-bold mb-4">
+                      Training Bootcamp:
+                      <span className="block text-[#B40101]">High-Conversion Buyer Consultations</span>
+                    </h3>
+
+                    <div className="flex-grow">
+                      <p className="mb-6 leading-relaxed h-32">
+                        Convert leads into loyal, long-term clients with supreme confidence. Dive deep into
+                        understanding the six distinct buyer types, implement a proven, ultimate buyer consultation
+                        flow, and master crafting a compelling buyer's journey.
+                      </p>
+
+                      <div className="space-y-3 mb-8">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
+                          <span className="text-sm text-slate-100">Single Session Event</span>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
+                          <span className="text-sm text-slate-100">In-Depth Training Session</span>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
+                          <span className="text-sm text-slate-100">Limited Seats</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <Button 
+                      className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md"
+                      onClick={() => setIsBootcampDialogOpen(true)}
+                    >
+                      Register for Interest
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </motion.div>
+                </div>
+
+                {/* Card 3: New Launch Analysis */}
+                <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
+                  <motion.div 
+                    className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col"
+                    initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    whileHover={{ y: -10, scale: 1.02 }}
+                  >
+                    <h3 className="text-2xl font-bold mb-4">
+                      Training Bootcamp:
+                      <span className="block text-[#B40101]">New Launch Analysis</span>
+                    </h3>
+
+                    <div className="flex-grow">
+                      <p className="mb-6 leading-relaxed h-32">
+                        Dominate Singapore's New Launch market with unparalleled expertise. This bootcamp equips you
+                        with the strategic skills to master site and floor plan analysis, deploy powerful pricing and
+                        comparison techniques, and execute data-driven closing strategies.
+                      </p>
+
+                      <div className="space-y-3 mb-8">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
+                          <span className="text-sm text-slate-100">Single Session Event</span>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
+                          <span className="text-sm text-slate-100">In-Depth Training Session</span>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
+                          <span className="text-sm text-slate-100">Limited Seats</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <Button 
+                      className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md"
+                      onClick={() => setIsBootcampDialogOpen(true)}
+                    >
+                      Register for Interest
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </motion.div>
+                </div>
+
+                {/* Card 4: Webinar & Market Charts */}
+                <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
+                  <motion.div 
+                    className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col"
+                    initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    whileHover={{ y: -10, scale: 1.02 }}
+                  >
+                    <h3 className="text-2xl font-bold mb-4">
+                      Training Bootcamp:
+                      <span className="block text-[#B40101]">Webinar & Market Charts</span>
+                    </h3>
+
+                    <div className="flex-grow">
+                      <p className="mb-6 leading-relaxed h-32">
+                        Transform complex data into clear, actionable market intelligence. This intensive series
+                        empowers you to become an expert advisor, master interpreting market charts, and craft
+                        compelling communication frameworks that secure client trust.
+                      </p>
+
+                      <div className="space-y-3 mb-8">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
+                          <span className="text-sm text-slate-100">Single Session Event</span>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
+                          <span className="text-sm text-slate-100">In-Depth Training Session</span>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
+                          <span className="text-sm text-slate-100">Limited Seats</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <Button 
+                      className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md"
+                      onClick={() => setIsBootcampDialogOpen(true)}
+                    >
+                      Register for Interest
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </motion.div>
+                </div>
+              </div>
+            </div>
+
+            {/* Carousel Navigation */}
+            <div className="flex justify-center mt-12 space-x-2">
+              <button
+                className="w-3 h-3 rounded-full bg-[#B40101] transition-all duration-300"
+                onClick={() => {
+                  const carousel = document.getElementById("bootcamp-carousel")
+                  if (carousel) carousel.style.transform = "translateX(0%)"
+                  document.querySelectorAll('[id^="dot-"]').forEach((dot, i) => {
+                    dot.className =
+                      i === 0
+                        ? "w-3 h-3 rounded-full bg-[#B40101] transition-all duration-300"
+                        : "w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"
+                  })
+                }}
+                id="dot-0"
+              ></button>
+              <button
+                className="w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"
+                onClick={() => {
+                  const carousel = document.getElementById("bootcamp-carousel")
+                  if (carousel) carousel.style.transform = "translateX(-50%)"
+                  document.querySelectorAll('[id^="dot-"]').forEach((dot, i) => {
+                    dot.className =
+                      i === 1
+                        ? "w-3 h-3 rounded-full bg-[#B40101] transition-all duration-300"
+                        : "w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"
+                  })
+                }}
+                id="dot-1"
+              ></button>
+            </div>
+
+            {/* Navigation Arrows */}
+            <button
+              className="absolute -left-16 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-[#B40101]/80 text-white p-3 rounded-full transition-all duration-300 hidden lg:block"
+              onClick={() => {
+                const carousel = document.getElementById("bootcamp-carousel")
+                const currentTransform = carousel?.style.transform || "translateX(0%)"
+                const isAtStart = currentTransform.includes("0%")
+
+                if (carousel) {
+                  if (isAtStart) {
+                    // If at start, go to the last view (wrap around)
+                    carousel.style.transform = "translateX(-50%)"
+                    document.querySelectorAll('[id^="dot-"]').forEach((dot, i) => {
+                      dot.className =
+                        i === 1
+                          ? "w-3 h-3 rounded-full bg-[#B40101] transition-all duration-300"
+                          : "w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"
+                    })
+                  } else {
+                    // Go to previous view
+                    carousel.style.transform = "translateX(0%)"
+                    document.querySelectorAll('[id^="dot-"]').forEach((dot, i) => {
+                      dot.className =
+                        i === 0
+                          ? "w-3 h-3 rounded-full bg-[#B40101] transition-all duration-300"
+                          : "w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"
+                    })
+                  }
+                }
+              }}
+              id="prev-btn"
+            >
+              <ChevronRight className="h-6 w-6 rotate-180" />
+            </button>
+            <button
+              className="absolute -right-16 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-[#B40101]/80 text-white p-3 rounded-full transition-all duration-300 hidden lg:block"
+              onClick={() => {
+                const carousel = document.getElementById("bootcamp-carousel")
+                const currentTransform = carousel?.style.transform || "translateX(0%)"
+                const isAtStart = currentTransform.includes("0%")
+
+                if (carousel) {
+                  if (isAtStart) {
+                    // Go to next view
+                    carousel.style.transform = "translateX(-50%)"
+                    document.querySelectorAll('[id^="dot-"]').forEach((dot, i) => {
+                      dot.className =
+                        i === 1
+                          ? "w-3 h-3 rounded-full bg-[#B40101] transition-all duration-300"
+                          : "w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"
+                    })
+                  } else {
+                    // If at end, go to the first view (wrap around)
+                    carousel.style.transform = "translateX(0%)"
+                    document.querySelectorAll('[id^="dot-"]').forEach((dot, i) => {
+                      dot.className =
+                        i === 0
+                          ? "w-3 h-3 rounded-full bg-[#B40101] transition-all duration-300"
+                          : "w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"
+                    })
+                  }
+                }
+              }}
+              id="next-btn"
+            >
+              <ChevronRight className="h-6 w-6" />
+            </button>
+          </div>
+
+          {/* Call to Action */}
+          <motion.div 
+            className="text-center mt-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-[#B40101] text-[#B40101] hover:bg-[#B40101] hover:text-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 group bg-transparent border-white text-white"
+            >
+              Get Notified About All Bootcamps
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="relative py-32">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#B40101]/20 via-black/80 to-black" />
+        <motion.div 
+          className="relative z-10 max-w-6xl mx-auto px-6 text-center my-0"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          <motion.h2 
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-sans mb-7"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            Can't Decide?
+            <span className="block text-[#B40101] italic">Let's Chat.</span>
+          </motion.h2>
+          <motion.p 
+            className="max-w-4xl mx-auto leading-relaxed text-xl mb-9"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            Not sure which event is right for you? Our team is here to help you choose the perfect opportunity to
+            accelerate your real estate career.
+          </motion.p>
+
+          <motion.div 
+            className="space-y-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <Button
+              size="lg"
+              className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
+              onClick={() => window.location.href = '/contact'}
+            >
+              Talk to Our Team
+              <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+            </Button>
+            <motion.p 
+              className="max-w-2xl mx-auto text-slate-100 text-base"
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              Get personalized recommendations based on your goals and experience level.
+            </motion.p>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* Bootcamp Registration Dialog */}
+      <BootcampRegistrationDialog
+        isOpen={isBootcampDialogOpen}
+        onClose={() => setIsBootcampDialogOpen(false)}
+        onSubmit={(data) => {
+          console.log('Bootcamp registration submitted:', data)
+          setIsBootcampDialogOpen(false)
+        }}
+      />
+    </main>
+  )
+} 

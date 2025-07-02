@@ -48,7 +48,7 @@
     "cmdk": "1.0.4",
     "date-fns": "4.1.0",
     "embla-carousel-react": "8.5.1",
-    "framer-motion": "^12.12.2",
+    "framer-motion": "^12.22.0",
     "googleapis": "^149.0.0",
     "highcharts": "^12.2.0",
     "input-otp": "1.4.1",

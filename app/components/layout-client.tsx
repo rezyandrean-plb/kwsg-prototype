@@ -18,9 +18,9 @@ const FloatingWhatsApp = dynamic(() => import("@/components/floating-whatsapp"),
 
 // Memoize the navigation items to prevent unnecessary re-renders
 const navItems = [
-  { href: "/why-kw", label: "KW Model" },
-  { href: "/editorial", label: "KW Blog" },
+  { href: "/model", label: "KW Model" },
   { href: "/projects", label: "New Launch Condo" },
+  { href: "/events", label: "Events" },
   { href: "/about-us", label: "About Us" },
   { href: "/contact", label: "Contact" },
   { href: "/join", label: "Join KW Singapore" }
@@ -69,10 +69,16 @@ export function Header() {
               key={item.href}
               href={item.href}
               id="nav-link"
-              className="text-sm font-medium text-white transition-colors duration-300 rounded px-2 py-1 relative group"
+              className={`text-sm font-semibold transition-colors duration-300 rounded px-2 py-1 relative group ${
+                item.label === "Join KW Singapore" 
+                  ? "bg-red-600 text-white hover:bg-red-700" 
+                  : "text-white"
+              }`}
             >
               {item.label}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
+              {item.label !== "Join KW Singapore" && (
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
+              )}
             </Link>
           ))}
         </nav>
@@ -87,11 +93,12 @@ export function Header() {
 const footerLinks = {
   column1: [
     { href: "/", label: "Home" },
-    { href: "/why-kw", label: "KW Model" },
+    { href: "/model", label: "KW Model" },
     { href: "/editorial", label: "KW Blog" },
     { href: "/projects", label: "New Launch Condo" }
   ],
   column2: [
+    { href: "/events", label: "Events" },
     { href: "/about-us", label: "About Us" },
     { href: "/contact", label: "Contact" },
     { href: "/join", label: "Join KW Singapore" }
