@@ -69,7 +69,7 @@ export function Header() {
               key={item.href}
               href={item.href}
               id="nav-link"
-              className={`text-sm font-semibold transition-colors duration-300 rounded px-2 py-1 relative group ${
+              className={`text-sm font-semibold transition-colors duration-300 rounded px-2 py-2 relative group ${
                 item.label === "Join KW Singapore" 
                   ? "bg-red-600 text-white hover:bg-red-700" 
                   : "text-white"

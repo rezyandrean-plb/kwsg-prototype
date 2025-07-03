@@ -91,7 +91,7 @@ export default function ModelPage() {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center">
         <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black" />
-        <div className="absolute inset-0 bg-[url('/images/model/kw-model-hero.webp')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-[url('/images/model/kw-model-heros.webp')] bg-cover bg-center" />
         <div className="absolute inset-0 bg-black/60" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
 
