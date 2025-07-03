@@ -25,6 +25,85 @@ export default function EventsPage() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // Touch/swipe functionality for carousel
+  useEffect(() => {
+    const carousel = document.getElementById("bootcamp-carousel")
+    if (!carousel) return
+
+    let startX = 0
+    let currentX = 0
+    let isDragging = false
+
+    const handleTouchStart = (e: TouchEvent) => {
+      startX = e.touches[0].clientX
+      isDragging = true
+      carousel.style.transition = "none"
+    }
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!isDragging) return
+      e.preventDefault()
+      currentX = e.touches[0].clientX
+      const diff = currentX - startX
+      const currentTransform = carousel.style.transform || "translateX(0%)"
+      const match = currentTransform.match(/-?\d+/)
+      const currentTranslate = parseInt(match && match[0] ? match[0] : "0")
+      carousel.style.transform = `translateX(${currentTranslate + diff}px)`
+    }
+
+    const handleTouchEnd = () => {
+      if (!isDragging) return
+      isDragging = false
+      carousel.style.transition = "transform 0.3s ease-out"
+      
+      const diff = currentX - startX
+      const threshold = 50
+      
+      if (Math.abs(diff) > threshold) {
+        const currentTransform = carousel.style.transform || "translateX(0%)"
+        const isAtStart = currentTransform.includes("0%")
+        
+        if (diff > 0 && !isAtStart) {
+          // Swipe right - go to previous
+          carousel.style.transform = "translateX(0%)"
+          document.querySelectorAll('[id^="dot-"]').forEach((dot, i) => {
+            dot.className =
+              i === 0
+                ? "w-4 h-4 sm:w-3 sm:h-3 rounded-full bg-[#B40101] transition-all duration-300 hover:scale-110"
+                : "w-4 h-4 sm:w-3 sm:h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300 hover:scale-110"
+          })
+        } else if (diff < 0 && isAtStart) {
+          // Swipe left - go to next
+          carousel.style.transform = "translateX(-50%)"
+          document.querySelectorAll('[id^="dot-"]').forEach((dot, i) => {
+            dot.className =
+              i === 1
+                ? "w-4 h-4 sm:w-3 sm:h-3 rounded-full bg-[#B40101] transition-all duration-300 hover:scale-110"
+                : "w-4 h-4 sm:w-3 sm:h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300 hover:scale-110"
+          })
+        } else {
+          // Return to current position
+          carousel.style.transform = isAtStart ? "translateX(0%)" : "translateX(-50%)"
+        }
+      } else {
+        // Return to current position
+        const currentTransform = carousel.style.transform || "translateX(0%)"
+        const isAtStart = currentTransform.includes("0%")
+        carousel.style.transform = isAtStart ? "translateX(0%)" : "translateX(-50%)"
+      }
+    }
+
+    carousel.addEventListener("touchstart", handleTouchStart, { passive: false })
+    carousel.addEventListener("touchmove", handleTouchMove, { passive: false })
+    carousel.addEventListener("touchend", handleTouchEnd)
+
+    return () => {
+      carousel.removeEventListener("touchstart", handleTouchStart)
+      carousel.removeEventListener("touchmove", handleTouchMove)
+      carousel.removeEventListener("touchend", handleTouchEnd)
+    }
+  }, [])
+
   return (
     <main className="min-h-screen bg-black text-white">
       {/* Hero Section */}
@@ -51,7 +130,7 @@ export default function EventsPage() {
           </motion.h1>
 
           <motion.p 
-            className="text-lg md:text-xl text-white/80 mb-12 max-w-4xl mx-auto leading-relaxed"
+            className="text-base md:text-xl text-white/80 mb-12 max-w-4xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
@@ -103,7 +182,7 @@ export default function EventsPage() {
               </motion.h2>
 
               <motion.p 
-                className="mb-8 leading-relaxed text-lg"
+                className="mb-8 leading-relaxed text-base md:text-lg"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
@@ -268,7 +347,7 @@ export default function EventsPage() {
               </motion.h2>
 
               <motion.p 
-                className="text-lg mb-8 leading-relaxed"
+                className="text-base md:text-lg mb-8 leading-relaxed"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
@@ -346,7 +425,7 @@ export default function EventsPage() {
           </motion.h2>
 
           <motion.p 
-            className="text-xl mb-12 max-w-4xl mx-auto leading-relaxed"
+            className="text-base md:text-xl mb-12 max-w-4xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
@@ -392,7 +471,7 @@ export default function EventsPage() {
             </Button>
 
             <motion.p 
-              className="text-lg text-white/80 max-w-2xl mx-auto leading-6"
+              className="text-sm md:text-lg text-white/80 max-w-2xl mx-auto leading-6"
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
@@ -431,7 +510,7 @@ export default function EventsPage() {
               <span className="block text-[#B40101] italic">Series</span>
             </motion.h2>
             <motion.p 
-              className="max-w-4xl mx-auto leading-relaxed leading-7 text-lg"
+              className="max-w-4xl mx-auto leading-relaxed leading-7 text-base md:text-lg"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
@@ -452,9 +531,9 @@ export default function EventsPage() {
                 style={{ transform: "translateX(0%)" }}
               >
                 {/* Card 1: Seller Presentation Mastery */}
-                <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
+                <div className="w-full sm:w-full lg:w-1/2 flex-shrink-0 px-2 sm:px-4">
                   <motion.div 
-                    className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col"
+                    className="bg-gradient-to-br from-gray-900 to-black p-4 sm:p-6 lg:p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col"
                     initial={{ opacity: 0, y: 50, scale: 0.9 }}
                     whileInView={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
@@ -467,7 +546,7 @@ export default function EventsPage() {
                     </h3>
 
                     <div className="flex-grow">
-                      <p className="mb-6 leading-relaxed h-32">
+                      <p className="mb-6 leading-relaxed h-32 text-sm md:text-base">
                         Command every listing pitch and consistently win mandates. Discover how to craft an undeniable
                         Unique Selling Proposition (USP) as expert listers, perfect a seamless seller presentation flow,
                         and deploy tailored strategies for six distinct seller profiles.
@@ -500,9 +579,9 @@ export default function EventsPage() {
                 </div>
 
                 {/* Card 2: High-Conversion Buyer Consultations */}
-                <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
+                <div className="w-full sm:w-full lg:w-1/2 flex-shrink-0 px-2 sm:px-4">
                   <motion.div 
-                    className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col"
+                    className="bg-gradient-to-br from-gray-900 to-black p-4 sm:p-6 lg:p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col"
                     initial={{ opacity: 0, y: 50, scale: 0.9 }}
                     whileInView={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
@@ -515,7 +594,7 @@ export default function EventsPage() {
                     </h3>
 
                     <div className="flex-grow">
-                      <p className="mb-6 leading-relaxed h-32">
+                      <p className="mb-6 leading-relaxed h-32 text-sm md:text-base">
                         Convert leads into loyal, long-term clients with supreme confidence. Dive deep into
                         understanding the six distinct buyer types, implement a proven, ultimate buyer consultation
                         flow, and master crafting a compelling buyer's journey.
@@ -548,9 +627,9 @@ export default function EventsPage() {
                 </div>
 
                 {/* Card 3: New Launch Analysis */}
-                <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
+                <div className="w-full sm:w-full lg:w-1/2 flex-shrink-0 px-2 sm:px-4">
                   <motion.div 
-                    className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col"
+                    className="bg-gradient-to-br from-gray-900 to-black p-4 sm:p-6 lg:p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col"
                     initial={{ opacity: 0, y: 50, scale: 0.9 }}
                     whileInView={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
@@ -563,7 +642,7 @@ export default function EventsPage() {
                     </h3>
 
                     <div className="flex-grow">
-                      <p className="mb-6 leading-relaxed h-32">
+                      <p className="mb-6 leading-relaxed h-32 text-sm md:text-base">
                         Dominate Singapore's New Launch market with unparalleled expertise. This bootcamp equips you
                         with the strategic skills to master site and floor plan analysis, deploy powerful pricing and
                         comparison techniques, and execute data-driven closing strategies.
@@ -596,9 +675,9 @@ export default function EventsPage() {
                 </div>
 
                 {/* Card 4: Webinar & Market Charts */}
-                <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
+                <div className="w-full sm:w-full lg:w-1/2 flex-shrink-0 px-2 sm:px-4">
                   <motion.div 
-                    className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col"
+                    className="bg-gradient-to-br from-gray-900 to-black p-4 sm:p-6 lg:p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col"
                     initial={{ opacity: 0, y: 50, scale: 0.9 }}
                     whileInView={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
@@ -611,7 +690,7 @@ export default function EventsPage() {
                     </h3>
 
                     <div className="flex-grow">
-                      <p className="mb-6 leading-relaxed h-32">
+                      <p className="mb-6 leading-relaxed h-32 text-sm md:text-base">
                         Transform complex data into clear, actionable market intelligence. This intensive series
                         empowers you to become an expert advisor, master interpreting market charts, and craft
                         compelling communication frameworks that secure client trust.
@@ -646,31 +725,31 @@ export default function EventsPage() {
             </div>
 
             {/* Carousel Navigation */}
-            <div className="flex justify-center mt-12 space-x-2">
+            <div className="flex justify-center mt-8 sm:mt-12 space-x-3">
               <button
-                className="w-3 h-3 rounded-full bg-[#B40101] transition-all duration-300"
+                className="w-4 h-4 sm:w-3 sm:h-3 rounded-full bg-[#B40101] transition-all duration-300 hover:scale-110"
                 onClick={() => {
                   const carousel = document.getElementById("bootcamp-carousel")
                   if (carousel) carousel.style.transform = "translateX(0%)"
                   document.querySelectorAll('[id^="dot-"]').forEach((dot, i) => {
                     dot.className =
                       i === 0
-                        ? "w-3 h-3 rounded-full bg-[#B40101] transition-all duration-300"
-                        : "w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"
+                        ? "w-4 h-4 sm:w-3 sm:h-3 rounded-full bg-[#B40101] transition-all duration-300 hover:scale-110"
+                        : "w-4 h-4 sm:w-3 sm:h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300 hover:scale-110"
                   })
                 }}
                 id="dot-0"
               ></button>
               <button
-                className="w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"
+                className="w-4 h-4 sm:w-3 sm:h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300 hover:scale-110"
                 onClick={() => {
                   const carousel = document.getElementById("bootcamp-carousel")
                   if (carousel) carousel.style.transform = "translateX(-50%)"
                   document.querySelectorAll('[id^="dot-"]').forEach((dot, i) => {
                     dot.className =
                       i === 1
-                        ? "w-3 h-3 rounded-full bg-[#B40101] transition-all duration-300"
-                        : "w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"
+                        ? "w-4 h-4 sm:w-3 sm:h-3 rounded-full bg-[#B40101] transition-all duration-300 hover:scale-110"
+                        : "w-4 h-4 sm:w-3 sm:h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300 hover:scale-110"
                   })
                 }}
                 id="dot-1"
@@ -679,7 +758,7 @@ export default function EventsPage() {
 
             {/* Navigation Arrows */}
             <button
-              className="absolute -left-16 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-[#B40101]/80 text-white p-3 rounded-full transition-all duration-300 hidden lg:block"
+              className="absolute -left-4 sm:-left-8 lg:-left-16 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-[#B40101]/80 text-white p-2 sm:p-3 rounded-full transition-all duration-300 block"
               onClick={() => {
                 const carousel = document.getElementById("bootcamp-carousel")
                 const currentTransform = carousel?.style.transform || "translateX(0%)"
@@ -709,10 +788,10 @@ export default function EventsPage() {
               }}
               id="prev-btn"
             >
-              <ChevronRight className="h-6 w-6 rotate-180" />
+              <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6 rotate-180" />
             </button>
             <button
-              className="absolute -right-16 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-[#B40101]/80 text-white p-3 rounded-full transition-all duration-300 hidden lg:block"
+              className="absolute -right-4 sm:-right-8 lg:-right-16 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-[#B40101]/80 text-white p-2 sm:p-3 rounded-full transition-all duration-300 block"
               onClick={() => {
                 const carousel = document.getElementById("bootcamp-carousel")
                 const currentTransform = carousel?.style.transform || "translateX(0%)"
@@ -742,7 +821,7 @@ export default function EventsPage() {
               }}
               id="next-btn"
             >
-              <ChevronRight className="h-6 w-6" />
+              <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6" />
             </button>
           </div>
 
@@ -757,7 +836,7 @@ export default function EventsPage() {
             <Button
               size="lg"
               variant="outline"
-              className="border-[#B40101] text-[#B40101] hover:bg-[#B40101] hover:text-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 group bg-transparent border-white text-white"
+              className="w-full sm:w-auto border-[#B40101] text-[#B40101] hover:bg-[#B40101] hover:text-white px-4 sm:px-8 py-4 text-base sm:text-lg font-semibold transition-all duration-300 hover:scale-105 group bg-transparent border-white text-white mx-auto"
             >
               Get Notified About All Bootcamps
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -786,16 +865,16 @@ export default function EventsPage() {
             Can't Decide?
             <span className="block text-[#B40101] italic">Let's Chat.</span>
           </motion.h2>
-          <motion.p 
-            className="max-w-4xl mx-auto leading-relaxed text-xl mb-9"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            Not sure which event is right for you? Our team is here to help you choose the perfect opportunity to
-            accelerate your real estate career.
-          </motion.p>
+                      <motion.p 
+              className="max-w-4xl mx-auto leading-relaxed text-base md:text-xl mb-9"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              Not sure which event is right for you? Our team is here to help you choose the perfect opportunity to
+              accelerate your real estate career.
+            </motion.p>
 
           <motion.div 
             className="space-y-6"
@@ -813,7 +892,7 @@ export default function EventsPage() {
               <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
             </Button>
             <motion.p 
-              className="max-w-2xl mx-auto text-slate-100 text-base"
+              className="max-w-2xl mx-auto text-slate-100 text-sm md:text-base"
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}

@@ -270,7 +270,7 @@ export default function ModelPage() {
 
       {/* Model 2: Manager Overriding */}
       <motion.section 
-        className="relative py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black"
+        className="relative py-20 lg:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black"
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
@@ -280,14 +280,14 @@ export default function ModelPage() {
         <div className="absolute inset-0 bg-black/60" />
         <div className="absolute inset-0 bg-gradient-to-l from-black via-transparent to-black" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-8 sm:px-6">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             <motion.div 
               className="order-2 lg:order-1"
               variants={slideInLeft}
             >
               <motion.h2 
-                className="font-bold mb-6 leading-tight text-2xl sm:text-3xl md:text-4xl"
+                className="font-bold mb-6 leading-tight text-xl sm:text-2xl md:text-3xl lg:text-4xl"
                 variants={itemVariants}
               >
                 Manager Overriding:
@@ -295,7 +295,7 @@ export default function ModelPage() {
               </motion.h2>
 
               <motion.p 
-                className="mb-8 leading-relaxed text-lg"
+                className="mb-6 lg:mb-8 leading-relaxed text-base lg:text-lg"
                 variants={itemVariants}
               >
                 As a KW leader, unlock additional revenue by coaching and mentoring your growing team. Your success in
@@ -304,28 +304,28 @@ export default function ModelPage() {
               </motion.p>
 
               <motion.div 
-                className="space-y-4 mb-10"
+                className="space-y-3 lg:space-y-4 mb-8 lg:mb-10"
                 variants={containerVariants}
               >
                 <motion.div className="flex items-start space-x-4" variants={itemVariants}>
                   <div className="w-2 h-2 bg-[#B40101] rounded-full mt-3 flex-shrink-0" />
                   <div>
-                    <h4 className="text-lg font-semibold mb-1">Monetize your leadership</h4>
-                    <p className="text-white/70">Turn your expertise into sustainable income</p>
+                    <h4 className="text-base lg:text-lg font-semibold mb-1">Monetize your leadership</h4>
+                    <p className="text-white/70 text-sm lg:text-base">Turn your expertise into sustainable income</p>
                   </div>
                 </motion.div>
                 <motion.div className="flex items-start space-x-4" variants={itemVariants}>
                   <div className="w-2 h-2 bg-[#B40101] rounded-full mt-3 flex-shrink-0" />
                   <div>
-                    <h4 className="text-lg font-semibold mb-1">Scalable earnings through guidance</h4>
-                    <p className="text-white/70">Income grows as your mentees succeed</p>
+                    <h4 className="text-base lg:text-lg font-semibold mb-1">Scalable earnings through guidance</h4>
+                    <p className="text-white/70 text-sm lg:text-base">Income grows as your mentees succeed</p>
                   </div>
                 </motion.div>
                 <motion.div className="flex items-start space-x-4" variants={itemVariants}>
                   <div className="w-2 h-2 bg-[#B40101] rounded-full mt-3 flex-shrink-0" />
                   <div>
-                    <h4 className="text-lg font-semibold mb-1">Support others while growing your business</h4>
-                    <p className="text-white/70">Create win-win relationships that compound</p>
+                    <h4 className="text-base lg:text-lg font-semibold mb-1">Support others while growing your business</h4>
+                    <p className="text-white/70 text-sm lg:text-base">Create win-win relationships that compound</p>
                   </div>
                 </motion.div>
               </motion.div>
@@ -471,10 +471,10 @@ export default function ModelPage() {
             className="flex flex-col sm:flex-row gap-6 justify-center items-center"
             variants={containerVariants}
           >
-            <motion.div variants={itemVariants}>
+            <motion.div variants={itemVariants} className="w-full sm:w-auto">
               <Button
                 size="lg"
-                className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
+                className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
                 onClick={() => window.location.href = '/contact'}
               >
                 Speak to Our Team
@@ -482,11 +482,11 @@ export default function ModelPage() {
               </Button>
             </motion.div>
 
-            <motion.div variants={itemVariants}>
+            <motion.div variants={itemVariants} className="w-full sm:w-auto">
               <Button
                 variant="outline"
                 size="lg"
-                className="border-[#999999] text-[#999999] hover:bg-[#999999] hover:text-black px-12 py-6 text-xl font-semibold transition-all duration-300 group bg-transparent rounded-md border-white text-white"
+                className="w-full border-[#B40101] text-[#B40101] hover:bg-[#B40101] hover:text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 group bg-transparent border-white text-white"
                 onClick={() => (window.location.href = "https://explore.kwsingapore.com/kw-explore-night-webinar-1")}
               >
                 Explore KW Singapore

@@ -23,6 +23,17 @@ const staggerContainer = {
   }
 }
 
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6
+    }
+  }
+}
+
 export default function AboutUsPage() {
   const [openModal, setOpenModal] = useState<string | null>(null)
   const [isJoinFormOpen, setIsJoinFormOpen] = useState(false)
@@ -134,7 +145,7 @@ export default function AboutUsPage() {
           </motion.h1>
 
           <motion.p 
-            className="text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed text-xl"
+            className="text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed text-base md:text-lg lg:text-xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -181,12 +192,20 @@ export default function AboutUsPage() {
             realtors through elite systems, technology, and training.
           </motion.p>
           <motion.div 
-            className="w-24 h-1 bg-[#B40101] mx-auto mt-12"
-            initial={{ opacity: 0, scaleX: 0 }}
-            whileInView={{ opacity: 1, scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          ></motion.div>
+            className="relative w-48 h-1 mx-auto mt-8 overflow-hidden"
+            variants={itemVariants}
+          >
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: "-100%" }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              className="absolute top-0 left-0 h-full w-full bg-gradient-to-r from-transparent via-[#B40101] to-transparent"
+            />
+          </motion.div>
         </div>
       </section>
 
@@ -218,7 +237,7 @@ export default function AboutUsPage() {
           </div>
 
           {/* Compact Grid Layout */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 text-left">
             {mvvbpItems.slice(0, 3).map((item, index) => (
               <motion.div 
                 key={index} 
@@ -231,7 +250,7 @@ export default function AboutUsPage() {
                 <div className="absolute inset-0 bg-gradient-to-br from-[#B40101]/15 via-[#B40101]/5 to-transparent rounded-xl transform group-hover:scale-105 transition-all duration-300" />
                 <div className="relative p-6 h-full border border-[#B40101]/20 rounded-xl bg-black/40 backdrop-blur-sm group-hover:border-[#B40101]/40 transition-all duration-300">
                   <div className="flex items-center mb-4">
-                    <div className="text-[#B40101] mr-3 group-hover:scale-110 transition-transform duration-300 bg-[#B40101]/10 p-2 rounded-lg">
+                    <div className="text-[#B40101] mr-3 group-hover:scale-110 transition-transform duration-300">
                       {item.icon}
                     </div>
                     <h3 className="text-xl font-bold text-white">{item.title}</h3>
@@ -244,7 +263,7 @@ export default function AboutUsPage() {
           
           {/* Bottom row - centered */}
           <div className="flex justify-center mt-6">
-            <div className="grid md:grid-cols-2 gap-6 text-left max-w-2xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left max-w-2xl">
               {mvvbpItems.slice(3).map((item, index) => (
                 <motion.div 
                   key={index + 3} 
@@ -256,12 +275,12 @@ export default function AboutUsPage() {
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-[#B40101]/15 via-[#B40101]/5 to-transparent rounded-xl transform group-hover:scale-105 transition-all duration-300" />
                   <div className="relative p-6 h-full border border-[#B40101]/20 rounded-xl bg-black/40 backdrop-blur-sm group-hover:border-[#B40101]/40 transition-all duration-300">
-                    <div className="flex items-center mb-4">
-                      <div className="text-[#B40101] mr-3 group-hover:scale-110 transition-transform duration-300 bg-[#B40101]/10 p-2 rounded-lg">
-                        {item.icon}
-                      </div>
-                      <h3 className="text-xl font-bold text-white">{item.title}</h3>
+                                      <div className="flex items-center mb-4">
+                    <div className="text-[#B40101] mr-3 group-hover:scale-110 transition-transform duration-300">
+                      {item.icon}
                     </div>
+                    <h3 className="text-xl font-bold text-white">{item.title}</h3>
+                  </div>
                     <p className="leading-relaxed text-sm text-slate-100">{item.description}</p>
                   </div>
                 </motion.div>
@@ -302,8 +321,8 @@ export default function AboutUsPage() {
           </div>
           {/* Main Featured Area */}
           <div className="grid md:grid-cols-2 gap-16 items-center mb-20">
-            {/* Left Side - Title and Description */}
-            <div>
+            {/* Mobile: Image First, Desktop: Description First */}
+            <div className="order-2 md:order-1">
               {/* Featured Member Details */}
               <div className="space-y-4">
                 <div>
@@ -324,8 +343,8 @@ export default function AboutUsPage() {
               </div>
             </div>
 
-            {/* Right Side - Featured Member Image */}
-            <div className="relative w-[70%] mx-auto">
+            {/* Mobile: Image First, Desktop: Image Second */}
+            <div className="relative w-[70%] mx-auto order-1 md:order-2">
               <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-gradient-to-br from-[#B40101]/10 to-transparent">
                 <img
                   src={teamMembers[selectedMember].image || "/placeholder.svg"}
@@ -382,7 +401,7 @@ export default function AboutUsPage() {
           </motion.h2>
 
           <motion.p 
-            className="text-xl mb-12 max-w-4xl mx-auto leading-relaxed text-white"
+            className="text-base md:text-lg lg:text-xl mb-12 max-w-4xl mx-auto leading-relaxed text-white"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

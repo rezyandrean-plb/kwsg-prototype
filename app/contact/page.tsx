@@ -1,16 +1,26 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Mail, Phone, Clock } from "lucide-react"
-import Image from "next/image"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Mail, Phone, Clock, Facebook, Instagram, Linkedin, Youtube, ChevronRight } from "lucide-react"
 import { motion } from "framer-motion"
 
+interface FormData {
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  subject: string
+  message: string
+}
+
 const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 30 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 }
+  transition: { duration: 0.6, ease: "easeOut" }
 }
 
 const staggerContainer = {
@@ -22,256 +32,428 @@ const staggerContainer = {
 }
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState<FormData>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: ""
+  })
+
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [scrollY, setScrollY] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const handleInputChange = (field: keyof FormData, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setSubmitSuccess(false)
+
+    try {
+      // Here you would typically send the form data to your API
+      // For now, we'll simulate a successful submission
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+      setSubmitSuccess(true)
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: ""
+      })
+    } catch (error) {
+      console.error('Error submitting form:', error)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const scrollToContactSection = () => {
+    const contactSection = document.getElementById('main-contact-section')
+    if (contactSection) {
+      contactSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+  }
+
   return (
-    <motion.main 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="min-h-screen flex flex-col"
-    >
+    <main className="min-h-screen bg-black text-white">
       {/* Hero Section */}
-      <section className="relative h-screen w-full">
-        <Image
-          src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80"
-          alt="Contact Us"
-          fill
-          className="object-cover brightness-50"
-          priority
+      <section className="relative min-h-screen flex items-center justify-center pt-20">
+        <div
+          className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"
+          style={{
+            transform: `translateY(${scrollY * 0.5}px)`,
+          }}
         />
-        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-          <div className="container mx-auto px-4 text-center">
-            <motion.h1 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="text-5xl md:text-7xl font-bold text-white inline-block tracking-tight"
-            >
-              Contact Us
-            </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              className="text-xl text-gray-100 max-w-3xl mx-auto mt-6"
-            >
-              Get in touch with our team for any inquiries about new launches, partnerships, or career opportunities.
-            </motion.p>
-          </div>
-        </div>
+        <div className="absolute inset-0 bg-[url('/images/event/modern-office-contact-bg.webp')] bg-cover bg-center opacity-30" />
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
+
+        <motion.div 
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative z-10 text-center max-w-6xl mx-auto px-6"
+        >
+          <motion.h1 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 sm:mb-8 leading-tight"
+          >
+            Get In
+            <span className="block text-[#B40101] italic">Touch</span>
+          </motion.h1>
+
+          <motion.p 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+            className="mb-8 sm:mb-12 max-w-4xl mx-auto leading-relaxed text-base sm:text-lg md:text-xl"
+          >
+            We're here to help you succeed. Reach out to our team for any inquiries, partnerships, or support. Your
+            journey to real estate excellence starts with a conversation.
+          </motion.p>
+        </motion.div>
+
+        <motion.button 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+          onClick={scrollToContactSection}
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hover:scale-110 transition-transform duration-300 cursor-pointer"
+        >
+          <ChevronRight className="h-6 w-6 text-[#B40101] rotate-90" />
+        </motion.button>
       </section>
 
-      {/* Contact Information Section */}
-      <section className="py-20 bg-black relative">
-        <div className="container mx-auto px-4">
+      {/* Main Contact Section */}
+      <section id="main-contact-section" className="relative py-32 bg-gradient-to-b from-black to-gray-900">
+        <div className="max-w-7xl mx-auto px-6">
           <motion.div 
             variants={staggerContainer}
             initial="initial"
             whileInView="animate"
-            viewport={{ once: true }}
-            className="grid md:grid-cols-2 gap-12"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid lg:grid-cols-2 gap-16"
           >
-            {/* Contact Information */}
+            {/* Left Side - Contact Information */}
             <motion.div 
               variants={fadeInUp}
-              className="space-y-8"
+              className="space-y-12"
             >
               <div>
-                <motion.h2 
-                  variants={fadeInUp}
-                  className="text-3xl font-bold mb-6 text-white"
-                >
-                  Get in Touch
-                </motion.h2>
-                <motion.p 
-                  variants={fadeInUp}
-                  className="text-gray-300 mb-8"
-                >
-                  Have questions about new launches or interested in joining our team? We're here to help.
-                </motion.p>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-white">Reach Us Directly</h2>
+                <p className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 sm:mb-12">
+                  Connect with our team through any of the channels below. We're committed to responding promptly and
+                  helping you take the next step in your real estate journey.
+                </p>
               </div>
 
+              {/* Contact Details */}
               <motion.div 
                 variants={staggerContainer}
-                className="space-y-6"
+                className="space-y-8"
               >
+                {/* Phone */}
                 <motion.div 
                   variants={fadeInUp}
-                  className="flex items-start space-x-4"
+                  className="flex items-start space-x-4 group"
                   whileHover={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <div className="bg-primary-red/10 p-3 rounded-full">
-                    <Clock className="h-6 w-6 text-primary-red" />
+                  <div className="flex-shrink-0 w-12 h-12 bg-[#B40101]/10 rounded-lg flex items-center justify-center group-hover:bg-[#B40101]/20 transition-colors">
+                    <Phone className="h-6 w-6 text-[#B40101]" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-white mb-1">Business Hours</h3>
-                    <p className="text-gray-300">Monday - Friday: 9:00 AM - 6:00 PM</p>
+                    <h3 className="text-xl font-semibold mb-2 text-white">Phone</h3>
+                    <a href="tel:+6586111703" className="text-white/80 hover:text-[#B40101] transition-colors text-lg">
+                      +65 8611 1703
+                    </a>
                   </div>
                 </motion.div>
 
+                {/* Email */}
                 <motion.div 
                   variants={fadeInUp}
-                  className="flex items-start space-x-4"
+                  className="flex items-start space-x-4 group"
                   whileHover={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <div className="bg-primary-red/10 p-3 rounded-full">
-                    <Mail className="h-6 w-6 text-primary-red" />
+                  <div className="flex-shrink-0 w-12 h-12 bg-[#B40101]/10 rounded-lg flex items-center justify-center group-hover:bg-[#B40101]/20 transition-colors">
+                    <Mail className="h-6 w-6 text-[#B40101]" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-white mb-1">Email Us</h3>
-                    <a href="mailto:hello@kwsingapore.com" className="text-gray-300 hover:text-primary-red transition-colors">
+                    <h3 className="text-xl font-semibold mb-2 text-white">Email</h3>
+                    <a
+                      href="mailto:hello@kwsingapore.com"
+                      className="text-white/80 hover:text-[#B40101] transition-colors text-lg"
+                    >
                       hello@kwsingapore.com
                     </a>
                   </div>
                 </motion.div>
 
+                {/* Operating Hours */}
                 <motion.div 
                   variants={fadeInUp}
-                  className="flex items-start space-x-4"
+                  className="flex items-start space-x-4 group"
                   whileHover={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <div className="bg-primary-red/10 p-3 rounded-full">
-                    <Phone className="h-6 w-6 text-primary-red" />
+                  <div className="flex-shrink-0 w-12 h-12 bg-[#B40101]/10 rounded-lg flex items-center justify-center group-hover:bg-[#B40101]/20 transition-colors">
+                    <Clock className="h-6 w-6 text-[#B40101]" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-white mb-1">Call Us</h3>
-                    <a href="tel:+6586111703" className="text-gray-300 hover:text-primary-red transition-colors">
-                      +65 8611 1703
-                    </a>
+                    <h3 className="text-xl font-semibold mb-2 text-white">Operating Hours</h3>
+                    <div className="text-white/80 text-lg leading-relaxed">
+                      <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                      <p>Saturday & Sunday: Closed</p>
+                    </div>
                   </div>
+                </motion.div>
+              </motion.div>
+
+              {/* Social Media Links */}
+              <motion.div 
+                variants={fadeInUp}
+                className="pt-8"
+              >
+                <h3 className="text-2xl font-bold mb-6 text-white">Connect With Us</h3>
+                <motion.div 
+                  variants={staggerContainer}
+                  className="flex space-x-4"
+                >
+                  {[
+                    { icon: Facebook, href: "https://www.facebook.com/kwsingapore", label: "Facebook" },
+                    { icon: Instagram, href: "https://www.instagram.com/kwsingapore/", label: "Instagram" },
+                    {
+                      icon: Linkedin,
+                      href: "https://www.linkedin.com/company/107526808/admin/dashboard/",
+                      label: "LinkedIn",
+                    },
+                    {
+                      icon: ({ className }: { className?: string }) => (
+                        <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                        </svg>
+                      ),
+                      href: "https://www.tiktok.com/@kwsingapore",
+                      label: "TikTok",
+                    },
+                    { icon: Youtube, href: "http://www.youtube.com/@kw_singapore", label: "YouTube" },
+                  ].map((social, index) => (
+                    <a
+                      key={index}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 bg-[#666666]/20 rounded-full flex items-center justify-center text-[#999999] hover:bg-[#B40101] hover:text-white transition-all duration-300 hover:scale-110"
+                      aria-label={social.label}
+                    >
+                      <social.icon className="w-5 h-5" />
+                    </a>
+                  ))}
                 </motion.div>
               </motion.div>
             </motion.div>
 
-            {/* Floating Contact Form */}
+            {/* Right Side - Contact Form */}
             <motion.div 
               variants={fadeInUp}
-              className="relative"
+              className="bg-gradient-to-br from-gray-900/50 to-black/50 p-6 sm:p-8 rounded-2xl border border-[#666666]/20 backdrop-blur-sm"
             >
-              <motion.div 
-                whileHover={{ scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                className="bg-gray-900 rounded-lg p-8 shadow-xl sticky top-8"
-              >
-                <motion.h3 
-                  variants={fadeInUp}
-                  className="text-2xl font-bold mb-6 text-white"
-                >
-                  Send Us a Message
-                </motion.h3>
-                <motion.form 
-                  variants={staggerContainer}
-                  className="space-y-6"
-                >
-                  <div className="grid grid-cols-2 gap-4">
-                    <motion.div 
-                      variants={fadeInUp}
-                      className="space-y-2"
-                    >
-                      <label htmlFor="firstName" className="text-sm font-medium text-white">
-                        First Name
-                      </label>
-                      <Input
-                        id="firstName"
-                        name="firstName"
-                        className="bg-gray-800 border-gray-700 text-white"
-                        required
-                      />
-                    </motion.div>
-                    <motion.div 
-                      variants={fadeInUp}
-                      className="space-y-2"
-                    >
-                      <label htmlFor="lastName" className="text-sm font-medium text-white">
-                        Last Name
-                      </label>
-                      <Input
-                        id="lastName"
-                        name="lastName"
-                        className="bg-gray-800 border-gray-700 text-white"
-                        required
-                      />
-                    </motion.div>
-                  </div>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-white">Send Us a Message</h2>
 
-                  <motion.div 
-                    variants={fadeInUp}
-                    className="space-y-2"
-                  >
-                    <label htmlFor="email" className="text-sm font-medium text-white">
-                      Email
+              {submitSuccess && (
+                <div className="mb-6 p-4 bg-green-600/20 border border-green-600/30 rounded-lg">
+                  <p className="text-green-400 font-medium">
+                    Thank you! Your message has been sent successfully. We'll get back to you soon.
+                  </p>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* First Name and Last Name Row */}
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="firstName" className="block text-sm font-semibold text-white mb-2">
+                      First Name *
+                    </label>
+                    <Input
+                      id="firstName"
+                      type="text"
+                      value={formData.firstName}
+                      onChange={(e) => handleInputChange("firstName", e.target.value)}
+                      placeholder="Enter your first name"
+                      required
+                      className="bg-black/50 border-[#666666]/30 text-white placeholder:text-[#999999] focus:border-[#B40101] focus:ring-[#B40101] h-12"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="lastName" className="block text-sm font-semibold text-white mb-2">
+                      Last Name *
+                    </label>
+                    <Input
+                      id="lastName"
+                      type="text"
+                      value={formData.lastName}
+                      onChange={(e) => handleInputChange("lastName", e.target.value)}
+                      placeholder="Enter your last name"
+                      required
+                      className="bg-black/50 border-[#666666]/30 text-white placeholder:text-[#999999] focus:border-[#B40101] focus:ring-[#B40101] h-12"
+                    />
+                  </div>
+                </div>
+
+                {/* Email and Phone Row */}
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-semibold text-white mb-2">
+                      Email Address *
                     </label>
                     <Input
                       id="email"
-                      name="email"
                       type="email"
-                      className="bg-gray-800 border-gray-700 text-white"
+                      value={formData.email}
+                      onChange={(e) => handleInputChange("email", e.target.value)}
+                      placeholder="your.email@example.com"
                       required
+                      className="bg-black/50 border-[#666666]/30 text-white placeholder:text-[#999999] focus:border-[#B40101] focus:ring-[#B40101] h-12"
                     />
-                  </motion.div>
-
-                  <motion.div 
-                    variants={fadeInUp}
-                    className="space-y-2"
-                  >
-                    <label htmlFor="phone" className="text-sm font-medium text-white">
+                  </div>
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-semibold text-white mb-2">
                       Phone Number
                     </label>
                     <Input
                       id="phone"
-                      name="phone"
                       type="tel"
-                      className="bg-gray-800 border-gray-700 text-white"
+                      value={formData.phone}
+                      onChange={(e) => handleInputChange("phone", e.target.value)}
+                      placeholder="+65 XXXX XXXX"
+                      className="bg-black/50 border-[#666666]/30 text-white placeholder:text-[#999999] focus:border-[#B40101] focus:ring-[#B40101] h-12"
                     />
-                  </motion.div>
+                  </div>
+                </div>
 
-                  <motion.div 
-                    variants={fadeInUp}
-                    className="space-y-2"
-                  >
-                    <label htmlFor="subject" className="text-sm font-medium text-white">
-                      Subject
-                    </label>
-                    <Input
-                      id="subject"
-                      name="subject"
-                      className="bg-gray-800 border-gray-700 text-white"
-                      required
-                    />
-                  </motion.div>
+                {/* Subject */}
+                <div>
+                  <label htmlFor="subject" className="block text-sm font-semibold text-white mb-2">
+                    Subject *
+                  </label>
+                  <Select value={formData.subject} onValueChange={(value) => handleInputChange("subject", value)}>
+                    <SelectTrigger className="bg-black/50 border-[#666666]/30 text-white focus:border-[#B40101] focus:ring-[#B40101] h-12 hover:border-[#B40101]/50 transition-colors">
+                      <SelectValue placeholder="Select inquiry type" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-[#1a1a1a] border-[#B40101]/30 shadow-2xl backdrop-blur-sm">
+                      <SelectItem value="general" className="text-white hover:bg-[#B40101]/20 focus:bg-[#B40101]/20 focus:text-white cursor-pointer transition-all duration-200 hover:scale-105">
+                        General Inquiry
+                      </SelectItem>
+                      <SelectItem value="partnership" className="text-white hover:bg-[#B40101]/20 focus:bg-[#B40101]/20 focus:text-white cursor-pointer transition-all duration-200 hover:scale-105">
+                        Partnership
+                      </SelectItem>
+                      <SelectItem value="bootcamp" className="text-white hover:bg-[#B40101]/20 focus:bg-[#B40101]/20 focus:text-white cursor-pointer transition-all duration-200 hover:scale-105">
+                        Training & Events
+                      </SelectItem>
+                      <SelectItem value="property" className="text-white hover:bg-[#B40101]/20 focus:bg-[#B40101]/20 focus:text-white cursor-pointer transition-all duration-200 hover:scale-105">
+                        Property Inquiry
+                      </SelectItem>
+                      <SelectItem value="career" className="text-white hover:bg-[#B40101]/20 focus:bg-[#B40101]/20 focus:text-white cursor-pointer transition-all duration-200 hover:scale-105">
+                        Career Opportunities
+                      </SelectItem>
+                      <SelectItem value="media" className="text-white hover:bg-[#B40101]/20 focus:bg-[#B40101]/20 focus:text-white cursor-pointer transition-all duration-200 hover:scale-105">
+                        Media Services
+                      </SelectItem>
+                      <SelectItem value="other" className="text-white hover:bg-[#B40101]/20 focus:bg-[#B40101]/20 focus:text-white cursor-pointer transition-all duration-200 hover:scale-105">
+                        Other
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
 
-                  <motion.div 
-                    variants={fadeInUp}
-                    className="space-y-2"
-                  >
-                    <label htmlFor="message" className="text-sm font-medium text-white">
-                      Message
-                    </label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      className="bg-gray-800 border-gray-700 text-white min-h-[150px]"
-                      required
-                    />
-                  </motion.div>
+                {/* Message */}
+                <div>
+                  <label htmlFor="message" className="block text-sm font-semibold text-white mb-2">
+                    Message *
+                  </label>
+                  <Textarea
+                    id="message"
+                    value={formData.message}
+                    onChange={(e) => handleInputChange("message", e.target.value)}
+                    placeholder="Tell us how we can help you..."
+                    required
+                    rows={6}
+                    className="bg-black/50 border-[#666666]/30 text-white placeholder:text-[#999999] focus:border-[#B40101] focus:ring-[#B40101] resize-none"
+                  />
+                </div>
 
-                  <motion.div
-                    variants={fadeInUp}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Button type="submit" className="w-full bg-primary-red text-white hover:bg-primary-red/90">
-                      Send Message
-                    </Button>
-                  </motion.div>
-                </motion.form>
-              </motion.div>
+                {/* Privacy Policy */}
+                <div className="text-sm text-[#999999]">
+                  By submitting this form, you agree to our{" "}
+                  <a href="#" className="text-[#B40101] hover:underline">
+                    Privacy Policy
+                  </a>{" "}
+                  and consent to being contacted by our team.
+                </div>
+
+                {/* Submit Button */}
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? "Sending Message..." : "Send Message"}
+                </Button>
+              </form>
             </motion.div>
           </motion.div>
         </div>
       </section>
-    </motion.main>
+
+      {/* FAQ Link Section */}
+      <motion.section 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="relative py-12 sm:py-16 bg-gradient-to-b from-gray-900 to-black"
+      >
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h3 className="text-xl sm:text-2xl font-bold mb-4 text-white">Looking for Quick Answers?</h3>
+          <p className="text-white/80 mb-6 sm:mb-8 text-base sm:text-lg">
+            Check out our frequently asked questions for immediate answers to common inquiries.
+          </p>
+          <Button
+            variant="outline"
+            className="border-[#B40101] text-[#B40101] hover:bg-[#B40101] hover:text-white px-8 py-3 text-lg font-semibold transition-all duration-300 hover:scale-105 bg-transparent"
+          >
+            View Our FAQs
+          </Button>
+        </div>
+      </motion.section>
+    </main>
   )
 } 
