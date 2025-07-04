@@ -593,7 +593,10 @@ export default function EventsPage() {
                       </div>
                     </div>
 
-                    <Button className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md">
+                    <Button 
+                      className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md"
+                      onClick={() => setIsSummitDialogOpen(true)}
+                    >
                       Register for Interest
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
@@ -631,7 +634,10 @@ export default function EventsPage() {
                       </div>
                     </div>
 
-                    <Button className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md">
+                    <Button 
+                      className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md"
+                      onClick={() => setIsSummitDialogOpen(true)}
+                    >
                       Register for Interest
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
@@ -669,7 +675,10 @@ export default function EventsPage() {
                       </div>
                     </div>
 
-                    <Button className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md">
+                    <Button 
+                      className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md"
+                      onClick={() => setIsSummitDialogOpen(true)}
+                    >
                       Register for Interest
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
@@ -707,7 +716,10 @@ export default function EventsPage() {
                       </div>
                     </div>
 
-                    <Button className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md">
+                    <Button 
+                      className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md"
+                      onClick={() => setIsSummitDialogOpen(true)}
+                    >
                       Register for Interest
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>

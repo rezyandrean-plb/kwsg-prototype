@@ -531,9 +531,9 @@ export default function Home() {
                   <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 text-white">{event.title}</h3>
                   {event.date && <p className="text-[#B40101] font-medium mb-2 sm:mb-3 text-sm">{event.date}</p>}
                   {event.description && <p className="text-white/90 mb-3 sm:mb-4 leading-relaxed text-sm">{event.description}</p>}
-                  <Button className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-4 sm:px-6 py-2 text-sm sm:text-base font-semibold transition-all duration-300 hover:scale-105">
+                  {/* <Button className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-4 sm:px-6 py-2 text-sm sm:text-base font-semibold transition-all duration-300 hover:scale-105">
                     {event.cta}
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             ))}
@@ -581,7 +581,7 @@ export default function Home() {
           <Button
             size="lg"
             className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 sm:px-12 py-4 sm:py-6 text-base sm:text-lg md:text-xl font-semibold transition-all duration-300 hover:scale-105 group"
-            onClick={() => setIsWebinarDialogOpen(true)}
+            onClick={() => window.open('https://explore.kwsingapore.com/mrea-masterclass-registration-1', '_blank')}
           >
             Start Your Future Now
             <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-1 transition-transform" />
