@@ -4,6 +4,13 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { ChevronRight, ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
+import dynamic from "next/dynamic"
+
+// Dynamically import the JoinFormDialog component
+const JoinFormDialog = dynamic(() => import("@/components/join-form-dialog").then(mod => mod.JoinFormDialog), {
+  loading: () => <div className="h-0" />,
+  ssr: false
+})
 
 // Animation variants
 const containerVariants = {
@@ -74,12 +81,18 @@ const slideInRight = {
 
 export default function ModelPage() {
   const [scrollY, setScrollY] = useState(0)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  const handleSubmit = (data: any) => {
+    console.log("Form submitted:", data)
+    // The form submission is handled within the JoinFormDialog component
+  }
 
   return (
     <motion.main 
@@ -329,16 +342,6 @@ export default function ModelPage() {
                   </div>
                 </motion.div>
               </motion.div>
-
-              <motion.div variants={itemVariants}>
-                <Button
-                  size="lg"
-                  className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
-                >
-                  Learn About Coaching Opportunities
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </motion.div>
             </motion.div>
 
             <motion.div 
@@ -475,7 +478,7 @@ export default function ModelPage() {
               <Button
                 size="lg"
                 className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
-                onClick={() => window.location.href = '/contact'}
+                onClick={() => setIsDialogOpen(true)}
               >
                 Speak to Our Team
                 <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
@@ -496,6 +499,13 @@ export default function ModelPage() {
           </motion.div>
         </motion.div>
       </motion.section>
+
+      {/* Join Form Dialog */}
+      <JoinFormDialog
+        isOpen={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+        onSubmit={handleSubmit}
+      />
     </motion.main>
   )
 } 

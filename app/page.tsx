@@ -36,6 +36,9 @@ export default function Home() {
   const [isJoinFormOpen, setIsJoinFormOpen] = useState(false)
   const [expandedAdvantage, setExpandedAdvantage] = useState(-1)
   const [scrollY, setScrollY] = useState(0)
+  
+  // Ref for the KW Advantage section
+  const advantageSectionRef = useRef<HTMLElement>(null)
 
   // Memoize handlers
   const handleSearch = useCallback((e: React.FormEvent) => {
@@ -59,7 +62,16 @@ export default function Home() {
 
   const handleJoinSubmit = useCallback((data: any) => {
     console.log("Join form submitted:", data)
-    setIsJoinFormOpen(false)
+    // The form submission is now handled within the JoinFormDialog component
+    // This callback can be used for additional actions if needed
+  }, [])
+
+  // Scroll to advantage section handler
+  const scrollToAdvantage = useCallback(() => {
+    advantageSectionRef.current?.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    })
   }, [])
 
   // Optimize animation controls
@@ -204,13 +216,16 @@ export default function Home() {
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-10">
+        <div 
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-10 cursor-pointer hover:scale-110 transition-transform duration-300"
+          onClick={scrollToAdvantage}
+        >
           <ChevronRight className="h-6 w-6 text-[#B40101] rotate-90" />
         </div>
       </section>
 
       {/* The KW Advantage */}
-      <section className="relative py-16 sm:py-20 md:py-24 lg:py-32 overflow-hidden">
+      <section ref={advantageSectionRef} className="relative py-16 sm:py-20 md:py-24 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black to-gray-900" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-start">
@@ -308,10 +323,7 @@ export default function Home() {
                       <p className="text-sm sm:text-base text-white/70 leading-relaxed pt-2">
                         {advantage.description}
                       </p>
-                      <div className="mt-4 flex items-center space-x-2">
-                        <div className="w-2 h-2 bg-[#B40101] rounded-full animate-pulse" />
-                        <span className="text-xs text-[#B40101]/80 font-medium">Learn More</span>
-                      </div>
+                      
                     </motion.div>
                   </div>
                 </motion.div>
@@ -564,7 +576,6 @@ export default function Home() {
             <div className="flex justify-center items-center space-x-4 sm:space-x-8 mb-4">
               <CountdownTimer targetDate="2025-07-05T00:00:00" />
             </div>
-            <p className="text-white/60 text-xs sm:text-sm">Until Next Bootcamp Intake</p>
           </div>
 
           <Button

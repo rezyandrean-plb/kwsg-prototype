@@ -39,7 +39,8 @@ export default function KWModelPage() {
 
   const handleJoinSubmit = (data: any) => {
     console.log("Form submitted:", data)
-    setIsJoinFormOpen(false)
+    // The form submission is now handled within the JoinFormDialog component
+    // This callback can be used for additional actions if needed
   }
 
   const businessModels = [

@@ -67,19 +67,30 @@ export default function ContactPage() {
     setSubmitSuccess(false)
 
     try {
-      // Here you would typically send the form data to your API
-      // For now, we'll simulate a successful submission
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
-      setSubmitSuccess(true)
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        subject: "",
-        message: ""
+      const response = await fetch('/api/contact-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       })
+
+      const result = await response.json()
+
+      if (response.ok && result.success) {
+        setSubmitSuccess(true)
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: ""
+        })
+      } else {
+        console.error('Form submission error:', result.error)
+        // You could add error state handling here
+      }
     } catch (error) {
       console.error('Error submitting form:', error)
     } finally {
@@ -251,7 +262,7 @@ export default function ContactPage() {
                     { icon: Instagram, href: "https://www.instagram.com/kwsingapore/", label: "Instagram" },
                     {
                       icon: Linkedin,
-                      href: "https://www.linkedin.com/company/107526808/admin/dashboard/",
+                      href: "https://www.linkedin.com/company/kw-singapore/",
                       label: "LinkedIn",
                     },
                     {
@@ -290,7 +301,7 @@ export default function ContactPage() {
               {submitSuccess && (
                 <div className="mb-6 p-4 bg-green-600/20 border border-green-600/30 rounded-lg">
                   <p className="text-green-400 font-medium">
-                    Thank you! Your message has been sent successfully. We'll get back to you soon.
+                    Thank you for your message! We have sent you a confirmation email and our team will get back to you within 24 business hours.
                   </p>
                 </div>
               )}

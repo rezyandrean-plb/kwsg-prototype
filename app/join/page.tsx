@@ -191,7 +191,8 @@ export default function JoinKW() {
 
   const handleSubmit = (data: any) => {
     console.log("Form submitted:", data)
-    setIsDialogOpen(false)
+    // The form submission is now handled within the JoinFormDialog component
+    // This callback can be used for additional actions if needed
   }
 
   return (

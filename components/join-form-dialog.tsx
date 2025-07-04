@@ -58,31 +58,67 @@ export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProp
     consent: false
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitMessage, setSubmitMessage] = useState("")
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
     // Validate areas of interest
     if (formData.areasOfInterest.length === 0) {
-      alert("Please select at least one area of interest")
+      setSubmitMessage("Please select at least one area of interest")
       return
     }
 
-    // Just log the form data for now
-    console.log('Form submitted:', formData)
-    
-    // Reset form
-    setFormData({
-      fullName: "",
-      email: "",
-      mobile: "",
-      experience: "",
-      currentBrokerage: "",
-      areasOfInterest: [],
-      linkedinUrl: "",
-      consent: false
-    })
-    
-    // Close the dialog
-    onClose()
+    // Validate consent
+    if (!formData.consent) {
+      setSubmitMessage("Please consent to be contacted by KW Singapore")
+      return
+    }
+
+    setIsSubmitting(true)
+    setSubmitMessage("")
+
+    try {
+      const response = await fetch('/api/join-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const result = await response.json()
+
+      if (response.ok && result.success) {
+        setSubmitMessage("Thank you! Your application has been submitted successfully. We'll be in touch within 24 hours.")
+        
+        // Reset form
+        setFormData({
+          fullName: "",
+          email: "",
+          mobile: "",
+          experience: "",
+          currentBrokerage: "",
+          areasOfInterest: [],
+          linkedinUrl: "",
+          consent: false
+        })
+        
+        // Close the dialog after a short delay
+        setTimeout(() => {
+          onClose()
+          setSubmitMessage("")
+        }, 3000)
+      } else {
+        setSubmitMessage(result.error || "Something went wrong. Please try again.")
+      }
+    } catch (error) {
+      console.error('Form submission error:', error)
+      setSubmitMessage("Network error. Please check your connection and try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleAreaToggle = (area: string) => {
@@ -227,9 +263,24 @@ export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProp
             </Label>
           </div>
 
+          {/* Submit Message */}
+          {submitMessage && (
+            <div className={`p-3 rounded-md text-sm ${
+              submitMessage.includes("Thank you") 
+                ? "bg-green-100 text-green-800 border border-green-200" 
+                : "bg-red-100 text-red-800 border border-red-200"
+            }`}>
+              {submitMessage}
+            </div>
+          )}
+
           {/* Submit Button */}
-          <Button type="submit" className="w-full bg-primary-red hover:bg-primary-red/90">
-            Schedule My Discovery Call
+          <Button 
+            type="submit" 
+            className="w-full bg-primary-red hover:bg-primary-red/90"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Submitting..." : "Schedule My Discovery Call"}
           </Button>
         </form>
       </DialogContent>

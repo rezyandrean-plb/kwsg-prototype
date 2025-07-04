@@ -44,7 +44,8 @@ export default function AboutUsPage() {
 
   const handleJoinFormSubmit = (data: any) => {
     console.log('Form submitted:', data)
-    setIsJoinFormOpen(false)
+    // The form submission is now handled within the JoinFormDialog component
+    // This callback can be used for additional actions if needed
   }
 
   const mvvbpItems = [
@@ -108,7 +109,7 @@ export default function AboutUsPage() {
     },
     {
       name: "Joanne Ong",
-      title: "Operations Manager",
+      title: "Regional Operations & Success Manager",
       bio: "Joanne Ong joins KW Singapore as our new Operations Manager, bringing extensive experience in building high-performing, systems-driven real estate teams. As the co-founder of Jdot Property (Mega Team), she was instrumental in developing collaborative and results-oriented strategies, contributing to over RM110 million in closed gross development value.\n\nA former litigation lawyer and entrepreneur, Joanne pivoted to real estate in 2020. Inspired by the Keller Williams Mega Agent team model, she leveraged her strengths in systems, operations, and team development to build Jdot Property, earning recognition as a KW Worldwide Top 100 agent in 2024. Her expertise in operational excellence and commitment to teamwork perfectly align with KW Singapore's mission.",
       image: "/images/about-us/core-team/joanne-ong-professional.webp",
     },

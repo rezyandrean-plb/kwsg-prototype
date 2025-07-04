@@ -5,25 +5,29 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     const { 
-      firstName, 
-      lastName, 
+      fullName, 
       email, 
-      phone, 
-      subject, 
-      message 
+      mobile, 
+      experience, 
+      currentBrokerage, 
+      areasOfInterest, 
+      linkedinUrl, 
+      consent 
     } = body
 
-    console.log('Contact form submission received:', { 
-      firstName, 
-      lastName, 
+    console.log('Join form submission received:', { 
+      fullName, 
       email, 
-      phone, 
-      subject, 
-      message 
+      mobile, 
+      experience, 
+      currentBrokerage, 
+      areasOfInterest, 
+      linkedinUrl, 
+      consent 
     })
 
     // Validate required fields
-    if (!firstName || !lastName || !email || !subject || !message) {
+    if (!fullName || !email || !mobile || !experience || !consent) {
       console.log('Validation failed: Missing required fields')
       return NextResponse.json(
         { error: 'Missing required fields' },
@@ -31,17 +35,24 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const fullName = `${firstName} ${lastName}`
+    // Validate areas of interest
+    if (!areasOfInterest || areasOfInterest.length === 0) {
+      console.log('Validation failed: No areas of interest selected')
+      return NextResponse.json(
+        { error: 'Please select at least one area of interest' },
+        { status: 400 }
+      )
+    }
 
     // Send notification email to KW Singapore team
     const notificationResult = await sendNotificationEmail({
-      firstName,
-      lastName,
       fullName,
       email,
-      phone,
-      subject,
-      message
+      mobile,
+      experience,
+      currentBrokerage,
+      areasOfInterest,
+      linkedinUrl
     })
 
     console.log('Notification email result:', notificationResult)
@@ -50,11 +61,10 @@ export async function POST(request: NextRequest) {
       console.error('Failed to send notification email:', notificationResult.error)
     }
 
-    // Send auto-reply email to the contact
+    // Send auto-reply email to the applicant
     const autoReplyResult = await sendAutoReplyEmail({
       fullName,
-      email,
-      subject
+      email
     })
 
     console.log('Auto-reply result:', autoReplyResult)
@@ -65,13 +75,13 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Thank you for your message! We have sent you a confirmation email and our team will get back to you within 24 business hours.',
+      message: 'Thank you for your interest in joining KW Singapore! We have sent you a confirmation email and our Growth Team will reach out to you within 24 business hours.',
       notificationSent: notificationResult.success,
       autoReplySent: autoReplyResult.success
     })
 
   } catch (error) {
-    console.error('Contact form error:', error)
+    console.error('Join form error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -80,21 +90,21 @@ export async function POST(request: NextRequest) {
 }
 
 async function sendNotificationEmail({ 
-  firstName, 
-  lastName, 
   fullName, 
   email, 
-  phone, 
-  subject, 
-  message 
+  mobile, 
+  experience, 
+  currentBrokerage, 
+  areasOfInterest, 
+  linkedinUrl 
 }: {
-  firstName: string
-  lastName: string
   fullName: string
   email: string
-  phone: string
-  subject: string
-  message: string
+  mobile: string
+  experience: string
+  currentBrokerage: string
+  areasOfInterest: string[]
+  linkedinUrl: string
 }) {
   try {
     const isDevelopment = process.env.NODE_ENV === 'development'
@@ -120,31 +130,28 @@ async function sendNotificationEmail({
     
     sgMail.setApiKey(apiKey)
 
-    const subjectText = {
-      'general': 'General Inquiry',
-      'partnership': 'Partnership',
-      'bootcamp': 'Training & Events',
-      'property': 'Property Inquiry',
-      'career': 'Career Opportunities',
-      'media': 'Media Services',
-      'other': 'Other'
-    }[subject] || subject
+    const experienceText = {
+      'new': 'Just starting',
+      '1-3': '1–3 years',
+      '3-5': '3–5 years',
+      '5+': '5+ years'
+    }[experience] || experience
 
     const emailContent = {
       to: toEmail,
       from: fromEmail,
-      subject: `New Contact Form Submission: ${subjectText} - ${fullName}`,
+      subject: `New Join KW Singapore Application: ${fullName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #B40101; color: white; padding: 20px; text-align: center;">
-            <h1 style="margin: 0; font-size: 24px;">KW Singapore - New Contact Form</h1>
+            <h1 style="margin: 0; font-size: 24px;">KW Singapore - New Application</h1>
           </div>
           
           <div style="padding: 30px; background-color: #f9f9f9;">
-            <h2 style="color: #333; margin-bottom: 20px;">New Contact Form Submission</h2>
+            <h2 style="color: #333; margin-bottom: 20px;">New Join Application Received</h2>
             
             <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-              <h3 style="color: #B40101; margin-top: 0;">Contact Details</h3>
+              <h3 style="color: #B40101; margin-top: 0;">Applicant Details</h3>
               
               <table style="width: 100%; border-collapse: collapse;">
                 <tr>
@@ -156,26 +163,36 @@ async function sendNotificationEmail({
                   <td style="padding: 8px 0; color: #666;"><a href="mailto:${email}" style="color: #B40101;">${email}</a></td>
                 </tr>
                 <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #333;">Phone:</td>
-                  <td style="padding: 8px 0; color: #666;">
-                    ${phone ? `<a href="tel:${phone}" style="color: #B40101;">${phone}</a>` : 'Not provided'}
-                  </td>
+                  <td style="padding: 8px 0; font-weight: bold; color: #333;">Mobile:</td>
+                  <td style="padding: 8px 0; color: #666;"><a href="tel:${mobile}" style="color: #B40101;">${mobile}</a></td>
                 </tr>
                 <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #333;">Subject:</td>
-                  <td style="padding: 8px 0; color: #666;">${subjectText}</td>
+                  <td style="padding: 8px 0; font-weight: bold; color: #333;">Experience:</td>
+                  <td style="padding: 8px 0; color: #666;">${experienceText}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #333;">Current Brokerage:</td>
+                  <td style="padding: 8px 0; color: #666;">${currentBrokerage || 'Not specified'}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #333;">LinkedIn/Portfolio:</td>
+                  <td style="padding: 8px 0; color: #666;">
+                    ${linkedinUrl ? `<a href="${linkedinUrl}" target="_blank" style="color: #B40101;">View Profile</a>` : 'Not provided'}
+                  </td>
                 </tr>
               </table>
             </div>
             
             <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-              <h3 style="color: #B40101; margin-top: 0;">Message</h3>
-              <p style="color: #666; line-height: 1.6; margin: 0; white-space: pre-wrap;">${message}</p>
+              <h3 style="color: #B40101; margin-top: 0;">Areas of Interest</h3>
+              <ul style="margin: 0; padding-left: 20px; color: #666;">
+                ${areasOfInterest.map(area => `<li style="margin-bottom: 5px;">${area}</li>`).join('')}
+              </ul>
             </div>
             
             <div style="text-align: center; margin-top: 30px;">
               <a href="mailto:${email}" style="background-color: #B40101; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block;">
-                Reply to Contact
+                Reply to Applicant
               </a>
             </div>
           </div>
@@ -227,10 +244,9 @@ async function sendNotificationEmail({
   }
 }
 
-async function sendAutoReplyEmail({ fullName, email, subject }: {
+async function sendAutoReplyEmail({ fullName, email }: {
   fullName: string
   email: string
-  subject: string
 }) {
   try {
     const isDevelopment = process.env.NODE_ENV === 'development'
@@ -255,20 +271,10 @@ async function sendAutoReplyEmail({ fullName, email, subject }: {
     
     sgMail.setApiKey(apiKey)
 
-    const subjectText = {
-      'general': 'General Inquiry',
-      'partnership': 'Partnership',
-      'bootcamp': 'Training & Events',
-      'property': 'Property Inquiry',
-      'career': 'Career Opportunities',
-      'media': 'Media Services',
-      'other': 'Other'
-    }[subject] || subject
-
     const emailContent = {
       to: email,
       from: fromEmail,
-      subject: `Your message to KW Singapore has been received`,
+      subject: `Your KW Singapore application has been received`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #B40101; color: white; padding: 20px; text-align: center;">
@@ -279,24 +285,24 @@ async function sendAutoReplyEmail({ fullName, email, subject }: {
             <h2 style="color: #333; margin-bottom: 20px;">Hello, ${fullName}</h2>
             
             <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">
-              Thank you for reaching out to KW Singapore! We've received your ${subjectText.toLowerCase()} and we're excited to help you.
+              Thank you for your interest in joining KW Singapore! We've received your application and we're excited about the possibility of working together.
             </p>
             
             <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">
-              Our team has been notified and will review your message carefully. We aim to get back to you within 24 business hours to address your inquiry.
+              Our Growth Team has been notified and will review your application carefully. We aim to get back to you within 24 business hours to discuss next steps.
             </p>
             
             <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">
-              In the meantime, if you have any urgent questions, please don't hesitate to reach out to us directly at <strong>hello@kwsingapore.com</strong> or call us at <strong>+65 8611 1703</strong>.
+              In the meantime, if you have any urgent questions, please don't hesitate to reach out to us directly at <strong>hello@kwsingapore.com</strong> or call us at <strong>+65 9123 4567</strong>.
             </p>
             
             <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">
-              We look forward to connecting with you soon!
+              We look forward to potentially welcoming you to the KW Singapore family!
             </p>
             
             <p style="color: #666; line-height: 1.6;">
               Best regards,<br>
-              <strong>The KW Singapore Team</strong>
+              <strong>The KW Singapore Growth Team</strong>
             </p>
           </div>
           
@@ -345,4 +351,4 @@ async function sendAutoReplyEmail({ fullName, email, subject }: {
     
     return { success: false, error: errorMessage }
   }
-} 
+}

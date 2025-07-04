@@ -14,10 +14,20 @@ import {
 } from "lucide-react"
 import { motion } from "framer-motion"
 import { BootcampRegistrationDialog } from "@/components/bootcamp-registration-dialog"
+import dynamic from "next/dynamic"
+
+// Dynamically import the JoinFormDialog component
+const JoinFormDialog = dynamic(() => import("@/components/join-form-dialog").then(mod => mod.JoinFormDialog), {
+  loading: () => <div className="h-0" />,
+  ssr: false
+})
 
 export default function EventsPage() {
   const [scrollY, setScrollY] = useState(0)
   const [isBootcampDialogOpen, setIsBootcampDialogOpen] = useState(false)
+  const [isJoinDialogOpen, setIsJoinDialogOpen] = useState(false)
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const totalSlides = 4
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
@@ -60,36 +70,17 @@ export default function EventsPage() {
       const threshold = 50
       
       if (Math.abs(diff) > threshold) {
-        const currentTransform = carousel.style.transform || "translateX(0%)"
-        const isAtStart = currentTransform.includes("0%")
-        
-        if (diff > 0 && !isAtStart) {
+        if (diff > 0) {
           // Swipe right - go to previous
-          carousel.style.transform = "translateX(0%)"
-          document.querySelectorAll('[id^="dot-"]').forEach((dot, i) => {
-            dot.className =
-              i === 0
-                ? "w-4 h-4 sm:w-3 sm:h-3 rounded-full bg-[#B40101] transition-all duration-300 hover:scale-110"
-                : "w-4 h-4 sm:w-3 sm:h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300 hover:scale-110"
-          })
-        } else if (diff < 0 && isAtStart) {
-          // Swipe left - go to next
-          carousel.style.transform = "translateX(-50%)"
-          document.querySelectorAll('[id^="dot-"]').forEach((dot, i) => {
-            dot.className =
-              i === 1
-                ? "w-4 h-4 sm:w-3 sm:h-3 rounded-full bg-[#B40101] transition-all duration-300 hover:scale-110"
-                : "w-4 h-4 sm:w-3 sm:h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300 hover:scale-110"
-          })
+          prevSlide()
         } else {
-          // Return to current position
-          carousel.style.transform = isAtStart ? "translateX(0%)" : "translateX(-50%)"
+          // Swipe left - go to next
+          nextSlide()
         }
       } else {
         // Return to current position
-        const currentTransform = carousel.style.transform || "translateX(0%)"
-        const isAtStart = currentTransform.includes("0%")
-        carousel.style.transform = isAtStart ? "translateX(0%)" : "translateX(-50%)"
+        const translateX = -(currentSlide * 50)
+        carousel.style.transform = `translateX(${translateX}%)`
       }
     }
 
@@ -102,7 +93,39 @@ export default function EventsPage() {
       carousel.removeEventListener("touchmove", handleTouchMove)
       carousel.removeEventListener("touchend", handleTouchEnd)
     }
-  }, [])
+  }, [currentSlide])
+
+  const handleJoinSubmit = (data: any) => {
+    console.log("Join form submitted:", data)
+    // The form submission is handled within the JoinFormDialog component
+  }
+
+  const goToSlide = (slideIndex: number) => {
+    const carousel = document.getElementById("bootcamp-carousel")
+    if (!carousel) return
+    
+    setCurrentSlide(slideIndex)
+    const translateX = -(slideIndex * 50) // Each slide is 50% width
+    carousel.style.transform = `translateX(${translateX}%)`
+    
+    // Update dot indicators
+    document.querySelectorAll('[id^="dot-"]').forEach((dot, i) => {
+      dot.className =
+        i === slideIndex
+          ? "w-3 h-3 rounded-full bg-[#B40101] transition-all duration-300"
+          : "w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"
+    })
+  }
+
+  const nextSlide = () => {
+    const nextIndex = (currentSlide + 1) % totalSlides
+    goToSlide(nextIndex)
+  }
+
+  const prevSlide = () => {
+    const prevIndex = (currentSlide - 1 + totalSlides) % totalSlides
+    goToSlide(prevIndex)
+  }
 
   return (
     <main className="min-h-screen bg-black text-white">
@@ -531,22 +554,15 @@ export default function EventsPage() {
                 style={{ transform: "translateX(0%)" }}
               >
                 {/* Card 1: Seller Presentation Mastery */}
-                <div className="w-full sm:w-full lg:w-1/2 flex-shrink-0 px-2 sm:px-4">
-                  <motion.div 
-                    className="bg-gradient-to-br from-gray-900 to-black p-4 sm:p-6 lg:p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col"
-                    initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    whileHover={{ y: -10, scale: 1.02 }}
-                  >
+                <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
+                  <div className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col">
                     <h3 className="text-2xl font-bold mb-4">
                       Training Bootcamp:
                       <span className="block text-[#B40101]">Seller Presentation Mastery</span>
                     </h3>
 
                     <div className="flex-grow">
-                      <p className="mb-6 leading-relaxed h-32 text-sm md:text-base">
+                      <p className="mb-6 leading-relaxed h-32">
                         Command every listing pitch and consistently win mandates. Discover how to craft an undeniable
                         Unique Selling Proposition (USP) as expert listers, perfect a seamless seller presentation flow,
                         and deploy tailored strategies for six distinct seller profiles.
@@ -568,33 +584,23 @@ export default function EventsPage() {
                       </div>
                     </div>
 
-                    <Button 
-                      className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md"
-                      onClick={() => setIsBootcampDialogOpen(true)}
-                    >
+                    <Button className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md">
                       Register for Interest
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
-                  </motion.div>
+                  </div>
                 </div>
 
                 {/* Card 2: High-Conversion Buyer Consultations */}
-                <div className="w-full sm:w-full lg:w-1/2 flex-shrink-0 px-2 sm:px-4">
-                  <motion.div 
-                    className="bg-gradient-to-br from-gray-900 to-black p-4 sm:p-6 lg:p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col"
-                    initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    whileHover={{ y: -10, scale: 1.02 }}
-                  >
+                <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
+                  <div className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col">
                     <h3 className="text-2xl font-bold mb-4">
                       Training Bootcamp:
                       <span className="block text-[#B40101]">High-Conversion Buyer Consultations</span>
                     </h3>
 
                     <div className="flex-grow">
-                      <p className="mb-6 leading-relaxed h-32 text-sm md:text-base">
+                      <p className="mb-6 leading-relaxed h-32">
                         Convert leads into loyal, long-term clients with supreme confidence. Dive deep into
                         understanding the six distinct buyer types, implement a proven, ultimate buyer consultation
                         flow, and master crafting a compelling buyer's journey.
@@ -616,33 +622,23 @@ export default function EventsPage() {
                       </div>
                     </div>
 
-                    <Button 
-                      className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md"
-                      onClick={() => setIsBootcampDialogOpen(true)}
-                    >
+                    <Button className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md">
                       Register for Interest
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
-                  </motion.div>
+                  </div>
                 </div>
 
                 {/* Card 3: New Launch Analysis */}
-                <div className="w-full sm:w-full lg:w-1/2 flex-shrink-0 px-2 sm:px-4">
-                  <motion.div 
-                    className="bg-gradient-to-br from-gray-900 to-black p-4 sm:p-6 lg:p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col"
-                    initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    whileHover={{ y: -10, scale: 1.02 }}
-                  >
+                <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
+                  <div className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col">
                     <h3 className="text-2xl font-bold mb-4">
                       Training Bootcamp:
                       <span className="block text-[#B40101]">New Launch Analysis</span>
                     </h3>
 
                     <div className="flex-grow">
-                      <p className="mb-6 leading-relaxed h-32 text-sm md:text-base">
+                      <p className="mb-6 leading-relaxed h-32">
                         Dominate Singapore's New Launch market with unparalleled expertise. This bootcamp equips you
                         with the strategic skills to master site and floor plan analysis, deploy powerful pricing and
                         comparison techniques, and execute data-driven closing strategies.
@@ -664,33 +660,23 @@ export default function EventsPage() {
                       </div>
                     </div>
 
-                    <Button 
-                      className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md"
-                      onClick={() => setIsBootcampDialogOpen(true)}
-                    >
+                    <Button className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md">
                       Register for Interest
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
-                  </motion.div>
+                  </div>
                 </div>
 
                 {/* Card 4: Webinar & Market Charts */}
-                <div className="w-full sm:w-full lg:w-1/2 flex-shrink-0 px-2 sm:px-4">
-                  <motion.div 
-                    className="bg-gradient-to-br from-gray-900 to-black p-4 sm:p-6 lg:p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col"
-                    initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    whileHover={{ y: -10, scale: 1.02 }}
-                  >
+                <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
+                  <div className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col">
                     <h3 className="text-2xl font-bold mb-4">
                       Training Bootcamp:
                       <span className="block text-[#B40101]">Webinar & Market Charts</span>
                     </h3>
 
                     <div className="flex-grow">
-                      <p className="mb-6 leading-relaxed h-32 text-sm md:text-base">
+                      <p className="mb-6 leading-relaxed h-32">
                         Transform complex data into clear, actionable market intelligence. This intensive series
                         empowers you to become an expert advisor, master interpreting market charts, and craft
                         compelling communication frameworks that secure client trust.
@@ -712,136 +698,49 @@ export default function EventsPage() {
                       </div>
                     </div>
 
-                    <Button 
-                      className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md"
-                      onClick={() => setIsBootcampDialogOpen(true)}
-                    >
+                    <Button className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md">
                       Register for Interest
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
-                  </motion.div>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Carousel Navigation */}
-            <div className="flex justify-center mt-8 sm:mt-12 space-x-3">
-              <button
-                className="w-4 h-4 sm:w-3 sm:h-3 rounded-full bg-[#B40101] transition-all duration-300 hover:scale-110"
-                onClick={() => {
-                  const carousel = document.getElementById("bootcamp-carousel")
-                  if (carousel) carousel.style.transform = "translateX(0%)"
-                  document.querySelectorAll('[id^="dot-"]').forEach((dot, i) => {
-                    dot.className =
-                      i === 0
-                        ? "w-4 h-4 sm:w-3 sm:h-3 rounded-full bg-[#B40101] transition-all duration-300 hover:scale-110"
-                        : "w-4 h-4 sm:w-3 sm:h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300 hover:scale-110"
-                  })
-                }}
-                id="dot-0"
-              ></button>
-              <button
-                className="w-4 h-4 sm:w-3 sm:h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300 hover:scale-110"
-                onClick={() => {
-                  const carousel = document.getElementById("bootcamp-carousel")
-                  if (carousel) carousel.style.transform = "translateX(-50%)"
-                  document.querySelectorAll('[id^="dot-"]').forEach((dot, i) => {
-                    dot.className =
-                      i === 1
-                        ? "w-4 h-4 sm:w-3 sm:h-3 rounded-full bg-[#B40101] transition-all duration-300 hover:scale-110"
-                        : "w-4 h-4 sm:w-3 sm:h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300 hover:scale-110"
-                  })
-                }}
-                id="dot-1"
-              ></button>
+            <div className="flex justify-center mt-12 space-x-2">
+              {Array.from({ length: totalSlides }, (_, i) => (
+                <button
+                  key={i}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    i === currentSlide 
+                      ? "bg-[#B40101]" 
+                      : "bg-white/30 hover:bg-white/50"
+                  }`}
+                  onClick={() => goToSlide(i)}
+                  id={`dot-${i}`}
+                ></button>
+              ))}
             </div>
 
             {/* Navigation Arrows */}
             <button
-              className="absolute -left-4 sm:-left-8 lg:-left-16 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-[#B40101]/80 text-white p-2 sm:p-3 rounded-full transition-all duration-300 block"
-              onClick={() => {
-                const carousel = document.getElementById("bootcamp-carousel")
-                const currentTransform = carousel?.style.transform || "translateX(0%)"
-                const isAtStart = currentTransform.includes("0%")
-
-                if (carousel) {
-                  if (isAtStart) {
-                    // If at start, go to the last view (wrap around)
-                    carousel.style.transform = "translateX(-50%)"
-                    document.querySelectorAll('[id^="dot-"]').forEach((dot, i) => {
-                      dot.className =
-                        i === 1
-                          ? "w-3 h-3 rounded-full bg-[#B40101] transition-all duration-300"
-                          : "w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"
-                    })
-                  } else {
-                    // Go to previous view
-                    carousel.style.transform = "translateX(0%)"
-                    document.querySelectorAll('[id^="dot-"]').forEach((dot, i) => {
-                      dot.className =
-                        i === 0
-                          ? "w-3 h-3 rounded-full bg-[#B40101] transition-all duration-300"
-                          : "w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"
-                    })
-                  }
-                }
-              }}
+              className="absolute -left-16 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-[#B40101]/80 text-white p-3 rounded-full transition-all duration-300 hidden lg:block"
+              onClick={prevSlide}
               id="prev-btn"
             >
-              <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6 rotate-180" />
+              <ChevronRight className="h-6 w-6 rotate-180" />
             </button>
             <button
-              className="absolute -right-4 sm:-right-8 lg:-right-16 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-[#B40101]/80 text-white p-2 sm:p-3 rounded-full transition-all duration-300 block"
-              onClick={() => {
-                const carousel = document.getElementById("bootcamp-carousel")
-                const currentTransform = carousel?.style.transform || "translateX(0%)"
-                const isAtStart = currentTransform.includes("0%")
-
-                if (carousel) {
-                  if (isAtStart) {
-                    // Go to next view
-                    carousel.style.transform = "translateX(-50%)"
-                    document.querySelectorAll('[id^="dot-"]').forEach((dot, i) => {
-                      dot.className =
-                        i === 1
-                          ? "w-3 h-3 rounded-full bg-[#B40101] transition-all duration-300"
-                          : "w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"
-                    })
-                  } else {
-                    // If at end, go to the first view (wrap around)
-                    carousel.style.transform = "translateX(0%)"
-                    document.querySelectorAll('[id^="dot-"]').forEach((dot, i) => {
-                      dot.className =
-                        i === 0
-                          ? "w-3 h-3 rounded-full bg-[#B40101] transition-all duration-300"
-                          : "w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"
-                    })
-                  }
-                }
-              }}
+              className="absolute -right-16 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-[#B40101]/80 text-white p-3 rounded-full transition-all duration-300 hidden lg:block"
+              onClick={nextSlide}
               id="next-btn"
             >
-              <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6" />
+              <ChevronRight className="h-6 w-6" />
             </button>
           </div>
 
-          {/* Call to Action */}
-          <motion.div 
-            className="text-center mt-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <Button
-              size="lg"
-              variant="outline"
-              className="w-full sm:w-auto border-[#B40101] text-[#B40101] hover:bg-[#B40101] hover:text-white px-4 sm:px-8 py-4 text-base sm:text-lg font-semibold transition-all duration-300 hover:scale-105 group bg-transparent border-white text-white mx-auto"
-            >
-              Get Notified About All Bootcamps
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
-          </motion.div>
+          
         </div>
       </section>
 
@@ -886,7 +785,7 @@ export default function EventsPage() {
             <Button
               size="lg"
               className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
-              onClick={() => window.location.href = '/contact'}
+              onClick={() => setIsJoinDialogOpen(true)}
             >
               Talk to Our Team
               <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
@@ -912,6 +811,13 @@ export default function EventsPage() {
           console.log('Bootcamp registration submitted:', data)
           setIsBootcampDialogOpen(false)
         }}
+      />
+
+      {/* Join Form Dialog */}
+      <JoinFormDialog
+        isOpen={isJoinDialogOpen}
+        onClose={() => setIsJoinDialogOpen(false)}
+        onSubmit={handleJoinSubmit}
       />
     </main>
   )
