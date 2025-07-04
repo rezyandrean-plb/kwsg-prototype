@@ -433,27 +433,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* FAQ Link Section */}
-      <motion.section 
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="relative py-12 sm:py-16 bg-gradient-to-b from-gray-900 to-black"
-      >
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h3 className="text-xl sm:text-2xl font-bold mb-4 text-white">Looking for Quick Answers?</h3>
-          <p className="text-white/80 mb-6 sm:mb-8 text-base sm:text-lg">
-            Check out our frequently asked questions for immediate answers to common inquiries.
-          </p>
-          <Button
-            variant="outline"
-            className="border-[#B40101] text-[#B40101] hover:bg-[#B40101] hover:text-white px-8 py-3 text-lg font-semibold transition-all duration-300 hover:scale-105 bg-transparent"
-          >
-            View Our FAQs
-          </Button>
-        </div>
-      </motion.section>
+      
     </main>
   )
 } 
