@@ -16,7 +16,7 @@ export default function CountdownTimer({ targetDate }: CountdownTimerProps) {
   })
 
   useEffect(() => {
-    const target = new Date('2025-07-05T00:00:00')
+    const target = new Date('2025-07-07T00:00:00')
 
     const calculateTimeLeft = () => {
       const now = new Date()
@@ -44,10 +44,10 @@ export default function CountdownTimer({ targetDate }: CountdownTimerProps) {
   const TimeUnit = ({ value, label }: { value: number; label: string }) => (
     <div className="relative">
       <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3 w-20 text-center transition-all duration-300">
-        <div className="text-4xl font-bold tracking-tight">
+        <div className="text-4xl font-bold tracking-tight text-white">
           {value.toString().padStart(2, '0')}
         </div>
-        <div className="text-xs uppercase tracking-wider mt-1">{label}</div>
+        <div className="text-xs text-white uppercase tracking-wider mt-1">{label}</div>
       </div>
     </div>
   )
