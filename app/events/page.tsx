@@ -14,6 +14,8 @@ import {
 } from "lucide-react"
 import { motion } from "framer-motion"
 import { BootcampRegistrationDialog } from "@/components/bootcamp-registration-dialog"
+import { SummitRegistrationDialog } from "@/components/summit-registration-dialog"
+import { Toaster } from "@/components/ui/toaster"
 import dynamic from "next/dynamic"
 
 // Dynamically import the JoinFormDialog component
@@ -26,6 +28,7 @@ export default function EventsPage() {
   const [scrollY, setScrollY] = useState(0)
   const [isBootcampDialogOpen, setIsBootcampDialogOpen] = useState(false)
   const [isJoinDialogOpen, setIsJoinDialogOpen] = useState(false)
+  const [isSummitDialogOpen, setIsSummitDialogOpen] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
   const totalSlides = 4
 
@@ -98,6 +101,12 @@ export default function EventsPage() {
   const handleJoinSubmit = (data: any) => {
     console.log("Join form submitted:", data)
     // The form submission is handled within the JoinFormDialog component
+  }
+
+  const handleSummitSubmit = (data: { email: string }) => {
+    console.log("Summit registration submitted:", data)
+    // Handle summit registration submission
+    setIsSummitDialogOpen(false)
   }
 
   const goToSlide = (slideIndex: number) => {
@@ -412,7 +421,7 @@ export default function EventsPage() {
                 <Button
                   size="lg"
                   className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
-                  onClick={() => window.open("https://explore.kwsingapore.com/mrea-masterclass-registration-1", "_blank")}
+                  onClick={() => setIsSummitDialogOpen(true)}
                 >
                   Save My Spot
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -819,6 +828,16 @@ export default function EventsPage() {
         onClose={() => setIsJoinDialogOpen(false)}
         onSubmit={handleJoinSubmit}
       />
+
+      {/* Summit Registration Dialog */}
+      <SummitRegistrationDialog
+        isOpen={isSummitDialogOpen}
+        onClose={() => setIsSummitDialogOpen(false)}
+        onSubmit={handleSummitSubmit}
+      />
+
+      {/* Toaster for notifications */}
+      <Toaster />
     </main>
   )
 } 
