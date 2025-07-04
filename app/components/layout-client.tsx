@@ -165,7 +165,7 @@ export function Footer() {
           </div>
         </div>
         <div className="container mt-8 border-t border-gray-800 pt-8 text-center text-sm text-gray-300">
-          <p>&copy; {new Date().getFullYear()} Kairos World Real Estate Inc Pte. Ltd. | All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} KW Singapore Real Estate Pte. Ltd. | All rights reserved.</p>
           <p className="mt-1">CEA License Number: L3011034Z</p>
         </div>
       </footer>
