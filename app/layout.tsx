@@ -4,16 +4,14 @@ import LayoutContent from "./components/layout-content"
 import Script from "next/script"
 import CSSLoader from "./components/css-loader"
 
-export const generateMetadata = () => {
-  return {
-    title: 'KW Singapore',
-    description: 'The Real Estate Model of the Future. Built Today.',
-    other: {
-      'Cache-Control': 'public, max-age=31536000, immutable',
-      'Surrogate-Control': 'public, max-age=31536000, immutable',
-      'Surrogate-Key': 'static',
-    },
-  }
+export const metadata = {
+  title: 'KW Singapore',
+  description: 'The Real Estate Model of the Future. Built Today.',
+  other: {
+    'Cache-Control': 'public, max-age=31536000, immutable',
+    'Surrogate-Control': 'public, max-age=31536000, immutable',
+    'Surrogate-Key': 'static',
+  },
 }
 
 export default function RootLayout({
@@ -29,7 +27,7 @@ export default function RootLayout({
         {/* Preload critical assets */}
         <link 
           rel="preload" 
-          href="/images/kwsg-logo.webp" 
+          href="/images/kw-icon.webp" 
           as="image" 
           type="image/webp" 
         />
