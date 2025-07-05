@@ -111,7 +111,7 @@ export default function ContactPage() {
   return (
     <main className="min-h-screen bg-black text-white">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center pt-20">
+      <section className="relative min-h-[70vh] md:min-h-screen flex items-center justify-center pt-20">
         <div
           className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"
           style={{
@@ -161,7 +161,7 @@ export default function ContactPage() {
       </section>
 
       {/* Main Contact Section */}
-      <section id="main-contact-section" className="relative py-32 bg-gradient-to-b from-black to-gray-900">
+      <section id="main-contact-section" className="relative py-16 bg-gradient-to-b from-black to-gray-900">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div 
             variants={staggerContainer}

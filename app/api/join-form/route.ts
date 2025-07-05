@@ -26,11 +26,26 @@ export async function POST(request: NextRequest) {
       consent 
     })
 
-    // Validate required fields
-    if (!fullName || !email || !mobile || !experience || !consent) {
-      console.log('Validation failed: Missing required fields')
+    // Validate required fields with specific error messages
+    const missingFields = []
+    
+    if (!fullName || fullName.trim() === '') {
+      missingFields.push('Full Name')
+    }
+    if (!email || email.trim() === '') {
+      missingFields.push('Email Address')
+    }
+    if (!mobile || mobile.trim() === '') {
+      missingFields.push('Mobile Number')
+    }
+    if (!consent) {
+      missingFields.push('Consent')
+    }
+    
+    if (missingFields.length > 0) {
+      console.log('Validation failed: Missing required fields:', missingFields)
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: `Missing required fields: ${missingFields.join(', ')}` },
         { status: 400 }
       )
     }

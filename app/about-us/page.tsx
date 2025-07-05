@@ -123,7 +123,7 @@ export default function AboutUsPage() {
       className="min-h-screen flex flex-col"
     >
       {/* Hero Banner */}
-      <section className="relative min-h-screen flex items-center justify-center pt-20">
+      <section className="relative min-h-[70vh] md:min-h-screen flex items-center justify-center pt-20">
         <motion.div
           className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"
           style={{
@@ -171,7 +171,7 @@ export default function AboutUsPage() {
       </section>
 
       {/* Our Story */}
-      <section id="our-story" className="relative py-32 bg-gradient-to-b from-black to-gray-900">
+      <section id="our-story" className="relative py-12 sm:py-32 bg-gradient-to-b from-black to-gray-900">
         <div className="max-w-4xl mx-auto text-center px-6">
           <motion.h2 
             className="text-3xl font-bold text-white mb-8 md:text-4xl lg:text-5xl"
@@ -211,7 +211,7 @@ export default function AboutUsPage() {
       </section>
 
       {/* Our Guiding Principles - Compact Design */}
-      <section className="relative py-24 overflow-hidden">
+      <section className="relative py-12 sm:py-24 overflow-hidden">
         <div className="absolute inset-0 bg-[url('/images/about-us/about-us-section-2.webp')] bg-cover bg-center" />
         <div className="absolute inset-0 bg-black/90" />
 
@@ -296,7 +296,7 @@ export default function AboutUsPage() {
       </section>
 
       {/* Meet the Core Team - Redesigned */}
-      <section className="relative py-32 overflow-hidden">
+      <section className="relative py-12 sm:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-black" />
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           {/* Section Header */}
@@ -384,7 +384,7 @@ export default function AboutUsPage() {
       </section>
 
       {/* Be Part of the Winning Team */}
-      <section className="relative py-32">
+      <section className="relative py-12 sm:py-32">
         <div className="absolute inset-0 bg-[url('/images/about-us/about-us-section-3.webp')] bg-cover bg-center" />
         <div className="absolute inset-0 bg-black/50" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30" />

@@ -13,7 +13,7 @@ import {
   Play,
 } from "lucide-react"
 import { motion } from "framer-motion"
-import { BootcampRegistrationDialog } from "@/components/bootcamp-registration-dialog"
+import { BootcampCarouselDialog } from "@/components/bootcamp-carousel-dialog"
 import { SummitRegistrationDialog } from "@/components/summit-registration-dialog"
 import { Toaster } from "@/components/ui/toaster"
 import dynamic from "next/dynamic"
@@ -26,7 +26,7 @@ const JoinFormDialog = dynamic(() => import("@/components/join-form-dialog").the
 
 export default function EventsPage() {
   const [scrollY, setScrollY] = useState(0)
-  const [isBootcampDialogOpen, setIsBootcampDialogOpen] = useState(false)
+  const [isBootcampCarouselDialogOpen, setIsBootcampCarouselDialogOpen] = useState(false)
   const [isJoinDialogOpen, setIsJoinDialogOpen] = useState(false)
   const [isSummitDialogOpen, setIsSummitDialogOpen] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -114,7 +114,10 @@ export default function EventsPage() {
     if (!carousel) return
     
     setCurrentSlide(slideIndex)
-    const translateX = -(slideIndex * 50) // Each slide is 50% width
+    
+    // Check if we're on mobile (screen width < 1024px) or desktop
+    const isMobile = window.innerWidth < 1024
+    const translateX = isMobile ? -(slideIndex * 100) : -(slideIndex * 50) // Mobile: 100% per slide, Desktop: 50% per slide
     carousel.style.transform = `translateX(${translateX}%)`
     
     // Update dot indicators
@@ -139,7 +142,7 @@ export default function EventsPage() {
   return (
     <main className="min-h-screen bg-black text-white">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center pt-20">
+      <section className="relative min-h-[70vh] sm:min-h-screen flex items-center justify-center pt-20 sm:pt-20">
         <div
           className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"
           style={{
@@ -189,7 +192,7 @@ export default function EventsPage() {
       </section>
 
       {/* MREA Training */}
-      <section className="relative py-32 overflow-hidden" data-section="mrea-training">
+      <section className="relative py-12 sm:py-32 overflow-hidden" data-section="mrea-training">
         <div className="absolute inset-0 bg-[url('/images/event/mega-summit.webp')] bg-cover bg-center opacity-15" />
         <div className="absolute inset-0 bg-black/70" />
         <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black" />
@@ -253,6 +256,7 @@ export default function EventsPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
                 viewport={{ once: true, margin: "-100px" }}
+                className="flex justify-center sm:justify-start"
               >
                 <Button
                   size="lg"
@@ -335,7 +339,7 @@ export default function EventsPage() {
       </section>
 
       {/* Mega Realtor Summit */}
-      <section className="relative py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+      <section className="relative py-12 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
         <div className="absolute inset-0 bg-[url('/images/event/mega-summit.webp')] bg-cover bg-center opacity-15" />
         <div className="absolute inset-0 bg-black/60" />
 
@@ -417,6 +421,7 @@ export default function EventsPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
                 viewport={{ once: true, margin: "-100px" }}
+                className="flex justify-center sm:justify-start"
               >
                 <Button
                   size="lg"
@@ -433,7 +438,7 @@ export default function EventsPage() {
       </section>
 
       {/* Explore Night */}
-      <section className="relative py-32 overflow-hidden">
+      <section className="relative py-12 sm:py-32 overflow-hidden">
         <div className="absolute inset-8 bg-[url('/images/event/melvin-explore.webp')] bg-cover bg-center rounded-lg" />
         <div className="absolute inset-8 bg-black/60 rounded-lg" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
@@ -487,7 +492,7 @@ export default function EventsPage() {
           </motion.div>
 
           <motion.div 
-            className="space-y-6"
+            className="space-y-6 flex flex-col items-center"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
@@ -519,7 +524,7 @@ export default function EventsPage() {
       </section>
 
       {/* Bootcamp Series - Redesigned */}
-      <section className="relative py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+      <section className="relative py-12 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
         <div className="absolute inset-0 bg-black/40" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6">
@@ -564,14 +569,14 @@ export default function EventsPage() {
               >
                 {/* Card 1: Seller Presentation Mastery */}
                 <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
-                  <div className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col">
+                  <div className="bg-gradient-to-br from-gray-900 to-black p-4 sm:p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col">
                     <h3 className="text-2xl font-bold mb-4">
                       Training Bootcamp:
                       <span className="block text-[#B40101]">Seller Presentation Mastery</span>
                     </h3>
 
                     <div className="flex-grow">
-                      <p className="mb-6 leading-relaxed h-32">
+                      <p className="mb-6 leading-relaxed sm:h-32">
                         Command every listing pitch and consistently win mandates. Discover how to craft an undeniable
                         Unique Selling Proposition (USP) as expert listers, perfect a seamless seller presentation flow,
                         and deploy tailored strategies for six distinct seller profiles.
@@ -593,26 +598,28 @@ export default function EventsPage() {
                       </div>
                     </div>
 
-                    <Button 
-                      className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md"
-                      onClick={() => setIsSummitDialogOpen(true)}
-                    >
-                      Register for Interest
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
+                    <div className="flex justify-center sm:justify-start mt-auto">
+                      <Button 
+                        className="w-full sm:w-auto bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 rounded-md"
+                        onClick={() => setIsBootcampCarouselDialogOpen(true)}
+                      >
+                        Register for Interest
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </div>
                   </div>
                 </div>
 
                 {/* Card 2: High-Conversion Buyer Consultations */}
                 <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
-                  <div className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col">
+                  <div className="bg-gradient-to-br from-gray-900 to-black p-4 sm:p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col">
                     <h3 className="text-2xl font-bold mb-4">
                       Training Bootcamp:
                       <span className="block text-[#B40101]">High-Conversion Buyer Consultations</span>
                     </h3>
 
                     <div className="flex-grow">
-                      <p className="mb-6 leading-relaxed h-32">
+                      <p className="mb-6 leading-relaxed sm:h-32">
                         Convert leads into loyal, long-term clients with supreme confidence. Dive deep into
                         understanding the six distinct buyer types, implement a proven, ultimate buyer consultation
                         flow, and master crafting a compelling buyer's journey.
@@ -634,26 +641,28 @@ export default function EventsPage() {
                       </div>
                     </div>
 
-                    <Button 
-                      className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md"
-                      onClick={() => setIsSummitDialogOpen(true)}
-                    >
-                      Register for Interest
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
+                    <div className="flex justify-center sm:justify-start mt-auto">
+                      <Button 
+                        className="w-full sm:w-auto bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 rounded-md"
+                        onClick={() => setIsBootcampCarouselDialogOpen(true)}
+                      >
+                        Register for Interest
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </div>
                   </div>
                 </div>
 
                 {/* Card 3: New Launch Analysis */}
                 <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
-                  <div className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col">
+                  <div className="bg-gradient-to-br from-gray-900 to-black p-4 sm:p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col">
                     <h3 className="text-2xl font-bold mb-4">
                       Training Bootcamp:
                       <span className="block text-[#B40101]">New Launch Analysis</span>
                     </h3>
 
                     <div className="flex-grow">
-                      <p className="mb-6 leading-relaxed h-32">
+                      <p className="mb-6 leading-relaxed sm:h-32">
                         Dominate Singapore's New Launch market with unparalleled expertise. This bootcamp equips you
                         with the strategic skills to master site and floor plan analysis, deploy powerful pricing and
                         comparison techniques, and execute data-driven closing strategies.
@@ -675,26 +684,28 @@ export default function EventsPage() {
                       </div>
                     </div>
 
-                    <Button 
-                      className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md"
-                      onClick={() => setIsSummitDialogOpen(true)}
-                    >
-                      Register for Interest
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
+                    <div className="flex justify-center sm:justify-start mt-auto">
+                      <Button 
+                        className="w-full sm:w-auto bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 rounded-md"
+                        onClick={() => setIsBootcampCarouselDialogOpen(true)}
+                      >
+                        Register for Interest
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </div>
                   </div>
                 </div>
 
                 {/* Card 4: Webinar & Market Charts */}
                 <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
-                  <div className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col">
+                  <div className="bg-gradient-to-br from-gray-900 to-black p-4 sm:p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col">
                     <h3 className="text-2xl font-bold mb-4">
                       Training Bootcamp:
                       <span className="block text-[#B40101]">Webinar & Market Charts</span>
                     </h3>
 
                     <div className="flex-grow">
-                      <p className="mb-6 leading-relaxed h-32">
+                      <p className="mb-6 leading-relaxed sm:h-32">
                         Transform complex data into clear, actionable market intelligence. This intensive series
                         empowers you to become an expert advisor, master interpreting market charts, and craft
                         compelling communication frameworks that secure client trust.
@@ -716,13 +727,15 @@ export default function EventsPage() {
                       </div>
                     </div>
 
-                    <Button 
-                      className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 mt-auto rounded-md"
-                      onClick={() => setIsSummitDialogOpen(true)}
-                    >
-                      Register for Interest
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
+                    <div className="flex justify-center sm:justify-start mt-auto">
+                      <Button 
+                        className="w-full sm:w-auto bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 rounded-md"
+                        onClick={() => setIsBootcampCarouselDialogOpen(true)}
+                      >
+                        Register for Interest
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -746,14 +759,14 @@ export default function EventsPage() {
 
             {/* Navigation Arrows */}
             <button
-              className="absolute -left-16 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-[#B40101]/80 text-white p-3 rounded-full transition-all duration-300 hidden lg:block"
+              className="hidden lg:block absolute -left-16 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-[#B40101]/80 text-white p-3 rounded-full transition-all duration-300"
               onClick={prevSlide}
               id="prev-btn"
             >
               <ChevronRight className="h-6 w-6 rotate-180" />
             </button>
             <button
-              className="absolute -right-16 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-[#B40101]/80 text-white p-3 rounded-full transition-all duration-300 hidden lg:block"
+              className="hidden lg:block absolute -right-16 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-[#B40101]/80 text-white p-3 rounded-full transition-all duration-300"
               onClick={nextSlide}
               id="next-btn"
             >
@@ -766,7 +779,7 @@ export default function EventsPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="relative py-32">
+      <section className="relative py-12 sm:py-32">
         <div className="absolute inset-0 bg-gradient-to-br from-[#B40101]/20 via-black/80 to-black" />
         <motion.div 
           className="relative z-10 max-w-6xl mx-auto px-6 text-center my-0"
@@ -824,13 +837,13 @@ export default function EventsPage() {
         </motion.div>
       </section>
 
-      {/* Bootcamp Registration Dialog */}
-      <BootcampRegistrationDialog
-        isOpen={isBootcampDialogOpen}
-        onClose={() => setIsBootcampDialogOpen(false)}
+      {/* Bootcamp Carousel Dialog */}
+      <BootcampCarouselDialog
+        isOpen={isBootcampCarouselDialogOpen}
+        onClose={() => setIsBootcampCarouselDialogOpen(false)}
         onSubmit={(data) => {
-          console.log('Bootcamp registration submitted:', data)
-          setIsBootcampDialogOpen(false)
+          console.log('Bootcamp carousel registration submitted:', data)
+          setIsBootcampCarouselDialogOpen(false)
         }}
       />
 

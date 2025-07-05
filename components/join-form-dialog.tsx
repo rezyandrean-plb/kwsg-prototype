@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import dynamic from "next/dynamic"
 import { useState } from "react"
 import Image from "next/image"
+import { useToast } from "@/hooks/use-toast"
 
 // Dynamically import non-critical components
 const Select = dynamic(() => import("@/components/ui/select").then(mod => mod.Select), {
@@ -47,6 +48,7 @@ const AREAS_OF_INTEREST = [
 ]
 
 export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProps) {
+  const { toast } = useToast()
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -59,25 +61,37 @@ export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProp
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitMessage, setSubmitMessage] = useState("")
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
     // Validate areas of interest
     if (formData.areasOfInterest.length === 0) {
-      setSubmitMessage("Please select at least one area of interest")
+      toast({
+        title: "Validation Error",
+        description: "Please select at least one area of interest",
+        variant: "destructive",
+      })
       return
     }
 
     // Validate consent
     if (!formData.consent) {
-      setSubmitMessage("Please consent to be contacted by KW Singapore")
+      toast({
+        title: "Validation Error",
+        description: "Please consent to be contacted by KW Singapore",
+        variant: "destructive",
+      })
       return
     }
 
     setIsSubmitting(true)
-    setSubmitMessage("")
+    
+    // Show submitting toast
+    toast({
+      title: "Submitting...",
+      description: "Please wait while we process your application",
+    })
 
     try {
       const response = await fetch('/api/join-form', {
@@ -91,7 +105,11 @@ export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProp
       const result = await response.json()
 
       if (response.ok && result.success) {
-        setSubmitMessage("Thank you! Your application has been submitted successfully. We'll be in touch within 24 hours.")
+        toast({
+          title: "Success!",
+          description: "Your application has been submitted successfully. We'll be in touch within 24 hours.",
+          variant: "default",
+        })
         
         // Reset form
         setFormData({
@@ -108,14 +126,21 @@ export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProp
         // Close the dialog after a short delay
         setTimeout(() => {
           onClose()
-          setSubmitMessage("")
-        }, 3000)
+        }, 2000)
       } else {
-        setSubmitMessage(result.error || "Something went wrong. Please try again.")
+        toast({
+          title: "Submission Error",
+          description: result.error || "Something went wrong. Please try again.",
+          variant: "destructive",
+        })
       }
     } catch (error) {
       console.error('Form submission error:', error)
-      setSubmitMessage("Network error. Please check your connection and try again.")
+      toast({
+        title: "Network Error",
+        description: "Please check your connection and try again.",
+        variant: "destructive",
+      })
     } finally {
       setIsSubmitting(false)
     }
@@ -195,16 +220,15 @@ export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProp
             <Select
               value={formData.experience}
               onValueChange={(value) => setFormData(prev => ({ ...prev, experience: value }))}
-              required
             >
-              <SelectTrigger>
+              <SelectTrigger className="w-full bg-white border border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-[#B40101] focus:ring-[#B40101]">
                 <SelectValue placeholder="Select your experience" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="new">I'm just starting</SelectItem>
-                <SelectItem value="1-3">1–3 years</SelectItem>
-                <SelectItem value="3-5">3–5 years</SelectItem>
-                <SelectItem value="5+">5+ years</SelectItem>
+              <SelectContent className="bg-white border border-gray-200 shadow-lg">
+                <SelectItem value="new" className="text-gray-900 hover:bg-gray-100">I'm just starting</SelectItem>
+                <SelectItem value="1-3" className="text-gray-900 hover:bg-gray-100">1–3 years</SelectItem>
+                <SelectItem value="3-5" className="text-gray-900 hover:bg-gray-100">3–5 years</SelectItem>
+                <SelectItem value="5+" className="text-gray-900 hover:bg-gray-100">5+ years</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -262,17 +286,6 @@ export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProp
               I consent to be contacted by KW Singapore about joining as a consultant and related opportunities. <span className="text-red-500">*</span>
             </Label>
           </div>
-
-          {/* Submit Message */}
-          {submitMessage && (
-            <div className={`p-3 rounded-md text-sm ${
-              submitMessage.includes("Thank you") 
-                ? "bg-green-100 text-green-800 border border-green-200" 
-                : "bg-red-100 text-red-800 border border-red-200"
-            }`}>
-              {submitMessage}
-            </div>
-          )}
 
           {/* Submit Button */}
           <Button 

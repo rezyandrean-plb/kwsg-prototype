@@ -154,7 +154,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col bg-white">
       {/* Hero Section - Updated with new design but keeping video background */}
-      <section className="relative min-h-screen flex items-center justify-center">
+      <section className="relative min-h-[70vh] sm:min-h-screen flex items-center justify-center">
         {/* Background elements */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -225,7 +225,7 @@ export default function Home() {
       </section>
 
       {/* The KW Advantage */}
-      <section ref={advantageSectionRef} className="relative py-16 sm:py-20 md:py-24 lg:py-32 overflow-hidden">
+      <section ref={advantageSectionRef} className="relative py-8 sm:py-20 md:py-24 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black to-gray-900" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-start">
@@ -334,7 +334,7 @@ export default function Home() {
       </section>
 
       {/* Why KW Singapore */}
-      <section className="relative py-16 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-b from-gray-900 to-black overflow-hidden">
+      <section className="relative py-8 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-b from-gray-900 to-black overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/homepage/why-kw-section.webp"
@@ -495,7 +495,7 @@ export default function Home() {
       </section> */}
 
       {/* Events Section */}
-      <section className="relative py-16 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-b from-black to-gray-900">
+      <section className="relative py-8 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-b from-black to-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 font-sans text-white">
@@ -554,7 +554,7 @@ export default function Home() {
       </section>
 
       {/* Future CTA with Countdown - Keep existing countdown component */}
-      <section className="relative py-16 sm:py-20 md:py-24 lg:py-32 overflow-hidden">
+      <section className="relative py-8 sm:py-20 md:py-24 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-[url('/placeholder.svg?height=600&width=1200')] bg-cover bg-center opacity-20" />
         <div className="absolute inset-0 bg-black/70" />
         <div className="absolute inset-0 bg-gradient-to-br from-[#B40101]/20 via-black/80 to-black" />
@@ -581,7 +581,7 @@ export default function Home() {
           <Button
             size="lg"
             className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 sm:px-12 py-4 sm:py-6 text-base sm:text-lg md:text-xl font-semibold transition-all duration-300 hover:scale-105 group"
-            onClick={() => window.open('https://explore.kwsingapore.com/mrea-masterclass-registration-1', '_blank')}
+            onClick={() => window.open('https://explore.kwsingapore.com/', '_blank')}
           >
             Start Your Future Now
             <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-1 transition-transform" />

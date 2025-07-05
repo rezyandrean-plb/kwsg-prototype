@@ -280,7 +280,7 @@ export default function JoinKW() {
       </section>
 
       {/* Why KW Singapore */}
-      <section id="why-kw-section" className="relative py-32 overflow-hidden">
+      <section id="why-kw-section" className="relative py-12 sm:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-[url('/images/luxury-singapore-properties.png')] bg-cover bg-center opacity-10" />
         <div className="absolute inset-0 bg-black/70" />
         <div className="absolute inset-0 bg-gradient-to-b from-black to-gray-900" />
@@ -396,7 +396,7 @@ export default function JoinKW() {
       </section>
 
       {/* Technology Section */}
-      <section className="relative py-32">
+      <section className="relative py-12 sm:py-32">
         <div className="absolute inset-0 bg-[url('/images/modern-office-tech.png')] bg-cover bg-center opacity-15" />
         <div className="absolute inset-0 bg-black/60" />
         <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black" />
@@ -536,7 +536,7 @@ export default function JoinKW() {
       </section>
 
       {/* Media & Branding */}
-      <section className="relative py-32 bg-gradient-to-b from-gray-900 to-black">
+      <section className="relative py-12 sm:py-32 bg-gradient-to-b from-gray-900 to-black">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div 
             className="text-center mb-20"
@@ -636,7 +636,7 @@ export default function JoinKW() {
       </section>
 
       {/* Commission Structure */}
-      <section className="relative py-32">
+      <section className="relative py-12 sm:py-32">
         <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-black" />
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -793,7 +793,7 @@ export default function JoinKW() {
       </section>
 
       {/* Financial Backing */}
-      <section className="relative py-32 bg-gradient-to-b from-black to-gray-900">
+      <section className="relative py-12 sm:py-32 bg-gradient-to-b from-black to-gray-900">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <motion.h2 
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 font-sans text-white"
@@ -868,7 +868,7 @@ export default function JoinKW() {
       </section>
 
       {/* Final CTA */}
-      <section className="relative py-32">
+      <section className="relative py-12 sm:py-32">
         <div className="absolute inset-0 bg-[url('/images/singapore-skyline-night.png')] bg-cover bg-center opacity-20" />
         <div className="absolute inset-0 bg-black/70" />
         <div className="absolute inset-0 bg-gradient-to-br from-[#B40101]/20 via-black/80 to-black" />

@@ -102,7 +102,7 @@ export default function ModelPage() {
       transition={{ duration: 0.8 }}
     >
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center">
+      <section className="relative min-h-[60vh] sm:min-h-screen flex items-center justify-center">
         <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black" />
         <div className="absolute inset-0 bg-[url('/images/model/kw-model-heros.webp')] bg-cover bg-center" />
         <div className="absolute inset-0 bg-black/60" />
@@ -148,7 +148,7 @@ export default function ModelPage() {
 
       {/* Intro Section */}
       <motion.section 
-        className="relative py-20" 
+        className="relative py-8 sm:py-20" 
         data-section="intro"
         variants={sectionVariants}
         initial="hidden"
@@ -195,7 +195,7 @@ export default function ModelPage() {
 
       {/* Model 1: MREA Rainmaker */}
       <motion.section 
-        className="relative py-32 overflow-hidden"
+        className="relative py-12 sm:py-32 overflow-hidden"
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
@@ -283,7 +283,7 @@ export default function ModelPage() {
 
       {/* Model 2: Manager Overriding */}
       <motion.section 
-        className="relative py-20 lg:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black"
+        className="relative py-12 lg:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black"
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
@@ -363,7 +363,7 @@ export default function ModelPage() {
 
       {/* Model 3: 7-Tier Growth Share */}
       <motion.section 
-        className="relative py-32 overflow-hidden"
+        className="relative py-12 sm:py-32 overflow-hidden"
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
@@ -441,7 +441,7 @@ export default function ModelPage() {
 
       {/* Final CTA Section */}
       <motion.section 
-        className="relative py-32"
+        className="relative py-12 sm:py-32"
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
