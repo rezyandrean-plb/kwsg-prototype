@@ -213,12 +213,7 @@ export default function JoinKW() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1.5 }}
         />
-        <motion.div 
-          className="absolute inset-0 bg-[url('/images/join-kw/join-kw-header.webp')] bg-cover bg-center"
-          initial={{ scale: 1.1, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 2, ease: "easeOut" }}
-        />
+        {/* Removed background image - now using black background */}
         <div className="absolute inset-0 bg-black/70" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
 

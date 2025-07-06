@@ -223,11 +223,10 @@ export default function EventsPage() {
                 transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
                 viewport={{ once: true, margin: "-100px" }}
               >
-                Unlock the blueprint to exponential business growth with our 2-Day Intensive MREA Masterclass. Learn
-                proven models, strategies, and systems from Keller Williams MREA Certified Trainers, Melvin Lim and
-                Grayce Tan to build a sustainable, wealth-building real estate business. Overcome inconsistent income
-                and lead flow, gain actionable insights, and join an exclusive community of ambitious, growth-minded
-                realtors.
+                UNLOCK THE MILLIONAIRE MINDSET:<br />
+                2-Day Intensive MREA Masterclass for Exponential Business Growth.<br />
+                2-Day Intensive Masterclass<br />
+                Learn the proven models, strategies, and systems to transform your real estate practice into a sustainable, wealth-building enterprise.
               </motion.p>
 
               <motion.div 
@@ -376,7 +375,7 @@ export default function EventsPage() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 viewport={{ once: true, margin: "-100px" }}
               >
-                <span className="text-white">MREA Summit:</span>
+                <span className="text-white">MEGA Realtor Summit:</span>
                 <span className="block text-[#B40101] italic">
                   Scale Your Real Estate Business with Industry Leaders
                 </span>
@@ -404,7 +403,7 @@ export default function EventsPage() {
               >
                 <div className="flex items-center space-x-3">
                   <Calendar className="h-5 w-5 text-[#B40101]" />
-                  <span className="text-slate-100">August 2025</span>
+                  <span className="text-slate-100">27 August 2025</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Clock className="h-5 w-5 text-[#B40101]" />
@@ -412,7 +411,7 @@ export default function EventsPage() {
                 </div>
                 <div className="flex items-center space-x-3">
                   <Users className="h-5 w-5 text-[#B40101]" />
-                  <span className="text-slate-100">Limited Seats Available</span>
+                  <span className="text-slate-100">Only 300 Seats Available</span>
                 </div>
               </motion.div>
 
@@ -457,8 +456,8 @@ export default function EventsPage() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            Explore Night
-            <span className="block text-[#B40101] italic">Webinar</span>
+            Your Real Estate Income
+            <span className="block text-[#B40101] italic">Shouldn’t Stop When You Do.</span>
           </motion.h2>
 
           <motion.p 
@@ -468,8 +467,8 @@ export default function EventsPage() {
             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            Discover the KW Difference. Get an inside look at our culture, systems, and opportunities. Perfect for
-            exploring your next career move in real estate.
+            Discover how top-producing agents are building 3 income streams
+            — without burning out or managing large teams.
           </motion.p>
 
           <motion.div 
@@ -821,7 +820,7 @@ export default function EventsPage() {
               className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
               onClick={() => setIsJoinDialogOpen(true)}
             >
-              Talk to Our Team
+              Speak to Our Team
               <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
             </Button>
             <motion.p 

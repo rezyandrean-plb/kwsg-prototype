@@ -48,57 +48,31 @@ export default function AboutUsPage() {
     // This callback can be used for additional actions if needed
   }
 
-  const mvvbpItems = [
-    {
-      icon: <Target className="h-6 w-6" />,
-      title: "Mission",
-      description: "Build careers worth having, businesses worth owning, lives worth living, experiences worth giving, and legacies worth leaving."
-    },
-    {
-      icon: <Lightbulb className="h-6 w-6" />,
-      title: "Vision",
-      description: "To be the real estate company of choice for consultants and their clients in Singapore."
-    },
-    {
-      icon: <Heart className="h-6 w-6" />,
-      title: "Values",
-      description: "God, family, then business."
-    },
-    {
-      icon: <Brain className="h-6 w-6" />,
-      title: "Beliefs",
-      description: "WI4C2TES – Win-Win, Integrity, Clients First, Commitment, Communication, Creativity, Teamwork, Trust, Equity, Success."
-    },
-    {
-      icon: <Users2 className="h-6 w-6" />,
-      title: "Perspective",
-      description: "We are a tech company that provides a real estate platform preferred by clients — thinking like top producers, consulting like coaches, and focusing on productivity, service, and profitability."
-    }
-  ]
+  
 
   const teamMembers = [
     {
       name: "Melvin Lim",
       title: "Founder & Operating Principal",
-      bio: "Melvin Lim is the Founder and Operating Principal of Keller Williams Singapore, where he stands at the forefront of a transformative movement in Singapore's real estate landscape. As the driving force behind this venture, Melvin brings a unique combination of visionary leadership, deep industry insight, and an extensive professional network, positioning Keller Williams Singapore as a new benchmark for excellence, collaboration, and innovation in real estate.\n\nWidely regarded as one of Singapore's most influential real estate leaders, Melvin is also the Co-Founder of PLB Realty and PLB Media—trailblazing companies that revolutionised the way properties are marketed and experienced. With a background in banking and finance, Melvin blends strategic financial acumen with a deep understanding of digital storytelling, data-driven marketing, and consumer psychology. Under his leadership, PropertyLimBrothers has grown into one of the most recognised and respected property content brands in the country.\n\nAt Keller Williams Singapore, Melvin leverages over a decade of entrepreneurial success to cultivate a new generation of high-performing real estate professionals, anchored by the KW values of integrity, innovation, and collaboration. His mission is to empower agents with the tools, training, and culture they need to thrive in a rapidly evolving industry.\n\nOutside of his professional achievements, Melvin is a devoted family man who enjoys quality time with his wife, their four children, and their beloved dog, Oreo.",
+      bio: "Melvin Lim is the Founder and Operating Principal of KW Singapore, where he stands at the forefront of a transformative movement in Singapore's real estate landscape. As the driving force behind this venture, Melvin brings a unique combination of visionary leadership, deep industry insight, and an extensive professional network, positioning KW Singapore as a new benchmark for excellence, collaboration, and innovation in real estate.\n\nWidely regarded as one of Singapore's most influential real estate leaders, Melvin is also the Co-Founder of PLB Realty and PLB Media—trailblazing companies that revolutionised the way properties are marketed and experienced. With a background in banking and finance, Melvin blends strategic financial acumen with a deep understanding of digital storytelling, data-driven marketing, and consumer psychology. Under his leadership, PropertyLimBrothers has grown into one of the most recognised and respected property content brands in the country.\n\nAt KW Singapore, Melvin leverages over a decade of entrepreneurial success to cultivate a new generation of high-performing real estate professionals, anchored by the KW values of integrity, innovation, and collaboration. His mission is to empower agents with the tools, training, and culture they need to thrive in a rapidly evolving industry.\n\nOutside of his professional achievements, Melvin is a devoted family man who enjoys quality time with his wife, their four children, and their beloved dog, Oreo.",
       image: "/images/about-us/core-team/melvin-lim-professional.webp",
     },
     {
       name: "Grayce Tan",
       title: "Director of Growth",
-      bio: "As Director of Growth at Keller Williams Singapore, Grayce works closely with Melvin Lim and the core team in building the company from the ground up — shaping the strategic vision, assembling the founding team, and laying the operational groundwork to scale a next-generation real estate organisation. Her focus is not just on growth, but on building a company culture defined by empowered agents, shared leadership, and a deep commitment to long-term business success.\n\nGrayce's leadership experience is shaped by her years at PropertyLimBrothers, where she serves as Vice President of Strategy. There, she established and led the Strategic Business Growth unit, while building the Business Development, Marketing, and Editorial departments. She played a pivotal role in driving cross-functional initiatives that scaled content production, strengthened salesforce enablement, and deepened media and developer partnerships — all while fostering a collaborative, performance-driven team environment.\n\nWith a deep-rooted passion for coaching, learning, and self-development, Grayce brings a multidisciplinary lens to her work. Her academic background spans Sociology, Educational Pedagogy, and Real Estate Investment — reflecting her lifelong curiosity about how people think, grow, and connect. A voracious reader and critical thinker, Grayce thrives on exploring ideas across disciplines and translating them into meaningful strategies for business and team development. This commitment to learning and service continues to define her approach as she helps lead the transformative movement in Singapore's real estate landscape through Keller Williams Singapore.",
+      bio: "As Director of Growth at KW Singapore, Grayce works closely with Melvin Lim and the core team in building the company from the ground up — shaping the strategic vision, assembling the founding team, and laying the operational groundwork to scale a next-generation real estate organisation. Her focus is not just on growth, but on building a company culture defined by empowered agents, shared leadership, and a deep commitment to long-term business success.\n\nGrayce's leadership experience is shaped by her years at PropertyLimBrothers, where she serves as Vice President of Strategy. There, she established and led the Strategic Business Growth unit, while building the Business Development, Marketing, and Editorial departments. She played a pivotal role in driving cross-functional initiatives that scaled content production, strengthened salesforce enablement, and deepened media and developer partnerships — all while fostering a collaborative, performance-driven team environment.\n\nWith a deep-rooted passion for coaching, learning, and self-development, Grayce brings a multidisciplinary lens to her work. Her academic background spans Sociology, Educational Pedagogy, and Real Estate Investment — reflecting her lifelong curiosity about how people think, grow, and connect. A voracious reader and critical thinker, Grayce thrives on exploring ideas across disciplines and translating them into meaningful strategies for business and team development. This commitment to learning and service continues to define her approach as she helps lead the transformative movement in Singapore's real estate landscape through KW Singapore.",
       image: "/images/about-us/core-team/grayce-tan-professional.webp",
     },
     {
-      name: "Carrie Teoh",
-      title: "HR & Finance Director",
-      bio: "Carrie is the systems architect behind KW Singapore's platform operations. As HR & Finance Director, she plans, builds, and scales the infrastructure that powers our consultants—from finance and compliance to HR systems, recruitment, and onboarding.\n\nWith a strong belief in fairness and structure, Carrie ensures that every process is thoughtfully designed to balance people needs with operational standards. Her approach is both strategic and grounded—bringing clarity to complexity while never losing sight of the human experience.\n\nShe's not here to manage agents. She's here to empower builders. Every consultant who joins KW Singapore touches a process she's crafted: structured, compliant, and performance-ready. From hiring playbooks to financial discipline, Carrie ensures our backend runs with the same clarity and scalability as our consultants' front-end brand engines.\n\nAnd while her systems run lean, her leadership is deeply human. Carrie leads by showing up—whether it's through onboarding sessions, supporting teammates through challenges, or even cooking for the team from the office kitchen that now proudly bears her name. For Carrie, wellness isn't a perk. It's a baseline for performance.\n\nKW Singapore doesn't run like a brokerage. It runs like a platform—and Carrie is the anchor who keeps that platform steady, fair, and future-ready.",
-      image: "/images/about-us/core-team/carrie-teoh-professional.webp",
+      name: "Joanne Ong",
+      title: "Regional Operations & Success Manager",
+      bio: "Joanne Ong joins KW Singapore as our new Operations Manager, bringing extensive experience in building high-performing, systems-driven real estate teams. As the co-founder of Jdot Property (Mega Team), she was instrumental in developing collaborative and results-oriented strategies, contributing to over RM110 million in closed gross development value.\n\nA former litigation lawyer and entrepreneur, Joanne pivoted to real estate in 2020. Inspired by the KW Mega Agent team model, she leveraged her strengths in systems, operations, and team development to build Jdot Property, earning recognition as a KW Worldwide Top 100 agent in 2024. Her expertise in operational excellence and commitment to teamwork perfectly align with KW Singapore's mission.",
+      image: "/images/about-us/core-team/joanne-ong-professional.webp",
     },
     {
       name: "Siew Min Choong",
       title: "Regional Tech Trainer & Administrator",
-      bio: "Siew Min champions the technological empowerment of Keller Williams (KW) consultants in Singapore. Leveraging her deep expertise in digital marketing and project management, she transforms KW's cutting-edge tools into decisive business advantages.\n\nA pivotal figure since joining the KW ecosystem in 2019, Siew Min has significantly influenced the evolution of KW's proprietary technology. Her critical involvement in Command Labs, a global initiative, ensured KW Command was developed and optimized to meet the real-world needs of consultants.\n\nIn her role at KW Singapore, Siew Min drives tech enablement and adoption. She empowers consultants and their teams to fully leverage KW Command, streamlining operations and scaling their businesses with unparalleled precision. With over a decade of experience, Siew Min consistently bridges the gap between innovation and execution, ensuring Keller Williams remains at the forefront by empowering its consultants with the best in real estate technology.",
+      bio: "Siew Min champions the technological empowerment of KW consultants in Singapore. Leveraging her deep expertise in digital marketing and project management, she transforms KW's cutting-edge tools into decisive business advantages.\n\nA pivotal figure since joining the KW ecosystem in 2019, Siew Min has significantly influenced the evolution of KW's proprietary technology. Her critical involvement in Command Labs, a global initiative, ensured KW Command was developed and optimized to meet the real-world needs of consultants.\n\nIn her role at KW Singapore, Siew Min drives tech enablement and adoption. She empowers consultants and their teams to fully leverage KW Command, streamlining operations and scaling their businesses with unparalleled precision. With over a decade of experience, Siew Min consistently bridges the gap between innovation and execution, ensuring KW remains at the forefront by empowering its consultants with the best in real estate technology.",
       image: "/images/about-us/core-team/siew-min-professional.webp",
     },
     {
@@ -106,12 +80,6 @@ export default function AboutUsPage() {
       title: "Market Center Administrator & Executive Assistant to OP",
       bio: "Marie serves as both Market Center Administrator and Executive Assistant to the Operating Principal—leading with precision, clarity, and operational discipline. She oversees financials, compliance, and market center systems while supporting top-level strategy and execution. With prior HR experience at PropertyLimBrothers and a track record in executive support, Marie bridges leadership and operations with focus and reliability. Her background in medical technology and business management adds depth to her role in managing both people and process.",
       image: "/images/about-us/core-team/marie-abalos-professional.webp",
-    },
-    {
-      name: "Joanne Ong",
-      title: "Regional Operations & Success Manager",
-      bio: "Joanne Ong joins KW Singapore as our new Operations Manager, bringing extensive experience in building high-performing, systems-driven real estate teams. As the co-founder of Jdot Property (Mega Team), she was instrumental in developing collaborative and results-oriented strategies, contributing to over RM110 million in closed gross development value.\n\nA former litigation lawyer and entrepreneur, Joanne pivoted to real estate in 2020. Inspired by the Keller Williams Mega Agent team model, she leveraged her strengths in systems, operations, and team development to build Jdot Property, earning recognition as a KW Worldwide Top 100 agent in 2024. Her expertise in operational excellence and commitment to teamwork perfectly align with KW Singapore's mission.",
-      image: "/images/about-us/core-team/joanne-ong-professional.webp",
     },
   ]
 
@@ -125,13 +93,11 @@ export default function AboutUsPage() {
       {/* Hero Banner */}
       <section className="relative min-h-[70vh] md:min-h-screen flex items-center justify-center pt-20">
         <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"
+          className="absolute inset-0 bg-black"
           style={{
             y: scrollYValue,
           }}
         />
-        <div className="absolute inset-0 bg-[url('/images/about-us/about-kw-hero.webp')] bg-cover bg-center" />
-        <div className="absolute inset-0 bg-black/50" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30" />
 
         <div className="relative z-10 text-center max-w-6xl mx-auto px-6">
@@ -151,8 +117,8 @@ export default function AboutUsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Keller Williams Singapore is more than a realty — it's a launchpad for real estate entrepreneurs. We are the
-            strategic intersection of performance, consulting, and innovation.
+            KW Singapore is more than a realty — it's a launchpad for real estate entrepreneurs. 
+            We are the strategic intersection of performance, consulting, and innovation.
           </motion.p>
         </div>
 
@@ -210,90 +176,7 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-      {/* Our Guiding Principles - Compact Design */}
-      <section className="relative py-12 sm:py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/images/about-us/about-us-section-2.webp')] bg-cover bg-center" />
-        <div className="absolute inset-0 bg-black/90" />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <motion.h2 
-              className="text-3xl font-bold mb-6 text-white leading-tight md:text-4xl lg:text-5xl"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              Our MVVBP
-            </motion.h2>
-            <motion.p 
-              className="text-lg text-white max-w-3xl mx-auto leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              The principles that guide our every decision and action
-            </motion.p>
-          </div>
-
-          {/* Compact Grid Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 text-left">
-            {mvvbpItems.slice(0, 3).map((item, index) => (
-              <motion.div 
-                key={index} 
-                className="group relative"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#B40101]/15 via-[#B40101]/5 to-transparent rounded-xl transform group-hover:scale-105 transition-all duration-300" />
-                <div className="relative p-6 h-full border border-[#B40101]/20 rounded-xl bg-black/40 backdrop-blur-sm group-hover:border-[#B40101]/40 transition-all duration-300">
-                  <div className="flex items-center mb-4">
-                    <div className="text-[#B40101] mr-3 group-hover:scale-110 transition-transform duration-300">
-                      {item.icon}
-                    </div>
-                    <h3 className="text-xl font-bold text-white">{item.title}</h3>
-                  </div>
-                  <p className="leading-relaxed text-sm text-slate-100">{item.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-          
-          {/* Bottom row - centered */}
-          <div className="flex justify-center mt-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left max-w-2xl">
-              {mvvbpItems.slice(3).map((item, index) => (
-                <motion.div 
-                  key={index + 3} 
-                  className="group relative"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: (index + 3) * 0.1 }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#B40101]/15 via-[#B40101]/5 to-transparent rounded-xl transform group-hover:scale-105 transition-all duration-300" />
-                  <div className="relative p-6 h-full border border-[#B40101]/20 rounded-xl bg-black/40 backdrop-blur-sm group-hover:border-[#B40101]/40 transition-all duration-300">
-                                      <div className="flex items-center mb-4">
-                    <div className="text-[#B40101] mr-3 group-hover:scale-110 transition-transform duration-300">
-                      {item.icon}
-                    </div>
-                    <h3 className="text-xl font-bold text-white">{item.title}</h3>
-                  </div>
-                    <p className="leading-relaxed text-sm text-slate-100">{item.description}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Decorative Elements */}
-          <div className="absolute top-10 left-10 w-16 h-16 border border-[#B40101]/20 rounded-full opacity-30"></div>
-          <div className="absolute bottom-10 right-10 w-24 h-24 border border-[#B40101]/10 rounded-full opacity-20"></div>
-        </div>
-      </section>
+      
 
       {/* Meet the Core Team - Redesigned */}
       <section className="relative py-12 sm:py-32 overflow-hidden">
@@ -327,11 +210,9 @@ export default function AboutUsPage() {
               {/* Featured Member Details */}
               <div className="space-y-4">
                 <div>
-                  <p className="text-sm text-[#B40101] font-semibold tracking-wider uppercase mb-2">NAME</p>
                   <h3 className="text-3xl font-bold text-white">{teamMembers[selectedMember].name}</h3>
                 </div>
                 <div>
-                  <p className="text-sm text-[#B40101] font-semibold tracking-wider uppercase mb-2">POSITION</p>
                   <h4 className="text-2xl font-semibold text-white/90">{teamMembers[selectedMember].title}</h4>
                 </div>
                 <div className="pt-4">

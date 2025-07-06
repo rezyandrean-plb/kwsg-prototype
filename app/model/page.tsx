@@ -103,9 +103,7 @@ export default function ModelPage() {
     >
       {/* Hero Section */}
       <section className="relative min-h-[60vh] sm:min-h-screen flex items-center justify-center">
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black" />
-        <div className="absolute inset-0 bg-[url('/images/model/kw-model-heros.webp')] bg-cover bg-center" />
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-black" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
 
         <motion.div 
@@ -213,7 +211,7 @@ export default function ModelPage() {
             >
               <div className="aspect-[4/3] bg-gradient-to-br from-[#B40101]/20 to-transparent rounded-lg overflow-hidden">
                 <img
-                  src="/images/model/active-income-rainmaker.webp"
+                  src="/images/model/active-income.webp"
                   alt="MREA Rainmaker - Team Leadership"
                   className="w-full h-full object-cover"
                 />
@@ -350,7 +348,7 @@ export default function ModelPage() {
             >
               <div className="aspect-[4/3] bg-gradient-to-br from-[#B40101]/20 to-transparent rounded-lg overflow-hidden">
                 <img
-                  src="/images/model/manager-coaching-income.webp"
+                  src="/images/model/manager-coaching.webp"
                   alt="Manager Overriding - Coaching Excellence"
                   className="w-full h-full object-cover"
                 />
@@ -381,7 +379,7 @@ export default function ModelPage() {
             >
               <div className="aspect-[4/3] bg-gradient-to-br from-[#B40101]/20 to-transparent rounded-lg overflow-hidden">
                 <img
-                  src="/images/model/growth-share-legacy.webp"
+                  src="/images/model/7-growth-share.webp"
                   alt="7-Tier Growth Share - Legacy Building"
                   className="w-full h-full object-cover"
                 />

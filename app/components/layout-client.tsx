@@ -18,7 +18,7 @@ const FloatingWhatsApp = dynamic(() => import("@/components/floating-whatsapp"),
 
 // Memoize the navigation items to prevent unnecessary re-renders
 const navItems = [
-  { href: "/model", label: "KW Model" },
+  { href: "/model", label: "KW Income Model" },
   { href: "/projects", label: "New Launch Condo" },
   { href: "/events", label: "Events" },
   { href: "/about-us", label: "About Us" },
@@ -54,8 +54,8 @@ export function Header() {
           <Image
             src="/images/kwsg-logo.webp"
             alt="KW Logo"
-            width={120}
-            height={60}
+            width={60}
+            height={30}
             priority
             loading="eager"
             fetchPriority="high"
@@ -93,8 +93,7 @@ export function Header() {
 const footerLinks = {
   column1: [
     { href: "/", label: "Home" },
-    { href: "/model", label: "KW Model" },
-    { href: "/editorial", label: "KW Blog" },
+    { href: "/model", label: "KW Income Model" },
     { href: "/projects", label: "New Launch Condo" }
   ],
   column2: [
@@ -120,13 +119,13 @@ export function Footer() {
             <Image
               src="/images/kwsg-logo.webp"
               alt="KW Logo"
-              width={180}
-              height={90}
+              width={60}
+              height={30}
               loading="lazy"
               className="w-auto h-auto"
             />
             <p className="text-sm text-gray-300">
-              The Real Estate Model of the Future. Built Today.
+              Realtors to Real Estate Entrepreneurs
             </p>
           </div>
           <div className="space-y-4">

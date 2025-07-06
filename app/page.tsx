@@ -209,9 +209,9 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-sm sm:text-base md:text-lg lg:text-xl mb-8 sm:mb-12 max-w-4xl mx-auto leading-relaxed text-white px-2"
           >
-            KW Singapore is the next-generation real estate model for tomorrow's consultants. We empower ambitious
-            professionals with world-class media production, AI automation, and training systems—so they can build
-            brands, grow businesses, and scale sustainably.
+            KW Singapore is the next-generation real estate model for <strong>today's</strong> consultants. <br></br> 
+            We empower ambitious professionals with <strong>media production</strong>, AI automation, and 
+            training systems—so they can build brands, grow businesses, and scale sustainably.
           </motion.p>
         </div>
 
@@ -228,7 +228,7 @@ export default function Home() {
       <section ref={advantageSectionRef} className="relative py-8 sm:py-20 md:py-24 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black to-gray-900" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-start">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
             {/* Left Column - Title and Description */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -237,16 +237,19 @@ export default function Home() {
               transition={{ duration: 0.6 }}
             >
               <div className="mb-4 sm:mb-6">
-                <span className="text-[#B40101] text-xs sm:text-sm font-semibold tracking-wider uppercase">
-                  KW SINGAPORE ADVANTAGE
-                </span>
+                <Image
+                  src="/images/kwsg-logo.webp"
+                  alt="KW Singapore Logo"
+                  width={200}
+                  height={60}
+                  className="h-12 sm:h-16 md:h-20 w-auto"
+                />
               </div>
               <h2 className="font-bold mb-6 sm:mb-8 leading-tight text-2xl sm:text-3xl md:text-4xl text-white">
-                We empower consultants to
-                <span className="block text-[#B40101] italic">dominate Singapore's</span>
-                real estate market.
+                From Realtors to
+                <span className="block text-[#B40101] italic">Real Estate Entrepreneurs</span>
               </h2>
-              <p className="text-sm sm:text-base md:text-lg leading-relaxed text-slate-100">
+              <p className="text-sm sm:text-base md:text-lg leading-relaxed text-slate-100 text-justify">
                 Our comprehensive platform combines cutting-edge technology, professional media services, and AI-powered
                 tools to give you the competitive edge needed to succeed in today's dynamic real estate landscape.
               </p>
@@ -262,25 +265,18 @@ export default function Home() {
             >
               {[
                 {
-                  title: "Dominate New Launches",
+                  title: "Up to 94% Commission Share",
                   description:
-                    "Access exclusive pre-launch opportunities and cutting-edge market intelligence to stay ahead of the competition.",
+                    "All KW Singapore realtors have the opportunity to enjoy up to 94% in commission share.",
                   icon: Rocket,
                   gradient: "from-blue-500/20 to-purple-500/20",
                 },
                 {
-                  title: "Scale with Media",
+                  title: "Build True Passive Income",
                   description:
-                    "Professional video production, photography, and content creation services to elevate your brand and listings.",
+                    "KW Singapore empowers realtors to build lifetime passive income through our Growth Share Programme.",
                   icon: Video,
                   gradient: "from-green-500/20 to-teal-500/20",
-                },
-                {
-                  title: "Win With AI",
-                  description:
-                    "Leverage artificial intelligence for lead generation, market analysis, and automated client communication systems.",
-                  icon: Bot,
-                  gradient: "from-orange-500/20 to-red-500/20",
                 },
               ].map((advantage, index) => (
                 <motion.div
@@ -358,12 +354,14 @@ export default function Home() {
             className="text-center mb-12 sm:mb-16 md:mb-20"
           >
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 font-sans text-white">
-              Why KW
-              <span className="block text-[#B40101] italic">Singapore?</span>
+              The KW Singapore
+              <span className="block text-[#B40101] italic">Advantage</span>
             </h2>
             <p className="text-sm sm:text-base md:text-lg max-w-4xl mx-auto leading-relaxed text-slate-100 px-2">
-              KW Singapore combines global expertise with cutting-edge technology and proven systems to empower
-              consultants in Singapore's competitive real estate market.
+              <p className="text-sm sm:text-base md:text-lg leading-relaxed text-slate-100">
+                Our comprehensive platform combines cutting-edge technology, professional media services, and AI-powered
+                tools to give you the competitive edge needed to succeed in today's dynamic real estate landscape.
+              </p>
             </p>
           </motion.div>
 
@@ -412,9 +410,9 @@ export default function Home() {
             {/* Second Row - 3 items */}
             {[
               {
-                title: "Look Pro. Sell More.",
+                title: "Build Your Brand.",
                 description:
-                  "KW-exclusive video shoots, reels, and scripts to grow your brand—at startup-friendly prices.",
+                  "Leverage our in-house Media-as-a-Service arm, equipped with media studios for production."
               },
               {
                 title: "Learn Fast. Earn Fast.",
@@ -499,7 +497,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 font-sans text-white">
-              Events &<span className="block text-[#B40101] italic">Workshops</span>
+              KW Training<span className="block text-[#B40101] italic">Academy</span>
             </h2>
           </div>
 
@@ -507,13 +505,13 @@ export default function Home() {
             {[
               {
                 title: "MREA Masterclass: The Blueprint for Exponential Real Estate Growth",
-                image: "/images/homepage/mrea-masterclass-event.webp",
+                image: "/images/event/melvin-explore.webp",
                 cta: "Secure Your Spot",
                 date: undefined,
                 description: undefined,
               },
               {
-                title: "MREA Summit: Scale Your Real Estate Business with Industry Leaders",
+                title: "MEGA Realtors Summit: Scale Your Real Estate Business with Industry Leaders",
                 image: "/images/homepage/mrea-summit-stage-event.webp",
                 cta: "Save My Spot",
                 date: undefined,
