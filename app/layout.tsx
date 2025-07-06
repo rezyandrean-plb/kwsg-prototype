@@ -36,6 +36,7 @@ export default function RootLayout({
           href="/images/kw-icon.webp" 
           type="image/webp" 
         />
+        <link rel="apple-touch-icon" href="/images/kw-icon.webp" />
         {/* Preconnect to external domains */}
         <link 
           rel="preconnect" 
