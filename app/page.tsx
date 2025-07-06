@@ -358,10 +358,8 @@ export default function Home() {
               <span className="block text-[#B40101] italic">Advantage</span>
             </h2>
             <p className="text-sm sm:text-base md:text-lg max-w-4xl mx-auto leading-relaxed text-slate-100 px-2">
-              <p className="text-sm sm:text-base md:text-lg leading-relaxed text-slate-100">
-                Our comprehensive platform combines cutting-edge technology, professional media services, and AI-powered
-                tools to give you the competitive edge needed to succeed in today's dynamic real estate landscape.
-              </p>
+              Our comprehensive platform combines cutting-edge technology, professional media services, and AI-powered
+              tools to give you the competitive edge needed to succeed in today's dynamic real estate landscape.
             </p>
           </motion.div>
 
@@ -551,6 +549,61 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Our Story Section */}
+      <section className="relative pt-2 md:pt-4 pb-4 md:pb-6 bg-black overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-24">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
+            {/* Left Column - Quote and Author */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6 }}
+              className="text-left self-center"
+            >
+              <blockquote className="italic text-white/80 text-lg md:text-xl lg:text-2xl leading-relaxed mb-6">
+                “The real estate model in Singapore is due for innovation and forward-looking change. We provide the tools, frameworks, platform and education for consultants to scale their business, while building true passive income through the Growth Share Programme."
+              </blockquote>
+              <div className="mb-4">
+                <span className="block font-bold text-white text-lg md:text-xl">Melvin Lim</span>
+                <span className="block text-white/70 text-base md:text-lg">Operating Principal of KW Singapore</span>
+              </div>
+            </motion.div>
+
+            {/* Right Column - Melvin Lim Image */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex justify-center md:justify-end items-start relative"
+              style={{ zIndex: 0 }}
+            >
+              <div className="relative">
+                <motion.div
+                  style={{
+                    y: scrollY ? scrollY * 0.08 : 0,
+                    position: 'relative',
+                    zIndex: 0,
+                  }}
+                >
+                  <Image
+                    src="/images/melvin-lim-section.png"
+                    alt="Melvin Lim"
+                    width={500}
+                    height={660}
+                    className="rounded-xl shadow-2xl object-cover bg-black/30"
+                    priority={false}
+                  />
+                </motion.div>
+                {/* Optional decorative element */}
+                <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-[#B40101]/20 rounded-full blur-2xl z-0"></div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Future CTA with Countdown - Keep existing countdown component */}
       <section className="relative py-8 sm:py-20 md:py-24 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-[url('/placeholder.svg?height=600&width=1200')] bg-cover bg-center opacity-20" />
@@ -563,11 +616,6 @@ export default function Home() {
             <span className="block text-[#B40101] italic">in Singapore is Here.</span>
             <span className="block">Are You Ready?</span>
           </h2>
-
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-8 sm:mb-12 max-w-4xl mx-auto leading-relaxed text-white px-2">
-            Join the pioneering real estate professionals who are embracing innovation and redefining success in
-            Singapore's dynamic property market.
-          </p>
 
           {/* Keep existing CountdownTimer component */}
           <div className="mb-8 sm:mb-12">
