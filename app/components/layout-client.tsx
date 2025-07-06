@@ -19,7 +19,6 @@ const FloatingWhatsApp = dynamic(() => import("@/components/floating-whatsapp"),
 // Memoize the navigation items to prevent unnecessary re-renders
 const navItems = [
   { href: "/model", label: "KW Income Model" },
-  { href: "/projects", label: "New Launch Condo" },
   { href: "/events", label: "Events" },
   { href: "/about-us", label: "About Us" },
   { href: "/contact", label: "Contact" },
@@ -94,10 +93,9 @@ const footerLinks = {
   column1: [
     { href: "/", label: "Home" },
     { href: "/model", label: "KW Income Model" },
-    { href: "/projects", label: "New Launch Condo" }
+    { href: "/events", label: "Events" },
   ],
   column2: [
-    { href: "/events", label: "Events" },
     { href: "/about-us", label: "About Us" },
     { href: "/contact", label: "Contact" },
     { href: "/join", label: "Join KW Singapore" }

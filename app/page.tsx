@@ -154,7 +154,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col bg-white">
       {/* Hero Section - Updated with new design but keeping video background */}
-      <section className="relative min-h-[70vh] sm:min-h-screen flex items-center justify-center">
+      <section className="relative min-h-[70vh] sm:min-h-[50vh] md:min-h-screen flex items-center justify-center">
         {/* Background elements */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -209,15 +209,15 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-sm sm:text-base md:text-lg lg:text-xl mb-8 sm:mb-12 max-w-4xl mx-auto leading-relaxed text-white px-2"
           >
-            KW Singapore is the next-generation real estate model for <strong>today's</strong> consultants. <br></br> 
-            We empower ambitious professionals with <strong>media production</strong>, AI automation, and 
+            KW Singapore is the next-generation real estate model for today's consultants. <br></br> 
+            We empower ambitious professionals with media production, AI automation, and 
             training systems—so they can build brands, grow businesses, and scale sustainably.
           </motion.p>
         </div>
 
         {/* Scroll indicator */}
         <div 
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-10 cursor-pointer hover:scale-110 transition-transform duration-300"
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-10 cursor-pointer hover:scale-110 transition-transform duration-300 sm:top-auto top-4"
           onClick={scrollToAdvantage}
         >
           <ChevronRight className="h-6 w-6 text-[#B40101] rotate-90" />
@@ -236,23 +236,10 @@ export default function Home() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6 }}
             >
-              <div className="mb-4 sm:mb-6">
-                <Image
-                  src="/images/kwsg-logo.webp"
-                  alt="KW Singapore Logo"
-                  width={200}
-                  height={60}
-                  className="h-12 sm:h-16 md:h-20 w-auto"
-                />
-              </div>
               <h2 className="font-bold mb-6 sm:mb-8 leading-tight text-2xl sm:text-3xl md:text-4xl text-white">
                 From Realtors to
                 <span className="block text-[#B40101] italic">Real Estate Entrepreneurs</span>
               </h2>
-              <p className="text-sm sm:text-base md:text-lg leading-relaxed text-slate-100 text-justify">
-                Our comprehensive platform combines cutting-edge technology, professional media services, and AI-powered
-                tools to give you the competitive edge needed to succeed in today's dynamic real estate landscape.
-              </p>
             </motion.div>
 
             {/* Right Column - Advantage Points */}
@@ -358,8 +345,8 @@ export default function Home() {
               <span className="block text-[#B40101] italic">Advantage</span>
             </h2>
             <p className="text-sm sm:text-base md:text-lg max-w-4xl mx-auto leading-relaxed text-slate-100 px-2">
-              Our comprehensive platform combines cutting-edge technology, professional media services, and AI-powered
-              tools to give you the competitive edge needed to succeed in today's dynamic real estate landscape.
+            All KW Realtors are supported by integrated services including in-house media production, 
+            AI-led client prospecting, and a modular training curriculum under KW Training Academy.
             </p>
           </motion.div>
 
@@ -552,14 +539,14 @@ export default function Home() {
       {/* Our Story Section */}
       <section className="relative pt-2 md:pt-4 pb-4 md:pb-6 bg-black overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-24">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-stretch min-h-[500px]">
             {/* Left Column - Quote and Author */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6 }}
-              className="text-left self-center"
+              className="text-left flex flex-col justify-center h-full"
             >
               <blockquote className="italic text-white/80 text-lg md:text-xl lg:text-2xl leading-relaxed mb-6">
                 “The real estate model in Singapore is due for innovation and forward-looking change. We provide the tools, frameworks, platform and education for consultants to scale their business, while building true passive income through the Growth Share Programme."
@@ -575,29 +562,19 @@ export default function Home() {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex justify-center md:justify-end items-start relative"
-              style={{ zIndex: 0 }}
+              className="flex items-center justify-center h-full"
             >
-              <div className="relative">
-                <motion.div
-                  style={{
-                    y: scrollY ? scrollY * 0.08 : 0,
-                    position: 'relative',
-                    zIndex: 0,
-                  }}
-                >
-                  <Image
-                    src="/images/melvin-lim-section.png"
-                    alt="Melvin Lim"
-                    width={500}
-                    height={660}
-                    className="rounded-xl shadow-2xl object-cover bg-black/30"
-                    priority={false}
-                  />
-                </motion.div>
+              <div className="relative flex items-center justify-center h-full w-full">
+                <Image
+                  src="/images/homepage/melvin-lim.webp"
+                  alt="Melvin Lim"
+                  width={500}
+                  height={800}
+                  className="rounded-xl shadow-2xl object-cover bg-black/30 w-full h-full max-w-none max-h-none"
+                  priority={false}
+                />
                 {/* Optional decorative element */}
-                <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-[#B40101]/20 rounded-full blur-2xl z-0"></div>
+                <div className="absolute -bottom-4 -right-4 w-20 h-20 md:w-32 md:h-32 bg-[#B40101]/20 rounded-full blur-2xl z-0"></div>
               </div>
             </motion.div>
           </div>

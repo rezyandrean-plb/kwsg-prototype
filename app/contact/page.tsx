@@ -144,8 +144,8 @@ export default function ContactPage() {
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
             className="mb-8 sm:mb-12 max-w-4xl mx-auto leading-relaxed text-base sm:text-lg md:text-xl"
           >
-            We're here to help you succeed. Reach out to our team for any inquiries, partnerships, or support. Your
-            journey to real estate excellence starts with a conversation.
+            We're here to help you succeed. Reach out to our team for any inquiries, partnerships, or support. <br></br>
+            Your journey to real estate excellence starts with a conversation.
           </motion.p>
         </motion.div>
 

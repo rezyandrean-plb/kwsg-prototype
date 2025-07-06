@@ -276,61 +276,15 @@ export default function EventsPage() {
               viewport={{ once: true, margin: "-100px" }}
             >
               <motion.div 
-                className="absolute inset-0 bg-gradient-to-br from-[#B40101]/20 to-transparent rounded-lg transform rotate-3"
-                initial={{ rotate: 0 }}
-                whileInView={{ rotate: 3 }}
-                transition={{ duration: 1, ease: "easeOut" }}
-                viewport={{ once: true, margin: "-100px" }}
-              />
-              <motion.div 
-                className="relative bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-[#666666]/30"
+                className="relative rounded-lg overflow-hidden"
                 whileHover={{ scale: 1.02, y: -5 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
-                <div className="text-center">
-                  <motion.div
-                    initial={{ scale: 0, rotate: -180 }}
-                    whileInView={{ scale: 1, rotate: 0 }}
-                    transition={{ duration: 0.6, ease: "backOut" }}
-                    viewport={{ once: true, margin: "-100px" }}
-                  >
-                    <BookOpen className="h-16 w-16 text-[#B40101] mx-auto mb-4" />
-                  </motion.div>
-                  <motion.h3 
-                    className="text-2xl font-bold mb-4"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-                    viewport={{ once: true, margin: "-100px" }}
-                  >
-                    Transform Your Business
-                  </motion.h3>
-                  <motion.p 
-                    className="text-white/80 mb-6"
-                    initial={{ opacity: 0, y: 15 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-                    viewport={{ once: true, margin: "-100px" }}
-                  >
-                    Learn proven systems and strategies from industry leaders
-                  </motion.p>
-                  <motion.div 
-                    className="grid grid-cols-2 gap-4 text-sm"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-                    viewport={{ once: true, margin: "-100px" }}
-                  >
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-[#B40101]">8+</div>
-                      <div className="text-white/60">Hours Training</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-[#B40101]">50+</div>
-                      <div className="text-white/60">Strategies</div>
-                    </div>
-                  </motion.div>
-                </div>
+                <img
+                  src="/images/event/mrea-pricing.webp"
+                  alt="MREA Pricing Information"
+                  className="w-full h-auto rounded-lg shadow-2xl"
+                />
               </motion.div>
             </motion.div>
           </div>
@@ -457,7 +411,7 @@ export default function EventsPage() {
             viewport={{ once: true, margin: "-100px" }}
           >
             Your Real Estate Income
-            <span className="block text-[#B40101] italic">Shouldn’t Stop When You Do.</span>
+            <span className="block text-[#B40101] italic">Shouldn't Stop When You Do.</span>
           </motion.h2>
 
           <motion.p 

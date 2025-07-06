@@ -117,7 +117,7 @@ export default function AboutUsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            KW Singapore is more than a realty — it's a launchpad for real estate entrepreneurs. 
+            KW Singapore is more than a realty — it's a launchpad for real estate entrepreneurs. <br></br>
             We are the strategic intersection of performance, consulting, and innovation.
           </motion.p>
         </div>
@@ -251,7 +251,9 @@ export default function AboutUsPage() {
                     <img
                       src={member.image || "/placeholder.svg"}
                       alt={member.name}
-                      className="w-full h-full object-cover transition-all duration-300 group-hover:scale-110"
+                      className={`w-full h-full object-cover transition-all duration-300 group-hover:scale-110 ${
+                        index < 3 ? 'scale-110' : ''
+                      }`}
                     />
                   </div>
                   {selectedMember !== index && (

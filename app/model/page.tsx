@@ -102,7 +102,7 @@ export default function ModelPage() {
       transition={{ duration: 0.8 }}
     >
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] sm:min-h-screen flex items-center justify-center">
+      <section className="relative min-h-[100vh] sm:min-h-screen flex items-center justify-center">
         <div className="absolute inset-0 bg-black" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
 
@@ -113,27 +113,30 @@ export default function ModelPage() {
           animate="visible"
         >
           <motion.h1 
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight"
             variants={itemVariants}
           >
-            Build Income, Grow Wealth,
-            <span className="block text-[#B40101] italic">Leave a Legacy</span>
+            Unlock Your Full Earning Potential:
+            <span className="block text-red-700">The KW Singapore 3-Income Model</span>
           </motion.h1>
 
           <motion.p 
-            className="text-xl md:text-2xl text-white/80 mb-12 max-w-4xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-white/80 mb-12 max-w-4xl mx-auto leading-relaxed"
             variants={itemVariants}
           >
-            At Keller Williams Singapore, you can access a powerful 3-income model.
+            At KW Singapore, we've redefined real estate earnings. Beyond traditional commissions, our innovative
+            3-income model is engineered to provide multiple, scalable revenue streams, empowering you to build lasting
+            wealth and true financial freedom. Discover how our system goes beyond closings to secure your long-term
+            legacy.
           </motion.p>
         </motion.div>
 
         <motion.div 
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer hover:scale-110 transition-transform"
           onClick={() => {
-            const introSection = document.querySelector('[data-section="intro"]')
-            if (introSection) {
-              introSection.scrollIntoView({ behavior: 'smooth' })
+            const model1Section = document.querySelector('[data-section="model1"]')
+            if (model1Section) {
+              model1Section.scrollIntoView({ behavior: 'smooth' })
             }
           }}
           initial={{ opacity: 0, y: 20 }}
@@ -144,56 +147,12 @@ export default function ModelPage() {
         </motion.div>
       </section>
 
-      {/* Intro Section */}
-      <motion.section 
-        className="relative py-8 sm:py-20" 
-        data-section="intro"
-        variants={sectionVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-      >
-        <motion.div 
-          className="max-w-4xl mx-auto px-6 text-center"
-          variants={containerVariants}
-        >
-          <motion.h2 
-            className="text-white/90 leading-relaxed mb-8 font-bold text-3xl sm:text-4xl md:text-5xl"
-            variants={itemVariants}
-          >
-            Unlock Your Full Earning Potential:
-            <span className="block text-red-700">The KW Singapore 3-Income Model</span>
-          </motion.h2>
-          <motion.p 
-            className="text-lg mb-8 max-w-3xl mx-auto leading-relaxed"
-            variants={itemVariants}
-          >
-            At KW Singapore, we've redefined real estate earnings. Beyond traditional commissions, our innovative
-            3-income model is engineered to provide multiple, scalable revenue streams, empowering you to build lasting
-            wealth and true financial freedom. Discover how our system goes beyond closings to secure your long-term
-            legacy.
-          </motion.p>
-          <motion.div 
-            className="relative w-48 h-1 mx-auto overflow-hidden"
-            variants={itemVariants}
-          >
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: "-100%" }}
-              transition={{ 
-                duration: 2,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-              className="absolute top-0 left-0 h-full w-full bg-gradient-to-r from-transparent via-[#B40101] to-transparent"
-            />
-          </motion.div>
-        </motion.div>
-      </motion.section>
+      
 
       {/* Model 1: MREA Rainmaker */}
       <motion.section 
         className="relative py-12 sm:py-32 overflow-hidden"
+        data-section="model1"
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
