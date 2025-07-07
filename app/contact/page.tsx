@@ -424,7 +424,7 @@ export default function ContactPage() {
                 {/* Privacy Policy */}
                 <div className="text-sm text-[#999999]">
                   By submitting this form, you agree to our{" "}
-                  <a href="#" className="text-[#B40101] hover:underline">
+                  <a href="/privacy-policy" className="text-[#B40101] hover:underline">
                     Privacy Policy
                   </a>{" "}
                   and consent to being contacted by our team.

@@ -38,6 +38,24 @@ export default function EventsPage() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // Auto-scroll to section based on URL hash
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash
+      if (hash) {
+        const element = document.querySelector(hash)
+        if (element) {
+          setTimeout(() => {
+            element.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'start' 
+            })
+          }, 100) // Small delay to ensure page is fully loaded
+        }
+      }
+    }
+  }, [])
+
   // Touch/swipe functionality for carousel
   useEffect(() => {
     const carousel = document.getElementById("bootcamp-carousel")
@@ -292,7 +310,7 @@ export default function EventsPage() {
       </section>
 
       {/* Mega Realtor Summit */}
-      <section className="relative py-12 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+      <section id="mega-summit" className="relative py-12 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
         <div className="absolute inset-0 bg-[url('/images/event/mega-summit.webp')] bg-cover bg-center opacity-15" />
         <div className="absolute inset-0 bg-black/60" />
 
@@ -421,7 +439,7 @@ export default function EventsPage() {
             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            Discover how top-producing agents are building 3 income streams
+            Discover how top-producing agents are building 3 income streams <br />
             — without burning out or managing large teams.
           </motion.p>
 
@@ -751,15 +769,15 @@ export default function EventsPage() {
             Can't Decide?
             <span className="block text-[#B40101] italic">Let's Chat.</span>
           </motion.h2>
-                      <motion.p 
+            <motion.p 
               className="max-w-4xl mx-auto leading-relaxed text-base md:text-xl mb-9"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
               viewport={{ once: true, margin: "-100px" }}
             >
-              Not sure which event is right for you? Our team is here to help you choose the perfect opportunity to
-              accelerate your real estate career.
+              Not sure which event is right for you? <br />
+              Our team is here to help you choose the perfect opportunity to accelerate your real estate career.
             </motion.p>
 
           <motion.div 

@@ -2134,7 +2134,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                       'Send Message'
                     )}
                   </button>
-                  <div className="text-xs text-gray-500 text-center mt-2">By submitting this form, you agree to our <a href="#" className="underline text-red-400">Privacy Policy</a></div>
+                  <div className="text-xs text-gray-500 text-center mt-2">By submitting this form, you agree to our <a href="/privacy-policy" className="underline text-red-400">Privacy Policy</a></div>
                 </form>
               )}
             </div>

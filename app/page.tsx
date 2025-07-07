@@ -5,7 +5,7 @@ import type React from "react"
 import { useState, useEffect, useRef, useCallback } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Search, ArrowRight, Calendar, ChevronRight, Rocket, Video, Bot } from "lucide-react"
+import { Search, ArrowRight, Calendar, ChevronRight, Rocket, BarChart3, Bot } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import CountdownTimer from "@/components/countdown-timer"
@@ -216,15 +216,18 @@ export default function Home() {
         </div>
 
         {/* Scroll indicator */}
-        <div 
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-10 cursor-pointer hover:scale-110 transition-transform duration-300 sm:top-auto top-4"
+        <motion.button 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.2 }}
           onClick={scrollToAdvantage}
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hover:scale-110 transition-transform cursor-pointer"
         >
           <ChevronRight className="h-6 w-6 text-[#B40101] rotate-90" />
-        </div>
+        </motion.button>
       </section>
 
-      {/* The KW Advantage */}
+      {/* From Realtors */}
       <section ref={advantageSectionRef} className="relative py-8 sm:py-20 md:py-24 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black to-gray-900" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
@@ -262,7 +265,7 @@ export default function Home() {
                   title: "Build True Passive Income",
                   description:
                     "KW Singapore empowers realtors to build lifetime passive income through our Growth Share Programme.",
-                  icon: Video,
+                  icon: BarChart3,
                   gradient: "from-green-500/20 to-teal-500/20",
                 },
               ].map((advantage, index) => (
@@ -316,7 +319,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why KW Singapore */}
+      {/* KW Singapore Advantage */}
       <section className="relative py-8 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-b from-gray-900 to-black overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
@@ -355,14 +358,14 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mb-12 sm:mb-16"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mb-4 sm:mb-16"
           >
             {/* First Row - 4 items */}
             {[
               {
                 title: "Built by the World. Powered for You.",
                 description:
-                  "60+ countries. 200,000 consultants. KW Singapore unlocks global referrals and instant credibility with developers.",
+                  "55+ regions. 189,000+ consultants. KW Singapore unlocks global referrals and instant credibility with developers.",
               },
               {
                 title: "Your All-In-One Control Panel.",
@@ -381,11 +384,11 @@ export default function Home() {
             ].map((point, index) => (
               <div key={index} className="group relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-[#B40101]/10 to-transparent rounded-lg transform group-hover:scale-105 transition-all duration-300" />
-                <div className="relative p-6 h-full border border-[#666666]/20 rounded-lg bg-black/40 backdrop-blur-sm group-hover:border-[#B40101]/40 transition-all duration-300">
-                  <h3 className="text-xl font-bold mb-4 text-white group-hover:text-[#B40101] transition-colors duration-300">
+                <div className="relative p-4 sm:p-6 h-full border border-[#666666]/20 rounded-lg bg-black/40 backdrop-blur-sm group-hover:border-[#B40101]/40 transition-all duration-300">
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold mb-3 sm:mb-4 text-white group-hover:text-[#B40101] transition-colors duration-300">
                     {point.title}
                   </h3>
-                  <p className="text-white/80 leading-relaxed text-sm">{point.description}</p>
+                  <p className="text-xs sm:text-sm text-white/80 leading-relaxed">{point.description}</p>
                 </div>
               </div>
             ))}
@@ -433,49 +436,44 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Media Service */}
-      {/* <section className="relative py-16 sm:py-20 md:py-24 lg:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/images/homepage/media-service-banner.webp')] bg-cover bg-center opacity-10" />
-        <div className="absolute inset-0 bg-black/85" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black" />
+      {/* Leadership Quote Section */}
+      <section className="relative py-16 sm:py-24 md:py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800" />
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-20 left-10 w-32 h-32 bg-[#B40101]/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 right-10 w-48 h-48 bg-[#B40101]/10 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-white/5 rounded-full blur-2xl" />
+        </div>
+        <div className="absolute inset-0 bg-[url('/images/pattern.png')] opacity-5" />
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left Column - Quote */}
+            <div>
+              <blockquote className="text-2xl md:text-3xl font-light leading-relaxed text-white mb-8 italic">
+                "The real estate model in Singapore is due for innovation and forward-looking change. We provide the
+                tools, frameworks, platform and education for consultants to scale their business, while building true
+                passive income through the Growth Share Programme."
+              </blockquote>
+              <div className="border-l-4 border-[#B40101] pl-6">
+                <p className="text-xl font-semibold text-white mb-2">Melvin Lim</p>
+                <p className="text-white/80">Operating Principal of KW Singapore</p>
+              </div>
+            </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-8 sm:mb-12"
-          >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 font-sans text-white">
-              Professional Media
-              <span className="block text-[#B40101] italic">Support</span>
-            </h2>
-            <p className="text-sm sm:text-base md:text-lg max-w-4xl mx-auto leading-relaxed text-white px-2">
-              Elevate your brand with our in-house media production services, designed to create stunning visuals and
-              compelling narratives for your listings and personal branding.
-            </p>
-          </motion.div>
-
-          <div className="relative">
-            <img
-              src="/images/homepage/media-service-banner.webp"
-              alt="Media Service Banner"
-              className="w-full h-64 sm:h-80 md:h-96 object-cover rounded-lg"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent rounded-lg" />
-            <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2">
-              <Button
-                size="lg"
-                className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-lg font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
-              >
-                Explore Media Services
-                <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
+            {/* Right Column - Photo */}
+            <div className="relative">
+              <div className="relative overflow-hidden rounded-lg">
+                <img
+                  src="/images/homepage/melvin-lim.webp"
+                  alt="Melvin Lim - Operating Principal of KW Singapore"
+                  className="w-full h-[600px] object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+              </div>
             </div>
           </div>
         </div>
-      </section> */}
+      </section>
 
       {/* Events Section */}
       <section className="relative py-8 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-b from-black to-gray-900">
@@ -498,7 +496,7 @@ export default function Home() {
               {
                 title: "MEGA Realtors Summit: Scale Your Real Estate Business with Industry Leaders",
                 image: "/images/homepage/mrea-summit-stage-event.webp",
-                cta: "Save My Spot",
+                cta: "View More",
                 date: undefined,
                 description: undefined,
               },
@@ -514,9 +512,20 @@ export default function Home() {
                   <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 text-white">{event.title}</h3>
                   {event.date && <p className="text-[#B40101] font-medium mb-2 sm:mb-3 text-sm">{event.date}</p>}
                   {event.description && <p className="text-white/90 mb-3 sm:mb-4 leading-relaxed text-sm">{event.description}</p>}
-                  {/* <Button className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-4 sm:px-6 py-2 text-sm sm:text-base font-semibold transition-all duration-300 hover:scale-105">
-                    {event.cta}
-                  </Button> */}
+                  <div className="text-center sm:text-left">
+                    <Button 
+                      className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-4 sm:px-6 py-2 text-sm sm:text-base font-semibold transition-all duration-300 hover:scale-105"
+                      onClick={() => {
+                        if (index === 0) {
+                          window.open('https://explore.kwsingapore.com/mrea-masterclass-registration-1', '_blank')
+                        } else if (index === 1) {
+                          window.location.href = '/events#mega-summit'
+                        }
+                      }}
+                    >
+                      {event.cta}
+                    </Button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -532,51 +541,6 @@ export default function Home() {
               View All Events
               <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Our Story Section */}
-      <section className="relative pt-2 md:pt-4 pb-4 md:pb-6 bg-black overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-24">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-stretch min-h-[500px]">
-            {/* Left Column - Quote and Author */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6 }}
-              className="text-left flex flex-col justify-center h-full"
-            >
-              <blockquote className="italic text-white/80 text-lg md:text-xl lg:text-2xl leading-relaxed mb-6">
-                “The real estate model in Singapore is due for innovation and forward-looking change. We provide the tools, frameworks, platform and education for consultants to scale their business, while building true passive income through the Growth Share Programme."
-              </blockquote>
-              <div className="mb-4">
-                <span className="block font-bold text-white text-lg md:text-xl">Melvin Lim</span>
-                <span className="block text-white/70 text-base md:text-lg">Operating Principal of KW Singapore</span>
-              </div>
-            </motion.div>
-
-            {/* Right Column - Melvin Lim Image */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="flex items-center justify-center h-full"
-            >
-              <div className="relative flex items-center justify-center h-full w-full">
-                <Image
-                  src="/images/homepage/melvin-lim.webp"
-                  alt="Melvin Lim"
-                  width={500}
-                  height={800}
-                  className="rounded-xl shadow-2xl object-cover bg-black/30 w-full h-full max-w-none max-h-none"
-                  priority={false}
-                />
-                {/* Optional decorative element */}
-                <div className="absolute -bottom-4 -right-4 w-20 h-20 md:w-32 md:h-32 bg-[#B40101]/20 rounded-full blur-2xl z-0"></div>
-              </div>
-            </motion.div>
           </div>
         </div>
       </section>

@@ -321,7 +321,7 @@ export default function JoinKW() {
                 icon: <Globe className="h-12 w-12" />,
                 title: "Global Network Strength",
                 description:
-                  "145,000+ consultants across 50+ countries. International referrals and cross-border investment opportunities.",
+                  "189,000+ consultants across 55+ regions. International referrals and cross-border investment opportunities.",
                 stat: "145K+",
               },
               {

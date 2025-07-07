@@ -4,16 +4,6 @@ import LayoutContent from "./components/layout-content"
 import Script from "next/script"
 import CSSLoader from "./components/css-loader"
 
-export const metadata = {
-  title: 'KW Singapore',
-  description: 'The Real Estate Model of the Future. Built Today.',
-  other: {
-    'Cache-Control': 'public, max-age=31536000, immutable',
-    'Surrogate-Control': 'public, max-age=31536000, immutable',
-    'Surrogate-Key': 'static',
-  },
-}
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -22,8 +12,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <title>KW Singapore</title>
+        <meta name="description" content="The Real Estate Model of the Future. Built Today." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#ffffff" />
+        <meta name="google-site-verification" content="Ma0XSMZeGat4Ymt0ueGTbr5GYOhTe--SEo1gL46mhks" />
+        {/* Cache-control (nonstandard, mostly for headers but included here as requested) */}
+        <meta httpEquiv="Cache-Control" content="public, max-age=31536000, immutable" />
+        <meta httpEquiv="Surrogate-Control" content="public, max-age=31536000, immutable" />
+        <meta name="Surrogate-Key" content="static" />
         {/* Preload critical assets */}
         <link 
           rel="preload" 
@@ -31,18 +28,15 @@ export default function RootLayout({
           as="image" 
           type="image/webp" 
         />
-        <link 
-          rel="icon" 
-          href="/images/kw-icon.webp" 
-          type="image/webp" 
-        />
-        <link rel="apple-touch-icon" href="/images/kw-icon.webp" />
         {/* Preconnect to external domains */}
         <link 
           rel="preconnect" 
           href="https://static.hotjar.com" 
           crossOrigin="anonymous" 
         />
+        <link rel="icon" href="/images/kw-icon.ico" sizes="any" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/kw-icon.ico" />
+        <link rel="apple-touch-icon" href="/images/kw-icon.ico" />
         {/* Performance hints */}
         <meta httpEquiv="x-dns-prefetch-control" content="on" />
         <link rel="dns-prefetch" href="https://static.hotjar.com" />
