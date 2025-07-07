@@ -10,7 +10,7 @@ export default function PrivacyPolicyPage() {
       <section className="relative min-h-[40vh] flex items-center justify-center pt-20">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800" />
 
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
+        <div className="relative z-10 text-center max-w-6xl mx-auto px-6">
           <h1 className="text-4xl font-bold mb-6 leading-tight md:text-5xl text-white">Privacy Policy</h1>
           <p className="text-lg text-gray-300 leading-relaxed">Data Protection Notice</p>
         </div>
@@ -18,7 +18,7 @@ export default function PrivacyPolicyPage() {
 
       {/* Breadcrumb */}
       <section className="py-6 border-b border-gray-700 bg-black">
-        <div className="max-w-4xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-6">
           <Button
             variant="ghost"
             className="text-gray-400 hover:text-white p-0 h-auto font-normal"
@@ -32,8 +32,8 @@ export default function PrivacyPolicyPage() {
 
       {/* Company Information */}
       <section className="py-8 bg-gray-900">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="text-center text-gray-300 text-sm leading-relaxed">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center text-gray-300 text-base leading-relaxed">
             <p className="mb-2">
               <strong>KW SINGAPORE REAL ESTATE PTE. LTD.</strong> with Estate Agent License Number{" "}
               <strong>L3011034Z</strong>, is the licensed and independently owned and operated franchisee of KW
@@ -46,7 +46,7 @@ export default function PrivacyPolicyPage() {
 
       {/* Privacy Policy Content */}
       <section className="py-16 bg-black">
-        <div className="max-w-4xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-6">
           <div className="prose prose-invert max-w-none">
             {/* Purpose */}
             <div className="mb-12">
@@ -310,23 +310,6 @@ export default function PrivacyPolicyPage() {
 
               <p className="text-gray-300 leading-relaxed font-semibold">Effective date: 01/07/2025</p>
             </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 mt-12 pt-8 border-t border-gray-700">
-            <Button
-              className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 py-3 font-semibold transition-all duration-300 hover:scale-105"
-              onClick={() => (window.location.href = "/contact")}
-            >
-              Contact Us
-            </Button>
-            <Button
-              variant="outline"
-              className="border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white px-8 py-3 font-semibold transition-all duration-300 bg-transparent"
-              onClick={() => window.history.back()}
-            >
-              Go Back
-            </Button>
           </div>
         </div>
       </section>
