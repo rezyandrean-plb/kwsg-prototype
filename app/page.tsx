@@ -437,7 +437,7 @@ export default function Home() {
       </section>
 
       {/* Leadership Quote Section */}
-      <section className="relative py-16 sm:py-24 md:py-32 overflow-hidden">
+      <section className="relative py-8 sm:py-8 md:py-12 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800" />
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-10 w-32 h-32 bg-[#B40101]/20 rounded-full blur-3xl" />
@@ -446,7 +446,7 @@ export default function Home() {
         </div>
         <div className="absolute inset-0 bg-[url('/images/pattern.png')] opacity-5" />
         <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
             {/* Left Column - Quote */}
             <div>
               <blockquote className="text-2xl md:text-3xl font-light leading-relaxed text-white mb-8 italic">
