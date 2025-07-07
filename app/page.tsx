@@ -464,9 +464,9 @@ export default function Home() {
             <div className="relative">
               <div className="relative overflow-hidden rounded-lg">
                 <img
-                  src="/images/homepage/melvin-lim.webp"
+                  src="/images/homepage/melvin-lim-section.webp"
                   alt="Melvin Lim - Operating Principal of KW Singapore"
-                  className="w-full h-[600px] object-cover"
+                  className="w-full h-[600px] object-cover object-top"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
               </div>
