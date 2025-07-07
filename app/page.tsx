@@ -154,7 +154,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col bg-white">
       {/* Hero Section - Updated with new design but keeping video background */}
-      <section className="relative min-h-[70vh] sm:min-h-[50vh] md:min-h-screen flex items-center justify-center">
+      <section className="relative min-h-[70vh] sm:min-h-[50vh] md:min-h-screen flex items-center justify-center pt-20 sm:pt-20">
         {/* Background elements */}
         <motion.div
           initial={{ opacity: 0 }}
