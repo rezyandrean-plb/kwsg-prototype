@@ -667,7 +667,7 @@ export default function JoinKW() {
                     Commission Retention
                   </motion.h3>
                   <motion.p 
-                    className="text-[#999999] mb-8"
+                    className="text-[#999999] mb-8 text-sm sm:text-base leading-tight sm:leading-normal max-w-xs sm:max-w-none mx-auto"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}

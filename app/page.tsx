@@ -461,7 +461,7 @@ export default function Home() {
             </div>
 
             {/* Right Column - Photo */}
-            <div className="relative">
+            <div className="relative md:mb-0 -mb-8">
               <div className="relative overflow-hidden rounded-lg">
                 <img
                   src="/images/homepage/melvin-lim-section.webp"

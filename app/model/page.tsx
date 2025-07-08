@@ -257,7 +257,7 @@ export default function ModelPage() {
               variants={slideInLeft}
             >
               <motion.h2 
-                className="font-bold mb-6 leading-tight text-xl sm:text-2xl md:text-3xl lg:text-4xl"
+                className="font-bold mb-6 leading-tight text-2xl sm:text-2xl md:text-3xl lg:text-4xl"
                 variants={itemVariants}
               >
                 Manager Overriding:
@@ -265,7 +265,7 @@ export default function ModelPage() {
               </motion.h2>
 
               <motion.p 
-                className="mb-6 lg:mb-8 leading-relaxed text-base lg:text-lg"
+                className="mb-6 lg:mb-8 leading-relaxed text-lg lg:text-lg"
                 variants={itemVariants}
               >
                 As a KW leader, unlock additional revenue by coaching and mentoring your growing team. Your success in
@@ -280,22 +280,22 @@ export default function ModelPage() {
                 <motion.div className="flex items-start space-x-4" variants={itemVariants}>
                   <div className="w-2 h-2 bg-[#B40101] rounded-full mt-3 flex-shrink-0" />
                   <div>
-                    <h4 className="text-base lg:text-lg font-semibold mb-1">Monetize your leadership</h4>
-                    <p className="text-white/70 text-sm lg:text-base">Turn your expertise into sustainable income</p>
+                    <h4 className="text-lg lg:text-lg font-semibold mb-1">Monetize your leadership</h4>
+                    <p className="text-white/70 lg:text-base">Turn your expertise into sustainable income</p>
                   </div>
                 </motion.div>
                 <motion.div className="flex items-start space-x-4" variants={itemVariants}>
                   <div className="w-2 h-2 bg-[#B40101] rounded-full mt-3 flex-shrink-0" />
                   <div>
-                    <h4 className="text-base lg:text-lg font-semibold mb-1">Scalable earnings through guidance</h4>
-                    <p className="text-white/70 text-sm lg:text-base">Income grows as your mentees succeed</p>
+                    <h4 className="text-lg lg:text-lg font-semibold mb-1">Scalable earnings through guidance</h4>
+                    <p className="text-white/70 lg:text-base">Income grows as your mentees succeed</p>
                   </div>
                 </motion.div>
                 <motion.div className="flex items-start space-x-4" variants={itemVariants}>
                   <div className="w-2 h-2 bg-[#B40101] rounded-full mt-3 flex-shrink-0" />
                   <div>
-                    <h4 className="text-base lg:text-lg font-semibold mb-1">Support others while growing your business</h4>
-                    <p className="text-white/70 text-sm lg:text-base">Create win-win relationships that compound</p>
+                    <h4 className="text-lg lg:text-lg font-semibold mb-1">Support others while growing your business</h4>
+                    <p className="text-white/70 lg:text-base">Create win-win relationships that compound</p>
                   </div>
                 </motion.div>
               </motion.div>

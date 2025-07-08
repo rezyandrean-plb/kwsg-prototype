@@ -410,8 +410,8 @@ export default function EventsPage() {
 
       {/* Explore Night */}
       <section className="relative py-12 sm:py-32 overflow-hidden">
-        <div className="absolute inset-8 bg-[url('/images/event/melvin-explore.webp')] bg-cover bg-center rounded-lg" />
-        <div className="absolute inset-8 bg-black/60 rounded-lg" />
+        <div className="absolute inset-0 bg-[url('/images/event/melvin-explore.webp')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-black/60" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
 
         <motion.div 
