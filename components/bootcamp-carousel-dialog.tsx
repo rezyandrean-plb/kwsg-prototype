@@ -70,7 +70,7 @@ export function BootcampCarouselDialog({ isOpen, onClose, onSubmit }: BootcampCa
         <DialogHeader>
           <div className="flex justify-center mb-4">
             <Image
-              src="/images/kwsingapore-logo.webp"
+              src="/images/kw-logo-dialog.webp"
               alt="KW Singapore"
               width={200}
               height={60}
