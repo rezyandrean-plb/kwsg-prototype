@@ -203,7 +203,7 @@ export default function JoinKW() {
       className="min-h-screen bg-black text-white"
     >
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center pt-20">
+      <section className="relative  min-h-[100vh] sm:min-h-screen flex items-center justify-center pt-20">
         <motion.div
           className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"
           style={{
@@ -217,7 +217,7 @@ export default function JoinKW() {
         <div className="absolute inset-0 bg-black/70" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
 
-        <div className="relative z-10 text-center max-w-6xl mx-auto px-6">
+        <div className="relative z-10 text-center max-w-6xl mx-auto px-6 mt-[-60px] sm:mt-0">
           <div className="mb-8"></div>
 
           <motion.h1 
@@ -260,7 +260,7 @@ export default function JoinKW() {
         </div>
 
         <motion.div 
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer hover:scale-110 transition-transform"
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer hover:scale-110 transition-transform flex items-center justify-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.2 }}
@@ -534,7 +534,7 @@ export default function JoinKW() {
       <section className="relative py-12 sm:py-32 bg-gradient-to-b from-gray-900 to-black">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div 
-            className="text-center mb-20"
+            className="text-center mb-10 sm:mb-20"
             variants={sectionVariants}
             initial="initial"
             whileInView="whileInView"
@@ -649,7 +649,7 @@ export default function JoinKW() {
               >
                 <div className="text-center">
                   <motion.div 
-                    className="text-6xl font-bold text-[#B40101] mb-4"
+                    className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#B40101] mb-4"
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true, margin: "-100px" }}
@@ -820,8 +820,8 @@ export default function JoinKW() {
           >
             {[
               { stat: "$10M", title: "Seed Valuation", desc: "Angel-funded seed round demonstrating investor confidence" },
-              { stat: "50+", title: "Countries", desc: "Global network presence with proven track record" },
-              { stat: "145K+", title: "Salespersons", desc: "Salespersons in our global network" }
+              { stat: "55+", title: "Regions", desc: "Global network presence with proven track record" },
+              { stat: "189K+", title: "Salespersons", desc: "Salespersons in our global network" }
             ].map((item, index) => (
               <motion.div 
                 key={index} 
@@ -830,7 +830,7 @@ export default function JoinKW() {
                 whileHover="hover"
               >
                 <motion.div 
-                  className="text-5xl font-bold text-[#B40101] mb-4"
+                  className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#B40101] mb-4"
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true, margin: "-100px" }}

@@ -653,7 +653,7 @@ export default function NewLaunchDirectory() {
                   <DialogHeader>
                     <div className="flex justify-center mb-4">
                       <Image
-                        src="/images/kwsg-logo.webp"
+                        src="/images/kwsingapore-logo.webp"
                         alt="KW Singapore"
                         width={200}
                         height={60}

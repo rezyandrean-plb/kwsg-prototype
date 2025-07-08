@@ -82,7 +82,7 @@ export default function AdminLayout({
       <div className="flex h-16 items-center px-4 border-b">
         <Link href="/" className="flex items-center space-x-2">
           <Image
-            src="/images/kwsg-logo.webp"
+            src="/images/kwsingapore-logo.webp"
             alt="KWSG Logo"
             width={32}
             height={32}
@@ -159,7 +159,7 @@ export default function AdminLayout({
           <div className="flex h-16 items-center justify-between px-4 border-b">
             <Link href="/" className="flex items-center space-x-2">
               <Image
-                src="/kwsg-logo.webp"
+                src="/kwsingapore-logo.webp"
                 alt="KWSG Logo"
                 width={32}
                 height={32}

@@ -173,7 +173,7 @@ export default function ContactPage() {
             {/* Left Side - Contact Information */}
             <motion.div 
               variants={fadeInUp}
-              className="space-y-12"
+              className="space-y-12 order-2 lg:order-1"
             >
               <div>
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-white">Reach Us Directly</h2>
@@ -294,7 +294,7 @@ export default function ContactPage() {
             {/* Right Side - Contact Form */}
             <motion.div 
               variants={fadeInUp}
-              className="bg-gradient-to-br from-gray-900/50 to-black/50 p-6 sm:p-8 rounded-2xl border border-[#666666]/20 backdrop-blur-sm"
+              className="bg-gradient-to-br from-gray-900/50 to-black/50 p-6 sm:p-8 rounded-2xl border border-[#666666]/20 backdrop-blur-sm order-1 lg:order-2"
             >
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-white">Send Us a Message</h2>
 

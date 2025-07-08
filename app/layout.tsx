@@ -34,9 +34,9 @@ export default function RootLayout({
           href="https://static.hotjar.com" 
           crossOrigin="anonymous" 
         />
-        <link rel="icon" href="/images/kw-icon.ico" sizes="any" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/images/kw-icon.ico" />
-        <link rel="apple-touch-icon" href="/images/kw-icon.ico" />
+        <link rel="icon" href="/images/kwsingapore-icon.ico" sizes="any" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/kwsingapore-icon.ico" />
+        <link rel="apple-touch-icon" href="/images/kwsingapore-icon.ico" />
         {/* Performance hints */}
         <meta httpEquiv="x-dns-prefetch-control" content="on" />
         <link rel="dns-prefetch" href="https://static.hotjar.com" />
@@ -45,10 +45,32 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               /* Critical CSS for initial render */
-              body { margin: 0; }
+              html, body { 
+                margin: 0; 
+                overflow-x: hidden;
+                width: 100%;
+                max-width: 100%;
+                position: relative;
+              }
               .flex { display: flex; }
               .min-h-screen { min-height: 100vh; }
               .flex-col { flex-direction: column; }
+              
+              /* Mobile-specific fixes */
+              @media (max-width: 768px) {
+                html, body {
+                  overflow-x: hidden;
+                  position: relative;
+                }
+                .container {
+                  max-width: 100vw;
+                  overflow-x: hidden;
+                }
+                * {
+                  max-width: 100%;
+                  box-sizing: border-box;
+                }
+              }
             `,
           }}
         />

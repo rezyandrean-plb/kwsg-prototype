@@ -51,7 +51,7 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center space-x-2">
           <Image
-            src="/images/kwsg-logo.webp"
+            src="/images/kwsingapore-logo.webp"
             alt="KW Logo"
             width={60}
             height={30}
@@ -115,7 +115,7 @@ export function Footer() {
         <div className="container grid gap-8 md:grid-cols-3">
           <div className="space-y-4">
             <Image
-              src="/images/kwsg-logo.webp"
+              src="/images/kwsingapore-logo.webp"
               alt="KW Logo"
               width={60}
               height={30}

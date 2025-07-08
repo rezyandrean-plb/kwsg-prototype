@@ -161,10 +161,10 @@ export function JoinFormDialog({ isOpen, onClose, onSubmit }: JoinFormDialogProp
         <DialogHeader>
           <div className="flex justify-center mb-4">
             <Image
-              src="/images/kwsg-logo.webp"
+              src="/images/kw-logo-dialog.webp"
               alt="KW Singapore"
-              width={200}
-              height={60}
+              width={320}
+              height={120}
               className="h-12 w-auto"
               priority
               fetchPriority="high"
