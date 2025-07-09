@@ -558,13 +558,6 @@ export default function Home() {
             <span className="block">Are You Ready?</span>
           </h2>
 
-          {/* Keep existing CountdownTimer component */}
-          <div className="mb-8 sm:mb-12">
-            <div className="flex justify-center items-center space-x-4 sm:space-x-8 mb-4">
-              <CountdownTimer targetDate="2025-07-05T00:00:00" />
-            </div>
-          </div>
-
           <Button
             size="lg"
             className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 sm:px-12 py-4 sm:py-6 text-base sm:text-lg md:text-xl font-semibold transition-all duration-300 hover:scale-105 group"
