@@ -9,7 +9,17 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    domains: ['images.unsplash.com', 'source.unsplash.com'],
+    domains: [
+      'images.unsplash.com', 
+      'source.unsplash.com',
+      'techcoffeehouse.com',
+      'img.tepcdn.com',
+      'edgeprop.sg',
+      'itbrief.asia',
+      'sg.news.yahoo.com',
+      'www.mingtiandi.com',
+      'mingtiandi.com'
+    ],
     remotePatterns: [
       {
         protocol: 'https',
@@ -20,6 +30,48 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'source.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'techcoffeehouse.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'img.tepcdn.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'edgeprop.sg',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'itbrief.asia',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'sg.news.yahoo.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.mingtiandi.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'mingtiandi.com',
         port: '',
         pathname: '/**',
       }
