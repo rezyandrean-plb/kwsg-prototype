@@ -20,6 +20,7 @@ const FloatingWhatsApp = dynamic(() => import("@/components/floating-whatsapp"),
 const navItems = [
   { href: "/model", label: "KW Income Model" },
   { href: "/events", label: "Events" },
+  { href: "/news", label: "News" },
   { href: "/about-us", label: "About Us" },
   { href: "/contact", label: "Contact" },
   { href: "/join", label: "Join KW Singapore" }
@@ -94,6 +95,7 @@ const footerLinks = {
     { href: "/", label: "Home" },
     { href: "/model", label: "KW Income Model" },
     { href: "/events", label: "Events" },
+    { href: "/news", label: "News" },
   ],
   column2: [
     { href: "/about-us", label: "About Us" },
