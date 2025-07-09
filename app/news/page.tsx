@@ -86,7 +86,7 @@ export default function NewsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           >
-            KW Singapore in the <span className="text-[#B40101]">News</span>
+            KW Singapore in the <span className=" text-[#B40101] italic"> <br></br> News</span>
           </motion.h1>
           <motion.p 
             className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed max-w-2xl mx-auto px-4 sm:px-0"
