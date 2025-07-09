@@ -427,7 +427,7 @@ export default function Home() {
             <Button
               size="lg"
               className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 sm:px-12 py-4 sm:py-6 text-base sm:text-lg md:text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
-              onClick={() => setIsJoinFormOpen(true)}
+              onClick={() => window.open("https://explore.kwsingapore.com/booking-page", "_blank")}
             >
               Revolutionise Your Business
               <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-1 transition-transform" />

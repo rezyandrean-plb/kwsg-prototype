@@ -435,7 +435,7 @@ export default function ModelPage() {
               <Button
                 size="lg"
                 className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
-                onClick={() => setIsDialogOpen(true)}
+                onClick={() => window.open("https://explore.kwsingapore.com/booking-page", "_blank")}
               >
                 Speak to Our Team
                 <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
