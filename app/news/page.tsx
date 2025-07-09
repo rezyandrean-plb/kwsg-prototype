@@ -15,8 +15,8 @@ const allArticles = [
         "Keller Williams, one of the world's largest real estate franchises, continues its expansion in Singapore with innovative technology and training programs for local property consultants.",
       imageUrl: "https://img.tepcdn.com/img-style/simplecrop_article/88304311.jpeg",
       link: "https://www.edgeprop.sg/property-news/real-estate-franchise-keller-williams-expands-singapore",
-      date: "2024-12-20",
-      year: "2024",
+      date: "2025-07-07",
+      year: "2025",
       source: "EdgeProp"
     },
   ]
