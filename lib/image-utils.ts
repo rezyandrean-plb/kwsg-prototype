@@ -25,7 +25,8 @@ export function getSafeImageUrl(url: string, fallback?: string): string {
     'itbrief.asia',
     'sg.news.yahoo.com',
     'www.mingtiandi.com',
-    'mingtiandi.com'
+    'mingtiandi.com',
+    'kwsingapore.s3.ap-southeast-1.amazonaws.com'
   ];
 
   try {
@@ -72,7 +73,8 @@ export function isAllowedImageUrl(url: string): boolean {
     'itbrief.asia',
     'sg.news.yahoo.com',
     'www.mingtiandi.com',
-    'mingtiandi.com'
+    'mingtiandi.com',
+    'kwsingapore.s3.ap-southeast-1.amazonaws.com'
   ];
 
   try {
@@ -97,6 +99,7 @@ export function getAllImageDomains(): string[] {
     'itbrief.asia',
     'sg.news.yahoo.com',
     'www.mingtiandi.com',
-    'mingtiandi.com'
+    'mingtiandi.com',
+    'kwsingapore.s3.ap-southeast-1.amazonaws.com'
   ];
 } 
