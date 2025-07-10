@@ -20,15 +20,20 @@ export default function PressPage() {
     new Date(article.date).getFullYear().toString()
   ))].sort((a, b) => parseInt(b) - parseInt(a));
 
-  // Filter articles based on search term and year
-  const filteredArticles = allArticles.filter((article: Article) => {
-    const matchesSearch = article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         article.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         article.source.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesYear = selectedYear === "all" || 
-                       new Date(article.date).getFullYear().toString() === selectedYear;
-    return matchesSearch && matchesYear;
-  });
+  // Filter articles based on search term and year, then sort by newest first
+  const filteredArticles = allArticles
+    .filter((article: Article) => {
+      const matchesSearch = article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           article.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           article.source.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesYear = selectedYear === "all" || 
+                         new Date(article.date).getFullYear().toString() === selectedYear;
+      return matchesSearch && matchesYear;
+    })
+    .sort((a: Article, b: Article) => {
+      // Sort by date, newest first
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    });
 
   // Calculate pagination
   const totalPages = Math.ceil(filteredArticles.length / articlesPerPage);
