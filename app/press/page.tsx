@@ -126,7 +126,7 @@ export default function PressPage() {
 
                 {/* Year Filter */}
                 <div className="flex items-center gap-2 w-full">
-                  <span className="text-white/80 text-sm whitespace-nowrap">Filter by year:</span>
+                  <span className="text-white font-medium text-sm whitespace-nowrap">Filter by year:</span>
                   <Select value={selectedYear} onValueChange={setSelectedYear}>
                     <SelectTrigger className="flex-1 bg-white/10 border-[#666666]/30 text-white focus:border-[#B40101] focus:ring-[#B40101]">
                       <SelectValue />
@@ -173,7 +173,7 @@ export default function PressPage() {
 
             {/* Year Filter */}
             <div className="flex items-center gap-2 ml-auto">
-              <span className="text-white/80 text-sm whitespace-nowrap">Filter by year:</span>
+              <span className="text-white font-medium text-sm whitespace-nowrap">Filter by year:</span>
               <Select value={selectedYear} onValueChange={setSelectedYear}>
                 <SelectTrigger className="w-32 bg-white/10 border-[#666666]/30 text-white focus:border-[#B40101] focus:ring-[#B40101]">
                   <SelectValue />
