@@ -227,6 +227,103 @@ export default function Home() {
         </motion.button>
       </section>
 
+      {/* Press News Section */}
+      <section className="relative py-8 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-b from-black to-gray-900 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-black to-gray-900" />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 font-sans text-white">
+              Featured in
+              <span className="block text-[#B40101] italic">Press</span>
+            </h2>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="max-w-4xl mx-auto"
+          >
+            {/* Desktop Layout - Side by side */}
+            <div className="hidden md:block group relative overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40 backdrop-blur-sm hover:border-[#B40101]/40 transition-all duration-300 hover:scale-105">
+              <div className="grid md:grid-cols-2 gap-0">
+                {/* Image */}
+                <div className="relative h-64 md:h-full">
+                  <img
+                    src="https://img.tepcdn.com/img-style/simplecrop_article/88304311.jpeg"
+                    alt="Real Estate Franchise Keller Williams Expands in Singapore"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                </div>
+                
+                {/* Content */}
+                <div className="p-6 sm:p-8 flex flex-col justify-center">
+                  <div className="mb-4">
+                    <span className="inline-block bg-[#B40101] text-white text-xs font-semibold px-3 py-1 rounded-full">
+                      EdgeProp
+                    </span>
+                    <span className="text-white/60 text-sm ml-3">July 7, 2025</span>
+                  </div>
+                  
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-white group-hover:text-[#B40101] transition-colors duration-300">
+                    Real Estate Franchise Keller Williams Expands in Singapore
+                  </h3>
+                  
+                  <p className="text-white/80 leading-relaxed mb-6 text-sm sm:text-base">
+                    Keller Williams, one of the world's largest real estate franchises, continues its expansion in Singapore with innovative technology and training programs for local property consultants.
+                  </p>
+                  
+                  <div className="mt-auto">
+                    <Button
+                      className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-6 py-3 text-sm sm:text-base font-semibold transition-all duration-300 hover:scale-105 group"
+                      onClick={() => window.location.href = '/press/real-estate-franchise-keller-williams-expands-in-singapore'}
+                    >
+                      Read Full Article
+                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile Layout - Card style like press page */}
+            <div className="md:hidden group relative overflow-hidden rounded-lg border border-[#666666]/20 transition-all duration-300 hover:scale-105 hover:border-[#B40101]/40 cursor-pointer"
+                 onClick={() => window.location.href = '/press/real-estate-franchise-keller-williams-expands-in-singapore'}>
+              <img
+                src="https://img.tepcdn.com/img-style/simplecrop_article/88304311.jpeg"
+                alt="Real Estate Franchise Keller Williams Expands in Singapore"
+                className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="bg-[#B40101] text-white text-xs px-2 py-1 rounded-full">
+                    July 7, 2025
+                  </div>
+                  <div className="bg-white/70 text-black text-xs px-2 py-1 rounded-full backdrop-blur-sm">
+                    EdgeProp
+                  </div>
+                </div>
+                <h3 className="text-lg font-bold mb-2 text-white line-clamp-2">
+                  Real Estate Franchise Keller Williams Expands in Singapore
+                </h3>
+                <div className="text-white/80 text-xs mt-2">
+                  Click to read full article
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* From Realtors */}
       <section ref={advantageSectionRef} className="relative py-8 sm:py-20 md:py-24 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black to-gray-900" />
@@ -464,7 +561,7 @@ export default function Home() {
             <div className="relative md:mb-0 -mb-8">
               <div className="relative overflow-hidden rounded-lg">
                 <img
-                  src="/images/homepage/melvin-lim-section.webp"
+                  src="/images/homepage/melvin-section.webp"
                   alt="Melvin Lim - Operating Principal of KW Singapore"
                   className="w-full h-[600px] object-cover object-top"
                 />
