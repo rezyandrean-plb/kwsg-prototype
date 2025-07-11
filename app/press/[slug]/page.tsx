@@ -78,10 +78,13 @@ export default function PressArticlePage() {
         }
       )
 
-      // Observe headings after content is rendered
+      // Observe headings after content is rendered and add IDs to them
       setTimeout(() => {
-        const renderedHeadings = Array.from(document.querySelectorAll('h2[id^="heading-"], h3[id^="heading-"]'))
-        renderedHeadings.forEach((heading) => observer.observe(heading))
+        const renderedHeadings = Array.from(document.querySelectorAll('.prose h2, .prose h3'))
+        renderedHeadings.forEach((heading, index) => {
+          heading.id = `heading-${index}`
+          observer.observe(heading)
+        })
       }, 100)
 
       return () => observer.disconnect()
@@ -91,7 +94,7 @@ export default function PressArticlePage() {
   const scrollToHeading = (id: string) => {
     const element = document.getElementById(id)
     if (element) {
-      const offset = 100 // Adjust this value based on your header height
+      const offset = 120 // Adjust this value based on your header height
       const elementPosition = element.getBoundingClientRect().top
       const offsetPosition = elementPosition + window.pageYOffset - offset
 
@@ -99,6 +102,9 @@ export default function PressArticlePage() {
         top: offsetPosition,
         behavior: "smooth"
       })
+      
+      // Update active heading immediately
+      setActiveId(id)
     }
   }
 
@@ -224,17 +230,17 @@ export default function PressArticlePage() {
             </div>
 
             {/* Source Link */}
-            <div className="mt-8 p-6 bg-gray-900 rounded-xl">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                <div className="mb-4 md:mb-0">
-                  <h3 className="text-xl font-bold mb-2">Original Source</h3>
-                  <p className="text-gray-400">This article was originally published on {article.source}</p>
+            <div className="mt-8 p-6 bg-gray-900/50 border border-gray-800 rounded-xl backdrop-blur-sm">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold mb-2 text-white">Original Source</h3>
+                  <p className="text-gray-400 text-sm">This article was originally published on {article.source}</p>
                 </div>
                 <a
                   href={article.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-[#B40101] hover:text-[#B40101]/80 font-semibold"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold rounded-lg transition-all duration-200 hover:scale-105 whitespace-nowrap"
                 >
                   Read on {article.source}
                   <ExternalLink className="w-4 h-4" />
