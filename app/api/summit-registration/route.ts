@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Thank you for registering your interest in the MREA Summit! We have sent you a confirmation email and will keep you updated with event details.',
+      message: 'Thank you for registering your interest in the Mega Realtor Summit! We have sent you a confirmation email and will keep you updated with event details.',
       notificationSent: notificationResult.success,
       confirmationSent: confirmationResult.success
     })
@@ -86,11 +86,11 @@ async function sendNotificationEmail({ email }: { email: string }) {
     const emailContent = {
       to: toEmail,
       from: fromEmail,
-      subject: `New MREA Summit Registration: ${email}`,
+      subject: `New Mega Realtor Summit Registration: ${email}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #B40101; color: white; padding: 20px; text-align: center;">
-            <h1 style="margin: 0; font-size: 24px;">KW Singapore - MREA Summit Registration</h1>
+            <h1 style="margin: 0; font-size: 24px;">KW Singapore - Mega Realtor Summit Registration</h1>
           </div>
           
           <div style="padding: 30px; background-color: #f9f9f9;">
@@ -106,7 +106,7 @@ async function sendNotificationEmail({ email }: { email: string }) {
                 </tr>
                 <tr>
                   <td style="padding: 8px 0; font-weight: bold; color: #333;">Event:</td>
-                  <td style="padding: 8px 0; color: #666;">MREA Summit</td>
+                  <td style="padding: 8px 0; color: #666;">Mega Realtor Summit</td>
                 </tr>
                 <tr>
                   <td style="padding: 8px 0; font-weight: bold; color: #333;">Registration Date:</td>
@@ -124,7 +124,7 @@ async function sendNotificationEmail({ email }: { email: string }) {
             <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
               <h3 style="color: #B40101; margin-top: 0;">Next Steps</h3>
               <p style="color: #666; line-height: 1.6; margin: 0;">
-                This person has registered their interest in the MREA Summit. Please follow up with them regarding event details, 
+                This person has registered their interest in the Mega Realtor Summit. Please follow up with them regarding event details, 
                 registration process, and any additional information they may need.
               </p>
             </div>
@@ -180,12 +180,12 @@ async function sendConfirmationEmail({ email }: { email: string }) {
     const emailContent = {
       to: email,
       from: fromEmail,
-      subject: 'MREA Summit Registration Confirmation - KW Singapore',
+      subject: 'Mega Realtor Summit Registration Confirmation - KW Singapore',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #B40101; color: white; padding: 20px; text-align: center;">
             <h1 style="margin: 0; font-size: 24px;">KW Singapore</h1>
-            <p style="margin: 5px 0 0 0; font-size: 16px;">MREA Summit Registration</p>
+            <p style="margin: 5px 0 0 0; font-size: 16px;">Mega Realtor Summit Registration</p>
           </div>
           
           <div style="padding: 30px; background-color: #f9f9f9;">
@@ -193,7 +193,7 @@ async function sendConfirmationEmail({ email }: { email: string }) {
             
             <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
               <p style="color: #666; line-height: 1.6; margin: 0;">
-                Thank you for registering your interest in the MREA Summit! We're excited to have you join us for this 
+                Thank you for registering your interest in the Mega Realtor Summit! We're excited to have you join us for this 
                 exclusive event designed for growth-minded real estate professionals.
               </p>
             </div>
@@ -213,7 +213,7 @@ async function sendConfirmationEmail({ email }: { email: string }) {
               <ul style="color: #666; line-height: 1.6; margin: 0; padding-left: 20px;">
                 <li>Learn from industry leaders J.P. Lewis, Melvin Lim, Grayce Tan, and Rayne Chua</li>
                 <li>Master cutting-edge strategies in lead generation and team scaling</li>
-                <li>Gain essential MREA insights for millionaire-level success</li>
+                <li>Gain essential Mega Realtor Summit insights for millionaire-level success</li>
                 <li>Network with ambitious, growth-minded realtors</li>
               </ul>
             </div>
