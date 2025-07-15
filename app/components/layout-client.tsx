@@ -29,6 +29,7 @@ const navItems = [
 export function Header() {
   const pathname = usePathname()
   const isAdminPage = pathname?.startsWith('/admin')
+  const isSpringleafPage = pathname?.startsWith('/springleaf-residence')
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
@@ -40,7 +41,7 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  if (isAdminPage) return null
+  if (isAdminPage || isSpringleafPage) return null
 
   return (
     <header 
@@ -107,8 +108,9 @@ const footerLinks = {
 export function Footer() {
   const pathname = usePathname()
   const isAdminPage = pathname?.startsWith('/admin')
+  const isSpringleafPage = pathname?.startsWith('/springleaf-residence')
 
-  if (isAdminPage) return null
+  if (isAdminPage || isSpringleafPage) return null
 
   return (
     <>
