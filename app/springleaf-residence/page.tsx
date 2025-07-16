@@ -133,6 +133,22 @@ const customStyles = `
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+  
+  .cta-buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .cta-buttons-container.justify-center {
+    justify-content: center;
+  }
+  
+  @media (min-width: 640px) {
+    .cta-buttons-container {
+      flex-direction: row;
+    }
+  }
 `;
 
 export default function SpringleafResidenceLanding() {
@@ -263,10 +279,18 @@ export default function SpringleafResidenceLanding() {
       </header>
 
       {/* Clean Modern Hero Section */}
-      <section
-        className="relative min-h-screen bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/images/springleaf-residence/springleaf-hero.jpg')" }}
-      >
+      <section className="relative min-h-screen flex items-center justify-center">
+        {/* Background elements */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/springleaf-residence/springleaf-hero.jpg"
+            alt="Springleaf Residence Hero"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/70" />
+        </div>
 
         <div className="relative container mx-auto px-4 min-h-screen flex items-center">
           <div className={`max-w-4xl transition-all duration-1000 delay-300 ${
@@ -295,27 +319,27 @@ export default function SpringleafResidenceLanding() {
                 isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
               }`}>
                 <div className="w-12 h-px bg-primary-red mr-4"></div>
-                <p className="text-lg text-red-200 font-medium">District 19, Serangoon</p>
+                <p className="text-lg text-red-200 font-medium">District26, Upper Thomson</p>
               </div>
 
               <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-8 transition-all duration-700 delay-1500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
-                Where Modern Living Meets Tranquil Nature in Singapore's Most Coveted District
+                A Rare Mega Development at Springleaf MRT
               </p>
             </div>
 
             {/* Clean CTA Buttons */}
-            <div className={`flex flex-col sm:flex-row gap-4 mb-12 transition-all duration-700 delay-1700 ${
+            <div className={`cta-buttons-container mb-12 transition-all duration-700 delay-1700 ${
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
-              <Button className={`bg-primary-red hover:bg-red-700 text-white px-8 py-4 text-lg font-medium rounded-lg transition-all duration-300 hover:scale-105 hover-lift ${isVisible ? 'animate-pulse-glow' : ''}`}>
+              <Button className={`bg-primary-red hover:bg-red-700 text-white px-8 py-4 text-lg font-medium rounded-lg transition-all duration-300 hover:scale-105 hover-lift flex-shrink-0 ${isVisible ? 'animate-pulse-glow' : ''}`}>
                 <Calendar className="w-5 h-5 mr-2" />
                 Book Showflat Visit
               </Button>
               <Button
                 variant="outline"
-                className="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8 py-4 text-lg font-medium rounded-lg transition-all duration-300 hover:scale-105 bg-transparent hover-lift"
+                className="border-2 border-white text-gray-900 hover:bg-transparent hover:text-white px-8 py-4 text-lg font-medium rounded-lg transition-all duration-300 hover:scale-105 bg-white hover-lift flex-shrink-0"
               >
                 <Download className="w-5 h-5 mr-2" />
                 Download Brochure
@@ -561,7 +585,7 @@ export default function SpringleafResidenceLanding() {
               <p className="text-lg mb-6 opacity-90">
                 Get the latest floor plans, pricing, and availability information
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="cta-buttons-container justify-center">
                 <Button className="bg-white text-primary-red hover:bg-gray-100 px-8 py-3 hover:scale-105 transition-all duration-300">Book Showflat Visit</Button>
                 <Button
                   variant="outline"
@@ -842,7 +866,7 @@ export default function SpringleafResidenceLanding() {
                 Book your personal showflat visit and discover why Springleaf Residence is the perfect choice for luxury
                 living
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="cta-buttons-container justify-center">
                 <Button className="bg-white text-primary-red hover:bg-gray-100 px-8 py-3 text-lg hover:scale-105 transition-all duration-300">
                   <Calendar className="w-5 h-5 mr-2" />
                   Book Showflat Visit
