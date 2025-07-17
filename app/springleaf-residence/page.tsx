@@ -33,6 +33,10 @@ import {
   Youtube,
   Linkedin,
   MoveDownIcon,
+  Mountain,
+  Clock,
+  Trees,
+  Boxes,
 } from "lucide-react"
 import { Calendar as CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
@@ -186,28 +190,34 @@ export default function SpringleafResidenceLanding() {
 
   const floorPlans = {
     "1br": {
-      name: "1 Bedroom",
-      size: "506 - 592 sqft",
-      price: "From $1.2M",
+      name: "1-Bedroom",
+      size: "592 sqft",
+      price: "~$1.15M",
       image: "/images/springleaf-residence/site-plan.jpg",
     },
     "2br": {
-      name: "2 Bedroom",
-      size: "721 - 883 sqft",
-      price: "From $1.6M",
+      name: "2-Bedroom (2 bath)",
+      size: "646 sqft",
+      price: "~$1.26M",
       image: "/placeholder.svg?height=400&width=600&text=2BR+Floor+Plan",
     },
     "3br": {
-      name: "3 Bedroom",
-      size: "1,001 - 1,249 sqft",
-      price: "From $2.1M",
+      name: "3-Bedroom",
+      size: "786–1,248 sqft",
+      price: "~$1.53M - $2.18M",
       image: "/placeholder.svg?height=400&width=600&text=3BR+Floor+Plan",
     },
     "4br": {
-      name: "4 Bedroom",
-      size: "1,399 - 1,647 sqft",
-      price: "From $2.8M",
+      name: "4-Bedroom",
+      size: "1,227 sqft",
+      price: "~$2.39M",
       image: "/placeholder.svg?height=400&width=600&text=4BR+Floor+Plan",
+    },
+    "5br": {
+      name: "5-Bedroom",
+      size: "1,453 sqft",
+      price: "~$2.83M",
+      image: "/placeholder.svg?height=400&width=600&text=5BR+Floor+Plan",
     },
   }
 
@@ -229,13 +239,13 @@ export default function SpringleafResidenceLanding() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#1c1c1d] text-white">
       <style dangerouslySetInnerHTML={{ __html: customStyles }} />
       {/* Sticky CTA for Mobile */}
-      <div className={`fixed bottom-0 left-0 right-0 bg-primary-red text-white p-4 z-50 md:hidden transition-all duration-700 ${
+      <div className={`fixed bottom-0 left-0 right-0 bg-[#ce001f] text-white p-4 z-50 md:hidden transition-all duration-700 ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
       }`}>
-        <Button className="w-full bg-white text-primary-red hover:bg-gray-100 font-semibold">
+        <Button className="w-full bg-white text-[#ce001f] hover:bg-gray-100 font-semibold">
           Book Your Showflat Visit
         </Button>
       </div>
@@ -243,7 +253,7 @@ export default function SpringleafResidenceLanding() {
       {/* Header */}
       <header 
         className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500 ${
-          isScrolled ? 'bg-black shadow-sm border-b border-gray-700' : 'bg-transparent'
+          isScrolled ? 'bg-[#1c1c1d] shadow-sm border-b border-gray-700' : 'bg-transparent'
         } ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}
       >
         <div className="container mx-auto px-4 py-3">
@@ -260,19 +270,19 @@ export default function SpringleafResidenceLanding() {
               </div>
             </div>
             <nav className="hidden md:flex items-center space-x-6">
-              <a href="#project-info" className="text-white hover:text-primary-red transition-colors duration-300">
+              <a href="#project-info" className="text-white hover:text-[#ce001f] transition-colors duration-300">
                 Project Info
               </a>
-              <a href="#floor-plans" className="text-white hover:text-primary-red transition-colors duration-300">
+              <a href="#floor-plans" className="text-white hover:text-[#ce001f] transition-colors duration-300">
                 Floor Plans
               </a>
-              <a href="#gallery" className="text-white hover:text-primary-red transition-colors duration-300">
+              <a href="#gallery" className="text-white hover:text-[#ce001f] transition-colors duration-300">
                 Explore
               </a>
-              <a href="#editorial" className="text-white hover:text-primary-red transition-colors duration-300">
+              <a href="#editorial" className="text-white hover:text-[#ce001f] transition-colors duration-300">
                 Editorial
               </a>
-              <Button className="bg-primary-red hover:bg-red-700 transition-colors duration-300">Book Showflat Visit</Button>
+              <Button className="bg-[#ce001f] hover:bg-[#b3001a] transition-colors duration-300">Book Showflat Visit</Button>
             </nav>
           </div>
         </div>
@@ -300,8 +310,8 @@ export default function SpringleafResidenceLanding() {
             <div className={`mb-8 transition-all duration-700 delay-500 ${
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
-              <Badge className="bg-green-600 text-white px-4 py-2 text-sm font-medium rounded-full animate-pulse">
-                NEW LAUNCH 2024
+              <Badge className="bg-[#ce001f] text-white px-4 py-2 text-sm font-medium rounded-full animate-pulse">
+                OFFICIAL PREVIEW LAUNCH 2025
               </Badge>
             </div>
 
@@ -318,14 +328,14 @@ export default function SpringleafResidenceLanding() {
               <div className={`flex items-center mb-6 transition-all duration-700 delay-1300 ${
                 isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
               }`}>
-                <div className="w-12 h-px bg-primary-red mr-4"></div>
-                <p className="text-lg text-red-200 font-medium">District26, Upper Thomson</p>
+                <div className="w-12 h-px bg-[#ce001f] mr-4"></div>
+                <p className="text-lg text-gray-200 font-light">District 26, Upper Thomson</p>
               </div>
 
               <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-8 transition-all duration-700 delay-1500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
-                A Rare Mega Development at Springleaf MRT
+                Redefining Modern Living in Nature's Embrace
               </p>
             </div>
 
@@ -333,7 +343,7 @@ export default function SpringleafResidenceLanding() {
             <div className={`cta-buttons-container mb-12 transition-all duration-700 delay-1700 ${
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
-              <Button className={`bg-primary-red hover:bg-red-700 text-white px-8 py-4 text-lg font-medium rounded-lg transition-all duration-300 hover:scale-105 hover-lift flex-shrink-0 ${isVisible ? 'animate-pulse-glow' : ''}`}>
+              <Button className={`bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-4 text-lg font-medium rounded-lg transition-all duration-300 hover:scale-105 hover-lift flex-shrink-0 ${isVisible ? 'animate-pulse-glow' : ''}`}>
                 <Calendar className="w-5 h-5 mr-2" />
                 Book Showflat Visit
               </Button>
@@ -362,30 +372,33 @@ export default function SpringleafResidenceLanding() {
       </section>
 
       {/* Enhanced Project Information Section */}
-      <section id="project-info" className="py-16 bg-gray-900">
+      <section id="project-info" className="py-16 bg-[#1c1c1d]">
         <div className="container mx-auto px-4">
           <div className={`text-center mb-12 transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
-            <h2 className="text-4xl font-bold text-primary-red mb-4">Discover Nature-Inspired Living</h2>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">The North's First Nature-Integrated, and Well-connected High-Rise</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-[#ce001f] rounded" />
+            </div>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Nestled in the tranquil enclave of Upper Thomson, <strong>Springleaf Residence</strong> is a highly anticipated 941-unit project by <strong>GuocoLand & Hong Leong</strong>. Just <strong>&lt;2 min sheltered walk</strong> to Springleaf MRT (TEL), this development offers unmatched access to nature, connectivity, and lifestyle.
+              Your future home awaits in District 26 – just <strong>2 minutes' walk</strong> to Springleaf MRT. Discover elegant 1- to 5-bedroom condos designed for today's modern lifestyle, surrounded by lush greenery and unrivaled connectivity.
             </p>
           </div>
 
           {/* Feature Cards */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {[
-              { icon: <Train className="w-12 h-12 text-primary-red mx-auto mb-4" />, desc: "&lt;100m Sheltered Access to Springleaf MRT" },
-              { icon: <MapPin className="w-12 h-12 text-primary-red mx-auto mb-4" />, desc: "Near <strong>Upper Seletar Reservoir</strong>, Mandai Wildlife, & Nature Parks" },
-              { icon: <ShoppingBag className="w-12 h-12 text-primary-red mx-auto mb-4" />, desc: "Surrounded by Hawker Fare, Upscale Dining, Golf & Malls" },
-              { icon: <Home className="w-12 h-12 text-primary-red mx-auto mb-4" />, desc: "1 to 5 Bedroom Units, Full Condo Facilities" },
-              { icon: <Building className="w-12 h-12 text-primary-red mx-auto mb-4" />, desc: "Attractive Pricing from ~$1,950 psf" },
-              { icon: <MapPin className="w-12 h-12 text-primary-red mx-auto mb-4" />, desc: "Direct connectivity to SLE, CTE & North-South Corridor" },
-              { icon: <Building className="w-12 h-12 text-primary-red mx-auto mb-4" />, desc: "5 Towers + Conservation Block | <strong>99-Year Leasehold</strong>" },
-              { icon: <Building className="w-12 h-12 text-primary-red mx-auto mb-4" />, desc: "Developed by <strong>GuocoLand & Hong Leong</strong>" }
+              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "&lt;100m Sheltered Access to Springleaf MRT" },
+              { icon: <MapPin className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Near <strong>Upper Seletar Reservoir</strong>, Mandai Wildlife, & Nature Parks" },
+              { icon: <ShoppingBag className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Surrounded by Hawker Fare, Upscale Dining, Golf & Malls" },
+              { icon: <Home className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "1- to 5-Bedroom Units, Full Condo Facilities" },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Attractive Pricing from ~$1,950 PSF" },
+              { icon: <MapPin className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Direct connectivity to SLE, CTE, TPE & Upcoming North-South Corridor" },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "5 Towers + Conservation Block | <strong>99-Year Leasehold</strong>" },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Developed by <strong>GuocoLand & Hong Leong</strong>" }
             ].map((card, index) => (
-              <Card key={index} className={`text-center hover:shadow-lg transition-all duration-500 border-gray-600 bg-gray-700 hover:scale-105 hover-lift ${
+              <Card key={index} className={`text-center hover:shadow-lg transition-all duration-500 border-gray-700 bg-[#18191b] hover:scale-105 hover-lift ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
               }`} style={{ transitionDelay: `${index * 200}ms` }}>
                 <CardContent className="p-6">
@@ -401,9 +414,9 @@ export default function SpringleafResidenceLanding() {
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
             {/* Project Details */}
-            <Card className="lg:col-span-4 border-gray-600 bg-gray-700 hover:shadow-lg transition-all duration-500">
+            <Card className="lg:col-span-4 border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
               <CardHeader>
-                <CardTitle className="text-primary-red flex items-center">
+                <CardTitle className="text-[#ce001f] flex items-center">
                   <Building className="w-5 h-5 mr-2" />
                   Project Information
                 </CardTitle>
@@ -449,9 +462,9 @@ export default function SpringleafResidenceLanding() {
             </Card>
 
             {/* Site Plan & Floor Plans */}
-            <Card className="lg:col-span-6 border-gray-600 bg-gray-700 hover:shadow-lg transition-all duration-500">
+            <Card className="lg:col-span-6 border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
               <CardHeader>
-                <CardTitle className="text-primary-red flex items-center">
+                <CardTitle className="text-[#ce001f] flex items-center">
                   <Ruler className="w-5 h-5 mr-2" />
                   Plans & Layout
                 </CardTitle>
@@ -472,7 +485,7 @@ export default function SpringleafResidenceLanding() {
                     <p className="text-sm text-gray-300 mb-3">
                       View the overall development layout and facilities distribution
                     </p>
-                    <Button variant="outline" size="sm" className="w-full bg-primary-red hover:bg-primary-red/20 hover:text-white transition-all duration-300 border-gray-500 text-gray-300">
+                    <Button variant="outline" size="sm" className="w-full bg-[#ce001f] hover:bg-[#ce001f]/20 hover:text-white transition-all duration-300 border-gray-500 text-gray-300">
                       <Download className="w-4 h-4 mr-2" />
                       Download Site Plan
                     </Button>
@@ -580,16 +593,16 @@ export default function SpringleafResidenceLanding() {
           <div className={`text-center mt-12 transition-all duration-1000 delay-900 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
-            <div className="bg-primary-red text-white rounded-lg p-8 hover:shadow-2xl transition-all duration-500 hover:scale-105">
-              <h3 className="text-2xl font-bold mb-4">Interested in Springleaf Residence?</h3>
+            <div className="bg-[#ce001f] text-white rounded-lg p-8 hover:shadow-2xl transition-all duration-500 hover:scale-105">
+              <h3 className="text-2xl font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
               <p className="text-lg mb-6 opacity-90">
-                Get the latest floor plans, pricing, and availability information
+                Register now for an exclusive preview of Springleaf Residence
               </p>
               <div className="cta-buttons-container justify-center">
-                <Button className="bg-white text-primary-red hover:bg-gray-100 px-8 py-3 hover:scale-105 transition-all duration-300">Book Showflat Visit</Button>
+                <Button className="bg-white text-[#ce001f] hover:bg-gray-100 px-8 py-3 hover:scale-105 transition-all duration-300">Book Showflat Visit</Button>
                 <Button
                   variant="outline"
-                  className="border-white text-white hover:bg-white hover:text-primary-red px-8 py-3 bg-transparent hover:scale-105 transition-all duration-300"
+                  className="border-white text-white hover:bg-white hover:text-[#ce001f] px-8 py-3 bg-transparent hover:scale-105 transition-all duration-300"
                 >
                   Download Brochure
                 </Button>
@@ -600,19 +613,22 @@ export default function SpringleafResidenceLanding() {
       </section>
 
       {/* Floor Plans Section */}
-      <section id="floor-plans" className="py-16 bg-gray-900">
+      <section id="floor-plans" className="py-16 bg-[#1c1c1d]">
         <div className="container mx-auto px-4">
           <div className={`text-center mb-12 transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
-            <h2 className="text-4xl font-bold text-primary-red mb-4">Floor Plans & Pricing</h2>
-            <p className="text-xl text-gray-300">Choose from our thoughtfully designed unit layouts</p>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Floor Plans & Pricing</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-[#ce001f] rounded" />
+            </div>
+            <p className="text-xl text-gray-300">Choose from the following thoughtfully designed unit layouts</p>
           </div>
 
           <Tabs value={selectedFloorPlan} onValueChange={setSelectedFloorPlan} className={`w-full transition-all duration-1000 delay-300 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
-            <TabsList className="grid w-full grid-cols-4 mb-8">
+            <TabsList className="grid w-full grid-cols-5 mb-8">
               {Object.entries(floorPlans).map(([key, plan]) => (
                 <TabsTrigger key={key} value={key} className="text-sm text-white hover:scale-105 transition-all duration-300">
                   {plan.name}
@@ -640,21 +656,21 @@ export default function SpringleafResidenceLanding() {
                     </div>
                     <div className="space-y-4">
                       <div className="flex items-center space-x-3">
-                        <Ruler className="w-5 h-5 text-primary-red" />
-                        <span className="text-white">Spacious and well-ventilated layout</span>
+                        <Ruler className="w-5 h-5" style={{ color: '#ce001f' }} />
+                        <span className="text-white font-light">Spacious and well-ventilated layout</span>
                       </div>
                       <div className="flex items-center space-x-3">
-                        <Eye className="w-5 h-5 text-primary-red" />
-                        <span className="text-white">Unblocked views from most units</span>
+                        <Eye className="w-5 h-5" style={{ color: '#ce001f' }} />
+                        <span className="text-white font-light">Unblocked views from most units</span>
                       </div>
                       <div className="flex items-center space-x-3">
-                        <Home className="w-5 h-5 text-primary-red" />
-                        <span className="text-white">Premium fittings and finishes</span>
+                        <Home className="w-5 h-5" style={{ color: '#ce001f' }} />
+                        <span className="text-white font-light">Premium fittings and finishes</span>
                       </div>
                     </div>
                     <div className="flex space-x-4">
-                      <Button className="bg-primary-red hover:bg-red-700 hover:scale-105 transition-all duration-300">Book Showflat Visit</Button>
-                      <Button variant="outline" className="border-primary-red text-primary-red bg-transparent hover:scale-105 transition-all duration-300">
+                      <Button className="bg-[#ce001f] hover:bg-[#b3001a] hover:scale-105 transition-all duration-300">Book Showflat Visit</Button>
+                      <Button variant="outline" className="border-[#ce001f] text-[#ce001f] bg-transparent hover:scale-105 transition-all duration-300">
                         <Download className="w-4 h-4 mr-2" />
                         Download Floor Plan
                       </Button>
@@ -664,29 +680,160 @@ export default function SpringleafResidenceLanding() {
               </TabsContent>
             ))}
           </Tabs>
+          {/* Safe Entry Price Comparison */}
+          <div className={`mt-16 transition-all duration-1000 delay-300 ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+          }`}>
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-light text-white mb-2">Safe entry price compared to other OCR areas:</h3>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+              <div className="text-center">
+                <h4 className="text-lg font-semibold text-white mb-3">Woodlands</h4>
+                <p className="text-3xl font-bold text-[#ce001f]">~$2,300 PSF</p>
+              </div>
+              <div className="text-center">
+                <h4 className="text-lg font-semibold text-white mb-3">Lakeside</h4>
+                <p className="text-3xl font-bold text-[#ce001f]">~$2,600 PSF</p>
+              </div>
+              <div className="text-center">
+                <h4 className="text-lg font-semibold text-white mb-3">Bayshore</h4>
+                <p className="text-3xl font-bold text-[#ce001f]">~$2,900 PSF</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Nearby Amenities */}
-      <section className="py-16 bg-gray-800">
+      {/* Investor Benefits & Pricing Comparison */}
+      <section className="py-16 bg-[#242728]">
         <div className="container mx-auto px-4">
           <div className={`text-center mb-12 transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
-            <h2 className="text-4xl font-bold text-primary-red mb-4">Nearby Amenities</h2>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">For Investors</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-[#ce001f] rounded" />
+            </div>
+          </div>
+
+          {/* Investor Benefits */}
+          <div className={`max-w-6xl mx-auto transition-all duration-1000 delay-500 ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+          }`}>
+            {/* Top Row - 3 Cards */}
+            <div className="grid md:grid-cols-3 gap-6 mb-6">
+              {[
+                { icon: <Train className="w-8 h-8" style={{ color: '#ce001f' }} />, text: "MRT-adjacent - Strong rental appeal" },
+                { icon: <Mountain className="w-8 h-8" style={{ color: '#ce001f' }} />, text: "Near Woodlands Regional Centre - future growth node" },
+                { icon: <Clock className="w-8 h-8" style={{ color: '#ce001f' }} />, text: "Limited new launches in D26" }
+              ].map((benefit, index) => (
+                <div key={index} className={`text-left hover:shadow-lg transition-all duration-500 bg-[#18191b] rounded-xl hover:scale-105 hover-lift ${
+                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+                }`} style={{ transitionDelay: `${index * 150}ms` }}>
+                  <div className="p-6 flex items-center space-x-4">
+                    <div>{benefit.icon}</div>
+                    <p className="text-sm text-gray-300 font-medium">{benefit.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            {/* Bottom Row - 2 Cards Centered */}
+            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              {[
+                { icon: <Trees className="w-8 h-8" style={{ color: '#ce001f' }} />, text: "Nature views + lifestyle value" },
+                { icon: <Boxes className="w-8 h-8" style={{ color: '#ce001f' }} />, text: "Ideal for both capital appreciation & family living" }
+              ].map((benefit, index) => (
+                <div key={index + 3} className={`text-left hover:shadow-lg transition-all duration-500 bg-[#18191b] rounded-xl hover:scale-105 hover-lift ${
+                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+                }`} style={{ transitionDelay: `${(index + 3) * 150}ms` }}>
+                  <div className="p-6 flex items-center space-x-4">
+                    <div>{benefit.icon}</div>
+                    <p className="text-sm text-gray-300 font-medium">{benefit.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Nearby Amenities */}
+      <section className="py-16 bg-[#1c1c1d]">
+        <div className="container mx-auto px-4">
+          <div className={`text-center mb-12 transition-all duration-1000 ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+          }`}>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Nearby Amenities</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-[#ce001f] rounded" />
+            </div>
             <p className="text-xl text-gray-300">Everything you need is within reach</p>
+          </div>
+
+          {/* Location Information */}
+          <div className={`mb-12 transition-all duration-1000 delay-300 ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+          }`}>
+            <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
+              <CardHeader>
+                <CardTitle className="text-[#ce001f] flex items-center">
+                  <MapPin className="w-5 h-5 mr-2" />
+                  Location Map
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Google Maps iframe */}
+                <div className="w-full rounded-lg overflow-hidden shadow-lg">
+                  <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4015.605867240783!2d103.81649283726121!3d1.3985850305882135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da11e9914a5efb%3A0xd9100f19271fb058!2sSpringleaf%20Residence!5e1!3m2!1sen!2sid!4v1752754620414!5m2!1sen!2sid" 
+                    width="100%" 
+                    height="450" 
+                    style={{border:0}} 
+                    allowFullScreen={true}
+                    loading="lazy" 
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="w-full"
+                  ></iframe>
+                </div>
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="flex items-center space-x-3">
+                    <MapPin className="w-5 h-5" style={{ color: '#ce001f' }} />
+                    <div>
+                      <p className="font-semibold text-white">Address</p>
+                      <p className="text-sm text-gray-300 font-light">825A Upper Thomson Road, S787135</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Train className="w-5 h-5" style={{ color: '#ce001f' }} />
+                    <div>
+                      <p className="font-semibold text-white">MRT</p>
+                      <p className="text-sm text-gray-300 font-light">Springleaf MRT (TEL Line)</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Car className="w-5 h-5" style={{ color: '#ce001f' }} />
+                    <div>
+                      <p className="font-semibold text-white">Access</p>
+                      <p className="text-sm text-gray-300 font-light">SLE | CTE | North-South Corridor</p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {amenities.map((amenity, index) => (
-              <Card key={index} className={`hover:shadow-lg transition-all duration-500 border-gray-600 bg-gray-700 rounded-xl hover:scale-105 ${
+              <Card key={index} className={`hover:shadow-lg transition-all duration-500 border-gray-700 bg-[#18191b] rounded-xl hover:scale-105 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
               }`} style={{ transitionDelay: `${index * 150}ms` }}>
                 <CardContent className="p-6 flex items-center space-x-4">
-                  <div className="text-primary-red">{amenity.icon}</div>
+                  <div style={{ color: '#ce001f' }}>{amenity.icon}</div>
                   <div>
                     <h3 className="font-semibold text-lg text-white">{amenity.name}</h3>
-                    <p className="text-gray-300">{amenity.distance}</p>
+                    <p className="text-gray-300 font-light">{amenity.distance}</p>
                   </div>
                 </CardContent>
               </Card>
@@ -696,12 +843,15 @@ export default function SpringleafResidenceLanding() {
       </section>
 
       {/* Enhanced Media Section */}
-      <section id="gallery" className="py-20 bg-gray-900">
+      <section id="gallery" className="py-20 bg-[#1c1c1d]">
         <div className="container mx-auto px-4">
           <div className={`text-center mb-16 transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
-            <h2 className="text-4xl font-bold text-primary-red mb-4">Explore Springleaf Residence</h2>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Explore Springleaf Residence</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-[#ce001f] rounded" />
+            </div>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Immerse yourself in the luxury and elegance of our latest development through our comprehensive media
               gallery
@@ -715,8 +865,8 @@ export default function SpringleafResidenceLanding() {
             {/* Item 1 - Text Left, Image Right */}
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
-                <Badge className="bg-primary-red/10 text-primary-red">SHOWFLAT TOUR</Badge>
-                <h3 className="text-3xl font-bold text-primary-red">
+                <Badge className="bg-[#ce001f]/10 text-[#ce001f]">SHOWFLAT TOUR</Badge>
+                <h3 className="text-3xl font-bold text-[#ce001f]">
                   Lentor Mansion: Luxury with Soul | KW Singapore New Launch Showflat Tour
                 </h3>
                 <p className="text-gray-300 leading-relaxed text-lg">
@@ -724,7 +874,7 @@ export default function SpringleafResidenceLanding() {
                   from KW Singapore introduces this newest luxury project by renowned developer, GuocoLand,
                   sitting on the largest plot in the Lentor precinct.
                 </p>
-                <Button className="bg-primary-red hover:bg-red-700 text-white px-8 py-3 hover:scale-105 transition-all duration-300">
+                <Button className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300">
                   <Play className="w-5 h-5 mr-2" />
                   Watch our Showflat Tour
                 </Button>
@@ -739,7 +889,7 @@ export default function SpringleafResidenceLanding() {
                   />
                   <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
                     <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                      <Play className="w-8 h-8 text-primary-red ml-1" />
+                      <Play className="w-8 h-8 text-[#ce001f] ml-1" />
                     </div>
                   </div>
                 </div>
@@ -765,7 +915,7 @@ export default function SpringleafResidenceLanding() {
               </div>
               <div className="space-y-6 lg:order-2">
                 <Badge className="bg-green-100 text-green-800">MARKET ANALYSIS</Badge>
-                <h3 className="text-3xl font-bold text-primary-red">
+                <h3 className="text-3xl font-bold text-[#ce001f]">
                   Lentor's Rejuvenation and What the URA Floor Area Harmonisation means for Buyers
                 </h3>
                 <p className="text-gray-300 leading-relaxed text-lg">
@@ -785,7 +935,7 @@ export default function SpringleafResidenceLanding() {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
                 <Badge className="bg-purple-100 text-purple-800">DETAILED REVIEW</Badge>
-                <h3 className="text-3xl font-bold text-primary-red">
+                <h3 className="text-3xl font-bold text-[#ce001f]">
                   Lentor Mansion New Launch Review – A Beacon in Lentor's Evolving Landscape
                 </h3>
                 <p className="text-gray-300 leading-relaxed text-lg">
@@ -837,7 +987,7 @@ export default function SpringleafResidenceLanding() {
               </div>
               <div className="space-y-6 lg:order-2">
                 <Badge className="bg-orange-100 text-orange-800">COMPREHENSIVE REVIEW</Badge>
-                <h3 className="text-3xl font-bold text-primary-red">
+                <h3 className="text-3xl font-bold text-[#ce001f]">
                   Lentor Mansion New Launch Review - Luxury Living Amidst Nature In D26 | Singapore New Launch Review
                 </h3>
                 <p className="text-gray-300 leading-relaxed text-lg">
@@ -860,20 +1010,19 @@ export default function SpringleafResidenceLanding() {
           <div className={`text-center mt-20 transition-all duration-1000 delay-500 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
-            <div className="bg-gradient-to-r from-primary-red to-red-700 text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
-              <h3 className="text-2xl font-bold mb-4">Ready to Experience Springleaf Residence?</h3>
+            <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
+              <h3 className="text-2xl font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
               <p className="text-lg mb-6 opacity-90">
-                Book your personal showflat visit and discover why Springleaf Residence is the perfect choice for luxury
-                living
+                Register now for an exclusive preview of Springleaf Residence
               </p>
               <div className="cta-buttons-container justify-center">
-                <Button className="bg-white text-primary-red hover:bg-gray-100 px-8 py-3 text-lg hover:scale-105 transition-all duration-300">
+                <Button className="bg-white text-[#ce001f] hover:bg-gray-100 px-8 py-3 text-lg hover:scale-105 transition-all duration-300">
                   <Calendar className="w-5 h-5 mr-2" />
                   Book Showflat Visit
                 </Button>
                 <Button
                   variant="outline"
-                  className="border-white text-white hover:bg-white hover:text-primary-red px-8 py-3 text-lg bg-transparent hover:scale-105 transition-all duration-300"
+                  className="border-white text-white hover:bg-white hover:text-[#ce001f] px-8 py-3 text-lg bg-transparent hover:scale-105 transition-all duration-300"
                 >
                   <Download className="w-5 h-5 mr-2" />
                   Download Brochure
@@ -885,16 +1034,19 @@ export default function SpringleafResidenceLanding() {
       </section>
 
       {/* Editorial Article Section */}
-      <section id="editorial" className="py-16 bg-gray-800">
+      <section id="editorial" className="py-16 bg-[#242728]">
         <div className="container mx-auto px-4">
           <div>
             <div className={`text-center mb-12 transition-all duration-1000 ${
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
             }`}>
-              <Badge className="bg-primary-red/10 text-primary-red mb-4">KW SINGAPORE EDITORIAL</Badge>
-              <h2 className="text-4xl font-bold text-primary-red mb-4">
-                Springleaf Residence: A New Chapter in Serangoon Living
+              <Badge className="bg-[#ce001f]/10 text-[#ce001f] mb-4">KW SINGAPORE EDITORIAL</Badge>
+              <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">
+                Springleaf Residence: Redefining Modern Living in Nature's Embrace
               </h2>
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-1 bg-[#ce001f] rounded" />
+              </div>
               <p className="text-xl text-gray-300">
                 Our property experts analyze what makes this development stand out in today's market
               </p>
@@ -916,35 +1068,33 @@ export default function SpringleafResidenceLanding() {
               <div>
                 <div className="prose prose-lg max-w-none mb-6">
                   <p className="text-gray-300 leading-relaxed mb-6">
-                    Serangoon has long been recognized as one of Singapore's most established residential districts.
-                    Springleaf Residence represents the next evolution of luxury living in this mature estate, bringing
-                    together modern design with tranquil charm.
+                    Springleaf Residence brings a rare opportunity to own a private condo in the tranquil Upper Thomson enclave. Developed by GuocoLand and Hong Leong, this 941-unit landmark blends contemporary design with serene landscapes, setting the stage for elevated living in the North.
                   </p>
 
                   <p className="text-gray-300 leading-relaxed mb-6">
-                    With excellent connectivity to Kovan MRT and limited new supply in the area, this development is
+                    With excellent connectivity to Springleaf MRT and limited new supply in D26, this development is
                     well-positioned for both owner-occupiers and investors seeking quality living in a prime location.
                   </p>
 
-                  <Button className="bg-primary-red hover:bg-red-700 text-white px-6 py-2 hover:scale-105 transition-all duration-300">Read More</Button>
+                  <Button className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-6 py-2 hover:scale-105 transition-all duration-300">Read More</Button>
                 </div>
 
-                <Card className="hover:shadow-lg transition-all duration-500 hover:scale-105 border-gray-600 bg-gray-700">
+                <Card className="hover:shadow-lg transition-all duration-500 hover:scale-105 border-gray-700 bg-[#18191b]">
                   <CardHeader>
                     <CardTitle className="text-lg text-white">Article Highlights</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="flex items-start space-x-3">
-                      <div className="w-2 h-2 bg-primary-red rounded-full mt-2"></div>
-                      <span className="text-sm text-gray-300">Strategic Serangoon location</span>
+                      <div className="w-2 h-2 bg-[#ce001f] rounded-full mt-2"></div>
+                      <span className="text-sm text-gray-300 font-light">Strategic Upper Thomson location</span>
                     </div>
                     <div className="flex items-start space-x-3">
-                      <div className="w-2 h-2 bg-primary-red rounded-full mt-2"></div>
-                      <span className="text-sm text-gray-300">Limited new supply</span>
+                      <div className="w-2 h-2 bg-[#ce001f] rounded-full mt-2"></div>
+                      <span className="text-sm text-gray-300 font-light">Limited new launches in D26</span>
                     </div>
                     <div className="flex items-start space-x-3">
-                      <div className="w-2 h-2 bg-primary-red rounded-full mt-2"></div>
-                      <span className="text-sm text-gray-300">Attractive to upgraders and investors</span>
+                      <div className="w-2 h-2 bg-[#ce001f] rounded-full mt-2"></div>
+                      <span className="text-sm text-gray-300 font-light">Nature views + lifestyle value</span>
                     </div>
                   </CardContent>
                 </Card>
@@ -967,8 +1117,7 @@ export default function SpringleafResidenceLanding() {
             <Card className="bg-white/20 backdrop-blur-sm text-white p-12 shadow-2xl border-0 rounded-xl hover:shadow-3xl transition-all duration-500 hover:scale-105">
               <h2 className="text-4xl font-bold mb-4 text-white">Book Your Showflat Visit Today</h2>
               <p className="text-md mb-8 opacity-90 text-white">
-                Experience Springleaf Residence firsthand. Our consultants will guide you through the showflat and answer
-                all your questions about this exciting new development.
+                Be the first to own a home that combines convenience, luxury, and nature. Register now for an exclusive preview of Springleaf Residence.
               </p>
               <form className="space-y-6">
                 <div>
@@ -1019,7 +1168,7 @@ export default function SpringleafResidenceLanding() {
                   </Select>
                 </div>
                 <div className="text-center">
-                  <Button className="bg-primary-red hover:bg-red-700 px-12 py-3 text-lg hover:scale-105 transition-all duration-300">Book Showflat Visit</Button>
+                  <Button className="bg-[#ce001f] hover:bg-[#b3001a] px-12 py-3 text-lg hover:scale-105 transition-all duration-300">Book Showflat Visit</Button>
                   <p className="text-sm italic text-white-600 mt-4">
                     By submitting this form, you agree to receive marketing communications from KW Singapore. 
                     <br /> You can unsubscribe at any time.
@@ -1032,7 +1181,7 @@ export default function SpringleafResidenceLanding() {
       </section>
 
       {/* Footer */}
-      <footer className={`bg-gray-900 text-white py-12 transition-all duration-1000 delay-500 ${
+      <footer className={`bg-[#1c1c1d] text-white py-12 transition-all duration-1000 delay-500 ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
       }`}>
         <div className="container mx-auto px-4">
@@ -1051,10 +1200,10 @@ export default function SpringleafResidenceLanding() {
                 Your trusted partner in Singapore property investment and new launch developments.
               </p>
               <div className="flex space-x-4">
-                <Facebook className="w-5 h-5 hover:text-primary-red cursor-pointer hover:scale-110 transition-transform duration-300" />
-                <Instagram className="w-5 h-5 hover:text-primary-red cursor-pointer hover:scale-110 transition-transform duration-300" />
-                <Youtube className="w-5 h-5 hover:text-primary-red cursor-pointer hover:scale-110 transition-transform duration-300" />
-                <Linkedin className="w-5 h-5 hover:text-primary-red cursor-pointer hover:scale-110 transition-transform duration-300" />
+                <Facebook className="w-5 h-5 hover:text-[#ce001f] cursor-pointer hover:scale-110 transition-transform duration-300" />
+                <Instagram className="w-5 h-5 hover:text-[#ce001f] cursor-pointer hover:scale-110 transition-transform duration-300" />
+                <Youtube className="w-5 h-5 hover:text-[#ce001f] cursor-pointer hover:scale-110 transition-transform duration-300" />
+                <Linkedin className="w-5 h-5 hover:text-[#ce001f] cursor-pointer hover:scale-110 transition-transform duration-300" />
               </div>
             </div>
 
@@ -1062,22 +1211,22 @@ export default function SpringleafResidenceLanding() {
               <h3 className="font-bold text-lg mb-4">Services</h3>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <a href="#" className="hover:text-primary-red">
+                  <a href="#" className="hover:text-[#ce001f]">
                     New Launch Properties
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-primary-red">
+                  <a href="#" className="hover:text-[#ce001f]">
                     Resale Properties
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-primary-red">
+                  <a href="#" className="hover:text-[#ce001f]">
                     Investment Advisory
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-primary-red">
+                  <a href="#" className="hover:text-[#ce001f]">
                     Property Management
                   </a>
                 </li>
@@ -1088,22 +1237,22 @@ export default function SpringleafResidenceLanding() {
               <h3 className="font-bold text-lg mb-4">Resources</h3>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <a href="#" className="hover:text-primary-red">
+                  <a href="#" className="hover:text-[#ce001f]">
                     Market Reports
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-primary-red">
+                  <a href="#" className="hover:text-[#ce001f]">
                     Property News
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-primary-red">
+                  <a href="#" className="hover:text-[#ce001f]">
                     Investment Guides
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-primary-red">
+                  <a href="#" className="hover:text-[#ce001f]">
                     Webinars
                   </a>
                 </li>
@@ -1132,13 +1281,13 @@ export default function SpringleafResidenceLanding() {
                         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
                 <p>© 2024 KW Singapore Real Estate Pte. Ltd. | All Rights Reserved</p>
                 <div className="flex justify-center space-x-4 mt-2">
-                  <a href="#" className="hover:text-primary-red hover:scale-110 transition-transform duration-300">
+                  <a href="#" className="hover:text-[#ce001f] hover:scale-110 transition-transform duration-300">
                     Privacy Policy
                   </a>
-                  <a href="#" className="hover:text-primary-red hover:scale-110 transition-transform duration-300">
+                  <a href="#" className="hover:text-[#ce001f] hover:scale-110 transition-transform duration-300">
                     Terms of Service
                   </a>
-                  <a href="#" className="hover:text-primary-red hover:scale-110 transition-transform duration-300">
+                  <a href="#" className="hover:text-[#ce001f] hover:scale-110 transition-transform duration-300">
                     Contact
                   </a>
                 </div>

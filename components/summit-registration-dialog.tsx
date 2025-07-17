@@ -85,7 +85,7 @@ export function SummitRegistrationDialog({
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="text-center mb-6">
             <p className="text-gray-600 text-base">
-              Register now to save your spot in the MREA Summit
+              Register now to save your spot in the Mega Realtor Summit
             </p>
           </div>
 
