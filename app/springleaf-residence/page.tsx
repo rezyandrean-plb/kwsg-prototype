@@ -340,6 +340,16 @@ export default function SpringleafResidenceLanding() {
     }
   }
 
+  const scrollToGallery = () => {
+    const gallerySection = document.getElementById('gallery')
+    if (gallerySection) {
+      gallerySection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+  }
+
   const scrollToNearbyAmenities = () => {
     const nearbyAmenitiesSection = document.getElementById('nearby-amenities')
     if (nearbyAmenitiesSection) {
@@ -401,10 +411,16 @@ export default function SpringleafResidenceLanding() {
                   Floor Plans
                 </a> */}
                 <button 
-                  onClick={scrollToNearbyAmenities}
+                  onClick={scrollToGallery}
                   className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
                 >
                   Explore
+                </button>
+                <button 
+                  onClick={scrollToNearbyAmenities}
+                  className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
+                >
+                  Location
                 </button>
                 {/* <a href="#editorial" className="text-white hover:text-[#ce001f] transition-colors duration-300">
                   Editorial
@@ -1056,8 +1072,8 @@ export default function SpringleafResidenceLanding() {
 
       {/* Enhanced Media Section */}
       <section id="gallery" className="pt-4 pb-4 bg-[#1c1c1d] flex items-center justify-center">
-        <div className="container mx-auto px-4 text-center">
-          {/* <div className={`text-center mb-16 transition-all duration-1000 ${
+        <div className="container mx-auto px-4 text-left">
+          <div className={`text-center mb-16 transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
             <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Explore Springleaf Residence</h2>
@@ -1068,28 +1084,31 @@ export default function SpringleafResidenceLanding() {
               Immerse yourself in the luxury and elegance of our latest development through our comprehensive media
               gallery
             </p>
-          </div> */}
+          </div>
 
           
           <div className={`space-y-20 transition-all duration-1000 delay-300 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
             
-            {/* <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
-                <Badge className="bg-[#ce001f]/10 text-[#ce001f]">SHOWFLAT TOUR</Badge>
+                <Badge className="bg-[#ce001f]/10 text-[#ce001f]">New Launch Analysis</Badge>
                 <h3 className="text-3xl font-bold text-[#ce001f]">
-                  Lentor Mansion: Luxury with Soul | KW Singapore New Launch Showflat Tour
+                  Springleaf Residence New Launch Analysis
                 </h3>
                 <p className="text-gray-300 leading-relaxed text-lg">
-                  Sneak a peek at one of the widely anticipated launches of 2024—Lentor Mansion! Melvin Lim and Grayce
-                  from KW Singapore introduces this newest luxury project by renowned developer, GuocoLand,
-                  sitting on the largest plot in the Lentor precinct.
+                  District 26's first high-rise mega condo with full facilities. 
+                  Developed by visionary GuocoLand and Hong Leong, this 941-unit project offers unbeatable connectivity, unparalleled green premium, and a strategic entry price. 
+                  Discover how you can capitalise on this rare opportunity.
                 </p>
-                <Button className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300">
-                  <Play className="w-5 h-5 mr-2" />
-                  Watch our Showflat Tour
-                </Button>
+                                  <Button 
+                    className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
+                    onClick={() => window.open('https://newlaunch.kwsingapore.com/springleaf-residence-new-launch-analysis', '_blank')}
+                  >
+                    <Play className="w-5 h-5 mr-2" />
+                    Watch Analysis
+                  </Button>
               </div>
               <div className="relative hover:scale-105 transition-transform duration-500">
                 <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
@@ -1109,7 +1128,7 @@ export default function SpringleafResidenceLanding() {
             </div>
 
             
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="relative lg:order-1">
                 <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
                   <Image
@@ -1141,85 +1160,11 @@ export default function SpringleafResidenceLanding() {
                   Watch Our Analysis
                 </Button>
               </div>
-            </div>
-
-           
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-6">
-                <Badge className="bg-purple-100 text-purple-800">DETAILED REVIEW</Badge>
-                <h3 className="text-3xl font-bold text-[#ce001f]">
-                  Lentor Mansion New Launch Review – A Beacon in Lentor's Evolving Landscape
-                </h3>
-                <p className="text-gray-300 leading-relaxed text-lg">
-                  Lentor Mansion is set to become a cherished asset in the growing Lentor neighbourhood, which holds
-                  immense promise for future development. The project will be the fifth addition to the serene
-                  neighbourhood around Hillock Park, nestled amidst lush green surroundings within a private residential
-                  enclave. Join us as we showcase the standout features of Lentor Mansion, its future prospects, and
-                  provide recommendations for each available unit type.
-                </p>
-                <Button className="bg-white hover:bg-gray-100 text-black px-8 py-3 hover:scale-105 transition-all duration-300">
-                  <Eye className="w-5 h-5 mr-2" />
-                  Read our Analysis
-                </Button>
-              </div>
-              <div className="relative">
-                <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
-                  <Image
-                    src="/images/springleaf-residence/site-plan-dummy.webp?height=320&width=500&text=Lentor+Mansion+Landscape+Review"
-                    alt="Lentor Mansion Landscape Review"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4">
-                      <h4 className="font-semibold text-gray-800">Detailed Analysis</h4>
-                      <p className="text-sm text-gray-600">Comprehensive review and recommendations</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="relative lg:order-1">
-                <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
-                  <Image
-                    src="/images/springleaf-residence/site-plan-dummy.webp?height=320&width=500&text=Lentor+Mansion+Luxury+Living+Review"
-                    alt="Lentor Mansion Luxury Living Review"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                    <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center">
-                      <Play className="w-8 h-8 text-orange-600 ml-1" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-6 lg:order-2">
-                <Badge className="bg-orange-100 text-orange-800">COMPREHENSIVE REVIEW</Badge>
-                <h3 className="text-3xl font-bold text-[#ce001f]">
-                  Lentor Mansion New Launch Review - Luxury Living Amidst Nature In D26 | Singapore New Launch Review
-                </h3>
-                <p className="text-gray-300 leading-relaxed text-lg">
-                  Wayne, Yong Zhun and Ramzi from KW Singapore review the third launch by GuocoLand in the Lentor
-                  Hills estate, and their 2nd iteration of their Mansion series, Lentor Mansion! Lentor Mansion's unique
-                  design that aims to blend luxury with convenience whilst embracing the surrounding greenery. The team
-                  highlights Lentor Mansion's other standout features, its expansive land plot and strategic location in
-                  the North-east region of Singapore, explore the pros and cons to this development, as well as its
-                  layouts and the impact of the recent harmonisation rule.
-                </p>
-                <Button className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3 hover:scale-105 transition-all duration-300">
-                  <Play className="w-5 h-5 mr-2" />
-                  Watch our Review
-                </Button>
-              </div>
             </div> */}
           </div>
 
           {/* Call to Action */}
-          <div className={`text-center mb-4 transition-all duration-1000 delay-500 ${
+          <div className={`text-center mt-12 mb-4 transition-all duration-1000 delay-500 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
             <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
