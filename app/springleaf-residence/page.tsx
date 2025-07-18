@@ -1093,7 +1093,7 @@ export default function SpringleafResidenceLanding() {
             
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
-                <Badge className="bg-[#ce001f]/10 text-[#ce001f]">New Launch Analysis</Badge>
+                <Badge className="bg-white text-[#ce001f]">New Launch Analysis</Badge>
                 <h3 className="text-3xl font-bold text-[#ce001f]">
                   Springleaf Residence New Launch Analysis
                 </h3>
@@ -1102,7 +1102,7 @@ export default function SpringleafResidenceLanding() {
                   Developed by visionary GuocoLand and Hong Leong, this 941-unit project offers unbeatable connectivity, unparalleled green premium, and a strategic entry price. 
                   Discover how you can capitalise on this rare opportunity.
                 </p>
-                                  <Button 
+                  <Button 
                     className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
                     onClick={() => window.open('https://newlaunch.kwsingapore.com/springleaf-residence-new-launch-analysis', '_blank')}
                   >
@@ -1113,7 +1113,7 @@ export default function SpringleafResidenceLanding() {
               <div className="relative hover:scale-105 transition-transform duration-500">
                 <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
                   <Image
-                    src="/images/springleaf-residence/site-plan-dummy.webp?height=320&width=500&text=Lentor+Mansion+Showflat+Tour"
+                    src="/images/springleaf-residence/new-launch-analysis.webp?height=320&width=500&text=Lentor+Mansion+Showflat+Tour"
                     alt="Lentor Mansion Showflat Tour"
                     fill
                     className="object-cover"
