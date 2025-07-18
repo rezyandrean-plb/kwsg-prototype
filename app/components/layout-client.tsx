@@ -108,9 +108,8 @@ const footerLinks = {
 export function Footer() {
   const pathname = usePathname()
   const isAdminPage = pathname?.startsWith('/admin')
-  const isSpringleafPage = pathname?.startsWith('/springleaf-residence')
 
-  if (isAdminPage || isSpringleafPage) return null
+  if (isAdminPage) return null
 
   return (
     <>
