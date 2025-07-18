@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Calendar as CalendarComponent } from "@/components/ui/calendar"
+import { useToast } from "@/components/ui/use-toast"
 import {
   Calendar,
   Download,
@@ -206,6 +207,7 @@ const customStyles = `
 `;
 
 export default function SpringleafResidenceLanding() {
+  const { toast } = useToast()
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [selectedFloorPlan, setSelectedFloorPlan] = useState("1br")
   const [isScrolled, setIsScrolled] = useState(false)
@@ -360,10 +362,88 @@ export default function SpringleafResidenceLanding() {
     }
   }
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const [formData, setFormData] = useState({
+    fullName: '',
+    contactNumber: '',
+    emailAddress: '',
+    preferredDate: undefined as Date | undefined,
+    preferredTiming: ''
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Here you would typically handle form submission to your backend
-    alert('Thank you for your interest! We will contact you soon to arrange your showflat visit.')
+    
+    // Validate required fields
+    if (!formData.fullName.trim() || !formData.contactNumber.trim()) {
+      setSubmitError('Full name and contact number are required')
+      toast({
+        title: "Validation Error",
+        description: "Full name and contact number are required",
+        variant: "destructive",
+      })
+      return
+    }
+
+    setIsSubmitting(true)
+    setSubmitError(null)
+
+    // Show submitting toast
+    toast({
+      title: "Submitting...",
+      description: "Please wait while we process your request",
+    })
+
+    try {
+      const response = await fetch('/api/springleaf-residence-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const result = await response.json()
+
+      if (response.ok && result.success) {
+        setSubmitSuccess(true)
+        setFormData({
+          fullName: '',
+          contactNumber: '',
+          emailAddress: '',
+          preferredDate: undefined,
+          preferredTiming: ''
+        })
+        setDate(undefined)
+        
+        // Show success toast
+        toast({
+          title: "Request Submitted Successfully!",
+          description: "Thank you for your interest in Springleaf Residence! We have sent you a confirmation email and our team will contact you soon to arrange your showflat visit.",
+          variant: "default",
+        })
+        
+        // Reset success state after 5 seconds
+        setTimeout(() => setSubmitSuccess(false), 5000)
+      } else {
+        throw new Error(result.error || 'Failed to submit form')
+      }
+    } catch (error) {
+      console.error('Form submission error:', error)
+      const errorMessage = error instanceof Error ? error.message : 'Failed to submit form. Please try again.'
+      setSubmitError(errorMessage)
+      
+      // Show error toast
+      toast({
+        title: "Submission Failed",
+        description: errorMessage,
+        variant: "destructive",
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -1110,7 +1190,7 @@ export default function SpringleafResidenceLanding() {
                     Watch Analysis
                   </Button>
               </div>
-              <div className="relative hover:scale-105 transition-transform duration-500">
+              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-4">
                 <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
                   <Image
                     src="/images/springleaf-residence/new-launch-analysis.webp?height=320&width=500&text=Lentor+Mansion+Showflat+Tour"
@@ -1283,6 +1363,18 @@ export default function SpringleafResidenceLanding() {
               <p className="text-md mb-8 opacity-90 text-white text-center">
                 Be the first to own a home that combines convenience, luxury, and nature. Register now for an exclusive preview of Springleaf Residence.
               </p>
+              {submitError && (
+                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
+                  {submitError}
+                </div>
+              )}
+              
+              {submitSuccess && (
+                <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400 text-sm">
+                  Thank you for your interest! We will contact you soon to arrange your showflat visit.
+                </div>
+              )}
+              
               <form className="space-y-6" onSubmit={handleFormSubmit}>
                 <div className="space-y-2">
                   <label htmlFor="fullName" className="text-sm font-medium text-white">
@@ -1290,9 +1382,12 @@ export default function SpringleafResidenceLanding() {
                   </label>
                   <Input 
                     id="fullName"
+                    value={formData.fullName}
+                    onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
                     placeholder="Enter your full name" 
                     className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
                 <div className="space-y-2">
@@ -1301,20 +1396,27 @@ export default function SpringleafResidenceLanding() {
                   </label>
                   <Input 
                     id="contactNumber"
+                    value={formData.contactNumber}
+                    onChange={(e) => setFormData(prev => ({ ...prev, contactNumber: e.target.value }))}
                     placeholder="Enter your contact number" 
                     className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="emailAddress" className="text-sm font-medium text-white">
-                    Email Address
+                    Email Address *
                   </label>
                   <Input 
                     id="emailAddress"
                     type="email"
+                    value={formData.emailAddress}
+                    onChange={(e) => setFormData(prev => ({ ...prev, emailAddress: e.target.value }))}
                     placeholder="Enter your email address" 
                     className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
+                    required
+                    disabled={isSubmitting}
                   />
                 </div>
                 <div className="space-y-2">
@@ -1327,18 +1429,19 @@ export default function SpringleafResidenceLanding() {
                         variant={"outline"}
                         className={cn(
                           "w-full justify-start text-left font-normal bg-white text-gray-800 border-0",
-                          !date && "text-gray-500"
+                          !formData.preferredDate && "text-gray-500"
                         )}
+                        disabled={isSubmitting}
                       >
                         <CalendarIcon className="mr-2 h-4 w-4" />
-                        {date ? format(date, "PPP") : <span>Select preferred date</span>}
+                        {formData.preferredDate ? format(formData.preferredDate, "PPP") : <span>Select preferred date</span>}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0 bg-white border border-gray-200" align="start">
                       <CalendarComponent
                         mode="single"
-                        selected={date}
-                        onSelect={setDate}
+                        selected={formData.preferredDate}
+                        onSelect={(date) => setFormData(prev => ({ ...prev, preferredDate: date }))}
                         initialFocus
                       />
                     </PopoverContent>
@@ -1346,27 +1449,41 @@ export default function SpringleafResidenceLanding() {
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="preferredTiming" className="text-sm font-medium text-white">
-                    Preferred Timing
+                    Preferred Time
                   </label>
-                  <Select>
+                  <Select 
+                    value={formData.preferredTiming}
+                    onValueChange={(value) => setFormData(prev => ({ ...prev, preferredTiming: value }))}
+                    disabled={isSubmitting}
+                  >
                     <SelectTrigger id="preferredTiming" className="w-full bg-white text-gray-800 border-0">
-                      <SelectValue placeholder="Select preferred timing" />
+                      <SelectValue placeholder="Select preferred time" />
                     </SelectTrigger>
                     <SelectContent className="bg-white border border-gray-200">
-                      <SelectItem value="weekday-morning">Weekday Morning</SelectItem>
-                      <SelectItem value="weekday-afternoon">Weekday Afternoon</SelectItem>
-                      <SelectItem value="weekday-evening">Weekday Evening</SelectItem>
-                      <SelectItem value="weekend-morning">Weekend Morning</SelectItem>
-                      <SelectItem value="weekend-afternoon">Weekend Afternoon</SelectItem>
+                      <SelectItem value="10:30-am">10:30 AM</SelectItem>
+                      <SelectItem value="11:00-am">11:00 AM</SelectItem>
+                      <SelectItem value="12:00-pm">12:00 PM</SelectItem>
+                      <SelectItem value="1:00-pm">1:00 PM</SelectItem>
+                      <SelectItem value="2:00-pm">2:00 PM</SelectItem>
+                      <SelectItem value="3:00-pm">3:00 PM</SelectItem>
+                      <SelectItem value="4:00-pm">4:00 PM</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="text-center">
                   <Button 
                     type="submit"
-                    className="bg-[#ce001f] hover:bg-[#b3001a] px-12 py-3 text-lg hover:scale-105 transition-all duration-300"
+                    disabled={isSubmitting}
+                    className="bg-[#ce001f] hover:bg-[#b3001a] px-12 py-3 text-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Book Showflat Visit
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                        Submitting...
+                      </>
+                    ) : (
+                      'Book Showflat Visit'
+                    )}
                   </Button>
                   <p className="text-sm italic text-white-600 mt-4 text-left">
                     By submitting this form, you agree to receive marketing communications from KW Singapore. 
