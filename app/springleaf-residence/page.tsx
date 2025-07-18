@@ -1118,11 +1118,6 @@ export default function SpringleafResidenceLanding() {
                     fill
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                    <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                      <Play className="w-8 h-8 text-[#ce001f] ml-1" />
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
