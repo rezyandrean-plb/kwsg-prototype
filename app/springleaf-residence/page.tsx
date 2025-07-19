@@ -36,6 +36,7 @@ import {
   ChartLine,
   Compass,
   Layers,
+  Info,
 } from "lucide-react"
 import { Calendar as CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
@@ -256,11 +257,10 @@ export default function SpringleafResidenceLanding() {
   }, [])
 
   const projectImages = [
-    "/images/springleaf-residence/building-rendering.jpg",
-    "/images/springleaf-residence/building-rendering.jpg",
-    "/images/springleaf-residence/building-rendering.jpg",
-    "/images/springleaf-residence/building-rendering.jpg",
-    "/images/springleaf-residence/building-rendering.jpg",
+    "/images/springleaf-residence/springleaf-residence-hero-aerial.webp",
+    "/images/springleaf-residence/springleaf-residence-condo-look.webp",
+    "/images/springleaf-residence/springleaf-residence-facilitate.webp",
+    "/images/springleaf-residence/springleaf-residence-front.webp",
   ]
 
   const floorPlans = {
@@ -342,10 +342,10 @@ export default function SpringleafResidenceLanding() {
     }
   }
 
-  const scrollToGallery = () => {
-    const gallerySection = document.getElementById('gallery')
-    if (gallerySection) {
-      gallerySection.scrollIntoView({ 
+  const scrollToMedia = () => {
+    const mediaSection = document.getElementById('media')
+    if (mediaSection) {
+      mediaSection.scrollIntoView({ 
         behavior: 'smooth',
         block: 'start'
       })
@@ -480,7 +480,7 @@ export default function SpringleafResidenceLanding() {
                 />
               </div>
             </div>
-                          <nav className="hidden md:flex items-center space-x-6">
+              <nav className="hidden md:flex items-center space-x-6">
                 <button 
                   onClick={scrollToProjectInfo}
                   className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
@@ -491,7 +491,7 @@ export default function SpringleafResidenceLanding() {
                   Floor Plans
                 </a> */}
                 <button 
-                  onClick={scrollToGallery}
+                  onClick={scrollToMedia}
                   className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
                 >
                   Explore
@@ -632,7 +632,7 @@ export default function SpringleafResidenceLanding() {
               { icon: <MountainSnow className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Near <strong>Upper Seletar Reservoir</strong>, Mandai Wildlife, & Nature Parks" },
               { icon: <ShoppingBag className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Surrounded by Hawker Fare, Upscale Dining, Golf & Malls" },
               { icon: <BedDouble className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "1- to 5-Bedroom Units, Full Condo Facilities" },
-              { icon: <ChartLine className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Attractive Pricing from ~$1,950 PSF" },
+              { icon: <ChartLine className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Attractive Pricing from ~$2250 PSF" },
               { icon: <Compass className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Direct connectivity to SLE, CTE, TPE & Upcoming North-South Corridor" },
               { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "5 Towers + Conservation Block | <strong>99-Year Leasehold</strong>" },
               { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Developed by <strong>GuocoLand & Hong Leong</strong>" }
@@ -726,7 +726,7 @@ export default function SpringleafResidenceLanding() {
                       <h4 className="font-semibold text-white">Site Plan</h4>
                     </div>
                     <Image
-                      src="/images/springleaf-residence/site-plan-dummy.webp"
+                      src="/images/springleaf-residence/springleaf-residence-site-plan.webp"
                       alt="Springleaf Residence Site Plan"
                       width={300}
                       height={200}
@@ -735,10 +735,10 @@ export default function SpringleafResidenceLanding() {
                     <p className="text-sm text-gray-300 mb-3">
                       View the overall development layout and facilities distribution
                     </p>
-                    {/* <Button variant="outline" size="sm" className="w-full bg-[#ce001f] hover:bg-[#ce001f]/20 hover:text-white transition-all duration-300 border-gray-500 text-gray-300">
+                    <Button variant="outline" size="sm" className="w-full bg-[#ce001f] hover:bg-[#ce001f]/20 hover:text-white transition-all duration-300 border-gray-500 text-gray-300">
                       <Download className="w-4 h-4 mr-2" />
-                      Download Site Plan
-                    </Button> */}
+                      Required Site Plan
+                    </Button>
                   </div>
                 </div>
               </CardContent>
@@ -749,17 +749,20 @@ export default function SpringleafResidenceLanding() {
           <div className={`mb-20 transition-all duration-1000 delay-700 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
-            {/* <div className="flex items-center justify-between mb-8">
-              <h3 className="text-2xl font-bold text-primary-red">Project Gallery</h3>
-              <div className="flex items-center space-x-2 text-sm text-gray-600">
+            <div className="text-center mb-8">
+              <h3 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Project Gallery</h3>
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-1 bg-[#ce001f] rounded" />
+              </div>
+              <div className="flex items-center justify-center space-x-2 text-sm text-gray-300">
                 <span>
                   {currentImageIndex + 1} of {projectImages.length}
                 </span>
               </div>
-            </div> */}
+            </div>
 
             {/* Main Image Display */}
-            {/* <div className="relative max-w-6xl mx-auto mb-8">
+            <div className="relative max-w-6xl mx-auto mb-8">
               <div className="relative h-[500px] rounded-xl overflow-hidden shadow-2xl">
                 <Image
                   src={projectImages[currentImageIndex] || "/placeholder.svg"}
@@ -804,12 +807,12 @@ export default function SpringleafResidenceLanding() {
                       {currentImageIndex === 0
                         ? "Modern luxury towers with premium finishes"
                         : currentImageIndex === 1
-                          ? "Resort-style pool with relaxation areas"
-                          : currentImageIndex === 2
-                            ? "Elegant clubhouse with premium amenities"
-                            : currentImageIndex === 3
-                              ? "Lush landscaping throughout the development"
-                              : "State-of-the-art fitness facilities"}
+                        ? "Resort-style pool with relaxation areas"
+                        : currentImageIndex === 2
+                        ? "Elegant clubhouse with premium amenities"
+                        : currentImageIndex === 3
+                        ? "Lush landscaping throughout the development"
+                        : "State-of-the-art fitness facilities"}
                     </p>
                   </div>
                 </div>
@@ -836,7 +839,7 @@ export default function SpringleafResidenceLanding() {
                   </button>
                 ))}
               </div>
-            </div>*/}
+            </div>
           </div> 
 
           {/* Call to Action */}
@@ -1084,18 +1087,15 @@ export default function SpringleafResidenceLanding() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                {/* Google Maps iframe */}
+                {/* Location Image */}
                 <div className="w-full rounded-lg overflow-hidden shadow-lg">
-                  <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4015.605867240783!2d103.81649283726121!3d1.3985850305882135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da11e9914a5efb%3A0xd9100f19271fb058!2sSpringleaf%20Residence!5e1!3m2!1sen!2sid!4v1752754620414!5m2!1sen!2sid" 
-                    width="100%" 
-                    height="450" 
-                    style={{border:0}} 
-                    allowFullScreen={true}
-                    loading="lazy" 
-                    referrerPolicy="no-referrer-when-downgrade"
-                    className="w-full"
-                  ></iframe>
+                  <Image
+                    src="/images/springleaf-residence/springleaf-location.webp"
+                    alt="Springleaf Residence Location"
+                    width={800}
+                    height={450}
+                    className="w-full h-[450px] object-cover"
+                  />
                 </div>
                 <div className="grid md:grid-cols-3 gap-6">
                   <div className="flex items-center space-x-3">
@@ -1151,7 +1151,7 @@ export default function SpringleafResidenceLanding() {
       </section>
 
       {/* Enhanced Media Section */}
-      <section id="gallery" className="pt-4 pb-4 bg-[#1c1c1d] flex items-center justify-center">
+      <section id="media" className="pt-4 pb-4 bg-[#1c1c1d] flex items-center justify-center">
         <div className="container mx-auto px-4 text-left">
           <div className={`text-center mb-16 transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
@@ -1173,7 +1173,7 @@ export default function SpringleafResidenceLanding() {
             
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
-                <Badge className="bg-white text-[#ce001f]">New Launch Analysis</Badge>
+                <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
                 <h3 className="text-3xl font-bold text-[#ce001f]">
                   Springleaf Residence New Launch Analysis
                 </h3>
@@ -1203,39 +1203,37 @@ export default function SpringleafResidenceLanding() {
             </div>
 
             
-            {/* <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="relative lg:order-1">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-4">
                 <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
                   <Image
-                    src="/images/springleaf-residence/site-plan-dummy.webp?height=320&width=500&text=Lentor+Rejuvenation+Analysis"
+                    src="/images/springleaf-residence/new-launch-analysis-2.webp?height=320&width=500&text=Lentor+Rejuvenation+Analysis"
                     alt="Lentor's Rejuvenation Analysis"
                     fill
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                    <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center">
-                      <Play className="w-8 h-8 text-green-600 ml-1" />
-                    </div>
-                  </div>
                 </div>
               </div>
               <div className="space-y-6 lg:order-2">
-                <Badge className="bg-green-100 text-green-800">MARKET ANALYSIS</Badge>
+                <Badge className="bg-green-100 text-green-800">NEW LAUNCH ANALYSIS</Badge>
                 <h3 className="text-3xl font-bold text-[#ce001f]">
-                  Lentor's Rejuvenation and What the URA Floor Area Harmonisation means for Buyers
+                  Springleaf Residence vs. the Supply Surge: Can a Lower Land Bid Still Outperform in a Crowded District 26?
                 </h3>
                 <p className="text-gray-300 leading-relaxed text-lg">
-                  You've probably heard a lot about Lentor's rejuvenation, but what is it all about? In this episode of
-                  NOTG, Melvin Lim from KW Singapore explores the development and transformation of Lentor—once a
-                  sleepy town, now projected to become a thriving estate in the years to come. Let Melvin explain more
-                  about our government's focus on injecting residential zones in this area.
+                  Before you buy into the hype of D26, ask yourself: Are you investing… or just following the crowd? 
+                  In a market flooded with options, the wrong call could mean years of stagnant capital. 
+                  This webinar goes beyond brochures and showflat buzz to confront one critical question : 
+                  <strong> Can Springleaf truly stand out — or will it be buried in the noise?</strong>
                 </p>
-                <Button className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 hover:scale-105 transition-all duration-300">
-                  <Play className="w-5 h-5 mr-2" />
-                  Watch Our Analysis
-                </Button>
+                <Button 
+                    className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 hover:scale-105 transition-all duration-300"
+                    onClick={() => window.open('https://newlaunch.kwsingapore.com/webinars/springleaf-residence-vs-the-supply-surge', '_blank')}
+                  >
+                    <Info className="w-5 h-5 mr-2" />
+                    Read More
+                  </Button>
               </div>
-            </div> */}
+            </div>
           </div>
 
           {/* Call to Action */}
@@ -1267,77 +1265,6 @@ export default function SpringleafResidenceLanding() {
           </div>
         </div>
       </section>
-
-      {/* Editorial Article Section */}
-      {/* <section id="editorial" className="py-16 bg-[#242728]">
-        <div className="container mx-auto px-4">
-          <div>
-            <div className={`text-center mb-12 transition-all duration-1000 ${
-              isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-            }`}>
-              <Badge className="bg-[#ce001f]/10 text-[#ce001f] mb-4">KW SINGAPORE EDITORIAL</Badge>
-              <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">
-                Springleaf Residence: Redefining Modern Living in Nature's Embrace
-              </h2>
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-1 bg-[#ce001f] rounded" />
-              </div>
-              <p className="text-xl text-gray-300">
-                Our property experts analyze what makes this development stand out in today's market
-              </p>
-            </div>
-
-            <div className={`grid md:grid-cols-2 gap-8 mb-8 transition-all duration-1000 delay-300 ${
-              isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-            }`}>
-              <div className="hover:scale-105 transition-transform duration-500">
-                <Image
-                  src="/images/springleaf-residence/site-plan-dummy.webp?height=200&width=400&text=Editorial+Hero+Image"
-                  alt="Editorial Image"
-                  width={400}
-                  height={200}
-                  className="w-full rounded-lg shadow-md mb-6"
-                />
-              </div>
-
-              <div>
-                <div className="prose prose-lg max-w-none mb-6">
-                  <p className="text-gray-300 leading-relaxed mb-6">
-                    Springleaf Residence brings a rare opportunity to own a private condo in the tranquil Upper Thomson enclave. Developed by GuocoLand and Hong Leong, this 941-unit landmark blends contemporary design with serene landscapes, setting the stage for elevated living in the North.
-                  </p>
-
-                  <p className="text-gray-300 leading-relaxed mb-6">
-                    With excellent connectivity to Springleaf MRT and limited new supply in D26, this development is
-                    well-positioned for both owner-occupiers and investors seeking quality living in a prime location.
-                  </p>
-
-                  <Button className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-6 py-2 hover:scale-105 transition-all duration-300">Read More</Button>
-                </div>
-
-                <Card className="hover:shadow-lg transition-all duration-500 hover:scale-105 border-gray-700 bg-[#18191b]">
-                  <CardHeader>
-                    <CardTitle className="text-lg text-white">Article Highlights</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="flex items-start space-x-3">
-                      <div className="w-2 h-2 bg-[#ce001f] rounded-full mt-2"></div>
-                      <span className="text-sm text-gray-300 font-light">Strategic Upper Thomson location</span>
-                    </div>
-                    <div className="flex items-start space-x-3">
-                      <div className="w-2 h-2 bg-[#ce001f] rounded-full mt-2"></div>
-                      <span className="text-sm text-gray-300 font-light">Limited new launches in D26</span>
-                    </div>
-                    <div className="flex items-start space-x-3">
-                      <div className="w-2 h-2 bg-[#ce001f] rounded-full mt-2"></div>
-                      <span className="text-sm text-gray-300 font-light">Nature views + lifestyle value</span>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
 
       {/* Lead Generation Form */}
       <section
@@ -1443,6 +1370,7 @@ export default function SpringleafResidenceLanding() {
                         selected={formData.preferredDate}
                         onSelect={(date) => setFormData(prev => ({ ...prev, preferredDate: date }))}
                         initialFocus
+                        defaultMonth={new Date(2025, 7, 1)} // August 2025 (month is 0-indexed, so 7 = August)
                       />
                     </PopoverContent>
                   </Popover>
@@ -1485,9 +1413,10 @@ export default function SpringleafResidenceLanding() {
                       'Book Showflat Visit'
                     )}
                   </Button>
-                  <p className="text-sm italic text-white-600 mt-4 text-left">
-                    By submitting this form, you agree to receive marketing communications from KW Singapore. 
-                    <br /> You can unsubscribe at any time.
+                  <p className="text-sm italic text-white-600 mt-4 text-center">
+                    Upon registering, you agree to receive future marketing materials from KW Singapore. 
+                    <br /> 
+                    Your personal information will be used in accordance with our <a href="/privacy-policy" className="text-white hover:text-gray-300">privacy policy</a>.
                   </p>
                 </div>
               </form>
