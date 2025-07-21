@@ -37,6 +37,7 @@ import {
   Compass,
   Layers,
   Info,
+  X,
 } from "lucide-react"
 import { Calendar as CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
@@ -215,6 +216,7 @@ export default function SpringleafResidenceLanding() {
   const [date, setDate] = useState<Date>()
   const [isVisible, setIsVisible] = useState(false)
   const [animatedSections, setAnimatedSections] = useState<Set<string>>(new Set())
+  const [showSiteMapPopup, setShowSiteMapPopup] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -297,21 +299,37 @@ export default function SpringleafResidenceLanding() {
   }
 
   const amenities = [
-    { icon: <Car className="w-6 h-6" />, name: "Covered Parking", distance: "On-site" },
-    { icon: <Train className="w-6 h-6" />, name: "Springleaf MRT", distance: "2 mins walk" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Thomson Plaza", distance: "5 mins drive" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Northpoint City", distance: "8 mins drive" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "AMK Hub", distance: "10 mins drive" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Lentor Modern Mall", distance: "Upcoming" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Bishan Junction 8", distance: "12 mins drive" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Upper Thomson Rd Eateries", distance: "3 mins walk" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "CHIJ St Nicholas Girls' School", distance: "8 mins drive" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Anderson Primary School", distance: "5 mins drive" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Mayflower Primary School", distance: "6 mins drive" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Peiying Primary School", distance: "7 mins drive" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Chung Cheng High School (Yishun)", distance: "10 mins drive" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "GEMS World Academy", distance: "15 mins drive" },
-    { icon: <Hospital className="w-6 h-6" />, name: "KK Hospital", distance: "10 mins drive" },
+    // CONNECTIVITY
+    { icon: <Train className="w-6 h-6" />, name: "Springleaf MRT Station (via sheltered walkway)", distance: "<2-MIN walk" },
+    { icon: <Train className="w-6 h-6" />, name: "Khatib MRT Station", distance: "12-MIN cycling" },
+    { icon: <Train className="w-6 h-6" />, name: "Seletar Expressway (SLE)", distance: "3-MIN drive" },
+    { icon: <Train className="w-6 h-6" />, name: "North-South Corridor (U/C)", distance: "8-MIN drive" },
+    { icon: <Train className="w-6 h-6" />, name: "Central Expressway (CTE)", distance: "10-MIN drive" },
+    
+    // RETAIL & F&B
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Springleaf Eateries", distance: "2-MIN walk" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Lentor Modern Mall", distance: "1-STOP MRT" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Mayflower Shopping & Food Centre", distance: "2-STOPS MRT" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Thomson Plaza", distance: "4-STOPS MRT" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Northpoint City", distance: "14-MIN drive" },
+    
+    // NATURE & LEISURE
+    { icon: <Trees className="w-6 h-6" />, name: "Springleaf Nature Park", distance: "9-MIN walk" },
+    { icon: <Trees className="w-6 h-6" />, name: "Upper Seletar Reservoir Park", distance: "5-MIN cycling" },
+    { icon: <Trees className="w-6 h-6" />, name: "Sembawang Golf Course", distance: "7-MIN cycling" },
+    { icon: <Trees className="w-6 h-6" />, name: "Lower Seletar Reservoir Park", distance: "10-MIN cycling" },
+    { icon: <Trees className="w-6 h-6" />, name: "Yishun Sport Centre", distance: "12-MIN cycling" },
+    { icon: <Trees className="w-6 h-6" />, name: "Thomson Nature Park", distance: "13-MIN cycling" },
+    
+    // EDUCATION
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Anderson Primary School", distance: "1-STOP MRT" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "CHIJ St Nicholas Girls' School", distance: "2-STOPS MRT" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Ai Tong School", distance: "3-STOPS MRT" },
+    
+    // HEALTHCARE
+    { icon: <Hospital className="w-6 h-6" />, name: "Khatib Polyclinic", distance: "9-MIN drive" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Khoo Teck Puat Hospital", distance: "9-MIN drive" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Ang Mo Kio Polyclinic", distance: "12-MIN drive" },
   ]
 
   const nextImage = () => {
@@ -372,6 +390,15 @@ export default function SpringleafResidenceLanding() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+
+  const [siteMapFormData, setSiteMapFormData] = useState({
+    fullName: '',
+    emailAddress: '',
+    contactNumber: ''
+  })
+  const [isSiteMapSubmitting, setIsSiteMapSubmitting] = useState(false)
+  const [siteMapSubmitSuccess, setSiteMapSubmitSuccess] = useState(false)
+  const [siteMapSubmitError, setSiteMapSubmitError] = useState<string | null>(null)
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -443,6 +470,79 @@ export default function SpringleafResidenceLanding() {
       })
     } finally {
       setIsSubmitting(false)
+    }
+  }
+
+  const handleSiteMapFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    // Validate required fields
+    if (!siteMapFormData.fullName.trim() || !siteMapFormData.emailAddress.trim() || !siteMapFormData.contactNumber.trim()) {
+      setSiteMapSubmitError('Full name, email address, and contact number are required')
+      toast({
+        title: "Validation Error",
+        description: "Full name, email address, and contact number are required",
+        variant: "destructive",
+      })
+      return
+    }
+
+    setIsSiteMapSubmitting(true)
+    setSiteMapSubmitError(null)
+
+    // Show submitting toast
+    toast({
+      title: "Submitting...",
+      description: "Please wait while we process your request",
+    })
+
+    try {
+      const response = await fetch('/api/site-map-request', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(siteMapFormData),
+      })
+
+      const result = await response.json()
+
+      if (response.ok && result.success) {
+        setSiteMapSubmitSuccess(true)
+        setSiteMapFormData({
+          fullName: '',
+          emailAddress: '',
+          contactNumber: ''
+        })
+        
+        // Show success toast
+        toast({
+          title: "Request Submitted Successfully!",
+          description: "Thank you for your interest! We have sent you a confirmation email and our team will contact you soon with the site map.",
+          variant: "default",
+        })
+        
+        // Close popup after 3 seconds
+        setTimeout(() => {
+          setShowSiteMapPopup(false)
+          setSiteMapSubmitSuccess(false)
+        }, 3000)
+      } else {
+        throw new Error(result.error || 'Failed to submit form')
+      }
+    } catch (error) {
+      console.error('Site map form submission error:', error)
+      const errorMessage = error instanceof Error ? error.message : 'Failed to submit form. Please try again.'
+      setSiteMapSubmitError(errorMessage)
+      
+      // Show error toast
+      toast({
+        title: "Submission Failed",
+        description: errorMessage,
+        variant: "destructive",
+      })
+    } finally {
+      setIsSiteMapSubmitting(false)
     }
   }
 
@@ -632,7 +732,7 @@ export default function SpringleafResidenceLanding() {
               { icon: <MountainSnow className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Near <strong>Upper Seletar Reservoir</strong>, Mandai Wildlife, & Nature Parks" },
               { icon: <ShoppingBag className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Surrounded by Hawker Fare, Upscale Dining, Golf & Malls" },
               { icon: <BedDouble className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "1- to 5-Bedroom Units, Full Condo Facilities" },
-              { icon: <ChartLine className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Attractive Pricing from ~$2250 PSF" },
+              { icon: <ChartLine className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Attractive Pricing Averaging at ~$2250 PSF" },
               { icon: <Compass className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Direct connectivity to SLE, CTE, TPE & Upcoming North-South Corridor" },
               { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "5 Towers + Conservation Block | <strong>99-Year Leasehold</strong>" },
               { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Developed by <strong>GuocoLand & Hong Leong</strong>" }
@@ -723,11 +823,11 @@ export default function SpringleafResidenceLanding() {
                 <div className="space-y-4">
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-semibold text-white">Site Plan</h4>
+                      <h4 className="font-semibold text-white">Site Map</h4>
                     </div>
                     <Image
                       src="/images/springleaf-residence/springleaf-residence-site-plan.webp"
-                      alt="Springleaf Residence Site Plan"
+                      alt="Springleaf Residence Site Map"
                       width={300}
                       height={200}
                       className="w-full rounded mb-3 hover:scale-95 transition-transform duration-500"
@@ -735,9 +835,14 @@ export default function SpringleafResidenceLanding() {
                     <p className="text-sm text-gray-300 mb-3">
                       View the overall development layout and facilities distribution
                     </p>
-                    <Button variant="outline" size="sm" className="w-full bg-[#ce001f] hover:bg-[#ce001f]/20 hover:text-white transition-all duration-300 border-gray-500 text-gray-300">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full bg-[#ce001f] hover:bg-[#ce001f]/20 hover:text-white transition-all duration-300 border-gray-500 text-gray-300"
+                      onClick={() => setShowSiteMapPopup(true)}
+                    >
                       <Download className="w-4 h-4 mr-2" />
-                      Required Site Plan
+                      Required Site Map
                     </Button>
                   </div>
                 </div>
@@ -778,7 +883,7 @@ export default function SpringleafResidenceLanding() {
                   className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
                   onClick={prevImage}
                 >
-                  <ChevronLeft className="w-5 h-5" />
+                  <ChevronLeft className="w-5 h-5 text-[#ce001f]" />
                 </Button>
                 <Button
                   variant="outline"
@@ -786,7 +891,7 @@ export default function SpringleafResidenceLanding() {
                   className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
                   onClick={nextImage}
                 >
-                  <ChevronRight className="w-5 h-5" />
+                  <ChevronRight className="w-5 h-5 text-[#ce001f]" />
                 </Button>
 
                 
@@ -1226,11 +1331,11 @@ export default function SpringleafResidenceLanding() {
                   <strong> Can Springleaf truly stand out — or will it be buried in the noise?</strong>
                 </p>
                 <Button 
-                    className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 hover:scale-105 transition-all duration-300"
+                    className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
                     onClick={() => window.open('https://newlaunch.kwsingapore.com/webinars/springleaf-residence-vs-the-supply-surge', '_blank')}
                   >
-                    <Info className="w-5 h-5 mr-2" />
-                    Read More
+                    <Play className="w-5 h-5 mr-2" />
+                    Watch Webinar
                   </Button>
               </div>
             </div>
@@ -1371,6 +1476,11 @@ export default function SpringleafResidenceLanding() {
                         onSelect={(date) => setFormData(prev => ({ ...prev, preferredDate: date }))}
                         initialFocus
                         defaultMonth={new Date(2025, 7, 1)} // August 2025 (month is 0-indexed, so 7 = August)
+                        disabled={(date) => {
+                          // Disable all dates up to and including July 31st, 2025
+                          const july31st = new Date(2025, 6, 31); // July 31st, 2025 (month is 0-indexed, so 6 = July)
+                          return date <= july31st;
+                        }}
                       />
                     </PopoverContent>
                   </Popover>
@@ -1424,6 +1534,109 @@ export default function SpringleafResidenceLanding() {
           </div>
         </div>
       </section>
+
+      {/* Site Map Request Popup */}
+      {showSiteMapPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-gray-900">Request Site Map</h2>
+                <button
+                  onClick={() => setShowSiteMapPopup(false)}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              {siteMapSubmitError && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
+                  {siteMapSubmitError}
+                </div>
+              )}
+              
+              {siteMapSubmitSuccess && (
+                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-600 text-sm">
+                  Thank you for your interest! We will contact you soon with the site map.
+                </div>
+              )}
+
+              <form onSubmit={handleSiteMapFormSubmit} className="space-y-4">
+                <div>
+                  <label htmlFor="siteMapFullName" className="block text-sm font-medium text-gray-700 mb-2">
+                    Full Name *
+                  </label>
+                  <Input
+                    id="siteMapFullName"
+                    type="text"
+                    value={siteMapFormData.fullName}
+                    onChange={(e) => setSiteMapFormData(prev => ({ ...prev, fullName: e.target.value }))}
+                    placeholder="Enter your full name"
+                    className="w-full bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-500 focus:border-[#ce001f] focus:ring-[#ce001f] focus:ring-opacity-20 transition-all duration-200"
+                    required
+                    disabled={isSiteMapSubmitting}
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="siteMapEmail" className="block text-sm font-medium text-gray-700 mb-2">
+                    Email Address *
+                  </label>
+                  <Input
+                    id="siteMapEmail"
+                    type="email"
+                    value={siteMapFormData.emailAddress}
+                    onChange={(e) => setSiteMapFormData(prev => ({ ...prev, emailAddress: e.target.value }))}
+                    placeholder="Enter your email address"
+                    className="w-full bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-500 focus:border-[#ce001f] focus:ring-[#ce001f] focus:ring-opacity-20 transition-all duration-200"
+                    required
+                    disabled={isSiteMapSubmitting}
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="siteMapPhone" className="block text-sm font-medium text-gray-700 mb-2">
+                    Contact Number *
+                  </label>
+                  <Input
+                    id="siteMapPhone"
+                    type="tel"
+                    value={siteMapFormData.contactNumber}
+                    onChange={(e) => setSiteMapFormData(prev => ({ ...prev, contactNumber: e.target.value }))}
+                    placeholder="Enter your contact number"
+                    className="w-full bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-500 focus:border-[#ce001f] focus:ring-[#ce001f] focus:ring-opacity-20 transition-all duration-200"
+                    required
+                    disabled={isSiteMapSubmitting}
+                  />
+                </div>
+
+                <div className="pt-4">
+                  <Button
+                    type="submit"
+                    disabled={isSiteMapSubmitting}
+                    className="w-full bg-[#ce001f] hover:bg-[#b3001a] text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSiteMapSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                        Submitting...
+                      </>
+                    ) : (
+                      'Request Site Map'
+                    )}
+                  </Button>
+                </div>
+
+                <p className="text-xs text-gray-500 text-center mt-4">
+                  Upon submitting, you agree to receive future marketing materials from KW Singapore. 
+                  Your personal information will be used in accordance with our privacy policy.
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
 
 
     </div>

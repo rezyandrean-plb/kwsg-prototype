@@ -6,25 +6,21 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { 
       fullName, 
-      contactNumber, 
       emailAddress, 
-      preferredDate, 
-      preferredTiming 
+      contactNumber
     } = body
 
-    console.log('Springleaf Residence form submission received:', { 
+    console.log('Site Map request form submission received:', { 
       fullName, 
-      contactNumber, 
       emailAddress, 
-      preferredDate, 
-      preferredTiming 
+      contactNumber
     })
 
     // Validate required fields
-    if (!fullName || !contactNumber) {
+    if (!fullName || !emailAddress || !contactNumber) {
       console.log('Validation failed: Missing required fields')
       return NextResponse.json(
-        { error: 'Full name and contact number are required' },
+        { error: 'Full name, email address, and contact number are required' },
         { status: 400 }
       )
     }
@@ -32,10 +28,8 @@ export async function POST(request: NextRequest) {
     // Send notification email to PropertyLim Brothers team
     const notificationResult = await sendNotificationEmail({
       fullName,
-      contactNumber,
       emailAddress,
-      preferredDate,
-      preferredTiming
+      contactNumber
     })
 
     console.log('Notification email result:', notificationResult)
@@ -44,30 +38,27 @@ export async function POST(request: NextRequest) {
       console.error('Failed to send notification email:', notificationResult.error)
     }
 
-    // Send auto-reply email to the contact (if email provided)
-    let autoReplyResult = null
-    if (emailAddress) {
-      autoReplyResult = await sendAutoReplyEmail({
-        fullName,
-        emailAddress
-      })
+    // Send auto-reply email to the contact
+    const autoReplyResult = await sendAutoReplyEmail({
+      fullName,
+      emailAddress
+    })
 
-      console.log('Auto-reply result:', autoReplyResult)
+    console.log('Auto-reply result:', autoReplyResult)
 
-      if (!autoReplyResult.success) {
-        console.error('Failed to send auto-reply email:', autoReplyResult.error)
-      }
+    if (!autoReplyResult.success) {
+      console.error('Failed to send auto-reply email:', autoReplyResult.error)
     }
 
     return NextResponse.json({
       success: true,
-      message: 'Thank you for your interest in Springleaf Residence! We have sent you a confirmation email and our team will contact you soon to arrange your showflat visit.',
+      message: 'Thank you for your interest! We have sent you a confirmation email and our team will contact you soon with the site map.',
       notificationSent: notificationResult.success,
-      autoReplySent: autoReplyResult?.success || false
+      autoReplySent: autoReplyResult.success
     })
 
   } catch (error) {
-    console.error('Springleaf Residence form error:', error)
+    console.error('Site Map request form error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -77,22 +68,18 @@ export async function POST(request: NextRequest) {
 
 async function sendNotificationEmail({ 
   fullName, 
-  contactNumber, 
   emailAddress, 
-  preferredDate, 
-  preferredTiming 
+  contactNumber
 }: {
   fullName: string
+  emailAddress: string
   contactNumber: string
-  emailAddress?: string
-  preferredDate?: Date
-  preferredTiming?: string
 }) {
   try {
     const isDevelopment = process.env.NODE_ENV === 'development'
     const apiKey = process.env.SENDGRID_API_KEY
     const fromEmail = process.env.FROM_EMAIL || 'noreply@kwsg.com'
-    const toEmails = ['dil.marc@propertylimbrothers.com', 'consults@propertylimbrothers.com']
+    const toEmails = ['dil.marc@propertylimbrothers.com', 'plbcare@propertylimbrothers.com']
     
     console.log('Notification email configuration:', {
       isDevelopment,
@@ -112,29 +99,19 @@ async function sendNotificationEmail({
     
     sgMail.setApiKey(apiKey)
 
-    const formatDate = (date?: Date) => {
-      if (!date) return 'Not specified'
-      return new Date(date).toLocaleDateString('en-SG', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      })
-    }
-
     const emailContent = {
       to: toEmails,
       from: fromEmail,
-      subject: `New Springleaf Residence Showflat Visit Request - ${fullName}`,
+      subject: `New Site Map Request - Springleaf Residence - ${fullName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #ce001f; color: white; padding: 20px; text-align: center;">
             <h1 style="margin: 0; font-size: 24px;">KW Singapore</h1>
-            <p style="margin: 5px 0 0 0; font-size: 16px;">Springleaf Residence Showflat Visit Request</p>
+            <p style="margin: 5px 0 0 0; font-size: 16px;">Site Map Request - Springleaf Residence</p>
           </div>
           
           <div style="padding: 30px; background-color: #f9f9f9;">
-            <h2 style="color: #333; margin-bottom: 20px;">New Showflat Visit Request</h2>
+            <h2 style="color: #333; margin-bottom: 20px;">New Site Map Request</h2>
             
             <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
               <h3 style="color: #ce001f; margin-top: 0;">Contact Information</h3>
@@ -144,27 +121,20 @@ async function sendNotificationEmail({
                   <td style="padding: 8px 0; border-bottom: 1px solid #eee; color: #333;">${fullName}</td>
                 </tr>
                 <tr>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #666;">Email Address:</td>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #eee; color: #333;">${emailAddress}</td>
+                </tr>
+                <tr>
                   <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #666;">Contact Number:</td>
                   <td style="padding: 8px 0; border-bottom: 1px solid #eee; color: #333;">${contactNumber}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #666;">Email Address:</td>
-                  <td style="padding: 8px 0; border-bottom: 1px solid #eee; color: #333;">${emailAddress || 'Not provided'}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #666;">Preferred Date:</td>
-                  <td style="padding: 8px 0; border-bottom: 1px solid #eee; color: #333;">${formatDate(preferredDate)}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #666;">Preferred Time:</td>
-                  <td style="padding: 8px 0; border-bottom: 1px solid #eee; color: #333;">${preferredTiming || 'Not specified'}</td>
                 </tr>
               </table>
             </div>
             
             <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-              <h3 style="color: #ce001f; margin-top: 0;">Project Details</h3>
+              <h3 style="color: #ce001f; margin-top: 0;">Request Details</h3>
               <p style="color: #666; line-height: 1.6; margin: 0;">
+                <strong>Request Type:</strong> Site Map<br>
                 <strong>Project:</strong> Springleaf Residence<br>
                 <strong>Location:</strong> District 26, Upper Thomson<br>
                 <strong>Developer:</strong> GuocoLand & Hong Leong<br>
@@ -176,9 +146,9 @@ async function sendNotificationEmail({
               <a href="tel:${contactNumber}" style="background-color: #ce001f; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block; margin-right: 10px;">
                 Call Contact
               </a>
-              ${emailAddress ? `<a href="mailto:${emailAddress}" style="background-color: #333; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block;">
+              <a href="mailto:${emailAddress}" style="background-color: #333; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block;">
                 Email Contact
-              </a>` : ''}
+              </a>
             </div>
           </div>
           
@@ -259,12 +229,12 @@ async function sendAutoReplyEmail({ fullName, emailAddress }: {
     const emailContent = {
       to: emailAddress,
       from: fromEmail,
-      subject: `Springleaf Residence Showflat Visit Request Confirmation - KW Singapore`,
+      subject: `Site Map Request Confirmation - Springleaf Residence - KW Singapore`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #ce001f; color: white; padding: 20px; text-align: center;">
             <h1 style="margin: 0; font-size: 24px;">KW Singapore</h1>
-            <p style="margin: 5px 0 0 0; font-size: 16px;">Springleaf Residence Showflat Visit</p>
+            <p style="margin: 5px 0 0 0; font-size: 16px;">Site Map Request - Springleaf Residence</p>
           </div>
           
           <div style="padding: 30px; background-color: #f9f9f9;">
@@ -275,16 +245,16 @@ async function sendAutoReplyEmail({ fullName, emailAddress }: {
                 Dear ${fullName},
               </p>
               <p style="color: #666; line-height: 1.6; margin: 10px 0 0 0;">
-                Thank you for your interest in Springleaf Residence! We have received your showflat visit request and our team will contact you within 24 business hours to arrange your visit.
+                Thank you for your interest in Springleaf Residence! We have received your site map request and our team will contact you within 24 business hours to provide you with the detailed site map and additional project information.
               </p>
             </div>
             
             <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
               <h3 style="color: #ce001f; margin-top: 0;">What's Next?</h3>
               <ul style="color: #666; line-height: 1.6; margin: 0; padding-left: 20px;">
-                <li>Our team will call you to confirm your preferred visit date and time</li>
-                <li>We'll provide you with detailed directions to the showflat</li>
-                <li>You'll receive exclusive information about unit availability and pricing</li>
+                <li>Our team will call you to confirm your request</li>
+                <li>We'll send you the detailed site map via email</li>
+                <li>You'll receive exclusive information about unit layouts and facilities</li>
                 <li>Our property experts will be available to answer all your questions</li>
               </ul>
             </div>
