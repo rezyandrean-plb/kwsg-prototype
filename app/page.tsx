@@ -154,7 +154,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col bg-white">
       {/* Hero Section - Updated with new design but keeping video background */}
-      <section className="relative min-h-[70vh] sm:min-h-[50vh] md:min-h-screen flex items-center justify-center pt-20 sm:pt-20">
+      <section className="relative min-h-[70vh] sm:min-h-[50vh] md:min-h-[80vh] lg:min-h-screen flex items-center justify-center pt-20 sm:pt-20 md:pt-12">
         {/* Background elements */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -221,7 +221,7 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.2 }}
           onClick={scrollToAdvantage}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hover:scale-110 transition-transform cursor-pointer"
+          className="absolute bottom-8 md:bottom-4 left-1/2 transform -translate-x-1/2 animate-bounce hover:scale-110 transition-transform cursor-pointer"
         >
           <ChevronRight className="h-6 w-6 text-[#B40101] rotate-90" />
         </motion.button>

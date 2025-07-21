@@ -300,36 +300,36 @@ export default function SpringleafResidenceLanding() {
 
   const amenities = [
     // CONNECTIVITY
-    { icon: <Train className="w-6 h-6" />, name: "Springleaf MRT Station (via sheltered walkway)", distance: "<2-MIN walk" },
-    { icon: <Train className="w-6 h-6" />, name: "Khatib MRT Station", distance: "12-MIN cycling" },
-    { icon: <Train className="w-6 h-6" />, name: "Seletar Expressway (SLE)", distance: "3-MIN drive" },
-    { icon: <Train className="w-6 h-6" />, name: "North-South Corridor (U/C)", distance: "8-MIN drive" },
-    { icon: <Train className="w-6 h-6" />, name: "Central Expressway (CTE)", distance: "10-MIN drive" },
+    { icon: <Train className="w-6 h-6" />, name: "Springleaf MRT Station (via sheltered walkway)", distance: "<2-Mins walk" },
+    { icon: <Train className="w-6 h-6" />, name: "Khatib MRT Station", distance: "12-Mins cycling" },
+    { icon: <Train className="w-6 h-6" />, name: "Seletar Expressway (SLE)", distance: "3-Mins drive" },
+    { icon: <Train className="w-6 h-6" />, name: "North-South Corridor (U/C)", distance: "8-Mins drive" },
+    { icon: <Train className="w-6 h-6" />, name: "Central Expressway (CTE)", distance: "10-Mins drive" },
     
     // RETAIL & F&B
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Springleaf Eateries", distance: "2-MIN walk" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Lentor Modern Mall", distance: "1-STOP MRT" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Mayflower Shopping & Food Centre", distance: "2-STOPS MRT" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Thomson Plaza", distance: "4-STOPS MRT" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Northpoint City", distance: "14-MIN drive" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Springleaf Eateries", distance: "2-Mins walk" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Lentor Modern Mall", distance: "1-Stop MRT" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Mayflower Shopping & Food Centre", distance: "2-Stops MRT" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Thomson Plaza", distance: "4-Stops MRT" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Northpoint City", distance: "14-Mins drive" },
     
     // NATURE & LEISURE
-    { icon: <Trees className="w-6 h-6" />, name: "Springleaf Nature Park", distance: "9-MIN walk" },
-    { icon: <Trees className="w-6 h-6" />, name: "Upper Seletar Reservoir Park", distance: "5-MIN cycling" },
-    { icon: <Trees className="w-6 h-6" />, name: "Sembawang Golf Course", distance: "7-MIN cycling" },
-    { icon: <Trees className="w-6 h-6" />, name: "Lower Seletar Reservoir Park", distance: "10-MIN cycling" },
-    { icon: <Trees className="w-6 h-6" />, name: "Yishun Sport Centre", distance: "12-MIN cycling" },
-    { icon: <Trees className="w-6 h-6" />, name: "Thomson Nature Park", distance: "13-MIN cycling" },
+    { icon: <Trees className="w-6 h-6" />, name: "Springleaf Nature Park", distance: "9-Mins walk" },
+    { icon: <Trees className="w-6 h-6" />, name: "Upper Seletar Reservoir Park", distance: "5-Mins cycling" },
+    { icon: <Trees className="w-6 h-6" />, name: "Sembawang Golf Course", distance: "7-Mins cycling" },
+    { icon: <Trees className="w-6 h-6" />, name: "Lower Seletar Reservoir Park", distance: "10-Mins cycling" },
+    { icon: <Trees className="w-6 h-6" />, name: "Yishun Sport Centre", distance: "12-Mins cycling" },
+    { icon: <Trees className="w-6 h-6" />, name: "Thomson Nature Park", distance: "13-Mins cycling" },
     
     // EDUCATION
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Anderson Primary School", distance: "1-STOP MRT" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "CHIJ St Nicholas Girls' School", distance: "2-STOPS MRT" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Ai Tong School", distance: "3-STOPS MRT" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Anderson Primary School", distance: "1-Stop MRT" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "CHIJ St Nicholas Girls' School", distance: "2-Stops MRT" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Ai Tong School", distance: "3-Stops MRT" },
     
     // HEALTHCARE
-    { icon: <Hospital className="w-6 h-6" />, name: "Khatib Polyclinic", distance: "9-MIN drive" },
-    { icon: <Hospital className="w-6 h-6" />, name: "Khoo Teck Puat Hospital", distance: "9-MIN drive" },
-    { icon: <Hospital className="w-6 h-6" />, name: "Ang Mo Kio Polyclinic", distance: "12-MIN drive" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Khatib Polyclinic", distance: "9-Mins drive" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Khoo Teck Puat Hospital", distance: "9-Mins drive" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Ang Mo Kio Polyclinic", distance: "12-Mins drive" },
   ]
 
   const nextImage = () => {
@@ -651,7 +651,7 @@ export default function SpringleafResidenceLanding() {
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
             {/* Clean Badge */}
-            <div className={`mb-8 transition-all duration-700 delay-500 ${
+            <div className={`mb-4 transition-all duration-700 delay-500 ${
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Badge className="bg-[#ce001f] text-white px-4 py-2 text-sm font-medium rounded-full animate-pulse">
@@ -660,23 +660,23 @@ export default function SpringleafResidenceLanding() {
             </div>
 
             {/* Clean Typography */}
-            <div className={`mb-8 transition-all duration-700 delay-700 ${
+            <div className={`mb-8 sm:mb-6 md:mb-6 lg:mb-8 transition-all duration-700 delay-700 ${
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
-              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-                <span className={`inline-block transition-all duration-1000 delay-900 ${isVisible ? 'animate-fade-in-left' : ''}`}>SPRINGLEAF</span>
-                <br />
-                <span className={`text-4xl md:text-6xl font-light text-white/90 inline-block transition-all duration-1000 delay-1100 ${isVisible ? 'animate-fade-in-right' : ''}`}>RESIDENCE</span>
+              <h1 className="text-5xl md:text-7xl font-bold text-white mb-2 sm:mb-4 md:mb-4 lg:mb-6 leading-tight flex flex-col lg:block">
+                <span className={`transition-all duration-1000 delay-900 ${isVisible ? 'animate-fade-in-left' : ''}`}>SPRINGLEAF</span>
+                <br className="hidden lg:block" />
+                <span className={`text-4xl md:text-6xl font-light text-white/90 transition-all duration-1000 delay-1100 lg:ml-0 ${isVisible ? 'animate-fade-in-right' : ''}`}>RESIDENCE</span>
               </h1>
 
-              <div className={`flex items-center mb-6 transition-all duration-700 delay-1300 ${
+              <div className={`flex items-center mb-2 sm:mb-4 md:mb-4 lg:mb-6 transition-all duration-700 delay-1300 ${
                 isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
               }`}>
                 <div className="w-12 h-px bg-[#ce001f] mr-4"></div>
                 <p className="text-lg text-gray-200 font-light">District 26, Upper Thomson</p>
               </div>
 
-              <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-8 transition-all duration-700 delay-1500 ${
+              <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-8 sm:mb-6 md:mb-6 lg:mb-8 transition-all duration-700 delay-1500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
                 Redefining Modern Living in Nature's Embrace
@@ -684,7 +684,7 @@ export default function SpringleafResidenceLanding() {
             </div>
 
             {/* Clean CTA Buttons */}
-            <div className={`cta-buttons-container mb-12 transition-all duration-700 delay-1700 ${
+            <div className={`cta-buttons-container mb-12 sm:mb-8 md:mb-8 lg:mb-12 transition-all duration-700 delay-1700 ${
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Button 
@@ -810,7 +810,7 @@ export default function SpringleafResidenceLanding() {
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Blocks:</span>
-                  <span className="font-semibold text-white">5 x 25-Storey + 1 x 4-Storey Conservation</span>
+                  <span className="font-semibold text-white text-right sm:text-left">5 x 25-Storey + 1 x 4-Storey Conservation</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Total Units:</span>
@@ -1121,41 +1121,41 @@ export default function SpringleafResidenceLanding() {
             opacity: animatedSections.has('investor-benefits') ? 1 : 0,
             transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(50px)'
           }}>
-            {/* Top Row - 3 Cards */}
-            <div className="grid md:grid-cols-3 gap-6 mb-6">
+            {/* First Row - 2 Cards on Mobile, 3 Cards on Desktop */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
               {[
-                { icon: <Train className="w-8 h-8" style={{ color: '#ce001f' }} />, text: "MRT-adjacent - Strong rental appeal" },
-                { icon: <MountainSnow className="w-8 h-8" style={{ color: '#ce001f' }} />, text: "Near Woodlands Regional Centre - future growth node" },
-                { icon: <Clock className="w-8 h-8" style={{ color: '#ce001f' }} />, text: "Limited new launches in D26" }
+                { icon: <Train className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "MRT-adjacent - Strong rental appeal" },
+                { icon: <MountainSnow className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "Near Woodlands Regional Centre - future growth node" },
+                { icon: <Clock className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "Limited new launches in D26" }
               ].map((benefit, index) => (
                 <div 
                   key={index} 
                   className={`text-left hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
                     animatedSections.has('investor-benefits') ? 'animate' : ''
-                  }`} 
+                  } ${index === 2 ? 'hidden md:block' : ''}`} 
                   style={{ 
                     transitionDelay: `${index * 200}ms`,
                     opacity: animatedSections.has('investor-benefits') ? 1 : 0,
                     transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
                   }}
                 >
-                  <div className="p-6 flex items-center space-x-4">
+                  <div className="p-4 md:p-6 flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-4 min-h-[100px] md:min-h-[120px]">
                     <div>{benefit.icon}</div>
-                    <p className="text-sm text-gray-300 font-medium">{benefit.text}</p>
+                    <p className="text-xs md:text-lg text-gray-300 font-light text-center md:text-left">{benefit.text}</p>
                   </div>
                 </div>
               ))}
             </div>
             
-            {/* Bottom Row - 2 Cards Centered */}
-            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {/* Second Row - 2 Cards on Mobile, 2 Cards on Desktop */}
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-6 mb-6">
               {[
-                { icon: <Trees className="w-8 h-8" style={{ color: '#ce001f' }} />, text: "Nature views + lifestyle value" },
-                { icon: <Boxes className="w-8 h-8" style={{ color: '#ce001f' }} />, text: "Ideal for both capital appreciation & family living" }
+                { icon: <Trees className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "Nature views + lifestyle value" },
+                { icon: <Boxes className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "Ideal for both capital appreciation & family living" }
               ].map((benefit, index) => (
                 <div 
                   key={index + 3} 
-                  className={`text-left hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
+                  className={`text-center hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
                     animatedSections.has('investor-benefits') ? 'animate' : ''
                   }`} 
                   style={{ 
@@ -1164,12 +1164,33 @@ export default function SpringleafResidenceLanding() {
                     transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
                   }}
                 >
-                  <div className="p-6 flex items-center space-x-4">
+                  <div className="p-4 md:p-6 flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-4 min-h-[100px] md:min-h-[120px]">
                     <div>{benefit.icon}</div>
-                    <p className="text-sm text-gray-300 font-medium">{benefit.text}</p>
+                    <p className="text-xs md:text-lg text-gray-300 font-light text-center">{benefit.text}</p>
                   </div>
                 </div>
               ))}
+            </div>
+            
+            {/* Third Row - 1 Card Centered on Mobile, Hidden on Desktop */}
+            <div className="grid grid-cols-4 md:hidden gap-6">
+              <div className="col-span-1"></div>
+              <div 
+                className={`col-span-2 text-center hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
+                  animatedSections.has('investor-benefits') ? 'animate' : ''
+                }`} 
+                style={{ 
+                  transitionDelay: `1000ms`,
+                  opacity: animatedSections.has('investor-benefits') ? 1 : 0,
+                  transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
+                }}
+              >
+                <div className="p-4 md:p-6 flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-4 min-h-[100px] md:min-h-[120px]">
+                  <div><Clock className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} /></div>
+                  <p className="text-xs md:text-lg text-gray-300 font-light text-center">Limited new launches in D26</p>
+                </div>
+              </div>
+              <div className="col-span-1"></div>
             </div>
           </div>
         </div>
@@ -1248,7 +1269,7 @@ export default function SpringleafResidenceLanding() {
             </Card>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
             {amenities.map((amenity, index) => (
               <Card 
                 key={index} 
@@ -1261,11 +1282,11 @@ export default function SpringleafResidenceLanding() {
                   transform: animatedSections.has('nearby-amenities') ? 'translateY(0)' : 'translateY(40px)'
                 }}
               >
-                <CardContent className="p-6 flex items-center space-x-4">
+                <CardContent className="p-4 md:p-6 flex flex-col md:flex-row items-center justify-center md:justify-start space-y-2 md:space-y-0 md:space-x-4 min-h-[100px] md:min-h-[120px]">
                   <div style={{ color: '#ce001f' }}>{amenity.icon}</div>
-                  <div>
-                    <h3 className="font-semibold text-lg text-white">{amenity.name}</h3>
-                    <p className="text-gray-300 font-light">{amenity.distance}</p>
+                  <div className="text-center md:text-left">
+                    <h3 className="font-semibold text-xs md:text-lg text-white">{amenity.name}</h3>
+                    <p className="text-gray-300 font-light text-xs md:text-sm">{amenity.distance}</p>
                   </div>
                 </CardContent>
               </Card>
@@ -1280,11 +1301,11 @@ export default function SpringleafResidenceLanding() {
           <div className={`text-center mb-16 transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Explore Springleaf Residence</h2>
+            <h2 className="text-2xl md:text-3xl font-light mb-3 text-white text-center tracking-wide">Explore Springleaf Residence</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
               Immerse yourself in the luxury and elegance of our latest development through our comprehensive media
               gallery
             </p>
@@ -1296,12 +1317,12 @@ export default function SpringleafResidenceLanding() {
           }`}>
             
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-6">
+              <div className="space-y-6 order-2 lg:order-1">
                 <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
-                <h3 className="text-3xl font-bold text-[#ce001f]">
+                <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
                   Springleaf Residence New Launch Analysis
                 </h3>
-                <p className="text-gray-300 leading-relaxed text-lg">
+                <p className="text-gray-300 leading-relaxed text-base md:text-lg">
                   District 26's first high-rise mega condo with full facilities. 
                   Developed by visionary GuocoLand and Hong Leong, this 941-unit project offers unbeatable connectivity, unparalleled green premium, and a strategic entry price. 
                   Discover how you can capitalise on this rare opportunity.
@@ -1314,7 +1335,7 @@ export default function SpringleafResidenceLanding() {
                     Watch Analysis
                   </Button>
               </div>
-              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-4">
+              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-4 order-1 lg:order-2">
                 <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
                   <Image
                     src="/images/springleaf-residence/new-launch-analysis.webp?height=320&width=500&text=Lentor+Mansion+Showflat+Tour"
@@ -1328,7 +1349,7 @@ export default function SpringleafResidenceLanding() {
 
             
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-4">
+              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-4 order-1 lg:order-1">
                 <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
                   <Image
                     src="/images/springleaf-residence/new-launch-analysis-2.webp?height=320&width=500&text=Lentor+Rejuvenation+Analysis"
@@ -1338,12 +1359,12 @@ export default function SpringleafResidenceLanding() {
                   />
                 </div>
               </div>
-              <div className="space-y-6 lg:order-2">
+              <div className="space-y-6 order-2 lg:order-2">
                 <Badge className="bg-green-100 text-green-800">NEW LAUNCH ANALYSIS</Badge>
-                <h3 className="text-3xl font-bold text-[#ce001f]">
+                <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
                   Springleaf Residence vs. the Supply Surge: Can a Lower Land Bid Still Outperform in a Crowded District 26?
                 </h3>
-                <p className="text-gray-300 leading-relaxed text-lg">
+                <p className="text-gray-300 leading-relaxed text-base md:text-lg">
                   Before you buy into the hype of D26, ask yourself: Are you investing… or just following the crowd? 
                   In a market flooded with options, the wrong call could mean years of stagnant capital. 
                   This webinar goes beyond brochures and showflat buzz to confront one critical question : 
@@ -1361,12 +1382,12 @@ export default function SpringleafResidenceLanding() {
           </div>
 
           {/* Call to Action */}
-          <div className={`text-center mt-12 mb-4 transition-all duration-1000 delay-500 ${
+          <div className={`text-center mt-12 sm:mt-16 md:mt-18 lg:mt-12 mb-4 transition-all duration-1000 delay-500 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
             <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
-              <h3 className="text-2xl font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
-              <p className="text-lg mb-6 opacity-90">
+              <h3 className="text-xl md:text-2xl font-normal md:font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
+              <p className="text-base md:text-lg mb-6 opacity-90">
                 Register now for an exclusive preview of Springleaf Residence
               </p>
               <div className="cta-buttons-container justify-center">
@@ -1393,7 +1414,7 @@ export default function SpringleafResidenceLanding() {
       {/* Lead Generation Form */}
       <section
         id="lead-form"
-        className={`py-16 relative bg-cover bg-center section-entrance`}
+        className={`py-8 md:py-16 relative bg-cover bg-center section-entrance`}
         data-section-id="lead-form"
         style={{ 
           backgroundImage: "url('/images/springleaf-residence/form-background.jpg')",
@@ -1404,7 +1425,7 @@ export default function SpringleafResidenceLanding() {
         <div className="absolute inset-0 bg-black bg-opacity-60"></div>
         <div className="relative container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-left">
-            <Card className={`bg-white/20 backdrop-blur-sm text-white p-12 shadow-2xl border-0 rounded-xl hover:shadow-3xl transition-all duration-700 hover:scale-105 ${
+            <Card className={`bg-white/20 backdrop-blur-sm text-white p-6 md:p-12 shadow-2xl border-0 rounded-xl hover:shadow-3xl transition-all duration-700 hover:scale-105 ${
               animatedSections.has('lead-form') ? 'animate-scale-in' : ''
             }`} style={{
               opacity: animatedSections.has('lead-form') ? 1 : 0,
