@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -300,7 +301,7 @@ export default function SpringleafResidenceLanding() {
 
   const amenities = [
     // CONNECTIVITY
-    { icon: <Train className="w-6 h-6" />, name: "Springleaf MRT Station (via sheltered walkway)", distance: "<2-Mins walk" },
+    { icon: <Train className="w-6 h-6" />, name: "Springleaf MRT Station)", distance: "<2-Mins walk" },
     { icon: <Train className="w-6 h-6" />, name: "Khatib MRT Station", distance: "12-Mins cycling" },
     { icon: <Train className="w-6 h-6" />, name: "Seletar Expressway (SLE)", distance: "3-Mins drive" },
     { icon: <Train className="w-6 h-6" />, name: "North-South Corridor (U/C)", distance: "8-Mins drive" },
@@ -580,7 +581,7 @@ export default function SpringleafResidenceLanding() {
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-2">
+              <Link href="/" aria-label="Go to homepage" className="flex items-center space-x-2">
                 <Image
                   src="/images/kwsingapore-logo.webp"
                   alt="KW Singapore Logo"
@@ -588,7 +589,7 @@ export default function SpringleafResidenceLanding() {
                   height={100}
                   className="h-12 w-auto"
                 />
-              </div>
+              </Link>
             </div>
               <nav className="hidden md:flex items-center space-x-6">
                 <button 
@@ -633,7 +634,7 @@ export default function SpringleafResidenceLanding() {
       </header>
 
       {/* Clean Modern Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center">
+      <section className="relative min-h-screen md:min-h-0 md:h-[50vh] lg:min-h-screen lg:h-auto flex items-center justify-center">
         {/* Background elements */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -651,7 +652,7 @@ export default function SpringleafResidenceLanding() {
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
             {/* Clean Badge */}
-            <div className={`mb-4 transition-all duration-700 delay-500 ${
+            <div className={`mb-2 sm:mb-2 md:mb-2 transition-all duration-700 delay-500 ${
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Badge className="bg-[#ce001f] text-white px-4 py-2 text-sm font-medium rounded-full animate-pulse">
@@ -660,23 +661,23 @@ export default function SpringleafResidenceLanding() {
             </div>
 
             {/* Clean Typography */}
-            <div className={`mb-8 sm:mb-6 md:mb-6 lg:mb-8 transition-all duration-700 delay-700 ${
+            <div className={`mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-700 ${
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
-              <h1 className="text-5xl md:text-7xl font-bold text-white mb-2 sm:mb-4 md:mb-4 lg:mb-6 leading-tight flex flex-col lg:block">
+              <h1 className="text-5xl md:text-7xl font-bold text-white mb-2 sm:mb-2 md:mb-2 lg:mb-4 leading-tight">
                 <span className={`transition-all duration-1000 delay-900 ${isVisible ? 'animate-fade-in-left' : ''}`}>SPRINGLEAF</span>
-                <br className="hidden lg:block" />
-                <span className={`text-4xl md:text-6xl font-light text-white/90 transition-all duration-1000 delay-1100 lg:ml-0 ${isVisible ? 'animate-fade-in-right' : ''}`}>RESIDENCE</span>
+                <br />
+                <span className={`text-4xl md:text-6xl font-light text-white/90 transition-all duration-1000 delay-1100 ${isVisible ? 'animate-fade-in-right' : ''}`}>RESIDENCE</span>
               </h1>
 
-              <div className={`flex items-center mb-2 sm:mb-4 md:mb-4 lg:mb-6 transition-all duration-700 delay-1300 ${
+              <div className={`flex items-center mb-2 sm:mb-2 md:mb-2 lg:mb-4 transition-all duration-700 delay-1300 ${
                 isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
               }`}>
                 <div className="w-12 h-px bg-[#ce001f] mr-4"></div>
                 <p className="text-lg text-gray-200 font-light">District 26, Upper Thomson</p>
               </div>
 
-              <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-8 sm:mb-6 md:mb-6 lg:mb-8 transition-all duration-700 delay-1500 ${
+              <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
                 Redefining Modern Living in Nature's Embrace
@@ -684,7 +685,7 @@ export default function SpringleafResidenceLanding() {
             </div>
 
             {/* Clean CTA Buttons */}
-            <div className={`cta-buttons-container mb-12 sm:mb-8 md:mb-8 lg:mb-12 transition-all duration-700 delay-1700 ${
+            <div className={`cta-buttons-container mb-4 sm:mb-4 md:mb-4 lg:mb-8 transition-all duration-700 delay-1700 ${
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Button 
@@ -844,9 +845,10 @@ export default function SpringleafResidenceLanding() {
                     <Image
                       src="/images/springleaf-residence/springleaf-residence-site-plan.webp"
                       alt="Springleaf Residence Site Map"
-                      width={300}
-                      height={200}
-                      className="w-full rounded mb-3 hover:scale-95 transition-transform duration-500"
+                      width={800}
+                      height={500}
+                      quality={90}
+                      className="w-full rounded mb-3 hover:scale-95 transition-transform duration-500 object-contain"
                     />
                     <p className="text-sm text-gray-300 mb-3">
                       View the overall development layout and facilities distribution
@@ -1282,11 +1284,13 @@ export default function SpringleafResidenceLanding() {
                   transform: animatedSections.has('nearby-amenities') ? 'translateY(0)' : 'translateY(40px)'
                 }}
               >
-                <CardContent className="p-4 md:p-6 flex flex-col md:flex-row items-center justify-center md:justify-start space-y-2 md:space-y-0 md:space-x-4 min-h-[100px] md:min-h-[120px]">
-                  <div style={{ color: '#ce001f' }}>{amenity.icon}</div>
-                  <div className="text-center md:text-left">
-                    <h3 className="font-semibold text-xs md:text-lg text-white">{amenity.name}</h3>
-                    <p className="text-gray-300 font-light text-xs md:text-sm">{amenity.distance}</p>
+                <CardContent className="p-4 md:p-6 min-h-[100px] md:min-h-[120px] w-full">
+                  <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:items-center md:justify-start md:space-y-0 md:space-x-4 w-full">
+                    <div className="flex-shrink-0" style={{ color: '#ce001f' }}>{amenity.icon}</div>
+                    <div className="text-center md:text-center flex-1 min-w-0">
+                      <h3 className="font-semibold text-xs md:text-lg text-white break-words">{amenity.name}</h3>
+                      <p className="text-gray-300 font-light text-xs md:text-sm break-words">{amenity.distance}</p>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -1298,7 +1302,7 @@ export default function SpringleafResidenceLanding() {
       {/* Enhanced Media Section */}
       <section id="media" className="pt-4 pb-4 bg-[#1c1c1d] flex items-center justify-center">
         <div className="container mx-auto px-4 text-left">
-          <div className={`text-center mb-16 transition-all duration-1000 ${
+          <div className={`text-center mb-8 md:mb-16 transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
             <h2 className="text-2xl md:text-3xl font-light mb-3 text-white text-center tracking-wide">Explore Springleaf Residence</h2>
@@ -1312,11 +1316,11 @@ export default function SpringleafResidenceLanding() {
           </div>
 
           
-          <div className={`space-y-20 transition-all duration-1000 delay-300 ${
+          <div className={`space-y-8 md:space-y-20 transition-all duration-1000 delay-300 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
             
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
               <div className="space-y-6 order-2 lg:order-1">
                 <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
                 <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
@@ -1335,27 +1339,27 @@ export default function SpringleafResidenceLanding() {
                     Watch Analysis
                   </Button>
               </div>
-              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-4 order-1 lg:order-2">
+              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-2">
                 <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
                   <Image
                     src="/images/springleaf-residence/new-launch-analysis.webp?height=320&width=500&text=Lentor+Mansion+Showflat+Tour"
                     alt="Lentor Mansion Showflat Tour"
                     fill
-                    className="object-cover"
+                    className="object-contain md:object-cover"
                   />
                 </div>
               </div>
             </div>
 
             
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-4 order-1 lg:order-1">
+            <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
+              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-1">
                 <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
                   <Image
                     src="/images/springleaf-residence/new-launch-analysis-2.webp?height=320&width=500&text=Lentor+Rejuvenation+Analysis"
                     alt="Lentor's Rejuvenation Analysis"
                     fill
-                    className="object-cover"
+                    className="object-contain md:object-cover"
                   />
                 </div>
               </div>

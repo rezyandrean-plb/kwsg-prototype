@@ -108,12 +108,13 @@ const footerLinks = {
 export function Footer() {
   const pathname = usePathname()
   const isAdminPage = pathname?.startsWith('/admin')
+  const isSpringleafPage = pathname?.startsWith('/springleaf-residence')
 
   if (isAdminPage) return null
 
   return (
     <>
-      <FloatingWhatsApp />
+      {!isSpringleafPage && <FloatingWhatsApp />}
       <footer className="border-t py-8 md:py-12 bg-black text-white">
         <div className="container grid gap-8 md:grid-cols-3">
           <div className="space-y-4">
