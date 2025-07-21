@@ -380,6 +380,16 @@ export default function SpringleafResidenceLanding() {
     }
   }
 
+  const scrollToGallery = () => {
+    const gallerySection = document.getElementById('project-gallery')
+    if (gallerySection) {
+      gallerySection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+  }
+
   const [formData, setFormData] = useState({
     fullName: '',
     contactNumber: '',
@@ -590,6 +600,12 @@ export default function SpringleafResidenceLanding() {
                 {/* <a href="#floor-plans" className="text-white hover:text-[#ce001f] transition-colors duration-300">
                   Floor Plans
                 </a> */}
+                <button 
+                  onClick={scrollToGallery}
+                  className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
+                >
+                  Gallery
+                </button>
                 <button 
                   onClick={scrollToMedia}
                   className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
@@ -851,9 +867,12 @@ export default function SpringleafResidenceLanding() {
           </div>
 
           {/* Image Gallery Section */}
-          <div className={`mb-20 transition-all duration-1000 delay-700 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
+          <div 
+            id="project-gallery"
+            className={`mb-20 transition-all duration-1000 delay-700 ${
+              isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+            }`}
+          >
             <div className="text-center mb-8">
               <h3 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Project Gallery</h3>
               <div className="flex justify-center mb-4">
@@ -899,25 +918,25 @@ export default function SpringleafResidenceLanding() {
                   <div className="text-white">
                     <h4 className="text-lg font-semibold mb-1">
                       {currentImageIndex === 0
-                        ? "Architectural Rendering"
+                        ? "Aerial View"
                         : currentImageIndex === 1
-                          ? "Swimming Pool Deck"
-                          : currentImageIndex === 2
-                            ? "Clubhouse Interior"
-                            : currentImageIndex === 3
-                              ? "Landscape Garden"
-                              : "Gym Facilities"}
+                        ? "Condo Exterior Look"
+                        : currentImageIndex === 2
+                        ? "Facilities & Amenities"
+                        : currentImageIndex === 3
+                        ? "Front View"
+                        : "Project Overview"}
                     </h4>
                     <p className="text-sm opacity-90">
                       {currentImageIndex === 0
-                        ? "Modern luxury towers with premium finishes"
+                        ? "Breathtaking aerial perspective of Springleaf Residence"
                         : currentImageIndex === 1
-                        ? "Resort-style pool with relaxation areas"
+                        ? "Modern condo exterior with contemporary design"
                         : currentImageIndex === 2
-                        ? "Elegant clubhouse with premium amenities"
+                        ? "Premium facilities and lifestyle amenities"
                         : currentImageIndex === 3
-                        ? "Lush landscaping throughout the development"
-                        : "State-of-the-art fitness facilities"}
+                        ? "Stunning front facade and entrance"
+                        : "Comprehensive project overview and highlights"}
                     </p>
                   </div>
                 </div>
