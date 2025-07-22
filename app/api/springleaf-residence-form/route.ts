@@ -405,11 +405,30 @@ async function insertIntoGoogleSheets({
 
     console.log('📊 Attempting to insert data into Google Sheets...')
     
+    // Process private key to handle different formats and OpenSSL compatibility
+    const processPrivateKey = (key: string): string => {
+      // Remove quotes if present
+      let processedKey = key.replace(/"/g, '')
+      
+      // Handle different newline formats
+      if (processedKey.includes('\\n')) {
+        processedKey = processedKey.replace(/\\n/g, '\n')
+      }
+      
+      // Ensure proper PEM format
+      if (!processedKey.includes('-----BEGIN PRIVATE KEY-----')) {
+        console.error('❌ Invalid private key format')
+        throw new Error('Invalid private key format')
+      }
+      
+      return processedKey
+    }
+    
     // Create JWT client
     const auth = new google.auth.JWT(
       clientEmail,
       undefined,
-      privateKey.replace(/\\n/g, '\n'),
+      processPrivateKey(privateKey),
       ['https://www.googleapis.com/auth/spreadsheets']
     )
 
@@ -474,6 +493,10 @@ async function insertIntoGoogleSheets({
         errorMessage = 'Spreadsheet not found. Please check your GOOGLE_SHEETS_SPREADSHEET_ID.'
       } else if (error.message.includes('Permission denied')) {
         errorMessage = 'Permission denied. Please check if the service account has access to the spreadsheet.'
+      } else if (error.message.includes('DECODER routines::unsupported') || error.message.includes('ERR_OSSL_UNSUPPORTED')) {
+        errorMessage = 'OpenSSL compatibility issue with private key format. Please check the private key format.'
+      } else if (error.message.includes('Invalid private key format')) {
+        errorMessage = 'Invalid private key format. Please ensure the private key is in correct PEM format.'
       } else {
         errorMessage = error.message
       }

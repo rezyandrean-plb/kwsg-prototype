@@ -86,6 +86,27 @@ GOOGLE_SHEETS_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYour private key here\n-
    - Look for the `private_key` field
    - Make sure to include the quotes and newline characters
 
+### ⚠️ Important: Private Key Format for Production
+
+The private key must be properly formatted to avoid OpenSSL compatibility issues in production:
+
+**Correct Format:**
+```env
+GOOGLE_SHEETS_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC...\n-----END PRIVATE KEY-----\n"
+```
+
+**Common Issues to Avoid:**
+- ❌ Missing quotes around the entire key
+- ❌ Missing `\n` characters for line breaks
+- ❌ Extra spaces or formatting
+- ❌ Using single quotes instead of double quotes
+
+**If you're still getting OpenSSL errors in production:**
+1. Ensure the private key starts with `-----BEGIN PRIVATE KEY-----`
+2. Make sure all newlines are represented as `\n`
+3. The key should be wrapped in double quotes
+4. Try regenerating the service account key if issues persist
+
 ## Step 7: Test the Integration
 
 1. Start your development server: `npm run dev`
