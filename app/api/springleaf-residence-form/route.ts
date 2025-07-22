@@ -109,7 +109,7 @@ async function sendNotificationEmail({
     const isDevelopment = process.env.NODE_ENV === 'development'
     const apiKey = process.env.SENDGRID_API_KEY
     const fromEmail = process.env.FROM_EMAIL || 'noreply@kwsg.com'
-    const toEmails = ['dil.marc@propertylimbrothers.com', 'consults@propertylimbrothers.com']
+    const toEmails = ['rezy.andrean@propertylimbrothers.com', 'rezzyandrean@gmail.com']
     
     console.log('Notification email configuration:', {
       isDevelopment,
@@ -464,7 +464,7 @@ async function insertIntoGoogleSheets({
     // Append data to the spreadsheet
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: 'Sheet1!A:K', // Adjust range based on your sheet structure
+      range: 'ShowflatVisitRequests!A:K', // Use tab name without spaces
       valueInputOption: 'RAW',
       insertDataOption: 'INSERT_ROWS',
       requestBody: {

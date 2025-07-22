@@ -41,20 +41,37 @@ This guide will help you set up Google Sheets integration for the Springleaf Res
 1. Go to [Google Sheets](https://sheets.google.com/)
 2. Create a new spreadsheet
 3. Name it "Springleaf Residence - Form Submissions"
-4. Set up the headers in the first row:
-   ```
-   A1: Timestamp
-   B1: Full Name
-   C1: Email Address
-   D1: Contact Number
-   E1: Request Type
-   F1: Project
-   G1: Location
-   H1: Developer
-   I1: Target Preview
-   J1: Preferred Date
-   K1: Preferred Time
-   ```
+4. Create two separate tabs with the following headers:
+
+### Tab 1: "ShowflatVisitRequests"
+Set up the headers in the first row:
+```
+A1: Timestamp
+B1: Full Name
+C1: Email Address
+D1: Contact Number
+E1: Request Type
+F1: Project
+G1: Location
+H1: Developer
+I1: Target Preview
+J1: Preferred Date
+K1: Preferred Time
+```
+
+### Tab 2: "SiteMapRequests"
+Set up the headers in the first row:
+```
+A1: Timestamp
+B1: Full Name
+C1: Email Address
+D1: Contact Number
+E1: Request Type
+F1: Project
+G1: Location
+H1: Developer
+I1: Target Preview
+```
 
 ## Step 5: Share Spreadsheet with Service Account
 
@@ -147,24 +164,9 @@ GOOGLE_SHEETS_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0B
 
 ## Data Structure
 
-Each form submission will create a new row with the following data:
+Each form submission will create a new row in the appropriate tab with the following data:
 
-### Site Map Request Form:
-| Column | Data |
-|--------|------|
-| A | Timestamp (ISO format) |
-| B | Full Name |
-| C | Email Address |
-| D | Contact Number |
-| E | Request Type (always "Site Map Request") |
-| F | Project (always "Springleaf Residence") |
-| G | Location (always "District 26, Upper Thomson") |
-| H | Developer (always "GuocoLand & Hong Leong") |
-| I | Target Preview (always "1 August 2025") |
-| J | Preferred Date (always "Not specified") |
-| K | Preferred Time (always "Not specified") |
-
-### Showflat Visit Request Form:
+### Showflat Visit Request Form (Tab 1: "ShowflatVisitRequests"):
 | Column | Data |
 |--------|------|
 | A | Timestamp (ISO format) |
@@ -178,6 +180,19 @@ Each form submission will create a new row with the following data:
 | I | Target Preview (always "1 August 2025") |
 | J | Preferred Date (formatted date or "Not specified") |
 | K | Preferred Time (selected time or "Not specified") |
+
+### Site Map Request Form (Tab 2: "SiteMapRequests"):
+| Column | Data |
+|--------|------|
+| A | Timestamp (ISO format) |
+| B | Full Name |
+| C | Email Address |
+| D | Contact Number |
+| E | Request Type (always "Site Map Request") |
+| F | Project (always "Springleaf Residence") |
+| G | Location (always "District 26, Upper Thomson") |
+| H | Developer (always "GuocoLand & Hong Leong") |
+| I | Target Preview (always "1 August 2025") |
 
 ## Form Types
 
@@ -220,10 +235,12 @@ For production deployment:
 
 You can use Google Sheets features to analyze your data:
 
-1. **Filter by Request Type**: Use column E to filter between "Site Map Request" and "Showflat Visit Request"
-2. **Date Analysis**: Use column A (Timestamp) to analyze submission trends
-3. **Contact Analysis**: Use columns B, C, D to track unique contacts
-4. **Response Time**: Track how quickly your team responds to requests
+1. **Separate Tabs**: Each form type has its own dedicated tab for easy organization
+2. **Request Type Analysis**: Use column E to filter within each tab
+3. **Date Analysis**: Use column A (Timestamp) to analyze submission trends
+4. **Contact Analysis**: Use columns B, C, D to track unique contacts
+5. **Cross-Tab Analysis**: Create summary sheets that pull data from both tabs
+6. **Response Time**: Track how quickly your team responds to different request types
 
 ### Automation
 

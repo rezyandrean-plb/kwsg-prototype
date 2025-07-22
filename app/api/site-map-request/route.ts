@@ -416,7 +416,7 @@ async function insertIntoGoogleSheets({
     // Append data to the spreadsheet
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: 'Sheet1!A:I', // Adjust range based on your sheet structure
+      range: 'SiteMapRequests!A:I', // Use tab name without spaces
       valueInputOption: 'RAW',
       insertDataOption: 'INSERT_ROWS',
       requestBody: {
