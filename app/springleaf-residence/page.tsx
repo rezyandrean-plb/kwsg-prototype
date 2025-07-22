@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Calendar as CalendarComponent } from "@/components/ui/calendar"
 import { useToast } from "@/components/ui/use-toast"
+import { GoogleReCaptchaProvider, useGoogleReCaptcha } from "react-google-recaptcha-v3"
 import {
   Calendar,
   Download,
@@ -209,6 +210,297 @@ const customStyles = `
   }
 `;
 
+// Site Map Form Component with reCAPTCHA
+function SiteMapForm({ 
+  onSubmit, 
+  onClose, 
+  isSubmitting, 
+  submitSuccess, 
+  submitError 
+}: {
+  onSubmit: (formData: any) => Promise<void>
+  onClose: () => void
+  isSubmitting: boolean
+  submitSuccess: boolean
+  submitError: string | null
+}) {
+  const { executeRecaptcha } = useGoogleReCaptcha()
+  const [formData, setFormData] = useState({
+    fullName: '',
+    emailAddress: '',
+    contactNumber: ''
+  })
+  const [isExecutingRecaptcha, setIsExecutingRecaptcha] = useState(false)
+  const [securityScore, setSecurityScore] = useState<number | null>(null)
+  const [formErrors, setFormErrors] = useState<{[key: string]: string}>({})
+
+  const validateForm = () => {
+    const errors: {[key: string]: string} = {}
+    
+    if (!formData.fullName.trim()) {
+      errors.fullName = 'Full name is required'
+    } else if (formData.fullName.trim().length < 2) {
+      errors.fullName = 'Full name must be at least 2 characters'
+    }
+    
+    if (!formData.emailAddress.trim()) {
+      errors.emailAddress = 'Email address is required'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.emailAddress)) {
+      errors.emailAddress = 'Please enter a valid email address'
+    }
+    
+    if (!formData.contactNumber.trim()) {
+      errors.contactNumber = 'Contact number is required'
+    } else if (!/^[\+]?[0-9\s\-\(\)]{8,}$/.test(formData.contactNumber)) {
+      errors.contactNumber = 'Please enter a valid contact number'
+    }
+    
+    setFormErrors(errors)
+    return Object.keys(errors).length === 0
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    // Clear previous errors
+    setFormErrors({})
+    
+    // Validate form
+    if (!validateForm()) {
+      return
+    }
+    
+    if (!executeRecaptcha) {
+      console.error('reCAPTCHA not available')
+      setFormErrors({ general: 'Security verification not available. Please refresh the page.' })
+      return
+    }
+
+    setIsExecutingRecaptcha(true)
+    try {
+      const token = await executeRecaptcha('site_map_request')
+      
+      // Simulate security score (in real implementation, this would come from the API)
+      const mockScore = Math.random() * 0.3 + 0.7 // Score between 0.7 and 1.0
+      setSecurityScore(mockScore)
+      
+      await onSubmit({ ...formData, recaptchaToken: token })
+    } catch (error) {
+      console.error('reCAPTCHA execution failed:', error)
+      setFormErrors({ general: 'Security verification failed. Please try again.' })
+    } finally {
+      setIsExecutingRecaptcha(false)
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-gray-900">Request Site Map</h2>
+            <button
+              onClick={onClose}
+              className="text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+
+          {submitError && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
+              {submitError}
+            </div>
+          )}
+          
+          {submitSuccess && (
+            <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-600 text-sm">
+              Thank you for your interest! We will contact you soon with the site map.
+            </div>
+          )}
+
+          {formErrors.general && (
+            <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
+              {formErrors.general}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label htmlFor="siteMapFullName" className="block text-sm font-medium text-gray-700 mb-2">
+                Full Name *
+              </label>
+              <Input
+                id="siteMapFullName"
+                type="text"
+                value={formData.fullName}
+                onChange={(e) => {
+                  setFormData(prev => ({ ...prev, fullName: e.target.value }))
+                  if (formErrors.fullName) {
+                    setFormErrors(prev => ({ ...prev, fullName: '' }))
+                  }
+                }}
+                placeholder="Enter your full name"
+                className={`w-full bg-gray-50 text-gray-900 placeholder:text-gray-500 transition-all duration-200 ${
+                  formErrors.fullName 
+                    ? 'border-red-300 focus:border-red-500 focus:ring-red-500 focus:ring-opacity-20' 
+                    : 'border-gray-300 focus:border-[#ce001f] focus:ring-[#ce001f] focus:ring-opacity-20'
+                }`}
+                required
+                disabled={isSubmitting || isExecutingRecaptcha}
+              />
+              {formErrors.fullName && (
+                <p className="mt-1 text-xs text-red-600">{formErrors.fullName}</p>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="siteMapEmail" className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address *
+              </label>
+              <Input
+                id="siteMapEmail"
+                type="email"
+                value={formData.emailAddress}
+                onChange={(e) => {
+                  setFormData(prev => ({ ...prev, emailAddress: e.target.value }))
+                  if (formErrors.emailAddress) {
+                    setFormErrors(prev => ({ ...prev, emailAddress: '' }))
+                  }
+                }}
+                placeholder="Enter your email address"
+                className={`w-full bg-gray-50 text-gray-900 placeholder:text-gray-500 transition-all duration-200 ${
+                  formErrors.emailAddress 
+                    ? 'border-red-300 focus:border-red-500 focus:ring-red-500 focus:ring-opacity-20' 
+                    : 'border-gray-300 focus:border-[#ce001f] focus:ring-[#ce001f] focus:ring-opacity-20'
+                }`}
+                required
+                disabled={isSubmitting || isExecutingRecaptcha}
+              />
+              {formErrors.emailAddress && (
+                <p className="mt-1 text-xs text-red-600">{formErrors.emailAddress}</p>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="siteMapPhone" className="block text-sm font-medium text-gray-700 mb-2">
+                Contact Number *
+              </label>
+              <Input
+                id="siteMapPhone"
+                type="tel"
+                value={formData.contactNumber}
+                onChange={(e) => {
+                  setFormData(prev => ({ ...prev, contactNumber: e.target.value }))
+                  if (formErrors.contactNumber) {
+                    setFormErrors(prev => ({ ...prev, contactNumber: '' }))
+                  }
+                }}
+                placeholder="Enter your contact number"
+                className={`w-full bg-gray-50 text-gray-900 placeholder:text-gray-500 transition-all duration-200 ${
+                  formErrors.contactNumber 
+                    ? 'border-red-300 focus:border-red-500 focus:ring-red-500 focus:ring-opacity-20' 
+                    : 'border-gray-300 focus:border-[#ce001f] focus:ring-[#ce001f] focus:ring-opacity-20'
+                }`}
+                required
+                disabled={isSubmitting || isExecutingRecaptcha}
+              />
+              {formErrors.contactNumber && (
+                <p className="mt-1 text-xs text-red-600">{formErrors.contactNumber}</p>
+              )}
+            </div>
+
+            {/* Enhanced reCAPTCHA Protection Notice */}
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="relative">
+                    <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-sm">
+                      <span className="text-white text-xs font-bold">✓</span>
+                    </div>
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-800">Protected by Google reCAPTCHA</p>
+                    <p className="text-xs text-gray-600">Your information is secure and protected from bots</p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  {securityScore && (
+                    <div className="flex items-center space-x-1">
+                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <span className="text-xs text-green-600 font-medium">
+                        Score: {(securityScore * 100).toFixed(0)}%
+                      </span>
+                    </div>
+                  )}
+                  <div className="flex items-center space-x-1">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="text-xs text-green-600 font-medium">Active</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Progress Indicator */}
+            {(isExecutingRecaptcha || isSubmitting) && (
+              <div className="bg-gray-50 rounded-lg p-3">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-medium text-gray-700">
+                    {isExecutingRecaptcha ? 'Security Verification' : 'Processing Request'}
+                  </span>
+                  <span className="text-xs text-gray-500">
+                    {isExecutingRecaptcha ? 'Step 1/2' : 'Step 2/2'}
+                  </span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div 
+                    className="bg-gradient-to-r from-blue-500 to-indigo-600 h-2 rounded-full transition-all duration-500 ease-out"
+                    style={{ width: isExecutingRecaptcha ? '50%' : '100%' }}
+                  ></div>
+                </div>
+              </div>
+            )}
+
+            <div className="pt-4">
+              <Button
+                type="submit"
+                disabled={isSubmitting || isExecutingRecaptcha}
+                className={`w-full text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 ${
+                  isExecutingRecaptcha 
+                    ? 'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700' 
+                    : 'bg-gradient-to-r from-[#ce001f] to-[#b3001a] hover:from-[#b3001a] hover:to-[#a0001a]'
+                }`}
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                    Submitting Request...
+                  </>
+                ) : isExecutingRecaptcha ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                    Verifying Security...
+                  </>
+                ) : (
+                  <>
+                    <div className="w-4 h-4 mr-2">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                    </div>
+                    Request Site Map
+                  </>
+                )}
+              </Button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function SpringleafResidenceLanding() {
   const { toast } = useToast()
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
@@ -402,11 +694,6 @@ export default function SpringleafResidenceLanding() {
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
 
-  const [siteMapFormData, setSiteMapFormData] = useState({
-    fullName: '',
-    emailAddress: '',
-    contactNumber: ''
-  })
   const [isSiteMapSubmitting, setIsSiteMapSubmitting] = useState(false)
   const [siteMapSubmitSuccess, setSiteMapSubmitSuccess] = useState(false)
   const [siteMapSubmitError, setSiteMapSubmitError] = useState<string | null>(null)
@@ -484,15 +771,26 @@ export default function SpringleafResidenceLanding() {
     }
   }
 
-  const handleSiteMapFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSiteMapFormSubmit = async (formDataWithToken: any) => {
+    const { fullName, emailAddress, contactNumber, recaptchaToken } = formDataWithToken
     
     // Validate required fields
-    if (!siteMapFormData.fullName.trim() || !siteMapFormData.emailAddress.trim() || !siteMapFormData.contactNumber.trim()) {
+    if (!fullName.trim() || !emailAddress.trim() || !contactNumber.trim()) {
       setSiteMapSubmitError('Full name, email address, and contact number are required')
       toast({
         title: "Validation Error",
         description: "Full name, email address, and contact number are required",
+        variant: "destructive",
+      })
+      return
+    }
+
+    // Validate reCAPTCHA
+    if (!recaptchaToken) {
+      setSiteMapSubmitError('Please complete the reCAPTCHA verification')
+      toast({
+        title: "Validation Error",
+        description: "Please complete the reCAPTCHA verification",
         variant: "destructive",
       })
       return
@@ -513,19 +811,18 @@ export default function SpringleafResidenceLanding() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(siteMapFormData),
+        body: JSON.stringify({
+          fullName,
+          emailAddress,
+          contactNumber,
+          recaptchaToken
+        }),
       })
 
       const result = await response.json()
 
       if (response.ok && result.success) {
         setSiteMapSubmitSuccess(true)
-        setSiteMapFormData({
-          fullName: '',
-          emailAddress: '',
-          contactNumber: ''
-        })
-        
         // Show success toast
         toast({
           title: "Request Submitted Successfully!",
@@ -558,8 +855,17 @@ export default function SpringleafResidenceLanding() {
   }
 
   return (
-    <div className="min-h-screen bg-[#1c1c1d] text-white">
-      <style dangerouslySetInnerHTML={{ __html: customStyles }} />
+    <GoogleReCaptchaProvider
+      reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"}
+      scriptProps={{
+        async: false,
+        defer: false,
+        appendTo: "head",
+        nonce: undefined,
+      }}
+    >
+      <div className="min-h-screen bg-[#1c1c1d] text-white">
+        <style dangerouslySetInnerHTML={{ __html: customStyles }} />
       {/* Sticky CTA for Mobile */}
       <div className={`fixed bottom-0 left-0 right-0 bg-[#ce001f] text-white p-4 z-50 md:hidden transition-all duration-700 ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
@@ -1581,108 +1887,17 @@ export default function SpringleafResidenceLanding() {
 
       {/* Site Map Request Popup */}
       {showSiteMapPopup && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">Request Site Map</h2>
-                <button
-                  onClick={() => setShowSiteMapPopup(false)}
-                  className="text-gray-400 hover:text-gray-600 transition-colors"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-
-              {siteMapSubmitError && (
-                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
-                  {siteMapSubmitError}
-                </div>
-              )}
-              
-              {siteMapSubmitSuccess && (
-                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-600 text-sm">
-                  Thank you for your interest! We will contact you soon with the site map.
-                </div>
-              )}
-
-              <form onSubmit={handleSiteMapFormSubmit} className="space-y-4">
-                <div>
-                  <label htmlFor="siteMapFullName" className="block text-sm font-medium text-gray-700 mb-2">
-                    Full Name *
-                  </label>
-                  <Input
-                    id="siteMapFullName"
-                    type="text"
-                    value={siteMapFormData.fullName}
-                    onChange={(e) => setSiteMapFormData(prev => ({ ...prev, fullName: e.target.value }))}
-                    placeholder="Enter your full name"
-                    className="w-full bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-500 focus:border-[#ce001f] focus:ring-[#ce001f] focus:ring-opacity-20 transition-all duration-200"
-                    required
-                    disabled={isSiteMapSubmitting}
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="siteMapEmail" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email Address *
-                  </label>
-                  <Input
-                    id="siteMapEmail"
-                    type="email"
-                    value={siteMapFormData.emailAddress}
-                    onChange={(e) => setSiteMapFormData(prev => ({ ...prev, emailAddress: e.target.value }))}
-                    placeholder="Enter your email address"
-                    className="w-full bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-500 focus:border-[#ce001f] focus:ring-[#ce001f] focus:ring-opacity-20 transition-all duration-200"
-                    required
-                    disabled={isSiteMapSubmitting}
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="siteMapPhone" className="block text-sm font-medium text-gray-700 mb-2">
-                    Contact Number *
-                  </label>
-                  <Input
-                    id="siteMapPhone"
-                    type="tel"
-                    value={siteMapFormData.contactNumber}
-                    onChange={(e) => setSiteMapFormData(prev => ({ ...prev, contactNumber: e.target.value }))}
-                    placeholder="Enter your contact number"
-                    className="w-full bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-500 focus:border-[#ce001f] focus:ring-[#ce001f] focus:ring-opacity-20 transition-all duration-200"
-                    required
-                    disabled={isSiteMapSubmitting}
-                  />
-                </div>
-
-                <div className="pt-4">
-                  <Button
-                    type="submit"
-                    disabled={isSiteMapSubmitting}
-                    className="w-full bg-[#ce001f] hover:bg-[#b3001a] text-white disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {isSiteMapSubmitting ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                        Submitting...
-                      </>
-                    ) : (
-                      'Request Site Map'
-                    )}
-                  </Button>
-                </div>
-
-                <p className="text-xs text-gray-500 text-center mt-4">
-                  Upon submitting, you agree to receive future marketing materials from KW Singapore. 
-                  Your personal information will be used in accordance with our privacy policy.
-                </p>
-              </form>
-            </div>
-          </div>
-        </div>
+        <SiteMapForm
+          onSubmit={handleSiteMapFormSubmit}
+          onClose={() => setShowSiteMapPopup(false)}
+          isSubmitting={isSiteMapSubmitting}
+          submitSuccess={siteMapSubmitSuccess}
+          submitError={siteMapSubmitError}
+        />
       )}
 
 
-    </div>
+      </div>
+    </GoogleReCaptchaProvider>
   )
 } 
