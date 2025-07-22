@@ -50,13 +50,11 @@ A1: Timestamp
 B1: Full Name
 C1: Email Address
 D1: Contact Number
-E1: Request Type
-F1: Project
-G1: Location
-H1: Developer
-I1: Target Preview
-J1: Preferred Date
-K1: Preferred Time
+E1: Project
+F1: Location
+G1: Developer
+H1: Preferred Date
+I1: Preferred Time
 ```
 
 ### Tab 2: "SiteMapRequests"
@@ -68,9 +66,6 @@ C1: Email Address
 D1: Contact Number
 E1: Request Type
 F1: Project
-G1: Location
-H1: Developer
-I1: Target Preview
 ```
 
 ## Step 5: Share Spreadsheet with Service Account
@@ -173,13 +168,11 @@ Each form submission will create a new row in the appropriate tab with the follo
 | B | Full Name |
 | C | Email Address (or "Not provided") |
 | D | Contact Number |
-| E | Request Type (always "Showflat Visit Request") |
-| F | Project (always "Springleaf Residence") |
-| G | Location (always "District 26, Upper Thomson") |
-| H | Developer (always "GuocoLand & Hong Leong") |
-| I | Target Preview (always "1 August 2025") |
-| J | Preferred Date (formatted date or "Not specified") |
-| K | Preferred Time (selected time or "Not specified") |
+| E | Project (always "Springleaf Residence") |
+| F | Location (always "District 26, Upper Thomson") |
+| G | Developer (always "GuocoLand & Hong Leong") |
+| H | Preferred Date (formatted date or "Not specified") |
+| I | Preferred Time (selected time or "Not specified") |
 
 ### Site Map Request Form (Tab 2: "SiteMapRequests"):
 | Column | Data |
@@ -190,9 +183,6 @@ Each form submission will create a new row in the appropriate tab with the follo
 | D | Contact Number |
 | E | Request Type (always "Site Map Request") |
 | F | Project (always "Springleaf Residence") |
-| G | Location (always "District 26, Upper Thomson") |
-| H | Developer (always "GuocoLand & Hong Leong") |
-| I | Target Preview (always "1 August 2025") |
 
 ## Form Types
 

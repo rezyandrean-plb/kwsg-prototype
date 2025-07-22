@@ -452,11 +452,9 @@ async function insertIntoGoogleSheets({
       fullName,
       emailAddress || 'Not provided',
       contactNumber,
-      'Showflat Visit Request',
       'Springleaf Residence',
       'District 26, Upper Thomson',
       'GuocoLand & Hong Leong',
-      '1 August 2025',
       formatDate(preferredDate),
       preferredTiming || 'Not specified'
     ]
@@ -464,7 +462,7 @@ async function insertIntoGoogleSheets({
     // Append data to the spreadsheet
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: 'ShowflatVisitRequests!A:K', // Use tab name without spaces
+      range: 'ShowflatVisitRequests!A:I', // Use tab name without spaces, reduced to 9 columns
       valueInputOption: 'RAW',
       insertDataOption: 'INSERT_ROWS',
       requestBody: {

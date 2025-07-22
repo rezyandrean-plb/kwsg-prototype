@@ -407,16 +407,13 @@ async function insertIntoGoogleSheets({
       emailAddress,
       contactNumber,
       'Site Map Request',
-      'Springleaf Residence',
-      'District 26, Upper Thomson',
-      'GuocoLand & Hong Leong',
-      '1 August 2025'
+      'Springleaf Residence'
     ]
 
     // Append data to the spreadsheet
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: 'SiteMapRequests!A:I', // Use tab name without spaces
+      range: 'SiteMapRequests!A:F', // Use tab name without spaces, reduced to 6 columns
       valueInputOption: 'RAW',
       insertDataOption: 'INSERT_ROWS',
       requestBody: {
