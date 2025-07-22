@@ -1,0 +1,214 @@
+# Google Sheets Integration Setup Guide
+
+This guide will help you set up Google Sheets integration for the Springleaf Residence forms (both site map requests and showflat visit requests).
+
+## Prerequisites
+
+1. A Google Cloud Project
+2. Google Sheets API enabled
+3. A Google Service Account
+
+## Step 1: Create a Google Cloud Project
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. Enable the Google Sheets API:
+   - Go to "APIs & Services" > "Library"
+   - Search for "Google Sheets API"
+   - Click on it and press "Enable"
+
+## Step 2: Create a Service Account
+
+1. Go to "APIs & Services" > "Credentials"
+2. Click "Create Credentials" > "Service Account"
+3. Fill in the service account details:
+   - Name: `springleaf-sheets-integration`
+   - Description: `Service account for Springleaf Residence form submissions`
+4. Click "Create and Continue"
+5. Skip the optional steps and click "Done"
+
+## Step 3: Generate Service Account Key
+
+1. In the Credentials page, find your service account
+2. Click on the service account email
+3. Go to the "Keys" tab
+4. Click "Add Key" > "Create new key"
+5. Choose "JSON" format
+6. Download the JSON file (keep it secure!)
+
+## Step 4: Create Google Spreadsheet
+
+1. Go to [Google Sheets](https://sheets.google.com/)
+2. Create a new spreadsheet
+3. Name it "Springleaf Residence - Form Submissions"
+4. Set up the headers in the first row:
+   ```
+   A1: Timestamp
+   B1: Full Name
+   C1: Email Address
+   D1: Contact Number
+   E1: Request Type
+   F1: Project
+   G1: Location
+   H1: Developer
+   I1: Target Preview
+   J1: Preferred Date
+   K1: Preferred Time
+   ```
+
+## Step 5: Share Spreadsheet with Service Account
+
+1. In your Google Spreadsheet, click "Share"
+2. Add the service account email (found in the JSON file) as an Editor
+3. Make sure to give it "Editor" permissions
+
+## Step 6: Configure Environment Variables
+
+Add these environment variables to your `.env.local` file:
+
+```env
+# Google Sheets Configuration
+GOOGLE_SHEETS_SPREADSHEET_ID=your_spreadsheet_id_here
+GOOGLE_SHEETS_CLIENT_EMAIL=your_service_account_email@project.iam.gserviceaccount.com
+GOOGLE_SHEETS_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYour private key here\n-----END PRIVATE KEY-----\n"
+```
+
+### How to get these values:
+
+1. **Spreadsheet ID**: Found in the URL of your Google Spreadsheet
+   - URL format: `https://docs.google.com/spreadsheets/d/SPREADSHEET_ID/edit`
+   - Copy the ID between `/d/` and `/edit`
+
+2. **Client Email**: Found in the downloaded JSON file
+   - Look for the `client_email` field
+
+3. **Private Key**: Found in the downloaded JSON file
+   - Look for the `private_key` field
+   - Make sure to include the quotes and newline characters
+
+## Step 7: Test the Integration
+
+1. Start your development server: `npm run dev`
+2. Go to the Springleaf Residence page
+3. Test both forms:
+   - **Site Map Request Form**: Click "Required Site Map" button
+   - **Showflat Visit Form**: Fill out the main form at the bottom
+4. Submit the forms
+5. Check your Google Spreadsheet for the new entries
+6. Check the console logs for any errors
+
+## Troubleshooting
+
+### Common Issues:
+
+1. **"Invalid JWT" error**:
+   - Check that your private key is correctly formatted
+   - Make sure the newline characters (`\n`) are preserved
+
+2. **"Spreadsheet not found" error**:
+   - Verify the spreadsheet ID is correct
+   - Make sure the spreadsheet exists and is accessible
+
+3. **"Permission denied" error**:
+   - Ensure the service account has Editor access to the spreadsheet
+   - Check that the Google Sheets API is enabled
+
+4. **"Service account not configured" error**:
+   - Verify all environment variables are set correctly
+   - Restart your development server after adding environment variables
+
+### Security Notes:
+
+- Never commit the service account JSON file to version control
+- Keep your environment variables secure
+- Consider using a dedicated service account for each environment (dev/staging/prod)
+- Regularly rotate your service account keys
+
+## Data Structure
+
+Each form submission will create a new row with the following data:
+
+### Site Map Request Form:
+| Column | Data |
+|--------|------|
+| A | Timestamp (ISO format) |
+| B | Full Name |
+| C | Email Address |
+| D | Contact Number |
+| E | Request Type (always "Site Map Request") |
+| F | Project (always "Springleaf Residence") |
+| G | Location (always "District 26, Upper Thomson") |
+| H | Developer (always "GuocoLand & Hong Leong") |
+| I | Target Preview (always "1 August 2025") |
+| J | Preferred Date (always "Not specified") |
+| K | Preferred Time (always "Not specified") |
+
+### Showflat Visit Request Form:
+| Column | Data |
+|--------|------|
+| A | Timestamp (ISO format) |
+| B | Full Name |
+| C | Email Address (or "Not provided") |
+| D | Contact Number |
+| E | Request Type (always "Showflat Visit Request") |
+| F | Project (always "Springleaf Residence") |
+| G | Location (always "District 26, Upper Thomson") |
+| H | Developer (always "GuocoLand & Hong Leong") |
+| I | Target Preview (always "1 August 2025") |
+| J | Preferred Date (formatted date or "Not specified") |
+| K | Preferred Time (selected time or "Not specified") |
+
+## Form Types
+
+The integration handles two different form types:
+
+1. **Site Map Request Form** (`/api/site-map-request`):
+   - Triggered by clicking "Required Site Map" button
+   - Collects: Full Name, Email Address, Contact Number
+   - Sends notification emails to the team
+   - Sends auto-reply to the contact
+
+2. **Showflat Visit Request Form** (`/api/springleaf-residence-form`):
+   - Triggered by submitting the main form at the bottom
+   - Collects: Full Name, Contact Number, Email Address (optional), Preferred Date, Preferred Time
+   - Sends notification emails to the team
+   - Sends auto-reply to the contact (if email provided)
+
+## Monitoring
+
+You can monitor the integration by:
+
+1. Checking the console logs in your development environment
+2. Reviewing the Google Sheets for new entries
+3. Setting up Google Cloud Logging for production monitoring
+4. Monitoring both form types separately in the spreadsheet
+
+## Production Deployment
+
+For production deployment:
+
+1. Set the environment variables in your hosting platform (Vercel, Netlify, etc.)
+2. Ensure the service account has access to the production spreadsheet
+3. Consider setting up automated backups of the spreadsheet
+4. Monitor the API usage in Google Cloud Console
+5. Set up separate spreadsheets for different environments if needed
+
+## Advanced Features
+
+### Filtering and Analysis
+
+You can use Google Sheets features to analyze your data:
+
+1. **Filter by Request Type**: Use column E to filter between "Site Map Request" and "Showflat Visit Request"
+2. **Date Analysis**: Use column A (Timestamp) to analyze submission trends
+3. **Contact Analysis**: Use columns B, C, D to track unique contacts
+4. **Response Time**: Track how quickly your team responds to requests
+
+### Automation
+
+Consider setting up Google Sheets automation:
+
+1. **Email Notifications**: Set up email notifications when new rows are added
+2. **Data Validation**: Add data validation rules to ensure data quality
+3. **Conditional Formatting**: Highlight important submissions or follow-ups needed
+4. **Charts and Dashboards**: Create visual representations of your form submission data 

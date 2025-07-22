@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import sgMail from '@sendgrid/mail'
+import { google } from 'googleapis'
 
 export async function POST(request: NextRequest) {
   try {
@@ -59,11 +60,27 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // Insert data into Google Sheets
+    const sheetsResult = await insertIntoGoogleSheets({
+      fullName,
+      contactNumber,
+      emailAddress,
+      preferredDate,
+      preferredTiming
+    })
+
+    console.log('Google Sheets result:', sheetsResult)
+
+    if (!sheetsResult.success) {
+      console.error('Failed to insert into Google Sheets:', sheetsResult.error)
+    }
+
     return NextResponse.json({
       success: true,
       message: 'Thank you for your interest in Springleaf Residence! We have sent you a confirmation email and our team will contact you soon to arrange your showflat visit.',
       notificationSent: notificationResult.success,
-      autoReplySent: autoReplyResult?.success || false
+      autoReplySent: autoReplyResult?.success || false,
+      sheetsInserted: sheetsResult.success
     })
 
   } catch (error) {
@@ -347,6 +364,116 @@ async function sendAutoReplyEmail({ fullName, emailAddress }: {
         errorMessage = 'Sender email not verified. Please verify your FROM_EMAIL in SendGrid.'
       } else if (error.message.includes('Bad Request')) {
         errorMessage = 'Invalid email format or missing required fields.'
+      } else {
+        errorMessage = error.message
+      }
+    }
+    
+    return { success: false, error: errorMessage }
+  }
+} 
+
+async function insertIntoGoogleSheets({ 
+  fullName, 
+  contactNumber, 
+  emailAddress, 
+  preferredDate, 
+  preferredTiming
+}: {
+  fullName: string
+  contactNumber: string
+  emailAddress?: string
+  preferredDate?: Date
+  preferredTiming?: string
+}) {
+  try {
+    const spreadsheetId = process.env.GOOGLE_SHEETS_SPREADSHEET_ID
+    const clientEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL
+    const privateKey = process.env.GOOGLE_SHEETS_PRIVATE_KEY
+    
+    console.log('Google Sheets configuration:', {
+      hasSpreadsheetId: !!spreadsheetId,
+      hasClientEmail: !!clientEmail,
+      hasPrivateKey: !!privateKey
+    })
+    
+    // If Google Sheets credentials are not configured, return error
+    if (!spreadsheetId || !clientEmail || !privateKey) {
+      console.error('❌ Google Sheets credentials not found')
+      return { success: false, error: 'Google Sheets service not configured' }
+    }
+
+    console.log('📊 Attempting to insert data into Google Sheets...')
+    
+    // Create JWT client
+    const auth = new google.auth.JWT(
+      clientEmail,
+      undefined,
+      privateKey.replace(/\\n/g, '\n'),
+      ['https://www.googleapis.com/auth/spreadsheets']
+    )
+
+    // Create Google Sheets API client
+    const sheets = google.sheets({ version: 'v4', auth })
+
+    // Prepare data row
+    const timestamp = new Date().toISOString()
+    const formatDate = (date?: Date) => {
+      if (!date) return 'Not specified'
+      return new Date(date).toLocaleDateString('en-SG', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })
+    }
+    
+    const dataRow = [
+      timestamp,
+      fullName,
+      emailAddress || 'Not provided',
+      contactNumber,
+      'Showflat Visit Request',
+      'Springleaf Residence',
+      'District 26, Upper Thomson',
+      'GuocoLand & Hong Leong',
+      '1 August 2025',
+      formatDate(preferredDate),
+      preferredTiming || 'Not specified'
+    ]
+
+    // Append data to the spreadsheet
+    const response = await sheets.spreadsheets.values.append({
+      spreadsheetId,
+      range: 'Sheet1!A:K', // Adjust range based on your sheet structure
+      valueInputOption: 'RAW',
+      insertDataOption: 'INSERT_ROWS',
+      requestBody: {
+        values: [dataRow]
+      }
+    })
+
+    console.log('✅ Data inserted into Google Sheets successfully')
+    console.log('📊 Sheets response:', {
+      updatedRange: response.data.updates?.updatedRange,
+      updatedRows: response.data.updates?.updatedRows,
+      updatedColumns: response.data.updates?.updatedColumns
+    })
+    
+    return { success: true, message: 'Data inserted into Google Sheets successfully' }
+
+  } catch (error) {
+    console.error('❌ Google Sheets insertion error:', error)
+    
+    let errorMessage = 'Failed to insert data into Google Sheets'
+    
+    if (error instanceof Error) {
+      if (error.message.includes('Invalid JWT')) {
+        errorMessage = 'Invalid Google Sheets credentials. Please check your service account configuration.'
+      } else if (error.message.includes('Requested entity was not found')) {
+        errorMessage = 'Spreadsheet not found. Please check your GOOGLE_SHEETS_SPREADSHEET_ID.'
+      } else if (error.message.includes('Permission denied')) {
+        errorMessage = 'Permission denied. Please check if the service account has access to the spreadsheet.'
       } else {
         errorMessage = error.message
       }
