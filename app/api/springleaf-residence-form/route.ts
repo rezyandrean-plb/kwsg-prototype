@@ -109,7 +109,7 @@ async function sendNotificationEmail({
     const isDevelopment = process.env.NODE_ENV === 'development'
     const apiKey = process.env.SENDGRID_API_KEY
     const fromEmail = process.env.FROM_EMAIL || 'noreply@kwsg.com'
-    const toEmails = ['rezy.andrean@propertylimbrothers.com', 'rezzyandrean@gmail.com']
+    const toEmails = ['dil.marc@propertylimbrothers.com', 'plbcare@propertylimbrothers.com']
     
     console.log('Notification email configuration:', {
       isDevelopment,
