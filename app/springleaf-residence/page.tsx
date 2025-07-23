@@ -1725,10 +1725,10 @@ export default function SpringleafResidenceLanding() {
                 </p>
                   <Button 
                     className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
-                    onClick={() => window.open('https://newlaunch.kwsingapore.com/springleaf-residence-new-launch-analysis', '_blank')}
+                    onClick={() => window.open('https://newlaunch.kwsingapore.com/webinars/as-lentor-heats-up-is-springleaf-residence-a-smart-play', '_blank')}
                   >
                     <Play className="w-5 h-5 mr-2" />
-                    Watch Analysis
+                    Watch Webinar
                   </Button>
               </div>
               <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-2">
