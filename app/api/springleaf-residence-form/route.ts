@@ -10,7 +10,8 @@ export async function POST(request: NextRequest) {
       contactNumber, 
       emailAddress, 
       preferredDate, 
-      preferredTiming 
+      preferredTiming,
+      recaptchaToken
     } = body
 
     console.log('Springleaf Residence form submission received:', { 
@@ -18,7 +19,8 @@ export async function POST(request: NextRequest) {
       contactNumber, 
       emailAddress, 
       preferredDate, 
-      preferredTiming 
+      preferredTiming,
+      hasRecaptchaToken: !!recaptchaToken
     })
 
     // Validate required fields
@@ -26,6 +28,25 @@ export async function POST(request: NextRequest) {
       console.log('Validation failed: Missing required fields')
       return NextResponse.json(
         { error: 'Full name and contact number are required' },
+        { status: 400 }
+      )
+    }
+
+    // Validate reCAPTCHA token
+    if (!recaptchaToken) {
+      console.log('Validation failed: Missing reCAPTCHA token')
+      return NextResponse.json(
+        { error: 'reCAPTCHA verification is required' },
+        { status: 400 }
+      )
+    }
+
+    // Verify reCAPTCHA token
+    const recaptchaVerification = await verifyRecaptcha(recaptchaToken)
+    if (!recaptchaVerification.success) {
+      console.log('reCAPTCHA verification failed:', recaptchaVerification.error)
+      return NextResponse.json(
+        { error: 'reCAPTCHA verification failed. Please try again.' },
         { status: 400 }
       )
     }
@@ -501,5 +522,50 @@ async function insertIntoGoogleSheets({
     }
     
     return { success: false, error: errorMessage }
+  }
+}
+
+async function verifyRecaptcha(token: string) {
+  try {
+    const secretKey = process.env.RECAPTCHA_SECRET_KEY
+    
+    if (!secretKey) {
+      console.error('❌ reCAPTCHA secret key not found')
+      return { success: false, error: 'reCAPTCHA service not configured' }
+    }
+
+    const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        secret: secretKey,
+        response: token,
+      }),
+    })
+
+    const data = await response.json()
+    
+    console.log('reCAPTCHA verification response:', {
+      success: data.success,
+      score: data.score,
+      action: data.action,
+      challenge_ts: data.challenge_ts,
+      hostname: data.hostname
+    })
+
+    if (data.success && data.score >= 0.5) {
+      return { success: true, score: data.score }
+    } else {
+      return { 
+        success: false, 
+        error: data.success ? `reCAPTCHA score too low: ${data.score}` : 'reCAPTCHA verification failed'
+      }
+    }
+
+  } catch (error) {
+    console.error('❌ reCAPTCHA verification error:', error)
+    return { success: false, error: 'Failed to verify reCAPTCHA' }
   }
 } 

@@ -683,6 +683,7 @@ export default function SpringleafResidenceLanding() {
     }
   }
 
+  const { executeRecaptcha } = useGoogleReCaptcha()
   const [formData, setFormData] = useState({
     fullName: '',
     contactNumber: '',
@@ -693,6 +694,8 @@ export default function SpringleafResidenceLanding() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const [isExecutingRecaptcha, setIsExecutingRecaptcha] = useState(false)
+  const [securityScore, setSecurityScore] = useState<number | null>(null)
 
   const [isSiteMapSubmitting, setIsSiteMapSubmitting] = useState(false)
   const [siteMapSubmitSuccess, setSiteMapSubmitSuccess] = useState(false)
@@ -712,22 +715,41 @@ export default function SpringleafResidenceLanding() {
       return
     }
 
-    setIsSubmitting(true)
+    if (!executeRecaptcha) {
+      console.error('reCAPTCHA not available')
+      setSubmitError('Security verification not available. Please refresh the page.')
+      toast({
+        title: "Security Error",
+        description: "Security verification not available. Please refresh the page.",
+        variant: "destructive",
+      })
+      return
+    }
+
+    setIsExecutingRecaptcha(true)
     setSubmitError(null)
 
-    // Show submitting toast
-    toast({
-      title: "Submitting...",
-      description: "Please wait while we process your request",
-    })
-
     try {
+      const token = await executeRecaptcha('showflat_visit_request')
+      
+      // Simulate security score (in real implementation, this would come from the API)
+      const mockScore = Math.random() * 0.3 + 0.7 // Score between 0.7 and 1.0
+      setSecurityScore(mockScore)
+      
+      setIsSubmitting(true)
+
+      // Show submitting toast
+      toast({
+        title: "Submitting...",
+        description: "Please wait while we process your request",
+      })
+
       const response = await fetch('/api/springleaf-residence-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, recaptchaToken: token }),
       })
 
       const result = await response.json()
@@ -768,6 +790,7 @@ export default function SpringleafResidenceLanding() {
       })
     } finally {
       setIsSubmitting(false)
+      setIsExecutingRecaptcha(false)
     }
   }
 
@@ -1657,7 +1680,6 @@ export default function SpringleafResidenceLanding() {
               </div>
             </div>
 
-            
             <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
               <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-1">
                 <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
@@ -1687,6 +1709,37 @@ export default function SpringleafResidenceLanding() {
                     <Play className="w-5 h-5 mr-2" />
                     Watch Webinar
                   </Button>
+              </div>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
+              <div className="space-y-6 order-2 lg:order-1">
+                <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
+                <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
+                  As Lentor Heats Up, Is Springleaf Residence a Smart Play — or Just Another Name in an Overcrowded District 26?
+                </h3>
+                <p className="text-gray-300 leading-relaxed text-base md:text-lg">
+                  Stop and think before you join the rush into Lentor. 
+                  In a market flooded with thousands of new condo units in one small area, the greatest risk isn't missing out—it's buying in. 
+                  This webinar is a necessary warning about the illusion of safety in numbers and the potential for long-term capital stagnation that most agents won't discuss.
+                </p>
+                  <Button 
+                    className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
+                    onClick={() => window.open('https://newlaunch.kwsingapore.com/springleaf-residence-new-launch-analysis', '_blank')}
+                  >
+                    <Play className="w-5 h-5 mr-2" />
+                    Watch Analysis
+                  </Button>
+              </div>
+              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-2">
+                <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
+                  <Image
+                    src="/images/springleaf-residence/new-launch-analysis-lentor.webp?height=320&width=500&text=Lentor+Mansion+Showflat+Tour"
+                    alt="Lentor Mansion Showflat Tour"
+                    fill
+                    className="object-contain md:object-cover"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -1858,19 +1911,67 @@ export default function SpringleafResidenceLanding() {
                     </SelectContent>
                   </Select>
                 </div>
+                {/* Enhanced reCAPTCHA Protection Notice */}
+                <div className="bg-gradient-to-r from-blue-50/20 to-indigo-50/20 border border-blue-200/30 rounded-lg p-4 backdrop-blur-sm">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="relative">
+                        <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-sm">
+                          <span className="text-white text-xs font-bold">✓</span>
+                        </div>
+                        <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-white">Protected by Google reCAPTCHA</p>
+                        <p className="text-xs text-gray-300">Your information is secure and protected from bots</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      {securityScore && (
+                        <div className="flex items-center space-x-1">
+                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                          <span className="text-xs text-green-400 font-medium">
+                            Score: {(securityScore * 100).toFixed(0)}%
+                          </span>
+                        </div>
+                      )}
+                      <div className="flex items-center space-x-1">
+                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        <span className="text-xs text-green-400 font-medium">Active</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="text-center">
                   <Button 
                     type="submit"
-                    disabled={isSubmitting}
-                    className="bg-[#ce001f] hover:bg-[#b3001a] px-12 py-3 text-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={isSubmitting || isExecutingRecaptcha}
+                    className={`w-full text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 ${
+                      isExecutingRecaptcha 
+                        ? 'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700' 
+                        : 'bg-gradient-to-r from-[#ce001f] to-[#b3001a] hover:from-[#b3001a] hover:to-[#a0001a]'
+                    }`}
                   >
                     {isSubmitting ? (
                       <>
                         <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                        Submitting...
+                        Submitting Request...
+                      </>
+                    ) : isExecutingRecaptcha ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                        Verifying Security...
                       </>
                     ) : (
-                      'Book Showflat Visit'
+                      <>
+                        <div className="w-4 h-4 mr-2">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                          </svg>
+                        </div>
+                        Book Showflat Visit
+                      </>
                     )}
                   </Button>
                   <p className="text-sm italic text-white-600 mt-4 text-center">

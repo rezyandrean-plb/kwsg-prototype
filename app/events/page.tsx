@@ -17,6 +17,7 @@ import { BootcampCarouselDialog } from "@/components/bootcamp-carousel-dialog"
 import { SummitRegistrationDialog } from "@/components/summit-registration-dialog"
 import { Toaster } from "@/components/ui/toaster"
 import dynamic from "next/dynamic"
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
 
 // Dynamically import the JoinFormDialog component
 const JoinFormDialog = dynamic(() => import("@/components/join-form-dialog").then(mod => mod.JoinFormDialog), {
@@ -158,9 +159,18 @@ export default function EventsPage() {
   }
 
   return (
-    <main className="min-h-screen bg-black text-white">
-      {/* Hero Section */}
-      <section className="relative min-h-[70vh] sm:min-h-screen flex items-center justify-center pt-20 sm:pt-20">
+    <GoogleReCaptchaProvider
+      reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
+      scriptProps={{
+        async: false,
+        defer: false,
+        appendTo: 'head',
+        nonce: undefined,
+      }}
+    >
+      <main className="min-h-screen bg-black text-white">
+        {/* Hero Section */}
+        <section className="relative min-h-[70vh] sm:min-h-screen flex items-center justify-center pt-20 sm:pt-20">
         <div
           className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"
           style={{
@@ -835,5 +845,6 @@ export default function EventsPage() {
       {/* Toaster for notifications */}
       <Toaster />
     </main>
+    </GoogleReCaptchaProvider>
   )
 } 

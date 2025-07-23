@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Mail, ArrowRight } from "lucide-react"
 import { useState } from "react"
 import Image from "next/image"
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
 
 interface BootcampCarouselDialogProps {
   isOpen: boolean
@@ -18,7 +19,9 @@ interface BootcampCarouselDialogProps {
 export function BootcampCarouselDialog({ isOpen, onClose, onSubmit }: BootcampCarouselDialogProps) {
   const [email, setEmail] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isExecutingRecaptcha, setIsExecutingRecaptcha] = useState(false)
   const [submitMessage, setSubmitMessage] = useState("")
+  const { executeRecaptcha } = useGoogleReCaptcha()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -28,16 +31,29 @@ export function BootcampCarouselDialog({ isOpen, onClose, onSubmit }: BootcampCa
       return
     }
 
+    if (!executeRecaptcha) {
+      console.error('reCAPTCHA not available')
+      setSubmitMessage("Security verification not available. Please refresh the page.")
+      return
+    }
+
     setIsSubmitting(true)
+    setIsExecutingRecaptcha(true)
     setSubmitMessage("")
 
     try {
+      // Execute reCAPTCHA
+      const token = await executeRecaptcha('bootcamp_registration')
+      
       const response = await fetch('/api/bootcamp-carousel-registration', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ 
+          email,
+          recaptchaToken: token 
+        }),
       })
 
       const result = await response.json()
@@ -61,6 +77,7 @@ export function BootcampCarouselDialog({ isOpen, onClose, onSubmit }: BootcampCa
       setSubmitMessage("Network error. Please check your connection and try again.")
     } finally {
       setIsSubmitting(false)
+      setIsExecutingRecaptcha(false)
     }
   }
 
@@ -88,6 +105,30 @@ export function BootcampCarouselDialog({ isOpen, onClose, onSubmit }: BootcampCa
             <p className="text-gray-600 text-base">
               Register now to save your spot in the Training Bootcamp
             </p>
+          </div>
+
+          {/* Enhanced reCAPTCHA Protection Notice */}
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4 mb-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="relative">
+                  <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-sm">
+                    <span className="text-white text-xs font-bold">✓</span>
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-800">Protected by Google reCAPTCHA</p>
+                  <p className="text-xs text-gray-600">Your information is secure and protected from bots</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-1">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-xs text-green-600 font-medium">Active</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="space-y-2">
@@ -122,10 +163,10 @@ export function BootcampCarouselDialog({ isOpen, onClose, onSubmit }: BootcampCa
           <Button
             type="submit"
             className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold py-3 transition-all duration-300 hover:scale-105 group"
-            disabled={isSubmitting || !email.trim()}
+            disabled={isSubmitting || !email.trim() || isExecutingRecaptcha}
           >
-            {isSubmitting ? (
-              "Submitting..."
+            {isSubmitting || isExecutingRecaptcha ? (
+              "Verifying..."
             ) : (
               <>
                 Submit Registration

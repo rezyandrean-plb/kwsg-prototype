@@ -4,15 +4,37 @@ import sgMail from '@sendgrid/mail'
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { email } = body
+    const { email, recaptchaToken } = body
 
-    console.log('Summit registration submission received:', { email })
+    console.log('Summit registration submission received:', { 
+      email,
+      hasRecaptchaToken: !!recaptchaToken
+    })
 
     // Validate required fields
     if (!email) {
       console.log('Validation failed: Missing email field')
       return NextResponse.json(
         { error: 'Email is required' },
+        { status: 400 }
+      )
+    }
+
+    // Validate reCAPTCHA token
+    if (!recaptchaToken) {
+      console.log('Validation failed: Missing reCAPTCHA token')
+      return NextResponse.json(
+        { error: 'reCAPTCHA verification is required' },
+        { status: 400 }
+      )
+    }
+
+    // Verify reCAPTCHA token
+    const recaptchaVerification = await verifyRecaptcha(recaptchaToken)
+    if (!recaptchaVerification.success) {
+      console.log('reCAPTCHA verification failed:', recaptchaVerification.error)
+      return NextResponse.json(
+        { error: 'reCAPTCHA verification failed. Please try again.' },
         { status: 400 }
       )
     }
@@ -160,6 +182,47 @@ async function sendNotificationEmail({ email }: { email: string }) {
   } catch (error) {
     console.error('❌ Failed to send notification email:', error)
     return { success: false, error: error instanceof Error ? error.message : 'Unknown error' }
+  }
+}
+
+async function verifyRecaptcha(token: string) {
+  try {
+    const secretKey = process.env.RECAPTCHA_SECRET_KEY
+    
+    if (!secretKey) {
+      console.error('❌ reCAPTCHA secret key not found')
+      return { success: false, error: 'reCAPTCHA service not configured' }
+    }
+
+    const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `secret=${secretKey}&response=${token}`,
+    })
+
+    const data = await response.json()
+    
+    console.log('reCAPTCHA verification response:', {
+      success: data.success,
+      score: data.score,
+      action: data.action,
+      challenge_ts: data.challenge_ts,
+      hostname: data.hostname
+    })
+
+    if (data.success && data.score >= 0.5) {
+      return { success: true, score: data.score }
+    } else {
+      return { 
+        success: false, 
+        error: data.success ? `reCAPTCHA score too low: ${data.score}` : 'reCAPTCHA verification failed'
+      }
+    }
+  } catch (error) {
+    console.error('❌ reCAPTCHA verification error:', error)
+    return { success: false, error: 'Failed to verify reCAPTCHA' }
   }
 }
 
