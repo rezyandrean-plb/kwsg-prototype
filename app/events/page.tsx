@@ -584,7 +584,7 @@ export default function EventsPage() {
                         className="w-full sm:w-auto bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 rounded-md"
                         onClick={() => window.open("https://explore.kwsingapore.com/seller-presentation-techniques", "_blank")}
                       >
-                        Register for Interest
+                        Tell Me More
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
                     </div>
@@ -627,7 +627,7 @@ export default function EventsPage() {
                         className="w-full sm:w-auto bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 rounded-md"
                         onClick={() => window.open("https://explore.kwsingapore.com/buyer-consultation-techniques", "_blank")}
                       >
-                        Register for Interest
+                        Tell Me More
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
                     </div>
@@ -670,7 +670,7 @@ export default function EventsPage() {
                         className="w-full sm:w-auto bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 rounded-md"
                         onClick={() => window.open("https://explore.kwsingapore.com/kw-new-launch-analysis-training", "_blank")}
                       >
-                        Register for Interest
+                        Tell Me More
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
                     </div>
@@ -713,7 +713,7 @@ export default function EventsPage() {
                         className="w-full sm:w-auto bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 rounded-md"
                         onClick={() => window.open("https://explore.kwsingapore.com/positioning-as-a-consultant", "_blank")}
                       >
-                        Register for Interest
+                        Tell Me More
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
                     </div>
