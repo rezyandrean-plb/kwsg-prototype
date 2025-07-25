@@ -356,7 +356,7 @@ async function sendAutoReplyEmail({ fullName, email, subject }: {
             </p>
             
             <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">
-              In the meantime, if you have any urgent questions, please don't hesitate to reach out to us directly at <strong>hello@kwsingapore.com</strong> or call us at <strong>+65 8611 1703</strong>.
+              In the meantime, if you have any urgent questions, please don't hesitate to reach out to us directly at <strong>hello@kwsingapore.com</strong> or call us at <strong>+65 8799 6569</strong>.
             </p>
             
             <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">
