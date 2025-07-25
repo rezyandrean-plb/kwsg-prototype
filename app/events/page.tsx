@@ -407,7 +407,7 @@ export default function EventsPage() {
                 <Button
                   size="lg"
                   className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
-                  onClick={() => setIsSummitDialogOpen(true)}
+                  onClick={() => window.open("https://explore.kwsingapore.com/mega-realtor-summit-singapore-2025", "_blank")}
                 >
                   Save My Spot
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -582,7 +582,7 @@ export default function EventsPage() {
                     <div className="flex justify-center sm:justify-start mt-auto">
                       <Button 
                         className="w-full sm:w-auto bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 rounded-md"
-                        onClick={() => setIsBootcampCarouselDialogOpen(true)}
+                        onClick={() => window.open("https://explore.kwsingapore.com/seller-presentation-techniques", "_blank")}
                       >
                         Register for Interest
                         <ArrowRight className="ml-2 h-4 w-4" />
@@ -625,7 +625,7 @@ export default function EventsPage() {
                     <div className="flex justify-center sm:justify-start mt-auto">
                       <Button 
                         className="w-full sm:w-auto bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 rounded-md"
-                        onClick={() => setIsBootcampCarouselDialogOpen(true)}
+                        onClick={() => window.open("https://explore.kwsingapore.com/buyer-consultation-techniques", "_blank")}
                       >
                         Register for Interest
                         <ArrowRight className="ml-2 h-4 w-4" />
@@ -668,7 +668,7 @@ export default function EventsPage() {
                     <div className="flex justify-center sm:justify-start mt-auto">
                       <Button 
                         className="w-full sm:w-auto bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 rounded-md"
-                        onClick={() => setIsBootcampCarouselDialogOpen(true)}
+                        onClick={() => window.open("https://explore.kwsingapore.com/kw-new-launch-analysis-training", "_blank")}
                       >
                         Register for Interest
                         <ArrowRight className="ml-2 h-4 w-4" />
@@ -677,12 +677,12 @@ export default function EventsPage() {
                   </div>
                 </div>
 
-                {/* Card 4: Webinar & Market Charts */}
+                {/* Card 4: Positioning as a Consultant: */}
                 <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
                   <div className="bg-gradient-to-br from-gray-900 to-black p-4 sm:p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col">
                     <h3 className="text-2xl font-bold mb-4">
                       Training Bootcamp:
-                      <span className="block text-[#B40101]">Webinar & Market Charts</span>
+                      <span className="block text-[#B40101]">Positioning as a Consultant</span>
                     </h3>
 
                     <div className="flex-grow">
@@ -711,7 +711,7 @@ export default function EventsPage() {
                     <div className="flex justify-center sm:justify-start mt-auto">
                       <Button 
                         className="w-full sm:w-auto bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 rounded-md"
-                        onClick={() => setIsBootcampCarouselDialogOpen(true)}
+                        onClick={() => window.open("https://explore.kwsingapore.com/positioning-as-a-consultant", "_blank")}
                       >
                         Register for Interest
                         <ArrowRight className="ml-2 h-4 w-4" />
