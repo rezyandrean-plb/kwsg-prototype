@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -39,7 +40,10 @@ import {
   Compass,
   Layers,
   Info,
+  ArrowRight,
   X,
+  Users,
+  MapPinned,
 } from "lucide-react"
 import { Calendar as CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
@@ -1022,7 +1026,7 @@ export default function SpringleafResidenceLanding() {
                 onClick={scrollToLeadForm}
               >
                 <Calendar className="w-5 h-5 mr-2" />
-                Book Showflat Visit
+                Secure My Spot!
               </Button>
               {/* <Button
                 variant="outline"
@@ -1312,7 +1316,7 @@ export default function SpringleafResidenceLanding() {
                   onClick={scrollToLeadForm}
                 >
                   <Calendar className="w-5 h-5 mr-2" />
-                  Book Showflat Visit
+                  Secure My Spot!
                 </Button>
                 {/* <Button
                   variant="outline"
@@ -1390,7 +1394,7 @@ export default function SpringleafResidenceLanding() {
                       </div>
                     </div>
                     <div className="flex space-x-4">
-                      <Button className="bg-[#ce001f] hover:bg-[#b3001a] hover:scale-105 transition-all duration-300">Book Showflat Visit</Button>
+                      <Button className="bg-[#ce001f] hover:bg-[#b3001a] hover:scale-105 transition-all duration-300">Secure My Spot!</Button>
                       <Button variant="outline" className="border-[#ce001f] text-[#ce001f] bg-transparent hover:scale-105 transition-all duration-300">
                         <Download className="w-4 h-4 mr-2" />
                         Download Floor Plan
@@ -1759,7 +1763,7 @@ export default function SpringleafResidenceLanding() {
                   onClick={scrollToLeadForm}
                 >
                   <Calendar className="w-5 h-5 mr-2" />
-                  Book Showflat Visit
+                  Secure My Spot!
                 </Button>
                 {/* <Button
                   variant="outline"
@@ -1775,7 +1779,109 @@ export default function SpringleafResidenceLanding() {
       </section>
 
       {/* Lead Generation Form */}
-      <section
+      {/* Event Section */}
+      <section id="lead-form" className="relative py-12 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+        <div className="absolute inset-0 bg-[url('/images/event/mega-summit.webp')] bg-cover bg-center opacity-15" />
+        <div className="absolute inset-0 bg-black/60" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div 
+              className="relative order-2 lg:order-1"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <div className="relative">
+                <img
+                  src="/images/event/mrea-summit-stage.webp"
+                  alt="MREA Summit 2025 - Industry Leaders Event"
+                  className="w-full h-auto rounded-lg shadow-2xl"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-lg" />
+              </div>
+            </motion.div>
+
+            <motion.div 
+              className="order-1 lg:order-2"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <motion.h2 
+                className="font-bold mb-6 font-sans text-2xl sm:text-3xl md:text-4xl"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+              >
+                <span className="text-white">6 Data Driven Investment Frameworks to Determine Entry Price In a 2025 New Launch</span>
+                <span className="block text-[#B40101] italic">
+                  Featuring SpringLeaf Residence
+                </span>
+              </motion.h2>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+                className="mb-8"
+              >
+                <p className="text-base md:text-md mb-4 leading-relaxed">
+                  The point :
+                </p>
+                <ul className="text-base md:text-md leading-relaxed space-y-2">
+                  <li>• Understand the 6 pricing frameworks to determine and avoid the Entry Price Trap</li>
+                  <li>• Walk away with the exact 7 stacks across 2-, 3-, and 4-bedders that offer the maximum future appreciation potential.</li>
+                  <li>• Core Methodology for Exit Strategy Appreciation for Springleaf Residence.</li>
+                </ul>
+              </motion.div>
+
+              <motion.div 
+                className="space-y-4 mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+              >
+                <div className="flex items-center space-x-3">
+                  <Calendar className="h-5 w-5 text-[#B40101]" />
+                  <span className="text-slate-100">04 August 2025</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Clock className="h-5 w-5 text-[#B40101]" />
+                  <span className="text-white/80">07:00 PM</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <MapPinned className="h-5 w-5 text-[#B40101]" />
+                  <span className="text-slate-100">Springleaf Residence Showflat</span>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+                className="flex justify-center sm:justify-start"
+              >
+                <Button
+                  size="lg"
+                  className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
+                  onClick={() => window.open("https://explore.kwsingapore.com/mega-realtor-summit-singapore-2025", "_blank")}
+                >
+                  Secure My Spot
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+      {/* <section
         id="lead-form"
         className={`py-8 md:py-16 relative bg-cover bg-center section-entrance`}
         data-section-id="lead-form"
@@ -1878,10 +1984,9 @@ export default function SpringleafResidenceLanding() {
                         selected={formData.preferredDate}
                         onSelect={(date) => setFormData(prev => ({ ...prev, preferredDate: date }))}
                         initialFocus
-                        defaultMonth={new Date(2025, 7, 1)} // August 2025 (month is 0-indexed, so 7 = August)
+                        defaultMonth={new Date(2025, 7, 1)} 
                         disabled={(date) => {
-                          // Disable all dates up to and including July 31st, 2025
-                          const july31st = new Date(2025, 6, 31); // July 31st, 2025 (month is 0-indexed, so 6 = July)
+                          const july31st = new Date(2025, 6, 31);
                           return date <= july31st;
                         }}
                       />
@@ -1911,7 +2016,7 @@ export default function SpringleafResidenceLanding() {
                     </SelectContent>
                   </Select>
                 </div>
-                {/* Enhanced reCAPTCHA Protection Notice */}
+                
                 <div className="bg-gradient-to-r from-blue-50/20 to-indigo-50/20 border border-blue-200/30 rounded-lg p-4 backdrop-blur-sm">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
@@ -1970,7 +2075,7 @@ export default function SpringleafResidenceLanding() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                           </svg>
                         </div>
-                        Book Showflat Visit
+                        Secure My Spot!
                       </>
                     )}
                   </Button>
@@ -1984,7 +2089,7 @@ export default function SpringleafResidenceLanding() {
             </Card>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Site Map Request Popup */}
       {showSiteMapPopup && (
