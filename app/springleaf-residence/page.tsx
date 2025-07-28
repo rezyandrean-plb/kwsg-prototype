@@ -709,7 +709,9 @@ export default function SpringleafResidenceLanding() {
   const [eventFormData, setEventFormData] = useState({
     fullName: '',
     contactNumber: '',
-    emailAddress: ''
+    emailAddress: '',
+    numberOfPax: '1',
+    plbConsultant: ''
   })
   const [isEventSubmitting, setIsEventSubmitting] = useState(false)
   const [eventSubmitSuccess, setEventSubmitSuccess] = useState(false)
@@ -932,7 +934,9 @@ export default function SpringleafResidenceLanding() {
         setEventFormData({
           fullName: '',
           contactNumber: '',
-          emailAddress: ''
+          emailAddress: '',
+          numberOfPax: '1',
+          plbConsultant: ''
         })
         
         // Show success toast
@@ -1106,10 +1110,10 @@ export default function SpringleafResidenceLanding() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Button 
-                className={`bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-4 text-lg font-medium rounded-lg transition-all duration-300 hover:scale-105 hover-lift flex-shrink-0 ${isVisible ? 'animate-pulse-glow' : ''}`}
+                className={`bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-4 text-sm sm:text-base md:text-lg font-medium rounded-lg transition-all duration-300 hover:scale-105 hover-lift flex-shrink-0 ${isVisible ? 'animate-pulse-glow' : ''}`}
                 onClick={scrollToLeadForm}
               >
-                <Calendar className="w-5 h-5 mr-2" />
+                <Calendar className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 04 Aug, 07:00 PM - Attend Analysis Seminar
               </Button>
               {/* <Button
@@ -1136,8 +1140,232 @@ export default function SpringleafResidenceLanding() {
         </div>
       </section>
 
+      {/* Event Section */}
+      <section id="lead-form" className="relative py-12 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+        <div className="absolute inset-0 bg-[url('/images/event/mega-summit.webp')] bg-cover bg-center opacity-15" />
+        <div className="absolute inset-0 bg-black/60" />
 
-      {/* Enhanced Media Section */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          {/* Centered Title */}
+          <motion.h2 
+            className="font-light mb-12 font-sans text-2xl sm:text-3xl md:text-4xl text-center"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <span className="text-white">6 Data Driven Investment Frameworks to Determine Entry Price <br /> In a 2025 New Launch</span>
+            <span className="block text-[#B40101] italic">
+              Featuring SpringLeaf Residence
+            </span>
+          </motion.h2>
+
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            {/* Image Column - Always first on mobile, second on desktop */}
+            <motion.div 
+              className="relative order-1 lg:order-2"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <div className="relative">
+                <img
+                  src="/images/event/springleaf-residence-event.webp"
+                  alt="Springleaf Residence Event"
+                  className="w-full h-auto rounded-lg shadow-2xl object-contain md:object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-lg" />
+              </div>
+            </motion.div>
+
+            {/* Content Column - Always second on mobile, first on desktop */}
+            <motion.div 
+              className="order-2 lg:order-1"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+                className="mb-8"
+              >
+                <ul className="text-base md:text-md leading-relaxed space-y-2">
+                  <li>• Understand the 6 pricing frameworks to determine and avoid the Entry Price Trap</li>
+                  <li>• Walk away with the exact 7 stacks across 2-, 3-, and 4-bedders that offer the maximum future appreciation potential.</li>
+                  <li>• Core Methodology for Exit Strategy Appreciation for Springleaf Residence.</li>
+                </ul>
+              </motion.div>
+
+              <motion.div 
+                className="space-y-4 mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+              >
+                <div className="flex items-center space-x-3">
+                  <Calendar className="h-5 w-5 text-[#B40101]" />
+                  <span className="text-slate-100">04 August 2025</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Clock className="h-5 w-5 text-[#B40101]" />
+                  <span className="text-white/80">07:00 PM</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <MapPinned className="h-5 w-5 text-[#B40101]" />
+                  <span className="text-slate-100">Springleaf Residence Showflat</span>
+                </div>
+              </motion.div>
+              
+            </motion.div>
+          </div>
+
+          {/* Event Registration Form - Centered below content */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="mt-16 max-w-2xl mx-auto"
+          >
+            <Card className="bg-white/10 backdrop-blur-sm text-white p-6 md:p-8 shadow-2xl border border-white/20 rounded-xl">
+              <h3 className="text-2xl font-medium mb-6 text-center text-white">
+                Join us LIVE for an in-person seminar!
+              </h3>
+              
+              {eventSubmitError && (
+                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
+                  {eventSubmitError}
+                </div>
+              )}
+              
+              {eventSubmitSuccess && (
+                <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400 text-sm">
+                  Thank you for registering! We will contact you soon with event details.
+                </div>
+              )}
+              
+              <form className="space-y-6" onSubmit={handleEventFormSubmit}>
+                <div className="space-y-2">
+                  <label htmlFor="eventFullName" className="text-sm font-medium text-white">
+                    Full Name *
+                  </label>
+                  <Input 
+                    id="eventFullName"
+                    value={eventFormData.fullName}
+                    onChange={(e) => setEventFormData(prev => ({ ...prev, fullName: e.target.value }))}
+                    placeholder="Enter your full name" 
+                    className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
+                    required
+                    disabled={isEventSubmitting}
+                  />
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label htmlFor="eventContactNumber" className="text-sm font-medium text-white">
+                      Contact Number *
+                    </label>
+                    <Input 
+                      id="eventContactNumber"
+                      value={eventFormData.contactNumber}
+                      onChange={(e) => setEventFormData(prev => ({ ...prev, contactNumber: e.target.value }))}
+                      placeholder="Enter your contact number" 
+                      className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
+                      required
+                      disabled={isEventSubmitting}
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label htmlFor="eventEmailAddress" className="text-sm font-medium text-white">
+                      Email Address *
+                    </label>
+                    <Input 
+                      id="eventEmailAddress"
+                      type="email"
+                      value={eventFormData.emailAddress}
+                      onChange={(e) => setEventFormData(prev => ({ ...prev, emailAddress: e.target.value }))}
+                      placeholder="Enter your email address" 
+                      className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
+                      required
+                      disabled={isEventSubmitting}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label htmlFor="eventNumberOfPax" className="text-sm font-medium text-white">
+                    No. of Pax *
+                  </label>
+                  <select
+                    id="eventNumberOfPax"
+                    value={eventFormData.numberOfPax}
+                    onChange={(e) => setEventFormData(prev => ({ ...prev, numberOfPax: e.target.value }))}
+                    className="w-full bg-white text-gray-800 border-0 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#B40101] disabled:opacity-50 disabled:cursor-not-allowed"
+                    required
+                    disabled={isEventSubmitting}
+                  >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <label htmlFor="eventPlbConsultant" className="text-sm font-medium text-white">
+                    Name of KW Singapore or PLB Consultant *
+                  </label>
+                  <Input 
+                    id="eventPlbConsultant"
+                    value={eventFormData.plbConsultant}
+                    onChange={(e) => setEventFormData(prev => ({ ...prev, plbConsultant: e.target.value }))}
+                    placeholder="Name of KW Singapore or PLB Consultant" 
+                    className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
+                    required
+                    disabled={isEventSubmitting}
+                  />
+                  <p className="text-xs text-white/70 italic">
+                    *Please indicate NA if you are not connected to one of our KW Singapore or PLB consultants.
+                  </p>
+                </div>
+
+                <div className="text-center">
+                  <Button 
+                    type="submit"
+                    disabled={isEventSubmitting}
+                    className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isEventSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                        Submitting...
+                      </>
+                    ) : (
+                      <>
+                        <Calendar className="w-5 h-5 mr-2" />
+                        Secure My Spot!
+                      </>
+                    )}
+                  </Button>
+                  <p className="text-sm italic text-white/70 mt-4 text-center">
+                    Upon registering, you agree to receive future marketing materials from KW Singapore. 
+                    <br /> 
+                    Your personal information will be used in accordance with our <a href="/privacy-policy" className="text-white hover:text-gray-300">privacy policy</a>.
+                  </p>
+                </div>
+              </form>
+            </Card>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Enhanced Explore Section */}
       <section id="media" className="pt-4 pb-4 bg-[#1c1c1d] flex items-center justify-center">
         <div className="container mx-auto px-4 text-left">
           <div className={`text-center mb-8 md:mb-16 transition-all duration-1000 ${
@@ -1252,219 +1480,81 @@ export default function SpringleafResidenceLanding() {
               </div>
             </div>
           </div>
-
-          {/* Call to Action */}
-          <div className={`text-center mt-12 sm:mt-16 md:mt-18 lg:mt-12 mb-4 transition-all duration-1000 delay-500 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
-              <h3 className="text-xl md:text-2xl font-normal md:font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
-              <p className="text-base md:text-lg mb-6 opacity-90">
-                Register now for an exclusive preview of Springleaf Residence
-              </p>
-              <div className="cta-buttons-container justify-center">
-                <Button 
-                  className="bg-white text-[#ce001f] hover:bg-gray-100 px-8 py-3 text-lg hover:scale-105 transition-all duration-300"
-                  onClick={scrollToLeadForm}
-                >
-                  <Calendar className="w-5 h-5 mr-2" />
-                  Secure My Spot!
-                </Button>
-                {/* <Button
-                  variant="outline"
-                  className="border-white text-white hover:bg-white hover:text-[#ce001f] px-8 py-3 text-lg bg-transparent hover:scale-105 transition-all duration-300"
-                >
-                  <Download className="w-5 h-5 mr-2" />
-                  Download Brochure
-                </Button> */}
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* Event Section */}
-      <section id="lead-form" className="relative py-12 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
-        <div className="absolute inset-0 bg-[url('/images/event/mega-summit.webp')] bg-cover bg-center opacity-15" />
-        <div className="absolute inset-0 bg-black/60" />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
-          {/* Centered Title */}
-          <motion.h2 
-            className="font-light mb-12 font-sans text-2xl sm:text-3xl md:text-4xl text-center"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <span className="text-white">6 Data Driven Investment Frameworks to Determine Entry Price <br /> In a 2025 New Launch</span>
-            <span className="block text-[#B40101] italic">
-              Featuring SpringLeaf Residence
-            </span>
-          </motion.h2>
-
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
-            <motion.div 
-              className="relative order-2 lg:order-1"
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              <div className="relative">
-                <img
-                  src="/images/event/springleaf-residence-event.webp"
-                  alt="Springleaf Residence Event"
-                  className="w-full h-auto rounded-lg shadow-2xl"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-lg" />
-              </div>
-            </motion.div>
-
-            <motion.div 
-              className="order-1 lg:order-2"
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-                viewport={{ once: true, margin: "-100px" }}
-                className="mb-8"
-              >
-                <ul className="text-base md:text-md leading-relaxed space-y-2">
-                  <li>• Understand the 6 pricing frameworks to determine and avoid the Entry Price Trap</li>
-                  <li>• Walk away with the exact 7 stacks across 2-, 3-, and 4-bedders that offer the maximum future appreciation potential.</li>
-                  <li>• Core Methodology for Exit Strategy Appreciation for Springleaf Residence.</li>
-                </ul>
-              </motion.div>
-
-              <motion.div 
-                className="space-y-4 mb-8"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-                viewport={{ once: true, margin: "-100px" }}
-              >
-                <div className="flex items-center space-x-3">
-                  <Calendar className="h-5 w-5 text-[#B40101]" />
-                  <span className="text-slate-100">04 August 2025</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Clock className="h-5 w-5 text-[#B40101]" />
-                  <span className="text-white/80">07:00 PM</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <MapPinned className="h-5 w-5 text-[#B40101]" />
-                  <span className="text-slate-100">Springleaf Residence Showflat</span>
-                </div>
-              </motion.div>
-              
-            </motion.div>
+      {/* Two Column Image CTA Section */}
+      <section className="py-16 bg-[#1c1c1d]">
+        <div className="container mx-auto px-4">
+          <div className={`text-center mb-12 transition-all duration-1000 ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+          }`}>
+            <h2 className="text-2xl md:text-3xl font-light mb-3 text-white text-center tracking-wide">Discover More About Springleaf Residence</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-[#ce001f] rounded" />
+            </div>
+            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+              Explore our comprehensive resources and insights to make an informed decision about your future home
+            </p>
           </div>
 
-          {/* Event Registration Form - Centered below content */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="mt-16 max-w-2xl mx-auto"
-          >
-            <Card className="bg-white/10 backdrop-blur-sm text-white p-6 md:p-8 shadow-2xl border border-white/20 rounded-xl">
-              <h3 className="text-2xl font-medium mb-6 text-center text-white">
-                Register your interest now!
-              </h3>
-              
-              {eventSubmitError && (
-                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
-                  {eventSubmitError}
-                </div>
-              )}
-              
-              {eventSubmitSuccess && (
-                <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400 text-sm">
-                  Thank you for registering! We will contact you soon with event details.
-                </div>
-              )}
-              
-              <form className="space-y-6" onSubmit={handleEventFormSubmit}>
-                <div className="space-y-2">
-                  <label htmlFor="eventFullName" className="text-sm font-medium text-white">
-                    Full Name *
-                  </label>
-                  <Input 
-                    id="eventFullName"
-                    value={eventFormData.fullName}
-                    onChange={(e) => setEventFormData(prev => ({ ...prev, fullName: e.target.value }))}
-                    placeholder="Enter your full name" 
-                    className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
-                    required
-                    disabled={isEventSubmitting}
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <label htmlFor="eventContactNumber" className="text-sm font-medium text-white">
-                    Contact Number *
-                  </label>
-                  <Input 
-                    id="eventContactNumber"
-                    value={eventFormData.contactNumber}
-                    onChange={(e) => setEventFormData(prev => ({ ...prev, contactNumber: e.target.value }))}
-                    placeholder="Enter your contact number" 
-                    className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
-                    required
-                    disabled={isEventSubmitting}
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <label htmlFor="eventEmailAddress" className="text-sm font-medium text-white">
-                    Email Address *
-                  </label>
-                  <Input 
-                    id="eventEmailAddress"
-                    type="email"
-                    value={eventFormData.emailAddress}
-                    onChange={(e) => setEventFormData(prev => ({ ...prev, emailAddress: e.target.value }))}
-                    placeholder="Enter your email address" 
-                    className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
-                    required
-                    disabled={isEventSubmitting}
-                  />
-                </div>
-
-                <div className="text-center">
-                  <Button 
-                    type="submit"
-                    disabled={isEventSubmitting}
-                    className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {isEventSubmitting ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                        Submitting...
-                      </>
-                    ) : (
-                      <>
-                        <Calendar className="w-5 h-5 mr-2" />
-                        Secure My Spot!
-                      </>
-                    )}
-                  </Button>
-                  <p className="text-sm italic text-white/70 mt-4 text-center">
-                    Upon registering, you agree to receive future marketing materials from KW Singapore. 
-                    <br /> 
-                    Your personal information will be used in accordance with our <a href="/privacy-policy" className="text-white hover:text-gray-300">privacy policy</a>.
+          <div className={`grid lg:grid-cols-2 gap-8 md:gap-12 transition-all duration-1000 delay-300 ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+          }`}>
+            {/* First Column */}
+            <div className="group relative overflow-hidden rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-500">
+              <div className="relative h-96 overflow-hidden">
+                <Image
+                  src="/images/springleaf-residence/springleaf-hero.jpg"
+                  alt="Springleaf Residence Showflat Tour"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <Badge className="bg-[#ce001f] text-white mb-3">VIRTUAL TOUR</Badge>
+                  <h3 className="text-2xl font-bold mb-3">Experience Springleaf Residence</h3>
+                  <p className="text-gray-200 mb-4">
+                    Take a virtual tour of our showflat and discover the luxury and elegance that awaits you
                   </p>
+                  <Button 
+                    className="bg-white text-[#ce001f] hover:bg-gray-100 px-6 py-3 hover:scale-105 transition-all duration-300"
+                    onClick={() => scrollToGallery()}
+                  >
+                    <Eye className="w-5 h-5 mr-2" />
+                    View Gallery
+                  </Button>
                 </div>
-              </form>
-            </Card>
-          </motion.div>
+              </div>
+            </div>
+
+            {/* Second Column */}
+            <div className="group relative overflow-hidden rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-500">
+              <div className="relative h-96 overflow-hidden">
+                <Image
+                  src="/images/springleaf-residence/springleaf-location.webp"
+                  alt="Springleaf Residence Location Analysis"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <Badge className="bg-green-600 text-white mb-3">LOCATION INSIGHTS</Badge>
+                  <h3 className="text-2xl font-bold mb-3">Prime Location Analysis</h3>
+                  <p className="text-gray-200 mb-4">
+                    Discover why Springleaf Residence's strategic location makes it an exceptional investment opportunity
+                  </p>
+                  <Button 
+                    className="bg-white text-[#ce001f] hover:bg-gray-100 px-6 py-3 hover:scale-105 transition-all duration-300"
+                    onClick={() => scrollToNearbyAmenities()}
+                  >
+                    <MapPin className="w-5 h-5 mr-2" />
+                    Explore Location
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1716,34 +1806,6 @@ export default function SpringleafResidenceLanding() {
               </div>
             </div>
           </div> 
-
-          {/* Call to Action */}
-          <div className={`text-center mb-4 transition-all duration-1000 delay-500 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
-              <h3 className="text-2xl font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
-              <p className="text-lg mb-6 opacity-90">
-                Register now for an exclusive preview of Springleaf Residence
-              </p>
-              <div className="cta-buttons-container justify-center">
-                <Button 
-                  className="bg-white text-[#ce001f] hover:bg-gray-100 px-8 py-3 text-lg hover:scale-105 transition-all duration-300"
-                  onClick={scrollToLeadForm}
-                >
-                  <Calendar className="w-5 h-5 mr-2" />
-                  Secure My Spot!
-                </Button>
-                {/* <Button
-                  variant="outline"
-                  className="border-white text-white hover:bg-white hover:text-[#ce001f] px-8 py-3 text-lg bg-transparent hover:scale-105 transition-all duration-300"
-                >
-                  <Download className="w-5 h-5 mr-2" />
-                  Download Brochure
-                </Button> */}
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 

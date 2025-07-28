@@ -8,20 +8,24 @@ export async function POST(request: NextRequest) {
     const { 
       fullName, 
       contactNumber, 
-      emailAddress
+      emailAddress,
+      numberOfPax,
+      plbConsultant
     } = body
 
     console.log('Springleaf Residence Event registration form submission received:', { 
       fullName, 
       contactNumber, 
-      emailAddress
+      emailAddress,
+      numberOfPax,
+      plbConsultant
     })
 
     // Validate required fields
-    if (!fullName || !contactNumber || !emailAddress) {
+    if (!fullName || !contactNumber || !emailAddress || !numberOfPax || !plbConsultant) {
       console.log('Validation failed: Missing required fields')
       return NextResponse.json(
-        { error: 'Full name, contact number, and email address are required' },
+        { error: 'Full name, contact number, email address, number of pax, and PLB consultant are required' },
         { status: 400 }
       )
     }
@@ -32,7 +36,9 @@ export async function POST(request: NextRequest) {
     const notificationResult = await sendNotificationEmail({
       fullName,
       contactNumber,
-      emailAddress
+      emailAddress,
+      numberOfPax,
+      plbConsultant
     })
 
     console.log('Notification email result:', notificationResult)
@@ -57,7 +63,9 @@ export async function POST(request: NextRequest) {
     const sheetsResult = await insertIntoGoogleSheets({
       fullName,
       contactNumber,
-      emailAddress
+      emailAddress,
+      numberOfPax,
+      plbConsultant
     })
 
     console.log('Google Sheets result:', sheetsResult)
@@ -88,11 +96,15 @@ export async function POST(request: NextRequest) {
 async function sendNotificationEmail({ 
   fullName, 
   contactNumber, 
-  emailAddress
+  emailAddress,
+  numberOfPax,
+  plbConsultant
 }: {
   fullName: string
   contactNumber: string
   emailAddress: string
+  numberOfPax: string
+  plbConsultant: string
 }) {
   try {
     const isDevelopment = process.env.NODE_ENV === 'development'
@@ -144,8 +156,16 @@ async function sendNotificationEmail({
                   <td style="padding: 8px 0; border-bottom: 1px solid #eee; color: #333;">${contactNumber}</td>
                 </tr>
                 <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #666;">Email Address:</td>
-                  <td style="padding: 8px 0; color: #333;">${emailAddress}</td>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #666;">Email Address:</td>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #eee; color: #333;">${emailAddress}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #666;">Number of Pax:</td>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #eee; color: #333;">${numberOfPax}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #666;">PLB Consultant:</td>
+                  <td style="padding: 8px 0; color: #333;">${plbConsultant}</td>
                 </tr>
               </table>
             </div>
@@ -207,11 +227,15 @@ async function sendNotificationEmail({
 async function insertIntoGoogleSheets({ 
   fullName, 
   contactNumber, 
-  emailAddress
+  emailAddress,
+  numberOfPax,
+  plbConsultant
 }: {
   fullName: string
   contactNumber: string
   emailAddress: string
+  numberOfPax: string
+  plbConsultant: string
 }) {
   try {
     const spreadsheetId = process.env.GOOGLE_SHEETS_EVENT_SPREADSHEET_ID
@@ -269,6 +293,8 @@ async function insertIntoGoogleSheets({
       fullName,
       contactNumber,
       emailAddress,
+      numberOfPax,
+      plbConsultant,
       'Event Registration',
       'Springleaf Residence Event'
     ]
@@ -276,7 +302,7 @@ async function insertIntoGoogleSheets({
     // Append data to the spreadsheet
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: 'EventRegistrations!A:F', // Use tab name for event registrations
+      range: 'EventRegistrations!A:H', // Updated range to include new columns
       valueInputOption: 'RAW',
       insertDataOption: 'INSERT_ROWS',
       requestBody: {
