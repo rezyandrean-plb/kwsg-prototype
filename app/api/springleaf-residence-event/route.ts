@@ -374,50 +374,73 @@ async function sendAutoReplyEmail({ fullName, emailAddress }: {
     const emailContent = {
       to: emailAddress,
       from: fromEmail,
-      subject: 'Springleaf Residence Event Registration Confirmation - KW Singapore',
+      subject: 'Springleaf Residence Live Seminar - Your Seat is Confirmed!',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #B40101; color: white; padding: 20px; text-align: center;">
             <h1 style="margin: 0; font-size: 24px;">KW Singapore</h1>
-            <p style="margin: 5px 0 0 0; font-size: 16px;">Springleaf Residence Event Registration</p>
+            <p style="margin: 5px 0 0 0; font-size: 16px;">Springleaf Residence Live Seminar</p>
           </div>
           
           <div style="padding: 30px; background-color: #f9f9f9;">
-            <h2 style="color: #333; margin-bottom: 20px;">Thank You for Your Registration!</h2>
-            
-            <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-              <p style="color: #666; line-height: 1.6; margin: 0;">
-                Dear ${fullName},
+            <div style="background-color: white; padding: 25px; border-radius: 8px; margin-bottom: 20px;">
+              <p style="color: #333; line-height: 1.6; margin: 0 0 15px 0; font-size: 16px;">
+                Hi ${fullName},
               </p>
-              <p style="color: #666; line-height: 1.6; margin: 10px 0 0 0;">
-                Thank you for registering your interest in the Springleaf Residence Event! We're excited to have you join us for this exclusive event.
+              <p style="color: #333; line-height: 1.6; margin: 0 0 15px 0; font-size: 16px;">
+                Thanks for signing up for the Springleaf Residence Live Seminar! Your seat is confirmed.
               </p>
             </div>
             
-            <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-              <h3 style="color: #B40101; margin-top: 0;">What's Next?</h3>
-              <ul style="color: #666; line-height: 1.6; margin: 0; padding-left: 20px;">
-                <li>Our team will review your registration and contact you with event details</li>
-                <li>You'll receive updates about the event schedule and agenda</li>
-                <li>We'll provide information about venue details and directions</li>
-                <li>You'll get exclusive access to event materials and resources</li>
+            <div style="background-color: white; padding: 25px; border-radius: 8px; margin-bottom: 20px;">
+              <div style="margin-bottom: 15px;">
+                <span style="color: #B40101; font-size: 18px;">📍</span>
+                <span style="color: #333; font-weight: bold; margin-left: 10px;">Venue:</span>
+                <span style="color: #333; margin-left: 10px;">Springleaf Residence Showflat - 825A Upper Thomson Rd, Singapore 787135</span>
+                <br>
+                <a href="https://maps.app.goo.gl/C9iSsjFFpA4k4RyC9" style="color: #B40101; text-decoration: none; margin-left: 28px; font-size: 14px;">View on Google Maps</a>
+              </div>
+              
+              <div style="margin-bottom: 15px;">
+                <span style="color: #B40101; font-size: 18px;">📅</span>
+                <span style="color: #333; font-weight: bold; margin-left: 10px;">Date:</span>
+                <span style="color: #333; margin-left: 10px;">Monday, 4 August 2025</span>
+              </div>
+              
+              <div style="margin-bottom: 15px;">
+                <span style="color: #B40101; font-size: 18px;">🕖</span>
+                <span style="color: #333; font-weight: bold; margin-left: 10px;">Time:</span>
+                <span style="color: #333; margin-left: 10px;">7:00PM (Please arrive by 6:45PM for registration)</span>
+              </div>
+            </div>
+            
+            <div style="background-color: white; padding: 25px; border-radius: 8px; margin-bottom: 20px;">
+              <h3 style="color: #B40101; margin-top: 0; margin-bottom: 15px;">What You'll Learn:</h3>
+              <p style="color: #333; line-height: 1.6; margin: 0 0 15px 0;">
+                Join Melvin Lim (Founder, KW Singapore) and Rayne Chua (New Launch Director) as they walk you through:
+              </p>
+              <ul style="color: #333; line-height: 1.6; margin: 0; padding-left: 20px;">
+                <li style="margin-bottom: 8px;"><span style="color: #B40101;">✅</span> 6 investment frameworks KW uses to analyse new launches</li>
+                <li style="margin-bottom: 8px;"><span style="color: #B40101;">✅</span> 7 Springleaf stacks with the strongest future upside</li>
+                <li style="margin-bottom: 8px;"><span style="color: #B40101;">✅</span> Why entry PSF is only half the story — and how to plan your exit before you buy</li>
               </ul>
             </div>
             
-            <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-              <h3 style="color: #B40101; margin-top: 0;">Event Highlights</h3>
-              <ul style="color: #666; line-height: 1.6; margin: 0; padding-left: 20px;">
-                <li>Exclusive preview of Springleaf Residence</li>
-                <li>Expert insights on the property market</li>
-                <li>Networking opportunities with industry professionals</li>
-                <li>Special event-only offers and promotions</li>
-              </ul>
+            <div style="background-color: white; padding: 25px; border-radius: 8px; margin-bottom: 20px;">
+              <p style="color: #333; line-height: 1.6; margin: 0 0 15px 0;">
+                You'll also get a full walkthrough of the showflat and have a chance to speak directly with our consultants on-site.
+              </p>
+              <p style="color: #333; line-height: 1.6; margin: 0; font-weight: bold;">
+                This is a one-night-only session and seats are limited — we're excited to have you join us!
+              </p>
             </div>
             
-            <div style="text-center; margin-top: 30px;">
-              <p style="color: #666; margin-bottom: 20px;">
-                Have questions? Contact our team at 
-                <a href="mailto:hello@kwsingapore.com" style="color: #B40101;">hello@kwsingapore.com</a>
+            <div style="background-color: white; padding: 25px; border-radius: 8px; margin-bottom: 20px;">
+              <p style="color: #333; line-height: 1.6; margin: 0 0 10px 0;">
+                See you soon,
+              </p>
+              <p style="color: #B40101; font-weight: bold; margin: 0;">
+                KW Singapore
               </p>
             </div>
           </div>
