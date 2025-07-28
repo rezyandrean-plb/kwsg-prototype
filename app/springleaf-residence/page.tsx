@@ -1106,11 +1106,11 @@ export default function SpringleafResidenceLanding() {
             </div>
 
             {/* Clean CTA Buttons */}
-            <div className={`cta-buttons-container mb-4 sm:mb-4 md:mb-4 lg:mb-8 transition-all duration-700 delay-1700 ${
+            <div className={`w-full px-2 sm:px-6 md:px-8 mb-4 sm:mb-4 md:mb-4 lg:mb-8 transition-all duration-700 delay-1700 ${
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Button 
-                className={`bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-4 text-sm sm:text-base md:text-lg font-medium rounded-lg transition-all duration-300 hover:scale-105 hover-lift flex-shrink-0 ${isVisible ? 'animate-pulse-glow' : ''}`}
+                className={`w-full bg-[#ce001f] hover:bg-[#b3001a] text-white px-2 sm:px-6 md:px-8 py-3 sm:py-4 text-sm sm:text-base md:text-lg font-medium rounded-lg transition-all duration-300 hover:scale-105 hover-lift flex-shrink-0 ${isVisible ? 'animate-pulse-glow' : ''}`}
                 onClick={scrollToLeadForm}
               >
                 <Calendar className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
@@ -1483,40 +1483,6 @@ export default function SpringleafResidenceLanding() {
         </div>
       </section>
 
-      {/* Two Column Image CTA Section */}
-      <section className="py-16 bg-[#1c1c1d]">
-        <div className="container mx-auto px-4">
-          <div className={`grid lg:grid-cols-2 gap-8 md:gap-12 transition-all duration-1000 delay-300 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            {/* First Column */}
-            <div className="group relative overflow-hidden rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-500">
-              <div className="relative h-[500px] overflow-hidden">
-                <Image
-                  src="/images/springleaf-residence/CTA-1.webp"
-                  alt="Springleaf Residence Showflat Tour"
-                  fill
-                  className="object-contain group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              </div>
-            </div>
-
-            {/* Second Column */}
-            <div className="group relative overflow-hidden rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-500">
-              <div className="relative h-[500px] overflow-hidden">
-                <Image
-                  src="/images/springleaf-residence/CTA-2.webp"
-                  alt="Springleaf Residence Location Analysis"
-                  fill
-                  className="object-contain group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Enhanced Project Information Section */}
       <section 
