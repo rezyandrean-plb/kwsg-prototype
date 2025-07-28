@@ -1161,9 +1161,9 @@ export default function SpringleafResidenceLanding() {
           </motion.h2>
 
           <div className="grid lg:grid-cols-2 gap-16 items-start">
-            {/* Image Column - Always first on mobile, second on desktop */}
+            {/* Image Column - Always first on mobile, left on desktop */}
             <motion.div 
-              className="relative order-1 lg:order-2"
+              className="relative order-1 lg:order-1"
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
@@ -1179,9 +1179,9 @@ export default function SpringleafResidenceLanding() {
               </div>
             </motion.div>
 
-            {/* Content Column - Always second on mobile, first on desktop */}
+            {/* Content Column - Always second on mobile, right on desktop */}
             <motion.div 
-              className="order-2 lg:order-1"
+              className="order-2 lg:order-2"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
@@ -1486,72 +1486,32 @@ export default function SpringleafResidenceLanding() {
       {/* Two Column Image CTA Section */}
       <section className="py-16 bg-[#1c1c1d]">
         <div className="container mx-auto px-4">
-          <div className={`text-center mb-12 transition-all duration-1000 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            <h2 className="text-2xl md:text-3xl font-light mb-3 text-white text-center tracking-wide">Discover More About Springleaf Residence</h2>
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-1 bg-[#ce001f] rounded" />
-            </div>
-            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-              Explore our comprehensive resources and insights to make an informed decision about your future home
-            </p>
-          </div>
-
           <div className={`grid lg:grid-cols-2 gap-8 md:gap-12 transition-all duration-1000 delay-300 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
             {/* First Column */}
             <div className="group relative overflow-hidden rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-500">
-              <div className="relative h-96 overflow-hidden">
+              <div className="relative h-[500px] overflow-hidden">
                 <Image
-                  src="/images/springleaf-residence/springleaf-hero.jpg"
+                  src="/images/springleaf-residence/CTA-1.webp"
                   alt="Springleaf Residence Showflat Tour"
                   fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                  className="object-contain group-hover:scale-110 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <Badge className="bg-[#ce001f] text-white mb-3">VIRTUAL TOUR</Badge>
-                  <h3 className="text-2xl font-bold mb-3">Experience Springleaf Residence</h3>
-                  <p className="text-gray-200 mb-4">
-                    Take a virtual tour of our showflat and discover the luxury and elegance that awaits you
-                  </p>
-                  <Button 
-                    className="bg-white text-[#ce001f] hover:bg-gray-100 px-6 py-3 hover:scale-105 transition-all duration-300"
-                    onClick={() => scrollToGallery()}
-                  >
-                    <Eye className="w-5 h-5 mr-2" />
-                    View Gallery
-                  </Button>
-                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
               </div>
             </div>
 
             {/* Second Column */}
             <div className="group relative overflow-hidden rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-500">
-              <div className="relative h-96 overflow-hidden">
+              <div className="relative h-[500px] overflow-hidden">
                 <Image
-                  src="/images/springleaf-residence/springleaf-location.webp"
+                  src="/images/springleaf-residence/CTA-2.webp"
                   alt="Springleaf Residence Location Analysis"
                   fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                  className="object-contain group-hover:scale-110 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <Badge className="bg-green-600 text-white mb-3">LOCATION INSIGHTS</Badge>
-                  <h3 className="text-2xl font-bold mb-3">Prime Location Analysis</h3>
-                  <p className="text-gray-200 mb-4">
-                    Discover why Springleaf Residence's strategic location makes it an exceptional investment opportunity
-                  </p>
-                  <Button 
-                    className="bg-white text-[#ce001f] hover:bg-gray-100 px-6 py-3 hover:scale-105 transition-all duration-300"
-                    onClick={() => scrollToNearbyAmenities()}
-                  >
-                    <MapPin className="w-5 h-5 mr-2" />
-                    Explore Location
-                  </Button>
-                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
               </div>
             </div>
           </div>
