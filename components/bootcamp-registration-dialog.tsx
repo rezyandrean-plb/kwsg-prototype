@@ -8,6 +8,9 @@ import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useState } from "react"
 import Image from "next/image"
+import { useToast } from "@/components/ui/use-toast"
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
+import { Toaster } from "@/components/ui/toaster"
 
 interface BootcampRegistrationDialogProps {
   isOpen: boolean
@@ -31,29 +34,93 @@ export function BootcampRegistrationDialog({ isOpen, onClose, onSubmit }: Bootca
     phoneNumber: "",
     selectedBootcamps: [] as string[]
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isExecutingRecaptcha, setIsExecutingRecaptcha] = useState(false)
+  const { toast } = useToast()
+  const { executeRecaptcha } = useGoogleReCaptcha()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
     // Validate bootcamp selection
     if (formData.selectedBootcamps.length === 0) {
-      alert("Please select at least one training bootcamp")
+      toast({
+        title: "Validation Error",
+        description: "Please select at least one training bootcamp",
+        variant: "destructive",
+      })
       return
     }
 
-    // Just log the form data for now
-    console.log('Bootcamp registration submitted:', formData)
+    if (!executeRecaptcha) {
+      console.error('reCAPTCHA not available')
+      toast({
+        title: "Security Error",
+        description: "Security verification not available. Please refresh the page.",
+        variant: "destructive",
+      })
+      return
+    }
+
+    setIsSubmitting(true)
+    setIsExecutingRecaptcha(true)
     
-    // Reset form
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      phoneNumber: "",
-      selectedBootcamps: []
-    })
-    
-    // Close the dialog
-    onClose()
+    try {
+      // Execute reCAPTCHA
+      const token = await executeRecaptcha('bootcamp_registration')
+      
+      // Show submitting toast
+      toast({
+        title: "Submitting...",
+        description: "Please wait while we process your registration",
+      })
+
+      const response = await fetch('/api/bootcamp-registration', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...formData, recaptchaToken: token }),
+      })
+
+      const result = await response.json()
+
+      if (response.ok && result.success) {
+        // Reset form
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phoneNumber: "",
+          selectedBootcamps: []
+        })
+        
+        // Show success toast
+        toast({
+          title: "Registration Successful!",
+          description: "Thank you for your interest in our training bootcamps! We have sent you a confirmation email and will contact you soon with bootcamp details.",
+          variant: "default",
+        })
+        
+        // Close the dialog
+        onClose()
+      } else {
+        throw new Error(result.error || 'Failed to submit registration')
+      }
+    } catch (error) {
+      console.error('Bootcamp registration error:', error)
+      const errorMessage = error instanceof Error ? error.message : 'Failed to submit registration. Please try again.'
+      
+      // Show error toast
+      toast({
+        title: "Registration Failed",
+        description: errorMessage,
+        variant: "destructive",
+      })
+    } finally {
+      setIsSubmitting(false)
+      setIsExecutingRecaptcha(false)
+    }
   }
 
   const handleBootcampToggle = (bootcamp: string) => {
@@ -95,6 +162,7 @@ export function BootcampRegistrationDialog({ isOpen, onClose, onSubmit }: Bootca
               onChange={(e) => setFormData(prev => ({ ...prev, firstName: e.target.value }))}
               placeholder="Enter your first name"
               required
+              disabled={isSubmitting}
             />
           </div>
 
@@ -107,6 +175,7 @@ export function BootcampRegistrationDialog({ isOpen, onClose, onSubmit }: Bootca
               onChange={(e) => setFormData(prev => ({ ...prev, lastName: e.target.value }))}
               placeholder="Enter your last name"
               required
+              disabled={isSubmitting}
             />
           </div>
 
@@ -120,6 +189,7 @@ export function BootcampRegistrationDialog({ isOpen, onClose, onSubmit }: Bootca
               onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
               placeholder="We'll send you bootcamp details and updates"
               required
+              disabled={isSubmitting}
             />
           </div>
 
@@ -133,6 +203,7 @@ export function BootcampRegistrationDialog({ isOpen, onClose, onSubmit }: Bootca
               onChange={(e) => setFormData(prev => ({ ...prev, phoneNumber: e.target.value }))}
               placeholder="For call-back and WhatsApp follow-up"
               required
+              disabled={isSubmitting}
             />
           </div>
 
@@ -147,6 +218,7 @@ export function BootcampRegistrationDialog({ isOpen, onClose, onSubmit }: Bootca
                     checked={formData.selectedBootcamps.includes(bootcamp)}
                     onCheckedChange={() => handleBootcampToggle(bootcamp)}
                     required={formData.selectedBootcamps.length === 0}
+                    disabled={isSubmitting}
                   />
                   <Label htmlFor={bootcamp} className="font-normal">{bootcamp}</Label>
                 </div>
@@ -155,11 +227,25 @@ export function BootcampRegistrationDialog({ isOpen, onClose, onSubmit }: Bootca
           </div>
 
           {/* Submit Button */}
-          <Button type="submit" className="w-full bg-[#B40101] hover:bg-[#B40101]/90">
-            Register for Interest
+          <Button 
+            type="submit" 
+            className="w-full bg-[#B40101] hover:bg-[#B40101]/90"
+            disabled={isSubmitting || isExecutingRecaptcha}
+          >
+            {isSubmitting || isExecutingRecaptcha ? (
+              <>
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                Submitting...
+              </>
+            ) : (
+              "Register for Interest"
+            )}
           </Button>
         </form>
       </DialogContent>
+      
+      {/* Toaster for notifications */}
+      <Toaster />
     </Dialog>
   )
 } 

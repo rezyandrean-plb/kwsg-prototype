@@ -220,15 +220,16 @@ function SiteMapForm({
   onClose, 
   isSubmitting, 
   submitSuccess, 
-  submitError 
+  submitError,
+  executeRecaptcha
 }: {
   onSubmit: (formData: any) => Promise<void>
   onClose: () => void
   isSubmitting: boolean
   submitSuccess: boolean
   submitError: string | null
+  executeRecaptcha: (action: string) => Promise<string>
 }) {
-  const { executeRecaptcha } = useGoogleReCaptcha()
   const [formData, setFormData] = useState({
     fullName: '',
     emailAddress: '',
@@ -687,7 +688,6 @@ export default function SpringleafResidenceLanding() {
     }
   }
 
-  const { executeRecaptcha } = useGoogleReCaptcha()
   const [formData, setFormData] = useState({
     fullName: '',
     contactNumber: '',
@@ -714,6 +714,8 @@ export default function SpringleafResidenceLanding() {
   const [isEventSubmitting, setIsEventSubmitting] = useState(false)
   const [eventSubmitSuccess, setEventSubmitSuccess] = useState(false)
   const [eventSubmitError, setEventSubmitError] = useState<string | null>(null)
+
+  const { executeRecaptcha } = useGoogleReCaptcha()
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -905,23 +907,10 @@ export default function SpringleafResidenceLanding() {
       return
     }
 
-    if (!executeRecaptcha) {
-      console.error('reCAPTCHA not available')
-      setEventSubmitError('Security verification not available. Please refresh the page.')
-      toast({
-        title: "Security Error",
-        description: "Security verification not available. Please refresh the page.",
-        variant: "destructive",
-      })
-      return
-    }
-
     setIsEventSubmitting(true)
     setEventSubmitError(null)
 
     try {
-      const token = await executeRecaptcha('event_registration')
-      
       // Show submitting toast
       toast({
         title: "Submitting...",
@@ -933,7 +922,7 @@ export default function SpringleafResidenceLanding() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ...eventFormData, recaptchaToken: token }),
+        body: JSON.stringify(eventFormData),
       })
 
       const result = await response.json()
@@ -1054,7 +1043,7 @@ export default function SpringleafResidenceLanding() {
                   className="bg-[#ce001f] hover:bg-[#b3001a] transition-colors duration-300"
                   onClick={scrollToLeadForm}
                 >
-                  Book Showflat Visit
+                  In-Person Analysis Seminar
                 </Button>
               </nav>
           </div>
@@ -1102,7 +1091,7 @@ export default function SpringleafResidenceLanding() {
                 isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
               }`}>
                 <div className="w-12 h-px bg-[#ce001f] mr-4"></div>
-                <p className="text-lg text-gray-200 font-light">District 26, Upper Thomson</p>
+                <p className="text-lg text-gray-200 font-light">Upper Thomson</p>
               </div>
 
               <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
@@ -1121,7 +1110,7 @@ export default function SpringleafResidenceLanding() {
                 onClick={scrollToLeadForm}
               >
                 <Calendar className="w-5 h-5 mr-2" />
-                Secure My Spot!
+                04 Aug, 07:00 PM - Attend Analysis Seminar
               </Button>
               {/* <Button
                 variant="outline"
@@ -1144,6 +1133,338 @@ export default function SpringleafResidenceLanding() {
             <span className="text-sm mb-2">Scroll to explore</span>
             <MoveDownIcon className="w-5 h-5 rotate-90 animate-bounce" />
           </div>
+        </div>
+      </section>
+
+
+      {/* Enhanced Media Section */}
+      <section id="media" className="pt-4 pb-4 bg-[#1c1c1d] flex items-center justify-center">
+        <div className="container mx-auto px-4 text-left">
+          <div className={`text-center mb-8 md:mb-16 transition-all duration-1000 ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+          }`}>
+            <h2 className="text-2xl md:text-3xl font-light mb-3 text-white text-center tracking-wide">Explore Springleaf Residence</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-[#ce001f] rounded" />
+            </div>
+            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+              Immerse yourself in the luxury and elegance of our latest development through our comprehensive media
+              gallery
+            </p>
+          </div>
+
+          
+          <div className={`space-y-8 md:space-y-20 transition-all duration-1000 delay-300 ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+          }`}>
+            
+            <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
+              <div className="space-y-6 order-2 lg:order-1">
+                <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
+                <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
+                  Springleaf Residence New Launch Analysis
+                </h3>
+                <p className="text-gray-300 leading-relaxed text-base md:text-lg">
+                  District 26's first high-rise mega condo with full facilities. 
+                  Developed by visionary GuocoLand and Hong Leong, this 941-unit project offers unbeatable connectivity, unparalleled green premium, and a strategic entry price. 
+                  Discover how you can capitalise on this rare opportunity.
+                </p>
+                  <Button 
+                    className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
+                    onClick={() => window.open('https://newlaunch.kwsingapore.com/springleaf-residence-new-launch-analysis', '_blank')}
+                  >
+                    <Play className="w-5 h-5 mr-2" />
+                    Watch Analysis
+                  </Button>
+              </div>
+              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-2">
+                <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
+                  <Image
+                    src="/images/springleaf-residence/new-launch-analysis.webp?height=320&width=500&text=Lentor+Mansion+Showflat+Tour"
+                    alt="Lentor Mansion Showflat Tour"
+                    fill
+                    className="object-contain md:object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
+              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-1">
+                <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
+                  <Image
+                    src="/images/springleaf-residence/new-launch-analysis-2.webp?height=320&width=500&text=Lentor+Rejuvenation+Analysis"
+                    alt="Lentor's Rejuvenation Analysis"
+                    fill
+                    className="object-contain md:object-cover"
+                  />
+                </div>
+              </div>
+              <div className="space-y-6 order-2 lg:order-2">
+                <Badge className="bg-green-100 text-green-800">NEW LAUNCH ANALYSIS</Badge>
+                <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
+                  Springleaf Residence vs. the Supply Surge: Can a Lower Land Bid Still Outperform in a Crowded District 26?
+                </h3>
+                <p className="text-gray-300 leading-relaxed text-base md:text-lg">
+                  Before you buy into the hype of D26, ask yourself: Are you investing… or just following the crowd? 
+                  In a market flooded with options, the wrong call could mean years of stagnant capital. 
+                  This webinar goes beyond brochures and showflat buzz to confront one critical question : 
+                  <strong> Can Springleaf truly stand out — or will it be buried in the noise?</strong>
+                </p>
+                <Button 
+                    className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
+                    onClick={() => window.open('https://newlaunch.kwsingapore.com/webinars/springleaf-residence-vs-the-supply-surge', '_blank')}
+                  >
+                    <Play className="w-5 h-5 mr-2" />
+                    Watch Webinar
+                  </Button>
+              </div>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
+              <div className="space-y-6 order-2 lg:order-1">
+                <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
+                <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
+                  As Lentor Heats Up, Is Springleaf Residence a Smart Play — or Just Another Name in an Overcrowded District 26?
+                </h3>
+                <p className="text-gray-300 leading-relaxed text-base md:text-lg">
+                  Stop and think before you join the rush into Lentor. 
+                  In a market flooded with thousands of new condo units in one small area, the greatest risk isn't missing out—it's buying in. 
+                  This webinar is a necessary warning about the illusion of safety in numbers and the potential for long-term capital stagnation that most agents won't discuss.
+                </p>
+                  <Button 
+                    className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
+                    onClick={() => window.open('https://newlaunch.kwsingapore.com/webinars/as-lentor-heats-up-is-springleaf-residence-a-smart-play', '_blank')}
+                  >
+                    <Play className="w-5 h-5 mr-2" />
+                    Watch Webinar
+                  </Button>
+              </div>
+              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-2">
+                <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
+                  <Image
+                    src="/images/springleaf-residence/new-launch-analysis-lentor.webp?height=320&width=500&text=Lentor+Mansion+Showflat+Tour"
+                    alt="Lentor Mansion Showflat Tour"
+                    fill
+                    className="object-contain md:object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Call to Action */}
+          <div className={`text-center mt-12 sm:mt-16 md:mt-18 lg:mt-12 mb-4 transition-all duration-1000 delay-500 ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+          }`}>
+            <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
+              <h3 className="text-xl md:text-2xl font-normal md:font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
+              <p className="text-base md:text-lg mb-6 opacity-90">
+                Register now for an exclusive preview of Springleaf Residence
+              </p>
+              <div className="cta-buttons-container justify-center">
+                <Button 
+                  className="bg-white text-[#ce001f] hover:bg-gray-100 px-8 py-3 text-lg hover:scale-105 transition-all duration-300"
+                  onClick={scrollToLeadForm}
+                >
+                  <Calendar className="w-5 h-5 mr-2" />
+                  Secure My Spot!
+                </Button>
+                {/* <Button
+                  variant="outline"
+                  className="border-white text-white hover:bg-white hover:text-[#ce001f] px-8 py-3 text-lg bg-transparent hover:scale-105 transition-all duration-300"
+                >
+                  <Download className="w-5 h-5 mr-2" />
+                  Download Brochure
+                </Button> */}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Event Section */}
+      <section id="lead-form" className="relative py-12 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+        <div className="absolute inset-0 bg-[url('/images/event/mega-summit.webp')] bg-cover bg-center opacity-15" />
+        <div className="absolute inset-0 bg-black/60" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          {/* Centered Title */}
+          <motion.h2 
+            className="font-light mb-12 font-sans text-2xl sm:text-3xl md:text-4xl text-center"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <span className="text-white">6 Data Driven Investment Frameworks to Determine Entry Price <br /> In a 2025 New Launch</span>
+            <span className="block text-[#B40101] italic">
+              Featuring SpringLeaf Residence
+            </span>
+          </motion.h2>
+
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            <motion.div 
+              className="relative order-2 lg:order-1"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <div className="relative">
+                <img
+                  src="/images/event/springleaf-residence-event.webp"
+                  alt="Springleaf Residence Event"
+                  className="w-full h-auto rounded-lg shadow-2xl"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-lg" />
+              </div>
+            </motion.div>
+
+            <motion.div 
+              className="order-1 lg:order-2"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+                className="mb-8"
+              >
+                <ul className="text-base md:text-md leading-relaxed space-y-2">
+                  <li>• Understand the 6 pricing frameworks to determine and avoid the Entry Price Trap</li>
+                  <li>• Walk away with the exact 7 stacks across 2-, 3-, and 4-bedders that offer the maximum future appreciation potential.</li>
+                  <li>• Core Methodology for Exit Strategy Appreciation for Springleaf Residence.</li>
+                </ul>
+              </motion.div>
+
+              <motion.div 
+                className="space-y-4 mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+              >
+                <div className="flex items-center space-x-3">
+                  <Calendar className="h-5 w-5 text-[#B40101]" />
+                  <span className="text-slate-100">04 August 2025</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Clock className="h-5 w-5 text-[#B40101]" />
+                  <span className="text-white/80">07:00 PM</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <MapPinned className="h-5 w-5 text-[#B40101]" />
+                  <span className="text-slate-100">Springleaf Residence Showflat</span>
+                </div>
+              </motion.div>
+              
+            </motion.div>
+          </div>
+
+          {/* Event Registration Form - Centered below content */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="mt-16 max-w-2xl mx-auto"
+          >
+            <Card className="bg-white/10 backdrop-blur-sm text-white p-6 md:p-8 shadow-2xl border border-white/20 rounded-xl">
+              <h3 className="text-2xl font-medium mb-6 text-center text-white">
+                Register your interest now!
+              </h3>
+              
+              {eventSubmitError && (
+                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
+                  {eventSubmitError}
+                </div>
+              )}
+              
+              {eventSubmitSuccess && (
+                <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400 text-sm">
+                  Thank you for registering! We will contact you soon with event details.
+                </div>
+              )}
+              
+              <form className="space-y-6" onSubmit={handleEventFormSubmit}>
+                <div className="space-y-2">
+                  <label htmlFor="eventFullName" className="text-sm font-medium text-white">
+                    Full Name *
+                  </label>
+                  <Input 
+                    id="eventFullName"
+                    value={eventFormData.fullName}
+                    onChange={(e) => setEventFormData(prev => ({ ...prev, fullName: e.target.value }))}
+                    placeholder="Enter your full name" 
+                    className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
+                    required
+                    disabled={isEventSubmitting}
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <label htmlFor="eventContactNumber" className="text-sm font-medium text-white">
+                    Contact Number *
+                  </label>
+                  <Input 
+                    id="eventContactNumber"
+                    value={eventFormData.contactNumber}
+                    onChange={(e) => setEventFormData(prev => ({ ...prev, contactNumber: e.target.value }))}
+                    placeholder="Enter your contact number" 
+                    className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
+                    required
+                    disabled={isEventSubmitting}
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <label htmlFor="eventEmailAddress" className="text-sm font-medium text-white">
+                    Email Address *
+                  </label>
+                  <Input 
+                    id="eventEmailAddress"
+                    type="email"
+                    value={eventFormData.emailAddress}
+                    onChange={(e) => setEventFormData(prev => ({ ...prev, emailAddress: e.target.value }))}
+                    placeholder="Enter your email address" 
+                    className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
+                    required
+                    disabled={isEventSubmitting}
+                  />
+                </div>
+
+                <div className="text-center">
+                  <Button 
+                    type="submit"
+                    disabled={isEventSubmitting}
+                    className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isEventSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                        Submitting...
+                      </>
+                    ) : (
+                      <>
+                        <Calendar className="w-5 h-5 mr-2" />
+                        Secure My Spot!
+                      </>
+                    )}
+                  </Button>
+                  <p className="text-sm italic text-white/70 mt-4 text-center">
+                    Upon registering, you agree to receive future marketing materials from KW Singapore. 
+                    <br /> 
+                    Your personal information will be used in accordance with our <a href="/privacy-policy" className="text-white hover:text-gray-300">privacy policy</a>.
+                  </p>
+                </div>
+              </form>
+            </Card>
+          </motion.div>
         </div>
       </section>
 
@@ -1571,7 +1892,7 @@ export default function SpringleafResidenceLanding() {
                 >
                   <div className="p-4 md:p-6 flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-4 min-h-[100px] md:min-h-[120px]">
                     <div>{benefit.icon}</div>
-                    <p className="text-xs md:text-lg text-gray-300 font-light text-center md:text-left">{benefit.text}</p>
+                    <p className="text-xs md:text-lg text-gray-300 font-light text-center md:text-center">{benefit.text}</p>
                   </div>
                 </div>
               ))}
@@ -1724,339 +2045,6 @@ export default function SpringleafResidenceLanding() {
               </Card>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Enhanced Media Section */}
-      <section id="media" className="pt-4 pb-4 bg-[#1c1c1d] flex items-center justify-center">
-        <div className="container mx-auto px-4 text-left">
-          <div className={`text-center mb-8 md:mb-16 transition-all duration-1000 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            <h2 className="text-2xl md:text-3xl font-light mb-3 text-white text-center tracking-wide">Explore Springleaf Residence</h2>
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-1 bg-[#ce001f] rounded" />
-            </div>
-            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-              Immerse yourself in the luxury and elegance of our latest development through our comprehensive media
-              gallery
-            </p>
-          </div>
-
-          
-          <div className={`space-y-8 md:space-y-20 transition-all duration-1000 delay-300 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            
-            <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
-              <div className="space-y-6 order-2 lg:order-1">
-                <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
-                <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
-                  Springleaf Residence New Launch Analysis
-                </h3>
-                <p className="text-gray-300 leading-relaxed text-base md:text-lg">
-                  District 26's first high-rise mega condo with full facilities. 
-                  Developed by visionary GuocoLand and Hong Leong, this 941-unit project offers unbeatable connectivity, unparalleled green premium, and a strategic entry price. 
-                  Discover how you can capitalise on this rare opportunity.
-                </p>
-                  <Button 
-                    className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
-                    onClick={() => window.open('https://newlaunch.kwsingapore.com/springleaf-residence-new-launch-analysis', '_blank')}
-                  >
-                    <Play className="w-5 h-5 mr-2" />
-                    Watch Analysis
-                  </Button>
-              </div>
-              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-2">
-                <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
-                  <Image
-                    src="/images/springleaf-residence/new-launch-analysis.webp?height=320&width=500&text=Lentor+Mansion+Showflat+Tour"
-                    alt="Lentor Mansion Showflat Tour"
-                    fill
-                    className="object-contain md:object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
-              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-1">
-                <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
-                  <Image
-                    src="/images/springleaf-residence/new-launch-analysis-2.webp?height=320&width=500&text=Lentor+Rejuvenation+Analysis"
-                    alt="Lentor's Rejuvenation Analysis"
-                    fill
-                    className="object-contain md:object-cover"
-                  />
-                </div>
-              </div>
-              <div className="space-y-6 order-2 lg:order-2">
-                <Badge className="bg-green-100 text-green-800">NEW LAUNCH ANALYSIS</Badge>
-                <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
-                  Springleaf Residence vs. the Supply Surge: Can a Lower Land Bid Still Outperform in a Crowded District 26?
-                </h3>
-                <p className="text-gray-300 leading-relaxed text-base md:text-lg">
-                  Before you buy into the hype of D26, ask yourself: Are you investing… or just following the crowd? 
-                  In a market flooded with options, the wrong call could mean years of stagnant capital. 
-                  This webinar goes beyond brochures and showflat buzz to confront one critical question : 
-                  <strong> Can Springleaf truly stand out — or will it be buried in the noise?</strong>
-                </p>
-                <Button 
-                    className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
-                    onClick={() => window.open('https://newlaunch.kwsingapore.com/webinars/springleaf-residence-vs-the-supply-surge', '_blank')}
-                  >
-                    <Play className="w-5 h-5 mr-2" />
-                    Watch Webinar
-                  </Button>
-              </div>
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
-              <div className="space-y-6 order-2 lg:order-1">
-                <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
-                <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
-                  As Lentor Heats Up, Is Springleaf Residence a Smart Play — or Just Another Name in an Overcrowded District 26?
-                </h3>
-                <p className="text-gray-300 leading-relaxed text-base md:text-lg">
-                  Stop and think before you join the rush into Lentor. 
-                  In a market flooded with thousands of new condo units in one small area, the greatest risk isn't missing out—it's buying in. 
-                  This webinar is a necessary warning about the illusion of safety in numbers and the potential for long-term capital stagnation that most agents won't discuss.
-                </p>
-                  <Button 
-                    className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
-                    onClick={() => window.open('https://newlaunch.kwsingapore.com/webinars/as-lentor-heats-up-is-springleaf-residence-a-smart-play', '_blank')}
-                  >
-                    <Play className="w-5 h-5 mr-2" />
-                    Watch Webinar
-                  </Button>
-              </div>
-              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-2">
-                <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
-                  <Image
-                    src="/images/springleaf-residence/new-launch-analysis-lentor.webp?height=320&width=500&text=Lentor+Mansion+Showflat+Tour"
-                    alt="Lentor Mansion Showflat Tour"
-                    fill
-                    className="object-contain md:object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Call to Action */}
-          <div className={`text-center mt-12 sm:mt-16 md:mt-18 lg:mt-12 mb-4 transition-all duration-1000 delay-500 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
-              <h3 className="text-xl md:text-2xl font-normal md:font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
-              <p className="text-base md:text-lg mb-6 opacity-90">
-                Register now for an exclusive preview of Springleaf Residence
-              </p>
-              <div className="cta-buttons-container justify-center">
-                <Button 
-                  className="bg-white text-[#ce001f] hover:bg-gray-100 px-8 py-3 text-lg hover:scale-105 transition-all duration-300"
-                  onClick={scrollToLeadForm}
-                >
-                  <Calendar className="w-5 h-5 mr-2" />
-                  Secure My Spot!
-                </Button>
-                {/* <Button
-                  variant="outline"
-                  className="border-white text-white hover:bg-white hover:text-[#ce001f] px-8 py-3 text-lg bg-transparent hover:scale-105 transition-all duration-300"
-                >
-                  <Download className="w-5 h-5 mr-2" />
-                  Download Brochure
-                </Button> */}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Event Section */}
-      <section id="lead-form" className="relative py-12 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
-        <div className="absolute inset-0 bg-[url('/images/event/mega-summit.webp')] bg-cover bg-center opacity-15" />
-        <div className="absolute inset-0 bg-black/60" />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
-            <motion.div 
-              className="relative order-2 lg:order-1"
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              <div className="relative">
-                <img
-                  src="/images/event/mrea-summit-stage.webp"
-                  alt="MREA Summit 2025 - Industry Leaders Event"
-                  className="w-full h-auto rounded-lg shadow-2xl"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-lg" />
-              </div>
-            </motion.div>
-
-            <motion.div 
-              className="order-1 lg:order-2"
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              <motion.h2 
-                className="font-bold mb-6 font-sans text-2xl sm:text-3xl md:text-4xl"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                viewport={{ once: true, margin: "-100px" }}
-              >
-                <span className="text-white">6 Data Driven Investment Frameworks to Determine Entry Price In a 2025 New Launch</span>
-                <span className="block text-[#B40101] italic">
-                  Featuring SpringLeaf Residence
-                </span>
-              </motion.h2>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-                viewport={{ once: true, margin: "-100px" }}
-                className="mb-8"
-              >
-                <p className="text-base md:text-md mb-4 leading-relaxed">
-                  The point :
-                </p>
-                <ul className="text-base md:text-md leading-relaxed space-y-2">
-                  <li>• Understand the 6 pricing frameworks to determine and avoid the Entry Price Trap</li>
-                  <li>• Walk away with the exact 7 stacks across 2-, 3-, and 4-bedders that offer the maximum future appreciation potential.</li>
-                  <li>• Core Methodology for Exit Strategy Appreciation for Springleaf Residence.</li>
-                </ul>
-              </motion.div>
-
-              <motion.div 
-                className="space-y-4 mb-8"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-                viewport={{ once: true, margin: "-100px" }}
-              >
-                <div className="flex items-center space-x-3">
-                  <Calendar className="h-5 w-5 text-[#B40101]" />
-                  <span className="text-slate-100">04 August 2025</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Clock className="h-5 w-5 text-[#B40101]" />
-                  <span className="text-white/80">07:00 PM</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <MapPinned className="h-5 w-5 text-[#B40101]" />
-                  <span className="text-slate-100">Springleaf Residence Showflat</span>
-                </div>
-              </motion.div>
-              
-            </motion.div>
-          </div>
-
-          {/* Event Registration Form - Centered below content */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="mt-16 max-w-2xl mx-auto"
-          >
-            <Card className="bg-white/10 backdrop-blur-sm text-white p-6 md:p-8 shadow-2xl border border-white/20 rounded-xl">
-              <h3 className="text-2xl font-bold mb-6 text-center text-white">
-                Springleaf Residence Event – 040825
-              </h3>
-              
-              {eventSubmitError && (
-                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
-                  {eventSubmitError}
-                </div>
-              )}
-              
-              {eventSubmitSuccess && (
-                <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400 text-sm">
-                  Thank you for registering! We will contact you soon with event details.
-                </div>
-              )}
-              
-              <form className="space-y-6" onSubmit={handleEventFormSubmit}>
-                <div className="space-y-2">
-                  <label htmlFor="eventFullName" className="text-sm font-medium text-white">
-                    Full Name *
-                  </label>
-                  <Input 
-                    id="eventFullName"
-                    value={eventFormData.fullName}
-                    onChange={(e) => setEventFormData(prev => ({ ...prev, fullName: e.target.value }))}
-                    placeholder="Enter your full name" 
-                    className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
-                    required
-                    disabled={isEventSubmitting}
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <label htmlFor="eventContactNumber" className="text-sm font-medium text-white">
-                    Contact Number *
-                  </label>
-                  <Input 
-                    id="eventContactNumber"
-                    value={eventFormData.contactNumber}
-                    onChange={(e) => setEventFormData(prev => ({ ...prev, contactNumber: e.target.value }))}
-                    placeholder="Enter your contact number" 
-                    className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
-                    required
-                    disabled={isEventSubmitting}
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <label htmlFor="eventEmailAddress" className="text-sm font-medium text-white">
-                    Email Address *
-                  </label>
-                  <Input 
-                    id="eventEmailAddress"
-                    type="email"
-                    value={eventFormData.emailAddress}
-                    onChange={(e) => setEventFormData(prev => ({ ...prev, emailAddress: e.target.value }))}
-                    placeholder="Enter your email address" 
-                    className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
-                    required
-                    disabled={isEventSubmitting}
-                  />
-                </div>
-
-                <div className="text-center">
-                  <Button 
-                    type="submit"
-                    disabled={isEventSubmitting}
-                    className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {isEventSubmitting ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                        Submitting...
-                      </>
-                    ) : (
-                      <>
-                        <Calendar className="w-5 h-5 mr-2" />
-                        Secure My Spot!
-                      </>
-                    )}
-                  </Button>
-                  <p className="text-sm italic text-white/70 mt-4 text-center">
-                    Upon registering, you agree to receive future marketing materials from KW Singapore. 
-                    <br /> 
-                    Your personal information will be used in accordance with our <a href="/privacy-policy" className="text-white hover:text-gray-300">privacy policy</a>.
-                  </p>
-                </div>
-              </form>
-            </Card>
-          </motion.div>
         </div>
       </section>
 
@@ -2272,13 +2260,14 @@ export default function SpringleafResidenceLanding() {
       </section> */}
 
       {/* Site Map Request Popup */}
-      {showSiteMapPopup && (
+      {showSiteMapPopup && executeRecaptcha && (
         <SiteMapForm
           onSubmit={handleSiteMapFormSubmit}
           onClose={() => setShowSiteMapPopup(false)}
           isSubmitting={isSiteMapSubmitting}
           submitSuccess={siteMapSubmitSuccess}
           submitError={siteMapSubmitError}
+          executeRecaptcha={executeRecaptcha}
         />
       )}
 
