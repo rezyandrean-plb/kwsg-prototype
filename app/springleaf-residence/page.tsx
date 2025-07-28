@@ -705,6 +705,16 @@ export default function SpringleafResidenceLanding() {
   const [siteMapSubmitSuccess, setSiteMapSubmitSuccess] = useState(false)
   const [siteMapSubmitError, setSiteMapSubmitError] = useState<string | null>(null)
 
+  // Event form state
+  const [eventFormData, setEventFormData] = useState({
+    fullName: '',
+    contactNumber: '',
+    emailAddress: ''
+  })
+  const [isEventSubmitting, setIsEventSubmitting] = useState(false)
+  const [eventSubmitSuccess, setEventSubmitSuccess] = useState(false)
+  const [eventSubmitError, setEventSubmitError] = useState<string | null>(null)
+
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
@@ -878,6 +888,91 @@ export default function SpringleafResidenceLanding() {
       })
     } finally {
       setIsSiteMapSubmitting(false)
+    }
+  }
+
+  const handleEventFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    // Validate required fields
+    if (!eventFormData.fullName.trim() || !eventFormData.contactNumber.trim() || !eventFormData.emailAddress.trim()) {
+      setEventSubmitError('Full name, contact number, and email address are required')
+      toast({
+        title: "Validation Error",
+        description: "Full name, contact number, and email address are required",
+        variant: "destructive",
+      })
+      return
+    }
+
+    if (!executeRecaptcha) {
+      console.error('reCAPTCHA not available')
+      setEventSubmitError('Security verification not available. Please refresh the page.')
+      toast({
+        title: "Security Error",
+        description: "Security verification not available. Please refresh the page.",
+        variant: "destructive",
+      })
+      return
+    }
+
+    setIsEventSubmitting(true)
+    setEventSubmitError(null)
+
+    try {
+      const token = await executeRecaptcha('event_registration')
+      
+      // Show submitting toast
+      toast({
+        title: "Submitting...",
+        description: "Please wait while we process your registration",
+      })
+
+      const response = await fetch('/api/springleaf-residence-event', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...eventFormData, recaptchaToken: token }),
+      })
+
+      const result = await response.json()
+
+      if (response.ok && result.success) {
+        setEventSubmitSuccess(true)
+        setEventFormData({
+          fullName: '',
+          contactNumber: '',
+          emailAddress: ''
+        })
+        
+        // Show success toast
+        toast({
+          title: "Registration Successful!",
+          description: "Thank you for registering for the Springleaf Residence Event! We will contact you soon with event details.",
+          variant: "default",
+        })
+        
+        // Reset success state after 5 seconds
+        setTimeout(() => {
+          setEventSubmitSuccess(false)
+        }, 5000)
+      } else {
+        throw new Error(result.error || 'Failed to submit registration')
+      }
+    } catch (error) {
+      console.error('Event form submission error:', error)
+      const errorMessage = error instanceof Error ? error.message : 'Failed to submit registration. Please try again.'
+      setEventSubmitError(errorMessage)
+      
+      // Show error toast
+      toast({
+        title: "Registration Failed",
+        description: errorMessage,
+        variant: "destructive",
+      })
+    } finally {
+      setIsEventSubmitting(false)
     }
   }
 
@@ -1778,14 +1873,13 @@ export default function SpringleafResidenceLanding() {
         </div>
       </section>
 
-      {/* Lead Generation Form */}
       {/* Event Section */}
       <section id="lead-form" className="relative py-12 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
         <div className="absolute inset-0 bg-[url('/images/event/mega-summit.webp')] bg-cover bg-center opacity-15" />
         <div className="absolute inset-0 bg-black/60" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
             <motion.div 
               className="relative order-2 lg:order-1"
               initial={{ opacity: 0, x: -50 }}
@@ -1860,27 +1954,113 @@ export default function SpringleafResidenceLanding() {
                   <span className="text-slate-100">Springleaf Residence Showflat</span>
                 </div>
               </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-                viewport={{ once: true, margin: "-100px" }}
-                className="flex justify-center sm:justify-start"
-              >
-                <Button
-                  size="lg"
-                  className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
-                  onClick={() => window.open("https://explore.kwsingapore.com/mega-realtor-summit-singapore-2025", "_blank")}
-                >
-                  Secure My Spot
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </motion.div>
+              
             </motion.div>
           </div>
+
+          {/* Event Registration Form - Centered below content */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="mt-16 max-w-2xl mx-auto"
+          >
+            <Card className="bg-white/10 backdrop-blur-sm text-white p-6 md:p-8 shadow-2xl border border-white/20 rounded-xl">
+              <h3 className="text-2xl font-bold mb-6 text-center text-white">
+                Springleaf Residence Event – 040825
+              </h3>
+              
+              {eventSubmitError && (
+                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
+                  {eventSubmitError}
+                </div>
+              )}
+              
+              {eventSubmitSuccess && (
+                <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400 text-sm">
+                  Thank you for registering! We will contact you soon with event details.
+                </div>
+              )}
+              
+              <form className="space-y-6" onSubmit={handleEventFormSubmit}>
+                <div className="space-y-2">
+                  <label htmlFor="eventFullName" className="text-sm font-medium text-white">
+                    Full Name *
+                  </label>
+                  <Input 
+                    id="eventFullName"
+                    value={eventFormData.fullName}
+                    onChange={(e) => setEventFormData(prev => ({ ...prev, fullName: e.target.value }))}
+                    placeholder="Enter your full name" 
+                    className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
+                    required
+                    disabled={isEventSubmitting}
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <label htmlFor="eventContactNumber" className="text-sm font-medium text-white">
+                    Contact Number *
+                  </label>
+                  <Input 
+                    id="eventContactNumber"
+                    value={eventFormData.contactNumber}
+                    onChange={(e) => setEventFormData(prev => ({ ...prev, contactNumber: e.target.value }))}
+                    placeholder="Enter your contact number" 
+                    className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
+                    required
+                    disabled={isEventSubmitting}
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <label htmlFor="eventEmailAddress" className="text-sm font-medium text-white">
+                    Email Address *
+                  </label>
+                  <Input 
+                    id="eventEmailAddress"
+                    type="email"
+                    value={eventFormData.emailAddress}
+                    onChange={(e) => setEventFormData(prev => ({ ...prev, emailAddress: e.target.value }))}
+                    placeholder="Enter your email address" 
+                    className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
+                    required
+                    disabled={isEventSubmitting}
+                  />
+                </div>
+
+                <div className="text-center">
+                  <Button 
+                    type="submit"
+                    disabled={isEventSubmitting}
+                    className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isEventSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                        Submitting...
+                      </>
+                    ) : (
+                      <>
+                        <Calendar className="w-5 h-5 mr-2" />
+                        Secure My Spot!
+                      </>
+                    )}
+                  </Button>
+                  <p className="text-sm italic text-white/70 mt-4 text-center">
+                    Upon registering, you agree to receive future marketing materials from KW Singapore. 
+                    <br /> 
+                    Your personal information will be used in accordance with our <a href="/privacy-policy" className="text-white hover:text-gray-300">privacy policy</a>.
+                  </p>
+                </div>
+              </form>
+            </Card>
+          </motion.div>
         </div>
       </section>
+
+      {/* Lead Generation Form */}
       {/* <section
         id="lead-form"
         className={`py-8 md:py-16 relative bg-cover bg-center section-entrance`}
