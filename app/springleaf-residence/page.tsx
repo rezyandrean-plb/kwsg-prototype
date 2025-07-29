@@ -1484,29 +1484,29 @@ export default function SpringleafResidenceLanding() {
       </section>
       
       {/* Two Column Image CTA Section */}
-      <section className="py-16 bg-[#1c1c1d]">
+      <section className="py-8 md:py-16 bg-[#1c1c1d]">
         <div className="container mx-auto px-4">
-          <div className={`grid lg:grid-cols-2 gap-8 md:gap-12 transition-all duration-1000 delay-300 ${
+          <div className={`grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 transition-all duration-1000 delay-300 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
             {/* First Column */}
             <div className="flex flex-col">
               <div className="group relative overflow-hidden rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-500">
-                <div className="relative h-[500px] overflow-hidden">
+                <div className="relative h-[300px] sm:h-[400px] md:h-[450px] lg:h-[500px] overflow-hidden">
                   <Image
                     src="/images/springleaf-residence/CTA-1.webp"
                     alt="Springleaf Residence Showflat Tour"
                     fill
-                    className="object-contain group-hover:scale-110 transition-transform duration-700"
+                    className="object-contain md:object-contain group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 </div>
               </div>
               {/* CTA Button for First Column */}
-              <div className="text-center mt-6">
+              <div className="text-center mt-4 md:mt-6">
                 <Button 
                   onClick={scrollToLeadForm}
-                  className="bg-[#ce001f] hover:bg-[#a8001a] text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                  className="bg-[#ce001f] hover:bg-[#a8001a] text-white px-6 md:px-8 py-2.5 md:py-3 rounded-lg font-semibold text-base md:text-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl w-full sm:w-auto"
                 >
                   Save your spot!
                 </Button>
@@ -1516,21 +1516,21 @@ export default function SpringleafResidenceLanding() {
             {/* Second Column */}
             <div className="flex flex-col">
               <div className="group relative overflow-hidden rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-500">
-                <div className="relative h-[500px] overflow-hidden">
+                <div className="relative h-[300px] sm:h-[400px] md:h-[450px] lg:h-[500px] overflow-hidden">
                   <Image
                     src="/images/springleaf-residence/CTA-2.webp"
                     alt="Springleaf Residence Location Analysis"
                     fill
-                    className="object-contain group-hover:scale-110 transition-transform duration-700"
+                    className="object-contain md:object-contain group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 </div>
               </div>
               {/* CTA Button for Second Column */}
-              <div className="text-center mt-6">
+              <div className="text-center mt-4 md:mt-6">
                 <Button 
                   onClick={scrollToLeadForm}
-                  className="bg-[#ce001f] hover:bg-[#a8001a] text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                  className="bg-[#ce001f] hover:bg-[#a8001a] text-white px-6 md:px-8 py-2.5 md:py-3 rounded-lg font-semibold text-base md:text-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl w-full sm:w-auto"
                 >
                   Book your seat!
                 </Button>
