@@ -515,6 +515,8 @@ export default function SpringleafResidenceLanding() {
   const [isVisible, setIsVisible] = useState(false)
   const [animatedSections, setAnimatedSections] = useState<Set<string>>(new Set())
   const [showSiteMapPopup, setShowSiteMapPopup] = useState(false)
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -555,6 +557,17 @@ export default function SpringleafResidenceLanding() {
       observer.disconnect()
     }
   }, [])
+
+  // Auto-slide effect
+  useEffect(() => {
+    if (!isAutoPlaying) return
+
+    const autoSlideInterval = setInterval(() => {
+      setCurrentSlide((prev) => (prev === 0 ? 1 : 0))
+    }, 5000) // Change slide every 5 seconds
+
+    return () => clearInterval(autoSlideInterval)
+  }, [isAutoPlaying])
 
   const projectImages = [
     "/images/springleaf-residence/springleaf-residence-hero-aerial.webp",
@@ -1486,55 +1499,115 @@ export default function SpringleafResidenceLanding() {
       {/* Two Column Image CTA Section */}
       <section className="py-8 md:py-16 bg-[#1c1c1d]">
         <div className="container mx-auto px-4">
-          <div className={`grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 transition-all duration-1000 delay-300 ${
+          <div className={`transition-all duration-1000 delay-300 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
-            {/* First Column */}
-            <div className="flex flex-col">
-              <div className="group relative overflow-hidden rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-500">
-                <div className="relative h-[300px] sm:h-[400px] md:h-[450px] lg:h-[500px] overflow-hidden">
-                  <Image
-                    src="/images/springleaf-residence/CTA-1.webp"
-                    alt="Springleaf Residence Showflat Tour"
-                    fill
-                    className="object-contain md:object-contain group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            {/* Carousel Container */}
+            <div className="relative overflow-hidden">
+              {/* Carousel Slides */}
+              <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
+                {/* Slide 1 - First Image */}
+                <div className="w-full flex-shrink-0">
+                  <div className="flex justify-center px-4">
+                    <div className="group relative overflow-hidden rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-500 max-w-4xl w-full">
+                      <div className="relative h-[250px] sm:h-[450px] md:h-[500px] lg:h-[600px] overflow-hidden rounded-xl">
+                        <Image
+                          src="/images/springleaf-residence/CTA-1.webp"
+                          alt="Springleaf Residence Showflat Tour"
+                          fill
+                          className="object-contain transition-all duration-300"
+                          priority
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 rounded-xl" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Slide 2 - Second Image */}
+                <div className="w-full flex-shrink-0">
+                  <div className="flex justify-center px-4">
+                    <div className="group relative overflow-hidden rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-500 max-w-4xl w-full">
+                      <div className="relative h-[250px] sm:h-[450px] md:h-[500px] lg:h-[600px] overflow-hidden rounded-xl">
+                        <Image
+                          src="/images/springleaf-residence/CTA-2.webp"
+                          alt="Springleaf Residence Location Analysis"
+                          fill
+                          className="object-contain transition-all duration-300"
+                          priority
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 rounded-xl" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              {/* CTA Button for First Column */}
-              <div className="text-center mt-4 md:mt-6">
-                <Button 
-                  onClick={scrollToLeadForm}
-                  className="bg-[#ce001f] hover:bg-[#a8001a] text-white px-6 md:px-8 py-2.5 md:py-3 rounded-lg font-semibold text-base md:text-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl w-full sm:w-auto"
-                >
-                  Save your spot!
-                </Button>
+
+              {/* Navigation Arrows */}
+              <button
+                onClick={() => {
+                  setCurrentSlide(currentSlide === 0 ? 1 : 0)
+                  setIsAutoPlaying(false)
+                  // Resume auto-play after 3 seconds of inactivity
+                  setTimeout(() => setIsAutoPlaying(true), 3000)
+                }}
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-300 hover:scale-110 z-10"
+                aria-label="Previous slide"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button
+                onClick={() => {
+                  setCurrentSlide(currentSlide === 1 ? 0 : 1)
+                  setIsAutoPlaying(false)
+                  // Resume auto-play after 3 seconds of inactivity
+                  setTimeout(() => setIsAutoPlaying(true), 3000)
+                }}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-300 hover:scale-110 z-10"
+                aria-label="Next slide"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+
+              {/* Dots Indicator */}
+              <div className="flex justify-center mt-6 space-x-2">
+                <button
+                  onClick={() => {
+                    setCurrentSlide(0)
+                    setIsAutoPlaying(false)
+                    // Resume auto-play after 3 seconds of inactivity
+                    setTimeout(() => setIsAutoPlaying(true), 3000)
+                  }}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    currentSlide === 0 ? 'bg-[#ce001f]' : 'bg-gray-400 hover:bg-gray-300'
+                  }`}
+                  aria-label="Go to slide 1"
+                />
+                <button
+                  onClick={() => {
+                    setCurrentSlide(1)
+                    setIsAutoPlaying(false)
+                    // Resume auto-play after 3 seconds of inactivity
+                    setTimeout(() => setIsAutoPlaying(true), 3000)
+                  }}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    currentSlide === 1 ? 'bg-[#ce001f]' : 'bg-gray-400 hover:bg-gray-300'
+                  }`}
+                  aria-label="Go to slide 2"
+                />
               </div>
             </div>
 
-            {/* Second Column */}
-            <div className="flex flex-col">
-              <div className="group relative overflow-hidden rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-500">
-                <div className="relative h-[300px] sm:h-[400px] md:h-[450px] lg:h-[500px] overflow-hidden">
-                  <Image
-                    src="/images/springleaf-residence/CTA-2.webp"
-                    alt="Springleaf Residence Location Analysis"
-                    fill
-                    className="object-contain md:object-contain group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                </div>
-              </div>
-              {/* CTA Button for Second Column */}
-              <div className="text-center mt-4 md:mt-6">
-                <Button 
-                  onClick={scrollToLeadForm}
-                  className="bg-[#ce001f] hover:bg-[#a8001a] text-white px-6 md:px-8 py-2.5 md:py-3 rounded-lg font-semibold text-base md:text-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl w-full sm:w-auto"
-                >
-                  Book your seat!
-                </Button>
-              </div>
+            {/* Single Centered CTA Button */}
+            <div className="text-center mt-8 md:mt-12">
+              <Button 
+                onClick={scrollToLeadForm}
+                className="bg-[#ce001f] hover:bg-[#a8001a] text-white px-8 md:px-12 py-3 md:py-4 rounded-lg font-semibold text-lg md:text-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                {currentSlide === 0 ? "Save your spot!" : "Book your seat!"}
+              </Button>
             </div>
           </div>
         </div>
