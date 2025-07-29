@@ -178,7 +178,7 @@ async function sendNotificationEmail({
           </div>
           
           <div style="background-color: #333; color: white; padding: 20px; text-align: center; font-size: 12px;">
-            <p style="margin: 0;">© 2024 KW Singapore. All rights reserved.</p>
+            <p style="margin: 0;">© 2025 KW Singapore. All rights reserved.</p>
             <p style="margin: 5px 0 0 0;">This notification was sent to ${toEmail}</p>
           </div>
         </div>
@@ -393,24 +393,30 @@ async function sendAutoReplyEmail({ fullName, emailAddress }: {
             </div>
             
             <div style="background-color: white; padding: 25px; border-radius: 8px; margin-bottom: 20px;">
-              <div style="margin-bottom: 15px;">
-                <span style="color: #B40101; font-size: 18px;">📍</span>
-                <span style="color: #333; font-weight: bold; margin-left: 10px;">Venue:</span>
-                <span style="color: #333; margin-left: 10px;">Springleaf Residence Showflat - 825A Upper Thomson Rd, Singapore 787135</span>
-                <br>
-                <a href="https://maps.app.goo.gl/C9iSsjFFpA4k4RyC9" style="color: #B40101; text-decoration: none; margin-left: 28px; font-size: 14px;">View on Google Maps</a>
+              <div style="margin-bottom: 15px; display: flex; align-items: flex-start;">
+                <span style="color: #B40101; font-size: 18px; min-width: 20px; margin-right: 10px;">📍</span>
+                <div style="flex: 1;">
+                  <span style="color: #333; font-weight: bold;">Venue:</span>
+                  <span style="color: #333; margin-left: 10px;">Springleaf Residence Showflat - 825A Upper Thomson Rd, Singapore 787135</span>
+                  <br>
+                  <a href="https://maps.app.goo.gl/C9iSsjFFpA4k4RyC9" style="color: #B40101; text-decoration: none; font-size: 14px;">View on Google Maps</a>
+                </div>
               </div>
               
-              <div style="margin-bottom: 15px;">
-                <span style="color: #B40101; font-size: 18px;">📅</span>
-                <span style="color: #333; font-weight: bold; margin-left: 10px;">Date:</span>
-                <span style="color: #333; margin-left: 10px;">Monday, 4 August 2025</span>
+              <div style="margin-bottom: 15px; display: flex; align-items: center;">
+                <span style="color: #B40101; font-size: 18px; min-width: 20px; margin-right: 10px;">📅</span>
+                <div style="flex: 1;">
+                  <span style="color: #333; font-weight: bold;">Date:</span>
+                  <span style="color: #333; margin-left: 10px;">Monday, 4 August 2025</span>
+                </div>
               </div>
               
-              <div style="margin-bottom: 15px;">
-                <span style="color: #B40101; font-size: 18px;">🕖</span>
-                <span style="color: #333; font-weight: bold; margin-left: 10px;">Time:</span>
-                <span style="color: #333; margin-left: 10px;">7:00PM (Please arrive by 6:45PM for registration)</span>
+              <div style="margin-bottom: 15px; display: flex; align-items: center;">
+                <span style="color: #B40101; font-size: 18px; min-width: 20px; margin-right: 10px;">🕖</span>
+                <div style="flex: 1;">
+                  <span style="color: #333; font-weight: bold;">Time:</span>
+                  <span style="color: #333; margin-left: 10px;">7:00PM (Please arrive by 6:45PM for registration)</span>
+                </div>
               </div>
             </div>
             
@@ -446,7 +452,7 @@ async function sendAutoReplyEmail({ fullName, emailAddress }: {
           </div>
           
           <div style="background-color: #333; color: white; padding: 20px; text-align: center; font-size: 12px;">
-            <p style="margin: 0;">© 2024 KW Singapore. All rights reserved.</p>
+            <p style="margin: 0;">© 2025 KW Singapore. All rights reserved.</p>
             <p style="margin: 5px 0 0 0;">This email was sent to ${emailAddress}</p>
           </div>
         </div>

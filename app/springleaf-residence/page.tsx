@@ -982,7 +982,7 @@ export default function SpringleafResidenceLanding() {
       <div className="min-h-screen bg-[#1c1c1d] text-white">
         <style dangerouslySetInnerHTML={{ __html: customStyles }} />
       {/* Sticky CTA for Mobile */}
-      <div className={`fixed bottom-0 left-0 right-0 bg-[#ce001f] text-white p-4 z-50 md:hidden transition-all duration-700 ${
+      {/* <div className={`fixed bottom-0 left-0 right-0 bg-[#ce001f] text-white p-4 z-50 md:hidden transition-all duration-700 ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
       }`}>
         <Button 
@@ -991,7 +991,7 @@ export default function SpringleafResidenceLanding() {
         >
           Book Your Showflat Visit
         </Button>
-      </div>
+      </div> */}
 
       {/* Header */}
       <header 
@@ -1218,7 +1218,7 @@ export default function SpringleafResidenceLanding() {
                 </div>
                 <div className="flex items-center space-x-3">
                   <MapPinned className="h-5 w-5 text-[#B40101]" />
-                  <span className="text-slate-100">Springleaf Residence Showflat</span>
+                  <span className="text-slate-100">Springleaf Residence Showflat, 825A Upper Thomson Rd, Singapore 787135</span>
                 </div>
               </motion.div>
               
@@ -1482,7 +1482,63 @@ export default function SpringleafResidenceLanding() {
           </div>
         </div>
       </section>
+      
+      {/* Two Column Image CTA Section */}
+      <section className="py-16 bg-[#1c1c1d]">
+        <div className="container mx-auto px-4">
+          <div className={`grid lg:grid-cols-2 gap-8 md:gap-12 transition-all duration-1000 delay-300 ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+          }`}>
+            {/* First Column */}
+            <div className="flex flex-col">
+              <div className="group relative overflow-hidden rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-500">
+                <div className="relative h-[500px] overflow-hidden">
+                  <Image
+                    src="/images/springleaf-residence/CTA-1.webp"
+                    alt="Springleaf Residence Showflat Tour"
+                    fill
+                    className="object-contain group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                </div>
+              </div>
+              {/* CTA Button for First Column */}
+              <div className="text-center mt-6">
+                <Button 
+                  onClick={scrollToLeadForm}
+                  className="bg-[#ce001f] hover:bg-[#a8001a] text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                >
+                  Save your spot!
+                </Button>
+              </div>
+            </div>
 
+            {/* Second Column */}
+            <div className="flex flex-col">
+              <div className="group relative overflow-hidden rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-500">
+                <div className="relative h-[500px] overflow-hidden">
+                  <Image
+                    src="/images/springleaf-residence/CTA-2.webp"
+                    alt="Springleaf Residence Location Analysis"
+                    fill
+                    className="object-contain group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                </div>
+              </div>
+              {/* CTA Button for Second Column */}
+              <div className="text-center mt-6">
+                <Button 
+                  onClick={scrollToLeadForm}
+                  className="bg-[#ce001f] hover:bg-[#a8001a] text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                >
+                  Book your seat!
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Enhanced Project Information Section */}
       <section 
