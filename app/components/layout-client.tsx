@@ -30,6 +30,7 @@ export function Header() {
   const pathname = usePathname()
   const isAdminPage = pathname?.startsWith('/admin')
   const isSpringleafPage = pathname?.startsWith('/springleaf-residence')
+  const isSpringleafBackupPage = pathname?.startsWith('/springleaf-backup')
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
@@ -41,7 +42,7 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  if (isAdminPage || isSpringleafPage) return null
+  if (isAdminPage || isSpringleafPage || isSpringleafBackupPage) return null
 
   return (
     <header 
@@ -109,12 +110,13 @@ export function Footer() {
   const pathname = usePathname()
   const isAdminPage = pathname?.startsWith('/admin')
   const isSpringleafPage = pathname?.startsWith('/springleaf-residence')
+  const isSpringleafBackupPage = pathname?.startsWith('/springleaf-backup')
 
   if (isAdminPage) return null
 
   return (
     <>
-      {!isSpringleafPage && <FloatingWhatsApp />}
+      {!isSpringleafPage && !isSpringleafBackupPage && <FloatingWhatsApp />}
       <footer className="border-t py-8 md:py-12 bg-black text-white">
         <div className="container grid gap-8 md:grid-cols-3">
           <div className="space-y-4">

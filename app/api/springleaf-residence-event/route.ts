@@ -299,23 +299,63 @@ async function insertIntoGoogleSheets({
       'Springleaf Residence Event'
     ]
 
-    // Append data to the spreadsheet
-    const response = await sheets.spreadsheets.values.append({
-      spreadsheetId,
-      range: 'EventRegistrations!A:H', // Updated range to include new columns
-      valueInputOption: 'RAW',
-      insertDataOption: 'INSERT_ROWS',
-      requestBody: {
-        values: [dataRow]
+    // Try to append data to the spreadsheet
+    let response
+    try {
+      response = await sheets.spreadsheets.values.append({
+        spreadsheetId,
+        range: 'EventRegistrations!A:H', // Updated range to include new columns
+        valueInputOption: 'RAW',
+        insertDataOption: 'INSERT_ROWS',
+        requestBody: {
+          values: [dataRow]
+        }
+      })
+    } catch (appendError) {
+      // If append fails due to protection, try to find the next empty row
+      if (appendError instanceof Error && appendError.message.includes('protected cell or object')) {
+        console.log('⚠️ Append failed due to protection, trying to find next empty row...')
+        
+        // Get the current data to find the next empty row
+        const currentData = await sheets.spreadsheets.values.get({
+          spreadsheetId,
+          range: 'EventRegistrations!A:A'
+        })
+        
+        const nextRow = (currentData.data.values?.length || 1) + 1
+        const range = `EventRegistrations!A${nextRow}:H${nextRow}`
+        
+        response = await sheets.spreadsheets.values.update({
+          spreadsheetId,
+          range,
+          valueInputOption: 'RAW',
+          requestBody: {
+            values: [dataRow]
+          }
+        })
+      } else {
+        throw appendError
       }
-    })
+    }
 
     console.log('✅ Data inserted into Google Sheets successfully')
-    console.log('📊 Sheets response:', {
-      updatedRange: response.data.updates?.updatedRange,
-      updatedRows: response.data.updates?.updatedRows,
-      updatedColumns: response.data.updates?.updatedColumns
-    })
+    
+    // Handle different response types (append vs update)
+    if ('updates' in response.data) {
+      console.log('📊 Sheets append response:', {
+        updatedRange: response.data.updates?.updatedRange,
+        updatedRows: response.data.updates?.updatedRows,
+        updatedColumns: response.data.updates?.updatedColumns
+      })
+    } else if ('updatedRange' in response.data) {
+      console.log('📊 Sheets update response:', {
+        updatedRange: response.data.updatedRange,
+        updatedRows: response.data.updatedRows,
+        updatedColumns: response.data.updatedColumns
+      })
+    } else {
+      console.log('📊 Sheets response received successfully')
+    }
     
     return { success: true, message: 'Data inserted into Google Sheets successfully' }
 
@@ -331,6 +371,8 @@ async function insertIntoGoogleSheets({
         errorMessage = 'Spreadsheet not found. Please check your GOOGLE_SHEETS_EVENT_SPREADSHEET_ID.'
       } else if (error.message.includes('Permission denied')) {
         errorMessage = 'Permission denied. Please check if the service account has access to the spreadsheet.'
+      } else if (error.message.includes('protected cell or object')) {
+        errorMessage = 'Spreadsheet has protected cells. Please remove protection from the EventRegistrations tab or ensure the service account has edit permissions.'
       } else if (error.message.includes('DECODER routines::unsupported') || error.message.includes('ERR_OSSL_UNSUPPORTED')) {
         errorMessage = 'OpenSSL compatibility issue with private key format. Please check the private key format.'
       } else if (error.message.includes('Invalid private key format')) {

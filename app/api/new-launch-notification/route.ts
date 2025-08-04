@@ -240,7 +240,7 @@ async function sendAutoReplyEmail({ fullName, email }: {
           </div>
           
           <div style="background-color: #333; color: white; padding: 20px; text-align: center; font-size: 12px;">
-            <p style="margin: 0;">© 2024 KW Singapore. All rights reserved.</p>
+            <p style="margin: 0;">© 2025 KW Singapore. All rights reserved.</p>
             <p style="margin: 5px 0 0 0;">This email was sent to ${email}</p>
           </div>
         </div>

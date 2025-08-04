@@ -21,6 +21,7 @@ interface ProjectCardProps extends Project {
   features?: string[]
   status?: 'upcoming' | 'ongoing' | 'completed'
   ctaText?: string
+  image_url_banner?: string | null
 }
 
 export default function ProjectCard({
@@ -30,6 +31,7 @@ export default function ProjectCard({
   price,
   type,
   image,
+  image_url_banner,
   className = "",
   priceRange,
   lowerPrice,
@@ -67,7 +69,7 @@ export default function ProjectCard({
       {/* Image Container */}
       <div className="relative aspect-[4/3] overflow-hidden">
         <Image
-          src={image}
+          src={image_url_banner && image_url_banner.trim() !== '' ? image_url_banner : image}
           alt={name}
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -87,7 +89,7 @@ export default function ProjectCard({
           {location}
         </div>
         {/* Project Name */}
-        <h3 className="text-lg font-semibold mb-2 text-white truncate">{name}</h3>
+        <h3 className="text-xl font-light mb-2 text-white truncate">{name}</h3>
         {/* Badges for tenure and TOP */}
         <div className="flex flex-wrap gap-1.5 mb-2">
           {features && features[0] && (
@@ -109,7 +111,7 @@ export default function ProjectCard({
         {/* Price at the bottom */}
         <div className="mt-auto pt-2 border-t border-gray-800">
           <div className="text-xs text-gray-400 mb-0.5">From</div>
-          <div className="text-lg font-bold text-white">
+          <div className="text-lg font-normal text-white">
             {lowerPrice ? `$${lowerPrice}M` : (priceRange || price)}
           </div>
           {pricePerSqFt && (
@@ -117,7 +119,7 @@ export default function ProjectCard({
               ${pricePerSqFt} psf
             </div>
           )}
-          <Link href={`/projects/${slug}`} className="mt-3">
+          <Link href={`/projects/${slug}`} className="mt-6">
             <Button variant="default" className="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white">
               {ctaText}
               <ChevronRight className="h-4 w-4" />

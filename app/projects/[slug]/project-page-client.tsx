@@ -839,7 +839,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
     { id: "site-plan", label: "Site Plan", icon: Layout },
     { id: "facilities", label: "Facilities", icon: Home },
     { id: "location", label: "Location", icon: MapPin },
-    { id: "ai-moat", label: "AI MOAT", icon: BarChart2 },
+    // { id: "ai-moat", label: "AI MOAT", icon: BarChart2 },
     { id: "pricing", label: "Unit & Pricing", icon: BadgeDollarSign },
     { id: "contact", label: "Contact Agent", icon: Phone },
   ]
@@ -1765,14 +1765,13 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       </section>
 
       {/* AI MOAT Section */}
-      <section id="ai-moat" className="w-full py-8 mb-2">
+      {/* <section id="ai-moat" className="w-full py-8 mb-2">
         <div className="max-w-screen-xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-light text-white mb-3 tracking-wide">AI MOAT Analysis</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
           <div className="flex flex-col items-center md:items-center md:justify-center">
-            {/* AI MOAT */}
             <div className="w-full md:w-7/12 min-w-0 mx-auto">
               <div className="bg-[#242728] border border-gray-700 rounded-lg text-center">
                 <MoatRadarChart moat={project.moat} />
@@ -1780,7 +1779,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Unit Mix Section */}
       <div className="w-full flex flex-col items-center py-8">
