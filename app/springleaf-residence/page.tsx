@@ -501,20 +501,27 @@ function SiteMapForm({
   )
 }
 
-// Lead Form Component with reCAPTCHA
-function LeadForm() {
+// Lead Generation Form Component with reCAPTCHA
+function LeadGenerationForm({ 
+  formData, 
+  setFormData, 
+  date, 
+  setDate, 
+  onSubmit, 
+  isSubmitting, 
+  submitSuccess, 
+  submitError 
+}: {
+  formData: any
+  setFormData: (data: any) => void
+  date: Date | undefined
+  setDate: (date: Date | undefined) => void
+  onSubmit: (formDataWithToken: any) => Promise<void>
+  isSubmitting: boolean
+  submitSuccess: boolean
+  submitError: string | null
+}) {
   const { executeRecaptcha } = useGoogleReCaptcha()
-  const { toast } = useToast()
-  const [formData, setFormData] = useState({
-    fullName: '',
-    contactNumber: '',
-    emailAddress: '',
-    preferredDate: undefined as Date | undefined,
-    preferredTiming: ''
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitSuccess, setSubmitSuccess] = useState(false)
-  const [submitError, setSubmitError] = useState<string | null>(null)
   const [isExecutingRecaptcha, setIsExecutingRecaptcha] = useState(false)
   const [securityScore, setSecurityScore] = useState<number | null>(null)
 
@@ -523,28 +530,15 @@ function LeadForm() {
     
     // Validate required fields
     if (!formData.fullName.trim() || !formData.contactNumber.trim()) {
-      setSubmitError('Full name and contact number are required')
-      toast({
-        title: "Validation Error",
-        description: "Full name and contact number are required",
-        variant: "destructive",
-      })
       return
     }
 
     if (!executeRecaptcha) {
       console.error('reCAPTCHA not available')
-      setSubmitError('Security verification not available. Please refresh the page.')
-      toast({
-        title: "Security Error",
-        description: "Security verification not available. Please refresh the page.",
-        variant: "destructive",
-      })
       return
     }
 
     setIsExecutingRecaptcha(true)
-    setSubmitError(null)
 
     try {
       const token = await executeRecaptcha('showflat_visit_request')
@@ -553,267 +547,204 @@ function LeadForm() {
       const mockScore = Math.random() * 0.3 + 0.7 // Score between 0.7 and 1.0
       setSecurityScore(mockScore)
       
-      setIsSubmitting(true)
-
-      // Show submitting toast
-      toast({
-        title: "Submitting...",
-        description: "Please wait while we process your request",
-      })
-
-      const response = await fetch('/api/springleaf-residence-form', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ ...formData, recaptchaToken: token }),
-      })
-
-      const result = await response.json()
-
-      if (response.ok && result.success) {
-        setSubmitSuccess(true)
-        setFormData({
-          fullName: '',
-          contactNumber: '',
-          emailAddress: '',
-          preferredDate: undefined,
-          preferredTiming: ''
-        })
-        
-        // Show success toast
-        toast({
-          title: "Request Submitted Successfully!",
-          description: "Thank you for your interest in Springleaf Residence! We have sent you a confirmation email and our team will contact you soon to arrange your showflat visit.",
-          variant: "default",
-        })
-        
-        // Reset success state after 5 seconds
-        setTimeout(() => setSubmitSuccess(false), 5000)
-      } else {
-        throw new Error(result.error || 'Failed to submit form')
-      }
+      await onSubmit({ ...formData, recaptchaToken: token })
     } catch (error) {
-      console.error('Form submission error:', error)
-      const errorMessage = error instanceof Error ? error.message : 'Failed to submit form. Please try again.'
-      setSubmitError(errorMessage)
-      
-      // Show error toast
-      toast({
-        title: "Submission Failed",
-        description: errorMessage,
-        variant: "destructive",
-      })
+      console.error('reCAPTCHA execution failed:', error)
     } finally {
-      setIsSubmitting(false)
       setIsExecutingRecaptcha(false)
     }
   }
 
   return (
-    <section
-      id="lead-form"
-      className={`py-8 md:py-16 relative bg-cover bg-center section-entrance`}
-      data-section-id="lead-form"
-      style={{ 
-        backgroundImage: "url('/images/springleaf-residence/form-background.jpg')",
-      }}
-    >
-      <div className="absolute inset-0 bg-black bg-opacity-60"></div>
-      <div className="relative container mx-auto px-4">
-        <div className="max-w-4xl mx-auto text-left">
-          <Card className={`bg-white/20 backdrop-blur-sm text-white p-6 md:p-12 shadow-2xl border-0 rounded-xl hover:shadow-3xl transition-all duration-700 hover:scale-105`}>
-            <h2 className="text-4xl font-bold mb-4 text-white text-center">Book Your Showflat Visit Today</h2>
-            <p className="text-md mb-8 opacity-90 text-white text-center">
-              Be the first to own a home that combines convenience, luxury, and nature. Register now for an exclusive preview of Springleaf Residence.
-            </p>
-            {submitError && (
-              <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
-                {submitError}
-              </div>
-            )}
-            
-            {submitSuccess && (
-              <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400 text-sm">
-                Thank you for your interest! We will contact you soon to arrange your showflat visit.
-              </div>
-            )}
-            
-            <form className="space-y-6" onSubmit={handleFormSubmit}>
-              <div className="space-y-2">
-                <label htmlFor="fullName" className="text-sm font-medium text-white">
-                  Full Name *
-                </label>
-                <Input 
-                  id="fullName"
-                  value={formData.fullName}
-                  onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
-                  placeholder="Enter your full name" 
-                  className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
-                  required
-                  disabled={isSubmitting}
-                />
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="contactNumber" className="text-sm font-medium text-white">
-                  Contact Number *
-                </label>
-                <Input 
-                  id="contactNumber"
-                  value={formData.contactNumber}
-                  onChange={(e) => setFormData(prev => ({ ...prev, contactNumber: e.target.value }))}
-                  placeholder="Enter your contact number" 
-                  className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
-                  required
-                  disabled={isSubmitting}
-                />
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="emailAddress" className="text-sm font-medium text-white">
-                  Email Address *
-                </label>
-                <Input 
-                  id="emailAddress"
-                  type="email"
-                  value={formData.emailAddress}
-                  onChange={(e) => setFormData(prev => ({ ...prev, emailAddress: e.target.value }))}
-                  placeholder="Enter your email address" 
-                  className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
-                  required
-                  disabled={isSubmitting}
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-white">
-                  Preferred Date
-                </label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-full justify-start text-left font-normal bg-white text-gray-800 border-0",
-                        !formData.preferredDate && "text-gray-500"
-                      )}
-                      disabled={isSubmitting}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {formData.preferredDate ? format(formData.preferredDate, "PPP") : <span>Select preferred date</span>}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0 bg-white border border-gray-200" align="start">
-                    <CalendarComponent
-                      mode="single"
-                      selected={formData.preferredDate}
-                      onSelect={(date) => setFormData(prev => ({ ...prev, preferredDate: date }))}
-                      initialFocus
-                      defaultMonth={new Date(2025, 7, 1)} // August 2025 (month is 0-indexed, so 7 = August)
-                      disabled={(date) => {
-                        // Disable all dates up to and including July 31st, 2025
-                        const july31st = new Date(2025, 6, 31); // July 31st, 2025 (month is 0-indexed, so 6 = July)
-                        return date <= july31st;
-                      }}
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="preferredTiming" className="text-sm font-medium text-white">
-                  Preferred Time
-                </label>
-                <Select 
-                  value={formData.preferredTiming}
-                  onValueChange={(value) => setFormData(prev => ({ ...prev, preferredTiming: value }))}
-                  disabled={isSubmitting}
-                >
-                  <SelectTrigger id="preferredTiming" className="w-full bg-white text-gray-800 border-0">
-                    <SelectValue placeholder="Select preferred time" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white border border-gray-200">
-                    <SelectItem value="10:30-am">10:30 AM</SelectItem>
-                    <SelectItem value="11:00-am">11:00 AM</SelectItem>
-                    <SelectItem value="12:00-pm">12:00 PM</SelectItem>
-                    <SelectItem value="1:00-pm">1:00 PM</SelectItem>
-                    <SelectItem value="2:00-pm">2:00 PM</SelectItem>
-                    <SelectItem value="3:00-pm">3:00 PM</SelectItem>
-                    <SelectItem value="4:00-pm">4:00 PM</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              {/* Enhanced reCAPTCHA Protection Notice */}
-              <div className="bg-gradient-to-r from-blue-50/20 to-indigo-50/20 border border-blue-200/30 rounded-lg p-4 backdrop-blur-sm">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="relative">
-                      <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-sm">
-                        <span className="text-white text-xs font-bold">✓</span>
-                      </div>
-                      <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-white">Protected by Google reCAPTCHA</p>
-                      <p className="text-xs text-gray-300">Your information is secure and protected from bots</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    {securityScore && (
-                      <div className="flex items-center space-x-1">
-                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                        <span className="text-xs text-green-400 font-medium">
-                          Score: {(securityScore * 100).toFixed(0)}%
-                        </span>
-                      </div>
-                    )}
-                    <div className="flex items-center space-x-1">
-                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                      <span className="text-xs text-green-400 font-medium">Active</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="text-center">
-                <Button 
-                  type="submit"
-                  disabled={isSubmitting || isExecutingRecaptcha}
-                  className={`w-full text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 ${
-                    isExecutingRecaptcha 
-                      ? 'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700' 
-                      : 'bg-gradient-to-r from-[#ce001f] to-[#b3001a] hover:from-[#b3001a] hover:to-[#a0001a]'
-                  }`}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                      Submitting Request...
-                    </>
-                  ) : isExecutingRecaptcha ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                      Verifying Security...
-                    </>
-                  ) : (
-                    <>
-                      <div className="w-4 h-4 mr-2">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                      </div>
-                      Book Showflat Visit
-                    </>
-                  )}
-                </Button>
-                <p className="text-sm italic text-white-600 mt-4 text-center">
-                  Upon registering, you agree to receive future marketing materials from KW Singapore. 
-                  <br /> 
-                  Your personal information will be used in accordance with our <a href="/privacy-policy" className="text-white hover:text-gray-300">privacy policy</a>.
-                </p>
-              </div>
-            </form>
-          </Card>
+    <Card className={`bg-white/20 backdrop-blur-sm text-white p-6 md:p-12 shadow-2xl border-0 rounded-xl hover:shadow-3xl transition-all duration-700 hover:scale-105`}>
+      <h2 className="text-4xl font-bold mb-4 text-white text-center">Book Your Showflat Visit Today</h2>
+      <p className="text-md mb-8 opacity-90 text-white text-center">
+        Be the first to own a home that combines convenience, luxury, and nature. Register now for an exclusive preview of Springleaf Residence.
+      </p>
+      {submitError && (
+        <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
+          {submitError}
         </div>
-      </div>
-    </section>
+      )}
+      
+      {submitSuccess && (
+        <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400 text-sm">
+          Thank you for your interest! We will contact you soon to arrange your showflat visit.
+        </div>
+      )}
+      
+      <form className="space-y-6" onSubmit={handleFormSubmit}>
+        <div className="space-y-2">
+          <label htmlFor="fullName" className="text-sm font-medium text-white">
+            Full Name *
+          </label>
+          <Input 
+            id="fullName"
+            value={formData.fullName}
+            onChange={(e) => setFormData((prev: any) => ({ ...prev, fullName: e.target.value }))}
+            placeholder="Enter your full name" 
+            className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
+            required
+            disabled={isSubmitting || isExecutingRecaptcha}
+          />
+        </div>
+        <div className="space-y-2">
+          <label htmlFor="contactNumber" className="text-sm font-medium text-white">
+            Contact Number *
+          </label>
+          <Input 
+            id="contactNumber"
+            value={formData.contactNumber}
+            onChange={(e) => setFormData((prev: any) => ({ ...prev, contactNumber: e.target.value }))}
+            placeholder="Enter your contact number" 
+            className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
+            required
+            disabled={isSubmitting || isExecutingRecaptcha}
+          />
+        </div>
+        <div className="space-y-2">
+          <label htmlFor="emailAddress" className="text-sm font-medium text-white">
+            Email Address *
+          </label>
+          <Input 
+            id="emailAddress"
+            type="email"
+            value={formData.emailAddress}
+            onChange={(e) => setFormData((prev: any) => ({ ...prev, emailAddress: e.target.value }))}
+            placeholder="Enter your email address" 
+            className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
+            required
+            disabled={isSubmitting || isExecutingRecaptcha}
+          />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-white">
+            Preferred Date
+          </label>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant={"outline"}
+                className={cn(
+                  "w-full justify-start text-left font-normal bg-white text-gray-800 border-0",
+                  !formData.preferredDate && "text-gray-500"
+                )}
+                disabled={isSubmitting || isExecutingRecaptcha}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {formData.preferredDate ? format(formData.preferredDate, "PPP") : <span>Select preferred date</span>}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0 bg-white border border-gray-200" align="start">
+              <CalendarComponent
+                mode="single"
+                selected={formData.preferredDate}
+                onSelect={(date) => setFormData((prev: any) => ({ ...prev, preferredDate: date }))}
+                initialFocus
+                defaultMonth={new Date(2025, 7, 1)} // August 2025 (month is 0-indexed, so 7 = August)
+                disabled={(date) => {
+                  // Disable all dates up to and including July 31st, 2025
+                  const july31st = new Date(2025, 6, 31); // July 31st, 2025 (month is 0-indexed, so 6 = July)
+                  return date <= july31st;
+                }}
+              />
+            </PopoverContent>
+          </Popover>
+        </div>
+        <div className="space-y-2">
+          <label htmlFor="preferredTiming" className="text-sm font-medium text-white">
+            Preferred Time
+          </label>
+          <Select 
+            value={formData.preferredTiming}
+            onValueChange={(value) => setFormData((prev: any) => ({ ...prev, preferredTiming: value }))}
+            disabled={isSubmitting || isExecutingRecaptcha}
+          >
+            <SelectTrigger id="preferredTiming" className="w-full bg-white text-gray-800 border-0">
+              <SelectValue placeholder="Select preferred time" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200">
+              <SelectItem value="10:30-am">10:30 AM</SelectItem>
+              <SelectItem value="11:00-am">11:00 AM</SelectItem>
+              <SelectItem value="12:00-pm">12:00 PM</SelectItem>
+              <SelectItem value="1:00-pm">1:00 PM</SelectItem>
+              <SelectItem value="2:00-pm">2:00 PM</SelectItem>
+              <SelectItem value="3:00-pm">3:00 PM</SelectItem>
+              <SelectItem value="4:00-pm">4:00 PM</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        {/* Enhanced reCAPTCHA Protection Notice */}
+        <div className="bg-gradient-to-r from-blue-50/20 to-indigo-50/20 border border-blue-200/30 rounded-lg p-4 backdrop-blur-sm">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="relative">
+                <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-sm">
+                  <span className="text-white text-xs font-bold">✓</span>
+                </div>
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-white">Protected by Google reCAPTCHA</p>
+                <p className="text-xs text-gray-300">Your information is secure and protected from bots</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              {securityScore && (
+                <div className="flex items-center space-x-1">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span className="text-xs text-green-400 font-medium">
+                    Score: {(securityScore * 100).toFixed(0)}%
+                  </span>
+                </div>
+              )}
+              <div className="flex items-center space-x-1">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span className="text-xs text-green-400 font-medium">Active</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="text-center">
+          <Button 
+            type="submit"
+            disabled={isSubmitting || isExecutingRecaptcha}
+            className={`w-full text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 ${
+              isExecutingRecaptcha 
+                ? 'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700' 
+                : 'bg-gradient-to-r from-[#ce001f] to-[#b3001a] hover:from-[#b3001a] hover:to-[#a0001a]'
+            }`}
+          >
+            {isSubmitting ? (
+              <>
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                Submitting Request...
+              </>
+            ) : isExecutingRecaptcha ? (
+              <>
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                Verifying Security...
+              </>
+            ) : (
+              <>
+                <div className="w-4 h-4 mr-2">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                </div>
+                Book Showflat Visit
+              </>
+            )}
+          </Button>
+          <p className="text-sm italic text-white-600 mt-4 text-center">
+            Upon registering, you agree to receive future marketing materials from KW Singapore. 
+            <br /> 
+            Your personal information will be used in accordance with our <a href="/privacy-policy" className="text-white hover:text-gray-300">privacy policy</a>.
+          </p>
+        </div>
+      </form>
+    </Card>
   )
 }
 
@@ -999,11 +930,112 @@ export default function SpringleafResidenceLanding() {
     }
   }
 
+  const [formData, setFormData] = useState({
+    fullName: '',
+    contactNumber: '',
+    emailAddress: '',
+    preferredDate: undefined as Date | undefined,
+    preferredTiming: ''
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const [securityScore, setSecurityScore] = useState<number | null>(null)
+
   const [isSiteMapSubmitting, setIsSiteMapSubmitting] = useState(false)
   const [siteMapSubmitSuccess, setSiteMapSubmitSuccess] = useState(false)
   const [siteMapSubmitError, setSiteMapSubmitError] = useState<string | null>(null)
 
+  const handleLeadFormSubmit = async (formDataWithToken: any) => {
+    const { fullName, contactNumber, emailAddress, preferredDate, preferredTiming, recaptchaToken } = formDataWithToken
+    
+    // Validate required fields
+    if (!fullName.trim() || !contactNumber.trim()) {
+      setSubmitError('Full name and contact number are required')
+      toast({
+        title: "Validation Error",
+        description: "Full name and contact number are required",
+        variant: "destructive",
+      })
+      return
+    }
 
+    // Validate reCAPTCHA token
+    if (!recaptchaToken) {
+      setSubmitError('Please complete the reCAPTCHA verification')
+      toast({
+        title: "Validation Error",
+        description: "Please complete the reCAPTCHA verification",
+        variant: "destructive",
+      })
+      return
+    }
+
+    setIsSubmitting(true)
+    setSubmitError(null)
+
+    try {
+      // Show submitting toast
+      toast({
+        title: "Submitting...",
+        description: "Please wait while we process your request",
+      })
+
+      const response = await fetch('/api/springleaf-residence-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          fullName, 
+          contactNumber, 
+          emailAddress, 
+          preferredDate, 
+          preferredTiming, 
+          recaptchaToken 
+        }),
+      })
+
+      const result = await response.json()
+
+      if (response.ok && result.success) {
+        setSubmitSuccess(true)
+        setFormData({
+          fullName: '',
+          contactNumber: '',
+          emailAddress: '',
+          preferredDate: undefined,
+          preferredTiming: ''
+        })
+        setDate(undefined)
+        
+        // Show success toast
+        toast({
+          title: "Request Submitted Successfully!",
+          description: "Thank you for your interest in Springleaf Residence! We have sent you a confirmation email and our team will contact you soon to arrange your showflat visit.",
+          variant: "default",
+        })
+        
+        // Reset success state after 5 seconds
+        setTimeout(() => setSubmitSuccess(false), 5000)
+      } else {
+        throw new Error(result.error || 'Failed to submit form')
+      }
+    } catch (error) {
+      console.error('Form submission error:', error)
+      const errorMessage = error instanceof Error ? error.message : 'Failed to submit form. Please try again.'
+      setSubmitError(errorMessage)
+      
+      // Show error toast
+      toast({
+        title: "Submission Failed",
+        description: errorMessage,
+        variant: "destructive",
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   const handleSiteMapFormSubmit = async (formDataWithToken: any) => {
     const { fullName, emailAddress, contactNumber, recaptchaToken } = formDataWithToken
@@ -1019,7 +1051,7 @@ export default function SpringleafResidenceLanding() {
       return
     }
 
-    // Validate reCAPTCHA
+    // Validate reCAPTCHA token
     if (!recaptchaToken) {
       setSiteMapSubmitError('Please complete the reCAPTCHA verification')
       toast({
@@ -1033,23 +1065,18 @@ export default function SpringleafResidenceLanding() {
     setIsSiteMapSubmitting(true)
     setSiteMapSubmitError(null)
 
-    // Show submitting toast
-    toast({
-      title: "Submitting...",
-      description: "Please wait while we process your request",
-    })
-
     try {
+      // Submit the form with the reCAPTCHA token
       const response = await fetch('/api/site-map-request', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          fullName,
-          emailAddress,
-          contactNumber,
-          recaptchaToken
+        body: JSON.stringify({ 
+          fullName, 
+          emailAddress, 
+          contactNumber, 
+          recaptchaToken 
         }),
       })
 
@@ -1057,27 +1084,24 @@ export default function SpringleafResidenceLanding() {
 
       if (response.ok && result.success) {
         setSiteMapSubmitSuccess(true)
-        // Show success toast
+        setShowSiteMapPopup(false)
+        
         toast({
-          title: "Request Submitted Successfully!",
-          description: "Thank you for your interest! We have sent you a confirmation email and our team will contact you soon with the site map.",
+          title: "Site Map Request Submitted!",
+          description: "Thank you for your interest! We will contact you soon with the site map.",
           variant: "default",
         })
         
-        // Close popup after 3 seconds
-        setTimeout(() => {
-          setShowSiteMapPopup(false)
-          setSiteMapSubmitSuccess(false)
-        }, 3000)
+        // Reset success state after 5 seconds
+        setTimeout(() => setSiteMapSubmitSuccess(false), 5000)
       } else {
-        throw new Error(result.error || 'Failed to submit form')
+        throw new Error(result.error || 'Failed to submit site map request')
       }
     } catch (error) {
       console.error('Site map form submission error:', error)
-      const errorMessage = error instanceof Error ? error.message : 'Failed to submit form. Please try again.'
+      const errorMessage = error instanceof Error ? error.message : 'Failed to submit site map request. Please try again.'
       setSiteMapSubmitError(errorMessage)
       
-      // Show error toast
       toast({
         title: "Submission Failed",
         description: errorMessage,
@@ -1986,22 +2010,66 @@ export default function SpringleafResidenceLanding() {
       </section>
 
       {/* Lead Generation Form */}
-      <LeadForm />
+      <section
+        id="lead-form"
+        className={`py-8 md:py-16 relative bg-cover bg-center section-entrance`}
+        data-section-id="lead-form"
+        style={{ 
+          backgroundImage: "url('/images/springleaf-residence/form-background.jpg')",
+          opacity: animatedSections.has('lead-form') ? 1 : 0,
+          transform: animatedSections.has('lead-form') ? 'translateY(0)' : 'translateY(60px)'
+        }}
+      >
+        <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+        <div className="relative container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-left">
+            <GoogleReCaptchaProvider
+              reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"}
+              scriptProps={{
+                async: false,
+                defer: false,
+                appendTo: "head",
+                nonce: undefined,
+              }}
+            >
+              <LeadGenerationForm
+                formData={formData}
+                setFormData={setFormData}
+                date={date}
+                setDate={setDate}
+                onSubmit={handleLeadFormSubmit}
+                isSubmitting={isSubmitting}
+                submitSuccess={submitSuccess}
+                submitError={submitError}
+              />
+            </GoogleReCaptchaProvider>
+          </div>
+        </div>
+      </section>
 
       {/* Site Map Request Popup */}
       {showSiteMapPopup && (
-        <SiteMapForm
-          onSubmit={handleSiteMapFormSubmit}
-          onClose={() => setShowSiteMapPopup(false)}
-          isSubmitting={isSiteMapSubmitting}
-          submitSuccess={siteMapSubmitSuccess}
-          submitError={siteMapSubmitError}
-        />
+        <GoogleReCaptchaProvider
+          reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"}
+          scriptProps={{
+            async: false,
+            defer: false,
+            appendTo: "head",
+            nonce: undefined,
+          }}
+        >
+          <SiteMapForm
+            onSubmit={handleSiteMapFormSubmit}
+            onClose={() => setShowSiteMapPopup(false)}
+            isSubmitting={isSiteMapSubmitting}
+            submitSuccess={siteMapSubmitSuccess}
+            submitError={siteMapSubmitError}
+          />
+        </GoogleReCaptchaProvider>
       )}
 
 
       </div>
     </GoogleReCaptchaProvider>
   )
-}
-
+} 
