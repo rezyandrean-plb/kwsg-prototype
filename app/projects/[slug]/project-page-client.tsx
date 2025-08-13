@@ -1836,7 +1836,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             {/* Site Plan Left */}
             <div className="flex-1 bg-[#242728] rounded-lg flex flex-col items-center justify-center min-h-[300px] lg:min-h-[400px] site-plan-left">
               <img
-                src="/siteplan-dummy.jpg"
+                src={project?.sitePlans && project.sitePlans.length > 0 ? project.sitePlans[0].image_url : "/siteplan-dummy.jpg"}
                 alt="Site Plan"
                 className="w-full h-auto max-w-full rounded-lg object-contain"
               />
@@ -1844,51 +1844,64 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             {/* Legend Right */}
             <div className="w-full lg:w-80 bg-[#242728] border border-gray-700 rounded-lg p-4 lg:p-6 flex flex-col justify-between min-h-[300px] lg:min-h-[400px] site-plan-right">
               <div>
-                <h4 className="text-lg lg:text-xl font-light text-left text-[#ce001f] mb-4">Map Legend</h4>
-                <ul className="space-y-3 lg:space-y-4">
-                  <li className="flex items-start gap-3">
-                    <span className="inline-block w-3 h-3 rounded-full bg-[#ce001f] mt-1 flex-shrink-0" />
-                    <div>
-                      <span className="text-white font-light text-sm lg:text-base">Main Entrance</span>
-                      <div className="text-xs text-gray-400">North Gate</div>
+                <h4 className="text-lg lg:text-xl font-light text-left text-[#ce001f] mb-4">Site Plan Details</h4>
+                <div className="space-y-4">
+                  {/* Project Info */}
+                  <div className="border-b border-gray-700 pb-3">
+                    <h5 className="text-white font-medium text-sm mb-2">Project Information</h5>
+                    <div className="space-y-2 text-xs text-gray-300">
+                      <div className="flex justify-between">
+                        <span>Developer:</span>
+                        <span className="text-white">{project?.developer || 'TBA'}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Total Units:</span>
+                        <span className="text-white">{project?.totalUnits || 'TBA'}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Site Area:</span>
+                        <span className="text-white">{project?.siteArea || 'TBA'}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Completion:</span>
+                        <span className="text-white">{project?.completion || 'TBA'}</span>
+                      </div>
                     </div>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="inline-block w-3 h-3 rounded-full bg-blue-500 mt-1 flex-shrink-0" />
-                    <div>
-                      <span className="text-white font-light text-sm lg:text-base">Clubhouse</span>
-                      <div className="text-xs text-gray-400">Central</div>
+                  </div>
+
+                  {/* Unit Types */}
+                  {project?.unitTypes && project.unitTypes.length > 0 && (
+                    <div className="border-b border-gray-700 pb-3">
+                      <h5 className="text-white font-medium text-sm mb-2">Unit Types</h5>
+                      <div className="space-y-2">
+                        {project.unitTypes.slice(0, 4).map((unitType, index) => (
+                          <div key={index} className="flex items-center gap-2">
+                            <span className={`inline-block w-2 h-2 rounded-full ${index === 0 ? 'bg-[#ce001f]' : index === 1 ? 'bg-blue-500' : index === 2 ? 'bg-cyan-400' : 'bg-green-500'} flex-shrink-0`} />
+                            <div className="text-xs text-gray-300">
+                              <span className="text-white">{unitType.type}</span>
+                              <div className="text-gray-400">{unitType.size}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="inline-block w-3 h-3 rounded-full bg-cyan-400 mt-1 flex-shrink-0" />
+                  )}
+
+                  {/* Key Features */}
+                  {project?.features && project.features.length > 0 && (
                     <div>
-                      <span className="text-white font-light text-sm lg:text-base">Swimming Pool</span>
-                      <div className="text-xs text-gray-400">South Wing</div>
+                      <h5 className="text-white font-medium text-sm mb-2">Key Features</h5>
+                      <div className="space-y-2">
+                        {project.features.slice(0, 3).map((feature, index) => (
+                          <div key={index} className="flex items-center gap-2">
+                            <span className={`inline-block w-2 h-2 rounded-full ${index === 0 ? 'bg-yellow-400' : index === 1 ? 'bg-purple-500' : 'bg-pink-400'} flex-shrink-0`} />
+                            <span className="text-xs text-gray-300">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="inline-block w-3 h-3 rounded-full bg-green-500 mt-1 flex-shrink-0" />
-                    <div>
-                      <span className="text-white font-light text-sm lg:text-base">Tennis Court</span>
-                      <div className="text-xs text-gray-400">East Side</div>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="inline-block w-3 h-3 rounded-full bg-yellow-400 mt-1 flex-shrink-0" />
-                    <div>
-                      <span className="text-white font-light text-sm lg:text-base">Children's Playground</span>
-                      <div className="text-xs text-gray-400">West Garden</div>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="inline-block w-3 h-3 rounded-full bg-purple-500 mt-1 flex-shrink-0" />
-                    <div>
-                      <span className="text-white font-light text-sm lg:text-base">Parking Entrance</span>
-                      <div className="text-xs text-gray-400">Underground</div>
-                    </div>
-                  </li>
-                </ul>
+                  )}
+                </div>
               </div>
               <button className="mt-6 lg:mt-8 w-full bg-[#ce001f] hover:bg-[#b3001a] text-white font-light py-3 rounded-full text-base lg:text-lg transition-colors" onClick={handleDownloadSitePlan}>
                 Download Site Plan
