@@ -99,6 +99,7 @@ type Project = {
   slug: string
   name: string
   location: string
+  address?: string
   price: string
   type?: string
   image: string
@@ -211,6 +212,7 @@ const fetchProjects = async (): Promise<Project[]> => {
         slug: apiProject.slug,
         name: apiProject.name || apiProject.project_name,
         location: apiProject.location,
+        address: apiProject.address,
         price,
         priceRange,
         pricePerSqFt: apiProject.price_per_sqft,

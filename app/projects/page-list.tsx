@@ -98,6 +98,7 @@ type Project = {
   slug: string
   name: string
   location: string
+  address?: string
   price: string
   type?: string
   image: string
@@ -165,16 +166,26 @@ const fetchProjects = async (): Promise<Project[]> => {
       let price = 'Price on request'
       let lowerPrice: string | undefined = undefined
       
-      if (apiProject.price_from) {
+      if (apiProject.price_from && apiProject.price_from !== '0') {
         // Use price_from as the primary lower price
         lowerPrice = apiProject.price_from
         price = `From $${apiProject.price_from}M`
+      } else if (apiProject.price_from === '0') {
+        // Handle case where price_from is 0
+        price = 'Price per request'
+        lowerPrice = undefined // Ensure lowerPrice is not set when price is 0
       } else if (apiProject.display_price) {
         // Extract lower price from display_price if available
         const priceMatch = apiProject.display_price.match(/From\s+\$?([\d,]+\.?\d*)M?/i)
         if (priceMatch) {
           lowerPrice = priceMatch[1]
-          price = `From $${lowerPrice}M`
+          // Check if the extracted price is 0
+          if (lowerPrice === '0') {
+            price = 'Price per request'
+            lowerPrice = undefined
+          } else {
+            price = `From $${lowerPrice}M`
+          }
         } else {
           // If display_price doesn't match expected format, use it as is
           price = apiProject.display_price
@@ -184,7 +195,13 @@ const fetchProjects = async (): Promise<Project[]> => {
         const priceMatch = apiProject.price.match(/From\s+\$?([\d,]+\.?\d*)M?/i)
         if (priceMatch) {
           lowerPrice = priceMatch[1]
-          price = `From $${lowerPrice}M`
+          // Check if the extracted price is 0
+          if (lowerPrice === '0') {
+            price = 'Price per request'
+            lowerPrice = undefined
+          } else {
+            price = `From $${lowerPrice}M`
+          }
         } else {
           price = apiProject.price
         }
@@ -207,6 +224,7 @@ const fetchProjects = async (): Promise<Project[]> => {
         slug: apiProject.slug,
         name: apiProject.name || apiProject.project_name,
         location: apiProject.location,
+        address: apiProject.address,
         price,
         priceRange,
         pricePerSqFt: apiProject.price_per_sqft,

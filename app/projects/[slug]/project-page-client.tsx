@@ -18,6 +18,7 @@ import {
   Home,
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
   Maximize2,
   BarChart2,
   Layout,
@@ -47,6 +48,18 @@ import {
   CheckCircle,
   Download,
   Bath,
+  Droplets,
+  Heart,
+  Thermometer,
+  Baby,
+  Car,
+  Shield,
+  UserCheck,
+  Coffee,
+  BookOpen,
+  Briefcase,
+  Activity,
+  Zap,
 } from "lucide-react"
 import dynamic from "next/dynamic"
 import {
@@ -61,6 +74,7 @@ import {
 // Import components
 import MoatRadarChart from "@/app/components/MoatRadarChart"
 import TdsrCalculator from "@/app/components/TdsrCalculator"
+import { MortgageLoanCalculator } from "@/app/components/calculators/mortgage-loan-calculator"
 
 // TODO: Create these components
 interface MoatRadarChartProps {
@@ -135,6 +149,11 @@ interface Project {
   locationAnalytics: LocationAnalytics
   mediaReviews: MediaReview[]
   similarProjects: SimilarProject[]
+  // New API data fields
+  unitPricing?: UnitPricing[]
+  facilities?: Facility[]
+  brochures?: Brochure[]
+  sitePlans?: SitePlan[]
   moat?: {
     project: string
     exitAudience: number
@@ -213,15 +232,254 @@ interface GooglePlace {
   isNearest?: boolean
 }
 
+// New interfaces for API data
+interface UnitPricing {
+  id: number
+  project_id: number
+  project_name: string
+  unit_type: string
+  bedrooms: string
+  bathrooms: string
+  size_sqft: number
+  price_from: number
+  price_to: number | null
+  price_per_sqft: number | null
+  currency: string
+  payment_terms: string
+  discount_info: string
+  is_available: boolean
+  created_at: string
+  updated_at: string
+}
+
+interface Facility {
+  id: number
+  name: string
+  description: string
+  icon: string | null
+}
+
+interface Brochure {
+  id: number
+  brochure_url: string
+  brochure_title: string
+  description: string
+  file_type: string
+  file_size: number | null
+  is_active: boolean
+  file_url: string
+}
+
+interface SitePlan {
+  id: number
+  project_id: number
+  project_name: string
+  site_plan_id: string
+  site_plan_name: string
+  image_url: string
+  description: string
+  layout_info: string | null
+  is_primary: boolean
+}
+
+// Unit mix data structure
+interface UnitMixData {
+  bedroomType: string
+  count: number
+  percentage: number
+  unitTypes: string[]
+}
+
+// Utility function to process unit mix data from API
+const processUnitMixData = (unitPricing: UnitPricing[]): UnitMixData[] => {
+  if (!unitPricing || unitPricing.length === 0) {
+    return []
+  }
+
+  // Group units by bedroom count
+  const bedroomGroups = unitPricing.reduce((acc, unit) => {
+    const bedroomCount = parseInt(unit.bedrooms) || 0
+    if (bedroomCount > 0) {
+      if (!acc[bedroomCount]) {
+        acc[bedroomCount] = {
+          bedroomType: `${bedroomCount}-Bedroom`,
+          count: 0,
+          percentage: 0,
+          unitTypes: []
+        }
+      }
+      acc[bedroomCount].count += 1
+      if (!acc[bedroomCount].unitTypes.includes(unit.unit_type)) {
+        acc[bedroomCount].unitTypes.push(unit.unit_type)
+      }
+    }
+    return acc
+  }, {} as Record<number, UnitMixData>)
+
+  // Convert to array and calculate percentages
+  const totalUnits = Object.values(bedroomGroups).reduce((sum, group) => sum + group.count, 0)
+  
+  return Object.values(bedroomGroups)
+    .map(group => ({
+      ...group,
+      percentage: totalUnits > 0 ? Math.round((group.count / totalUnits) * 100) : 0
+    }))
+    .sort((a, b) => {
+      const aBedrooms = parseInt(a.bedroomType.split('-')[0])
+      const bBedrooms = parseInt(b.bedroomType.split('-')[0])
+      return aBedrooms - bBedrooms
+    })
+}
+
+// Utility function to process unit availability data from API
+const processUnitAvailabilityData = (unitPricing: UnitPricing[]) => {
+  if (!unitPricing || unitPricing.length === 0) {
+    return unitAvailabilityData // Fallback to mock data
+  }
+
+  // Group units by bedroom count
+  const bedroomGroups = unitPricing.reduce((acc, unit) => {
+    const bedroomCount = parseInt(unit.bedrooms) || 0
+    if (bedroomCount > 0) {
+      if (!acc[bedroomCount]) {
+        acc[bedroomCount] = {
+          unitType: `${bedroomCount} Bedroom Units`,
+          subtypes: []
+        }
+      }
+      
+      // Check if this unit type already exists
+      const existingSubtype = acc[bedroomCount].subtypes.find((s: any) => s.subtype === unit.unit_type)
+      if (!existingSubtype) {
+        // Format price range
+        let priceDisplay = 'Price on request'
+        if (unit.price_from) {
+          if (unit.price_to && unit.price_to > unit.price_from) {
+            const fromPrice = (unit.price_from / 1000000).toFixed(1)
+            const toPrice = (unit.price_to / 1000000).toFixed(1)
+            priceDisplay = `$${fromPrice}M - $${toPrice}M`
+          } else {
+            priceDisplay = `$${(unit.price_from / 1000000).toFixed(1)}M`
+          }
+        }
+
+        // Format size range
+        const sizeDisplay = unit.size_sqft ? `${unit.size_sqft.toLocaleString()} sqft` : 'Size N/A'
+
+        acc[bedroomCount].subtypes.push({
+          subtype: unit.unit_type,
+          size: sizeDisplay,
+          price: priceDisplay,
+          price_from: unit.price_from,
+          price_to: unit.price_to,
+          price_per_sqft: unit.price_per_sqft,
+          total: 1,
+          available: unit.is_available ? 1 : 0,
+          status: unit.is_available ? 100 : 0,
+          bedrooms: unit.bedrooms,
+          bathrooms: unit.bathrooms,
+          currency: unit.currency,
+          payment_terms: unit.payment_terms,
+          discount_info: unit.discount_info
+        })
+      } else {
+        existingSubtype.total += 1
+        if (unit.is_available) {
+          existingSubtype.available += 1
+        }
+        
+        // Update price range if this unit has different pricing
+        if (unit.price_from) {
+          if (!existingSubtype.price_from || unit.price_from < existingSubtype.price_from) {
+            existingSubtype.price_from = unit.price_from
+          }
+          if (unit.price_to && (!existingSubtype.price_to || unit.price_to > existingSubtype.price_to)) {
+            existingSubtype.price_to = unit.price_to
+          }
+        }
+        
+        // Update size range
+        if (unit.size_sqft) {
+          if (!existingSubtype.size_min || unit.size_sqft < existingSubtype.size_min) {
+            existingSubtype.size_min = unit.size_sqft
+          }
+          if (!existingSubtype.size_max || unit.size_sqft > existingSubtype.size_max) {
+            existingSubtype.size_max = unit.size_sqft
+          }
+        }
+        
+        existingSubtype.status = Math.round((existingSubtype.available / existingSubtype.total) * 100)
+      }
+    }
+    return acc
+  }, {} as Record<number, any>)
+
+  // Process the grouped data to format price and size ranges
+  Object.values(bedroomGroups).forEach(group => {
+    group.subtypes.forEach((subtype: any) => {
+      // Format price range for subtypes with multiple units
+      if (subtype.price_from && subtype.price_to && subtype.price_to > subtype.price_from) {
+        const fromPrice = (subtype.price_from / 1000000).toFixed(1)
+        const toPrice = (subtype.price_to / 1000000).toFixed(1)
+        subtype.price = `$${fromPrice}M - $${toPrice}M`
+      } else if (subtype.price_from) {
+        subtype.price = `$${(subtype.price_from / 1000000).toFixed(1)}M`
+      }
+
+      // Format size range for subtypes with multiple units
+      if (subtype.size_min && subtype.size_max && subtype.size_max > subtype.size_min) {
+        subtype.size = `${subtype.size_min.toLocaleString()} - ${subtype.size_max.toLocaleString()} sqft`
+      } else if (subtype.size_min) {
+        subtype.size = `${subtype.size_min.toLocaleString()} sqft`
+      }
+    })
+  })
+
+  return Object.values(bedroomGroups).sort((a, b) => {
+    const aBedrooms = parseInt(a.unitType.split(' ')[0])
+    const bBedrooms = parseInt(b.unitType.split(' ')[0])
+    return aBedrooms - bBedrooms
+  })
+}
+
 // Icon mapping for facilities
 const facilityIconMap: Record<string, React.ReactNode> = {
   "Gym": <Dumbbell className="h-6 w-6" style={{ color: '#ce001f' }} />,
   "BBQ Pavilion": <Flame className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "BBQ Corner": <Flame className="h-6 w-6" style={{ color: '#ce001f' }} />,
   "Playground": <Sliders className="h-6 w-6" style={{ color: '#ce001f' }} />,
   "Pool Lounge": <Martini className="h-6 w-6" style={{ color: '#ce001f' }} />,
   "Garden": <Flower className="h-6 w-6" style={{ color: '#ce001f' }} />,
   "Arrival Lobby": <DoorOpen className="h-6 w-6" style={{ color: '#ce001f' }} />,
   "Function Room": <Users className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Club house": <Users className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Clubhouse": <Users className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Swimming Pool": <Droplets className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Pool": <Droplets className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Tennis Court": <Activity className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Basketball Court": <Activity className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Fitness Center": <Dumbbell className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Spa": <Heart className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Sauna": <Thermometer className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Steam Room": <Thermometer className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Children's Playground": <Baby className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Kids Playground": <Baby className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Parking": <Car className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Car Park": <Car className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Security": <Shield className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Concierge": <UserCheck className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Lounge": <Coffee className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Library": <BookOpen className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Business Center": <Briefcase className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Meeting Room": <Users className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Yoga Studio": <Activity className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Meditation Room": <Zap className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Rooftop Garden": <Flower className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Sky Garden": <Flower className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Outdoor Dining": <Utensils className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Al Fresco Dining": <Utensils className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "Barbecue Area": <Flame className="h-6 w-6" style={{ color: '#ce001f' }} />,
+  "BBQ Area": <Flame className="h-6 w-6" style={{ color: '#ce001f' }} />,
 }
 
 // Mock data for unit types & pricing table
@@ -403,6 +661,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
   const [selectedAmenity, setSelectedAmenity] = useState<GooglePlace | null>(null)
   const [realAmenitiesData, setRealAmenitiesData] = useState<Record<string, GooglePlace[]>>({})
   const [isLoadingAmenities, setIsLoadingAmenities] = useState(false)
+  const [showAllFacilities, setShowAllFacilities] = useState(false)
 
   // Floor Plan state
   const [bedroomTab, setBedroomTab] = useState<BedroomTabKey>('1')
@@ -468,7 +727,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
     try {
       console.log('Fetching project with slug:', projectSlug)
       
-      // Fetch all projects and find the one with matching slug
+      // First, fetch all projects to find the matching one
       const response = await fetch('https://striking-hug-052e89dfad.strapiapp.com/api/projects')
       
       if (!response.ok) {
@@ -490,8 +749,26 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       
       console.log('Found matching project:', matchingProject)
       
-      const apiProject = matchingProject
+            // Now fetch the specific project with its related data (including unitPricing)
+      const projectResponse = await fetch(`https://striking-hug-052e89dfad.strapiapp.com/api/projects/${matchingProject.id}?populate=unitPricing,facilities,brochures,sitePlans`)
+      
+      let apiProject = matchingProject
+      
+      if (projectResponse.ok) {
+        const projectData = await projectResponse.json()
+        console.log('Project details with related data:', projectData)
+        apiProject = projectData.data || matchingProject
+      } else {
+        console.log('Failed to fetch project details, using basic project data')
+      }
+      
       console.log('API Project data:', apiProject)
+      console.log('Developer field:', apiProject.developer)
+      console.log('Developer name:', apiProject.developer?.name)
+      console.log('Unit Pricing data:', apiProject.unitPricing)
+      console.log('Unit Pricing data structure:', JSON.stringify(apiProject.unitPricing, null, 2))
+      console.log('Facilities data:', apiProject.facilities)
+      console.log('Facilities data structure:', JSON.stringify(apiProject.facilities, null, 2))
       
       if (!apiProject) {
         console.log('No project data found')
@@ -521,7 +798,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
           "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80",
         ],
         units: apiProject.units ? `${apiProject.units} Units` : '',
-        developer: apiProject.developer || '',
+        developer: apiProject.developer?.name || apiProject.developer || 'Developer not specified',
         completion: apiProject.completion || '',
         description: apiProject.description || '',
         features: apiProject.features || [],
@@ -610,6 +887,11 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             coordinates: { lat: 1.3521, lng: 103.8198 },
           },
         ],
+        // New API data fields
+        unitPricing: apiProject.unitPricing?.data || apiProject.unitPricing || [],
+        facilities: apiProject.facilities?.data || apiProject.facilities || [],
+        brochures: apiProject.brochures?.data || apiProject.brochures || [],
+        sitePlans: apiProject.sitePlans?.data || apiProject.sitePlans || [],
         moat: {
           project: apiProject.name || apiProject.project_name || '',
           exitAudience: 4.2,
@@ -786,9 +1068,11 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
         const projectData = await fetchProject(slug)
         if (projectData) {
           console.log('Using API data for project')
+          console.log('Project developer field:', projectData.developer)
           setProject(projectData)
         } else {
           console.log('API returned no data, using mock data as fallback')
+          console.log('Mock project developer field:', mockProject.developer)
           setProject(mockProject)
         }
       } catch (error) {
@@ -1137,7 +1421,10 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               <div className="flex flex-wrap gap-4 text-gray-200 text-base">
                 <div className="flex items-center">
                   <Building2 className="h-5 w-5 mr-2" style={{ color: '#ce001f' }} />
-                  {project.developer}
+                  {(() => {
+                    console.log('Rendering developer field:', project.developer);
+                    return project.developer || 'Developer not available';
+                  })()}
                 </div>
                 <div className="flex items-center">
                   <Calendar className="h-5 w-5 mr-2" style={{ color: '#ce001f' }} />
@@ -1623,20 +1910,91 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             Premium amenities designed for modern luxury living
           </p>
           {/* Facilities Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {facilities.map((facility: string, idx: number) => (
-              <div
-                key={idx}
-                className="flex items-center gap-3 bg-[#232324] rounded-lg px-4 py-4 shadow-sm"
-              >
-                <span className="flex items-center justify-center w-10 h-10 rounded-full bg-[#ce001f]/20">
-                  {facilityIconMap[facility] || (
-                    <Layout className="h-5 w-5" style={{ color: '#ce001f' }} />
-                  )}
-                </span>
-                <span className="text-white font-light">{facility}</span>
-              </div>
-            ))}
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {(() => {
+                // Use API facilities data if available, otherwise fallback to mock data
+                const displayFacilities = project?.facilities && project.facilities.length > 0 
+                  ? project.facilities 
+                  : facilities.map(name => ({ id: 0, name, description: `Facility: ${name}`, icon: null }))
+                
+                // Filter out facilities with null, empty, or whitespace-only names (including invisible characters)
+                const validFacilities = displayFacilities.filter((facility: any) => {
+                  if (!facility.name) return false
+                  
+                  // Remove all whitespace and invisible characters
+                  const cleanName = facility.name.replace(/\s/g, '').replace(/[\u200B-\u200D\uFEFF]/g, '')
+                  
+                  return cleanName.length > 0
+                })
+                
+                // If no valid facilities, show a message
+                if (validFacilities.length === 0) {
+                  return (
+                    <div className="col-span-full text-center py-8">
+                      <p className="text-gray-400">No facilities information available at the moment.</p>
+                      <p className="text-sm text-gray-500 mt-2">Please check back later for updated facility information.</p>
+                    </div>
+                  )
+                }
+                
+                // Show only first 9 facilities initially, or all if showAllFacilities is true
+                const facilitiesToShow = showAllFacilities ? validFacilities : validFacilities.slice(0, 9)
+                
+                return facilitiesToShow.map((facility: any, idx: number) => (
+                  <div
+                    key={facility.id || idx}
+                    className="flex items-center gap-3 bg-[#232324] rounded-lg px-4 py-4 shadow-sm"
+                  >
+                    <span className="flex items-center justify-center w-10 h-10 rounded-full bg-[#ce001f]/20">
+                      {facilityIconMap[facility.name] || (
+                        <Layout className="h-5 w-5" style={{ color: '#ce001f' }} />
+                      )}
+                    </span>
+                    <span className="text-white font-light">{facility.name}</span>
+                  </div>
+                ))
+              })()}
+            </div>
+            
+            {/* Show More/Less Button */}
+            {(() => {
+              const displayFacilities = project?.facilities && project.facilities.length > 0 
+                ? project.facilities 
+                : facilities.map(name => ({ id: 0, name, description: `Facility: ${name}`, icon: null }))
+              
+              const validFacilities = displayFacilities.filter((facility: any) => {
+                if (!facility.name) return false
+                const cleanName = facility.name.replace(/\s/g, '').replace(/[\u200B-\u200D\uFEFF]/g, '')
+                return cleanName.length > 0
+              })
+              
+              // Only show button if there are more than 9 facilities
+              if (validFacilities.length > 9) {
+                return (
+                  <div className="flex justify-center">
+                    <button
+                      onClick={() => setShowAllFacilities(!showAllFacilities)}
+                      className="bg-[#ce001f] hover:bg-[#b3001a] text-white font-medium py-3 px-6 rounded-full transition-colors flex items-center gap-2"
+                    >
+                      {showAllFacilities ? (
+                        <>
+                          <ChevronUp className="h-4 w-4" />
+                          Show Less
+                        </>
+                      ) : (
+                        <>
+                          <ChevronDown className="h-4 w-4" />
+                          Show More ({validFacilities.length - 9} more)
+                        </>
+                      )}
+                    </button>
+                  </div>
+                )
+              }
+              
+              return null
+            })()}
           </div>
         </div>
       </section>
@@ -1786,32 +2144,46 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
         <div className="max-w-7xl w-full py-10 px-4 flex flex-col items-center">
           <h3 className="text-xl font-light text-red-400 mb-8 text-center tracking-wide">Unit Mix</h3>
           <div className="w-full flex flex-row gap-6 overflow-x-auto sm:overflow-x-visible scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent px-2" style={{ WebkitOverflowScrolling: 'touch' }}>
-            {/* 1-Bedroom */}
-            <div className="flex-1 bg-[#232324] rounded-xl py-8 flex flex-col items-center justify-center">
-              <span className="text-3xl font-light text-white mb-2">85</span>
-              <span className="text-gray-400 font-light">1-Bedroom</span>
-            </div>
-            {/* 2-Bedroom */}
-            <div className="flex-1 bg-[#232324] rounded-xl py-8 flex flex-col items-center justify-center">
-              <span className="text-3xl font-light text-white mb-2">180</span>
-              <span className="text-gray-400 font-light">2-Bedroom</span>
-            </div>
-            {/* 3-Bedroom */}
-            <div className="flex-1 bg-[#232324] rounded-xl py-8 flex flex-col items-center justify-center">
-              <span className="text-3xl font-light text-white mb-2">220</span>
-              <span className="text-gray-400 font-light">3-Bedroom</span>
-            </div>
-            {/* 4-Bedroom */}
-            <div className="flex-1 bg-[#232324] rounded-xl py-8 flex flex-col items-center justify-center">
-              <span className="text-3xl font-light text-white mb-2">95</span>
-              <span className="text-gray-400 font-light">4-Bedroom</span>
-            </div>
-            {/* 5-Bedroom */}
-            <div className="flex-1 bg-[#232324] rounded-xl py-8 flex flex-col items-center justify-center">
-              <span className="text-3xl font-light text-white mb-2">25</span>
-              <span className="text-gray-400 font-light">5-Bedroom</span>
-            </div>
+            {(() => {
+              // Process unit mix data from API
+              const unitMixData = processUnitMixData(project?.unitPricing || [])
+              
+              // Fallback to default data if no API data available
+              const displayData = unitMixData.length > 0 ? unitMixData : [
+                { bedroomType: "1-Bedroom", count: 85, percentage: 18, unitTypes: [] },
+                { bedroomType: "2-Bedroom", count: 180, percentage: 38, unitTypes: [] },
+                { bedroomType: "3-Bedroom", count: 220, percentage: 46, unitTypes: [] },
+                { bedroomType: "4-Bedroom", count: 95, percentage: 20, unitTypes: [] },
+                { bedroomType: "5-Bedroom", count: 25, percentage: 5, unitTypes: [] },
+              ]
+
+              return displayData.map((unit, index) => (
+                <div key={unit.bedroomType} className="flex-1 bg-[#232324] rounded-xl py-8 flex flex-col items-center justify-center hover:bg-[#2a2b2c] transition-colors duration-300">
+                  <span className="text-3xl font-light text-white mb-2">{unit.count}</span>
+                  <span className="text-gray-400 font-light">{unit.bedroomType}</span>
+                  {unit.percentage > 0 && (
+                    <span className="text-xs text-gray-500 mt-1">({unit.percentage}%)</span>
+                  )}
+                </div>
+              ))
+            })()}
           </div>
+          {/* Additional unit mix information */}
+          {project?.unitPricing && project.unitPricing.length > 0 && (
+            <div className="mt-6 text-center">
+              <p className="text-sm text-gray-400">
+                {(() => {
+                  const totalUnits = project.unitPricing.length
+                  const availableUnits = project.unitPricing.filter(u => u.is_available).length
+                  const priceRange = project.unitPricing.filter(u => u.price_from)
+                  const minPrice = priceRange.length > 0 ? Math.min(...priceRange.map(u => u.price_from)) : 0
+                  const maxPrice = priceRange.length > 0 ? Math.max(...priceRange.map(u => u.price_from)) : 0
+                  
+                  return `Total Unit Types: ${totalUnits} | Available: ${availableUnits} | Price Range: ${minPrice > 0 ? `$${(minPrice / 1000000).toFixed(1)}M - $${(maxPrice / 1000000).toFixed(1)}M` : 'Price on request'}`
+                })()}
+              </p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -1827,125 +2199,187 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
           {/* Tabs for unit types */}
           <div className="w-full px-6 pt-6 pb-2 border-b border-gray-700 mb-8">
             <div className="flex flex-nowrap gap-2 justify-center overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent" style={{ WebkitOverflowScrolling: 'touch' }}>
-              {unitAvailabilityData.map((unit, idx) => (
-                <button
-                  key={unit.unitType}
-                  onClick={() => setUnitsActiveTab(idx)}
-                  className={`px-4 py-2 rounded-full font-light flex items-center gap-2 text-sm transition-colors border focus:outline-none whitespace-nowrap ${unitsActiveTab === idx ? 'bg-gray-800 border-[#ce001f] text-white' : 'bg-[#18191b] border-gray-700 text-gray-300 hover:bg-[#ce001f]/10 hover:text-[#ce001f]'}`}
-                >
-                  {unit.unitType.replace(' Units', '')}
-                </button>
-              ))}
+              {(() => {
+                const dynamicUnitData = processUnitAvailabilityData(project?.unitPricing || [])
+                
+                // If no API data, show fallback tabs
+                if (dynamicUnitData.length === 0) {
+                  return unitAvailabilityData.map((unit, idx) => (
+                    <button
+                      key={unit.unitType}
+                      onClick={() => setUnitsActiveTab(idx)}
+                      className={`px-4 py-2 rounded-full font-light flex items-center gap-2 text-sm transition-colors border focus:outline-none whitespace-nowrap ${unitsActiveTab === idx ? 'bg-gray-800 border-[#ce001f] text-white' : 'bg-[#18191b] border-gray-700 text-gray-300 hover:bg-[#ce001f]/10 hover:text-[#ce001f]'}`}
+                    >
+                      {unit.unitType.replace(' Units', '')}
+                    </button>
+                  ))
+                }
+                
+                return dynamicUnitData.map((unit, idx) => {
+                  // Calculate total available units for this type
+                  const totalAvailable = unit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.available, 0)
+                  const totalUnits = unit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.total, 0)
+                  
+                  return (
+                    <button
+                      key={unit.unitType}
+                      onClick={() => setUnitsActiveTab(idx)}
+                      className={`px-4 py-2 rounded-full font-light flex items-center gap-2 text-sm transition-colors border focus:outline-none whitespace-nowrap ${unitsActiveTab === idx ? 'bg-gray-800 border-[#ce001f] text-white' : 'bg-[#18191b] border-gray-700 text-gray-300 hover:bg-[#ce001f]/10 hover:text-[#ce001f]'}`}
+                    >
+                      <span>{unit.unitType.replace(' Units', '')}</span>
+                      {totalAvailable > 0 && (
+                        <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full">
+                          {totalAvailable}
+                        </span>
+                      )}
+                    </button>
+                  )
+                })
+              })()}
             </div>
           </div>
 
           {/* Card layout for selected unit type */}
-          <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 justify-center items-stretch bg-[#111] rounded-xl p-4 lg:p-8 max-w-5xl mx-auto shadow-lg pricing-container">
-            {/* Left: Floor plan image with action buttons */}
-            <div className="w-full lg:flex-1 flex flex-col items-center justify-center min-w-0 lg:min-w-[320px] lg:max-w-[420px] pricing-left">
-              <div className="relative w-full aspect-[4/3] bg-[#e5e5e5] rounded-xl flex items-center justify-center overflow-hidden mb-4">
-                {/* Placeholder image icon */}
-                <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5V8.25A2.25 2.25 0 0 1 5.25 6h13.5A2.25 2.25 0 0 1 21 8.25v8.25M3 16.5l3.72-3.72a2.25 2.25 0 0 1 3.18 0l2.4 2.4m-9.3 1.32 3.72-3.72a2.25 2.25 0 0 1 3.18 0l2.4 2.4m0 0 2.4-2.4a2.25 2.25 0 0 1 3.18 0l3.72 3.72M12 11.25a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
-                </svg>
-                {/* Pill buttons */}
-                <div className="absolute top-4 right-4 flex gap-2 z-10">
-                  <button className="flex items-center gap-2 bg-[#232324] text-white px-4 py-2 rounded-full text-sm font-medium shadow hover:bg-[#18191b] transition-colors">
-                    <Search className="h-4 w-4 text-white" />
-                    View
-                  </button>
-                  <button className="flex items-center gap-2 bg-[#232324] text-white px-4 py-2 rounded-full text-sm font-medium shadow hover:bg-[#18191b] transition-colors">
-                    <ChevronDown className="h-4 w-4 text-white" />
-                    Download
-                  </button>
-                </div>
-              </div>
-            </div>
-            {/* Right: Unit details */}
-            <div className="w-full lg:flex-1 flex flex-col justify-between min-w-0 lg:min-w-[320px] text-left pricing-right relative">
-              {/* Unit type and availability inline */}
-              <div className="flex items-center justify-between mb-2 w-full">
-                <span className="text-2xl font-semibold text-white">{unitAvailabilityData[unitsActiveTab].unitType.replace(' Units', '')}</span>
-                <span className="flex flex-col items-end ml-auto whitespace-nowrap">
-                  <span className="text-white font-light text-sm">Available</span>
-                  <span className="text-green-400 font-semibold text-lg">{unitAvailabilityData[unitsActiveTab].subtypes[0].available} of {unitAvailabilityData[unitsActiveTab].subtypes[0].total}</span>
-                </span>
-              </div>
-              {/* Description */}
-              <div className="text-gray-300 text-sm mb-4">Perfect for young professionals and couples seeking modern urban living with premium finishes and thoughtful design.</div>
-              {/* Features row */}
-              <div className="flex w-full mb-4">
-                <div className="flex-1 flex flex-col items-start">
-                  <div className="flex flex-col items-center w-full">
-                    <span className="flex items-center justify-center w-10 h-10 rounded-full bg-red-900/60">
-                      <Home className="h-5 w-5 text-red-400" />
-                    </span>
-                    <span className="text-white text-xs mt-1 text-center w-full">1 Bedrooms</span>
+          {(() => {
+            const dynamicUnitData = processUnitAvailabilityData(project?.unitPricing || [])
+            const currentUnit = dynamicUnitData[unitsActiveTab] || dynamicUnitData[0]
+            
+            // If no data available, show fallback
+            if (!currentUnit) {
+              return (
+                <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 justify-center items-stretch bg-[#111] rounded-xl p-4 lg:p-8 max-w-5xl mx-auto shadow-lg pricing-container">
+                  <div className="w-full text-center text-gray-400 py-8">
+                    <p>No unit information available at the moment.</p>
+                    <p className="text-sm mt-2">Please check back later or contact our agents for more details.</p>
                   </div>
                 </div>
-                <div className="flex-1 flex flex-col items-center">
-                  <div className="flex flex-col items-center w-full">
-                    <span className="flex items-center justify-center w-10 h-10 rounded-full bg-red-900/60">
-                      <Bath className="h-5 w-5 text-red-400" />
-                    </span>
-                    <span className="text-white text-xs mt-1 text-center w-full">1 Bathrooms</span>
+              )
+            }
+            
+            // Calculate total availability for this unit type
+            const totalAvailable = currentUnit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.available, 0)
+            const totalUnits = currentUnit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.total, 0)
+            
+            return (
+              <div className="space-y-6">
+                {/* Unit type header */}
+                <div className="text-center mb-6">
+                  <h3 className="text-2xl font-semibold text-white mb-2">{currentUnit.unitType.replace(' Units', '')}</h3>
+                  <div className="flex items-center justify-center gap-4 text-sm">
+                    <span className="text-gray-400">Total Units: <span className="text-white font-medium">{totalUnits}</span></span>
+                    <span className="text-gray-400">Available: <span className="text-green-400 font-medium">{totalAvailable}</span></span>
+                    <span className="text-gray-400">Availability: <span className="text-white font-medium">{totalUnits > 0 ? Math.round((totalAvailable / totalUnits) * 100) : 0}%</span></span>
                   </div>
                 </div>
-                <div className="flex-1 flex flex-col items-end">
-                  <div className="flex flex-col items-center w-full">
-                    <span className="flex items-center justify-center w-10 h-10 rounded-full bg-red-900/60">
-                      <Layout className="h-5 w-5 text-red-400" />
-                    </span>
-                    <span className="text-white text-xs mt-1 text-center w-full">{unitAvailabilityData[unitsActiveTab].subtypes[0].size}</span>
-                  </div>
+                
+                {/* Subtype cards */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {currentUnit.subtypes.map((subtype: any, subtypeIndex: number) => (
+                    <div key={subtypeIndex} className="bg-[#111] rounded-xl p-6 shadow-lg border border-gray-800">
+                      {/* Subtype header */}
+                      <div className="flex items-center justify-between mb-4">
+                        <h4 className="text-lg font-semibold text-white">{subtype.subtype}</h4>
+                        <div className="flex flex-col items-end">
+                          <span className="text-green-400 font-semibold text-lg">{subtype.available} of {subtype.total}</span>
+                          <span className="text-gray-400 text-xs">Available</span>
+                        </div>
+                      </div>
+                      
+                      {/* Unit specifications */}
+                      <div className="grid grid-cols-3 gap-4 mb-4">
+                        <div className="text-center">
+                          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-red-900/60 mx-auto mb-2">
+                            <Home className="h-5 w-5 text-red-400" />
+                          </div>
+                          <span className="text-white text-xs">{subtype.bedrooms || 'N/A'} Bedrooms</span>
+                        </div>
+                        <div className="text-center">
+                          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-red-900/60 mx-auto mb-2">
+                            <Bath className="h-5 w-5 text-red-400" />
+                          </div>
+                          <span className="text-white text-xs">{subtype.bathrooms || 'N/A'} Bathrooms</span>
+                        </div>
+                        <div className="text-center">
+                          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-red-900/60 mx-auto mb-2">
+                            <Layout className="h-5 w-5 text-red-400" />
+                          </div>
+                          <span className="text-white text-xs">{subtype.size}</span>
+                        </div>
+                      </div>
+                      
+                      {/* Pricing information */}
+                      <div className="space-y-2 mb-4">
+                        <div className="flex items-center justify-between">
+                          <span className="text-gray-400 text-sm">Price Range:</span>
+                          <span className="text-white font-medium">{subtype.price}</span>
+                        </div>
+                        {subtype.price_per_sqft && (
+                          <div className="flex items-center justify-between">
+                            <span className="text-gray-400 text-sm">Price per sqft:</span>
+                            <span className="text-white text-sm">
+                              ${subtype.price_per_sqft.toLocaleString()} {subtype.currency || 'SGD'}
+                            </span>
+                          </div>
+                        )}
+                        {subtype.payment_terms && (
+                          <div className="flex items-center justify-between">
+                            <span className="text-gray-400 text-sm">Payment Terms:</span>
+                            <span className="text-white text-sm">{subtype.payment_terms}</span>
+                          </div>
+                        )}
+                        {subtype.discount_info && (
+                          <div className="flex items-center justify-between">
+                            <span className="text-green-400 text-sm">Special Offer:</span>
+                            <span className="text-white text-sm">{subtype.discount_info}</span>
+                          </div>
+                        )}
+                      </div>
+                      
+                      {/* Availability status */}
+                      <div className="mb-4">
+                        <div className="flex items-center justify-between text-sm mb-1">
+                          <span className="text-gray-400">Availability</span>
+                          <span className="text-white">{subtype.status}%</span>
+                        </div>
+                        <div className="w-full bg-gray-700 rounded-full h-2">
+                          <div 
+                            className="bg-green-500 h-2 rounded-full transition-all duration-300" 
+                            style={{ width: `${subtype.status}%` }}
+                          />
+                        </div>
+                      </div>
+                      
+                      {/* CTA Button */}
+                      <button 
+                        onClick={() => scrollToSection('contact')}
+                        className="w-full bg-red-500 hover:bg-red-600 text-white font-light py-3 px-4 rounded-full text-sm transition-colors"
+                      >
+                        Enquire About This Unit Type
+                      </button>
+                    </div>
+                  ))}
                 </div>
               </div>
-              {/* Price range */}
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-red-400 text-lg font-medium">$</span>
-                <span className="text-white text-lg font-medium">Price Range</span>
-                <span className="text-white text-lg font-medium">{unitAvailabilityData[unitsActiveTab].subtypes[0].price}</span>
-              </div>
-              {/* Key Features */}
-              <div className="mb-4">
-                <div className="text-red-400 font-semibold mb-1 text-base">Key Features</div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-1 text-sm">
-                  <div className="flex items-start gap-2"><span className="text-red-400 mt-1">•</span> <span className="text-white">Open Concept Kitchen</span></div>
-                  <div className="flex items-start gap-2"><span className="text-red-400 mt-1">•</span> <span className="text-white">Premium Fixtures</span></div>
-                  <div className="flex items-start gap-2"><span className="text-red-400 mt-1">•</span> <span className="text-white">City Views</span></div>
-                  <div className="flex items-start gap-2"><span className="text-red-400 mt-1">•</span> <span className="text-white">Built-in Storage</span></div>
-                </div>
-              </div>
-              {/* CTA Button */}
-              <div className="flex justify-end mt-6 w-full">
-                <button 
-                  onClick={() => scrollToSection('contact')}
-                  className="bg-red-500 hover:bg-red-600 text-white font-light py-3 px-8 rounded-full text-base transition-colors w-full sm:w-auto lg:w-auto"
-                >
-                  Enquire About This Unit
-                </button>
-              </div>
-            </div>
-          </div>
+            )
+          })()}
+
+
         </div>
       </section>
 
-      {/* Mortage Calculator - Full Width */}
+      {/* Mortgage Loan Calculator - Full Width */}
       <div className="w-full py-8 mb-8">
         <div className="max-w-screen-xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-light text-white mb-3 tracking-wide">Mortage Calculator</h2>
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-1 bg-[#ce001f] rounded" />
-            </div>
+          <h2 className="text-4xl font-light text-white mb-3 tracking-wide">Mortgage Loan Calculator</h2>
+          <div className="flex justify-center mb-4">
+            <div className="w-16 h-1 bg-[#ce001f] rounded" />
+          </div>
+          <p className="text-gray-400 text-base font-light text-center mb-8">Calculate your monthly mortgage payments and view detailed amortization schedules</p>
           <div className="flex flex-col items-center md:items-center md:justify-center">
-            {/* Mortage Calculator */}
-            <div className="w-full md:w-3/4 min-w-0 mx-auto">
+            {/* Mortgage Loan Calculator */}
+            <div className="w-full max-w-7xl min-w-0 mx-auto">
               <div className="bg-[#23232a] rounded-lg p-6">
-                <TdsrCalculator 
-                  propertyPrice={parseFloat(project?.priceFrom?.replace(/[^0-9]/g, '') || '0')}
-                  loanTenure={30}
-                  interestRate={3.5}
-                />
+                <MortgageLoanCalculator />
               </div>
             </div>
           </div>

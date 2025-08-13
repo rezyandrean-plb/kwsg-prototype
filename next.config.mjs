@@ -85,6 +85,14 @@ const nextConfig = {
     ],
   },
   webpack: (config, { dev, isServer }) => {
+    // Fix for tslib module not found error
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      net: false,
+      tls: false,
+    }
+    
     // Production optimizations
     if (!dev) {
       config.optimization = {

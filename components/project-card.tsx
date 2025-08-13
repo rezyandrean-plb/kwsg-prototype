@@ -9,6 +9,7 @@ import { Project } from "@/data/projects"
 
 interface ProjectCardProps extends Project {
   className?: string
+  address?: string
   priceRange?: string
   lowerPrice?: string
   units?: string
@@ -19,6 +20,7 @@ interface ProjectCardProps extends Project {
   description?: string
   pricePerSqFt?: string
   features?: string[]
+  tenure?: string
   status?: 'upcoming' | 'ongoing' | 'completed'
   ctaText?: string
   image_url_banner?: string | null
@@ -28,6 +30,7 @@ export default function ProjectCard({
   slug,
   name,
   location,
+  address,
   price,
   type,
   image,
@@ -43,6 +46,7 @@ export default function ProjectCard({
   description,
   pricePerSqFt,
   features,
+  tenure,
   status = 'upcoming',
   ctaText = "View Project"
 }: ProjectCardProps) {
@@ -86,17 +90,17 @@ export default function ProjectCard({
         {/* Location/District */}
         <div className="text-xs text-gray-400 mb-1.5 truncate flex items-center">
           <MapPin className="h-3.5 w-3.5 mr-1 text-gray-500" />
-          {location}
+          {address || location}
         </div>
         {/* Project Name */}
         <h3 className="text-xl font-light mb-2 text-white truncate">{name}</h3>
         {/* Badges for tenure and TOP */}
         <div className="flex flex-wrap gap-1.5 mb-2">
-          {features && features[0] && (
-            <span className="bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full text-xs font-medium border border-gray-700">{features[0]}</span>
+          {tenure && (
+            <span className="bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full text-xs font-medium border border-gray-700">{tenure}</span>
           )}
           {completion && (
-            <span className="bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full text-xs font-medium border border-gray-700">TOP: {completion}</span>
+            <span className="bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full text-xs font-medium border border-gray-700">TOP: {completion.split('-')[0]}</span>
           )}
         </div>
         {/* Bedroom range and property size */}
@@ -112,7 +116,21 @@ export default function ProjectCard({
         <div className="mt-auto pt-2 border-t border-gray-800">
           <div className="text-xs text-gray-400 mb-0.5">From</div>
           <div className="text-lg font-normal text-white">
-            {lowerPrice ? `$${lowerPrice}M` : (priceRange || price)}
+            {(() => {
+              if (lowerPrice && lowerPrice !== '0' && lowerPrice !== '0M') {
+                return `${lowerPrice}M`
+              } else if (priceRange && priceRange !== '0') {
+                return priceRange
+              } else if (lowerPrice && lowerPrice !== '0') {
+                // If price is "Price per request", display it with proper styling
+                if (lowerPrice === 'Price per request') {
+                  return <span className="text-gray-500 italic">Price per request</span>
+                }
+                return lowerPrice
+              } else {
+                return <span className="text-gray-500 italic">Price per request</span>
+              }
+            })()}
           </div>
           {pricePerSqFt && (
             <div className="text-xs text-gray-400 mt-0.5">
