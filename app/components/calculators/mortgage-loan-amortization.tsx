@@ -58,7 +58,7 @@ export function MortgageLoanAmortization() {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col md:flex-row gap-4 mb-4">
+        <div className="flex flex-row gap-4 mb-4">
           <div className="flex-1">
             <Label htmlFor="yearFilter">Filter by Year</Label>
             <Select value={yearFilter} onValueChange={setYearFilter}>

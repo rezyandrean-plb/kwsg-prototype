@@ -43,16 +43,51 @@ const DefaultIcon = L.icon({
 });
 L.Marker.prototype.options.icon = DefaultIcon;
 
+// Custom property marker icon
+const PropertyIcon = L.icon({
+  iconUrl: '/map-markers/property.svg',
+  iconSize: [32, 32],
+  iconAnchor: [16, 32],
+  popupAnchor: [0, -32],
+});
+
 // Custom icon mapping for amenity types
 const amenityIconMap: Record<string, string> = {
-  'Primary School': '/map-markers/school.png',
-  'Secondary School': '/map-markers/school.png',
-  'School': '/map-markers/school.png',
-  'MRT Station': '/map-markers/mrt.png',
-  'Shopping Mall': '/map-markers/shopping.png',
-  'Food Centre': '/map-markers/food.png',
-  'Supermarket': '/map-markers/groceries.png',
-  'Park': '/map-markers/recreation.png',
+  // Education
+  'Primary School': '/map-markers/school.svg',
+  'Secondary School': '/map-markers/school.svg',
+  'School': '/map-markers/school.svg',
+  'University': '/map-markers/school.svg',
+  'College': '/map-markers/school.svg',
+  
+  // Transportation
+  'MRT Station': '/map-markers/mrt.svg',
+  'Bus Stop': '/map-markers/bus.svg',
+  'Bus Station': '/map-markers/bus.svg',
+  'Train Station': '/map-markers/mrt.svg',
+  
+  // Shopping & Food
+  'Shopping Mall': '/map-markers/shopping.svg',
+  'Shopping Centre': '/map-markers/shopping.svg',
+  'Food Centre': '/map-markers/food.svg',
+  'Food Court': '/map-markers/food.svg',
+  'Restaurant': '/map-markers/food.svg',
+  'Supermarket': '/map-markers/groceries.svg',
+  'Grocery Store': '/map-markers/groceries.svg',
+  'Convenience Store': '/map-markers/groceries.svg',
+  
+  // Recreation
+  'Park': '/map-markers/recreation.svg',
+  'Garden': '/map-markers/recreation.svg',
+  'Recreation Centre': '/map-markers/recreation.svg',
+  'Sports Centre': '/map-markers/recreation.svg',
+  
+  // Healthcare
+  'Hospital': '/map-markers/hospital.svg',
+  'Medical Centre': '/map-markers/hospital.svg',
+  'Clinic': '/map-markers/hospital.svg',
+  'Polyclinic': '/map-markers/hospital.svg',
+  
   // Add more mappings as needed
 };
 
@@ -83,18 +118,25 @@ export default function NearbyAmenitiesMap({ project, amenities, selectedAmenity
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {/* Project Marker */}
-      <Marker position={projectCoords}>
-        <Popup>{project.title ? project.title : 'Project Location'}</Popup>
+      <Marker position={projectCoords} icon={PropertyIcon}>
+        <Popup>
+          <div>
+            <div className="font-bold text-blue-600">{project.title ? project.title : 'Project Location'}</div>
+            <div className="text-xs text-gray-500">Property Location</div>
+          </div>
+        </Popup>
       </Marker>
       {/* Amenity Markers */}
       {amenities.map((amenity) => {
-        const iconUrl = amenityIconMap[amenity.type] || DefaultIcon.options.iconUrl;
-        const icon = L.icon({
-          ...DefaultIcon.options,
-          iconUrl: amenity.placeId === selectedAmenity?.placeId
-            ? '/map-markers/selected.png' // Optional: special icon for selected
-            : iconUrl,
-        });
+        const isSelected = amenity.placeId === selectedAmenity?.placeId;
+        const iconUrl = isSelected ? '/map-markers/selected.svg' : amenityIconMap[amenity.type];
+        const icon = iconUrl ? L.icon({
+          iconUrl: iconUrl,
+          iconSize: [32, 32],
+          iconAnchor: [16, 32],
+          popupAnchor: [0, -32],
+        }) : DefaultIcon;
+        
         return (
           <Marker
             key={amenity.placeId}
@@ -105,7 +147,15 @@ export default function NearbyAmenitiesMap({ project, amenities, selectedAmenity
               <div>
                 <div className="font-bold">{amenity.name}</div>
                 <div className="text-xs text-gray-500">{amenity.address}</div>
-                <div className="text-xs">{amenity.type}</div>
+                <div className="text-xs font-medium">{amenity.type}</div>
+                <div className="text-xs text-green-600">
+                  {amenity.distance} • {amenity.duration} by {amenity.transportMode}
+                </div>
+                {isSelected && (
+                  <div className="text-xs text-red-600 font-medium mt-1">
+                    ✓ Selected
+                  </div>
+                )}
               </div>
             </Popup>
           </Marker>

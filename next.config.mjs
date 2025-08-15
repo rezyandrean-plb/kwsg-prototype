@@ -19,7 +19,8 @@ const nextConfig = {
       'sg.news.yahoo.com',
       'www.mingtiandi.com',
       'mingtiandi.com',
-      'kwsingapore.s3.ap-southeast-1.amazonaws.com'
+      'kwsingapore.s3.ap-southeast-1.amazonaws.com',
+      'img.singmap.com'
     ],
     remotePatterns: [
       {
@@ -79,6 +80,12 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'kwsingapore.s3.ap-southeast-1.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'img.singmap.com',
         port: '',
         pathname: '/**',
       }

@@ -128,10 +128,25 @@ type Project = {
 // Function to fetch projects from API
 const fetchProjects = async (): Promise<Project[]> => {
   try {
-    const response = await fetch('https://striking-hug-052e89dfad.strapiapp.com/api/projects/')
-    if (!response.ok) {
-      throw new Error('Failed to fetch projects')
-    }
+    // Add timeout to prevent hanging requests
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => {
+      controller.abort('Request timeout after 10 seconds')
+    }, 10000) // 10 second timeout
+    
+    try {
+      const response = await fetch('https://striking-hug-052e89dfad.strapiapp.com/api/projects/', {
+        signal: controller.signal,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      
+      clearTimeout(timeoutId)
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
     
     const data = await response.json()
     const apiProjects: ApiProject[] = data.data || []
@@ -235,9 +250,30 @@ const fetchProjects = async (): Promise<Project[]> => {
         lowerPrice
       }
     })
+    } catch (fetchError) {
+      clearTimeout(timeoutId)
+      
+      // Check if it's an abort error (timeout)
+      if (fetchError instanceof Error && fetchError.name === 'AbortError') {
+        console.error('Request timed out after 10 seconds')
+      } else {
+        console.error('Fetch error:', fetchError)
+      }
+      
+      throw fetchError // Re-throw to be caught by outer catch
+    }
   } catch (error) {
-    console.error('Error fetching projects:', error)
-    return []
+    console.error('Error fetching projects from Strapi:', error)
+    
+    // Fallback to local data if available
+    try {
+      const { projects } = await import('@/data/projects')
+      console.log('Using fallback local data')
+      return projects
+    } catch (fallbackError) {
+      console.error('Fallback data also failed:', fallbackError)
+      return []
+    }
   }
 }
 

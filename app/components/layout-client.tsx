@@ -164,6 +164,11 @@ export function Footer() {
                   Phone: +65 8799 6569
                 </a>
               </p>
+              <p>
+                <a rel="noopener noreferrer" className="hover:text-white">
+                  Address: Oxley Bizhub 2, 62 Ubi Road 1 #01-19 <br /> Singapore 408734
+                </a>
+              </p>
             </div>
           </div>
         </div>

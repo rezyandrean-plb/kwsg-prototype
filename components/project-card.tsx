@@ -78,12 +78,6 @@ export default function ProjectCard({
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
-        {/* Status Badge */}
-        <div className="absolute top-4 left-4">
-          <span className={`px-3 py-1 rounded-full text-xs font-medium ${statusConfig[status].bg} ${statusConfig[status].text}`}>
-            {statusConfig[status].label}
-          </span>
-        </div>
       </div>
 
       <div className="p-4 flex flex-col flex-grow">
@@ -115,7 +109,7 @@ export default function ProjectCard({
         {/* Price at the bottom */}
         <div className="mt-auto pt-2 border-t border-gray-800">
           <div className="text-xs text-gray-400 mb-0.5">From</div>
-          <div className="text-lg font-normal text-white">
+          <div className="text-lg font-normal text-white pb-2">
             {(() => {
               if (lowerPrice && lowerPrice !== '0' && lowerPrice !== '0M') {
                 return `${lowerPrice}M`
@@ -124,11 +118,11 @@ export default function ProjectCard({
               } else if (lowerPrice && lowerPrice !== '0') {
                 // If price is "Price per request", display it with proper styling
                 if (lowerPrice === 'Price per request') {
-                  return <span className="text-gray-500 italic">Price per request</span>
+                  return <span className="text-white italic">Price per request</span>
                 }
                 return lowerPrice
               } else {
-                return <span className="text-gray-500 italic">Price per request</span>
+                return <span className="text-white italic">Price per request</span>
               }
             })()}
           </div>

@@ -1174,10 +1174,24 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
     }
   }, [project?.latitude, project?.longitude]);
 
-  const amenitiesArray =
-    selectedAmenityType === "all"
+  // Helper function to extract numeric distance for sorting
+  const extractNumericDistance = (distanceStr: string): number => {
+    const match = distanceStr.match(/(\d+(?:\.\d+)?)/);
+    return match ? parseFloat(match[1]) : Number.MAX_VALUE;
+  };
+
+  const amenitiesArray = (() => {
+    const rawArray = selectedAmenityType === "all"
       ? Object.values(realAmenitiesData).flat()
-      : realAmenitiesData[selectedAmenityType] || []
+      : realAmenitiesData[selectedAmenityType] || [];
+    
+    // Sort by distance (nearest first)
+    return rawArray.sort((a, b) => {
+      const distanceA = extractNumericDistance(a.distance);
+      const distanceB = extractNumericDistance(b.distance);
+      return distanceA - distanceB;
+    });
+  })()
 
   // Handle download site plan
   const handleDownloadSitePlan = () => {
@@ -1428,11 +1442,11 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 </div>
                 <div className="flex items-center">
                   <Calendar className="h-5 w-5 mr-2" style={{ color: '#ce001f' }} />
-                  TOP {project.completion}
+                  TOP {project.completion ? new Date(project.completion).getFullYear() : 'TBD'}
                 </div>
                 <div className="flex items-center">
                   <Home className="h-5 w-5 mr-2" style={{ color: '#ce001f' }} />
-                  {project.totalUnits} (50% SOLD)
+                  {project.totalUnits} 
                 </div>
               </div>
             </div>
@@ -2125,7 +2139,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
           </div>
           {/* Prime Connectivity Section */}
           <div className="w-full flex justify-center">
-            <div className="max-w-3xl w-full bg-[#18191b] rounded-xl p-8 border border-gray-800 text-center mt-2">
+            <div className="max-w-3xl w-full bg-[#18191b] rounded-xl p-2 border border-gray-800 text-center mt-2">
               <div className="text-lg text-[#ce001f] font-light mb-2 tracking-wide">Prime Connectivity</div>
               <div className="text-gray-300 text-light font-light">
                 Experience unparalleled connectivity with direct access to Newton MRT station, major expressways including the Central Expressway (CTE) and Pan Island Expressway (PIE), and seamless connections to Orchard Road, Marina Bay, and Changi Airport within 30 minutes.
@@ -2153,7 +2167,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       </section> */}
 
       {/* Unit Mix Section */}
-      <div className="w-full flex flex-col items-center py-8">
+      <div className="w-full flex flex-col items-center py-4">
         <div className="max-w-7xl w-full py-10 px-4 flex flex-col items-center">
           <h3 className="text-xl font-light text-red-400 mb-8 text-center tracking-wide">Unit Mix</h3>
           <div className="w-full flex flex-row gap-6 overflow-x-auto sm:overflow-x-visible scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent px-2" style={{ WebkitOverflowScrolling: 'touch' }}>

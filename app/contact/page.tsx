@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Mail, Phone, Clock, Facebook, Instagram, Linkedin, Youtube, ChevronRight } from "lucide-react"
+import { Mail, Phone, Clock, Facebook, Instagram, Linkedin, Youtube, ChevronRight, MapPin } from "lucide-react"
 import { motion } from "framer-motion"
 import { GoogleReCaptchaProvider, useGoogleReCaptcha } from "react-google-recaptcha-v3"
 
@@ -477,6 +477,25 @@ export default function ContactPage() {
                       >
                         hello@kwsingapore.com
                       </a>
+                    </div>
+                  </motion.div>
+
+                  {/* Address */}
+                  <motion.div 
+                    variants={fadeInUp}
+                    className="flex items-start space-x-4 group"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <div className="flex-shrink-0 w-12 h-12 bg-[#B40101]/10 rounded-lg flex items-center justify-center group-hover:bg-[#B40101]/20 transition-colors">
+                      <MapPin className="h-6 w-6 text-[#B40101]" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold mb-2 text-white">Address</h3>
+                      <p className="text-white/80 text-lg leading-relaxed">
+                        Oxley Bizhub 2, 62 Ubi Road 1 #01-19<br />
+                        Singapore 408734
+                      </p>
                     </div>
                   </motion.div>
 
