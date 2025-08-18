@@ -131,8 +131,8 @@ const fetchProjects = async (): Promise<Project[]> => {
     // Add timeout to prevent hanging requests
     const controller = new AbortController()
     const timeoutId = setTimeout(() => {
-      controller.abort('Request timeout after 10 seconds')
-    }, 10000) // 10 second timeout
+      controller.abort('Request timeout after 15 seconds')
+    }, 15000) // Increased to 15 second timeout
     
     try {
       const response = await fetch('https://striking-hug-052e89dfad.strapiapp.com/api/projects/', {
@@ -140,6 +140,8 @@ const fetchProjects = async (): Promise<Project[]> => {
         headers: {
           'Content-Type': 'application/json',
         },
+        // Add cache control to prevent stale requests
+        cache: 'no-cache',
       })
       
       clearTimeout(timeoutId)
@@ -236,7 +238,9 @@ const fetchProjects = async (): Promise<Project[]> => {
         units: apiProject.units ? `${apiProject.units} Units` : undefined,
         unitsAvailable: apiProject.total_units ? `${apiProject.total_units} Units` : undefined,
         propertySizeRange: apiProject.size,
-        developer: apiProject.developer,
+        developer: typeof apiProject.developer === 'string' ? apiProject.developer : 
+                  (apiProject.developer && typeof apiProject.developer === 'object' && 'name' in apiProject.developer) ? (apiProject.developer as any).name : 
+                  apiProject.developer,
         completion: apiProject.completion,
         description: apiProject.description,
         features: apiProject.features || [],
@@ -255,7 +259,7 @@ const fetchProjects = async (): Promise<Project[]> => {
       
       // Check if it's an abort error (timeout)
       if (fetchError instanceof Error && fetchError.name === 'AbortError') {
-        console.error('Request timed out after 10 seconds')
+        console.error('Request timed out after 15 seconds')
       } else {
         console.error('Fetch error:', fetchError)
       }
@@ -315,11 +319,27 @@ export default function NewLaunchDirectory() {
   useEffect(() => {
     if (!isClient) return
     
-    const loadProjects = async () => {
+    const loadProjects = async (retryCount = 0) => {
       setIsLoading(true)
-      const fetchedProjects = await fetchProjects()
-      setProjects(fetchedProjects)
-      setIsLoading(false)
+      try {
+        const fetchedProjects = await fetchProjects()
+        setProjects(fetchedProjects)
+        setIsLoading(false)
+      } catch (error) {
+        console.error(`Failed to load projects (attempt ${retryCount + 1}):`, error)
+        
+        // Retry up to 2 times with exponential backoff
+        if (retryCount < 2) {
+          const delay = Math.pow(2, retryCount) * 1000 // 1s, 2s delays
+          setTimeout(() => {
+            loadProjects(retryCount + 1)
+          }, delay)
+        } else {
+          // After 3 failed attempts, show empty state
+          setProjects([])
+          setIsLoading(false)
+        }
+      }
     }
     
     loadProjects()
@@ -345,7 +365,9 @@ export default function NewLaunchDirectory() {
     .filter((project) => {
       const matchesSearch = project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         project.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (project.developer?.toLowerCase() || '').includes(searchQuery.toLowerCase())
+        (typeof project.developer === 'string' ? project.developer.toLowerCase() : 
+         (project.developer && typeof project.developer === 'object' && 'name' in project.developer) ? (project.developer as any).name.toLowerCase() : 
+         '').includes(searchQuery.toLowerCase())
       
       const matchesDistrict = selectedDistricts.length === 0 || (project.district && selectedDistricts.includes(project.district))
       const matchesTenure = selectedTenures.length === 0 || (project.tenure && selectedTenures.includes(project.tenure))

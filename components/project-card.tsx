@@ -50,6 +50,31 @@ export default function ProjectCard({
   status = 'upcoming',
   ctaText = "View Project"
 }: ProjectCardProps) {
+  // Dynamic status based on completion date
+  const getDynamicStatus = () => {
+    if (!completion) {
+      // Fallback to prop status if no completion date
+      return statusConfig[status];
+    }
+    
+    const currentYear = new Date().getFullYear();
+    const completionYear = parseInt(completion.split('-')[0]);
+    
+    if (completionYear < currentYear) {
+      return {
+        label: 'Completed',
+        bg: 'bg-gray-500',
+        text: 'text-white'
+      };
+    } else {
+      return {
+        label: 'Coming Soon',
+        bg: 'bg-orange-500',
+        text: 'text-white'
+      };
+    }
+  };
+
   const statusConfig = {
     upcoming: {
       label: 'Upcoming',
@@ -68,6 +93,8 @@ export default function ProjectCard({
     }
   } as const
 
+  const dynamicStatus = getDynamicStatus();
+
   return (
     <div className={`group relative bg-[#242728] border border-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${className}`}>
       {/* Image Container */}
@@ -78,6 +105,20 @@ export default function ProjectCard({
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
+        {/* Status Badge */}
+        <div className="absolute top-4 left-4 flex gap-2">
+          <span className={`px-3 py-1 rounded-full text-xs font-medium ${dynamicStatus.bg} ${dynamicStatus.text}`}>
+            {dynamicStatus.label}
+          </span>
+          {units && (() => {
+            const unitsMatch = units.match(/(\d+)\s*Units?/);
+            return unitsMatch && parseInt(unitsMatch[1]) === 0;
+          })() && (
+            <span className="px-3 py-1 rounded-full text-xs font-medium bg-white text-black">
+              Sold Out
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="p-4 flex flex-col flex-grow">

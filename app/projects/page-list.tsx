@@ -247,7 +247,9 @@ const fetchProjects = async (): Promise<Project[]> => {
         units: apiProject.units ? `${apiProject.units} Units` : undefined,
         unitsAvailable: apiProject.total_units ? `${apiProject.total_units} Units` : undefined,
         propertySizeRange: apiProject.size,
-        developer: apiProject.developer,
+        developer: typeof apiProject.developer === 'string' ? apiProject.developer : 
+                  (apiProject.developer && typeof apiProject.developer === 'object' && 'name' in apiProject.developer) ? (apiProject.developer as any).name : 
+                  apiProject.developer,
         completion: apiProject.completion,
         description: apiProject.description,
         features: apiProject.features || [],
@@ -356,7 +358,9 @@ export default function NewLaunchDirectory() {
     .filter((project) => {
       const matchesSearch = project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         project.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (project.developer?.toLowerCase() || '').includes(searchQuery.toLowerCase())
+        (typeof project.developer === 'string' ? project.developer.toLowerCase() : 
+         (project.developer && typeof project.developer === 'object' && 'name' in project.developer) ? (project.developer as any).name.toLowerCase() : 
+         '').includes(searchQuery.toLowerCase())
       
       const matchesDistrict = selectedDistricts.length === 0 || (project.district && selectedDistricts.includes(project.district))
       const matchesTenure = selectedTenures.length === 0 || (project.tenure && selectedTenures.includes(project.tenure))

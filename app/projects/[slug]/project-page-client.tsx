@@ -60,6 +60,7 @@ import {
   Briefcase,
   Activity,
   Zap,
+  Images,
 } from "lucide-react"
 import dynamic from "next/dynamic"
 import {
@@ -96,6 +97,27 @@ interface MoatRadarChartProps {
 // import dynamic and set up dynamic import for NearbyAmenitiesMap
 const NearbyAmenitiesMap = dynamic(() => import('@/app/components/NearbyAmenitiesMap'), { ssr: false });
 
+interface ImageGalleryItem {
+  id: number
+  project_name: string
+  image_title: string
+  image_url: string
+  image_description: string
+  image_category: string
+  display_order: number
+  is_featured: boolean
+  alt_text: string
+  image_size: string
+  is_active: boolean
+  created_at: string | null
+  updated_at: string | null
+  document_id: number | null
+  published_at: string | null
+  created_by_id: number | null
+  updated_by_id: number | null
+  locale: string | null
+}
+
 interface ProjectPageClientProps {
   slug: string
 }
@@ -130,6 +152,8 @@ interface Project {
   bathrooms: string
   size: string
   images: string[]
+  image_url_banner?: string | null
+  imageGallery?: ImageGalleryItem[]
   units: string
   developer: string
   completion: string
@@ -655,6 +679,13 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
 
   // State management
   const [galleryOpen, setGalleryOpen] = useState(false)
+  const [allImagesGalleryOpen, setAllImagesGalleryOpen] = useState(false)
+  const [selectedGalleryImage, setSelectedGalleryImage] = useState<number>(0)
+  
+  // Debug log for gallery state
+  useEffect(() => {
+    console.log('Gallery state changed:', galleryOpen)
+  }, [galleryOpen])
   const [galleryIdx, setGalleryIdx] = useState(0)
   const [selectedPlan, setSelectedPlan] = useState<{ type: string; image: string } | null>(null)
   const [selectedAmenityType, setSelectedAmenityType] = useState("schools")
@@ -791,12 +822,16 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
         bedrooms: apiProject.bedrooms || '',
         bathrooms: apiProject.bathrooms || '',
         size: apiProject.size || '',
-        // Use placeholder images for now since API doesn't provide images
-        images: [
-          "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80",
-          "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80",
-          "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80",
-        ],
+        // Use image_url_banner from API if available, otherwise use placeholder images
+        images: apiProject.image_url_banner && apiProject.image_url_banner.trim() !== '' 
+          ? [apiProject.image_url_banner]
+          : [
+              "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80",
+              "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80",
+              "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80",
+            ],
+        image_url_banner: apiProject.image_url_banner || null,
+        imageGallery: apiProject.imageGallery || [],
         units: apiProject.units ? `${apiProject.units} Units` : '',
         developer: apiProject.developer?.name || apiProject.developer || 'Developer not specified',
         completion: apiProject.completion || '',
@@ -1361,8 +1396,8 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             </li>
             <li>/</li>
             <li>
-              <Link href="/condos" className="hover:underline">
-                Condos & Apartments
+              <Link href="/projects" className="hover:underline">
+                New Launch
               </Link>
             </li>
             <li>/</li>
@@ -1374,48 +1409,54 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       {/* Hero Section */}
       <section className="bg-black">
         <div className="relative w-full h-[500px] overflow-hidden">
-          <Image
-            src={project.images[galleryIdx] || "/placeholder.svg"}
-            alt={project.title}
-            fill
-            className="object-cover cursor-zoom-in"
-            priority
-            onClick={() => setGalleryOpen(true)}
-          />
+            <Image
+              src={project.image_url_banner && project.image_url_banner.trim() !== '' 
+                ? project.image_url_banner 
+                : project.images[galleryIdx] || "/placeholder.svg"}
+              alt={project.title}
+              fill
+              className="object-cover cursor-zoom-in"
+              priority
+              onClick={() => setGalleryOpen(true)}
+            />
 
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
-          {/* Navigation Controls */}
           <button
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors z-10"
+            className="absolute bottom-4 right-20 bg-black/60 hover:bg-black/80 rounded-lg px-3 py-2 transition-colors z-20 cursor-pointer flex items-center gap-2"
             onClick={(e) => {
+              e.preventDefault()
               e.stopPropagation()
-              prevImage()
+              console.log('Show gallery button clicked')
+              setAllImagesGalleryOpen(true)
             }}
-            aria-label="Previous image"
+            onMouseDown={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+            }}
+            aria-label="Show all gallery"
+            type="button"
           >
-            <ChevronLeft className="w-6 h-6 text-white" />
+            <Images className="w-4 h-4 text-white pointer-events-none" />
+            <span className="text-white text-sm font-medium">Show All Images</span>
           </button>
           <button
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors z-10"
+            className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors z-20 cursor-pointer"
             onClick={(e) => {
+              e.preventDefault()
               e.stopPropagation()
-              nextImage()
-            }}
-            aria-label="Next image"
-          >
-            <ChevronRight className="w-6 h-6 text-white" />
-          </button>
-          <button
-            className="absolute right-16 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors z-10"
-            onClick={(e) => {
-              e.stopPropagation()
+              console.log('Enlarge button clicked, setting galleryOpen to true')
               setGalleryOpen(true)
             }}
+            onMouseDown={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+            }}
             aria-label="Enlarge image"
+            type="button"
           >
-            <Maximize2 className="w-6 h-6 text-white" />
+            <Maximize2 className="w-6 h-6 text-white pointer-events-none" />
           </button>
 
           {/* Project Info Overlay */}
@@ -1461,25 +1502,114 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             </DialogTitle>
             <div className="relative w-full aspect-[16/9]">
               <Image
-                src={project.images[galleryIdx] || "/placeholder.svg"}
+                src={project.image_url_banner && project.image_url_banner.trim() !== '' 
+                  ? project.image_url_banner 
+                  : project.images[galleryIdx] || "/placeholder.svg"}
                 alt={`${project.title} enlarged image`}
                 fill
                 className="object-contain rounded"
               />
               <button
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors"
-                onClick={prevImage}
-                aria-label="Previous image"
+                className="absolute top-4 right-4 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors z-10"
+                onClick={() => setGalleryOpen(false)}
+                aria-label="Close modal"
               >
-                <ChevronLeft className="w-6 h-6 text-white" />
+                <span className="text-white text-xl">&times;</span>
               </button>
-              <button
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors"
-                onClick={nextImage}
-                aria-label="Next image"
-              >
-                <ChevronRight className="w-6 h-6 text-white" />
-              </button>
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* All Images Gallery Modal */}
+        <Dialog open={allImagesGalleryOpen} onOpenChange={setAllImagesGalleryOpen}>
+          <DialogContent className="max-w-6xl bg-black p-0">
+            <DialogTitle>
+              <span className="sr-only">Image Gallery for {project.title}</span>
+            </DialogTitle>
+            <div className="relative w-full max-h-[80vh] overflow-hidden">
+              {/* Main Image Display */}
+              <div className="relative w-full aspect-[16/9]">
+                {project.imageGallery && project.imageGallery.length > 0 ? (
+                  <Image
+                    src={project.imageGallery[selectedGalleryImage]?.image_url || "/placeholder.svg"}
+                    alt={project.imageGallery[selectedGalleryImage]?.alt_text || project.title}
+                    fill
+                    className="object-contain rounded"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-white">
+                    <p>No images available</p>
+                  </div>
+                )}
+                
+                {/* Navigation Controls */}
+                {project.imageGallery && project.imageGallery.length > 1 && (
+                  <>
+                    <button
+                      className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors z-10"
+                      onClick={() => setSelectedGalleryImage(prev => 
+                        prev === 0 ? project.imageGallery!.length - 1 : prev - 1
+                      )}
+                      aria-label="Previous image"
+                    >
+                      <ChevronLeft className="w-6 h-6 text-white" />
+                    </button>
+                    <button
+                      className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors z-10"
+                      onClick={() => setSelectedGalleryImage(prev => 
+                        (prev + 1) % project.imageGallery!.length
+                      )}
+                      aria-label="Next image"
+                    >
+                      <ChevronRight className="w-6 h-6 text-white" />
+                    </button>
+                  </>
+                )}
+                
+                {/* Close Button */}
+                <button
+                  className="absolute top-4 right-4 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors z-10"
+                  onClick={() => setAllImagesGalleryOpen(false)}
+                  aria-label="Close modal"
+                >
+                  <span className="text-white text-xl">&times;</span>
+                </button>
+              </div>
+              
+
+
+              {/* All Images Preview Strip */}
+              {project.imageGallery && project.imageGallery.length > 0 ? (
+                <div className="p-4 bg-gray-800">
+                  <div className="flex gap-3 overflow-x-auto pb-2">
+                    {project.imageGallery.map((image, index) => (
+                      <div
+                        key={image.id}
+                        className={`flex-shrink-0 w-32 h-24 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${
+                          selectedGalleryImage === index 
+                            ? 'border-[#ce001f]' 
+                            : 'border-gray-600 hover:border-gray-400'
+                        }`}
+                        onClick={() => setSelectedGalleryImage(index)}
+                      >
+                        <Image
+                          src={image.image_url}
+                          alt={image.alt_text || image.image_title}
+                          width={128}
+                          height={96}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="p-4 bg-gray-800">
+                  <div className="text-white text-center py-4">
+                    <p>No additional images available</p>
+                  </div>
+                </div>
+              )}
             </div>
           </DialogContent>
         </Dialog>
@@ -2027,7 +2157,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       </section>
 
       {/* Location Section */}
-      <section id="location" className="w-full py-16 mb-2 bg-[#1c1c1d]">
+      <section id="location" className="w-full py-8 mb-2 bg-[#1c1c1d]">
         <div className="max-w-screen-xl mx-auto px-4">
           {/* Title and Subtitle */}
           <div className="text-center mb-4">
