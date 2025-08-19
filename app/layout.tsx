@@ -2,7 +2,6 @@ import type React from "react"
 import "./globals.css"
 import LayoutContent from "./components/layout-content"
 import Script from "next/script"
-import CSSLoader from "./components/css-loader"
 
 export default function RootLayout({
   children,
@@ -21,13 +20,7 @@ export default function RootLayout({
         <meta httpEquiv="Cache-Control" content="public, max-age=31536000, immutable" />
         <meta httpEquiv="Surrogate-Control" content="public, max-age=31536000, immutable" />
         <meta name="Surrogate-Key" content="static" />
-        {/* Preload critical assets */}
-        <link 
-          rel="preload" 
-          href="/images/kw-icon.webp" 
-          as="image" 
-          type="image/webp" 
-        />
+        {/* Preload removed: /images/kw-icon.webp did not exist */}
         {/* Preconnect to external domains */}
         <link 
           rel="preconnect" 
@@ -100,7 +93,7 @@ export default function RootLayout({
           />
         </noscript>
         {/* End Google Tag Manager (noscript) */}
-        <CSSLoader />
+        {/* Removed CSSLoader to avoid 404s for non-existent _next static CSS paths */}
         <LayoutContent>{children}</LayoutContent>
         {/* Load Hotjar with optimized strategy and cache control */}
         <Script

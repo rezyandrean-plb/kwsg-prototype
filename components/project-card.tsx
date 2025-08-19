@@ -63,7 +63,7 @@ export default function ProjectCard({
     if (completionYear < currentYear) {
       return {
         label: 'Completed',
-        bg: 'bg-gray-500',
+        bg: 'bg-green-500',
         text: 'text-white'
       };
     } else {
@@ -114,7 +114,7 @@ export default function ProjectCard({
             const unitsMatch = units.match(/(\d+)\s*Units?/);
             return unitsMatch && parseInt(unitsMatch[1]) === 0;
           })() && (
-            <span className="px-3 py-1 rounded-full text-xs font-medium bg-white text-black">
+            <span className="px-3 py-1 rounded-full text-xs font-medium bg-red-700 text-white">
               Sold Out
             </span>
           )}

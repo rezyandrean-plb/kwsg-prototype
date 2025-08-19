@@ -309,10 +309,32 @@ export default function NewLaunchDirectory() {
   const [projects, setProjects] = useState<Project[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [isClient, setIsClient] = useState(false)
+  const [paginationMeta, setPaginationMeta] = useState({
+    total: 0,
+    page: 1,
+    pageSize: projectsPerPage,
+    pageCount: 1,
+  })
 
   // Ensure we're on the client side
   useEffect(() => {
     setIsClient(true)
+  }, [])
+
+  // Log unhandled promise rejections to help diagnose [object Event] errors
+  useEffect(() => {
+    const onUnhandled = (event: PromiseRejectionEvent) => {
+      console.error('Unhandled promise rejection:', event.reason || event)
+    }
+    const onError = (event: ErrorEvent) => {
+      console.error('Window error:', event.error || event.message || event)
+    }
+    window.addEventListener('unhandledrejection', onUnhandled)
+    window.addEventListener('error', onError)
+    return () => {
+      window.removeEventListener('unhandledrejection', onUnhandled)
+      window.removeEventListener('error', onError)
+    }
   }, [])
 
   // Fetch projects on component mount (client-side only)
@@ -322,8 +344,19 @@ export default function NewLaunchDirectory() {
     const loadProjects = async (retryCount = 0) => {
       setIsLoading(true)
       try {
-        const fetchedProjects = await fetchProjects()
-        setProjects(fetchedProjects)
+        // Use the new paginated API endpoint
+        const response = await fetch(`/api/projects/minimal?page=${currentPage}&pageSize=${projectsPerPage}`)
+        if (response.ok) {
+          const data = await response.json()
+          setProjects((data.data || []).map((p: any) => ({
+            ...p,
+            image_url_banner: p.image_url_banner ?? p.image,
+          })))
+          // Store pagination metadata
+          setPaginationMeta(data.meta.pagination)
+        } else {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
         setIsLoading(false)
       } catch (error) {
         console.error(`Failed to load projects (attempt ${retryCount + 1}):`, error)
@@ -343,7 +376,7 @@ export default function NewLaunchDirectory() {
     }
     
     loadProjects()
-  }, [isClient])
+  }, [isClient, currentPage]) // Add currentPage as dependency
 
   const scrollToSearch = () => {
     searchSectionRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -496,11 +529,9 @@ export default function NewLaunchDirectory() {
     return enhancedBedrooms
   })() : []
 
-  // Calculate pagination
-  const indexOfLastProject = currentPage * projectsPerPage
-  const indexOfFirstProject = indexOfLastProject - projectsPerPage
-  const currentProjects = filteredProjects.slice(indexOfFirstProject, indexOfLastProject)
-  const totalPages = Math.ceil(filteredProjects.length / projectsPerPage)
+  // Use API pagination metadata
+  const currentProjects = projects // Projects are already paginated from API
+  const totalPages = paginationMeta.pageCount || 1
 
   const handleDistrictChange = (district: number) => {
     setSelectedDistricts(prev => 
@@ -1263,21 +1294,25 @@ export default function NewLaunchDirectory() {
       <section className="py-16 bg-black">
         <div className="container mx-auto px-4">
           {/* Loading State */}
-          {(!isClient || isLoading) && (
+          {isLoading && (
             <div className="flex justify-center items-center h-64">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-red"></div>
             </div>
           )}
 
           {/* Results Count */}
-          {isClient && !isLoading && filteredProjects.length > 0 && (
+          {!isLoading && projects.length > 0 && (
             <div className="text-sm text-gray-400 mb-6">
-              Showing {indexOfFirstProject + 1} to {Math.min(indexOfLastProject, filteredProjects.length)} of {filteredProjects.length} projects
+              {(() => {
+                const start = (paginationMeta.page - 1) * paginationMeta.pageSize + 1
+                const end = Math.min(paginationMeta.page * paginationMeta.pageSize, paginationMeta.total)
+                return `Showing ${start} to ${end} of ${paginationMeta.total} projects`
+              })()}
             </div>
           )}
 
           {/* Projects Grid */}
-          {isClient && !isLoading && (
+          {!isLoading && (
             <motion.div
               variants={staggerContainer}
               initial="initial"
@@ -1296,8 +1331,11 @@ export default function NewLaunchDirectory() {
             </motion.div>
           )}
 
+          {/* Debug Info */}
+          {/* Debug removed */}
+
           {/* No Results */}
-          {isClient && !isLoading && filteredProjects.length === 0 && (
+          {!isLoading && projects.length === 0 && (
             <div className="text-center py-16">
               <p className="text-gray-400 text-lg">New Project Coming Soon</p>
               <Button 
@@ -1321,7 +1359,7 @@ export default function NewLaunchDirectory() {
           )}
 
           {/* Pagination */}
-          {isClient && !isLoading && totalPages > 1 && (
+          {!isLoading && totalPages > 1 && projects.length > 0 && (
             <div className="flex flex-col items-center mt-12 gap-4">
               {/* Pagination Controls */}
               <div className="flex items-center gap-2">
