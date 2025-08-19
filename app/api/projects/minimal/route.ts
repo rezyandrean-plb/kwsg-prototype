@@ -96,6 +96,9 @@ export async function GET(request: NextRequest) {
         headers: {
           'Content-Type': 'application/json',
         },
+        // Add caching for better performance
+        cache: 'force-cache',
+        next: { revalidate: 300 } // Revalidate every 5 minutes
       })
 
       clearTimeout(timeoutId)

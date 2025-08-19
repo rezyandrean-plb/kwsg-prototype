@@ -344,8 +344,12 @@ export default function NewLaunchDirectory() {
     const loadProjects = async (retryCount = 0) => {
       setIsLoading(true)
       try {
-        // Use the new paginated API endpoint
-        const response = await fetch(`/api/projects/minimal?page=${currentPage}&pageSize=${projectsPerPage}`)
+        // Use the new paginated API endpoint with caching
+        const response = await fetch(`/api/projects/minimal?page=${currentPage}&pageSize=${projectsPerPage}`, {
+          // Add caching for better performance
+          cache: 'force-cache',
+          next: { revalidate: 300 } // Revalidate every 5 minutes
+        })
         if (response.ok) {
           const data = await response.json()
           setProjects((data.data || []).map((p: any) => ({
