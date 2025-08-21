@@ -6,11 +6,6 @@ import Image from "next/image"
 import dynamic from 'next/dynamic'
 
 // Dynamically import components that are not immediately visible
-const TransparentHeader = dynamic(() => import("@/components/transparent-header"), {
-  ssr: false,
-  loading: () => <div className="h-16" />
-})
-
 const MobileMenu = dynamic(() => import("@/components/mobile-menu"), {
   ssr: false,
   loading: () => <div className="w-8 h-8" />
@@ -37,7 +32,6 @@ export function Header() {
 
   return (
     <>
-      <TransparentHeader />
       <header className="fixed top-0 left-0 right-0 z-[100] w-full transition-all duration-300" id="main-header">
         <div className="container flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
