@@ -41,14 +41,14 @@ export function MortgageLoanAmortization() {
   const yearOptions = Array.from({ length: totalYears }, (_, i) => i + 1)
 
   return (
-    <Card>
+    <Card className="bg-[#23232a] border-gray-800">
       <CardHeader>
-        <CardTitle>
+        <CardTitle className="text-white">
           Loan Repayment Amortisation Table
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <span className="ml-2 align-middle cursor-pointer"><Info className="inline h-4 w-4 text-gray-400 hover:text-gray-600" /></span>
+                <span className="ml-2 align-middle cursor-pointer"><Info className="inline h-4 w-4 text-gray-400 hover:text-gray-300" /></span>
               </TooltipTrigger>
               <TooltipContent>
                 An amortisation schedule is a table showing how your monthly loan payments are split between principal and interest over time.
@@ -60,15 +60,15 @@ export function MortgageLoanAmortization() {
       <CardContent>
         <div className="flex flex-row gap-4 mb-4">
           <div className="flex-1">
-            <Label htmlFor="yearFilter">Filter by Year</Label>
+            <Label htmlFor="yearFilter" className="text-white">Filter by Year</Label>
             <Select value={yearFilter} onValueChange={setYearFilter}>
-              <SelectTrigger id="yearFilter">
+              <SelectTrigger id="yearFilter" className="bg-[#1c1c1d] border-gray-700 text-white">
                 <SelectValue placeholder="Select Year" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Years</SelectItem>
+              <SelectContent className="bg-[#1c1c1d] border-gray-700">
+                <SelectItem value="all" className="text-white hover:bg-gray-700">All Years</SelectItem>
                 {yearOptions.map((year) => (
-                  <SelectItem key={year} value={year.toString()}>
+                  <SelectItem key={year} value={year.toString()} className="text-white hover:bg-gray-700">
                     Year {year}
                   </SelectItem>
                 ))}
@@ -77,13 +77,13 @@ export function MortgageLoanAmortization() {
           </div>
 
           <div className="flex-1">
-            <Label htmlFor="search">Search by Month</Label>
+            <Label htmlFor="search" className="text-white">Search by Month</Label>
             <div className="relative">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
+              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-400" />
               <Input
                 id="search"
                 placeholder="Search..."
-                className="pl-8"
+                className="pl-8 bg-[#1c1c1d] border-gray-700 text-white placeholder-gray-500"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -91,38 +91,38 @@ export function MortgageLoanAmortization() {
           </div>
 
           <div className="flex-1">
-            <Label htmlFor="pageSize">Rows per page</Label>
+            <Label htmlFor="pageSize" className="text-white">Rows per page</Label>
             <Select value={pageSize.toString()} onValueChange={(value) => setPageSize(Number.parseInt(value))}>
-              <SelectTrigger id="pageSize">
+              <SelectTrigger id="pageSize" className="bg-[#1c1c1d] border-gray-700 text-white">
                 <SelectValue placeholder="Page Size" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="12">12 rows</SelectItem>
-                <SelectItem value="24">24 rows</SelectItem>
-                <SelectItem value="36">36 rows</SelectItem>
+              <SelectContent className="bg-[#1c1c1d] border-gray-700">
+                <SelectItem value="12" className="text-white hover:bg-gray-700">12 rows</SelectItem>
+                <SelectItem value="24" className="text-white hover:bg-gray-700">24 rows</SelectItem>
+                <SelectItem value="36" className="text-white hover:bg-gray-700">36 rows</SelectItem>
               </SelectContent>
             </Select>
           </div>
         </div>
         <div className="mb-2 flex justify-end gap-2">
-          <Button variant="outline" size="sm" onClick={() => setShowExtraCols(v => !v)}>
+          <Button variant="outline" size="sm" onClick={() => setShowExtraCols(v => !v)} className="border-gray-700 text-white hover:bg-gray-700">
             {showExtraCols ? "Hide Extra Columns" : "Show More Columns"}
           </Button>
-          <Button variant="outline" size="sm" onClick={() => setShowFullTable(v => !v)}>
+          <Button variant="outline" size="sm" onClick={() => setShowFullTable(v => !v)} className="border-gray-700 text-white hover:bg-gray-700">
             {showFullTable ? "Row Select" : "Full Table"}
           </Button>
         </div>
-        <div className="border rounded-md">
+        <div className="border border-gray-700 rounded-md">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead className="w-[80px]">Payment Month</TableHead>
-                <TableHead>Monthly Instalment ($)</TableHead>
-                <TableHead>Interest Portion ($)</TableHead>
-                <TableHead>Principle Portion ($)</TableHead>
-                {showExtraCols && <TableHead>Interest Paid To Date ($)</TableHead>}
-                {showExtraCols && <TableHead>Principal Paid To Date ($)</TableHead>}
-                <TableHead>Balance ($)</TableHead>
+              <TableRow className="bg-[#1c1c1d] hover:bg-[#1c1c1d]">
+                <TableHead className="w-[80px] text-white">Payment Month</TableHead>
+                <TableHead className="text-white">Monthly Instalment ($)</TableHead>
+                <TableHead className="text-white">Interest Portion ($)</TableHead>
+                <TableHead className="text-white">Principle Portion ($)</TableHead>
+                {showExtraCols && <TableHead className="text-white">Interest Paid To Date ($)</TableHead>}
+                {showExtraCols && <TableHead className="text-white">Principal Paid To Date ($)</TableHead>}
+                <TableHead className="text-white">Balance ($)</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -130,8 +130,8 @@ export function MortgageLoanAmortization() {
                 (showFullTable ? filteredSchedule : paginatedSchedule).map((item: any, index: number) => (
                   <TableRow 
                     key={item.month} 
-                    className={`hover:bg-gray-50 transition-colors duration-150 text-black ${
-                      index % 2 === 0 ? "bg-white" : "bg-gray-50/50"
+                    className={`hover:bg-gray-700 transition-colors duration-150 text-white ${
+                      index % 2 === 0 ? "bg-[#1c1c1d]" : "bg-[#2a2a2a]"
                     }`}
                   >
                     <TableCell className="font-medium">{item.month}</TableCell>
@@ -145,7 +145,7 @@ export function MortgageLoanAmortization() {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={showExtraCols ? 7 : 5} className="text-center py-4">
+                  <TableCell colSpan={showExtraCols ? 7 : 5} className="text-center py-4 text-white">
                     No results found
                   </TableCell>
                 </TableRow>
@@ -156,7 +156,7 @@ export function MortgageLoanAmortization() {
 
         {!showFullTable && totalPages > 1 && (
           <div className="flex items-center justify-between mt-4">
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-gray-300">
               Showing {startIndex + 1} to {Math.min(startIndex + pageSize, filteredSchedule.length)} of {filteredSchedule.length} entries
             </div>
             <div className="flex items-center space-x-2">
@@ -165,10 +165,11 @@ export function MortgageLoanAmortization() {
                 size="sm"
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
+                className="border-gray-700 text-white hover:bg-gray-700"
               >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
-              <span className="text-sm">
+              <span className="text-sm text-white">
                 Page {currentPage} of {totalPages}
               </span>
               <Button
@@ -176,6 +177,7 @@ export function MortgageLoanAmortization() {
                 size="sm"
                 onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
+                className="border-gray-700 text-white hover:bg-gray-700"
               >
                 <ChevronRight className="h-4 w-4" />
               </Button>

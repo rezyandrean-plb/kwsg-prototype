@@ -51,6 +51,7 @@ export function MortgageLoanCalculator() {
 
   const [selectedClient, setSelectedClient] = useState<any>(null)
   const [hasCalculated, setHasCalculated] = useState(false)
+  const [showDetailedResults, setShowDetailedResults] = useState(false)
 
   const handlePurchasePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value
@@ -156,6 +157,7 @@ export function MortgageLoanCalculator() {
 
   const handleCalculate = () => {
     setHasCalculated(true)
+    setShowDetailedResults(false) // Reset detailed results visibility when new calculation is made
 
     // Save calculation to history if client is selected
     if (selectedClient) {
@@ -178,6 +180,10 @@ export function MortgageLoanCalculator() {
         description: `Mortgage loan calculation saved for ${selectedClient.name}`,
       })
     }
+  }
+
+  const handleShowDetailedResults = () => {
+    setShowDetailedResults(true)
   }
 
   return (
@@ -330,31 +336,6 @@ export function MortgageLoanCalculator() {
                 )}
               </div>
 
-              <div>
-                <Label htmlFor="loanAmount" className="text-base text-white">
-                  Loan Amount <span className="text-[#ce001f]">*</span>
-                </Label>
-                                  <div className="relative mt-1.5">
-                    <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">$</span>
-                    <Input 
-                      id="loanAmount" 
-                      className="pl-7 bg-[#1c1c1d] border-gray-700 text-white placeholder-gray-500"  
-                    value={lastModified === "loanAmount" ? (manualLoanAmount > 0 ? manualLoanAmount.toLocaleString() : "") : formatCurrency(loanAmount)}
-                    onChange={handleManualLoanAmountChange}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <Label htmlFor="monthlyRepayment" className="text-base text-white">
-                  Monthly Repayment <span className="text-[#ce001f]">*</span>
-                </Label>
-                                  <div className="relative mt-1.5">
-                    <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">$</span>
-                    <Input id="monthlyRepayment" className="pl-7 bg-[#1c1c1d] border-gray-700 text-white placeholder-gray-500" value={formatCurrency(monthlyRepayment)} readOnly />
-                </div>
-              </div>
-
               <Button className="w-full bg-[#ce001f] hover:bg-[#b3001a] text-white" size="lg" onClick={handleCalculate}>
                 Calculate Mortgage Loan
               </Button>
@@ -367,9 +348,22 @@ export function MortgageLoanCalculator() {
         <div className="bg-[#23232a] border-gray-800 rounded-lg">
           <MortgageLoanResults hasCalculated={hasCalculated} />
         </div>
+        
+        {/* Show Result Details Button */}
+        {hasCalculated && !showDetailedResults && (
+          <div className="mt-4 flex justify-center">
+            <Button 
+              onClick={handleShowDetailedResults}
+              className="bg-[#ce001f] hover:bg-[#b3001a] text-white"
+              size="lg"
+            >
+              Show Result Details
+            </Button>
+          </div>
+        )}
       </div>
 
-      {hasCalculated && (
+      {hasCalculated && showDetailedResults && (
         <div className="col-span-1 lg:col-span-2 space-y-6">
           <MortgageLoanCharts />
           <MortgageLoanAmortization />

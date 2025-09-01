@@ -178,6 +178,7 @@ interface Project {
   facilities?: Facility[]
   brochures?: Brochure[]
   sitePlans?: SitePlan[]
+  apiFloorPlans?: any[]
   moat?: {
     project: string
     exitAudience: number
@@ -464,6 +465,44 @@ const processUnitAvailabilityData = (unitPricing: UnitPricing[]) => {
     const bBedrooms = parseInt(b.unitType.split(' ')[0])
     return aBedrooms - bBedrooms
   })
+}
+
+// Helper function to find floor plan image for a unit type
+const findFloorPlanImage = (unitType: string, apiFloorPlans: any[] = []): string | null => {
+  if (!apiFloorPlans || apiFloorPlans.length === 0) {
+    return null
+  }
+
+  // Extract bedroom count from unit type (e.g., "1 Bedroom Units" -> "1")
+  const bedroomMatch = unitType.match(/(\d+)\s+Bedroom/)
+  if (!bedroomMatch) {
+    return null
+  }
+
+  const bedroomCount = bedroomMatch[1]
+  
+  // Try to find a floor plan that matches the bedroom count
+  // First try exact match with bedroom count
+  const exactMatch = apiFloorPlans.find(fp => fp.type === bedroomCount)
+  if (exactMatch) {
+    return exactMatch.image_url || exactMatch.image
+  }
+
+  // If no exact match, try to find any floor plan that might be related
+  // This is a fallback for when floor plan types don't exactly match
+  const fallbackMatch = apiFloorPlans.find(fp => 
+    fp.type && fp.type.toLowerCase().includes(bedroomCount)
+  )
+  if (fallbackMatch) {
+    return fallbackMatch.image_url || fallbackMatch.image
+  }
+
+  // If still no match, return the first available floor plan as a general fallback
+  if (apiFloorPlans.length > 0) {
+    return apiFloorPlans[0].image_url || apiFloorPlans[0].image
+  }
+
+  return null
 }
 
 // Icon mapping for facilities
@@ -927,6 +966,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
         facilities: apiProject.facilities?.data || apiProject.facilities || [],
         brochures: apiProject.brochures?.data || apiProject.brochures || [],
         sitePlans: apiProject.sitePlans?.data || apiProject.sitePlans || [],
+        apiFloorPlans: apiProject.floorPlans?.data || apiProject.floorPlans || [],
         moat: {
           project: apiProject.name || apiProject.project_name || '',
           exitAudience: 4.2,
@@ -2463,6 +2503,27 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                           <span className="text-white text-xs">{subtype.size}</span>
                         </div>
                       </div>
+                      
+                      {/* Floor Plan Image */}
+                      {(() => {
+                        const floorPlanImage = findFloorPlanImage(currentUnit.unitType, project?.apiFloorPlans)
+                        return (
+                          <div className="mb-4">
+                            <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden border border-gray-700">
+                              <Image
+                                src={floorPlanImage || `/placeholder.svg?height=400&width=600&text=${encodeURIComponent(currentUnit.unitType.replace(' Units', '') + ' Floor Plan')}`}
+                                alt={`${currentUnit.unitType.replace(' Units', '')} Floor Plan`}
+                                fill
+                                className="object-cover"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                              <div className="absolute bottom-2 left-2 text-white text-xs font-medium">
+                                Floor Plan
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      })()}
                       
                       {/* Pricing information */}
                       <div className="space-y-2 mb-4">

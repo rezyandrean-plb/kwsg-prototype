@@ -639,7 +639,12 @@ INSERT INTO floor_plans (project_id, type, image_url) VALUES
     (1, 'A', '/floorplan-dummy.png'),
     (1, 'B', '/floorplan-dummy.png'),
     (1, 'C', '/floorplan-dummy.png'),
-    (1, 'D', '/floorplan-dummy.png');
+    (1, 'D', '/floorplan-dummy.png'),
+    (1, '1', '/floorplan-dummy.png'),
+    (1, '2', '/floorplan-dummy.png'),
+    (1, '3', '/floorplan-dummy.png'),
+    (1, '4', '/floorplan-dummy.png'),
+    (1, '5', '/floorplan-dummy.png');
 
 -- Insert location points for 10 Evelyn
 INSERT INTO location_analytics (project_id, category, name, distance) VALUES

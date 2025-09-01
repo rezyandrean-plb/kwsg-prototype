@@ -35,6 +35,7 @@ type ApiProject = {
   gallery_images?: string[]
   unit_pricing?: any[]
   facilities?: any[]
+  floor_plans?: any[]
 }
 
 type Project = {
@@ -63,6 +64,7 @@ type Project = {
   unitPricing?: any[]
   facilities?: any[]
   galleryImages?: string[]
+  floorPlans?: any[]
 }
 
 function mapStatus(status?: string | null): 'upcoming' | 'ongoing' | 'completed' {
@@ -155,6 +157,7 @@ export async function GET(
       unitPricing: Array.isArray(apiProject.unit_pricing) ? apiProject.unit_pricing : [],
       facilities: Array.isArray(apiProject.facilities) ? apiProject.facilities : [],
       galleryImages: Array.isArray(apiProject.gallery_images) ? apiProject.gallery_images : [],
+      floorPlans: Array.isArray(apiProject.floor_plans) ? apiProject.floor_plans : [],
     }
 
     return NextResponse.json({ data: project })
