@@ -273,6 +273,7 @@ interface UnitPricing {
   payment_terms: string
   discount_info: string
   is_available: boolean
+  floor_plan_image?: string
   created_at: string
   updated_at: string
 }
@@ -405,7 +406,8 @@ const processUnitAvailabilityData = (unitPricing: UnitPricing[]) => {
           bathrooms: unit.bathrooms,
           currency: unit.currency,
           payment_terms: unit.payment_terms,
-          discount_info: unit.discount_info
+          discount_info: unit.discount_info,
+          floor_plan_image: unit.floor_plan_image
         })
       } else {
         existingSubtype.total += 1
@@ -795,57 +797,109 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
   // Function to fetch project data from Strapi API
   const fetchProject = async (projectSlug: string): Promise<Project | null> => {
     try {
-      console.log('Fetching project with slug:', projectSlug)
-      
-      // First, fetch all projects to find the matching one
-      const response = await fetch('https://striking-hug-052e89dfad.strapiapp.com/api/projects')
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch projects')
-      }
-      
-      const data = await response.json()
-      console.log('API Response:', data)
-      
-      // Find the project with matching slug
-      const matchingProject = data.data?.find((project: any) => 
-        project.slug === projectSlug
-      )
-      
-      if (!matchingProject) {
-        console.log('No project found with slug:', projectSlug)
-        return null
-      }
-      
-      console.log('Found matching project:', matchingProject)
-      
-            // Now fetch the specific project with its related data (including unitPricing)
-      const projectResponse = await fetch(`https://striking-hug-052e89dfad.strapiapp.com/api/projects/${matchingProject.id}?populate=unitPricing,facilities,brochures,sitePlans`)
-      
-      let apiProject = matchingProject
-      
-      if (projectResponse.ok) {
-        const projectData = await projectResponse.json()
-        console.log('Project details with related data:', projectData)
-        apiProject = projectData.data || matchingProject
-      } else {
-        console.log('Failed to fetch project details, using basic project data')
-      }
-      
-      console.log('API Project data:', apiProject)
-      console.log('Developer field:', apiProject.developer)
-      console.log('Developer name:', apiProject.developer?.name)
-      console.log('Unit Pricing data:', apiProject.unitPricing)
-      console.log('Unit Pricing data structure:', JSON.stringify(apiProject.unitPricing, null, 2))
-      console.log('Facilities data:', apiProject.facilities)
-      console.log('Facilities data structure:', JSON.stringify(apiProject.facilities, null, 2))
-      
-      if (!apiProject) {
-        console.log('No project data found')
-        return null
+      // 1) Try local proxy API first (handles slug/id and field mapping)
+      const proxyRes = await fetch(`/api/projects/${encodeURIComponent(projectSlug)}`, { cache: 'no-store' })
+      if (proxyRes.ok) {
+        const proxyJson = await proxyRes.json()
+        const p = proxyJson?.data
+        if (p) {
+          const banner = (p.image_url_banner ?? '').trim()
+          const images = banner ? [banner] : [
+            "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80",
+            "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80",
+            "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80",
+          ]
+          const transformedFromProxy: Project = {
+            id: p.id,
+            name: p.name || p.project_name || '',
+            project_name: p.project_name || p.name || '',
+            slug: p.slug || projectSlug,
+            title: p.name || p.project_name || '',
+            location: p.location || '',
+            address: p.address || '',
+            type: p.type || p.propertyType || '',
+            price: p.price || 'Price on request',
+            priceFrom: p.lowerPrice || '',
+            pricePerSqFt: p.pricePerSqFt || '',
+            bedrooms: Array.isArray(p.bedrooms) ? p.bedrooms.join(', ') : (p.bedrooms || ''),
+            bathrooms: p.bathrooms || '',
+            size: p.size || '',
+            images,
+            image_url_banner: p.image_url_banner || null,
+            imageGallery: p.galleryImages || [],
+            units: p.units || '',
+            developer: p.developer || 'Developer not specified',
+            completion: p.completion || '',
+            description: p.description || '',
+            features: p.features || [],
+            district: (p.district as any) || '',
+            tenure: p.tenure || '',
+            propertyType: p.propertyType || p.type || '',
+            status: (p.status as any) || '',
+            totalUnits: p.units || '',
+            totalFloors: p.totalFloors || '',
+            siteArea: p.siteArea || '',
+            latitude: p.coordinates?.lat || p.latitude || 1.2834,
+            longitude: p.coordinates?.lng || p.longitude || 103.8598,
+            unitTypes: [
+              { type: "1 Bedroom", size: "484 - 527 sq ft", price: "From $1.2M" },
+              { type: "2 Bedroom", size: "678 - 753 sq ft", price: "From $1.8M" },
+              { type: "3 Bedroom", size: "1,076 - 1,184 sq ft", price: "From $2.8M" },
+              { type: "4 Bedroom", size: "1,518 - 1,636 sq ft", price: "From $4.2M" },
+            ],
+            floorPlans: [
+              { type: "1 Bedroom", image: "/placeholder.svg?height=400&width=600&text=1+Bedroom+Floor+Plan" },
+              { type: "2 Bedroom", image: "/placeholder.svg?height=400&width=600&text=2+Bedroom+Floor+Plan" },
+              { type: "3 Bedroom", image: "/placeholder.svg?height=400&width=600&text=3+Bedroom+Floor+Plan" },
+              { type: "4 Bedroom", image: "/placeholder.svg?height=400&width=600&text=4+Bedroom+Floor+Plan" },
+            ],
+            locationAnalytics: {
+              mrt: [ { name: "Nearest MRT", distance: "n/a" } ],
+              schools: [ { name: "Nearby School", distance: "n/a" } ],
+              amenities: [ { name: "Nearby Mall", distance: "n/a" } ],
+              parks: [ { name: "Nearby Park", distance: "n/a" } ],
+            },
+            mediaReviews: [],
+            similarProjects: [],
+            unitPricing: p.unitPricing || [],
+            facilities: p.facilities || [],
+            brochures: [],
+            sitePlans: [],
+            apiFloorPlans: p.floorPlans || [],
+            moat: {
+              project: p.name || p.project_name || '',
+              exitAudience: 4.2,
+              districtDisparityEffect: 3.8,
+              mrtProximity: 4.5,
+              parentsAttractionEffect: 3.9,
+              quantumEffect: 4.1,
+              rentalDemand: 4.3,
+              regionDisparityEffect: 4.0,
+              volumeEffect: 3.7,
+              balasCurveEffect: 4.4,
+              landsizeDensity: 3.6,
+            },
+          }
+          return transformedFromProxy
+        }
       }
 
-      // Transform API data to match our Project interface
+      // 2) Fallback: direct Strapi by slug (as before)
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://striking-hug-052e89dfad.strapiapp.com'
+      const url = `${API_BASE}/api/projects?filters[slug][$eq]=${encodeURIComponent(projectSlug)}&populate=unitPricing,facilities,brochures,sitePlans`
+      const response = await fetch(url)
+      if (!response.ok) {
+        throw new Error(`Failed to fetch project by slug: ${response.status}`)
+      }
+      const data = await response.json()
+      const item = Array.isArray(data?.data) ? data.data[0] : null
+      if (!item) {
+        return null
+      }
+      // Support both Strapi v4 (attributes) and flat payloads
+      const attributes = (item as any).attributes ? (item as any).attributes : (item as any)
+      const apiProject = { id: (item as any).id, ...attributes }
+
       const transformedProject: Project = {
         id: apiProject.id,
         name: apiProject.name || apiProject.project_name || '',
@@ -861,7 +915,6 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
         bedrooms: apiProject.bedrooms || '',
         bathrooms: apiProject.bathrooms || '',
         size: apiProject.size || '',
-        // Use image_url_banner from API if available, otherwise use placeholder images
         images: apiProject.image_url_banner && apiProject.image_url_banner.trim() !== '' 
           ? [apiProject.image_url_banner]
           : [
@@ -885,7 +938,6 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
         siteArea: apiProject.site_area || '',
         latitude: apiProject.latitude || 1.2834,
         longitude: apiProject.longitude || 103.8598,
-        // Keep dummy data for sections not covered by API
         unitTypes: [
           { type: "1 Bedroom", size: "484 - 527 sq ft", price: "From $1.2M" },
           { type: "2 Bedroom", size: "678 - 753 sq ft", price: "From $1.8M" },
@@ -899,69 +951,13 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
           { type: "4 Bedroom", image: "/placeholder.svg?height=400&width=600&text=4+Bedroom+Floor+Plan" },
         ],
         locationAnalytics: {
-          mrt: [
-            { name: "Newton MRT", distance: "300m" },
-            { name: "Orchard MRT", distance: "800m" },
-          ],
-          schools: [
-            { name: "Anglo-Chinese School (Junior)", distance: "400m" },
-            { name: "St. Margaret's Primary School", distance: "600m" },
-          ],
-          amenities: [
-            { name: "United Square", distance: "250m" },
-            { name: "Goldhill Plaza", distance: "400m" },
-          ],
-          parks: [{ name: "Newton Green", distance: "150m" }],
+          mrt: [ { name: "Nearest MRT", distance: "n/a" } ],
+          schools: [ { name: "Nearby School", distance: "n/a" } ],
+          amenities: [ { name: "Nearby Mall", distance: "n/a" } ],
+          parks: [ { name: "Nearby Park", distance: "n/a" } ],
         },
-        mediaReviews: [
-          {
-            source: "The Edge Property",
-            date: "2024-02-15",
-            title: "10 Evelyn: A Rare Freehold Gem in Newton",
-            excerpt: "The development offers a unique opportunity for investors and homeowners alike...",
-            rating: 4.5,
-          },
-          {
-            source: "PropertyGuru",
-            date: "2024-02-10",
-            title: "Why 10 Evelyn is the Talk of Newton",
-            excerpt: "With its prime location and luxury finishes, 10 Evelyn stands out...",
-            rating: 4.8,
-          },
-        ],
-        similarProjects: [
-          {
-            name: "The Avenir",
-            location: "River Valley",
-            price: "From $2.5M",
-            priceRange: "$2.5M - $4.8M",
-            image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80",
-            units: "376 Units",
-            unitsAvailable: "376 Units",
-            propertySizeRange: "614 - 1,862 sqft",
-            developer: "Hong Leong Group",
-            completion: "2025",
-            slug: "the-avenir",
-            type: "Luxury Condominium",
-            coordinates: { lat: 1.3521, lng: 103.8198 },
-          },
-          {
-            name: "Midtown Modern",
-            location: "Bugis",
-            price: "From $1.8M",
-            priceRange: "$1.8M - $3.8M",
-            image: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80",
-            units: "558 Units",
-            unitsAvailable: "558 Units",
-            propertySizeRange: "678 - 1,862 sqft",
-            developer: "GuocoLand",
-            completion: "2024",
-            slug: "midtown-modern",
-            type: "Mixed Development",
-            coordinates: { lat: 1.3521, lng: 103.8198 },
-          },
-        ],
-        // New API data fields
+        mediaReviews: [],
+        similarProjects: [],
         unitPricing: apiProject.unitPricing?.data || apiProject.unitPricing || [],
         facilities: apiProject.facilities?.data || apiProject.facilities || [],
         brochures: apiProject.brochures?.data || apiProject.brochures || [],
@@ -990,21 +986,26 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
   }
 
   // Helper function to display "n/a" for empty values
-  const displayValue = (value: string | undefined | null): string => {
-    if (!value || value.trim() === '') return 'n/a'
-    return value
+  const displayValue = (value: unknown): string => {
+    if (value === undefined || value === null) return 'n/a'
+    const s = String(value).trim()
+    if (s === '') return 'n/a'
+    return s
   }
 
   // Helper function to check if a value should be displayed (not 'n/a')
-  const shouldDisplayValue = (value: string | undefined | null): boolean => {
-    if (!value || value.trim() === '') return false
-    return true
+  const shouldDisplayValue = (value: unknown): boolean => {
+    if (value === undefined || value === null) return false
+    const s = String(value).trim()
+    return s !== '' && s.toLowerCase() !== 'n/a'
   }
 
   // Helper function to get display value for complex cases
-  const getDisplayValue = (value: string | undefined | null, prefix?: string, suffix?: string): string => {
-    if (!value || value.trim() === '') return 'n/a'
-    return prefix ? `${prefix} ${value}${suffix || ''}` : value
+  const getDisplayValue = (value: unknown, prefix?: string, suffix?: string): string => {
+    if (value === undefined || value === null) return 'n/a'
+    const s = String(value).trim()
+    if (s === '') return 'n/a'
+    return prefix ? `${prefix} ${s}${suffix || ''}` : s
   }
 
   // Mock project data - fallback when API doesn't return data
@@ -1453,7 +1454,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               src={project.image_url_banner && project.image_url_banner.trim() !== '' 
                 ? project.image_url_banner 
                 : project.images[galleryIdx] || "/placeholder.svg"}
-              alt={project.title}
+              alt={project.title || "Project banner image"}
               fill
               className="object-cover cursor-zoom-in"
               priority
@@ -1572,7 +1573,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 {project.imageGallery && project.imageGallery.length > 0 ? (
                   <Image
                     src={project.imageGallery[selectedGalleryImage]?.image_url || "/placeholder.svg"}
-                    alt={project.imageGallery[selectedGalleryImage]?.alt_text || project.title}
+                    alt={project.imageGallery[selectedGalleryImage]?.alt_text || project.title || "Project gallery image"}
                     fill
                     className="object-contain rounded"
                   />
@@ -1634,7 +1635,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                       >
                         <Image
                           src={image.image_url}
-                          alt={image.alt_text || image.image_title}
+                          alt={image.alt_text || image.image_title || "Project thumbnail image"}
                           width={128}
                           height={96}
                           className="w-full h-full object-cover"
@@ -2506,7 +2507,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                       
                       {/* Floor Plan Image */}
                       {(() => {
-                        const floorPlanImage = findFloorPlanImage(currentUnit.unitType, project?.apiFloorPlans)
+                        const floorPlanImage = subtype.floor_plan_image
                         return (
                           <div className="mb-4">
                             <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden border border-gray-700">

@@ -89,9 +89,9 @@ export async function GET(
     }
 
     // Determine if it's an ID or a slug
-    const isNumericId = !isNaN(Number(id))
-    const queryParam = isNumericId ? id : `?filters[slug][$eq]=${id}`
-    const strapiUrl = `https://striking-hug-052e89dfad.strapiapp.com/api/projects/${queryParam}`
+    const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://striking-hug-052e89dfad.strapiapp.com'
+    // This Strapi instance supports direct slug access at /api/projects/:slug
+    const strapiUrl = `${API_BASE}/api/projects/${encodeURIComponent(id)}?populate=unit_pricing,unitPricing,facilities,brochures,sitePlans,site_plans,floor_plans,floorPlans,gallery_images,imageGallery`
 
     const response = await fetch(strapiUrl, {
       headers: { 'Content-Type': 'application/json' },
@@ -101,7 +101,8 @@ export async function GET(
       return NextResponse.json({ error: `Strapi error: ${response.status}` }, { status: response.status })
     }
     const json = await response.json()
-    const apiProject: ApiProject = isNumericId ? json?.data : json?.data?.[0] // If by slug, it's an array
+    // This API returns the project directly under data for both id and slug
+    const apiProject: any = json?.data
 
     if (!apiProject) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 })
@@ -153,11 +154,11 @@ export async function GET(
       status: mapStatus(apiProject.status),
       image,
       image_url_banner: banner || null,
-      coordinates: (apiProject.latitude && apiProject.longitude) ? { lat: apiProject.latitude, lng: apiProject.longitude } : undefined,
-      unitPricing: Array.isArray(apiProject.unit_pricing) ? apiProject.unit_pricing : [],
+      coordinates: (apiProject.latitude && apiProject.longitude) ? { lat: Number(apiProject.latitude), lng: Number(apiProject.longitude) } : undefined,
+      unitPricing: Array.isArray(apiProject.unit_pricing) ? apiProject.unit_pricing : (Array.isArray(apiProject.unitPricing) ? apiProject.unitPricing : []),
       facilities: Array.isArray(apiProject.facilities) ? apiProject.facilities : [],
-      galleryImages: Array.isArray(apiProject.gallery_images) ? apiProject.gallery_images : [],
-      floorPlans: Array.isArray(apiProject.floor_plans) ? apiProject.floor_plans : [],
+      galleryImages: Array.isArray(apiProject.gallery_images) ? apiProject.gallery_images : (Array.isArray(apiProject.imageGallery) ? apiProject.imageGallery : []),
+      floorPlans: Array.isArray(apiProject.floor_plans) ? apiProject.floor_plans : (Array.isArray(apiProject.floorPlans) ? apiProject.floorPlans : []),
     }
 
     return NextResponse.json({ data: project })

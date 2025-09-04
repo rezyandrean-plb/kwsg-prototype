@@ -309,7 +309,7 @@ export default function EventsPage() {
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
                 <img
-                  src="/images/event/mrea-pricing.webp"
+                  src="/images/event/mrea-pricing-new.webp"
                   alt="MREA Pricing Information"
                   className="w-full h-auto rounded-lg shadow-2xl"
                 />
@@ -582,7 +582,7 @@ export default function EventsPage() {
                     <div className="flex justify-center sm:justify-start mt-auto">
                       <Button 
                         className="w-full sm:w-auto bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 rounded-md"
-                        onClick={() => window.open("https://explore.kwsingapore.com/seller-presentation-techniques", "_blank")}
+                        onClick={() => window.open("https://explore.kwsingapore.com/seller-presentation-formula", "_blank")}
                       >
                         Tell Me More
                         <ArrowRight className="ml-2 h-4 w-4" />
@@ -625,7 +625,7 @@ export default function EventsPage() {
                     <div className="flex justify-center sm:justify-start mt-auto">
                       <Button 
                         className="w-full sm:w-auto bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 rounded-md"
-                        onClick={() => window.open("https://explore.kwsingapore.com/buyer-consultation-techniques", "_blank")}
+                        onClick={() => window.open("https://explore.kwsingapore.com/buyers/investors-consultation-playbook", "_blank")}
                       >
                         Tell Me More
                         <ArrowRight className="ml-2 h-4 w-4" />
@@ -668,7 +668,7 @@ export default function EventsPage() {
                     <div className="flex justify-center sm:justify-start mt-auto">
                       <Button 
                         className="w-full sm:w-auto bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 rounded-md"
-                        onClick={() => window.open("https://explore.kwsingapore.com/kw-new-launch-analysis-training", "_blank")}
+                        onClick={() => window.open("https://explore.kwsingapore.com/new-launch-analysis", "_blank")}
                       >
                         Tell Me More
                         <ArrowRight className="ml-2 h-4 w-4" />
@@ -711,7 +711,7 @@ export default function EventsPage() {
                     <div className="flex justify-center sm:justify-start mt-auto">
                       <Button 
                         className="w-full sm:w-auto bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 rounded-md"
-                        onClick={() => window.open("https://explore.kwsingapore.com/positioning-as-a-consultant", "_blank")}
+                        onClick={() => window.open("https://explore.kwsingapore.com/positioning-as-data-centric-consultant", "_blank")}
                       >
                         Tell Me More
                         <ArrowRight className="ml-2 h-4 w-4" />
