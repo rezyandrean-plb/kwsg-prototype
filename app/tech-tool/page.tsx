@@ -439,13 +439,13 @@ export default function TechToolPage() {
                       whileTap={{ scale: 0.98 }}
                     >
                       <Card
-                        className={`bg-gray-800 border-gray-700 hover:shadow-lg hover:shadow-[#b40101]/20 transition-all duration-300 hover:border-[#b40101] ${
+                        className={`bg-gray-800 border-gray-700 hover:shadow-lg hover:shadow-[#b40101]/20 transition-all duration-300 hover:border-[#b40101] h-full ${
                           tool.url ? 'cursor-pointer' : 'cursor-default'
                         }`}
                         onClick={() => handleCardClick(tool)}
                       >
-                        <CardContent className="p-6 px-3 py-3">
-                          <div className="flex items-start space-x-4">
+                        <CardContent className="p-6 px-3 py-3 h-full flex flex-col">
+                          <div className="flex items-start space-x-4 h-full">
                             <div className="flex-shrink-0">
                               <motion.div 
                                 className="w-12 h-12 bg-[#b40101]/20 rounded-lg flex items-center justify-center"
@@ -458,9 +458,9 @@ export default function TechToolPage() {
                                 <IconComponent className="w-6 h-6 text-[#b40101]" />
                               </motion.div>
                             </div>
-                            <div className="flex-1 min-w-0">
+                            <div className="flex-1 min-w-0 flex flex-col">
                               <h3 className="text-lg font-semibold text-white mb-2">{tool.title}</h3>
-                              <p className="text-sm text-gray-300 leading-relaxed">{tool.description}</p>
+                              <p className="text-sm text-gray-300 leading-relaxed flex-1">{tool.description}</p>
                               {tool.url && (
                                 <motion.p 
                                   className="text-xs text-[#b40101] mt-2"
