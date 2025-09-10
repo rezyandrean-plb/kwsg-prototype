@@ -360,7 +360,7 @@ const processUnitMixData = (unitPricing: UnitPricing[]): UnitMixData[] => {
 // Utility function to process unit availability data from API
 const processUnitAvailabilityData = (unitPricing: UnitPricing[]) => {
   if (!unitPricing || unitPricing.length === 0) {
-    return unitAvailabilityData // Fallback to mock data
+    return [] // Return empty array if no data
   }
 
   // Group units by bedroom count
@@ -547,43 +547,6 @@ const facilityIconMap: Record<string, React.ReactNode> = {
   "BBQ Area": <Flame className="h-6 w-6" style={{ color: '#ce001f' }} />,
 }
 
-// Mock data for unit types & pricing table
-const unitAvailabilityData = [
-  {
-    unitType: '1 Bedroom Units',
-    subtypes: [
-      { subtype: '1 BEDROOM+STUDY', size: '560 sqft', price: '$1,510,000 - $1,721,000', total: 68, available: 56, status: 82 },
-    ],
-  },
-  {
-    unitType: '2 Bedroom Units',
-    subtypes: [
-      { subtype: '2 BEDROOM', size: '646 sqft - 807 sqft', price: '$1,993,000 - $2,210,000', total: 170, available: 2, status: 1 },
-      { subtype: '2 BEDROOM+STUDY', size: '700 sqft - 721 sqft', price: 'Not Applicable', total: 136, available: 0, status: 0 },
-    ],
-  },
-  {
-    unitType: '3 Bedroom Units',
-    subtypes: [
-      { subtype: '3 BEDROOM', size: '872 sqft - 1,141 sqft', price: '$2,966,000 - $3,120,000', total: 102, available: 6, status: 6 },
-      { subtype: '3 BEDROOM PREMIER', size: '1,066 sqft - 1,302 sqft', price: '$3,047,000 - $3,735,000', total: 136, available: 33, status: 24 },
-      { subtype: '3 BEDROOM+STUDY', size: '1,227 sqft - 1,464 sqft', price: '$3,452,000 - $4,336,000', total: 72, available: 60, status: 83 },
-    ],
-  },
-  {
-    unitType: '4 Bedroom Units',
-    subtypes: [
-      { subtype: '4 BEDROOM', size: '1,227 sqft - 1,518 sqft', price: '$3,593,000 - $4,209,000', total: 68, available: 10, status: 15 },
-      { subtype: '4 BEDROOM PREMIER', size: '1,690 sqft - 2,034 sqft', price: '$4,759,000 - $5,879,000', total: 32, available: 29, status: 91 },
-    ],
-  },
-  {
-    unitType: '5 Bedroom Units',
-    subtypes: [
-      { subtype: '5 BEDROOM', size: '1,905 sqft - 2,260 sqft', price: '$5,567,000 - $6,669,000', total: 32, available: 29, status: 91 },
-    ],
-  },
-]
 
 // Dummy floor plan data based on unitTypes
 const floorPlans = [
@@ -1008,131 +971,6 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
     return prefix ? `${prefix} ${s}${suffix || ''}` : s
   }
 
-  // Mock project data - fallback when API doesn't return data
-  const mockProject: Project = {
-    id: 1,
-    name: "10 Evelyn",
-    project_name: "10 Evelyn",
-    slug: "10-evelyn",
-    title: "10 Evelyn",
-    location: "Newton, District 11",
-    address: "10 Evelyn Road, Singapore 308318",
-    type: "Condominium",
-    price: "From $1.2M",
-    priceFrom: "1200000",
-    pricePerSqFt: "$2,100 - $2,400 psf",
-    bedrooms: "1-4",
-    bathrooms: "1-3",
-    size: "484 - 1,636 sq ft",
-    images: [
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80",
-    ],
-    units: "56 Units",
-    developer: "Amara Holdings",
-    completion: "2025",
-    description:
-      "10 Evelyn is a prestigious freehold development nestled in the heart of Newton, Singapore's prime District 11. This exclusive residential project offers a collection of meticulously designed living spaces ranging from 1 to 5 bedrooms, each crafted with premium finishes and thoughtful layouts. Residents will enjoy a sophisticated lifestyle with a comprehensive suite of facilities including a 50-meter lap pool, state-of-the-art fitness center, and beautifully landscaped gardens. The development's prime location provides unparalleled connectivity, with Newton MRT Station just a 3-minute walk away, and easy access to Orchard Road's shopping and dining precinct. Families will appreciate the proximity to prestigious educational institutions such as Anglo-Chinese School (Junior) and St. Margaret's Primary School. The development's strategic position also offers convenient access to medical facilities, including Mount Elizabeth Hospital, and is surrounded by an array of dining options, shopping centers, and recreational facilities. With its combination of luxury living, prime location, and excellent connectivity, 10 Evelyn represents an exceptional investment opportunity in one of Singapore's most sought-after residential districts.",
-    features: ["Freehold", "Luxury finishes", "Prime location", "Full facilities"],
-    district: "11",
-    tenure: "Freehold",
-    propertyType: "Condominium",
-    status: "Launching Soon",
-    totalUnits: "56 Units",
-    totalFloors: "24 Floors",
-    siteArea: "12,000 sq ft",
-    latitude: 1.2834,
-    longitude: 103.8598,
-    unitTypes: [
-      { type: "1 Bedroom", size: "484 - 527 sq ft", price: "From $1.2M" },
-      { type: "2 Bedroom", size: "678 - 753 sq ft", price: "From $1.8M" },
-      { type: "3 Bedroom", size: "1,076 - 1,184 sq ft", price: "From $2.8M" },
-      { type: "4 Bedroom", size: "1,518 - 1,636 sq ft", price: "From $4.2M" },
-    ],
-    floorPlans: [
-      { type: "1 Bedroom", image: "/placeholder.svg?height=400&width=600&text=1+Bedroom+Floor+Plan" },
-      { type: "2 Bedroom", image: "/placeholder.svg?height=400&width=600&text=2+Bedroom+Floor+Plan" },
-      { type: "3 Bedroom", image: "/placeholder.svg?height=400&width=600&text=3+Bedroom+Floor+Plan" },
-      { type: "4 Bedroom", image: "/placeholder.svg?height=400&width=600&text=4+Bedroom+Floor+Plan" },
-    ],
-    locationAnalytics: {
-      mrt: [
-        { name: "Newton MRT", distance: "300m" },
-        { name: "Orchard MRT", distance: "800m" },
-      ],
-      schools: [
-        { name: "Anglo-Chinese School (Junior)", distance: "400m" },
-        { name: "St. Margaret's Primary School", distance: "600m" },
-      ],
-      amenities: [
-        { name: "United Square", distance: "250m" },
-        { name: "Goldhill Plaza", distance: "400m" },
-      ],
-      parks: [{ name: "Newton Green", distance: "150m" }],
-    },
-    mediaReviews: [
-      {
-        source: "The Edge Property",
-        date: "2024-02-15",
-        title: "10 Evelyn: A Rare Freehold Gem in Newton",
-        excerpt: "The development offers a unique opportunity for investors and homeowners alike...",
-        rating: 4.5,
-      },
-      {
-        source: "PropertyGuru",
-        date: "2024-02-10",
-        title: "Why 10 Evelyn is the Talk of Newton",
-        excerpt: "With its prime location and luxury finishes, 10 Evelyn stands out...",
-        rating: 4.8,
-      },
-    ],
-    similarProjects: [
-      {
-        name: "The Avenir",
-        location: "River Valley",
-        price: "From $2.5M",
-        priceRange: "$2.5M - $4.8M",
-        image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80",
-        units: "376 Units",
-        unitsAvailable: "376 Units",
-        propertySizeRange: "614 - 1,862 sqft",
-        developer: "Hong Leong Group",
-        completion: "2025",
-        slug: "the-avenir",
-        type: "Luxury Condominium",
-        coordinates: { lat: 1.3521, lng: 103.8198 },
-      },
-      {
-        name: "Midtown Modern",
-        location: "Bugis",
-        price: "From $1.8M",
-        priceRange: "$1.8M - $3.8M",
-        image: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80",
-        units: "558 Units",
-        unitsAvailable: "558 Units",
-        propertySizeRange: "678 - 1,862 sqft",
-        developer: "GuocoLand",
-        completion: "2024",
-        slug: "midtown-modern",
-        type: "Mixed Development",
-        coordinates: { lat: 1.3521, lng: 103.8198 },
-      },
-    ],
-    moat: {
-      project: "10 Evelyn",
-      exitAudience: 4.2,
-      districtDisparityEffect: 3.8,
-      mrtProximity: 4.5,
-      parentsAttractionEffect: 3.9,
-      quantumEffect: 4.1,
-      rentalDemand: 4.3,
-      regionDisparityEffect: 4.0,
-      volumeEffect: 3.7,
-      balasCurveEffect: 4.4,
-      landsizeDensity: 3.6
-    }
-  }
 
   // Fetch project data on component mount
   useEffect(() => {
@@ -1147,14 +985,12 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
           console.log('Project developer field:', projectData.developer)
           setProject(projectData)
         } else {
-          console.log('API returned no data, using mock data as fallback')
-          console.log('Mock project developer field:', mockProject.developer)
-          setProject(mockProject)
+          console.log('API returned no data')
+          setError('Project not found')
         }
       } catch (error) {
         console.error('Error loading project:', error)
-        console.log('Error occurred, using mock data as fallback')
-        setProject(mockProject)
+        setError('Failed to load project data')
       } finally {
         setLoading(false)
       }
@@ -1449,7 +1285,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
 
       {/* Hero Section */}
       <section className="bg-black">
-        <div className="relative w-full h-[500px] overflow-hidden">
+        <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] overflow-hidden">
             <Image
               src={project.image_url_banner && project.image_url_banner.trim() !== '' 
                 ? project.image_url_banner 
@@ -1465,7 +1301,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
           <button
-            className="absolute bottom-4 right-20 bg-black/60 hover:bg-black/80 rounded-lg px-3 py-2 transition-colors z-20 cursor-pointer flex items-center gap-2"
+            className="absolute bottom-4 right-16 sm:right-20 bg-black/60 hover:bg-black/80 rounded-lg px-2 sm:px-3 py-2 transition-colors z-20 cursor-pointer flex items-center gap-1 sm:gap-2"
             onClick={(e) => {
               e.preventDefault()
               e.stopPropagation()
@@ -1479,8 +1315,9 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             aria-label="Show all gallery"
             type="button"
           >
-            <Images className="w-4 h-4 text-white pointer-events-none" />
-            <span className="text-white text-sm font-medium">Show All Images</span>
+            <Images className="w-3 h-3 sm:w-4 sm:h-4 text-white pointer-events-none" />
+            <span className="text-white text-xs sm:text-sm font-medium hidden sm:inline">Show All Images</span>
+            <span className="text-white text-xs font-medium sm:hidden">Gallery</span>
           </button>
           <button
             className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors z-20 cursor-pointer"
@@ -1497,38 +1334,38 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             aria-label="Enlarge image"
             type="button"
           >
-            <Maximize2 className="w-6 h-6 text-white pointer-events-none" />
+            <Maximize2 className="w-5 h-5 sm:w-6 sm:h-6 text-white pointer-events-none" />
           </button>
 
           {/* Project Info Overlay */}
-          <div className="absolute left-0 bottom-0 p-8 text-white z-10 w-full">
+          <div className="absolute left-0 bottom-0 p-4 sm:p-6 md:p-8 text-white z-10 w-full">
             <div className="container mx-auto">
-              <div className="uppercase text-sm font-medium mb-2 text-gray-200">
+              <div className="uppercase text-xs sm:text-sm font-medium mb-2 text-gray-200">
                 {project.propertyType} • {project.tenure}
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">{project.title}</h1>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 leading-tight">{project.title}</h1>
 
               {/* Address and Key Info */}
               <div className="flex items-center gap-2 text-gray-200 mb-2">
-                <MapPin className="h-5 w-5" style={{ color: '#ce001f' }} />
-                <span className="text-lg">{project.address.replace(/,?\s*\d{6}$/, '')}</span>
+                <MapPin className="h-4 w-4 sm:h-5 sm:w-5" style={{ color: '#ce001f' }} />
+                <span className="text-sm sm:text-base md:text-lg">{project.address.replace(/,?\s*\d{6}$/, '')}</span>
               </div>
 
-              <div className="flex flex-wrap gap-4 text-gray-200 text-base">
+              <div className="flex flex-wrap gap-2 sm:gap-4 text-gray-200 text-sm sm:text-base">
                 <div className="flex items-center">
-                  <Building2 className="h-5 w-5 mr-2" style={{ color: '#ce001f' }} />
-                  {(() => {
+                  <Building2 className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" style={{ color: '#ce001f' }} />
+                  <span className="truncate">{(() => {
                     console.log('Rendering developer field:', project.developer);
                     return project.developer || 'Developer not available';
-                  })()}
+                  })()}</span>
                 </div>
                 <div className="flex items-center">
-                  <Calendar className="h-5 w-5 mr-2" style={{ color: '#ce001f' }} />
-                  TOP {project.completion ? new Date(project.completion).getFullYear() : 'TBD'}
+                  <Calendar className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" style={{ color: '#ce001f' }} />
+                  <span className="whitespace-nowrap">TOP {project.completion ? new Date(project.completion).getFullYear() : 'TBD'}</span>
                 </div>
                 <div className="flex items-center">
-                  <Home className="h-5 w-5 mr-2" style={{ color: '#ce001f' }} />
-                  {project.totalUnits} 
+                  <Home className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" style={{ color: '#ce001f' }} />
+                  <span className="whitespace-nowrap">{project.totalUnits}</span>
                 </div>
               </div>
             </div>
@@ -1537,7 +1374,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
 
         {/* Gallery Modal */}
         <Dialog open={galleryOpen} onOpenChange={setGalleryOpen}>
-          <DialogContent className="max-w-4xl bg-black p-0">
+          <DialogContent className="max-w-4xl w-[95vw] sm:w-full bg-black p-0">
             <DialogTitle>
               <span className="sr-only">Gallery for {project.title}</span>
             </DialogTitle>
@@ -1551,11 +1388,11 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 className="object-contain rounded"
               />
               <button
-                className="absolute top-4 right-4 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors z-10"
+                className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors z-10"
                 onClick={() => setGalleryOpen(false)}
                 aria-label="Close modal"
               >
-                <span className="text-white text-xl">&times;</span>
+                <span className="text-white text-lg sm:text-xl">&times;</span>
               </button>
             </div>
           </DialogContent>
@@ -1563,7 +1400,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
 
         {/* All Images Gallery Modal */}
         <Dialog open={allImagesGalleryOpen} onOpenChange={setAllImagesGalleryOpen}>
-          <DialogContent className="max-w-6xl bg-black p-0">
+          <DialogContent className="max-w-6xl w-[95vw] sm:w-full bg-black p-0">
             <DialogTitle>
               <span className="sr-only">Image Gallery for {project.title}</span>
             </DialogTitle>
@@ -1587,33 +1424,33 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 {project.imageGallery && project.imageGallery.length > 1 && (
                   <>
                     <button
-                      className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors z-10"
+                      className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors z-10"
                       onClick={() => setSelectedGalleryImage(prev => 
                         prev === 0 ? project.imageGallery!.length - 1 : prev - 1
                       )}
                       aria-label="Previous image"
                     >
-                      <ChevronLeft className="w-6 h-6 text-white" />
+                      <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </button>
                     <button
-                      className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors z-10"
+                      className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors z-10"
                       onClick={() => setSelectedGalleryImage(prev => 
                         (prev + 1) % project.imageGallery!.length
                       )}
                       aria-label="Next image"
                     >
-                      <ChevronRight className="w-6 h-6 text-white" />
+                      <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </button>
                   </>
                 )}
                 
                 {/* Close Button */}
                 <button
-                  className="absolute top-4 right-4 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors z-10"
+                  className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors z-10"
                   onClick={() => setAllImagesGalleryOpen(false)}
                   aria-label="Close modal"
                 >
-                  <span className="text-white text-xl">&times;</span>
+                  <span className="text-white text-lg sm:text-xl">&times;</span>
                 </button>
               </div>
               
@@ -1621,12 +1458,12 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
 
               {/* All Images Preview Strip */}
               {project.imageGallery && project.imageGallery.length > 0 ? (
-                <div className="p-4 bg-gray-800">
-                  <div className="flex gap-3 overflow-x-auto pb-2">
+                <div className="p-2 sm:p-4 bg-gray-800">
+                  <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2">
                     {project.imageGallery.map((image, index) => (
                       <div
                         key={image.id}
-                        className={`flex-shrink-0 w-32 h-24 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${
+                        className={`flex-shrink-0 w-24 h-18 sm:w-32 sm:h-24 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${
                           selectedGalleryImage === index 
                             ? 'border-[#ce001f]' 
                             : 'border-gray-600 hover:border-gray-400'
@@ -1645,9 +1482,9 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                   </div>
                 </div>
               ) : (
-                <div className="p-4 bg-gray-800">
+                <div className="p-2 sm:p-4 bg-gray-800">
                   <div className="text-white text-center py-4">
-                    <p>No additional images available</p>
+                    <p className="text-sm sm:text-base">No additional images available</p>
                   </div>
                 </div>
               )}
@@ -1658,40 +1495,40 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
 
       {/* Tabs Navigation */}
       <div className="sticky top-16 z-50 bg-[#1c1c1d] border-b border-gray-800">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-2 sm:px-4">
           <div className="flex justify-between items-center">
             <div className="w-full">
               {/* Mobile: 2 rows layout */}
               <div className="block lg:hidden">
-                <div className="grid grid-cols-4 gap-1 py-2">
+                <div className="grid grid-cols-4 gap-1 py-3">
                   {tabs.slice(0, 4).map((tab) => (
                     <button
                       key={tab.id}
-                      className={`flex flex-col items-center gap-1 px-2 py-2 border-b-2 transition-all duration-300 ease-in-out ${
+                      className={`flex flex-col items-center gap-1 px-1 sm:px-2 py-2 sm:py-3 border-b-2 transition-all duration-300 ease-in-out min-h-[60px] ${
                         activeTab === tab.id
                           ? "border-[#ce001f] text-[#ce001f]"
                           : "border-transparent text-gray-400 hover:text-white"
                       }`}
                       onClick={() => scrollToSection(tab.id)}
                     >
-                      <tab.icon className="h-4 w-4" />
-                      <span className="text-xs font-medium text-center leading-tight">{tab.label}</span>
+                      <tab.icon className="h-4 w-4 sm:h-5 sm:w-5" />
+                      <span className="text-xs sm:text-sm font-medium text-center leading-tight">{tab.label}</span>
                     </button>
                   ))}
                 </div>
-                <div className="grid grid-cols-4 gap-1 py-2">
+                <div className="grid grid-cols-4 gap-1 py-3">
                   {tabs.slice(4, 8).map((tab) => (
                     <button
                       key={tab.id}
-                      className={`flex flex-col items-center gap-1 px-2 py-2 border-b-2 transition-all duration-300 ease-in-out ${
+                      className={`flex flex-col items-center gap-1 px-1 sm:px-2 py-2 sm:py-3 border-b-2 transition-all duration-300 ease-in-out min-h-[60px] ${
                         activeTab === tab.id
                           ? "border-[#ce001f] text-[#ce001f]"
                           : "border-transparent text-gray-400 hover:text-white"
                       }`}
                       onClick={() => scrollToSection(tab.id)}
                     >
-                      <tab.icon className="h-4 w-4" />
-                      <span className="text-xs font-medium text-center leading-tight">{tab.label}</span>
+                      <tab.icon className="h-4 w-4 sm:h-5 sm:w-5" />
+                      <span className="text-xs sm:text-sm font-medium text-center leading-tight">{tab.label}</span>
                     </button>
                   ))}
                 </div>
@@ -1724,43 +1561,43 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       </div>
 
       {/* Overview Section */}
-      <section id="overview" className="w-full bg-[#1c1c1d] py-8">
-        <div className="container mx-auto px-4 max-w-screen-xl">
-          <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Project Overview</h2>
-          <div className="flex justify-center mb-4">
-            <div className="w-16 h-1 bg-[#ce001f] rounded" />
+      <section id="overview" className="w-full bg-[#1c1c1d] py-6 sm:py-8">
+        <div className="container mx-auto px-4 sm:px-6 max-w-screen-xl">
+          <h2 className="text-2xl sm:text-3xl font-light mb-3 text-white text-center tracking-wide">Project Overview</h2>
+          <div className="flex justify-center mb-4 sm:mb-6">
+            <div className="w-12 sm:w-16 h-1 bg-[#ce001f] rounded" />
           </div>
           <div 
-            className="flex flex-col gap-8 items-stretch min-h-[400px] overview-container"
+            className="flex flex-col gap-6 sm:gap-8 items-stretch min-h-[300px] sm:min-h-[400px] overview-container"
             style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: '2rem',
+              gap: '1.5rem',
               alignItems: 'stretch',
-              minHeight: '400px'
+              minHeight: '300px'
             }}
           >
             
             {/* Left Section */}
             <div 
-              className="w-full flex flex-col gap-6 min-h-[400px] overview-left"
+              className="w-full flex flex-col gap-4 sm:gap-6 min-h-[300px] sm:min-h-[400px] overview-left"
               style={{
                 width: '100%',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '1.5rem',
-                minHeight: '400px'
+                gap: '1rem',
+                minHeight: '300px'
               }}
             >
-              <div className="text-2xl font-semibold text-[#ce001f] mb-2">{project?.title}</div>
-              <div className="text-gray-200 text-sm md:text-base leading-relaxed">
+              <div className="text-xl sm:text-2xl font-semibold text-[#ce001f] mb-2">{project?.title}</div>
+              <div className="text-gray-200 text-sm sm:text-base leading-relaxed">
                 <div 
                   className={`whitespace-pre-line ${
-                    !showFullDescription ? 'max-h-[120px] overflow-hidden' : ''
+                    !showFullDescription ? 'max-h-[100px] sm:max-h-[120px] overflow-hidden' : ''
                   }`}
                   style={{
                     display: !showFullDescription ? '-webkit-box' : 'block',
-                    WebkitLineClamp: !showFullDescription ? '5' : 'unset',
+                    WebkitLineClamp: !showFullDescription ? '4' : 'unset',
                     WebkitBoxOrient: !showFullDescription ? 'vertical' : 'unset',
                     overflow: !showFullDescription ? 'hidden' : 'visible'
                   }}
@@ -1770,14 +1607,14 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 {project?.description && project.description.length > 300 && (
                   <button
                     onClick={() => setShowFullDescription(!showFullDescription)}
-                    className="text-[#ce001f] hover:text-[#b3001a] font-medium mt-2 transition-colors"
+                    className="text-[#ce001f] hover:text-[#b3001a] font-medium mt-2 transition-colors text-sm sm:text-base"
                   >
                     {showFullDescription ? 'Show Less' : 'Show More'}
                   </button>
                 )}
               </div>
-              <div className="bg-[#ce001f]/10 border border-[#ce001f]/20 rounded-lg p-6 mt-4">
-                <span className="text-[#ce001f] italic text-lg">
+              <div className="bg-[#ce001f]/10 border border-[#ce001f]/20 rounded-lg p-4 sm:p-6 mt-2 sm:mt-4">
+                <span className="text-[#ce001f] italic text-base sm:text-lg">
                   {"Where modern architecture meets timeless elegance, creating homes that inspire and endure."}
                 </span>
               </div>
@@ -1785,14 +1622,14 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
 
             {/* Right Section */}
             <div 
-              className="w-full flex flex-col items-center gap-4 min-h-[400px] overview-right"
+              className="w-full flex flex-col items-center gap-4 min-h-[250px] sm:min-h-[400px] overview-right"
               style={{
                 width: '100%',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 gap: '1rem',
-                minHeight: '400px'
+                minHeight: '250px'
               }}
             >
               <div className="relative w-full aspect-[4/3] bg-[#e5e5e5] rounded-xl overflow-hidden">
@@ -1804,13 +1641,13 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                     objectPosition: 'center center'
                   }}
                 />
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-4 bg-black/70 rounded-lg px-6 py-3 border border-gray-700 backdrop-blur-sm">
-                  <div className="flex flex-col items-center min-w-[100px]">
-                    <span className="text-xl lg:text-2xl font-bold text-[#ce001f]">{project?.totalUnits?.replace(/[^0-9]/g, '') || '0'}</span>
+                <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-4 bg-black/70 rounded-lg px-3 sm:px-6 py-2 sm:py-3 border border-gray-700 backdrop-blur-sm">
+                  <div className="flex flex-col items-center min-w-[80px] sm:min-w-[100px]">
+                    <span className="text-lg sm:text-xl lg:text-2xl font-bold text-[#ce001f]">{project?.totalUnits?.replace(/[^0-9]/g, '') || '0'}</span>
                     <span className="text-xs text-gray-300 mt-1">Total Units</span>
                   </div>
-                  <div className="flex flex-col items-center min-w-[100px]">
-                    <span className="text-xl lg:text-2xl font-bold text-[#ce001f]">
+                  <div className="flex flex-col items-center min-w-[80px] sm:min-w-[100px]">
+                    <span className="text-lg sm:text-xl lg:text-2xl font-bold text-[#ce001f]">
                       {project?.completion ? project.completion.split('-')[0] : 'N/A'}
                     </span>
                     <span className="text-xs text-gray-300 mt-1">Expected TOP</span>
@@ -1824,41 +1661,41 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       </section>
 
       {/* Project Details Section */}
-      <section id="details" className="w-full py-8 mb-8">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Project Details</h2>
-          <div className="flex justify-center mb-4">
-            <div className="w-16 h-1 bg-[#ce001f] rounded" />
+      <section id="details" className="w-full py-6 sm:py-8 mb-6 sm:mb-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl sm:text-3xl font-light mb-3 text-white text-center tracking-wide">Project Details</h2>
+          <div className="flex justify-center mb-4 sm:mb-6">
+            <div className="w-12 sm:w-16 h-1 bg-[#ce001f] rounded" />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {/* HIGH PRIORITY - Location & Connectivity */}
             {/* Address */}
             {shouldDisplayValue(project?.address) && (
-              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-2 border border-gray-700">
-                <MapPin className="h-7 w-7" style={{ color: '#ce001f' }} />
-                <div>
-                  <div className="text-gray-400 text-sm">Address</div>
-                  <div className="text-white font-light">{displayValue(project?.address?.replace(/,?\s*\d{6}$/, ''))}</div>
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <MapPin className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Address</div>
+                  <div className="text-white font-light text-sm sm:text-base truncate">{displayValue(project?.address?.replace(/,?\s*\d{6}$/, ''))}</div>
                 </div>
               </div>
             )}
             {/* District */}
             {shouldDisplayValue(project?.district) && (
-              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-                <MapPin className="h-7 w-7" style={{ color: '#ce001f' }} />
-                <div>
-                  <div className="text-gray-400 text-sm">District</div>
-                  <div className="text-white font-light">{`District ${displayValue(project.district)}`}</div>
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <MapPin className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">District</div>
+                  <div className="text-white font-light text-sm sm:text-base">{`District ${displayValue(project.district)}`}</div>
                 </div>
               </div>
             )}
             {/* Nearest MRT */}
             {project?.locationAnalytics?.mrt[0]?.name && (
-              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-                <Train className="h-7 w-7" style={{ color: '#ce001f' }} />
-                <div>
-                  <div className="text-gray-400 text-sm">Nearest MRT</div>
-                  <div className="text-white font-light">
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Train className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Nearest MRT</div>
+                  <div className="text-white font-light text-sm sm:text-base truncate">
                     {`${project.locationAnalytics.mrt[0].name} (${project.locationAnalytics.mrt[0].distance})`}
                   </div>
                 </div>
@@ -1866,11 +1703,11 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             )}
             {/* Tenure */}
             {shouldDisplayValue(project?.tenure) && (
-              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-                <Calendar className="h-7 w-7" style={{ color: '#ce001f' }} />
-                <div>
-                  <div className="text-gray-400 text-sm">Tenure</div>
-                  <div className="text-white font-light">{displayValue(project?.tenure)}</div>
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Calendar className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Tenure</div>
+                  <div className="text-white font-light text-sm sm:text-base">{displayValue(project?.tenure)}</div>
                 </div>
               </div>
             )}
@@ -1878,21 +1715,21 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             {/* HIGH PRIORITY - Pricing & Investment */}
             {/* Average PSF */}
             {shouldDisplayValue(project?.pricePerSqFt) && (
-              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-                <BadgeDollarSign className="h-7 w-7" style={{ color: '#ce001f' }} />
-                <div>
-                  <div className="text-gray-400 text-sm">Average PSF</div>
-                  <div className="text-white font-light">{`From ${displayValue(project.pricePerSqFt)}`}</div>
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <BadgeDollarSign className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Average PSF</div>
+                  <div className="text-white font-light text-sm sm:text-base">{`From ${displayValue(project.pricePerSqFt)}`}</div>
                 </div>
               </div>
             )}
             {/* Expected TOP */}
             {shouldDisplayValue(project?.completion) && (
-              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-                <Calendar className="h-7 w-7" style={{ color: '#ce001f' }} />
-                <div>
-                  <div className="text-gray-400 text-sm">Expected TOP</div>
-                  <div className="text-white font-light">
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Calendar className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Expected TOP</div>
+                  <div className="text-white font-light text-sm sm:text-base">
                     {`Q${project.completion?.slice(0,1) === '2' ? '2' : '1'} ${displayValue(project.completion)}`}
                   </div>
                 </div>
@@ -1900,21 +1737,21 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             )}
             {/* Property Type */}
             {shouldDisplayValue(project?.propertyType) && (
-              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-                <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
-                <div>
-                  <div className="text-gray-400 text-sm">Property Type</div>
-                  <div className="text-white font-light">{displayValue(project?.propertyType)}</div>
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Building2 className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Property Type</div>
+                  <div className="text-white font-light text-sm sm:text-base">{displayValue(project?.propertyType)}</div>
                 </div>
               </div>
             )}
             {/* Developer */}
             {shouldDisplayValue(project?.developer) && (
-              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-                <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
-                <div>
-                  <div className="text-gray-400 text-sm">Developer</div>
-                  <div className="text-white font-light">{displayValue(project?.developer)}</div>
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Building2 className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Developer</div>
+                  <div className="text-white font-light text-sm sm:text-base truncate">{displayValue(project?.developer)}</div>
                 </div>
               </div>
             )}
@@ -1922,41 +1759,41 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             {/* MEDIUM PRIORITY - Unit Configuration */}
             {/* Total Units */}
             {shouldDisplayValue(project?.totalUnits) && (
-              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-                <Home className="h-7 w-7" style={{ color: '#ce001f' }} />
-                <div>
-                  <div className="text-gray-400 text-sm">Total Units</div>
-                  <div className="text-white font-light">{displayValue(project?.totalUnits)}</div>
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Home className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Total Units</div>
+                  <div className="text-white font-light text-sm sm:text-base">{displayValue(project?.totalUnits)}</div>
                 </div>
               </div>
             )}
             {/* Bedrooms */}
             {shouldDisplayValue(project?.bedrooms) && (
-              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-                <Home className="h-7 w-7" style={{ color: '#ce001f' }} />
-                <div>
-                  <div className="text-gray-400 text-sm">Bedrooms</div>
-                  <div className="text-white font-light">{`${displayValue(project.bedrooms)} bedrooms`}</div>
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Home className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Bedrooms</div>
+                  <div className="text-white font-light text-sm sm:text-base">{`${displayValue(project.bedrooms)} bedrooms`}</div>
                 </div>
               </div>
             )}
             {/* Floor Size */}
             {shouldDisplayValue(project?.size) && (
-              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-                <Layout className="h-7 w-7" style={{ color: '#ce001f' }} />
-                <div>
-                  <div className="text-gray-400 text-sm">Floor Size</div>
-                  <div className="text-white font-light">{displayValue(project?.size)}</div>
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Layout className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Floor Size</div>
+                  <div className="text-white font-light text-sm sm:text-base">{displayValue(project?.size)}</div>
                 </div>
               </div>
             )}
             {/* Floors */}
             {shouldDisplayValue(project?.totalFloors) && (
-              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-                <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
-                <div>
-                  <div className="text-gray-400 text-sm">Floors</div>
-                  <div className="text-white font-light">{displayValue(project?.totalFloors)}</div>
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Building2 className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Floors</div>
+                  <div className="text-white font-light text-sm sm:text-base">{displayValue(project?.totalFloors)}</div>
                 </div>
               </div>
             )}
@@ -1964,21 +1801,21 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             {/* LOWER PRIORITY - Technical Details */}
             {/* Site Area */}
             {shouldDisplayValue(project?.siteArea) && (
-              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-2 border border-gray-700">
-                <Layout className="h-7 w-7" style={{ color: '#ce001f' }} />
-                <div>
-                  <div className="text-gray-400 text-sm">Site Area</div>
-                  <div className="text-white font-light">{displayValue(project?.siteArea)}</div>
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Layout className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Site Area</div>
+                  <div className="text-white font-light text-sm sm:text-base">{displayValue(project?.siteArea)}</div>
                 </div>
               </div>
             )}
             {/* Blocks */}
             {shouldDisplayValue(project?.totalUnits) && (
-              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-                <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
-                <div>
-                  <div className="text-gray-400 text-sm">Blocks</div>
-                  <div className="text-white font-light">
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Building2 className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Blocks</div>
+                  <div className="text-white font-light text-sm sm:text-base">
                     {`${Math.ceil(Number(project.totalUnits.replace(/[^0-9]/g, '')) / 7)} blocks`}
                   </div>
                 </div>
@@ -1986,22 +1823,22 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             )}
             {/* Car Park Lots */}
             {shouldDisplayValue(project?.totalUnits) && (
-              <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-                <Home className="h-7 w-7" style={{ color: '#ce001f' }} />
-                <div>
-                  <div className="text-gray-400 text-sm">Car Park Lots</div>
-                  <div className="text-white font-light">
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Home className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Car Park Lots</div>
+                  <div className="text-white font-light text-sm sm:text-base">
                     {`${project.totalUnits.replace(/[^0-9]/g, '')} lots`}
                   </div>
                 </div>
               </div>
             )}
             {/* Zoning */}
-            <div className="bg-[#18191b] rounded-lg p-6 flex items-center gap-4 border border-gray-700">
-              <Building2 className="h-7 w-7" style={{ color: '#ce001f' }} />
-              <div>
-                <div className="text-gray-400 text-sm">Zoning</div>
-                <div className="text-white font-light">Residential</div>
+            <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+              <Building2 className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+              <div className="min-w-0 flex-1">
+                <div className="text-gray-400 text-xs sm:text-sm">Zoning</div>
+                <div className="text-white font-light text-sm sm:text-base">Residential</div>
               </div>
             </div>
           </div>
@@ -2097,24 +1934,24 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       </section>
 
       {/* Facilities Section */}
-      <section id="facilities" className="w-full py-16 mb-2 bg-[#1c1c1d]">
-        <div className="max-w-4xl mx-auto px-4">
+      <section id="facilities" className="w-full py-8 sm:py-12 lg:py-16 mb-2 bg-[#1c1c1d]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
           {/* Title and Subtitle */}
-          <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Facilities</h2>
-          <div className="flex justify-center mb-4">
-            <div className="w-16 h-1 bg-[#ce001f] rounded" />
+          <h2 className="text-2xl sm:text-3xl font-light mb-3 text-white text-center tracking-wide">Facilities</h2>
+          <div className="flex justify-center mb-4 sm:mb-6">
+            <div className="w-12 sm:w-16 h-1 bg-[#ce001f] rounded" />
           </div>
-          <p className="text-center font-light text-gray-400 mb-10">
+          <p className="text-center font-light text-gray-400 mb-6 sm:mb-8 lg:mb-10 text-sm sm:text-base">
             Premium amenities designed for modern luxury living
           </p>
           {/* Facilities Grid */}
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="space-y-4 sm:space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               {(() => {
-                // Use API facilities data if available, otherwise fallback to mock data
+                // Use API facilities data if available
                 const displayFacilities = project?.facilities && project.facilities.length > 0 
                   ? project.facilities 
-                  : facilities.map(name => ({ id: 0, name, description: `Facility: ${name}`, icon: null }))
+                  : []
                 
                 // Filter out facilities with null, empty, or whitespace-only names (including invisible characters)
                 const validFacilities = displayFacilities.filter((facility: any) => {
@@ -2142,14 +1979,14 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 return facilitiesToShow.map((facility: any, idx: number) => (
                   <div
                     key={facility.id || idx}
-                    className="flex items-center gap-3 bg-[#232324] rounded-lg px-4 py-4 shadow-sm"
+                    className="flex items-center gap-2 sm:gap-3 bg-[#232324] rounded-lg px-3 sm:px-4 py-3 sm:py-4 shadow-sm"
                   >
-                    <span className="flex items-center justify-center w-10 h-10 rounded-full bg-[#ce001f]/20">
+                    <span className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#ce001f]/20 flex-shrink-0">
                       {facilityIconMap[facility.name] || (
-                        <Layout className="h-5 w-5" style={{ color: '#ce001f' }} />
+                        <Layout className="h-4 w-4 sm:h-5 sm:w-5" style={{ color: '#ce001f' }} />
                       )}
                     </span>
-                    <span className="text-white font-light">{facility.name}</span>
+                    <span className="text-white font-light text-sm sm:text-base truncate">{facility.name}</span>
                   </div>
                 ))
               })()}
@@ -2159,7 +1996,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             {(() => {
               const displayFacilities = project?.facilities && project.facilities.length > 0 
                 ? project.facilities 
-                : facilities.map(name => ({ id: 0, name, description: `Facility: ${name}`, icon: null }))
+                : []
               
               const validFacilities = displayFacilities.filter((facility: any) => {
                 if (!facility.name) return false
@@ -2170,20 +2007,22 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               // Only show button if there are more than 9 facilities
               if (validFacilities.length > 9) {
                 return (
-                  <div className="flex justify-center">
+                  <div className="flex justify-center mt-4 sm:mt-6">
                     <button
                       onClick={() => setShowAllFacilities(!showAllFacilities)}
-                      className="bg-[#ce001f] hover:bg-[#b3001a] text-white font-medium py-3 px-6 rounded-full transition-colors flex items-center gap-2"
+                      className="bg-[#ce001f] hover:bg-[#b3001a] text-white font-medium py-2 sm:py-3 px-4 sm:px-6 rounded-full transition-colors flex items-center gap-1 sm:gap-2 text-sm sm:text-base"
                     >
                       {showAllFacilities ? (
                         <>
-                          <ChevronUp className="h-4 w-4" />
-                          Show Less
+                          <ChevronUp className="h-3 w-3 sm:h-4 sm:w-4" />
+                          <span className="hidden sm:inline">Show Less</span>
+                          <span className="sm:hidden">Less</span>
                         </>
                       ) : (
                         <>
-                          <ChevronDown className="h-4 w-4" />
-                          Show More ({validFacilities.length - 9} more)
+                          <ChevronDown className="h-3 w-3 sm:h-4 sm:w-4" />
+                          <span className="hidden sm:inline">Show More ({validFacilities.length - 9} more)</span>
+                          <span className="sm:hidden">More ({validFacilities.length - 9})</span>
                         </>
                       )}
                     </button>
@@ -2386,31 +2225,28 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       </div>
 
       {/* Units & Pricing Section */}
-      <section id="pricing" className="w-full py-8 mb-4">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-4xl font-light mb-3 text-white text-center tracking-wide">Unit & Pricing</h2>
-          <div className="flex justify-center mb-4">
-            <div className="w-16 h-1 bg-[#ce001f] rounded" />
+      <section id="pricing" className="w-full py-6 sm:py-8 mb-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-light mb-3 text-white text-center tracking-wide">Unit & Pricing</h2>
+          <div className="flex justify-center mb-4 sm:mb-6">
+            <div className="w-12 sm:w-16 h-1 bg-[#ce001f] rounded" />
           </div>
-          <p className="text-gray-400 text-base font-light text-center mb-2">Discover your perfect home from our collection of meticulously designed residences</p>
+          <p className="text-gray-400 text-sm sm:text-base font-light text-center mb-4 sm:mb-6">Discover your perfect home from our collection of meticulously designed residences</p>
 
           {/* Tabs for unit types */}
-          <div className="w-full px-6 pt-6 pb-2 border-b border-gray-700 mb-8">
-            <div className="flex flex-nowrap gap-2 justify-center overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent" style={{ WebkitOverflowScrolling: 'touch' }}>
+          <div className="w-full px-2 sm:px-6 pt-4 sm:pt-6 pb-2 border-b border-gray-700 mb-6 sm:mb-8">
+            <div className="flex flex-nowrap gap-1 sm:gap-2 justify-center overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent" style={{ WebkitOverflowScrolling: 'touch' }}>
               {(() => {
                 const dynamicUnitData = processUnitAvailabilityData(project?.unitPricing || [])
                 
-                // If no API data, show fallback tabs
+                // If no API data, show message
                 if (dynamicUnitData.length === 0) {
-                  return unitAvailabilityData.map((unit, idx) => (
-                    <button
-                      key={unit.unitType}
-                      onClick={() => setUnitsActiveTab(idx)}
-                      className={`px-4 py-2 rounded-full font-light flex items-center gap-2 text-sm transition-colors border focus:outline-none whitespace-nowrap ${unitsActiveTab === idx ? 'bg-gray-800 border-[#ce001f] text-white' : 'bg-[#18191b] border-gray-700 text-gray-300 hover:bg-[#ce001f]/10 hover:text-[#ce001f]'}`}
-                    >
-                      {unit.unitType.replace(' Units', '')}
-                    </button>
-                  ))
+                  return (
+                    <div className="col-span-full text-center py-8">
+                      <p className="text-gray-400">No unit information available at the moment.</p>
+                      <p className="text-sm text-gray-500 mt-2">Please check back later or contact our agents for more details.</p>
+                    </div>
+                  )
                 }
                 
                 return dynamicUnitData.map((unit, idx) => {
@@ -2422,11 +2258,11 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                     <button
                       key={unit.unitType}
                       onClick={() => setUnitsActiveTab(idx)}
-                      className={`px-4 py-2 rounded-full font-light flex items-center gap-2 text-sm transition-colors border focus:outline-none whitespace-nowrap ${unitsActiveTab === idx ? 'bg-gray-800 border-[#ce001f] text-white' : 'bg-[#18191b] border-gray-700 text-gray-300 hover:bg-[#ce001f]/10 hover:text-[#ce001f]'}`}
+                      className={`px-2 sm:px-4 py-2 rounded-full font-light flex items-center gap-1 sm:gap-2 text-xs sm:text-sm transition-colors border focus:outline-none whitespace-nowrap ${unitsActiveTab === idx ? 'bg-gray-800 border-[#ce001f] text-white' : 'bg-[#18191b] border-gray-700 text-gray-300 hover:bg-[#ce001f]/10 hover:text-[#ce001f]'}`}
                     >
                       <span>{unit.unitType.replace(' Units', '')}</span>
                       {totalAvailable > 0 && (
-                        <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full">
+                        <span className="bg-green-500 text-white text-xs px-1 sm:px-2 py-1 rounded-full">
                           {totalAvailable}
                         </span>
                       )}
@@ -2459,11 +2295,11 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             const totalUnits = currentUnit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.total, 0)
             
             return (
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 {/* Unit type header */}
-                <div className="text-center mb-6">
-                  <h3 className="text-2xl font-semibold text-white mb-2">{currentUnit.unitType.replace(' Units', '')}</h3>
-                  <div className="flex items-center justify-center gap-4 text-sm">
+                <div className="text-center mb-4 sm:mb-6">
+                  <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">{currentUnit.unitType.replace(' Units', '')}</h3>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm">
                     <span className="text-gray-400">Total Units: <span className="text-white font-medium">{totalUnits}</span></span>
                     <span className="text-gray-400">Available: <span className="text-green-400 font-medium">{totalAvailable}</span></span>
                     <span className="text-gray-400">Availability: <span className="text-white font-medium">{totalUnits > 0 ? Math.round((totalAvailable / totalUnits) * 100) : 0}%</span></span>
@@ -2471,35 +2307,35 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 </div>
                 
                 {/* Subtype cards */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                   {currentUnit.subtypes.map((subtype: any, subtypeIndex: number) => (
-                    <div key={subtypeIndex} className="bg-[#111] rounded-xl p-6 shadow-lg border border-gray-800">
+                    <div key={subtypeIndex} className="bg-[#111] rounded-xl p-4 sm:p-6 shadow-lg border border-gray-800">
                       {/* Subtype header */}
-                      <div className="flex items-center justify-between mb-4">
-                        <h4 className="text-lg font-semibold text-white">{subtype.subtype}</h4>
+                      <div className="flex items-center justify-between mb-3 sm:mb-4">
+                        <h4 className="text-base sm:text-lg font-semibold text-white">{subtype.subtype}</h4>
                         <div className="flex flex-col items-end">
-                          <span className="text-green-400 font-semibold text-lg">{subtype.available} of {subtype.total}</span>
+                          <span className="text-green-400 font-semibold text-sm sm:text-lg">{subtype.available} of {subtype.total}</span>
                           <span className="text-gray-400 text-xs">Available</span>
                         </div>
                       </div>
                       
                       {/* Unit specifications */}
-                      <div className="grid grid-cols-3 gap-4 mb-4">
+                      <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-3 sm:mb-4">
                         <div className="text-center">
-                          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-red-900/60 mx-auto mb-2">
-                            <Home className="h-5 w-5 text-red-400" />
+                          <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-red-900/60 mx-auto mb-1 sm:mb-2">
+                            <Home className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
                           </div>
                           <span className="text-white text-xs">{subtype.bedrooms || 'N/A'} Bedrooms</span>
                         </div>
                         <div className="text-center">
-                          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-red-900/60 mx-auto mb-2">
-                            <Bath className="h-5 w-5 text-red-400" />
+                          <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-red-900/60 mx-auto mb-1 sm:mb-2">
+                            <Bath className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
                           </div>
                           <span className="text-white text-xs">{subtype.bathrooms || 'N/A'} Bathrooms</span>
                         </div>
                         <div className="text-center">
-                          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-red-900/60 mx-auto mb-2">
-                            <Layout className="h-5 w-5 text-red-400" />
+                          <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-red-900/60 mx-auto mb-1 sm:mb-2">
+                            <Layout className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
                           </div>
                           <span className="text-white text-xs">{subtype.size}</span>
                         </div>
@@ -2587,17 +2423,17 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       </section>
 
       {/* Mortgage Loan Calculator - Full Width */}
-      <div className="w-full py-8 mb-8">
-        <div className="max-w-screen-xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-light text-white mb-3 tracking-wide">Mortgage Loan Calculator</h2>
-          <div className="flex justify-center mb-4">
-            <div className="w-16 h-1 bg-[#ce001f] rounded" />
+      <div className="w-full py-6 sm:py-8 mb-6 sm:mb-8">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 text-center">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-light text-white mb-3 tracking-wide">Mortgage Loan Calculator</h2>
+          <div className="flex justify-center mb-4 sm:mb-6">
+            <div className="w-12 sm:w-16 h-1 bg-[#ce001f] rounded" />
           </div>
-          <p className="text-gray-400 text-base font-light text-center mb-8">Calculate your monthly mortgage payments and view detailed amortization schedules</p>
+          <p className="text-gray-400 text-sm sm:text-base font-light text-center mb-6 sm:mb-8">Calculate your monthly mortgage payments and view detailed amortization schedules</p>
           <div className="flex flex-col items-center md:items-center md:justify-center">
             {/* Mortgage Loan Calculator */}
             <div className="w-full max-w-7xl min-w-0 mx-auto">
-              <div className="bg-[#23232a] rounded-lg p-6">
+              <div className="bg-[#23232a] rounded-lg p-4 sm:p-6">
                 <MortgageLoanCalculator />
               </div>
             </div>
@@ -2606,13 +2442,13 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       </div>
 
       {/* Contact Agent Section */}
-      <section id="contact" className="w-full py-16 mb-8 bg-[#18191b]">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-4xl font-light text-white text-center mb-3 tracking-wide">Contact Our Expert Agents</h2>
-          <div className="flex justify-center mb-4">
-            <div className="w-16 h-1 bg-[#ce001f] rounded" />
+      <section id="contact" className="w-full py-8 sm:py-12 lg:py-16 mb-6 sm:mb-8 bg-[#18191b]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-light text-white text-center mb-3 tracking-wide">Contact Our Expert Agents</h2>
+          <div className="flex justify-center mb-4 sm:mb-6">
+            <div className="w-12 sm:w-16 h-1 bg-[#ce001f] rounded" />
           </div>
-          <p className="text-gray-400 text-base font-light text-center mb-12">Get personalized assistance from our experienced property consultants</p>
+          <p className="text-gray-400 text-sm sm:text-base font-light text-center mb-8 sm:mb-12">Get personalized assistance from our experienced property consultants</p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Download Brochure Card */}
             <div className="flex flex-col items-center">
