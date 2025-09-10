@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Search, Building2, Calculator, TrendingUp, BarChart3, MapPin, DollarSign, Smartphone, Home, ChevronRight } from "lucide-react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useState } from "react"
+import Image from "next/image"
 
 // Tool data based on the image
 const tools = [
@@ -70,6 +71,66 @@ const tools = [
     description: "Rent or buy? New launch or resale? This tool compares every scenario to help you make the smartest move for your property goals.",
     icon: "RS",
     category: "KW Singapore Internal Proptech"
+  },
+  // Notion Wiki items
+  {
+    id: 10,
+    title: "Property Research Wiki",
+    description: "Comprehensive database of property insights, market trends, and research findings accessible through our Notion workspace.",
+    icon: "PR",
+    category: "Notion Wiki"
+  },
+  {
+    id: 11,
+    title: "Team Knowledge Base",
+    description: "Centralized repository of best practices, training materials, and internal documentation for the KW Singapore team.",
+    icon: "KB",
+    category: "Notion Wiki"
+  },
+  // Google Sheets items
+  {
+    id: 12,
+    title: "Market Data Tracker",
+    description: "Real-time property market data and analytics tracked through Google Sheets for comprehensive market analysis.",
+    icon: "MD",
+    category: "Google Sheets"
+  },
+  {
+    id: 13,
+    title: "Client Portfolio Manager",
+    description: "Organized client portfolios and investment tracking system built on Google Sheets for efficient portfolio management.",
+    icon: "CP",
+    category: "Google Sheets"
+  },
+  // External Resources items
+  {
+    id: 14,
+    title: "URA Property Portal",
+    description: "Direct access to Urban Redevelopment Authority's property information and planning resources for Singapore properties.",
+    icon: "URA",
+    category: "External Resources"
+  },
+  {
+    id: 15,
+    title: "IRAS Tax Calculator",
+    description: "Singapore tax calculation tools and resources from the Inland Revenue Authority for property investment planning.",
+    icon: "IRAS",
+    category: "External Resources"
+  },
+  // KW Singapore Mortgage Calculator items
+  {
+    id: 16,
+    title: "TDSR Calculator",
+    description: "Total Debt Servicing Ratio calculator to determine loan eligibility and monthly payment capacity for property purchases.",
+    icon: "TDSR",
+    category: "KW Singapore Mortgage Calculator"
+  },
+  {
+    id: 17,
+    title: "Loan Comparison Tool",
+    description: "Compare different mortgage options, interest rates, and payment structures to find the best loan package for your needs.",
+    icon: "LCT",
+    category: "KW Singapore Mortgage Calculator"
   }
 ]
 
@@ -160,12 +221,48 @@ export default function TechToolPage() {
                 <button
                   key={category}
                   onClick={() => setActiveCategory(category)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors flex items-center gap-2 ${
                     activeCategory === category
                       ? "bg-[#B40101] text-white"
                       : "bg-gray-800 text-gray-300 hover:bg-gray-700"
                   }`}
                 >
+                  {category === "KW Singapore Internal Proptech" && (
+                    <Image
+                      src="/images/kwsingapore-icon.webp"
+                      alt="KW Singapore"
+                      width={16}
+                      height={16}
+                      className="w-4 h-4"
+                    />
+                  )}
+                  {category === "Notion Wiki" && (
+                    <Image
+                      src="/images/tech-tool/notion.webp"
+                      alt="Notion"
+                      width={16}
+                      height={16}
+                      className="w-4 h-4"
+                    />
+                  )}
+                  {category === "Google Sheets" && (
+                    <Image
+                      src="/images/tech-tool/sheets.webp"
+                      alt="Google Sheets"
+                      width={16}
+                      height={16}
+                      className="w-4 h-4"
+                    />
+                  )}
+                  {category === "KW Singapore Mortgage Calculator" && (
+                    <Image
+                      src="/images/tech-tool/calculator.webp"
+                      alt="Calculator"
+                      width={16}
+                      height={16}
+                      className="w-4 h-4"
+                    />
+                  )}
                   {category}
                 </button>
               ))}
