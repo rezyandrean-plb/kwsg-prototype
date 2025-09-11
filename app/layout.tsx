@@ -2,6 +2,7 @@ import type React from "react"
 import "./globals.css"
 import LayoutContent from "./components/layout-content"
 import Script from "next/script"
+import { ClerkProvider } from '@clerk/nextjs'
 
 export default function RootLayout({
   children,
@@ -83,18 +84,20 @@ export default function RootLayout({
         />
       </head>
       <body suppressHydrationWarning>
-        {/* Google Tag Manager (noscript) */}
-        <noscript>
-          <iframe 
-            src="https://www.googletagmanager.com/ns.html?id=GTM-KW8HQD4J"
-            height="0" 
-            width="0" 
-            style={{display: 'none', visibility: 'hidden'}}
-          />
-        </noscript>
-        {/* End Google Tag Manager (noscript) */}
-        {/* Removed CSSLoader to avoid 404s for non-existent _next static CSS paths */}
-        <LayoutContent>{children}</LayoutContent>
+        <ClerkProvider>
+          {/* Google Tag Manager (noscript) */}
+          <noscript>
+            <iframe 
+              src="https://www.googletagmanager.com/ns.html?id=GTM-KW8HQD4J"
+              height="0" 
+              width="0" 
+              style={{display: 'none', visibility: 'hidden'}}
+            />
+          </noscript>
+          {/* End Google Tag Manager (noscript) */}
+          {/* Removed CSSLoader to avoid 404s for non-existent _next static CSS paths */}
+          <LayoutContent>{children}</LayoutContent>
+        </ClerkProvider>
         {/* Load Hotjar with optimized strategy and cache control */}
         <Script
           id="hotjar"

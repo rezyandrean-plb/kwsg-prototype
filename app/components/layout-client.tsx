@@ -5,6 +5,8 @@ import Link from "next/link"
 import Image from "next/image"
 import dynamic from 'next/dynamic'
 import { useState, useEffect } from 'react'
+import { useUser, UserButton } from '@clerk/nextjs'
+import { User } from 'lucide-react'
 
 // Dynamically import components that are not immediately visible
 const MobileMenu = dynamic(() => import("@/components/mobile-menu"), {
@@ -22,9 +24,10 @@ const navItems = [
   { href: "/events", label: "Events" },
   { href: "/press", label: "Press" },
   { href: "/about-us", label: "About Us" },
-  { href: "/contact", label: "Contact" },
-  { href: "/join", label: "Join KW Singapore" }
+  { href: "/contact", label: "Contact" }
 ]
+
+const joinNavItem = { href: "/join", label: "Join KW Singapore" }
 
 export function Header() {
   const pathname = usePathname()
@@ -32,6 +35,7 @@ export function Header() {
   const isSpringleafPage = pathname?.startsWith('/springleaf-residence')
   const isSpringleafBackupPage = pathname?.startsWith('/springleaf-backup')
   const [isScrolled, setIsScrolled] = useState(false)
+  const { isSignedIn, user } = useUser()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,24 +69,63 @@ export function Header() {
           />
         </Link>
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex gap-4 lg:gap-6">
+        <nav className="hidden lg:flex gap-4 lg:gap-6 items-center">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               id="nav-link"
-              className={`text-sm font-semibold transition-colors duration-300 rounded px-2 py-2 relative group ${
-                item.label === "Join KW Singapore" 
-                  ? "bg-red-600 text-white hover:bg-red-700" 
-                  : "text-white"
-              }`}
+              className="text-sm font-semibold transition-colors duration-300 rounded px-2 py-2 relative group text-white"
             >
               {item.label}
-              {item.label !== "Join KW Singapore" && (
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
-              )}
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
             </Link>
           ))}
+          
+          {/* Show Join button or User info based on authentication status */}
+          {isSignedIn ? (
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 text-white">
+                <User className="w-4 h-4" />
+                <span className="text-sm font-medium">
+                  {user?.emailAddresses[0]?.emailAddress || 'User'}
+                </span>
+              </div>
+              <UserButton 
+                appearance={{
+                  elements: {
+                    avatarBox: "w-8 h-8",
+                    userButtonPopoverCard: "bg-white border-gray-200 shadow-lg",
+                    userButtonPopoverActionButton: "text-gray-700 hover:bg-gray-100 hover:text-gray-900",
+                    userButtonPopoverActionButtonText: "text-gray-700",
+                    userButtonPopoverFooter: "hidden",
+                    userButtonPopoverMain: "bg-white",
+                    userButtonPopoverActionButtonIcon: "text-gray-500",
+                    userButtonPopoverHeaderTitle: "text-gray-900",
+                    userButtonPopoverHeaderSubtitle: "text-gray-500",
+                    userButtonPopoverHeader: "text-gray-900",
+                    userButtonPopoverUserPreview: "text-gray-900",
+                    userButtonPopoverUserPreviewMainIdentifier: "text-gray-900",
+                    userButtonPopoverUserPreviewSecondaryIdentifier: "text-gray-500",
+                    userButtonPopoverUserPreviewTextContainer: "text-gray-900",
+                    userButtonPopoverUserPreviewTextContainerPrimary: "text-gray-900",
+                    userButtonPopoverUserPreviewTextContainerSecondary: "text-gray-500",
+                    userButtonPopoverUserPreviewTextContainerIdentifier: "text-gray-900",
+                    userButtonPopoverUserPreviewTextContainerUsername: "text-gray-900",
+                    userButtonPopoverUserPreviewTextContainerEmail: "text-gray-500"
+                  }
+                }}
+              />
+            </div>
+          ) : (
+            <Link
+              href={joinNavItem.href}
+              id="nav-link"
+              className="text-sm font-semibold transition-colors duration-300 rounded px-2 py-2 bg-red-600 text-white hover:bg-red-700"
+            >
+              {joinNavItem.label}
+            </Link>
+          )}
         </nav>
         {/* Mobile and Tablet Menu */}
         <MobileMenu />

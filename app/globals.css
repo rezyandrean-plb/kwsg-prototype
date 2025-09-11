@@ -261,3 +261,13 @@ img {
     justify-content: flex-start !important;
   }
 }
+
+/* Clerk UI dark badge overrides */
+:where(.cl-badge, .cl-internal-badge, .cl-internal-dev-badge) {
+  background-color: #1f2937 !important; /* gray-800 */
+  color: #e5e7eb !important; /* gray-200 */
+  border: 1px solid #4b5563 !important; /* gray-600 */
+}
+:where(.cl-badge__icon, .cl-internal-badge__icon) {
+  color: #e5e7eb !important;
+}
