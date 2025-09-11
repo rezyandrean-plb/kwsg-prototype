@@ -22,9 +22,9 @@ const tools = [
   {
     id: 2,
     title: "KW Command",
-    description: "Your central hub for all things real estate, making it easy to manage your business from anywhere and avoid the pain of juggling multiple platforms.",
+    description: "Manage your real estate business easily from anywhere with one central hub.",
     icon: Calculator,
-    category: "Internal Tool",
+    category: "Command Tools",
     url: "agent.kw.com"
   },
   {
@@ -32,8 +32,16 @@ const tools = [
     title: "KW University",
     description: "Access world-class real estate training and mentorship to continuously sharpen your skills and dominate the market.",
     icon: TrendingUp,
-    category: "Internal Tool",
+    category: "Command Tools",
     url: "https://agent.kw.com/connect/learning/categories"
+  },
+  {
+    id: 4,
+    title: "KW Canva",
+    description: "Design stunning marketing materials, from social media posts to property brochures, even if you have no design experience.",
+    icon: Building2,
+    category: "Command Tools",
+    url: "canva.kw.com"
   },
   // External Tools items
   {
@@ -42,7 +50,8 @@ const tools = [
     description: "Get instant, data-driven insights into a property's value, market trends, and transaction history to price homes accurately.",
     icon: BarChart3,
     category: "External Tools",
-    url: "rea-insight.com/"
+    url: "https://rea-insight.com/",
+    image: "/images/tech-tool/rea-insights.webp"
   },
   {
     id: 13,
@@ -50,7 +59,8 @@ const tools = [
     description: "Avoid the pain of manual research by using this tool to get comprehensive property data, including URA planning, school details, and transaction history, all in one place.",
     icon: TrendingUp,
     category: "External Tools",
-    url: "www.edgeprop.sg/analytic/inspector"
+    url: "https://www.edgeprop.sg/analytic/inspector",
+    image: "/images/tech-tool/edgeprop-pro.webp"
   },
   {
     id: 18,
@@ -58,15 +68,8 @@ const tools = [
     description: "Easily check recent transaction prices of HDBs, condos, and landed properties to ensure your clients get the best deal.",
     icon: Home,
     category: "External Tools",
-    url: "squarefoot.com.sg/component/users/login"
-  },
-  {
-    id: 19,
-    title: "KW Canva",
-    description: "Design stunning marketing materials, from social media posts to property brochures, even if you have no design experience.",
-    icon: Building2,
-    category: "External Tools",
-    url: "canva.kw.com"
+    url: "squarefoot.com.sg/component/users/login",
+    image: "/images/tech-tool/squarefoot.webp"
   },
   {
     id: 20,
@@ -76,93 +79,222 @@ const tools = [
     category: "External Tools",
     url: "https://drive.google.com/file/d/1GcNpqifBzKSurSmz7qkpIMjrjaVOD1Pm/view"
   },
-  // Compass Tools items
+  // Compass Tools items - Sales Proceed
   {
     id: 14,
-    title: "Research Chart Mega Vault",
-    description: "Access a vast library of charts and reports to quickly understand market cycles and confidently advise clients on when to buy or sell.",
-    icon: BarChart3,
+    title: "Sales Proceed",
+    description: "Instantly calculate net cash proceeds after property sale and costs.",
+    icon: Calculator,
     category: "Compass Tools",
-    url: "proptech.kwsingapore.com"
+    subtitle: "Sales Proceed",
+    url: "https://proptech.kwsingapore.com/calculators/sales-proceed",
+    image: "/images/tech-tool/sales-proceed.webp"
   },
   {
     id: 15,
-    title: "Disparity Effect Research Chart",
-    description: "Comprehensive research charts and data analysis tools for property market insights and trend analysis.",
+    title: "Timeline Planning",
+    description: "Plan key property transaction milestones with clear, date-based scheduling tool.",
     icon: TrendingUp,
     category: "Compass Tools",
-    url: "https://proptech.kwsingapore.com/tech-tools/disparity-effect/charts?type=all"
+    subtitle: "Sales Proceed",
+    url: "https://proptech.kwsingapore.com/calculators/timeline-planning",
+    image: "/images/tech-tool/timeline-planning.webp"
+  },
+  {
+    id: 16,
+    title: "Decoupling",
+    description: "Assess cost and benefits of transferring ownership for future property purchase.",
+    icon: Building2,
+    category: "Compass Tools",
+    subtitle: "Sales Proceed",
+    url: "https://proptech.kwsingapore.com/calculators/decoupling",
+    image: "/images/tech-tool/decoupling.webp"
+  },
+  {
+    id: 17,
+    title: "Equity Term Loan",
+    description: "Estimate how much equity you can unlock through refinancing options.",
+    icon: DollarSign,
+    category: "Compass Tools",
+    subtitle: "Sales Proceed",
+    url: "https://proptech.kwsingapore.com/calculators/equity-term-loan",
+    image: "/images/tech-tool/equity-term-loan.webp"
+  },
+  // Compass Tools items - Buyer Affordability
+  {
+    id: 18,
+    title: "TDSR/MSR",
+    description: "Evaluate buyer affordability using government-mandated loan ratio and income guidelines.",
+    icon: Calculator,
+    category: "Compass Tools",
+    subtitle: "Buyer Affordability",
+    url: "https://proptech.kwsingapore.com/calculators/tdsr-msr",
+    image: "/images/tech-tool/tdsr-msr.webp"
+  },
+  {
+    id: 19,
+    title: "New Project Purchase (BUC)",
+    description: "Project progressive payment schedule for building-under-construction properties before completion.",
+    icon: Home,
+    category: "Compass Tools",
+    subtitle: "Buyer Affordability",
+    url: "https://proptech.kwsingapore.com/calculators/buc",
+    image: "/images/tech-tool/buc-calculator.webp"
+  },
+  {
+    id: 20,
+    title: "New EC Purchase (BUC)",
+    description: "Calculate EC affordability with income ceiling, grant eligibility, and staged payments.",
+    icon: Home,
+    category: "Compass Tools",
+    subtitle: "Buyer Affordability",
+    url: "https://proptech.kwsingapore.com/calculators/ec",
+    image: "/images/tech-tool/buc-calculator.webp"
   },
   {
     id: 21,
-    title: "BUC vs Resale Comparison Calculator",
-    description: "Compare Build-to-Order (BUC) properties against resale properties to help clients make informed investment decisions.",
+    title: "Resale Purchase",
+    description: "Estimate upfront costs, loan structure, and timeline for resale property purchase.",
+    icon: Building2,
+    category: "Compass Tools",
+    subtitle: "Buyer Affordability",
+    url: "https://proptech.kwsingapore.com/calculators/timeline-payment"
+  },
+  {
+    id: 22,
+    title: "Mortgage Loan",
+    description: "Compute monthly repayments and interest impact based on loan tenure and rates.",
     icon: Calculator,
     category: "Compass Tools",
-    url: "https://proptech.kwsingapore.com/tech-tools/property-comparison"
+    subtitle: "Buyer Affordability",
+    url: "https://proptech.kwsingapore.com/calculators/mortgage-loan",
+    image: "/images/tech-tool/mortgage-loan.webp"
+  },
+  {
+    id: 23,
+    title: "Pledge/Unpledge",
+    description: "Assess affordability impact when pledging or unpledging funds for property loan.",
+    icon: DollarSign,
+    category: "Compass Tools",
+    subtitle: "Buyer Affordability",
+    url: "https://proptech.kwsingapore.com/calculators/pledge-unpledge",
+    image: "/images/tech-tool/pledge-unpledge.webp"
+  },
+  // Compass Tools items - Stamp Duty
+  {
+    id: 24,
+    title: "ABSD/BSD",
+    description: "Calculate Buyer's and Additional Buyer's Stamp Duties for property transactions.",
+    icon: Calculator,
+    category: "Compass Tools",
+    subtitle: "Stamp Duty",
+    url: "https://proptech.kwsingapore.com/calculators/absd-bsd",
+    image: "/images/tech-tool/absd-bsd.webp"
+  },
+  {
+    id: 25,
+    title: "SSD",
+    description: "Determine payable Seller's Stamp Duty based on property holding duration and rules.",
+    icon: Calculator,
+    category: "Compass Tools",
+    subtitle: "Stamp Duty",
+    url: "https://proptech.kwsingapore.com/calculators/ssd",
+    image: "/images/tech-tool/ssd.webp"
+  },
+  {
+    id: 26,
+    title: "Rental Stamp Duty",
+    description: "Instantly compute rental stamp duty payable on signed tenancy agreements.",
+    icon: Calculator,
+    category: "Compass Tools",
+    subtitle: "Stamp Duty",
+    url: "https://proptech.kwsingapore.com/calculators/rental-stamp-duty",
+    image: "/images/tech-tool/rental-stamp-duty.webp"
+  },
+  // Compass Tools items - Research Charts
+  {
+    id: 27,
+    title: "Disparity Effect",
+    description: "Analyse property price gaps across different markets through charts to identify undervalued opportunities.",
+    icon: BarChart3,
+    category: "Compass Tools",
+    subtitle: "Research Charts",
+    url: "https://proptech.kwsingapore.com/tech-tools/disparity-effect/charts?type=all",
+    image: "/images/tech-tool/disparity-effect.webp"
+  },
+  // Compass Tools items - Concept Calculators
+  {
+    id: 28,
+    title: "Property Comparison",
+    description: "Compare multiple properties side-by-side using price, size, and yield metrics.",
+    icon: BarChart3,
+    category: "Compass Tools",
+    subtitle: "Concept Calculators",
+    url: "https://proptech.kwsingapore.com/tech-tools/property-comparison",
+    image: "/images/tech-tool/buc-calculator.webp"
   },
   // Research Tools items
   {
-    id: 22,
+    id: 29,
     title: "Research Chart Mega Vault",
-    description: "Access a comprehensive collection of research charts and data analysis tools for property market insights and trend analysis.",
+    description: "Compare BUC vs Resale financial outlays, analysing own-stay versus investment.",
     icon: BarChart3,
     category: "Research Tools",
     url: "https://drive.google.com/drive/u/2/folders/16cpLVQWIGSmdsat2f9XONQkDbOESYV0m"
   },
   // Training Resource items
   {
-    id: 23,
+    id: 30,
     title: "Training Recording: KW PropTech Calculator, EdgeProp Inspector, Real Insights, etc.",
-    description: "Comprehensive training videos covering KW PropTech calculators, EdgeProp Inspector, Real Insights, and other essential tools.",
+    description: "Learn PropTech calculators, EdgeProp Inspector, and Real Insights through recorded training.",
     icon: Play,
     category: "Training Resource",
     url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmAqEH3-QDXlGc4Opm9i3lGa0"
   },
   {
-    id: 24,
+    id: 31,
     title: "Training Recording: KW PropSage Deal Submission",
-    description: "Step-by-step training videos for KW PropSage deal submission process and best practices.",
+    description: "Watch step-by-step process for submitting and managing deals using PropSage.",
     icon: Play,
     category: "Training Resource",
     url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmAoqtN5dPkjshZgUhF735R9x"
   },
   {
-    id: 25,
+    id: 32,
     title: "Video Guide: KW Command",
-    description: "Comprehensive video tutorials for KW Command platform features and functionality.",
+    description: "Get a visual walkthrough of KW Command’s main tools and features.",
     icon: Play,
     category: "Training Resource",
     url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmAr-TbCVIjwGGCItRE-mQ3Vg"
   },
   {
-    id: 26,
+    id: 33,
     title: "Step-by-step Guide: KW Command",
-    description: "Detailed written guides and documentation for KW Command platform usage and troubleshooting.",
+    description: "Follow detailed written steps to navigate KW Command confidently and effectively.",
     icon: Play,
     category: "Training Resource",
     url: "https://answers.kw.com/hc/en-us/categories/26283417706515-Command"
   },
   {
-    id: 27,
+    id: 34,
     title: "Step-by-step Guide: KW Command Mobile App",
-    description: "Complete guide for using KW Command mobile application features and functionality.",
+    description: "Master KW Command mobile app functions with clear, easy instructions provided.",
     icon: Play,
     category: "Training Resource",
     url: "https://answers.kw.com/hc/en-us/categories/4402619174931-Command-App"
   },
   {
-    id: 28,
+    id: 35,
     title: "Step-by-step Guide: Real Insights",
-    description: "Comprehensive guide for using Real Insights tool for property valuation and market analysis.",
+    description: "Leverage Real Insights step-by-step for effective property research and analysis.",
     icon: Play,
     category: "Training Resource",
     url: "https://drive.google.com/file/d/1YkRJJebAJhWilzd2mvTMwMGbIvzvBzWY/view?usp=drive_link"
   },
   {
-    id: 29,
+    id: 36,
     title: "Step-by-step Guide: Real Insights Valuation Report",
-    description: "Detailed instructions for generating and interpreting Real Insights valuation reports.",
+    description: "Generate and interpret valuation reports from Real Insights with simple steps.",
     icon: Play,
     category: "Training Resource",
     url: "https://drive.google.com/file/d/1KnOVVO_2YtvDta0vS_t0nxCIlo1K0AK3/view?usp=drive_link"
@@ -171,6 +303,7 @@ const tools = [
 
 const categories = [
   "All",
+  "Command Tools",
   "Internal Tool",
   "External Tools",
   "Compass Tools",
@@ -179,7 +312,7 @@ const categories = [
 ]
 
 export default function TechToolPage() {
-  const [activeCategory, setActiveCategory] = useState("Internal Tool")
+  const [activeCategory, setActiveCategory] = useState("Command Tools")
   const [searchQuery, setSearchQuery] = useState("")
   const [showMore, setShowMore] = useState(false)
   const [passwordDialogOpen, setPasswordDialogOpen] = useState(false)
@@ -413,92 +546,226 @@ export default function TechToolPage() {
             </motion.div>
           ) : (
             <>
-              <motion.div 
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
-                initial={{ opacity: 0 }}
-                animate={toolsInView ? { opacity: 1 } : { opacity: 0 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-              >
-                {displayedTools.map((tool, index) => {
-                  const IconComponent = tool.icon
-                  return (
-                    <motion.div
-                      key={tool.id}
-                      initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                      animate={toolsInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.95 }}
-                      transition={{ 
-                        duration: 0.5, 
-                        delay: 0.6 + index * 0.1,
-                        ease: "easeOut"
-                      }}
-                      whileHover={{ 
-                        y: -5, 
-                        scale: 1.02,
-                        transition: { duration: 0.2 }
-                      }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <Card
-                        className={`bg-gray-800 border-gray-700 hover:shadow-lg hover:shadow-[#b40101]/20 transition-all duration-300 hover:border-[#b40101] h-full ${
-                          tool.url ? 'cursor-pointer' : 'cursor-default'
-                        }`}
-                        onClick={() => handleCardClick(tool)}
+              {activeCategory === "Compass Tools" ? (
+                // Special rendering for Compass Tools with subtitles
+                <div className="space-y-12">
+                  {(() => {
+                    const compassTools = filteredTools.filter(tool => tool.category === "Compass Tools")
+                    const subtitleGroups = compassTools.reduce((groups, tool) => {
+                      const subtitle = tool.subtitle || "Other"
+                      if (!groups[subtitle]) {
+                        groups[subtitle] = []
+                      }
+                      groups[subtitle].push(tool)
+                      return groups
+                    }, {} as Record<string, typeof compassTools>)
+
+                    return Object.entries(subtitleGroups).map(([subtitle, tools], groupIndex) => (
+                      <motion.div
+                        key={subtitle}
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={toolsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                        transition={{ duration: 0.6, delay: 0.5 + groupIndex * 0.2 }}
                       >
-                        <CardContent className="p-6 px-3 py-3 h-full flex flex-col">
-                          <div className="flex items-start space-x-4 h-full">
-                            <div className="flex-shrink-0">
-                              <motion.div 
-                                className="w-12 h-12 bg-[#b40101]/20 rounded-lg flex items-center justify-center"
+                        <motion.h3 
+                          className="text-2xl font-bold text-white mb-6 border-b border-gray-700 pb-2"
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={toolsInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                          transition={{ duration: 0.6, delay: 0.6 + groupIndex * 0.2 }}
+                        >
+                          {subtitle}
+                        </motion.h3>
+                        <motion.div 
+                          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
+                          initial={{ opacity: 0 }}
+                          animate={toolsInView ? { opacity: 1 } : { opacity: 0 }}
+                          transition={{ duration: 0.6, delay: 0.7 + groupIndex * 0.2 }}
+                        >
+                          {tools.map((tool, index) => {
+                            const IconComponent = tool.icon
+                            return (
+                              <motion.div
+                                key={tool.id}
+                                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                                animate={toolsInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.95 }}
+                                transition={{ 
+                                  duration: 0.5, 
+                                  delay: 0.8 + groupIndex * 0.2 + index * 0.1,
+                                  ease: "easeOut"
+                                }}
                                 whileHover={{ 
-                                  backgroundColor: "rgba(180, 1, 1, 0.3)",
-                                  scale: 1.1,
+                                  y: -5, 
+                                  scale: 1.02,
                                   transition: { duration: 0.2 }
                                 }}
+                                whileTap={{ scale: 0.98 }}
                               >
-                                <IconComponent className="w-6 h-6 text-[#b40101]" />
-                              </motion.div>
-                            </div>
-                            <div className="flex-1 min-w-0 flex flex-col">
-                              <h3 className="text-lg font-semibold text-white mb-2">{tool.title}</h3>
-                              <p className="text-sm text-gray-300 leading-relaxed flex-1">{tool.description}</p>
-                              {tool.url && (
-                                <motion.p 
-                                  className="text-xs text-[#b40101] mt-2"
-                                  initial={{ opacity: 0 }}
-                                  animate={{ opacity: 1 }}
-                                  transition={{ delay: 0.8 + index * 0.1 }}
+                                <Card
+                                  className={`bg-gray-800 border-gray-700 hover:shadow-lg hover:shadow-[#b40101]/20 transition-all duration-300 hover:border-[#b40101] h-full ${
+                                    tool.url ? 'cursor-pointer' : 'cursor-default'
+                                  }`}
+                                  onClick={() => handleCardClick(tool)}
                                 >
-                                  Click to access →
-                                </motion.p>
-                              )}
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  )
-                })}
-              </motion.div>
-
-              {hasMoreItems && (
-                <motion.div 
-                  className="text-center"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={toolsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                  transition={{ duration: 0.6, delay: 0.8 }}
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                                  <CardContent className="p-6 px-3 py-3 h-full flex flex-col">
+                                    <div className="flex items-start space-x-4 h-full">
+                                      <div className="flex-shrink-0">
+                                        <motion.div 
+                                          className={`w-12 h-12 rounded-lg flex items-center justify-center overflow-hidden relative ${
+                                            tool.image && tool.image.startsWith('/') 
+                                              ? 'bg-[#b40101]/20' 
+                                              : 'bg-white'
+                                          }`}
+                                          whileHover={{ 
+                                            backgroundColor: tool.image && tool.image.startsWith('/') 
+                                              ? "rgba(180, 1, 1, 0.3)" 
+                                              : "rgba(255, 255, 255, 0.8)",
+                                            scale: 1.1,
+                                            transition: { duration: 0.2 }
+                                          }}
+                                        >
+                                          {tool.image && tool.image.startsWith('/') ? (
+                                            <Image
+                                              src={tool.image}
+                                              alt={tool.title}
+                                              fill
+                                              className="object-cover"
+                                            />
+                                          ) : (
+                                            <IconComponent className="w-6 h-6 text-[#b40101]" />
+                                          )}
+                                        </motion.div>
+                                      </div>
+                                      <div className="flex-1 min-w-0 flex flex-col">
+                                        <h3 className="text-lg font-semibold text-white mb-2">{tool.title}</h3>
+                                        <p className="text-sm text-gray-300 leading-relaxed flex-1">{tool.description}</p>
+                                        {tool.url && (
+                                          <motion.p 
+                                            className="text-xs text-[#b40101] mt-2"
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            transition={{ delay: 1.0 + groupIndex * 0.2 + index * 0.1 }}
+                                          >
+                                            Click to access →
+                                          </motion.p>
+                                        )}
+                                      </div>
+                                    </div>
+                                  </CardContent>
+                                </Card>
+                              </motion.div>
+                            )
+                          })}
+                        </motion.div>
+                      </motion.div>
+                    ))
+                  })()}
+                </div>
+              ) : (
+                // Regular rendering for other categories
+                <>
+                  <motion.div 
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
+                    initial={{ opacity: 0 }}
+                    animate={toolsInView ? { opacity: 1 } : { opacity: 0 }}
+                    transition={{ duration: 0.6, delay: 0.5 }}
                   >
-                    <Button
-                      className="bg-[#b40101] hover:bg-[#8a0101] text-white px-8 py-2 transition-all duration-300 hover:shadow-lg hover:shadow-[#b40101]/30"
-                      onClick={() => setShowMore(!showMore)}
-                    >
-                      {showMore ? "Show Less" : `Show More (${filteredTools.length - itemsPerPage} more)`}
-                    </Button>
+                    {displayedTools.map((tool, index) => {
+                      const IconComponent = tool.icon
+                      return (
+                        <motion.div
+                          key={tool.id}
+                          initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                          animate={toolsInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.95 }}
+                          transition={{ 
+                            duration: 0.5, 
+                            delay: 0.6 + index * 0.1,
+                            ease: "easeOut"
+                          }}
+                          whileHover={{ 
+                            y: -5, 
+                            scale: 1.02,
+                            transition: { duration: 0.2 }
+                          }}
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          <Card
+                            className={`bg-gray-800 border-gray-700 hover:shadow-lg hover:shadow-[#b40101]/20 transition-all duration-300 hover:border-[#b40101] h-full ${
+                              tool.url ? 'cursor-pointer' : 'cursor-default'
+                            }`}
+                            onClick={() => handleCardClick(tool)}
+                          >
+                            <CardContent className="p-6 px-3 py-3 h-full flex flex-col">
+                              <div className="flex items-start space-x-4 h-full">
+                                <div className="flex-shrink-0">
+                                  <motion.div 
+                                    className={`w-12 h-12 rounded-lg flex items-center justify-center overflow-hidden relative ${
+                                      tool.image && tool.image.startsWith('/') 
+                                        ? 'bg-[#b40101]/20' 
+                                        : 'bg-white'
+                                    }`}
+                                    whileHover={{ 
+                                      backgroundColor: tool.image && tool.image.startsWith('/') 
+                                        ? "rgba(180, 1, 1, 0.3)" 
+                                        : "rgba(255, 255, 255, 0.8)",
+                                      scale: 1.1,
+                                      transition: { duration: 0.2 }
+                                    }}
+                                  >
+                                    {tool.image && tool.image.startsWith('/') ? (
+                                      <Image
+                                        src={tool.image}
+                                        alt={tool.title}
+                                        fill
+                                        className="object-cover"
+                                      />
+                                    ) : (
+                                      <IconComponent className="w-6 h-6 text-[#b40101]" />
+                                    )}
+                                  </motion.div>
+                                </div>
+                                <div className="flex-1 min-w-0 flex flex-col">
+                                  <h3 className="text-lg font-semibold text-white mb-2">{tool.title}</h3>
+                                  <p className="text-sm text-gray-300 leading-relaxed flex-1">{tool.description}</p>
+                                  {tool.url && (
+                                    <motion.p 
+                                      className="text-xs text-[#b40101] mt-2"
+                                      initial={{ opacity: 0 }}
+                                      animate={{ opacity: 1 }}
+                                      transition={{ delay: 0.8 + index * 0.1 }}
+                                    >
+                                      Click to access →
+                                    </motion.p>
+                                  )}
+                                </div>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        </motion.div>
+                      )
+                    })}
                   </motion.div>
-                </motion.div>
+
+                  {hasMoreItems && (
+                    <motion.div 
+                      className="text-center"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={toolsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                      transition={{ duration: 0.6, delay: 0.8 }}
+                    >
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Button
+                          className="bg-[#b40101] hover:bg-[#8a0101] text-white px-8 py-2 transition-all duration-300 hover:shadow-lg hover:shadow-[#b40101]/30"
+                          onClick={() => setShowMore(!showMore)}
+                        >
+                          {showMore ? "Show Less" : `Show More (${filteredTools.length - itemsPerPage} more)`}
+                        </Button>
+                      </motion.div>
+                    </motion.div>
+                  )}
+                </>
               )}
             </>
           )}
