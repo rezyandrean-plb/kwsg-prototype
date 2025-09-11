@@ -166,6 +166,13 @@ img {
   }
 }
 
+/* Force-hide mobile header on md and up to avoid utility conflicts */
+@media (min-width: 768px) {
+  .mobile-only-header {
+    display: none !important;
+  }
+}
+
 /* Lower Leaflet map and controls z-index so sticky headers are always above */
 .leaflet-pane,
 .leaflet-top,

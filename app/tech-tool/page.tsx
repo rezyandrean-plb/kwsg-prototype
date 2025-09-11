@@ -519,7 +519,7 @@ export default function TechToolPage() {
           />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16 sm:pb-32">
           <motion.h1 
             className="text-5xl md:text-6xl font-bold text-balance"
             initial={{ opacity: 0, y: 50 }}
@@ -536,7 +536,7 @@ export default function TechToolPage() {
       <section ref={navigationRef} className="relative py-8 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
-            className="flex flex-wrap gap-3"
+            className="flex gap-3 flex-nowrap overflow-x-auto pb-2 md:flex-wrap md:overflow-visible"
             initial={{ opacity: 0, y: 30 }}
             animate={navigationInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -545,7 +545,7 @@ export default function TechToolPage() {
               <motion.button 
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap flex-shrink-0 ${
                   activeCategory === category
                     ? "bg-[#B40101] text-white shadow-lg shadow-[#B40101]/30"
                     : "bg-gray-800 text-gray-300 hover:bg-gray-700 hover:shadow-md"
@@ -566,8 +566,10 @@ export default function TechToolPage() {
       {/* Tech Tool Dashboard */}
       <div ref={toolsRef} className="bg-gray-900 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+          {/* Title and Search Desktop */}
           <motion.div 
-            className="flex items-center justify-between mb-8"
+            className="hidden md:flex items-center justify-between mb-8"
             initial={{ opacity: 0, y: 30 }}
             animate={toolsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -582,6 +584,37 @@ export default function TechToolPage() {
             </motion.h2>
             <motion.div 
               className="relative max-w-md"
+              initial={{ opacity: 0, x: 30 }}
+              animate={toolsInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Input
+                placeholder="Search Tools..."
+                value={searchQuery}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onSearchChange(e.target.value)}
+                className="pl-10 bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-[#b40101] focus:ring-[#b40101]/20 transition-all duration-300"
+              />
+            </motion.div>
+          </motion.div>
+
+          {/* Mobile-only stacked Title and Search */}
+          <motion.div 
+            className="mobile-only-header flex flex-col items-start gap-4 mb-8 md:hidden lg:hidden xl:hidden 2xl:hidden"
+            initial={{ opacity: 0, y: 30 }}
+            animate={toolsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <motion.h2 
+              className="text-3xl font-bold text-white"
+              initial={{ opacity: 0, x: -30 }}
+              animate={toolsInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              {activeCategory} ({filteredTools.length})
+            </motion.h2>
+            <motion.div 
+              className="relative w-full md:max-w-md"
               initial={{ opacity: 0, x: 30 }}
               animate={toolsInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
               transition={{ duration: 0.6, delay: 0.4 }}
