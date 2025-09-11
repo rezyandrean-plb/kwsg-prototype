@@ -3,18 +3,19 @@
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Search, Building2, Calculator, TrendingUp, BarChart3, MapPin, DollarSign, Smartphone, Home, ChevronRight, Play } from "lucide-react"
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion"
 import { useState, useRef } from "react"
 import Image from "next/image"
+import { useUser } from '@clerk/nextjs'
+import AuthDialog from "@/components/auth-dialog"
 
 // Tool data based on the image
 const tools = [
   {
     id: 1,
     title: "KW PropSage",
-    description: "A powerful back-end system that handles your entire transaction process smoothly, from start to finish, so you don't have to worry about paperwork.",
+    description: "Handle the entire transaction process smoothly from start to finish, paperwork-free.",
     icon: Building2,
     category: "Internal Tool",
     url: "app.propsage.com"
@@ -28,26 +29,74 @@ const tools = [
     url: "agent.kw.com"
   },
   {
+    id: 101,
+    title: "KW Contacts",
+    description: "Organize leads and contacts intelligently, never forget important follow-ups again.",
+    icon: Building2,
+    category: "Command Tools",
+    url: "https://console.command.kw.com/command/contacts"
+  },
+  {
+    id: 102,
+    title: "KW Tasks",
+    description: "Track every client’s to-do list carefully, ensuring no task gets missed.",
+    icon: Calculator,
+    category: "Command Tools",
+    url: "https://console.command.kw.com/command/task-manager"
+  },
+  {
+    id: 103,
+    title: "KW Campaigns",
+    description: "Generate steady social media leads without needing complex ad platform expertise.",
+    icon: TrendingUp,
+    category: "Command Tools",
+    url: "https://campaigns.kw.com/"
+  },
+  {
+    id: 104,
+    title: "KW Opportunities",
+    description: "Track deals from new leads to closings, ensuring payments never missed.",
+    icon: BarChart3,
+    category: "Command Tools",
+    url: "https://console.command.kw.com/command/opportunities"
+  },
+  {
+    id: 105,
+    title: "KW SmartPlans",
+    description: "Automate client follow-ups and marketing campaigns, saving time while staying connected.",
+    icon: Smartphone,
+    category: "Command Tools",
+    url: "https://console.command.kw.com/command/smart-plans"
+  },
+  {
+    id: 106,
+    title: "KW Listings",
+    description: "Showcase properties beautifully with professional listing pages that attract serious buyers.",
+    icon: Home,
+    category: "Command Tools",
+    url: "https://console.command.kw.com/command/listings"
+  },
+  {
+    id: 107,
+    title: "KW Website",
+    description: "Create branded, user-friendly websites in minutes to capture online inquiries.",
+    icon: MapPin,
+    category: "Command Tools",
+    url: "https://console.command.kw.com/command/websites"
+  },
+  {
     id: 3,
     title: "KW University",
-    description: "Access world-class real estate training and mentorship to continuously sharpen your skills and dominate the market.",
+    description: "Access world-class real estate training and mentorship to sharpen skills continuously.",
     icon: TrendingUp,
     category: "Command Tools",
     url: "https://agent.kw.com/connect/learning/categories"
-  },
-  {
-    id: 4,
-    title: "KW Canva",
-    description: "Design stunning marketing materials, from social media posts to property brochures, even if you have no design experience.",
-    icon: Building2,
-    category: "Command Tools",
-    url: "canva.kw.com"
   },
   // External Tools items
   {
     id: 12,
     title: "Real Insights",
-    description: "Get instant, data-driven insights into a property's value, market trends, and transaction history to price homes accurately.",
+    description: "Get instant, data-driven insights on property value, market trends, and history.",
     icon: BarChart3,
     category: "External Tools",
     url: "https://rea-insight.com/",
@@ -56,11 +105,19 @@ const tools = [
   {
     id: 13,
     title: "EdgeProp Inspector",
-    description: "Avoid the pain of manual research by using this tool to get comprehensive property data, including URA planning, school details, and transaction history, all in one place.",
+    description: "Access URA planning, school details, and transaction data quickly, all in one place.",
     icon: TrendingUp,
     category: "External Tools",
     url: "https://www.edgeprop.sg/analytic/inspector",
     image: "/images/tech-tool/edgeprop-pro.webp"
+  },
+  {
+    id: 108,
+    title: "KW Canva",
+    description: "Design stunning brochures, posts, and materials easily, no design experience required.",
+    icon: Building2,
+    category: "External Tools",
+    url: "canva.kw.com"
   },
   {
     id: 18,
@@ -74,7 +131,7 @@ const tools = [
   {
     id: 20,
     title: "SpiderGate DNC Subscription",
-    description: "Easily check phone numbers against the Do Not Call registry to stay compliant and avoid legal trouble.",
+    description: "Verify phone numbers instantly against the Do Not Call registry database.",
     icon: Smartphone,
     category: "External Tools",
     url: "https://drive.google.com/file/d/1GcNpqifBzKSurSmz7qkpIMjrjaVOD1Pm/view"
@@ -312,12 +369,12 @@ const categories = [
 ]
 
 export default function TechToolPage() {
+  const { isSignedIn, user, isLoaded } = useUser()
   const [activeCategory, setActiveCategory] = useState("Command Tools")
   const [searchQuery, setSearchQuery] = useState("")
   const [showMore, setShowMore] = useState(false)
-  const [passwordDialogOpen, setPasswordDialogOpen] = useState(false)
+  const [authDialogOpen, setAuthDialogOpen] = useState(false)
   const [selectedTool, setSelectedTool] = useState<any>(null)
-  const [password, setPassword] = useState("")
  
   const { scrollYProgress, scrollY } = useScroll()
   const scrollYValue = useTransform(scrollY, (value) => value * 0.5)
@@ -351,23 +408,26 @@ export default function TechToolPage() {
 
   const handleCardClick = (tool: any) => {
     if (tool.url) {
-      setSelectedTool(tool)
-      setPasswordDialogOpen(true)
+      if (isSignedIn) {
+        // User is authenticated, directly open the tool
+        const url = tool.url.startsWith('http') ? tool.url : `https://${tool.url}`
+        window.open(url, '_blank')
+      } else {
+        // User is not authenticated, show auth dialog
+        setSelectedTool(tool)
+        setAuthDialogOpen(true)
+      }
     }
   }
 
-  const handlePasswordSubmit = () => {
-    if (password === "kwagent2025#") {
-      if (selectedTool?.url) {
-        const url = selectedTool.url.startsWith('http') ? selectedTool.url : `https://${selectedTool.url}`
-        window.open(url, '_blank')
-      }
-      setPasswordDialogOpen(false)
-      setPassword("")
-      setSelectedTool(null)
-    } else {
-      alert("Incorrect password. Please try again.")
+  const handleAuthSuccess = () => {
+    // After successful authentication, open the selected tool
+    if (selectedTool?.url) {
+      const url = selectedTool.url.startsWith('http') ? selectedTool.url : `https://${selectedTool.url}`
+      window.open(url, '_blank')
     }
+    setAuthDialogOpen(false)
+    setSelectedTool(null)
   }
 
   return (
@@ -471,6 +531,7 @@ export default function TechToolPage() {
         </div>
       </section>
 
+
       {/* Navigation Filters */}
       <section ref={navigationRef} className="relative py-8 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -529,7 +590,7 @@ export default function TechToolPage() {
               <Input
                 placeholder="Search Tools..."
                 value={searchQuery}
-                onChange={(e) => onSearchChange(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onSearchChange(e.target.value)}
                 className="pl-10 bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-[#b40101] focus:ring-[#b40101]/20 transition-all duration-300"
               />
             </motion.div>
@@ -638,16 +699,6 @@ export default function TechToolPage() {
                                       <div className="flex-1 min-w-0 flex flex-col">
                                         <h3 className="text-lg font-semibold text-white mb-2">{tool.title}</h3>
                                         <p className="text-sm text-gray-300 leading-relaxed flex-1">{tool.description}</p>
-                                        {tool.url && (
-                                          <motion.p 
-                                            className="text-xs text-[#b40101] mt-2"
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                            transition={{ delay: 1.0 + groupIndex * 0.2 + index * 0.1 }}
-                                          >
-                                            Click to access →
-                                          </motion.p>
-                                        )}
                                       </div>
                                     </div>
                                   </CardContent>
@@ -726,16 +777,6 @@ export default function TechToolPage() {
                                 <div className="flex-1 min-w-0 flex flex-col">
                                   <h3 className="text-lg font-semibold text-white mb-2">{tool.title}</h3>
                                   <p className="text-sm text-gray-300 leading-relaxed flex-1">{tool.description}</p>
-                                  {tool.url && (
-                                    <motion.p 
-                                      className="text-xs text-[#b40101] mt-2"
-                                      initial={{ opacity: 0 }}
-                                      animate={{ opacity: 1 }}
-                                      transition={{ delay: 0.8 + index * 0.1 }}
-                                    >
-                                      Click to access →
-                                    </motion.p>
-                                  )}
                                 </div>
                               </div>
                             </CardContent>
@@ -972,95 +1013,12 @@ export default function TechToolPage() {
         </div>
       </section>
 
-      {/* Password Dialog */}
-      <AnimatePresence>
-        {passwordDialogOpen && (
-          <Dialog open={passwordDialogOpen} onOpenChange={setPasswordDialogOpen}>
-            <DialogContent className="bg-gray-800 border-gray-700">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-              >
-                <DialogHeader>
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.1 }}
-                  >
-                    <DialogTitle className="text-white">Access Tool</DialogTitle>
-                  </motion.div>
-                </DialogHeader>
-                <motion.div 
-                  className="space-y-4"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3, delay: 0.2 }}
-                >
-                  <motion.p 
-                    className="text-gray-300"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.3 }}
-                  >
-                    Please enter the password to access <span className="text-[#b40101] font-semibold">{selectedTool?.title}</span>
-                  </motion.p>
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.4 }}
-                  >
-                    <Input
-                      type="password"
-                      placeholder="Enter password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-[#b40101] focus:ring-[#b40101]/20 transition-all duration-300"
-                      onKeyPress={(e) => e.key === 'Enter' && handlePasswordSubmit()}
-                      autoFocus
-                    />
-                  </motion.div>
-                  <motion.div 
-                    className="flex gap-3"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.5 }}
-                  >
-                    <motion.div
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <Button
-                        onClick={handlePasswordSubmit}
-                        className="bg-[#b40101] hover:bg-[#8a0101] text-white flex-1 transition-all duration-300 hover:shadow-lg hover:shadow-[#b40101]/30"
-                      >
-                        Access Tool
-                      </Button>
-                    </motion.div>
-                    <motion.div
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <Button
-                        onClick={() => {
-                          setPasswordDialogOpen(false)
-                          setPassword("")
-                          setSelectedTool(null)
-                        }}
-                        variant="outline"
-                        className="border-gray-600 text-gray-300 hover:bg-gray-700 transition-all duration-300"
-                      >
-                        Cancel
-                      </Button>
-                    </motion.div>
-                  </motion.div>
-                </motion.div>
-              </motion.div>
-            </DialogContent>
-          </Dialog>
-        )}
-      </AnimatePresence>
+      {/* Authentication Dialog */}
+      <AuthDialog 
+        open={authDialogOpen} 
+        onOpenChange={setAuthDialogOpen}
+        toolTitle={selectedTool?.title}
+      />
     </motion.main>
   )
 }
