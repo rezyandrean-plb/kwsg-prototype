@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Calendar as CalendarComponent } from "@/components/ui/calendar"
 import { useToast } from "@/components/ui/use-toast"
 import { GoogleReCaptchaProvider, useGoogleReCaptcha } from "react-google-recaptcha-v3"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import {
   Calendar,
   Download,
@@ -212,7 +213,7 @@ const customStyles = `
   }
 `;
 
-// Site Map Form Component with reCAPTCHA
+// Site Plan Form Component with reCAPTCHA
 function SiteMapForm({ 
   onSubmit, 
   onClose, 
@@ -300,7 +301,7 @@ function SiteMapForm({
       <div className="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Request Site Map</h2>
+            <h2 className="text-2xl font-bold text-gray-900">Request Site Plan</h2>
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -491,7 +492,7 @@ function SiteMapForm({
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                       </svg>
                     </div>
-                    Request Site Map
+                    Request Site Plan
                   </>
                 )}
               </Button>
@@ -878,6 +879,14 @@ export default function AureaLanding() {
   }, [])
 
   const [projectImages, setProjectImages] = useState<string[]>([])
+  
+  // Site Plan images for carousel
+  const sitePlanImages = [
+    "/images/aurea/site-plan/Aurea - Site Plan 1.png",
+    "/images/aurea/site-plan/Aurea - Site Plan 2.png",
+    "/images/aurea/site-plan/Aurea - Site Plan 3.png"
+  ]
+  
   useEffect(() => {
     const loadGallery = async () => {
       try {
@@ -945,29 +954,36 @@ export default function AureaLanding() {
     // MRT & CONNECTIVITY
     { icon: <Train className="w-6 h-6" />, name: "Nicoll Highway MRT (Circle Line)", distance: "5 mins' walk (~0.4 km)" },
     { icon: <Train className="w-6 h-6" />, name: "Lavender MRT (East-West Line)", distance: "9 mins' walk (~0.8 km)" },
-    { icon: <Train className="w-6 h-6" />, name: "Bugis Junction / Bugis MRT Interchange", distance: "3 mins' drive" },
-    { icon: <Train className="w-6 h-6" />, name: "Central Business District (Raffles Place / Shenton Way / MBFC)", distance: "7 mins' drive" },
     { icon: <Train className="w-6 h-6" />, name: "Major Expressways (ECP, KPE, Nicoll Highway)", distance: "Quick Access" },
     
     // SHOPPING & LIFESTYLE
     { icon: <ShoppingBag className="w-6 h-6" />, name: "Golden Mile Food Centre", distance: "2 mins' walk (~0.2 km)" },
     { icon: <ShoppingBag className="w-6 h-6" />, name: "Kampong Glam Heritage District", distance: "9 mins' walk (~0.8 km)" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Bugis Junction", distance: "3 mins' drive" },
     { icon: <ShoppingBag className="w-6 h-6" />, name: "Raffles City / Suntec City", distance: "3–4 mins' drive" },
     { icon: <ShoppingBag className="w-6 h-6" />, name: "The Shoppes at Marina Bay Sands", distance: "6 mins' drive" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Orchard Road Shopping Belt", distance: "8 mins' drive" },
     
     // PARKS & RECREATION
     { icon: <Trees className="w-6 h-6" />, name: "Kallang Riverside Park", distance: "3 mins' walk (~0.3 km)" },
     { icon: <Trees className="w-6 h-6" />, name: "Esplanade – Theatres on the Bay", distance: "5 mins' drive" },
+    { icon: <Trees className="w-6 h-6" />, name: "Sands Expo and Convention Centre", distance: "5 mins' drive" },
     { icon: <Trees className="w-6 h-6" />, name: "Gardens by the Bay", distance: "9 mins' drive" },
     { icon: <Trees className="w-6 h-6" />, name: "Singapore Sports Hub & Indoor Stadium", distance: "9 mins' drive" },
     
     // SCHOOLS & EDUCATION
+    { icon: <GraduationCap className="w-6 h-6" />, name: "HWA International School - MSQ Campus", distance: "3 mins' drive" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Nanyang Academy of Fine Arts (NAFA) Bencoolen", distance: "3 mins' drive" },
     { icon: <GraduationCap className="w-6 h-6" />, name: "Singapore Management University (SMU)", distance: "4 mins' drive" },
     { icon: <GraduationCap className="w-6 h-6" />, name: "LASALLE College of the Arts / NAFA", distance: "3–4 mins' drive" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "School of the Arts (SOTA)", distance: "5 mins' drive" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Farrer Park Primary School", distance: "6 mins' drive" },
     { icon: <GraduationCap className="w-6 h-6" />, name: "Anglo-Chinese School (Junior)", distance: "7 mins' drive" },
     { icon: <GraduationCap className="w-6 h-6" />, name: "Dunman High School", distance: "8 mins' drive" },
+    
+    // MEDICAL
+    { icon: <Hospital className="w-6 h-6" />, name: "Raffles Hospital", distance: "2 mins' drive" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Farrer Park Hospital", distance: "4 mins' drive" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Mount Elizabeth Hospital", distance: "11 mins' drive" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Singapore General Hospital", distance: "11 mins' drive" },
   ]
 
   // Mock data for Aurea units and pricing
@@ -1314,7 +1330,7 @@ export default function AureaLanding() {
         setShowSiteMapPopup(false)
         
         toast({
-          title: "Site Map Request Submitted!",
+          title: "Site Plan Request Submitted!",
           description: "Thank you for your interest! We will contact you soon with the site map.",
           variant: "default",
         })
@@ -1605,7 +1621,7 @@ export default function AureaLanding() {
               <CardContent className="space-y-6">
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Project Name:</span>
-                  <span className="font-semibold text-white text-right">Aurea (Residential)<br />The Golden Mile (Commercial)</span>
+                  <span className="font-semibold text-white text-right">Aurea (Residential)</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Developer:</span>
@@ -1658,17 +1674,41 @@ export default function AureaLanding() {
                 <div className="space-y-4">
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-semibold text-white">Site Map</h4>
+                      <h4 className="font-semibold text-white">Site Plan</h4>
                     </div>
-                    <Image
-                      src="/placeholder.svg?height=500&width=800&text=Aurea+Site+Plan"
-                      alt="Aurea Site Map"
-                      width={800}
-                      height={500}
-                      quality={90}
-                      className="w-full rounded mb-3 hover:scale-95 transition-transform duration-500 object-contain"
-                    />
-                    <p className="text-sm text-gray-300 mb-3">
+                    <div className="relative">
+                      <Carousel className="w-full">
+                        <CarouselContent>
+                          {sitePlanImages.map((image, index) => (
+                            <CarouselItem key={index}>
+                              <div className="relative">
+                                <Image
+                                  src={image}
+                                  alt={`Aurea Site Plan ${index + 1}`}
+                                  width={800}
+                                  height={500}
+                                  quality={90}
+                                  className="w-full rounded mb-3 object-contain"
+                                />
+                              </div>
+                            </CarouselItem>
+                          ))}
+                        </CarouselContent>
+                        <CarouselPrevious className="left-2 bg-white/90 hover:bg-white text-gray-800 border-gray-300 shadow-lg" />
+                        <CarouselNext className="right-2 bg-white/90 hover:bg-white text-gray-800 border-gray-300 shadow-lg" />
+                      </Carousel>
+                      {/* Carousel indicators */}
+                      <div className="flex justify-center space-x-2 mt-3">
+                        {sitePlanImages.map((_, index) => (
+                          <button
+                            key={index}
+                            className="w-2 h-2 rounded-full bg-gray-400 hover:bg-gray-300 transition-colors duration-200"
+                            aria-label={`Go to slide ${index + 1}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-300 mb-3 mt-3">
                       View the overall development layout and facilities distribution
                     </p>
                     <Button 
@@ -1678,7 +1718,7 @@ export default function AureaLanding() {
                       onClick={() => setShowSiteMapPopup(true)}
                     >
                       <Download className="w-4 h-4 mr-2" />
-                      Required Site Map
+                      Required Site Plan
                     </Button>
                   </div>
                 </div>
@@ -2025,7 +2065,12 @@ export default function AureaLanding() {
                               >
                                 Book Showflat Visit
                               </button>
-                              
+                              <button 
+                                onClick={() => scrollToSection('lead-form')}
+                                className="w-full bg-white text-red-500 hover:bg-white-600 text-red-500 font-medium py-3 px-4 rounded-lg text-sm transition-colors"
+                              >
+                                Required Brochure
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -2149,7 +2194,7 @@ export default function AureaLanding() {
         className={`py-8 md:py-16 relative bg-cover bg-center section-entrance`}
         data-section-id="lead-form"
         style={{ 
-          backgroundImage: 'url("/images/aurea/gallery/R-View09 - L3 Infinity Pool View_08 (250109)-min.webp")',
+          backgroundImage: 'url("/images/aurea/gallery/R-View09 - L3 Infinity Pool View_08 (250109).jpg")',
           opacity: animatedSections.has('lead-form') ? 1 : 0,
           transform: animatedSections.has('lead-form') ? 'translateY(0)' : 'translateY(60px)'
         }}
@@ -2181,7 +2226,7 @@ export default function AureaLanding() {
         </div>
       </section>
 
-      {/* Site Map Request Popup */}
+      {/* Site Plan Request Popup */}
       {showSiteMapPopup && (
         <GoogleReCaptchaProvider
           reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"}
