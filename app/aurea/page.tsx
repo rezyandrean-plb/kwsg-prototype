@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Calendar as CalendarComponent } from "@/components/ui/calendar"
 import { useToast } from "@/components/ui/use-toast"
 import { GoogleReCaptchaProvider, useGoogleReCaptcha } from "react-google-recaptcha-v3"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import {
   Calendar,
   Download,
@@ -212,7 +213,7 @@ const customStyles = `
   }
 `;
 
-// Site Map Form Component with reCAPTCHA
+// Site Plan Form Component with reCAPTCHA
 function SiteMapForm({ 
   onSubmit, 
   onClose, 
@@ -300,7 +301,7 @@ function SiteMapForm({
       <div className="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Request Site Map</h2>
+            <h2 className="text-2xl font-bold text-gray-900">Request Site Plan</h2>
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -491,7 +492,7 @@ function SiteMapForm({
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                       </svg>
                     </div>
-                    Request Site Map
+                    Request Site Plan
                   </>
                 )}
               </Button>
@@ -760,6 +761,82 @@ export default function AureaLanding() {
   const [animatedSections, setAnimatedSections] = useState<Set<string>>(new Set())
   const [showSiteMapPopup, setShowSiteMapPopup] = useState(false)
   const [unitsActiveTab, setUnitsActiveTab] = useState(0)
+  const [floorPlanIndex, setFloorPlanIndex] = useState(0)
+
+  useEffect(() => {
+    setFloorPlanIndex(0)
+  }, [unitsActiveTab])
+
+  const generateFloorPlanCandidates = (subtype: any, unitType: string) => {
+    const base = '/images/aurea/floor-plan/'
+    const candidates: string[] = []
+
+    const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+    const ut = normalize(unitType.replace(' Units', ''))
+    const st = normalize(subtype?.subtype || '')
+
+    // Derive human-readable bedroom label like "2 Bedroom"
+    const extractBedroomLabel = (raw: string) => {
+      const m = raw.match(/(\d+)\s*-?\s*bedroom/i)
+      if (m) return `${m[1]} Bedroom`
+      // try unitType too
+      const m2 = unitType.match(/(\d+)\s*-?\s*bedroom/i)
+      if (m2) return `${m2[1]} Bedroom`
+      return ''
+    }
+    const bedroomLabel = extractBedroomLabel(subtype?.subtype || unitType)
+    const safeBedroomLabel = bedroomLabel // keep spaces as filenames have spaces
+
+    // Specific "Type" patterns e.g. "2 Bedroom - Type B1.jpg" (put FIRST, prioritize jpg)
+    if (bedroomLabel) {
+      const typeLetters = ['A','B','C','D','E','F']
+      const extsPriority = ['jpg', 'jpeg', 'png', 'webp']
+      for (const L of typeLetters) {
+        for (let n = 1; n <= 9; n++) {
+          for (const ext of extsPriority) {
+            candidates.push(`${base}${bedroomLabel} - Type ${L}${n}.${ext}`)
+            // Include variants with trailing letter (e.g., B1H)
+            candidates.push(`${base}${bedroomLabel} - Type ${L}${n}H.${ext}`)
+          }
+        }
+      }
+    }
+
+    // Common patterns
+    const patterns = [
+      st,
+      ut,
+      st.replace('bedroom-', 'br-'),
+      ut.replace('bedroom-', 'br-'),
+      st.replace(' ', '-'),
+      // also push human label without normalization (to match filenames with spaces)
+      safeBedroomLabel,
+    ].filter(Boolean)
+
+    // Build numbered variants (prioritize jpg)
+    for (const p of patterns) {
+      if (!p) continue
+      const exts = ['jpg', 'jpeg', 'png', 'webp']
+      for (const ext of exts) {
+        candidates.push(`${base}${p}.${ext}`)
+      }
+      for (let i = 1; i <= 9; i++) {
+        for (const ext of exts) {
+          candidates.push(`${base}${p}-${i}.${ext}`)
+          candidates.push(`${base}${p} ${i}.${ext}`)
+        }
+      }
+    }
+
+    // Fallback to any explicit image on subtype
+    if (subtype?.floor_plan_image) {
+      candidates.unshift(subtype.floor_plan_image)
+    }
+
+    // De-duplicate while preserving order
+    const seen = new Set<string>()
+    return candidates.filter((c) => (seen.has(c) ? false : (seen.add(c), true)))
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -801,13 +878,44 @@ export default function AureaLanding() {
     }
   }, [])
 
-  const projectImages = [
+  const [projectImages, setProjectImages] = useState<string[]>([])
+  
+  // Site Plan images for carousel
+  const sitePlanImages = [
+    "/images/aurea/site-plan/Aurea - Site Plan 1.png",
+    "/images/aurea/site-plan/Aurea - Site Plan 2.png",
+    "/images/aurea/site-plan/Aurea - Site Plan 3.png"
+  ]
+  
+  useEffect(() => {
+    const loadGallery = async () => {
+      try {
+        const res = await fetch('/api/aurea/gallery')
+        if (!res.ok) throw new Error('Failed to load gallery')
+        const data = await res.json()
+        if (Array.isArray(data?.images) && data.images.length > 0) {
+          setProjectImages(data.images)
+        } else {
+          setProjectImages([
     "/images/aurea/gallery/R-View03 - Aerial View from Nicoll Highway_04-min.webp",
     "/images/aurea/gallery/R-View09 - L3 Infinity Pool View_08 (250109)-min.webp",
     "/images/aurea/gallery/R-View17 - 2BR Living Dining Area B2_08 (250108)-min.webp",
     "/images/aurea/gallery/R-View22 - Penthouse Living Dining Area PH2_06 (250108)-min.webp",
     "/images/aurea/gallery/R-View34 - Aerial View from Beach Road Dusk_07 (241216) (1)-min.webp",
-  ]
+          ])
+        }
+      } catch (e) {
+        setProjectImages([
+          "/images/aurea/gallery/R-View03 - Aerial View from Nicoll Highway_04-min.webp",
+          "/images/aurea/gallery/R-View09 - L3 Infinity Pool View_08 (250109)-min.webp",
+          "/images/aurea/gallery/R-View17 - 2BR Living Dining Area B2_08 (250108)-min.webp",
+          "/images/aurea/gallery/R-View22 - Penthouse Living Dining Area PH2_06 (250108)-min.webp",
+          "/images/aurea/gallery/R-View34 - Aerial View from Beach Road Dusk_07 (241216) (1)-min.webp",
+        ])
+      }
+    }
+    loadGallery()
+  }, [])
 
   const floorPlans = {
     "1br": {
@@ -846,153 +954,137 @@ export default function AureaLanding() {
     // MRT & CONNECTIVITY
     { icon: <Train className="w-6 h-6" />, name: "Nicoll Highway MRT (Circle Line)", distance: "5 mins' walk (~0.4 km)" },
     { icon: <Train className="w-6 h-6" />, name: "Lavender MRT (East-West Line)", distance: "9 mins' walk (~0.8 km)" },
-    { icon: <Train className="w-6 h-6" />, name: "Bugis Junction / Bugis MRT Interchange", distance: "3 mins' drive" },
-    { icon: <Train className="w-6 h-6" />, name: "Central Business District (Raffles Place / Shenton Way / MBFC)", distance: "7 mins' drive" },
     { icon: <Train className="w-6 h-6" />, name: "Major Expressways (ECP, KPE, Nicoll Highway)", distance: "Quick Access" },
     
     // SHOPPING & LIFESTYLE
     { icon: <ShoppingBag className="w-6 h-6" />, name: "Golden Mile Food Centre", distance: "2 mins' walk (~0.2 km)" },
     { icon: <ShoppingBag className="w-6 h-6" />, name: "Kampong Glam Heritage District", distance: "9 mins' walk (~0.8 km)" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Bugis Junction", distance: "3 mins' drive" },
     { icon: <ShoppingBag className="w-6 h-6" />, name: "Raffles City / Suntec City", distance: "3–4 mins' drive" },
     { icon: <ShoppingBag className="w-6 h-6" />, name: "The Shoppes at Marina Bay Sands", distance: "6 mins' drive" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Orchard Road Shopping Belt", distance: "8 mins' drive" },
     
     // PARKS & RECREATION
     { icon: <Trees className="w-6 h-6" />, name: "Kallang Riverside Park", distance: "3 mins' walk (~0.3 km)" },
     { icon: <Trees className="w-6 h-6" />, name: "Esplanade – Theatres on the Bay", distance: "5 mins' drive" },
+    { icon: <Trees className="w-6 h-6" />, name: "Sands Expo and Convention Centre", distance: "5 mins' drive" },
     { icon: <Trees className="w-6 h-6" />, name: "Gardens by the Bay", distance: "9 mins' drive" },
     { icon: <Trees className="w-6 h-6" />, name: "Singapore Sports Hub & Indoor Stadium", distance: "9 mins' drive" },
     
     // SCHOOLS & EDUCATION
+    { icon: <GraduationCap className="w-6 h-6" />, name: "HWA International School - MSQ Campus", distance: "3 mins' drive" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Nanyang Academy of Fine Arts (NAFA) Bencoolen", distance: "3 mins' drive" },
     { icon: <GraduationCap className="w-6 h-6" />, name: "Singapore Management University (SMU)", distance: "4 mins' drive" },
     { icon: <GraduationCap className="w-6 h-6" />, name: "LASALLE College of the Arts / NAFA", distance: "3–4 mins' drive" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "School of the Arts (SOTA)", distance: "5 mins' drive" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Farrer Park Primary School", distance: "6 mins' drive" },
     { icon: <GraduationCap className="w-6 h-6" />, name: "Anglo-Chinese School (Junior)", distance: "7 mins' drive" },
     { icon: <GraduationCap className="w-6 h-6" />, name: "Dunman High School", distance: "8 mins' drive" },
+    
+    // MEDICAL
+    { icon: <Hospital className="w-6 h-6" />, name: "Raffles Hospital", distance: "2 mins' drive" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Farrer Park Hospital", distance: "4 mins' drive" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Mount Elizabeth Hospital", distance: "11 mins' drive" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Singapore General Hospital", distance: "11 mins' drive" },
   ]
 
   // Mock data for Aurea units and pricing
   const mockUnitPricing = [
     {
-      unitType: "2-Bedroom Units",
+      unitType: "2-Bedroom",
       subtypes: [
         {
-          subtype: "2-Bedroom Premium",
+          subtype: "2-Bedroom",
           bedrooms: 2,
           bathrooms: 2,
-          size: "850 sqft",
-          price: "$2.1M - $2.3M",
+          size: "635 - 710 sqft",
+          price: "$2.1M - $2.5M",
           price_per_sqft: 2470,
           currency: "SGD",
+          total: 80,
+          available: 20,
+          status: 50,
+          floor_plan_images: [
+            "/images/aurea/floor-plan/2 Bedroom - Type B1.jpg",
+            "/images/aurea/floor-plan/2 Bedroom - Type B1H.jpg",
+            "/images/aurea/floor-plan/2 Bedroom - Type B2.jpg",
+            "/images/aurea/floor-plan/2 Bedroom - Type B2H.jpg",
+            "/images/aurea/floor-plan/2 Bedroom - Type B3.jpg",
+            "/images/aurea/floor-plan/2 Bedroom - Type B3H.jpg"
+          ],
+          payment_terms: "20% Down Payment",
+          discount_info: "Launch Collection"
+        }
+      ]
+    },
+    {
+      unitType: "3-Bedroom",
+      subtypes: [
+        {
+          subtype: "3-Bedroom",
+          bedrooms: 3,
+          bathrooms: 2,
+          size: "1,001 sqft",
+          price: "$3.0M - $3.7M",
+          price_per_sqft: 2510,
+          currency: "SGD",
+          total: 70,
+          available: 21,
+          status: 58,
+          floor_plan_images: [
+            "/images/aurea/floor-plan/3 Bedroom - Type C1.jpg",
+            "/images/aurea/floor-plan/3 Bedroom - Type C1H.jpg"
+          ],
+          payment_terms: "20% Down Payment",
+          discount_info: "Launch Collection"
+        }
+      ]
+    },
+    {
+      unitType: "4-Bedroom",
+      subtypes: [
+        {
+          subtype: "4-Bedroom",
+          bedrooms: 4,
+          bathrooms: 3,
+          size: "1,442 – 1,798 sqft",
+          price: "$4.2M - $5.2M",
+          price_per_sqft: 2640,
+          currency: "SGD",
           total: 45,
-          available: 12,
-          status: 27,
-          floor_plan_image: "/placeholder.svg?height=400&width=600&text=2BR+Premium+Floor+Plan",
+          available: 14,
+          status: 60,
+          floor_plan_images: [
+            "/images/aurea/floor-plan/4 Bedroom - Type D1.jpg",
+            "/images/aurea/floor-plan/4 Bedroom - Type D1g.jpg",
+            "/images/aurea/floor-plan/4 Bedroom - Type D1H.jpg",
+            "/images/aurea/floor-plan/4 Bedroom - Type D1Hg.jpg",
+            "/images/aurea/floor-plan/4 Bedroom - Type D2.jpg",
+            "/images/aurea/floor-plan/4 Bedroom - Type D2g.jpg",
+            "/images/aurea/floor-plan/4 Bedroom - Type D2H.jpg",
+            "/images/aurea/floor-plan/4 Bedroom - Type D2Hg.jpg"
+          ],
           payment_terms: "20% Down Payment",
-          discount_info: "Early Bird Discount Available"
-        },
-        {
-          subtype: "2-Bedroom Deluxe",
-          bedrooms: 2,
-          bathrooms: 2,
-          size: "920 sqft",
-          price: "$2.3M - $2.5M",
-          price_per_sqft: 2500,
-          currency: "SGD",
-          total: 35,
-          available: 8,
-          status: 23,
-          floor_plan_image: "/placeholder.svg?height=400&width=600&text=2BR+Deluxe+Floor+Plan",
-          payment_terms: "20% Down Payment",
-          discount_info: "Limited Time Offer"
+          discount_info: "Launch Collection"
         }
       ]
     },
     {
-      unitType: "3-Bedroom Units",
+      unitType: "5-Bedroom",
       subtypes: [
         {
-          subtype: "3-Bedroom Premium",
-          bedrooms: 3,
-          bathrooms: 2,
-          size: "1,200 sqft",
-          price: "$3.0M - $3.3M",
-          price_per_sqft: 2500,
-          currency: "SGD",
-          total: 40,
-          available: 15,
-          status: 38,
-          floor_plan_image: "/placeholder.svg?height=400&width=600&text=3BR+Premium+Floor+Plan",
-          payment_terms: "20% Down Payment",
-          discount_info: "VIP Preview Pricing"
-        },
-        {
-          subtype: "3-Bedroom Deluxe",
-          bedrooms: 3,
-          bathrooms: 3,
-          size: "1,350 sqft",
-          price: "$3.4M - $3.7M",
-          price_per_sqft: 2520,
-          currency: "SGD",
-          total: 30,
-          available: 6,
-          status: 20,
-          floor_plan_image: "/placeholder.svg?height=400&width=600&text=3BR+Deluxe+Floor+Plan",
-          payment_terms: "20% Down Payment",
-          discount_info: "Exclusive Launch Price"
-        }
-      ]
-    },
-    {
-      unitType: "4-Bedroom Units",
-      subtypes: [
-        {
-          subtype: "4-Bedroom Premium",
-          bedrooms: 4,
-          bathrooms: 3,
-          size: "1,600 sqft",
-          price: "$4.2M - $4.6M",
-          price_per_sqft: 2625,
-          currency: "SGD",
-          total: 25,
-          available: 10,
-          status: 40,
-          floor_plan_image: "/placeholder.svg?height=400&width=600&text=4BR+Premium+Floor+Plan",
-          payment_terms: "20% Down Payment",
-          discount_info: "Developer's Special"
-        },
-        {
-          subtype: "4-Bedroom Deluxe",
-          bedrooms: 4,
-          bathrooms: 4,
-          size: "1,800 sqft",
-          price: "$4.8M - $5.2M",
-          price_per_sqft: 2667,
-          currency: "SGD",
-          total: 20,
-          available: 4,
-          status: 20,
-          floor_plan_image: "/placeholder.svg?height=400&width=600&text=4BR+Deluxe+Floor+Plan",
-          payment_terms: "20% Down Payment",
-          discount_info: "Limited Edition"
-        }
-      ]
-    },
-    {
-      unitType: "5-Bedroom Units",
-      subtypes: [
-        {
-          subtype: "5-Bedroom Penthouse",
+          subtype: "5-Bedroom",
           bedrooms: 5,
           bathrooms: 4,
-          size: "2,200 sqft",
+          size: "2,852 - 3251 sqft",
           price: "$6.5M - $7.2M",
           price_per_sqft: 2955,
           currency: "SGD",
           total: 8,
           available: 2,
           status: 25,
-          floor_plan_image: "/placeholder.svg?height=400&width=600&text=5BR+Penthouse+Floor+Plan",
+          floor_plan_images: [
+            "/images/aurea/floor-plan/5 Bedroom - Type E1.jpg",
+            "/images/aurea/floor-plan/5 Bedroom - Type E2.jpg"
+          ],
           payment_terms: "20% Down Payment",
           discount_info: "Ultra-Luxury Collection"
         }
@@ -1238,7 +1330,7 @@ export default function AureaLanding() {
         setShowSiteMapPopup(false)
         
         toast({
-          title: "Site Map Request Submitted!",
+          title: "Site Plan Request Submitted!",
           description: "Thank you for your interest! We will contact you soon with the site map.",
           variant: "default",
         })
@@ -1529,7 +1621,7 @@ export default function AureaLanding() {
               <CardContent className="space-y-6">
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Project Name:</span>
-                  <span className="font-semibold text-white text-right">Aurea (Residential)<br />The Golden Mile (Commercial)</span>
+                  <span className="font-semibold text-white text-right">Aurea (Residential)</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Developer:</span>
@@ -1582,17 +1674,41 @@ export default function AureaLanding() {
                 <div className="space-y-4">
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-semibold text-white">Site Map</h4>
+                      <h4 className="font-semibold text-white">Site Plan</h4>
                     </div>
-                    <Image
-                      src="/placeholder.svg?height=500&width=800&text=Aurea+Site+Plan"
-                      alt="Aurea Site Map"
-                      width={800}
-                      height={500}
-                      quality={90}
-                      className="w-full rounded mb-3 hover:scale-95 transition-transform duration-500 object-contain"
-                    />
-                    <p className="text-sm text-gray-300 mb-3">
+                    <div className="relative">
+                      <Carousel className="w-full">
+                        <CarouselContent>
+                          {sitePlanImages.map((image, index) => (
+                            <CarouselItem key={index}>
+                              <div className="relative">
+                                <Image
+                                  src={image}
+                                  alt={`Aurea Site Plan ${index + 1}`}
+                                  width={800}
+                                  height={500}
+                                  quality={90}
+                                  className="w-full rounded mb-3 object-contain"
+                                />
+                              </div>
+                            </CarouselItem>
+                          ))}
+                        </CarouselContent>
+                        <CarouselPrevious className="left-2 bg-white/90 hover:bg-white text-gray-800 border-gray-300 shadow-lg" />
+                        <CarouselNext className="right-2 bg-white/90 hover:bg-white text-gray-800 border-gray-300 shadow-lg" />
+                      </Carousel>
+                      {/* Carousel indicators */}
+                      <div className="flex justify-center space-x-2 mt-3">
+                        {sitePlanImages.map((_, index) => (
+                          <button
+                            key={index}
+                            className="w-2 h-2 rounded-full bg-gray-400 hover:bg-gray-300 transition-colors duration-200"
+                            aria-label={`Go to slide ${index + 1}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-300 mb-3 mt-3">
                       View the overall development layout and facilities distribution
                     </p>
                     <Button 
@@ -1602,7 +1718,7 @@ export default function AureaLanding() {
                       onClick={() => setShowSiteMapPopup(true)}
                     >
                       <Download className="w-4 h-4 mr-2" />
-                      Required Site Map
+                      Required Site Plan
                     </Button>
                   </div>
                 </div>
@@ -1689,7 +1805,7 @@ export default function AureaLanding() {
               </div>
 
               
-              <div className="flex items-center justify-center mt-6 space-x-3">
+              <div className="flex items-center justify-center mt-6 space-x-3 overflow-x-auto px-2">
                 {/* Previous Arrow */}
                 <Button
                   variant="outline"
@@ -1704,7 +1820,7 @@ export default function AureaLanding() {
                 {projectImages.map((image, index) => (
                   <button
                     key={index}
-                    className={`relative w-20 h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-110 ${
+                    className={`relative w-20 h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-110 flex-shrink-0 ${
                       index === currentImageIndex
                         ? "border-primary-red shadow-lg scale-105"
                         : "border-gray-200 hover:border-gray-300"
@@ -1863,16 +1979,54 @@ export default function AureaLanding() {
                           {/* Floor Plan Image - Left Side */}
                           <div>
                             {(() => {
-                              const floorPlanImage = subtype.floor_plan_image
+                              const images = Array.isArray(subtype.floor_plan_images) && subtype.floor_plan_images.length > 0
+                                ? subtype.floor_plan_images
+                                : []
+                              const hasImages = images && images.length > 0
+
+                              const prev = () => setFloorPlanIndex((i) => (i - 1 + images.length) % images.length)
+                              const next = () => setFloorPlanIndex((i) => (i + 1) % images.length)
+
                               return (
                                 <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden border border-gray-700">
+                                  {hasImages ? (
                                   <Image
-                                    src={floorPlanImage || `/placeholder.svg?height=400&width=600&text=${encodeURIComponent(currentUnit.unitType.replace(' Units', '') + ' Floor Plan')}`}
+                                      key={images[floorPlanIndex % images.length]}
+                                      src={images[floorPlanIndex % images.length]}
                                     alt={`${currentUnit.unitType.replace(' Units', '')} Floor Plan`}
                                     fill
-                                    className="object-cover"
-                                  />
-                                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                                      className="object-contain bg-black"
+                                    />
+                                  ) : (
+                                    <div className="absolute inset-0 flex items-center justify-center bg-black text-white text-xs">No floor plan images</div>
+                                  )}
+                                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
+                                  {hasImages && images.length > 1 && (
+                                    <>
+                                      <button
+                                        aria-label="Previous floor plan"
+                                        className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow"
+                                        onClick={prev}
+                                      >
+                                        <ChevronLeft className="w-4 h-4" />
+                                      </button>
+                                      <button
+                                        aria-label="Next floor plan"
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow"
+                                        onClick={next}
+                                      >
+                                        <ChevronRight className="w-4 h-4" />
+                                      </button>
+                                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+                                        {images.slice(0, 8).map((_img: string, idx: number) => (
+                                          <span
+                                            key={idx}
+                                            className={`w-2 h-2 rounded-full ${idx === (floorPlanIndex % images.length) ? 'bg-white' : 'bg-white/40'}`}
+                                          />
+                                        ))}
+                                      </div>
+                                    </>
+                                  )}
                                   <div className="absolute bottom-1 left-1 text-white text-xs font-medium">
                                     Floor Plan
                                   </div>
@@ -1911,7 +2065,12 @@ export default function AureaLanding() {
                               >
                                 Book Showflat Visit
                               </button>
-                              
+                              <button 
+                                onClick={() => scrollToSection('lead-form')}
+                                className="w-full bg-white text-red-500 hover:bg-white-600 text-red-500 font-medium py-3 px-4 rounded-lg text-sm transition-colors"
+                              >
+                                Required Brochure
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -1965,14 +2124,14 @@ export default function AureaLanding() {
                 <div className="w-full rounded-lg overflow-hidden shadow-lg">
                   <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
                     <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3786.2308858225747!2d103.86307007471228!3d1.3031172617248135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19116424c627%3A0xa2823d888c760319!2sAurea!5e1!3m2!1sen!2sid!4v1757919325191!5m2!1sen!2sid"
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15271.694546428162!2d103.85770980545122!3d1.3038412869991762!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19116424c627%3A0xa2823d888c760319!2sAurea!5e0!3m2!1sen!2sid!4v1757920658884!5m2!1sen!2sid"
                       style={{ border: 0 }}
                       allowFullScreen
                       loading="lazy"
                       referrerPolicy="no-referrer-when-downgrade"
                       className="absolute inset-0 w-full h-full"
-                    />
-                  </div>
+                  />
+                </div>
                 </div>
                 <div className="grid md:grid-cols-3 gap-12 md:gap-12 max-w-4xl mx-auto px-4">
                   <div className="flex items-center space-x-4">
@@ -2035,7 +2194,7 @@ export default function AureaLanding() {
         className={`py-8 md:py-16 relative bg-cover bg-center section-entrance`}
         data-section-id="lead-form"
         style={{ 
-          backgroundImage: 'url("/images/aurea/gallery/R-View09 - L3 Infinity Pool View_08 (250109)-min.webp")',
+          backgroundImage: 'url("/images/aurea/gallery/R-View09 - L3 Infinity Pool View_08 (250109).jpg")',
           opacity: animatedSections.has('lead-form') ? 1 : 0,
           transform: animatedSections.has('lead-form') ? 'translateY(0)' : 'translateY(60px)'
         }}
@@ -2067,7 +2226,7 @@ export default function AureaLanding() {
         </div>
       </section>
 
-      {/* Site Map Request Popup */}
+      {/* Site Plan Request Popup */}
       {showSiteMapPopup && (
         <GoogleReCaptchaProvider
           reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"}
@@ -2092,4 +2251,4 @@ export default function AureaLanding() {
       </div>
     </GoogleReCaptchaProvider>
   )
-}
+} 

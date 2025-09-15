@@ -18,7 +18,8 @@ const tools = [
     description: "Handle the entire transaction process smoothly from start to finish, paperwork-free.",
     icon: Building2,
     category: "Internal Tool",
-    url: "app.propsage.com"
+    url: "app.propsage.com",
+    image: "/images/tech-tool/kw-propsage.webp"
   },
   {
     id: 2,
@@ -34,7 +35,8 @@ const tools = [
     description: "Organize leads and contacts intelligently, never forget important follow-ups again.",
     icon: Building2,
     category: "Command Tools",
-    url: "https://console.command.kw.com/command/contacts"
+    url: "https://console.command.kw.com/command/contacts",
+    image: "/images/tech-tool/kw-contacts.webp"
   },
   {
     id: 102,
@@ -42,7 +44,8 @@ const tools = [
     description: "Track every client’s to-do list carefully, ensuring no task gets missed.",
     icon: Calculator,
     category: "Command Tools",
-    url: "https://console.command.kw.com/command/task-manager"
+    url: "https://console.command.kw.com/command/task-manager",
+    image: "/images/tech-tool/kw-tasks.webp"
   },
   {
     id: 103,
@@ -50,7 +53,8 @@ const tools = [
     description: "Generate steady social media leads without needing complex ad platform expertise.",
     icon: TrendingUp,
     category: "Command Tools",
-    url: "https://campaigns.kw.com/"
+    url: "https://campaigns.kw.com/",
+    image: "/images/tech-tool/kw-campaigns.webp"
   },
   {
     id: 104,
@@ -74,7 +78,8 @@ const tools = [
     description: "Showcase properties beautifully with professional listing pages that attract serious buyers.",
     icon: Home,
     category: "Command Tools",
-    url: "https://console.command.kw.com/command/listings"
+    url: "https://console.command.kw.com/command/listings",
+    image: "/images/tech-tool/kw-listings.webp"
   },
   {
     id: 107,
@@ -90,7 +95,8 @@ const tools = [
     description: "Access world-class real estate training and mentorship to sharpen skills continuously.",
     icon: TrendingUp,
     category: "Command Tools",
-    url: "https://agent.kw.com/connect/learning/categories"
+    url: "https://agent.kw.com/connect/learning/categories",
+    image: "/images/tech-tool/kw-university.webp"
   },
   // External Tools items
   {
@@ -297,7 +303,8 @@ const tools = [
     description: "Compare BUC vs Resale financial outlays, analysing own-stay versus investment.",
     icon: BarChart3,
     category: "Research Tools",
-    url: "https://drive.google.com/drive/u/2/folders/16cpLVQWIGSmdsat2f9XONQkDbOESYV0m"
+    url: "https://drive.google.com/drive/u/2/folders/16cpLVQWIGSmdsat2f9XONQkDbOESYV0m",
+    image: "/images/tech-tool/research-charts.webp"
   },
   // Training Resource items
   {
@@ -306,7 +313,8 @@ const tools = [
     description: "Learn PropTech calculators, EdgeProp Inspector, and Real Insights through recorded training.",
     icon: Play,
     category: "Training Resource",
-    url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmAqEH3-QDXlGc4Opm9i3lGa0"
+    url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmAqEH3-QDXlGc4Opm9i3lGa0",
+    image: "/images/tech-tool/kw-tutorial.webp"
   },
   {
     id: 31,
@@ -314,15 +322,17 @@ const tools = [
     description: "Watch step-by-step process for submitting and managing deals using PropSage.",
     icon: Play,
     category: "Training Resource",
-    url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmAoqtN5dPkjshZgUhF735R9x"
+    url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmAoqtN5dPkjshZgUhF735R9x",
+    image: "/images/tech-tool/kw-tutorial.webp"
   },
   {
     id: 32,
     title: "Video Guide: KW Command",
-    description: "Get a visual walkthrough of KW Command’s main tools and features.",
+    description: "Get a visual walkthrough of KW Command's main tools and features.",
     icon: Play,
     category: "Training Resource",
-    url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmAr-TbCVIjwGGCItRE-mQ3Vg"
+    url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmAr-TbCVIjwGGCItRE-mQ3Vg",
+    image: "/images/tech-tool/kw-tutorial.webp"
   },
   {
     id: 33,
@@ -330,7 +340,8 @@ const tools = [
     description: "Follow detailed written steps to navigate KW Command confidently and effectively.",
     icon: Play,
     category: "Training Resource",
-    url: "https://answers.kw.com/hc/en-us/categories/26283417706515-Command"
+    url: "https://answers.kw.com/hc/en-us/categories/26283417706515-Command",
+    image: "/images/tech-tool/kw-tutorial.webp"
   },
   {
     id: 34,
@@ -338,7 +349,8 @@ const tools = [
     description: "Master KW Command mobile app functions with clear, easy instructions provided.",
     icon: Play,
     category: "Training Resource",
-    url: "https://answers.kw.com/hc/en-us/categories/4402619174931-Command-App"
+    url: "https://answers.kw.com/hc/en-us/categories/4402619174931-Command-App",
+    image: "/images/tech-tool/kw-tutorial.webp"
   },
   {
     id: 35,
@@ -346,7 +358,8 @@ const tools = [
     description: "Leverage Real Insights step-by-step for effective property research and analysis.",
     icon: Play,
     category: "Training Resource",
-    url: "https://drive.google.com/file/d/1YkRJJebAJhWilzd2mvTMwMGbIvzvBzWY/view?usp=drive_link"
+    url: "https://drive.google.com/file/d/1YkRJJebAJhWilzd2mvTMwMGbIvzvBzWY/view?usp=drive_link",
+    image: "/images/tech-tool/kw-tutorial.webp"
   },
   {
     id: 36,
@@ -354,7 +367,8 @@ const tools = [
     description: "Generate and interpret valuation reports from Real Insights with simple steps.",
     icon: Play,
     category: "Training Resource",
-    url: "https://drive.google.com/file/d/1KnOVVO_2YtvDta0vS_t0nxCIlo1K0AK3/view?usp=drive_link"
+    url: "https://drive.google.com/file/d/1KnOVVO_2YtvDta0vS_t0nxCIlo1K0AK3/view?usp=drive_link",
+    image: "/images/tech-tool/kw-tutorial.webp"
   },
 ]
 
