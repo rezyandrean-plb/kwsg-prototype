@@ -802,10 +802,11 @@ export default function AureaLanding() {
   }, [])
 
   const projectImages = [
-    "/placeholder.svg?height=600&width=800&text=Aurea+Exterior+View",
-    "/placeholder.svg?height=600&width=800&text=Aurea+Facilities",
-    "/placeholder.svg?height=600&width=800&text=Aurea+Interior",
-    "/placeholder.svg?height=600&width=800&text=Aurea+Location",
+    "/images/aurea/gallery/R-View03 - Aerial View from Nicoll Highway_04-min.webp",
+    "/images/aurea/gallery/R-View09 - L3 Infinity Pool View_08 (250109)-min.webp",
+    "/images/aurea/gallery/R-View17 - 2BR Living Dining Area B2_08 (250108)-min.webp",
+    "/images/aurea/gallery/R-View22 - Penthouse Living Dining Area PH2_06 (250108)-min.webp",
+    "/images/aurea/gallery/R-View34 - Aerial View from Beach Road Dusk_07 (241216) (1)-min.webp",
   ]
 
   const floorPlans = {
@@ -1352,7 +1353,7 @@ export default function AureaLanding() {
         {/* Background elements */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/placeholder.svg?height=800&width=1200&text=Aurea+Hero+Background"
+            src="/images/aurea/aurea-hero.webp"
             alt="Aurea Hero"
             fill
             className="object-cover"
@@ -1454,6 +1455,29 @@ export default function AureaLanding() {
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Your future home awaits in District 7 – just <strong>5 minutes' walk</strong> to Nicoll Highway MRT. Discover exclusive 2- to 5-bedroom residences designed for today's modern lifestyle, seamlessly linked to The Golden Mile conserved icon.
             </p>
+          </div>
+
+          {/* Video Section */}
+          <div className={`mb-12 transition-all duration-1000 delay-500 ${
+            animatedSections.has('project-info') ? 'animate-fade-in-up' : ''
+          }`} style={{
+            opacity: animatedSections.has('project-info') ? 1 : 0,
+            transform: animatedSections.has('project-info') ? 'translateY(0)' : 'translateY(50px)'
+          }}>
+            <div className="max-w-4xl mx-auto">
+              <div className="relative aspect-video rounded-xl overflow-hidden shadow-2xl bg-gray-900">
+                
+                <iframe
+                  className="w-full h-full"
+                  src="https://drive.google.com/file/d/1-0SE91jFU7Ya53pJc9znfeUrRHzURq7d/preview"
+                  title="Aurea Project Overview"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+                
+              </div>
+            </div>
           </div>
 
           {/* Feature Cards */}
@@ -1657,7 +1681,7 @@ export default function AureaLanding() {
               <div className="relative h-[500px] rounded-xl overflow-hidden shadow-2xl">
                 <Image
                   src={projectImages[currentImageIndex] || "/placeholder.svg"}
-                  alt={`Springleaf Residence - Image ${currentImageIndex + 1}`}
+                  alt={`Aurea - Image ${currentImageIndex + 1}`}
                   fill
                   className="object-cover transition-all duration-500"
                 />
@@ -1685,32 +1709,43 @@ export default function AureaLanding() {
                   <div className="text-white">
                     <h4 className="text-lg font-semibold mb-1">
                       {currentImageIndex === 0
-                        ? "Exterior View"
+                        ? "Aerial View"
                         : currentImageIndex === 1
-                        ? "Facilities & Amenities"
+                        ? "Infinity Pool"
                         : currentImageIndex === 2
-                        ? "Interior Design"
+                        ? "2BR Living Area"
                         : currentImageIndex === 3
-                        ? "Location & Surroundings"
-                        : "Project Overview"}
+                        ? "Penthouse Living"
+                        : "Dusk Aerial View"}
                     </h4>
                     <p className="text-sm opacity-90">
                       {currentImageIndex === 0
-                        ? "Breathtaking exterior perspective of Aurea"
+                        ? "Stunning aerial perspective from Nicoll Highway"
                         : currentImageIndex === 1
-                        ? "Premium facilities and lifestyle amenities"
+                        ? "Luxurious infinity pool with panoramic views"
                         : currentImageIndex === 2
-                        ? "Luxurious interior design and finishes"
+                        ? "Spacious 2-bedroom living and dining area"
                         : currentImageIndex === 3
-                        ? "Prime location in The Golden Mile"
-                        : "Comprehensive project overview and highlights"}
+                        ? "Premium penthouse living and dining space"
+                        : "Breathtaking dusk aerial view from Beach Road"}
                     </p>
                   </div>
                 </div>
               </div>
 
               
-              <div className="flex justify-center mt-6 space-x-3">
+              <div className="flex items-center justify-center mt-6 space-x-3">
+                {/* Previous Arrow */}
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="w-10 h-10 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                  onClick={prevImage}
+                >
+                  <ChevronLeft className="w-4 h-4 text-[#ce001f]" />
+                </Button>
+
+                {/* Thumbnail Images */}
                 {projectImages.map((image, index) => (
                   <button
                     key={index}
@@ -1729,6 +1764,16 @@ export default function AureaLanding() {
                     />
                   </button>
                 ))}
+
+                {/* Next Arrow */}
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="w-10 h-10 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                  onClick={nextImage}
+                >
+                  <ChevronRight className="w-4 h-4 text-[#ce001f]" />
+                </Button>
               </div>
             </div>
           </div> 
@@ -1976,11 +2021,11 @@ export default function AureaLanding() {
                 {/* Location Image */}
                 <div className="w-full rounded-lg overflow-hidden shadow-lg">
                   <Image
-                    src="/placeholder.svg?height=450&width=800&text=Aurea+Location+Map"
+                    src="/images/aurea/aurea-location.webp"
                     alt="Aurea Location"
-                    width={800}
-                    height={450}
-                    className="w-full h-[450px] object-cover"
+                    width={720}
+                    height={720}
+                    className="w-full h-[720px] object-contain"
                   />
                 </div>
                 <div className="grid md:grid-cols-3 gap-6">
