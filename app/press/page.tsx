@@ -53,11 +53,11 @@ export default function PressPage() {
   return (
     <div className="min-h-screen bg-gray-900">
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center overflow-hidden pt-20 sm:pt-20 md:pt-12">
         <div className="absolute inset-0 bg-black" />
         <div className="absolute inset-0 bg-black/60" />
         <motion.div 
-          className="relative z-10 text-center max-w-4xl mx-auto px-6"
+          className="relative z-10 text-center max-w-4xl mx-auto px-6 pt-8 sm:pt-12 md:pt-16 lg:pt-32"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -82,20 +82,6 @@ export default function PressPage() {
           </motion.p>
         </motion.div>
 
-        {/* Scroll indicator */}
-        <motion.button 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.0, ease: "easeOut" }}
-          onClick={() => {
-            document.getElementById('filters-section')?.scrollIntoView({ 
-              behavior: 'smooth' 
-            });
-          }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hover:scale-110 transition-transform cursor-pointer"
-        >
-          <ChevronRight className="h-6 w-6 text-[#B40101] rotate-90" />
-        </motion.button>
       </section>
 
       {/* Filters Section */}

@@ -154,7 +154,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col bg-white">
       {/* Hero Section - Updated with new design but keeping video background */}
-      <section className="relative min-h-[70vh] sm:min-h-[50vh] md:min-h-[80vh] lg:min-h-screen flex items-center justify-center pt-20 sm:pt-20 md:pt-12">
+      <section className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center pt-20 sm:pt-20 md:pt-12">
         {/* Background elements */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -191,7 +191,7 @@ export default function Home() {
         </motion.div>
 
         {/* Content - properly centered */}
-        <div className="relative z-10 text-center max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="relative z-10 text-center max-w-6xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 md:pt-16 lg:pt-32">
           <motion.h1 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -215,16 +215,7 @@ export default function Home() {
           </motion.p>
         </div>
 
-        {/* Scroll indicator */}
-        <motion.button 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-          onClick={scrollToAdvantage}
-          className="absolute bottom-8 md:bottom-4 left-1/2 transform -translate-x-1/2 animate-bounce hover:scale-110 transition-transform cursor-pointer"
-        >
-          <ChevronRight className="h-6 w-6 text-[#B40101] rotate-90" />
-        </motion.button>
+        
       </section>
 
       {/* Press News Section */}

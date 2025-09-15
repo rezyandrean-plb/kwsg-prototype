@@ -1529,11 +1529,11 @@ export default function AureaLanding() {
               <CardContent className="space-y-6">
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Project Name:</span>
-                  <span className="font-semibold text-white">Aurea (Residential) | The Golden Mile (Commercial)</span>
+                  <span className="font-semibold text-white text-right">Aurea (Residential)<br />The Golden Mile (Commercial)</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Developer:</span>
-                  <span className="font-semibold text-white">GMC Property Pte. Ltd. (JV between Perennial Holdings and Far East Organization)</span>
+                  <span className="font-semibold text-white text-right">GMC Property Pte. Ltd.<br />(JV between Perennial Holdings and Far East Organization)</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Tenure:</span>
@@ -1571,7 +1571,7 @@ export default function AureaLanding() {
             </Card>
 
             {/* Site Plan & Floor Plans */}
-            <Card className="lg:col-span-6 border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
+            <Card className="lg:col-span-6 border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500 max-w-4xl mx-auto">
               <CardHeader>
                 <CardTitle className="text-[#ce001f] flex items-center">
                   <Ruler className="w-5 h-5 mr-2" />
@@ -1610,52 +1610,7 @@ export default function AureaLanding() {
             </Card>
           </div>
 
-          {/* Project Description Section */}
-          <div className={`mb-12 transition-all duration-1000 delay-700 ${
-            animatedSections.has('project-info') ? 'animate-fade-in-up' : ''
-          }`} style={{
-            opacity: animatedSections.has('project-info') ? 1 : 0,
-            transform: animatedSections.has('project-info') ? 'translateY(0)' : 'translateY(50px)'
-          }}>
-            <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
-              <CardHeader>
-                <CardTitle className="text-[#ce001f] flex items-center">
-                  <Info className="w-5 h-5 mr-2" />
-                  Project Description
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-300 leading-relaxed">
-                  Project Description (TBC) - Detailed description of Aurea's unique features, design philosophy, and lifestyle offerings will be available soon.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Aurea Highlights Section */}
-          <div className={`mb-12 transition-all duration-1000 delay-900 ${
-            animatedSections.has('project-info') ? 'animate-fade-in-up' : ''
-          }`} style={{
-            opacity: animatedSections.has('project-info') ? 1 : 0,
-            transform: animatedSections.has('project-info') ? 'translateY(0)' : 'translateY(50px)'
-          }}>
-            <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
-              <CardHeader>
-                <CardTitle className="text-[#ce001f] flex items-center">
-                  <Layers className="w-5 h-5 mr-2" />
-                  Aurea Highlights
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-[#ce001f] rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-gray-300">Aurea Highlights (TBC) - Comprehensive highlights and key selling points will be available soon.</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          
 
           {/* Image Gallery Section */}
           <div 
@@ -1956,19 +1911,7 @@ export default function AureaLanding() {
                               >
                                 Book Showflat Visit
                               </button>
-                              <button 
-                                onClick={() => {
-                                  // Handle download floor plan
-                                  const floorPlanImage = subtype.floor_plan_image
-                                  if (floorPlanImage) {
-                                    window.open(floorPlanImage, '_blank')
-                                  }
-                                }}
-                                className="w-full border border-gray-600 hover:border-gray-500 text-white font-medium py-3 px-4 rounded-lg text-sm transition-colors flex items-center justify-center gap-2"
-                              >
-                                <Download className="h-4 w-4" />
-                                Download Floor Plan
-                              </button>
+                              
                             </div>
                           </div>
                         </div>
@@ -2018,32 +1961,35 @@ export default function AureaLanding() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                {/* Location Image */}
+                {/* Location Map */}
                 <div className="w-full rounded-lg overflow-hidden shadow-lg">
-                  <Image
-                    src="/images/aurea/aurea-location.webp"
-                    alt="Aurea Location"
-                    width={720}
-                    height={720}
-                    className="w-full h-[720px] object-contain"
-                  />
+                  <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
+                    <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3786.2308858225747!2d103.86307007471228!3d1.3031172617248135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19116424c627%3A0xa2823d888c760319!2sAurea!5e1!3m2!1sen!2sid!4v1757919325191!5m2!1sen!2sid"
+                      style={{ border: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      className="absolute inset-0 w-full h-full"
+                    />
+                  </div>
                 </div>
-                <div className="grid md:grid-cols-3 gap-6">
-                  <div className="flex items-center space-x-3">
+                <div className="grid md:grid-cols-3 gap-12 md:gap-12 max-w-4xl mx-auto px-4">
+                  <div className="flex items-center space-x-4">
                     <MapPin className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
                       <p className="font-semibold text-white">Address</p>
                       <p className="text-sm text-gray-300 font-light">802 Beach Road, Singapore 199980</p>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-4">
                     <Train className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
                       <p className="font-semibold text-white">MRT</p>
                       <p className="text-sm text-gray-300 font-light">Nicoll Highway MRT (Circle Line)</p>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-4">
                     <Car className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
                       <p className="font-semibold text-white">Access</p>
@@ -2083,159 +2029,13 @@ export default function AureaLanding() {
         </div>
       </section>
 
-      {/* Enhanced Media Section */}
-      <section id="media" className="pt-4 pb-4 bg-[#1c1c1d] flex items-center justify-center">
-        <div className="container mx-auto px-4 text-left">
-          <div className={`text-center mb-8 md:mb-16 transition-all duration-1000 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            <h2 className="text-2xl md:text-3xl font-light mb-3 text-white text-center tracking-wide">Explore Aurea</h2>
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-1 bg-[#ce001f] rounded" />
-            </div>
-            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-              Immerse yourself in the luxury and elegance of our latest development through our comprehensive media
-              gallery
-            </p>
-          </div>
-
-          
-          <div className={`space-y-8 md:space-y-20 transition-all duration-1000 delay-300 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            
-            <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
-              <div className="space-y-6 order-2 lg:order-1">
-                <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
-                <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
-                  Aurea New Launch Analysis
-                </h3>
-                <p className="text-gray-300 leading-relaxed text-base md:text-lg">
-                  District 7's premier residential development with exclusive 188 units. 
-                  Developed by Perennial Holdings and Far East Organization, this luxury project offers unbeatable connectivity to The Golden Mile, panoramic city views, and premium lifestyle amenities. 
-                  Discover how you can capitalise on this rare opportunity.
-                </p>
-                  <Button 
-                    className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
-                    onClick={() => window.open('https://newlaunch.kwsingapore.com/springleaf-residence-new-launch-analysis', '_blank')}
-                  >
-                    <Play className="w-5 h-5 mr-2" />
-                    Watch Analysis
-                  </Button>
-              </div>
-              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-2">
-                <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
-                  <Image
-                    src="/placeholder.svg?height=320&width=500&text=Aurea+Analysis+Video"
-                    alt="Aurea Analysis Video"
-                    fill
-                    className="object-contain md:object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
-              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-1">
-                <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
-                  <Image
-                    src="/placeholder.svg?height=320&width=500&text=Aurea+Webinar+Video"
-                    alt="Aurea Webinar Video"
-                    fill
-                    className="object-contain md:object-cover"
-                  />
-                </div>
-              </div>
-              <div className="space-y-6 order-2 lg:order-2">
-                <Badge className="bg-green-100 text-green-800">NEW LAUNCH ANALYSIS</Badge>
-                <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
-                  Aurea vs. the Competition: Can This Golden Mile Development Outperform in District 7?
-                </h3>
-                <p className="text-gray-300 leading-relaxed text-base md:text-lg">
-                  Before you buy into the hype of D7, ask yourself: Are you investing… or just following the crowd? 
-                  In a market with limited new launches, the right choice could mean significant capital appreciation. 
-                  This webinar goes beyond brochures and showflat buzz to confront one critical question : 
-                  <strong> Can Aurea truly stand out — or will it be just another development?</strong>
-                </p>
-                <Button 
-                    className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
-                    onClick={() => window.open('https://newlaunch.kwsingapore.com/webinars/springleaf-residence-vs-the-supply-surge', '_blank')}
-                  >
-                    <Play className="w-5 h-5 mr-2" />
-                    Watch Webinar
-                  </Button>
-              </div>
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
-              <div className="space-y-6 order-2 lg:order-1">
-                <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
-                <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
-                  As District 7 Heats Up, Is Aurea a Smart Play — or Just Another Name in a Competitive Market?
-                </h3>
-                <p className="text-gray-300 leading-relaxed text-base md:text-lg">
-                  Stop and think before you join the rush into District 7. 
-                  In a market with limited new launches and high demand, the greatest opportunity is finding the right development. 
-                  This webinar is a comprehensive analysis of Aurea's unique positioning and the potential for long-term capital appreciation that most agents won't discuss.
-                </p>
-                  <Button 
-                    className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
-                    onClick={() => window.open('https://newlaunch.kwsingapore.com/webinars/as-lentor-heats-up-is-springleaf-residence-a-smart-play', '_blank')}
-                  >
-                    <Play className="w-5 h-5 mr-2" />
-                    Watch Webinar
-                  </Button>
-              </div>
-              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-2">
-                <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
-                  <Image
-                    src="/placeholder.svg?height=320&width=500&text=Aurea+Showflat+Tour"
-                    alt="Aurea Showflat Tour"
-                    fill
-                    className="object-contain md:object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Call to Action */}
-          <div className={`text-center mt-12 sm:mt-16 md:mt-18 lg:mt-12 mb-4 transition-all duration-1000 delay-500 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
-              <h3 className="text-xl md:text-2xl font-normal md:font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
-              <p className="text-base md:text-lg mb-6 opacity-90">
-                Register now for an exclusive preview of Aurea
-              </p>
-              <div className="cta-buttons-container justify-center">
-                <Button 
-                  className="bg-white text-[#ce001f] hover:bg-gray-100 px-8 py-3 text-lg hover:scale-105 transition-all duration-300"
-                  onClick={scrollToLeadForm}
-                >
-                  <Calendar className="w-5 h-5 mr-2" />
-                  Book Showflat Visit
-                </Button>
-                {/* <Button
-                  variant="outline"
-                  className="border-white text-white hover:bg-white hover:text-[#ce001f] px-8 py-3 text-lg bg-transparent hover:scale-105 transition-all duration-300"
-                >
-                  <Download className="w-5 h-5 mr-2" />
-                  Download Brochure
-                </Button> */}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Lead Generation Form */}
       <section
         id="lead-form"
         className={`py-8 md:py-16 relative bg-cover bg-center section-entrance`}
         data-section-id="lead-form"
         style={{ 
-          backgroundImage: "url('/placeholder.svg?height=600&width=1200&text=Aurea+Form+Background')",
+          backgroundImage: 'url("/images/aurea/gallery/R-View09 - L3 Infinity Pool View_08 (250109)-min.webp")',
           opacity: animatedSections.has('lead-form') ? 1 : 0,
           transform: animatedSections.has('lead-form') ? 'translateY(0)' : 'translateY(60px)'
         }}
@@ -2292,4 +2092,4 @@ export default function AureaLanding() {
       </div>
     </GoogleReCaptchaProvider>
   )
-} 
+}

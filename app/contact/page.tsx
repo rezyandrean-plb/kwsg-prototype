@@ -364,7 +364,7 @@ export default function ContactPage() {
     >
       <main className="min-h-screen bg-black text-white">
         {/* Hero Section */}
-        <section className="relative min-h-[70vh] md:min-h-screen flex items-center justify-center pt-20">
+        <section className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center pt-20 sm:pt-20 md:pt-12">
           <div
             className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"
             style={{
@@ -379,7 +379,7 @@ export default function ContactPage() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative z-10 text-center max-w-6xl mx-auto px-6"
+            className="relative z-10 text-center max-w-6xl mx-auto px-6 pt-8 sm:pt-12 md:pt-16 lg:pt-32"
           >
             <motion.h1 
               initial={{ opacity: 0, y: 30 }}
@@ -402,15 +402,6 @@ export default function ContactPage() {
             </motion.p>
           </motion.div>
 
-          <motion.button 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-            onClick={scrollToContactSection}
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hover:scale-110 transition-transform duration-300 cursor-pointer"
-          >
-            <ChevronRight className="h-6 w-6 text-[#B40101] rotate-90" />
-          </motion.button>
         </section>
 
         {/* Main Contact Section */}

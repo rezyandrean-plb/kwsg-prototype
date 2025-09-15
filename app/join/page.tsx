@@ -203,7 +203,7 @@ export default function JoinKW() {
       className="min-h-screen bg-black text-white"
     >
       {/* Hero Section */}
-      <section className="relative  min-h-[100vh] sm:min-h-screen flex items-center justify-center pt-20">
+      <section className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center pt-20 sm:pt-20 md:pt-12">
         <motion.div
           className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"
           style={{
@@ -217,7 +217,7 @@ export default function JoinKW() {
         <div className="absolute inset-0 bg-black/70" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
 
-        <div className="relative z-10 text-center max-w-6xl mx-auto px-6 mt-[-60px] sm:mt-0">
+        <div className="relative z-10 text-center max-w-6xl mx-auto px-6 pt-8 sm:pt-12 md:pt-16 lg:pt-32">
           <div className="mb-8"></div>
 
           <motion.h1 
@@ -259,19 +259,6 @@ export default function JoinKW() {
           </motion.div>
         </div>
 
-        <motion.div 
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer hover:scale-110 transition-transform flex items-center justify-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-          onClick={() => {
-            document.getElementById('why-kw-section')?.scrollIntoView({ 
-              behavior: 'smooth' 
-            });
-          }}
-        >
-          <ChevronRight className="h-6 w-6 text-[#B40101] rotate-90" />
-        </motion.div>
       </section>
 
       {/* Why KW Singapore */}

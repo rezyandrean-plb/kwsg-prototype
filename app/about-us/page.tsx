@@ -91,7 +91,7 @@ export default function AboutUsPage() {
       className="min-h-screen flex flex-col"
     >
       {/* Hero Banner */}
-      <section className="relative min-h-[70vh] md:min-h-screen flex items-center justify-center pt-20">
+      <section className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center pt-20 sm:pt-20 md:pt-12">
         <motion.div
           className="absolute inset-0 bg-black"
           style={{
@@ -100,7 +100,7 @@ export default function AboutUsPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30" />
 
-        <div className="relative z-10 text-center max-w-6xl mx-auto px-6">
+        <div className="relative z-10 text-center max-w-6xl mx-auto px-6 pt-8 sm:pt-12 md:pt-16 lg:pt-32">
           <motion.h1 
             className="text-4xl font-bold mb-8 leading-tight md:text-6xl lg:text-7xl text-white"
             initial={{ opacity: 0, y: 30 }}
@@ -122,18 +122,6 @@ export default function AboutUsPage() {
           </motion.p>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <button 
-            onClick={() => {
-              document.getElementById('our-story')?.scrollIntoView({ 
-                behavior: 'smooth' 
-              });
-            }}
-            className="cursor-pointer hover:scale-110 transition-transform duration-300"
-          >
-            <ChevronRight className="h-6 w-6 text-[#B40101] rotate-90" />
-          </button>
-        </div>
       </section>
 
       {/* Our Story */}
