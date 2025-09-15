@@ -170,7 +170,7 @@ export default function EventsPage() {
     >
       <main className="min-h-screen bg-black text-white">
         {/* Hero Section */}
-        <section className="relative min-h-[70vh] sm:min-h-screen flex items-center justify-center pt-20 sm:pt-20">
+        <section className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center pt-20 sm:pt-20 md:pt-12">
         <div
           className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"
           style={{
@@ -181,7 +181,7 @@ export default function EventsPage() {
         <div className="absolute inset-0 bg-black/65" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
 
-        <div className="relative z-10 text-center max-w-6xl mx-auto px-6">
+        <div className="relative z-10 text-center max-w-6xl mx-auto px-6 pt-8 sm:pt-12 md:pt-16 lg:pt-32">
           <motion.h1 
             className="font-bold mb-8 leading-tight font-sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
             initial={{ opacity: 0, y: 50 }}
@@ -203,20 +203,6 @@ export default function EventsPage() {
           </motion.p>
         </div>
 
-        <motion.div 
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-          onClick={() => {
-            const mreaSection = document.querySelector('[data-section="mrea-training"]')
-            if (mreaSection) {
-              mreaSection.scrollIntoView({ behavior: 'smooth' })
-            }
-          }}
-        >
-          <ChevronRight className="h-6 w-6 text-[#B40101] rotate-90" />
-        </motion.div>
       </section>
 
       {/* MREA Training */}

@@ -52,7 +52,7 @@ export default function GrowthSharePage() {
       className="min-h-screen bg-black text-white"
     >
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center">
+      <section className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center pt-20 sm:pt-20 md:pt-12">
         <div className="absolute inset-0">
           <Image
             src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=2000"
@@ -64,7 +64,7 @@ export default function GrowthSharePage() {
           <div className="absolute inset-0 bg-black/60" />
         </div>
         <motion.div 
-          className="relative container mx-auto px-4 text-center"
+          className="relative container mx-auto px-4 text-center pt-8 sm:pt-12 md:pt-16 lg:pt-32"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
