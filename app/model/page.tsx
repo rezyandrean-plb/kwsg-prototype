@@ -102,7 +102,7 @@ export default function ModelPage() {
       transition={{ duration: 0.8 }}
     >
       {/* Hero Section */}
-      <section className="relative min-h-[100vh] sm:min-h-screen flex items-center justify-center pt-20 sm:pt-20">
+      <section className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center pt-20 sm:pt-20 md:pt-12">
         <div className="absolute inset-0 bg-black" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
 
