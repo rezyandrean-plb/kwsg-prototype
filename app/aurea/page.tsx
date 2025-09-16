@@ -1774,34 +1774,6 @@ export default function AureaLanding() {
                 >
                   <ChevronRight className="w-5 h-5 text-[#ce001f]" />
                 </Button>
-
-                
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
-                  <div className="text-white">
-                    <h4 className="text-lg font-semibold mb-1">
-                      {currentImageIndex === 0
-                        ? "Aerial View"
-                        : currentImageIndex === 1
-                        ? "Infinity Pool"
-                        : currentImageIndex === 2
-                        ? "2BR Living Area"
-                        : currentImageIndex === 3
-                        ? "Penthouse Living"
-                        : "Dusk Aerial View"}
-                    </h4>
-                    <p className="text-sm opacity-90">
-                      {currentImageIndex === 0
-                        ? "Stunning aerial perspective from Nicoll Highway"
-                        : currentImageIndex === 1
-                        ? "Luxurious infinity pool with panoramic views"
-                        : currentImageIndex === 2
-                        ? "Spacious 2-bedroom living and dining area"
-                        : currentImageIndex === 3
-                        ? "Premium penthouse living and dining space"
-                        : "Breathtaking dusk aerial view from Beach Road"}
-                    </p>
-                  </div>
-                </div>
               </div>
 
               
