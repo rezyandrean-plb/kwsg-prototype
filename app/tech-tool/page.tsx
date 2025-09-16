@@ -140,7 +140,8 @@ const tools = [
     description: "Verify phone numbers instantly against the Do Not Call registry database.",
     icon: Smartphone,
     category: "External Tools",
-    url: "https://drive.google.com/file/d/1GcNpqifBzKSurSmz7qkpIMjrjaVOD1Pm/view"
+    url: "https://drive.google.com/file/d/1GcNpqifBzKSurSmz7qkpIMjrjaVOD1Pm/view",
+    image: "/images/tech-tool/spidergate.webp"
   },
   // Compass Tools items - Sales Proceed
   {

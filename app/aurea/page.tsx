@@ -2105,26 +2105,26 @@ export default function AureaLanding() {
                   />
                 </div>
                 </div>
-                <div className="grid md:grid-cols-3 gap-12 md:gap-12 max-w-4xl mx-auto px-4">
-                  <div className="flex items-center space-x-4">
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="flex items-center space-x-3">
                     <MapPin className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
-                      <p className="font-semibold text-white">Address</p>
-                      <p className="text-sm text-gray-300 font-light">802 Beach Road, Singapore 199980</p>
+                    <p className="font-semibold text-white">Address</p>
+                    <p className="text-sm text-gray-300 font-light">802 Beach Road, Singapore 199980</p>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-3">
                     <Train className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
                       <p className="font-semibold text-white">MRT</p>
                       <p className="text-sm text-gray-300 font-light">Nicoll Highway MRT (Circle Line)</p>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-3">
                     <Car className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
-                      <p className="font-semibold text-white">Access</p>
-                      <p className="text-sm text-gray-300 font-light">ECP | KPE | Nicoll Highway</p>
+                    <p className="font-semibold text-white">Access</p>
+                    <p className="text-sm text-gray-300 font-light">ECP | KPE | Nicoll Highway</p>
                     </div>
                   </div>
                 </div>

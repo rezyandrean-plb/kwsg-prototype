@@ -84,10 +84,12 @@ export default function PressPage() {
 
       </section>
 
+      {/* Filters + Articles Container with one continuous background */}
+      <section className="bg-gradient-to-b from-black to-gray-900">
       {/* Filters Section */}
       <motion.section 
         id="filters-section"
-        className="py-8 border-b border-[#666666]/20"
+        className="py-8"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
@@ -294,6 +296,7 @@ export default function PressPage() {
           )}
         </div>
       </motion.section>
+      </section>
 
 
     </div>

@@ -214,8 +214,59 @@ export default function Home() {
             training systems—so they can build brands, grow businesses, and scale sustainably.
           </motion.p>
         </div>
+      </section>
 
-        
+      {/* Second Shorts / Reels Section */}
+      <section className="relative py-8 sm:py-14 md:py-16 lg:py-20 bg-gradient-to-b from-black to-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          {/* 4-up row of vertical reels */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
+              <iframe
+                src="https://drive.google.com/file/d/1yneqmSEe06XO0x2IqxL5B96JC8xpOcqO/preview"
+                className="w-full h-[420px] sm:h-[500px]"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="KW Singapore Reel 1"
+              />
+            </div>
+            <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
+              <iframe
+                src="https://drive.google.com/file/d/17w071cpKEwBo6fZi7OV04jeWbkOFcv6y/preview"
+                className="w-full h-[420px] sm:h-[500px]"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="KW Singapore Reel 2"
+              />
+            </div>
+            <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
+              <iframe
+                src="https://drive.google.com/file/d/1RhoYPjTv-qSrytulh8Xxlg2zd-EzQ41k/preview"
+                className="w-full h-[420px] sm:h-[500px]"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="KW Singapore Reel 3"
+              />
+            </div>
+            <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
+              <iframe
+                src="https://drive.google.com/file/d/1ohFt-wy19rJpA7ZJt5RLHW_WHqqQv1y4/preview"
+                className="w-full h-[420px] sm:h-[500px]"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="KW Singapore Reel 4"
+              />
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Press News Section */}
@@ -629,6 +680,65 @@ export default function Home() {
               View All Events
               <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Shorts / Reels Section */}
+      <section className="relative py-8 sm:py-14 md:py-16 lg:py-20 bg-gradient-to-b from-black to-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-6 sm:mb-10">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
+              Building Success Together
+            </h2>
+          </div>
+
+          {/* 4-up row of vertical reels */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
+              <iframe
+                src="https://drive.google.com/file/d/1cWutCGeM8eUb37MDEOxZMKPf3H5V4uGk/preview"
+                className="w-full h-[420px] sm:h-[500px]"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="KW Singapore Reel 1"
+              />
+            </div>
+            <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
+              <iframe
+                src="https://drive.google.com/file/d/1ipnt57hAQPVHacjZifN5Izwh3IzKtxH1/preview"
+                className="w-full h-[420px] sm:h-[500px]"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="KW Singapore Reel 2"
+              />
+            </div>
+            <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
+              <iframe
+                src="https://drive.google.com/file/d/1CG6DCTC-QlzuX1otdajlyd4_YwLhtYlE/preview"
+                className="w-full h-[420px] sm:h-[500px]"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="KW Singapore Reel 3"
+              />
+            </div>
+            <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
+              <iframe
+                src="https://drive.google.com/file/d/1FI4Ba-iQW3J8I7rNPrq5d5AISJe_9W3Y/preview"
+                className="w-full h-[420px] sm:h-[500px]"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="KW Singapore Reel 4"
+              />
+            </div>
           </div>
         </div>
       </section>
