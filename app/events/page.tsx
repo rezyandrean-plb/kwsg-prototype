@@ -306,7 +306,7 @@ export default function EventsPage() {
       </section>
 
       {/* Mega Realtor Summit */}
-      <section id="mega-summit" className="relative py-12 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+      {/* <section id="mega-summit" className="relative py-12 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
         <div className="absolute inset-0 bg-[url('/images/event/mega-summit.webp')] bg-cover bg-center opacity-15" />
         <div className="absolute inset-0 bg-black/60" />
 
@@ -402,7 +402,7 @@ export default function EventsPage() {
             </motion.div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Explore Night */}
       <section className="relative py-12 sm:py-32 overflow-hidden">
