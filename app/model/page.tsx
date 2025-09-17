@@ -107,7 +107,7 @@ export default function ModelPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
 
         <motion.div 
-          className="relative z-10 text-center max-w-6xl mx-auto px-6"
+          className="relative z-10 text-center max-w-6xl mx-auto px-6 pt-8 sm:pt-12 md:pt-16 lg:pt-32"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -129,21 +129,6 @@ export default function ModelPage() {
             wealth and true financial freedom. Discover how our system goes beyond closings to secure your long-term
             legacy.
           </motion.p>
-        </motion.div>
-
-        <motion.div 
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer hover:scale-110 transition-transform"
-          onClick={() => {
-            const model1Section = document.querySelector('[data-section="model1"]')
-            if (model1Section) {
-              model1Section.scrollIntoView({ behavior: 'smooth' })
-            }
-          }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-        >
-          <ChevronRight className="h-6 w-6 text-[#B40101] rotate-90" />
         </motion.div>
       </section>
 
@@ -428,10 +413,10 @@ export default function ModelPage() {
           </motion.p>
 
           <motion.div 
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+            className="flex flex-row gap-6 justify-center items-center"
             variants={containerVariants}
           >
-            <motion.div variants={itemVariants} className="w-full sm:w-auto">
+            <motion.div variants={itemVariants} className="flex-1 max-w-xs">
               <Button
                 size="lg"
                 className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
@@ -442,7 +427,7 @@ export default function ModelPage() {
               </Button>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="w-full sm:w-auto">
+            <motion.div variants={itemVariants} className="flex-1 max-w-xs">
               <Button
                 variant="outline"
                 size="lg"
