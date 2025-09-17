@@ -556,7 +556,7 @@ export default function TechToolPage() {
       <section ref={navigationRef} className="relative py-8 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
-            className="flex gap-3 flex-nowrap overflow-x-auto pb-2 md:flex-wrap md:overflow-visible"
+            className="flex gap-3 flex-nowrap overflow-x-auto pb-2 md:flex-nowrap md:overflow-x-auto lg:flex-wrap lg:overflow-visible"
             initial={{ opacity: 0, y: 30 }}
             animate={navigationInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.2 }}
