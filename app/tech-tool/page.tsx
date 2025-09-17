@@ -131,7 +131,7 @@ const tools = [
     image: "/images/tech-tool/kw-canva.webp"
   },
   {
-    id: 18,
+    id: 118,
     title: "Squarefoot",
     description: "Easily check recent transaction prices of HDBs, condos, and landed properties to ensure your clients get the best deal.",
     icon: Home,
@@ -140,7 +140,7 @@ const tools = [
     image: "/images/tech-tool/squarefoot.webp"
   },
   {
-    id: 20,
+    id: 120,
     title: "SpiderGate DNC Subscription",
     description: "Verify phone numbers instantly against the Do Not Call registry database.",
     icon: Smartphone,
@@ -392,7 +392,6 @@ export default function TechToolPage() {
   const { isSignedIn, user, isLoaded } = useUser()
   const [activeCategory, setActiveCategory] = useState("Command Tools")
   const [searchQuery, setSearchQuery] = useState("")
-  const [showMore, setShowMore] = useState(false)
   const [authDialogOpen, setAuthDialogOpen] = useState(false)
   const [selectedTool, setSelectedTool] = useState<any>(null)
  
@@ -418,9 +417,7 @@ export default function TechToolPage() {
     return matchesCategory && matchesSearch
   })
 
-  const itemsPerPage = 6
-  const displayedTools = showMore ? filteredTools : filteredTools.slice(0, itemsPerPage)
-  const hasMoreItems = filteredTools.length > itemsPerPage
+  const displayedTools = filteredTools
 
   const onSearchChange = (value: string) => {
     setSearchQuery(value)
@@ -839,26 +836,7 @@ export default function TechToolPage() {
                     })}
                   </motion.div>
 
-                  {hasMoreItems && (
-                    <motion.div 
-                      className="text-center"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={toolsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                      transition={{ duration: 0.6, delay: 0.8 }}
-                    >
-                      <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <Button
-                          className="bg-[#b40101] hover:bg-[#8a0101] text-white px-8 py-2 transition-all duration-300 hover:shadow-lg hover:shadow-[#b40101]/30"
-                          onClick={() => setShowMore(!showMore)}
-                        >
-                          {showMore ? "Show Less" : `Show More (${filteredTools.length - itemsPerPage} more)`}
-                        </Button>
-                      </motion.div>
-                    </motion.div>
-                  )}
+                  
                 </>
               )}
             </>
