@@ -5,7 +5,7 @@ import type React from "react"
 import { useState, useEffect, useRef, useCallback } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Search, ArrowRight, Calendar, ChevronRight, Rocket, BarChart3, Bot } from "lucide-react"
+import { Search, ArrowRight, Calendar, ChevronRight, Rocket, BarChart3, Bot, ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import CountdownTimer from "@/components/countdown-timer"
@@ -36,6 +36,8 @@ export default function Home() {
   const [isJoinFormOpen, setIsJoinFormOpen] = useState(false)
   const [expandedAdvantage, setExpandedAdvantage] = useState(-1)
   const [scrollY, setScrollY] = useState(0)
+  const [currentReelIndex, setCurrentReelIndex] = useState(0)
+  const [currentReelIndex2, setCurrentReelIndex2] = useState(0)
   
   // Ref for the KW Advantage section
   const advantageSectionRef = useRef<HTMLElement>(null)
@@ -72,6 +74,23 @@ export default function Home() {
       behavior: 'smooth',
       block: 'start'
     })
+  }, [])
+
+  // Carousel navigation handlers
+  const nextReel = useCallback(() => {
+    setCurrentReelIndex((prev) => (prev + 1) % 4)
+  }, [])
+
+  const prevReel = useCallback(() => {
+    setCurrentReelIndex((prev) => (prev - 1 + 4) % 4)
+  }, [])
+
+  const nextReel2 = useCallback(() => {
+    setCurrentReelIndex2((prev) => (prev + 1) % 4)
+  }, [])
+
+  const prevReel2 = useCallback(() => {
+    setCurrentReelIndex2((prev) => (prev - 1 + 4) % 4)
   }, [])
 
   // Optimize animation controls
@@ -117,6 +136,21 @@ export default function Home() {
     "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80",
     "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80",
     "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80"
+  ]
+
+  // Reel data
+  const reels1 = [
+    { src: "/video/Shorts 1 - Melvin.mp4", label: "KW Singapore Reel 1" },
+    { src: "/video/Shorts 2 - Melvin.mp4", label: "KW Singapore Reel 2" },
+    { src: "/video/Shorts 3 - Grayce.mp4", label: "KW Singapore Reel 3" },
+    { src: "/video/Shorts 4 - Grayce.mp4", label: "KW Singapore Reel 4" }
+  ]
+
+  const reels2 = [
+    { src: "/video/Shorts 5 - Rayne Realtors.mp4", label: "KW Singapore Reel 5" },
+    { src: "/video/Shorts 6 - Elizabeth Realtors.mp4", label: "KW Singapore Reel 6" },
+    { src: "/video/Shorts 7 - William Realtors.mp4", label: "KW Singapore Reel 7" },
+    { src: "/video/Shorts 8 - Joel Realtors.mp4", label: "KW Singapore Reel 8" }
   ]
 
   useEffect(() => {
@@ -219,66 +253,71 @@ export default function Home() {
       {/* Shorts / Reels Section */}
       <section className="relative py-8 sm:py-14 md:py-16 lg:py-20 bg-gradient-to-b from-black to-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-6 sm:mb-10">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
-              Building Success Together
-            </h2>
+          {/* Mobile Carousel */}
+          <div className="sm:hidden relative">
+            <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
+              <video
+                key={currentReelIndex}
+                className="w-full h-[600px] object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                aria-label={reels1[currentReelIndex].label}
+              >
+                <source src={reels1[currentReelIndex].src} type="video/mp4" />
+              </video>
+            </div>
+            
+            {/* Navigation buttons */}
+            <button
+              onClick={prevReel}
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300"
+              aria-label="Previous reel"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              onClick={nextReel}
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300"
+              aria-label="Next reel"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+            
+            {/* Indicators */}
+            <div className="flex justify-center mt-4 space-x-2">
+              {reels1.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentReelIndex(index)}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    index === currentReelIndex ? 'bg-[#B40101]' : 'bg-white/30'
+                  }`}
+                  aria-label={`Go to reel ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
 
-          {/* 4-up row of vertical reels */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
-              <video
-                className="w-full h-[420px] sm:h-[500px] object-cover"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                aria-label="KW Singapore Reel 1"
-              >
-                <source src="/video/Shorts 1 - Melvin.mp4" type="video/mp4" />
-              </video>
-            </div>
-            <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
-              <video
-                className="w-full h-[420px] sm:h-[500px] object-cover"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                aria-label="KW Singapore Reel 2"
-              >
-                <source src="/video/Shorts 2 - Melvin.mp4" type="video/mp4" />
-              </video>
-            </div>
-            <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
-              <video
-                className="w-full h-[420px] sm:h-[500px] object-cover"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                aria-label="KW Singapore Reel 3"
-              >
-                <source src="/video/Shorts 3 - Grayce.mp4" type="video/mp4" />
-              </video>
-            </div>
-            <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
-              <video
-                className="w-full h-[420px] sm:h-[500px] object-cover"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                aria-label="KW Singapore Reel 4"
-              >
-                <source src="/video/Shorts 4 - Grayce.mp4" type="video/mp4" />
-              </video>
-            </div>
+          {/* Desktop Grid */}
+          <div className="hidden sm:grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            {reels1.map((reel, index) => (
+              <div key={index} className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
+                <video
+                  className="w-full h-[500px] object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  aria-label={reel.label}
+                >
+                  <source src={reel.src} type="video/mp4" />
+                </video>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -701,60 +740,77 @@ export default function Home() {
       {/* Second Shorts / Reels Section */}
       <section className="relative py-8 sm:py-14 md:py-16 lg:py-20 bg-gradient-to-b from-black to-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          {/* 4-up row of vertical reels */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          <div className="text-center mb-6 sm:mb-10">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
+              Building Success Together
+            </h2>
+          </div>
+
+          {/* Mobile Carousel */}
+          <div className="sm:hidden relative">
             <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
               <video
-                className="w-full h-[420px] sm:h-[500px] object-cover"
+                key={currentReelIndex2}
+                className="w-full h-[600px] object-cover"
                 autoPlay
                 muted
                 loop
                 playsInline
                 preload="metadata"
-                aria-label="KW Singapore Reel 5"
+                aria-label={reels2[currentReelIndex2].label}
               >
-                <source src="/video/Shorts 5 - Rayne Realtors.mp4" type="video/mp4" />
+                <source src={reels2[currentReelIndex2].src} type="video/mp4" />
               </video>
             </div>
-            <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
-              <video
-                className="w-full h-[420px] sm:h-[500px] object-cover"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                aria-label="KW Singapore Reel 6"
-              >
-                <source src="/video/Shorts 6 - Elizabeth Realtors.mp4" type="video/mp4" />
-              </video>
+            
+            {/* Navigation buttons */}
+            <button
+              onClick={prevReel2}
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300"
+              aria-label="Previous reel"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              onClick={nextReel2}
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300"
+              aria-label="Next reel"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+            
+            {/* Indicators */}
+            <div className="flex justify-center mt-4 space-x-2">
+              {reels2.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentReelIndex2(index)}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    index === currentReelIndex2 ? 'bg-[#B40101]' : 'bg-white/30'
+                  }`}
+                  aria-label={`Go to reel ${index + 1}`}
+                />
+              ))}
             </div>
-            <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
-              <video
-                className="w-full h-[420px] sm:h-[500px] object-cover"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                aria-label="KW Singapore Reel 7"
-              >
-                <source src="/video/Shorts 7 - William Realtors.mp4" type="video/mp4" />
-              </video>
-            </div>
-            <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
-              <video
-                className="w-full h-[420px] sm:h-[500px] object-cover"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                aria-label="KW Singapore Reel 8"
-              >
-                <source src="/video/Shorts 8 - Joel Realtors.mp4" type="video/mp4" />
-              </video>
-            </div>
+          </div>
+
+          {/* Desktop Grid */}
+          <div className="hidden sm:grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            {reels2.map((reel, index) => (
+              <div key={index} className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
+                <video
+                  className="w-full h-[500px] object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  aria-label={reel.label}
+                >
+                  <source src={reel.src} type="video/mp4" />
+                </video>
+              </div>
+            ))}
           </div>
         </div>
       </section>
