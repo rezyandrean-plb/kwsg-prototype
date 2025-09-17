@@ -51,8 +51,7 @@ export default function AuthDialog({ open, onOpenChange, toolTitle }: AuthDialog
                     colorText: "#e5e7eb", // gray-200
                     colorTextSecondary: "#d1d5db", // gray-300
                     colorPrimary: "#b40101",
-                    colorAlphaShaded: "rgba(31,41,55,0.9)",
-                    colorShimmer: "#4b5563"
+                    
                   },
                   elements: {
                     rootBox: "w-full bg-transparent",
@@ -88,7 +87,7 @@ export default function AuthDialog({ open, onOpenChange, toolTitle }: AuthDialog
                     form: "bg-transparent",
                     footer: "bg-gray-800",
                     footerText: "text-gray-300",
-                    footerAction: "bg-gray-800",
+                    footerAction: "hidden",
                     alternativeMethodsBlockButton: "bg-gray-600 border-gray-500 text-white hover:bg-gray-500",
                     alternativeMethodsBlockButtonText: "text-white",
                     formFieldInputShowPasswordButton: "text-gray-400 hover:text-white",
