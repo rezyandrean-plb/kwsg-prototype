@@ -27,7 +27,8 @@ const tools = [
     description: "Manage your real estate business easily from anywhere with one central hub.",
     icon: Calculator,
     category: "Command Tools",
-    url: "agent.kw.com"
+    url: "agent.kw.com",
+    image: "/images/tech-tool/kw-command.webp"
   },
   {
     id: 101,
@@ -62,7 +63,8 @@ const tools = [
     description: "Track deals from new leads to closings, ensuring payments never missed.",
     icon: BarChart3,
     category: "Command Tools",
-    url: "https://console.command.kw.com/command/opportunities"
+    url: "https://console.command.kw.com/command/opportunities",
+    image: "/images/tech-tool/kw-opportunities.webp"
   },
   {
     id: 105,
@@ -70,7 +72,8 @@ const tools = [
     description: "Automate client follow-ups and marketing campaigns, saving time while staying connected.",
     icon: Smartphone,
     category: "Command Tools",
-    url: "https://console.command.kw.com/command/smart-plans"
+    url: "https://console.command.kw.com/command/smart-plans",
+    image: "/images/tech-tool/kw-smartplans.webp"
   },
   {
     id: 106,
@@ -87,7 +90,8 @@ const tools = [
     description: "Create branded, user-friendly websites in minutes to capture online inquiries.",
     icon: MapPin,
     category: "Command Tools",
-    url: "https://console.command.kw.com/command/websites"
+    url: "https://console.command.kw.com/command/websites",
+    image: "/images/tech-tool/kw-website.webp"
   },
   {
     id: 3,
@@ -123,7 +127,8 @@ const tools = [
     description: "Design stunning brochures, posts, and materials easily, no design experience required.",
     icon: Building2,
     category: "External Tools",
-    url: "canva.kw.com"
+    url: "canva.kw.com",
+    image: "/images/tech-tool/kw-canva.webp"
   },
   {
     id: 18,
