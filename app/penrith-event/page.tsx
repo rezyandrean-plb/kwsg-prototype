@@ -570,10 +570,11 @@ export default function SpringleafResidenceLanding() {
   }, [isAutoPlaying])
 
   const projectImages = [
-    "/images/springleaf-residence/springleaf-residence-hero-aerial.webp",
-    "/images/springleaf-residence/springleaf-residence-condo-look.webp",
-    "/images/springleaf-residence/springleaf-residence-facilitate.webp",
-    "/images/springleaf-residence/springleaf-residence-front.webp",
+    "/images/penrith/penrith-hero-background.webp",
+    "/images/penrith/penrith-exterior-view.webp",
+    "/images/penrith/penrith-facilities.webp",
+    "/images/penrith/penrith-drone-view.webp",
+    "/images/penrith/penrith-balcony.webp",
   ]
 
   const floorPlans = {
@@ -1081,7 +1082,7 @@ export default function SpringleafResidenceLanding() {
         {/* Background elements */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/springleaf-residence/springleaf-hero.jpg"
+            src="/images/penrith/penrith-hero-background.webp"
             alt="Penrith Hero"
             fill
             className="object-cover"
@@ -1634,7 +1635,7 @@ export default function SpringleafResidenceLanding() {
                       <h4 className="font-semibold text-white">Site Map</h4>
                     </div>
                     <Image
-                      src="/images/springleaf-residence/springleaf-residence-site-plan.webp"
+                      src="/images/springleaf-residence/site-plan-dummy.webp"
                       alt="Penrith Site Map"
                       width={800}
                       height={500}
@@ -1717,7 +1718,9 @@ export default function SpringleafResidenceLanding() {
                         : currentImageIndex === 2
                         ? "Facilities & Amenities"
                         : currentImageIndex === 3
-                        ? "Front View"
+                        ? "Drone View"
+                        : currentImageIndex === 4
+                        ? "Balcony View"
                         : "Project Overview"}
                     </h4>
                     <p className="text-sm opacity-90">
@@ -1889,9 +1892,9 @@ export default function SpringleafResidenceLanding() {
             {/* First Row - 2 Cards on Mobile, 3 Cards on Desktop */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
               {[
-                { icon: <Train className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "MRT-adjacent - Strong rental appeal" },
-                { icon: <MountainSnow className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "Near Woodlands Regional Centre - future growth node" },
-                { icon: <Clock className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "Limited new launches in D26" }
+                { icon: <Train className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "4-min Walk to Queenstown MRT" },
+                { icon: <ChartLine className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "strong rental demand from professionals in CBD & One-North" },
+                { icon: <MapPin className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "City-Fringe Location in D03" }
               ].map((benefit, index) => (
                 <div 
                   key={index} 
@@ -1915,8 +1918,8 @@ export default function SpringleafResidenceLanding() {
             {/* Second Row - 2 Cards on Mobile, 2 Cards on Desktop */}
             <div className="grid grid-cols-2 md:grid-cols-2 gap-6 mb-6">
               {[
-                { icon: <Trees className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "Nature views + lifestyle value" },
-                { icon: <Boxes className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "Ideal for both capital appreciation & family living" }
+                { icon: <ChartLine className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "proven resilience and sustained buyer demand" },
+                { icon: <Clock className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "First GLS Launch in Queenstown Since 2017" }
               ].map((benefit, index) => (
                 <div 
                   key={index + 3} 
@@ -1951,11 +1954,37 @@ export default function SpringleafResidenceLanding() {
                 }}
               >
                 <div className="p-4 md:p-6 flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-4 min-h-[100px] md:min-h-[120px]">
-                  <div><Clock className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} /></div>
-                  <p className="text-xs md:text-lg text-gray-300 font-light text-center">Limited new launches in D26</p>
+                  <div><ChartLine className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} /></div>
+                  <p className="text-xs md:text-lg text-gray-300 font-light text-center">limited new supply drives scarcity premium</p>
                 </div>
               </div>
               <div className="col-span-1"></div>
+            </div>
+
+            {/* Additional Row for Desktop - 3 Cards */}
+            <div className="hidden md:grid grid-cols-3 gap-6 mb-6">
+              {[
+                { icon: <Compass className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "Close to Key Growth Hubs" },
+                { icon: <MapPin className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "Orchard, CBD, and One-North business park in minutes" },
+                { icon: <Building className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "Blue-Chip Developers – GuocoLand + Hong Leong track record in premium city projects" }
+              ].map((benefit, index) => (
+                <div 
+                  key={index + 5} 
+                  className={`text-center hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
+                    animatedSections.has('investor-benefits') ? 'animate' : ''
+                  }`} 
+                  style={{ 
+                    transitionDelay: `${(index + 5) * 200}ms`,
+                    opacity: animatedSections.has('investor-benefits') ? 1 : 0,
+                    transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
+                  }}
+                >
+                  <div className="p-4 md:p-6 flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-4 min-h-[100px] md:min-h-[120px]">
+                    <div>{benefit.icon}</div>
+                    <p className="text-xs md:text-lg text-gray-300 font-light text-center">{benefit.text}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -1999,12 +2028,15 @@ export default function SpringleafResidenceLanding() {
               <CardContent className="space-y-6">
                 {/* Location Image */}
                 <div className="w-full rounded-lg overflow-hidden shadow-lg">
-                  <Image
-                    src="/images/springleaf-residence/springleaf-location.webp"
-                    alt="Penrith Location"
-                    width={800}
-                    height={450}
-                    className="w-full h-[450px] object-cover"
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10877.017147974153!2d103.80274218107014!3d1.2968611962702363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da1b590c541b6f%3A0xdcd4bd3dc6253e2!2sPenrith%20Condo!5e0!3m2!1sen!2sid!4v1758178257681!5m2!1sen!2sid"
+                    width="800"
+                    height="450"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="w-full h-[450px]"
                   />
                 </div>
                 <div className="grid md:grid-cols-3 gap-6">
