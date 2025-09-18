@@ -942,7 +942,7 @@ export default function SpringleafResidenceLanding() {
         description: "Please wait while we process your registration",
       })
 
-      const response = await fetch('/api/springleaf-residence-event', {
+      const response = await fetch('/api/penrith-event', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
