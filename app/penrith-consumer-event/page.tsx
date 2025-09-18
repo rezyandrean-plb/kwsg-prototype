@@ -1190,7 +1190,7 @@ export default function SpringleafResidenceLanding() {
             >
               <div className="relative">
                 <img
-                  src="/images/event/springleaf-residence-event.webp"
+                  src="/images/penrith/penrith-seminar.webp"
                   alt="Penrith Event"
                   className="w-full h-auto rounded-lg shadow-2xl object-contain md:object-cover"
                 />
