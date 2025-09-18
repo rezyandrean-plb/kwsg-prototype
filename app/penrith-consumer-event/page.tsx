@@ -1518,49 +1518,7 @@ export default function SpringleafResidenceLanding() {
         }}
       >
         <div className="container mx-auto px-4">
-          <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
-            animatedSections.has('project-info') ? 'animate-slide-in-top' : ''
-          }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">The Margaret Drive Address That Brings You Closer to Everything</h2>
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-1 bg-[#ce001f] rounded" />
-            </div>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Penrith is a new 462-unit condominium along Margaret Drive, developed by GuocoLand and Hong Leong. Situated in the heart of Queenstown, it is just a 5-minute walk from Queenstown MRT, with everyday conveniences and schools close by — while Orchard, the CBD, and One-North are only a short train ride away.
-            </p>
-          </div>
-
-          {/* Feature Cards */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {[
-              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "4 mins walk to Queenstown MRT on the East–West Line" },
-              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "3–6 MRT stops to Outram, Tanjong Pagar, Raffles Place & Marina Bay" },
-              { icon: <Car className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Seamless access to AYE, PIE & CTE" },
-              { icon: <GraduationCap className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Within 1km of Queenstown Primary & Secondary Schools" },
-              { icon: <BedDouble className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "2- to 4-Bedroom Units with Full Condo Facilities" },
-              { icon: <ChartLine className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Attractive pricing averaging at $2,2XX PSF" },
-              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "99-Year Leasehold in the heart of Queenstown" },
-              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Jointly developed by GuocoLand & Hong Leong Holdings" }
-            ].map((card, index) => (
-              <Card 
-                key={index} 
-                className={`text-center hover:shadow-lg transition-all duration-700 border-gray-700 bg-[#18191b] hover:scale-105 hover-lift stagger-animation ${
-                  animatedSections.has('project-info') ? 'animate' : ''
-                }`} 
-                style={{ 
-                  transitionDelay: `${index * 150}ms`,
-                  opacity: animatedSections.has('project-info') ? 1 : 0,
-                  transform: animatedSections.has('project-info') ? 'translateY(0)' : 'translateY(40px)'
-                }}
-              >
-                <CardContent className="p-6">
-                  {card.icon}
-                  <p className="text-gray-300" dangerouslySetInnerHTML={{ __html: card.desc }}></p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
+          
           {/* Detailed Information Grid */}
           <div className={`grid lg:grid-cols-10 gap-8 mb-12 transition-all duration-1000 delay-500 ${
             animatedSections.has('project-info') ? 'animate-fade-in-up' : ''
