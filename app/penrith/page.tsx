@@ -1418,8 +1418,8 @@ export default function SpringleafResidenceLanding() {
                       <h4 className="font-semibold text-white">Site Map</h4>
                     </div>
                     <Image
-                      src="/images/springleaf-residence/springleaf-residence-site-plan.webp"
-                      alt="Springleaf Residence Site Map"
+                      src="/images/springleaf-residence/site-plan-dummy.webp"
+                      alt="Penrith Site Map"
                       width={800}
                       height={500}
                       quality={90}
@@ -1451,7 +1451,7 @@ export default function SpringleafResidenceLanding() {
             }`}
           >
             <div className="text-center mb-8">
-              <h3 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Gallery</h3>
+              <h3 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Project Gallery</h3>
               <div className="flex justify-center mb-4">
                 <div className="w-16 h-1 bg-[#ce001f] rounded" />
               </div>
@@ -1467,7 +1467,7 @@ export default function SpringleafResidenceLanding() {
               <div className="relative h-[500px] rounded-xl overflow-hidden shadow-2xl">
                 <Image
                   src={projectImages[currentImageIndex] || "/placeholder.svg"}
-                  alt={`Springleaf Residence - Image ${currentImageIndex + 1}`}
+                  alt={`Penrith - Image ${currentImageIndex + 1}`}
                   fill
                   className="object-cover transition-all duration-500"
                 />
@@ -1501,12 +1501,14 @@ export default function SpringleafResidenceLanding() {
                         : currentImageIndex === 2
                         ? "Facilities & Amenities"
                         : currentImageIndex === 3
-                        ? "Front View"
+                        ? "Drone View"
+                        : currentImageIndex === 4
+                        ? "Balcony View"
                         : "Project Overview"}
                     </h4>
                     <p className="text-sm opacity-90">
                       {currentImageIndex === 0
-                        ? "Breathtaking aerial perspective of Springleaf Residence"
+                        ? "Breathtaking aerial perspective of Penrith"
                         : currentImageIndex === 1
                         ? "Modern condo exterior with contemporary design"
                         : currentImageIndex === 2
@@ -1541,7 +1543,7 @@ export default function SpringleafResidenceLanding() {
                 ))}
               </div>
             </div>
-          </div> 
+          </div>  
 
           {/* Call to Action */}
           <div className={`text-center mb-4 transition-all duration-1000 delay-500 ${
@@ -1718,7 +1720,7 @@ export default function SpringleafResidenceLanding() {
                 >
                   <div className="p-4 md:p-6 flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-4 min-h-[100px] md:min-h-[120px]">
                     <div>{benefit.icon}</div>
-                    <p className="text-xs md:text-lg text-gray-300 font-light text-center md:text-left">{benefit.text}</p>
+                    <p className="text-xs md:text-lg text-gray-300 font-light text-center md:text-center">{benefit.text}</p>
                   </div>
                 </div>
               ))}
@@ -1763,19 +1765,19 @@ export default function SpringleafResidenceLanding() {
                 }}
               >
                 <div className="p-4 md:p-6 flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-4 min-h-[100px] md:min-h-[120px]">
-                  <div><Clock className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} /></div>
-                  <p className="text-xs md:text-lg text-gray-300 font-light text-center">First GLS Launch in Queenstown Since 2017</p>
+                  <div><ChartLine className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} /></div>
+                  <p className="text-xs md:text-lg text-gray-300 font-light text-center">limited new supply drives scarcity premium</p>
                 </div>
               </div>
               <div className="col-span-1"></div>
             </div>
-            
+
             {/* Additional Row for Desktop - 3 Cards */}
             <div className="hidden md:grid grid-cols-3 gap-6 mb-6">
               {[
-                { icon: <ChartLine className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "limited new supply drives scarcity premium" },
                 { icon: <Compass className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "Close to Key Growth Hubs" },
-                { icon: <Building className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "Blue-Chip Developers" }
+                { icon: <MapPin className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "Orchard, CBD, and One-North business park in minutes" },
+                { icon: <Building className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "Blue-Chip Developers – GuocoLand + Hong Leong track record in premium city projects" }
               ].map((benefit, index) => (
                 <div 
                   key={index + 5} 
@@ -1837,12 +1839,15 @@ export default function SpringleafResidenceLanding() {
               <CardContent className="space-y-6">
                 {/* Location Image */}
                 <div className="w-full rounded-lg overflow-hidden shadow-lg">
-                  <Image
-                    src="/images/springleaf-residence/springleaf-location.webp"
-                    alt="Springleaf Residence Location"
-                    width={800}
-                    height={450}
-                    className="w-full h-[450px] object-cover"
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10877.017147974153!2d103.80274218107014!3d1.2968611962702363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da1b590c541b6f%3A0xdcd4bd3dc6253e2!2sPenrith%20Condo!5e0!3m2!1sen!2sid!4v1758178257681!5m2!1sen!2sid"
+                    width="800"
+                    height="450"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="w-full h-[450px]"
                   />
                 </div>
                 <div className="grid md:grid-cols-3 gap-6">

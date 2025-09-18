@@ -1126,12 +1126,12 @@ export default function SpringleafResidenceLanding() {
               </p>
             </div>
 
-            {/* Clean CTA Buttons */}
-            <div className={`w-full px-2 sm:px-6 md:px-8 mb-4 sm:mb-4 md:mb-4 lg:mb-8 transition-all duration-700 delay-1700 ${
+            {/* Clean CTA Buttons Hero */}
+            <div className={`w-full pl-0 pr-2 sm:pl-0 sm:pr-6 md:pl-0 md:pr-8 mb-4 sm:mb-4 md:mb-4 lg:mb-8 transition-all duration-700 delay-1700 ${
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Button 
-                className={`w-full bg-[#ce001f] hover:bg-[#b3001a] text-white px-2 sm:px-6 md:px-8 py-3 sm:py-4 text-sm sm:text-base md:text-lg font-medium rounded-lg transition-all duration-300 hover:scale-105 hover-lift flex-shrink-0 ${isVisible ? 'animate-pulse-glow' : ''}`}
+                className={`inline-flex w-auto items-center justify-start text-left bg-[#ce001f] hover:bg-[#b3001a] text-white px-2 sm:px-6 md:px-8 py-3 sm:py-4 text-sm sm:text-base md:text-lg font-medium rounded-lg transition-all duration-300 hover:scale-105 hover-lift flex-shrink-0 ${isVisible ? 'animate-pulse-glow' : ''}`}
                 onClick={scrollToLeadForm}
               >
                 <Calendar className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
@@ -1175,7 +1175,10 @@ export default function SpringleafResidenceLanding() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <span className="text-white">Mastering New Launch Investments: <br /> 6 Strategies to Identify the Best Entry Points in 2025 In a 2025 New Launch</span>
+            <span className="text-white">
+              <span className="font-bold">Mastering New Launch Investments:</span>
+              <br /> 6 Strategies to Identify the Best Entry Points in 2025 In a 2025 New Launch
+            </span>
             <span className="block text-[#B40101] italic">
               Featuring Penrith
             </span>
@@ -1239,7 +1242,13 @@ export default function SpringleafResidenceLanding() {
                 </div>
                 <div className="flex items-center space-x-3">
                   <MapPinned className="h-5 w-5 text-[#B40101]" />
-                  <span className="text-slate-100">Penrith Showflat, 6A Margaret Drive, Singapore 142006</span>
+                  <button
+                    type="button"
+                    className="text-slate-100 underline-offset-2 hover:underline cursor-pointer text-left"
+                    onClick={() => document.getElementById('location')?.scrollIntoView({ behavior: 'smooth' })}
+                  >
+                    Penrith Showflat, 6A Margaret Drive, Singapore 142006
+                  </button>
                 </div>
               </motion.div>
               
@@ -1518,106 +1527,6 @@ export default function SpringleafResidenceLanding() {
         }}
       >
         <div className="container mx-auto px-4">
-          
-          {/* Detailed Information Grid */}
-          <div className={`grid lg:grid-cols-10 gap-8 mb-12 transition-all duration-1000 delay-500 ${
-            animatedSections.has('project-info') ? 'animate-fade-in-up' : ''
-          }`} style={{
-            opacity: animatedSections.has('project-info') ? 1 : 0,
-            transform: animatedSections.has('project-info') ? 'translateY(0)' : 'translateY(50px)'
-          }}>
-            {/* Project Details */}
-            <Card className="lg:col-span-4 border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
-              <CardHeader>
-                <CardTitle className="text-[#ce001f] flex items-center">
-                  <Building className="w-5 h-5 mr-2" />
-                  Project Information
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Name:</span>
-                  <span className="font-semibold text-white">Penrith</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Developer:</span>
-                  <span className="font-semibold text-white">Hong Leong Holdings & GuocoLand<br/>(Margaret Rise Development Pte Ltd)</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Tenure:</span>
-                  <span className="font-semibold text-white">99 years Leasehold from 4 November 2024</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">District:</span>
-                  <span className="font-semibold text-white">3 (Queenstown)</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Site Area:</span>
-                  <span className="font-semibold text-white">9,522.3 Sqm / 102,498 Sqft</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Blocks:</span>
-                  <span className="font-semibold text-white text-right sm:text-left">40 storeys</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Total Units:</span>
-                  <span className="font-semibold text-white">462</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Unit Mix:</span>
-                  <span className="font-semibold text-white">2- to 5-bedroom</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">TOP:</span>
-                  <span className="font-semibold text-white">1 April 2029 (non-commitment basis)</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Target Preview:</span>
-                  <span className="font-semibold text-white">3 October 2025</span>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Site Plan & Floor Plans */}
-            <Card className="lg:col-span-6 border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
-              <CardHeader>
-                <CardTitle className="text-[#ce001f] flex items-center">
-                  <Ruler className="w-5 h-5 mr-2" />
-                  Plans & Layout
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-4">
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-semibold text-white">Site Map</h4>
-                    </div>
-                    <Image
-                      src="/images/springleaf-residence/site-plan-dummy.webp"
-                      alt="Penrith Site Map"
-                      width={800}
-                      height={500}
-                      quality={90}
-                      className="w-full rounded mb-3 hover:scale-95 transition-transform duration-500 object-contain"
-                    />
-                    <p className="text-sm text-gray-300 mb-3">
-                      View the overall development layout and facilities distribution
-                    </p>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="w-full bg-[#ce001f] hover:bg-[#ce001f]/20 hover:text-white transition-all duration-300 border-gray-500 text-gray-300"
-                      onClick={() => setShowSiteMapPopup(true)}
-                    >
-                      <Download className="w-4 h-4 mr-2" />
-                      Required Site Map
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
           {/* Image Gallery Section */}
           <div 
             id="project-gallery"
@@ -1722,236 +1631,10 @@ export default function SpringleafResidenceLanding() {
         </div>
       </section>
 
-      {/* Floor Plans Section */}
-      {/* <section id="floor-plans" className="py-16 bg-[#1c1c1d]">
-        <div className="container mx-auto px-4">
-          <div className={`text-center mb-12 transition-all duration-1000 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Floor Plans & Pricing</h2>
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-1 bg-[#ce001f] rounded" />
-            </div>
-            <p className="text-xl text-gray-300">Choose from the following thoughtfully designed unit layouts</p>
-          </div>
-
-          <Tabs value={selectedFloorPlan} onValueChange={setSelectedFloorPlan} className={`w-full transition-all duration-1000 delay-300 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-                        <TabsList className="w-full mb-8">
-              <div className="flex flex-nowrap gap-3 justify-center overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent px-4" style={{ WebkitOverflowScrolling: 'touch' }}>
-                {Object.entries(floorPlans).map(([key, plan]) => (
-                  <TabsTrigger 
-                    key={key} 
-                    value={key} 
-                    className="px-6 py-3 rounded-full font-medium flex items-center gap-2 text-sm transition-all duration-300 border-2 focus:outline-none whitespace-nowrap flex-shrink-0 data-[state=active]:bg-[#ce001f] data-[state=active]:border-[#ce001f] data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=inactive]:bg-transparent data-[state=inactive]:border-gray-600 data-[state=inactive]:text-gray-300 hover:bg-gray-800 hover:border-gray-500 hover:text-white"
-                  >
-                    {plan.name}
-                  </TabsTrigger>
-                ))}
-              </div>
-            </TabsList>
-
-            {Object.entries(floorPlans).map(([key, plan]) => (
-              <TabsContent key={key} value={key}>
-                <div className="grid md:grid-cols-2 gap-8 items-center">
-                  <div className="hover:scale-105 transition-transform duration-500">
-                    <Image
-                      src={plan.image || "/placeholder.svg"}
-                      alt={`${plan.name} Floor Plan`}
-                      width={600}
-                      height={400}
-                      className="w-full rounded-lg shadow-lg"
-                    />
-                  </div>
-                  <div className="space-y-6">
-                    <div>
-                      <h3 className="text-3xl font-bold text-primary-red mb-2">{plan.name}</h3>
-                      <p className="text-xl text-gray-300 mb-4">{plan.size}</p>
-                      <p className="text-2xl font-bold text-green-400">{plan.price}</p>
-                    </div>
-                    <div className="space-y-4">
-                      <div className="flex items-center space-x-3">
-                        <Ruler className="w-5 h-5" style={{ color: '#ce001f' }} />
-                        <span className="text-white font-light">Spacious and well-ventilated layout</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <Eye className="w-5 h-5" style={{ color: '#ce001f' }} />
-                        <span className="text-white font-light">Unblocked views from most units</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <Home className="w-5 h-5" style={{ color: '#ce001f' }} />
-                        <span className="text-white font-light">Premium fittings and finishes</span>
-                      </div>
-                    </div>
-                    <div className="flex space-x-4">
-                      <Button className="bg-[#ce001f] hover:bg-[#b3001a] hover:scale-105 transition-all duration-300">Secure My Spot!</Button>
-                      <Button variant="outline" className="border-[#ce001f] text-[#ce001f] bg-transparent hover:scale-105 transition-all duration-300">
-                        <Download className="w-4 h-4 mr-2" />
-                        Download Floor Plan
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </TabsContent>
-            ))}
-          </Tabs>
-          
-          <div className={`mt-16 transition-all duration-1000 delay-300 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-light text-white mb-2">Safe entry price compared to other OCR areas:</h3>
-            </div>
-            <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-              <div className="text-center">
-                <h4 className="text-lg font-semibold text-white mb-3">Woodlands</h4>
-                <p className="text-3xl font-bold text-[#ce001f]">~$2,300 PSF</p>
-              </div>
-              <div className="text-center">
-                <h4 className="text-lg font-semibold text-white mb-3">Lakeside</h4>
-                <p className="text-3xl font-bold text-[#ce001f]">~$2,600 PSF</p>
-              </div>
-              <div className="text-center">
-                <h4 className="text-lg font-semibold text-white mb-3">Bayshore</h4>
-                <p className="text-3xl font-bold text-[#ce001f]">~$2,900 PSF</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
-
-      {/* Investor Benefits & Pricing Comparison */}
-      <section 
-        className="py-16 bg-[#242728] section-entrance"
-        data-section-id="investor-benefits"
-        style={{ 
-          opacity: animatedSections.has('investor-benefits') ? 1 : 0,
-          transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(60px)'
-        }}
-      >
-        <div className="container mx-auto px-4">
-          <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
-            animatedSections.has('investor-benefits') ? 'animate-slide-in-top' : ''
-          }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">For Investors</h2>
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-1 bg-[#ce001f] rounded" />
-            </div>
-          </div>
-
-          {/* Investor Benefits */}
-          <div className={`max-w-6xl mx-auto transition-all duration-1000 delay-500 ${
-            animatedSections.has('investor-benefits') ? 'animate-fade-in-up' : ''
-          }`} style={{
-            opacity: animatedSections.has('investor-benefits') ? 1 : 0,
-            transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(50px)'
-          }}>
-            {/* First Row - 2 Cards on Mobile, 3 Cards on Desktop */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
-              {[
-                { icon: <Train className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "4-min Walk to Queenstown MRT" },
-                { icon: <ChartLine className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "strong rental demand from professionals in CBD & One-North" },
-                { icon: <MapPin className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "City-Fringe Location in D03" }
-              ].map((benefit, index) => (
-                <div 
-                  key={index} 
-                  className={`text-left hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
-                    animatedSections.has('investor-benefits') ? 'animate' : ''
-                  } ${index === 2 ? 'hidden md:block' : ''}`} 
-                  style={{ 
-                    transitionDelay: `${index * 200}ms`,
-                    opacity: animatedSections.has('investor-benefits') ? 1 : 0,
-                    transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
-                  }}
-                >
-                  <div className="p-4 md:p-6 flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-4 min-h-[100px] md:min-h-[120px]">
-                    <div>{benefit.icon}</div>
-                    <p className="text-xs md:text-lg text-gray-300 font-light text-center md:text-center">{benefit.text}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            
-            {/* Second Row - 2 Cards on Mobile, 2 Cards on Desktop */}
-            <div className="grid grid-cols-2 md:grid-cols-2 gap-6 mb-6">
-              {[
-                { icon: <ChartLine className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "proven resilience and sustained buyer demand" },
-                { icon: <Clock className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "First GLS Launch in Queenstown Since 2017" }
-              ].map((benefit, index) => (
-                <div 
-                  key={index + 3} 
-                  className={`text-center hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
-                    animatedSections.has('investor-benefits') ? 'animate' : ''
-                  }`} 
-                  style={{ 
-                    transitionDelay: `${(index + 3) * 200}ms`,
-                    opacity: animatedSections.has('investor-benefits') ? 1 : 0,
-                    transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
-                  }}
-                >
-                  <div className="p-4 md:p-6 flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-4 min-h-[100px] md:min-h-[120px]">
-                    <div>{benefit.icon}</div>
-                    <p className="text-xs md:text-lg text-gray-300 font-light text-center">{benefit.text}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            
-            {/* Third Row - 1 Card Centered on Mobile, Hidden on Desktop */}
-            <div className="grid grid-cols-4 md:hidden gap-6">
-              <div className="col-span-1"></div>
-              <div 
-                className={`col-span-2 text-center hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
-                  animatedSections.has('investor-benefits') ? 'animate' : ''
-                }`} 
-                style={{ 
-                  transitionDelay: `1000ms`,
-                  opacity: animatedSections.has('investor-benefits') ? 1 : 0,
-                  transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
-                }}
-              >
-                <div className="p-4 md:p-6 flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-4 min-h-[100px] md:min-h-[120px]">
-                  <div><ChartLine className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} /></div>
-                  <p className="text-xs md:text-lg text-gray-300 font-light text-center">limited new supply drives scarcity premium</p>
-                </div>
-              </div>
-              <div className="col-span-1"></div>
-            </div>
-
-            {/* Additional Row for Desktop - 3 Cards */}
-            <div className="hidden md:grid grid-cols-3 gap-6 mb-6">
-              {[
-                { icon: <Compass className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "Close to Key Growth Hubs" },
-                { icon: <MapPin className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "Orchard, CBD, and One-North business park in minutes" },
-                { icon: <Building className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "Blue-Chip Developers – GuocoLand + Hong Leong track record in premium city projects" }
-              ].map((benefit, index) => (
-                <div 
-                  key={index + 5} 
-                  className={`text-center hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
-                    animatedSections.has('investor-benefits') ? 'animate' : ''
-                  }`} 
-                  style={{ 
-                    transitionDelay: `${(index + 5) * 200}ms`,
-                    opacity: animatedSections.has('investor-benefits') ? 1 : 0,
-                    transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
-                  }}
-                >
-                  <div className="p-4 md:p-6 flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-4 min-h-[100px] md:min-h-[120px]">
-                    <div>{benefit.icon}</div>
-                    <p className="text-xs md:text-lg text-gray-300 font-light text-center">{benefit.text}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Nearby Amenities */}
-      <section 
-        id="nearby-amenities"
-        className="py-16 bg-[#1c1c1d] section-entrance"
+      {/* Location */}
+       <section 
+         id="location"
+         className="pt-8 md:pt-12 pb-16 bg-[#1c1c1d] section-entrance"
         data-section-id="nearby-amenities"
         style={{ 
           opacity: animatedSections.has('nearby-amenities') ? 1 : 0,
@@ -1966,7 +1649,7 @@ export default function SpringleafResidenceLanding() {
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
-            <p className="text-xl text-gray-300">Everything you need is within reach</p>
+            <p className="text-xl text-gray-300">Penrith Showflat, 6A Margaret Drive, Singapore 142006</p>
           </div>
 
           {/* Location Information */}
@@ -1998,270 +1681,45 @@ export default function SpringleafResidenceLanding() {
                   />
                 </div>
                 <div className="grid md:grid-cols-3 gap-6">
-                  <div className="flex items-center space-x-3">
-                    <MapPin className="w-5 h-5" style={{ color: '#ce001f' }} />
-                    <div>
-                      <p className="font-semibold text-white">Address</p>
-                      <p className="text-sm text-gray-300 font-light">Margaret Drive, Queenstown</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Train className="w-5 h-5" style={{ color: '#ce001f' }} />
-                    <div>
-                      <p className="font-semibold text-white">MRT</p>
-                      <p className="text-sm text-gray-300 font-light">Queenstown MRT (EW Line)</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Car className="w-5 h-5" style={{ color: '#ce001f' }} />
-                    <div>
-                      <p className="font-semibold text-white">Access</p>
-                      <p className="text-sm text-gray-300 font-light">AYE | PIE | CTE</p>
-                    </div>
-                  </div>
+                   <div className="flex items-center space-x-3">
+                     <Button 
+                       className="inline-flex items-center gap-2 bg-[#ce001f] hover:bg-[#b3001a] text-white px-4 py-2 rounded-md transition-colors"
+                       onClick={() => window.open('https://maps.google.com/maps/dir//Penrith+Condo+498+Margaret+Dr+Singapore+149308/@1.2967344,103.8086402,15z/data=!4m5!4m4!1m0!1m2!1m1!1s0x31da1b590c541b6f:0xdcd4bd3dc6253e2', '_blank', 'noopener,noreferrer')}
+                     >
+                       <Car className="w-4 h-4" />
+                       Get Direction
+                     </Button>
+                   </div>
                 </div>
               </CardContent>
             </Card>
           </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-            {amenities.map((amenity, index) => (
-              <Card 
-                key={index} 
-                className={`hover:shadow-lg transition-all duration-700 border-gray-700 bg-[#18191b] rounded-xl hover:scale-105 stagger-animation ${
-                  animatedSections.has('nearby-amenities') ? 'animate' : ''
-                }`} 
-                style={{ 
-                  transitionDelay: `${index * 200}ms`,
-                  opacity: animatedSections.has('nearby-amenities') ? 1 : 0,
-                  transform: animatedSections.has('nearby-amenities') ? 'translateY(0)' : 'translateY(40px)'
-                }}
-              >
-                <CardContent className="p-4 md:p-6 min-h-[100px] md:min-h-[120px] w-full">
-                  <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:items-center md:justify-start md:space-y-0 md:space-x-4 w-full">
-                    <div className="flex-shrink-0" style={{ color: '#ce001f' }}>{amenity.icon}</div>
-                    <div className="text-center md:text-center flex-1 min-w-0">
-                      <h3 className="font-semibold text-xs md:text-lg text-white break-words">{amenity.name}</h3>
-                      <p className="text-gray-300 font-light text-xs md:text-sm break-words">{amenity.distance}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
         </div>
       </section>
 
-      {/* Lead Generation Form */}
-      {/* <section
-        id="lead-form"
-        className={`py-8 md:py-16 relative bg-cover bg-center section-entrance`}
-        data-section-id="lead-form"
-        style={{ 
-          backgroundImage: "url('/images/springleaf-residence/form-background.jpg')",
-          opacity: animatedSections.has('lead-form') ? 1 : 0,
-          transform: animatedSections.has('lead-form') ? 'translateY(0)' : 'translateY(60px)'
-        }}
-      >
-        <div className="absolute inset-0 bg-black bg-opacity-60"></div>
-        <div className="relative container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-left">
-            <Card className={`bg-white/20 backdrop-blur-sm text-white p-6 md:p-12 shadow-2xl border-0 rounded-xl hover:shadow-3xl transition-all duration-700 hover:scale-105 ${
-              animatedSections.has('lead-form') ? 'animate-scale-in' : ''
-            }`} style={{
-              opacity: animatedSections.has('lead-form') ? 1 : 0,
-              transform: animatedSections.has('lead-form') ? 'scale(1)' : 'scale(0.9)'
-            }}>
-              <h2 className="text-4xl font-bold mb-4 text-white text-center">Book Your Showflat Visit Today</h2>
-              <p className="text-md mb-8 opacity-90 text-white text-center">
-                Be the first to own a home that combines convenience, luxury, and nature. Register now for an exclusive preview of Penrith.
-              </p>
-              {submitError && (
-                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
-                  {submitError}
-                </div>
-              )}
-              
-              {submitSuccess && (
-                <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400 text-sm">
-                  Thank you for your interest! We will contact you soon to arrange your showflat visit.
-                </div>
-              )}
-              
-              <form className="space-y-6" onSubmit={handleFormSubmit}>
-                <div className="space-y-2">
-                  <label htmlFor="fullName" className="text-sm font-medium text-white">
-                    Full Name *
-                  </label>
-                  <Input 
-                    id="fullName"
-                    value={formData.fullName}
-                    onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
-                    placeholder="Enter your full name" 
-                    className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
-                    required
-                    disabled={isSubmitting}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="contactNumber" className="text-sm font-medium text-white">
-                    Contact Number *
-                  </label>
-                  <Input 
-                    id="contactNumber"
-                    value={formData.contactNumber}
-                    onChange={(e) => setFormData(prev => ({ ...prev, contactNumber: e.target.value }))}
-                    placeholder="Enter your contact number" 
-                    className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
-                    required
-                    disabled={isSubmitting}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="emailAddress" className="text-sm font-medium text-white">
-                    Email Address *
-                  </label>
-                  <Input 
-                    id="emailAddress"
-                    type="email"
-                    value={formData.emailAddress}
-                    onChange={(e) => setFormData(prev => ({ ...prev, emailAddress: e.target.value }))}
-                    placeholder="Enter your email address" 
-                    className="w-full bg-white text-gray-800 placeholder:text-gray-500 border-0" 
-                    required
-                    disabled={isSubmitting}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-white">
-                    Preferred Date
-                  </label>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "w-full justify-start text-left font-normal bg-white text-gray-800 border-0",
-                          !formData.preferredDate && "text-gray-500"
-                        )}
-                        disabled={isSubmitting}
-                      >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {formData.preferredDate ? format(formData.preferredDate, "PPP") : <span>Select preferred date</span>}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 bg-white border border-gray-200" align="start">
-                      <CalendarComponent
-                        mode="single"
-                        selected={formData.preferredDate}
-                        onSelect={(date) => setFormData(prev => ({ ...prev, preferredDate: date }))}
-                        initialFocus
-                        defaultMonth={new Date(2025, 7, 1)} 
-                        disabled={(date) => {
-                          const july31st = new Date(2025, 6, 31);
-                          return date <= july31st;
-                        }}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="preferredTiming" className="text-sm font-medium text-white">
-                    Preferred Time
-                  </label>
-                  <Select 
-                    value={formData.preferredTiming}
-                    onValueChange={(value) => setFormData(prev => ({ ...prev, preferredTiming: value }))}
-                    disabled={isSubmitting}
-                  >
-                    <SelectTrigger id="preferredTiming" className="w-full bg-white text-gray-800 border-0">
-                      <SelectValue placeholder="Select preferred time" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-white border border-gray-200">
-                      <SelectItem value="10:30-am">10:30 AM</SelectItem>
-                      <SelectItem value="11:00-am">11:00 AM</SelectItem>
-                      <SelectItem value="12:00-pm">12:00 PM</SelectItem>
-                      <SelectItem value="1:00-pm">1:00 PM</SelectItem>
-                      <SelectItem value="2:00-pm">2:00 PM</SelectItem>
-                      <SelectItem value="3:00-pm">3:00 PM</SelectItem>
-                      <SelectItem value="4:00-pm">4:00 PM</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div className="bg-gradient-to-r from-blue-50/20 to-indigo-50/20 border border-blue-200/30 rounded-lg p-4 backdrop-blur-sm">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className="relative">
-                        <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-sm">
-                          <span className="text-white text-xs font-bold">✓</span>
-                        </div>
-                        <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-white">Protected by Google reCAPTCHA</p>
-                        <p className="text-xs text-gray-300">Your information is secure and protected from bots</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      {securityScore && (
-                        <div className="flex items-center space-x-1">
-                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                          <span className="text-xs text-green-400 font-medium">
-                            Score: {(securityScore * 100).toFixed(0)}%
-                          </span>
-                        </div>
-                      )}
-                      <div className="flex items-center space-x-1">
-                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                        <span className="text-xs text-green-400 font-medium">Active</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+      {/* Future CTA with Countdown - Keep existing countdown component */}
+      <section className="relative py-8 sm:py-20 md:py-24 lg:py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/placeholder.svg?height=600&width=1200')] bg-cover bg-center opacity-20" />
+        <div className="absolute inset-0 bg-black/70" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#B40101]/20 via-black/80 to-black" />
 
-                <div className="text-center">
-                  <Button 
-                    type="submit"
-                    disabled={isSubmitting || isExecutingRecaptcha}
-                    className={`w-full text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 ${
-                      isExecutingRecaptcha 
-                        ? 'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700' 
-                        : 'bg-gradient-to-r from-[#ce001f] to-[#b3001a] hover:from-[#b3001a] hover:to-[#a0001a]'
-                    }`}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                        Submitting Request...
-                      </>
-                    ) : isExecutingRecaptcha ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                        Verifying Security...
-                      </>
-                    ) : (
-                      <>
-                        <div className="w-4 h-4 mr-2">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                          </svg>
-                        </div>
-                        Secure My Spot!
-                      </>
-                    )}
-                  </Button>
-                  <p className="text-sm italic text-white-600 mt-4 text-center">
-                    Upon registering, you agree to receive future marketing materials from KW Singapore. 
-                    <br /> 
-                    Your personal information will be used in accordance with our <a href="/privacy-policy" className="text-white hover:text-gray-300">privacy policy</a>.
-                  </p>
-                </div>
-              </form>
-            </Card>
-          </div>
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 text-center">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 sm:mb-8 font-sans text-white">
+            The Future of Real Estate
+            <span className="block text-[#B40101] italic">in Singapore is Here.</span>
+            <span className="block">Are You Ready?</span>
+          </h2>
+
+          <Button
+            size="lg"
+            className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 sm:px-12 py-4 sm:py-6 text-base sm:text-lg md:text-xl font-semibold transition-all duration-300 hover:scale-105 group"
+            onClick={() => window.open('https://explore.kwsingapore.com/', '_blank')}
+          >
+            Start Your Future Now
+            <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-1 transition-transform" />
+          </Button>
         </div>
-      </section> */}
+      </section>
 
       {/* Site Map Request Popup */}
       {showSiteMapPopup && executeRecaptcha && (
