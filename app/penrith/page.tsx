@@ -559,7 +559,7 @@ function LeadGenerationForm({
     <Card className={`bg-white/20 backdrop-blur-sm text-white p-6 md:p-12 shadow-2xl border-0 rounded-xl hover:shadow-3xl transition-all duration-700 hover:scale-105`}>
       <h2 className="text-4xl font-bold mb-4 text-white text-center">Book Your Showflat Visit Today</h2>
       <p className="text-md mb-8 opacity-90 text-white text-center">
-        Be the first to own a home that combines convenience, luxury, and nature. Register now for an exclusive preview of Springleaf Residence.
+        Be the first to own a home that combines convenience, luxury, and nature. Register now for an exclusive preview of Penrith.
       </p>
       {submitError && (
         <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
@@ -799,86 +799,55 @@ export default function SpringleafResidenceLanding() {
   }, [])
 
   const projectImages = [
-    "/images/springleaf-residence/springleaf-residence-hero-aerial.webp",
-    "/images/springleaf-residence/springleaf-residence-condo-look.webp",
-    "/images/springleaf-residence/springleaf-residence-facilitate.webp",
-    "/images/springleaf-residence/springleaf-residence-front.webp",
+    "/images/penrith/penrith-hero-background.webp",
+    "/images/penrith/penrith-exterior-view.webp",
+    "/images/penrith/penrith-facilities.webp",
+    "/images/penrith/penrith-drone-view.webp",
+    "/images/penrith/penrith-balcony.webp",
   ]
 
-  const floorPlans = {
-    "1br": {
-      name: "1-Bedroom",
-      size: "592 sqft",
-      price: "~$1.15M",
-      image: "/images/springleaf-residence/site-plan-dummy.webp",
-    },
-    "2br": {
-      name: "2-Bedroom (2 bath)",
-      size: "646 sqft",
-      price: "~$1.26M",
-      image: "/placeholder.svg?height=400&width=600&text=2BR+Floor+Plan",
-    },
-    "3br": {
-      name: "3-Bedroom",
-      size: "786–1,248 sqft",
-      price: "~$1.53M - $2.18M",
-      image: "/placeholder.svg?height=400&width=600&text=3BR+Floor+Plan",
-    },
-    "4br": {
-      name: "4-Bedroom",
-      size: "1,227 sqft",
-      price: "~$2.39M",
-      image: "/placeholder.svg?height=400&width=600&text=4BR+Floor+Plan",
-    },
-    "5br": {
-      name: "5-Bedroom",
-      size: "1,453 sqft",
-      price: "~$2.83M",
-      image: "/placeholder.svg?height=400&width=600&text=5BR+Floor+Plan",
-    },
-  }
 
   const amenities = [
     // TRANSPORT
-    { icon: <Train className="w-6 h-6" />, name: "Queenstown MRT", distance: "🚶 4 min walk" },
-    { icon: <Train className="w-6 h-6" />, name: "Outram Park MRT", distance: "🚇 3 stops" },
-    { icon: <Train className="w-6 h-6" />, name: "Tanjong Pagar MRT", distance: "🚇 4 stops" },
-    { icon: <Car className="w-6 h-6" />, name: "Orchard Road / CBD", distance: "🚗10–15 min drive" },
-    { icon: <Car className="w-6 h-6" />, name: "AYE (Ayer Rajah Expressway)", distance: "🚗 2 min" },
-    { icon: <Car className="w-6 h-6" />, name: "PIE (Pan Island Expressway)", distance: "🚗 5 min" },
-    { icon: <Car className="w-6 h-6" />, name: "CTE (Central Expressway)", distance: "🚗 7 min" },
+    { icon: <Train className="w-6 h-6" />, name: "Queenstown MRT", distance: "4-Mins walk", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Outram Park MRT", distance: "3-Stops MRT", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Tanjong Pagar MRT", distance: "4-Stops MRT", category: "Transport" },
+    { icon: <Car className="w-6 h-6" />, name: "Orchard Road / CBD", distance: "10–15-Mins drive", category: "Transport" },
+    { icon: <Car className="w-6 h-6" />, name: "AYE (Ayer Rajah Expressway)", distance: "2-Mins drive", category: "Transport" },
+    { icon: <Car className="w-6 h-6" />, name: "PIE (Pan Island Expressway)", distance: "5-Mins drive", category: "Transport" },
+    { icon: <Car className="w-6 h-6" />, name: "CTE (Central Expressway)", distance: "7-Mins drive", category: "Transport" },
     
     // RETAIL AND F&B
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Queensway Shopping Centre", distance: "🚶 6 min" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "IKEA Alexandra", distance: "🚶 8 min" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Alexandra Central", distance: "🚶 7 min" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Anchorpoint", distance: "🚶 8 min" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Mei Ling Market & Food Centre", distance: "🚶 4 min" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Dawson Place", distance: "🚗 3 min" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Queensway Shopping Centre", distance: "6-Mins walk", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "IKEA Alexandra", distance: "8-Mins walk", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Alexandra Central", distance: "7-Mins walk", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Anchorpoint", distance: "8-Mins walk", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Mei Ling Market & Food Centre", distance: "4-Mins walk", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Dawson Place", distance: "3-Mins drive", category: "Retail & F&B" },
     
     // NATURE AND LEISURE
-    { icon: <Trees className="w-6 h-6" />, name: "Alexandra Canal Linear Park", distance: "🚶 5 min" },
-    { icon: <Trees className="w-6 h-6" />, name: "Rail Corridor (Alexandra stretch)", distance: "🚶 7 min" },
-    { icon: <Trees className="w-6 h-6" />, name: "HortPark", distance: "🚗 8 min" },
-    { icon: <Trees className="w-6 h-6" />, name: "Dempsey Hill dining & lifestyle", distance: "🚗 8 min" },
-    { icon: <Trees className="w-6 h-6" />, name: "Labrador Nature Reserve", distance: "🚗 10 min" },
-    { icon: <Trees className="w-6 h-6" />, name: "Botanic Gardens", distance: "🚗 10 min" },
+    { icon: <Trees className="w-6 h-6" />, name: "Alexandra Canal Linear Park", distance: "5-Mins walk", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Rail Corridor (Alexandra stretch)", distance: "7-Mins walk", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "HortPark", distance: "8-Mins drive", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Dempsey Hill dining & lifestyle", distance: "8-Mins drive", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Labrador Nature Reserve", distance: "10-Mins drive", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Botanic Gardens", distance: "10-Mins drive", category: "Nature & Leisure" },
     
     // EDUCATION
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Queenstown Primary School", distance: "🚶 6 min" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Queenstown Secondary School", distance: "🚶 8 min" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Queensway Secondary School", distance: "🚶 9 min" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Alexandra Primary School", distance: "🚗 5 min" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Gan Eng Seng Primary School", distance: "🚗 7 min" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "New Town Primary School", distance: "🚗 8 min" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "ACS International", distance: "🚗 10 min" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Invictus International / Melbourne International", distance: "🚗 12 min" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Queenstown Primary School", distance: "6-Mins walk", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Queenstown Secondary School", distance: "8-Mins walk", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Queensway Secondary School", distance: "9-Mins walk", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Alexandra Primary School", distance: "5-Mins drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Gan Eng Seng Primary School", distance: "7-Mins drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "New Town Primary School", distance: "8-Mins drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "ACS International", distance: "10-Mins drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Invictus International / Melbourne International", distance: "12-Mins drive", category: "Education" },
     
     // HEALTHCARE
-    { icon: <Hospital className="w-6 h-6" />, name: "Alexandra Hospital", distance: "🚗 6 min" },
-    { icon: <Hospital className="w-6 h-6" />, name: "National University Hospital (NUH)", distance: "🚗 10 min" },
-    { icon: <Hospital className="w-6 h-6" />, name: "Gleneagles Hospital", distance: "🚗 12 min" },
-    { icon: <Hospital className="w-6 h-6" />, name: "Khoo Teck Puat Hospital", distance: "🚇 8 stops / 🚗 18 min" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Alexandra Hospital", distance: "6-Mins drive", category: "Healthcare" },
+    { icon: <Hospital className="w-6 h-6" />, name: "National University Hospital (NUH)", distance: "10-Mins drive", category: "Healthcare" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Gleneagles Hospital", distance: "12-Mins drive", category: "Healthcare" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Khoo Teck Puat Hospital", distance: "8-Stops MRT", category: "Healthcare" },
   ]
 
   const nextImage = () => {
@@ -1021,7 +990,7 @@ export default function SpringleafResidenceLanding() {
         // Show success toast
         toast({
           title: "Request Submitted Successfully!",
-          description: "Thank you for your interest in Springleaf Residence! We have sent you a confirmation email and our team will contact you soon to arrange your showflat visit.",
+          description: "Thank you for your interest in Penrith! We have sent you a confirmation email and our team will contact you soon to arrange your showflat visit.",
           variant: "default",
         })
         
@@ -1552,7 +1521,7 @@ export default function SpringleafResidenceLanding() {
             <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
               <h3 className="text-2xl font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
               <p className="text-lg mb-6 opacity-90">
-                Register now for an exclusive preview of Springleaf Residence
+                Register now for an exclusive preview of Penrith
               </p>
               <div className="cta-buttons-container justify-center">
                 <Button 
@@ -1854,31 +1823,55 @@ export default function SpringleafResidenceLanding() {
             </Card>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-            {amenities.map((amenity, index) => (
-              <Card 
-                key={index} 
-                className={`hover:shadow-lg transition-all duration-700 border-gray-700 bg-[#18191b] rounded-xl hover:scale-105 stagger-animation ${
-                  animatedSections.has('nearby-amenities') ? 'animate' : ''
-                }`} 
-                style={{ 
-                  transitionDelay: `${index * 200}ms`,
-                  opacity: animatedSections.has('nearby-amenities') ? 1 : 0,
-                  transform: animatedSections.has('nearby-amenities') ? 'translateY(0)' : 'translateY(40px)'
-                }}
-              >
-                <CardContent className="p-4 md:p-6 min-h-[100px] md:min-h-[120px] w-full">
-                  <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:items-center md:justify-start md:space-y-0 md:space-x-4 w-full">
-                    <div className="flex-shrink-0" style={{ color: '#ce001f' }}>{amenity.icon}</div>
-                    <div className="text-center md:text-center flex-1 min-w-0">
-                      <h3 className="font-semibold text-xs md:text-lg text-white break-words">{amenity.name}</h3>
-                      <p className="text-gray-300 font-light text-xs md:text-sm break-words">{amenity.distance}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+          <Tabs defaultValue="All" className="w-full">
+            <TabsList className="flex justify-start gap-2 bg-transparent p-0 mb-6 overflow-x-auto whitespace-nowrap snap-x snap-mandatory">
+              {['All','Transport','Retail & F&B','Nature & Leisure','Education','Healthcare'].map((cat) => (
+                <TabsTrigger 
+                  key={cat} 
+                  value={cat} 
+                  className="bg-[#18191b] text-white data-[state=active]:bg-[#ce001f] data-[state=active]:text-white border border-gray-700 min-w-max snap-start rounded-full px-4 py-2 flex items-center gap-2"
+                >
+                  {cat === 'All' && <Layers className="w-4 h-4" />}
+                  {cat === 'Transport' && <Train className="w-4 h-4" />}
+                  {cat === 'Retail & F&B' && <ShoppingBag className="w-4 h-4" />}
+                  {cat === 'Nature & Leisure' && <Trees className="w-4 h-4" />}
+                  {cat === 'Education' && <GraduationCap className="w-4 h-4" />}
+                  {cat === 'Healthcare' && <Hospital className="w-4 h-4" />}
+                  {cat}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+
+            {['All','Transport','Retail & F&B','Nature & Leisure','Education','Healthcare'].map((cat) => (
+              <TabsContent key={cat} value={cat}>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+                  {amenities.filter(a => cat === 'All' ? true : a.category === cat).map((amenity, index) => (
+                    <Card 
+                      key={`${cat}-${index}`}
+                      className={`hover:shadow-lg transition-all duration-700 border-gray-700 bg-[#18191b] rounded-xl hover:scale-105 stagger-animation ${
+                        animatedSections.has('nearby-amenities') ? 'animate' : ''
+                      }`}
+                      style={{ 
+                        transitionDelay: `${index * 150}ms`,
+                        opacity: animatedSections.has('nearby-amenities') ? 1 : 0,
+                        transform: animatedSections.has('nearby-amenities') ? 'translateY(0)' : 'translateY(40px)'
+                      }}
+                    >
+                      <CardContent className="p-4 md:p-6 min-h-[100px] md:min-h-[120px] w-full">
+                        <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:items-center md:justify-start md:space-y-0 md:space-x-4 w-full">
+                          <div className="flex-shrink-0" style={{ color: '#ce001f' }}>{amenity.icon}</div>
+                          <div className="text-center md:text-center flex-1 min-w-0">
+                            <h3 className="font-semibold text-xs md:text-lg text-white break-words">{amenity.name}</h3>
+                            <p className="text-gray-300 font-light text-xs md:text-sm break-words">{amenity.distance}</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
             ))}
-          </div>
+          </Tabs>
         </div>
       </section>
 
@@ -1888,7 +1881,7 @@ export default function SpringleafResidenceLanding() {
           <div className={`text-center mb-8 md:mb-16 transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
-            <h2 className="text-2xl md:text-3xl font-light mb-3 text-white text-center tracking-wide">Explore Springleaf Residence</h2>
+            <h2 className="text-2xl md:text-3xl font-light mb-3 text-white text-center tracking-wide">Explore Penrith</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
@@ -1907,7 +1900,7 @@ export default function SpringleafResidenceLanding() {
               <div className="space-y-6 order-2 lg:order-1">
                 <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
                 <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
-                  Springleaf Residence New Launch Analysis
+                  Penrith New Launch Analysis
                 </h3>
                 <p className="text-gray-300 leading-relaxed text-base md:text-lg">
                   District 26's first high-rise mega condo with full facilities. 
@@ -1948,7 +1941,7 @@ export default function SpringleafResidenceLanding() {
               <div className="space-y-6 order-2 lg:order-2">
                 <Badge className="bg-green-100 text-green-800">NEW LAUNCH ANALYSIS</Badge>
                 <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
-                  Springleaf Residence vs. the Supply Surge: Can a Lower Land Bid Still Outperform in a Crowded District 26?
+                  Penrith vs. the Supply Surge: Can a Lower Land Bid Still Outperform in a Crowded District 26?
                 </h3>
                 <p className="text-gray-300 leading-relaxed text-base md:text-lg">
                   Before you buy into the hype of D26, ask yourself: Are you investing… or just following the crowd? 
@@ -1970,7 +1963,7 @@ export default function SpringleafResidenceLanding() {
               <div className="space-y-6 order-2 lg:order-1">
                 <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
                 <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
-                  As Lentor Heats Up, Is Springleaf Residence a Smart Play — or Just Another Name in an Overcrowded District 26?
+                  As Lentor Heats Up, Is Penrith a Smart Play — or Just Another Name in an Overcrowded District 26?
                 </h3>
                 <p className="text-gray-300 leading-relaxed text-base md:text-lg">
                   Stop and think before you join the rush into Lentor. 
@@ -2005,7 +1998,7 @@ export default function SpringleafResidenceLanding() {
             <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
               <h3 className="text-xl md:text-2xl font-normal md:font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
               <p className="text-base md:text-lg mb-6 opacity-90">
-                Register now for an exclusive preview of Springleaf Residence
+                Register now for an exclusive preview of Penrith
               </p>
               <div className="cta-buttons-container justify-center">
                 <Button 
