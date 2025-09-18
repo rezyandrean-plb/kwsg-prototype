@@ -35,6 +35,8 @@ export function Header() {
   const isSpringleafPage = pathname?.startsWith('/springleaf-residence')
   const isSpringleafBackupPage = pathname?.startsWith('/springleaf-backup')
   const isAureaPage = pathname?.startsWith('/aurea')
+  const isPenrithPage = pathname?.startsWith('/penrith')
+  const isPenrithEventPage = pathname?.startsWith('/penrith-event')
   const [isScrolled, setIsScrolled] = useState(false)
   const { isSignedIn, user } = useUser()
 
@@ -47,7 +49,7 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  if (isAdminPage || isSpringleafPage || isSpringleafBackupPage || isAureaPage) return null
+  if (isAdminPage || isSpringleafPage || isSpringleafBackupPage || isAureaPage || isPenrithPage || isPenrithEventPage) return null
 
   return (
     <header 
@@ -156,12 +158,14 @@ export function Footer() {
   const isSpringleafPage = pathname?.startsWith('/springleaf-residence')
   const isSpringleafBackupPage = pathname?.startsWith('/springleaf-backup')
   const isAureaPage = pathname?.startsWith('/aurea')
+  const isPenrithPage = pathname?.startsWith('/penrith')
+  const isPenrithEventPage = pathname?.startsWith('/penrith-event')
 
   if (isAdminPage) return null
 
   return (
     <>
-      {!isSpringleafPage && !isSpringleafBackupPage && !isAureaPage && <FloatingWhatsApp />}
+      {!isSpringleafPage && !isSpringleafBackupPage && !isAureaPage && !isPenrithPage && !isPenrithEventPage && <FloatingWhatsApp />}
       <footer className="border-t py-8 md:py-12 bg-black text-white">
         <div className="container grid gap-8 md:grid-cols-3">
           <div className="space-y-4">

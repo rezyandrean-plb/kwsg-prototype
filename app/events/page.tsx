@@ -845,6 +845,7 @@ export default function EventsPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
+              className="order-2 lg:order-1"
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
@@ -857,9 +858,14 @@ export default function EventsPage() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 viewport={{ once: true, margin: "-100px" }}
               >
-                <span className="text-white">MREA Masterclass:</span>
-                <span className="block text-[#B40101] italic">The Blueprint for Exponential Real Estate Growth</span>
+                <span className="text-white">MEGA Realtor Summit: </span>
+                <span className="block text-[#B40101] italic">Scale Your Real Estate Business with Industry Leaders</span>
               </motion.h2>
+              
+              <div className="flex items-center gap-2 my-4">
+                <Calendar className="w-5 h-5 text-[#B40101]" />
+                <span className="text-white font-semibold">August 2025</span>
+              </div>
 
               <motion.p 
                 className="mb-8 leading-relaxed text-base md:text-lg"
@@ -868,30 +874,36 @@ export default function EventsPage() {
                 transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
                 viewport={{ once: true, margin: "-100px" }}
               >
-                UNLOCK THE MILLIONAIRE MINDSET:<br />
-                2-Day Intensive MREA Masterclass for Exponential Business Growth.<br />
-                2-Day Intensive Masterclass<br />
-                Learn the proven models, strategies, and systems to transform your real estate practice into a sustainable, wealth-building enterprise.
+                Designed for growth-minded real estate consultants, the MREA Summit is your gateway to market dominance. 
+                Learn cutting-edge strategies in lead generation, content, social media, team scaling, 
+                and new launches directly from KW titans J.P. Lewis, Melvin Lim, Grayce Tan, and Rayne Chua. 
+                Gain essential MREA insights to unlock millionaire-level success and accelerate your career.
               </motion.p>
             </motion.div>
 
             <motion.div 
-              className="relative"
+              className="relative h-full flex items-stretch order-1 lg:order-2"
               initial={{ opacity: 0, x: 50, scale: 0.9 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
               viewport={{ once: true, margin: "-100px" }}
             >
               <motion.div 
-                className="relative rounded-lg overflow-hidden"
+                className="relative rounded-lg overflow-hidden w-full h-full"
                 whileHover={{ scale: 1.02, y: -5 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
-                <img
-                  src="/images/event/mrea-pricing-new.webp"
-                  alt="MREA Pricing Information"
-                  className="w-full h-auto rounded-lg shadow-2xl"
-                />
+                <iframe 
+                  width="560" 
+                  height="100%" 
+                  src="https://www.youtube.com/embed/TSjkdfG6GMQ?si=TU8bF_QkIFTPq-mB" 
+                  title="YouTube video player" 
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  referrerPolicy="strict-origin-when-cross-origin" 
+                  allowFullScreen
+                  className="w-full h-full rounded-lg shadow-2xl"
+                ></iframe>
               </motion.div>
             </motion.div>
           </div>
