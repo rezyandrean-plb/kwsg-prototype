@@ -671,8 +671,8 @@ export default function SpringleafResidenceLanding() {
     }
   }
 
-  const scrollToProjectInfo = () => {
-    const projectInfoSection = document.getElementById('project-info')
+  const scrollToEventInfo = () => {
+    const projectInfoSection = document.getElementById('event-info')
     if (projectInfoSection) {
       projectInfoSection.scrollIntoView({ 
         behavior: 'smooth',
@@ -1037,26 +1037,21 @@ export default function SpringleafResidenceLanding() {
             </div>
               <nav className="hidden md:flex items-center space-x-6">
                 <button 
-                  onClick={scrollToProjectInfo}
+                  onClick={scrollToEventInfo}
                   className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
                 >
-                  Project Info
+                  Event Info
                 </button>
                 {/* <a href="#floor-plans" className="text-white hover:text-[#ce001f] transition-colors duration-300">
                   Floor Plans
                 </a> */}
                 <button 
-                  onClick={scrollToGallery}
+                  onClick={() => window.open('/penrith', '_blank', 'noopener,noreferrer')}
                   className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
                 >
-                  Gallery
+                  Project Info
                 </button>
-                <button 
-                  onClick={scrollToMedia}
-                  className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
-                >
-                  Explore
-                </button>
+                
                 <button 
                   onClick={scrollToNearbyAmenities}
                   className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
@@ -1162,7 +1157,7 @@ export default function SpringleafResidenceLanding() {
       </section>
 
       {/* Event Section */}
-      <section id="lead-form" className="relative py-12 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+      <section id="event-info" className="relative py-12 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
         <div className="absolute inset-0 bg-[url('/images/event/mega-summit.webp')] bg-cover bg-center opacity-15" />
         <div className="absolute inset-0 bg-black/60" />
 
@@ -1516,124 +1511,11 @@ export default function SpringleafResidenceLanding() {
       {/* Two Column Image CTA Section */}
       
 
-      {/* Enhanced Project Information Section */}
-      <section 
-        id="project-info" 
-        className="py-16 bg-[#1c1c1d] section-entrance"
-        data-section-id="project-info"
-        style={{ 
-          opacity: animatedSections.has('project-info') ? 1 : 0,
-          transform: animatedSections.has('project-info') ? 'translateY(0)' : 'translateY(60px)'
-        }}
-      >
-        <div className="container mx-auto px-4">
-          {/* Image Gallery Section */}
-          <div 
-            id="project-gallery"
-            className={`mb-20 transition-all duration-1000 delay-700 ${
-              isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-            }`}
-          >
-            <div className="text-center mb-8">
-              <h3 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Project Gallery</h3>
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-1 bg-[#ce001f] rounded" />
-              </div>
-              <div className="flex items-center justify-center space-x-2 text-sm text-gray-300">
-                <span>
-                  {currentImageIndex + 1} of {projectImages.length}
-                </span>
-              </div>
-            </div>
-
-            {/* Main Image Display */}
-            <div className="relative max-w-6xl mx-auto mb-8">
-              <div className="relative h-[500px] rounded-xl overflow-hidden shadow-2xl">
-                <Image
-                  src={projectImages[currentImageIndex] || "/placeholder.svg"}
-                  alt={`Penrith - Image ${currentImageIndex + 1}`}
-                  fill
-                  className="object-cover transition-all duration-500"
-                />
-
-                
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
-                  onClick={prevImage}
-                >
-                  <ChevronLeft className="w-5 h-5 text-[#ce001f]" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
-                  onClick={nextImage}
-                >
-                  <ChevronRight className="w-5 h-5 text-[#ce001f]" />
-                </Button>
-
-                
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
-                  <div className="text-white">
-                    <h4 className="text-lg font-semibold mb-1">
-                      {currentImageIndex === 0
-                        ? "Aerial View"
-                        : currentImageIndex === 1
-                        ? "Condo Exterior Look"
-                        : currentImageIndex === 2
-                        ? "Facilities & Amenities"
-                        : currentImageIndex === 3
-                        ? "Drone View"
-                        : currentImageIndex === 4
-                        ? "Balcony View"
-                        : "Project Overview"}
-                    </h4>
-                    <p className="text-sm opacity-90">
-                      {currentImageIndex === 0
-                        ? "Breathtaking aerial perspective of Penrith"
-                        : currentImageIndex === 1
-                        ? "Modern condo exterior with contemporary design"
-                        : currentImageIndex === 2
-                        ? "Premium facilities and lifestyle amenities"
-                        : currentImageIndex === 3
-                        ? "Stunning front facade and entrance"
-                        : "Comprehensive project overview and highlights"}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              
-              <div className="flex justify-center mt-6 space-x-3">
-                {projectImages.map((image, index) => (
-                  <button
-                    key={index}
-                    className={`relative w-20 h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-110 ${
-                      index === currentImageIndex
-                        ? "border-primary-red shadow-lg scale-105"
-                        : "border-gray-200 hover:border-gray-300"
-                    }`}
-                    onClick={() => setCurrentImageIndex(index)}
-                  >
-                    <Image
-                      src={image || "/placeholder.svg"}
-                      alt={`Thumbnail ${index + 1}`}
-                      fill
-                      className="object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div> 
-        </div>
-      </section>
+      
 
       {/* Location */}
        <section 
-         id="location"
+         id="nearby-amenities"
          className="pt-8 md:pt-12 pb-16 bg-[#1c1c1d] section-entrance"
         data-section-id="nearby-amenities"
         style={{ 
@@ -1705,7 +1587,7 @@ export default function SpringleafResidenceLanding() {
 
         <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 text-center">
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 sm:mb-8 font-sans text-white">
-            Explore the untapped potential.
+            Explore the untapped potential
             <span className="block text-[#B40101] italic">of Penrith</span>
             <span className="block">Are You Ready?</span>
           </h2>
@@ -1713,7 +1595,7 @@ export default function SpringleafResidenceLanding() {
           <Button
             size="lg"
             className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 sm:px-12 py-4 sm:py-6 text-base sm:text-lg md:text-xl font-semibold transition-all duration-300 hover:scale-105 group"
-            onClick={() => window.open('https://explore.kwsingapore.com/', '_blank')}
+            onClick={() => window.open('/penrith', '_blank', 'noopener,noreferrer')}
           >
             Find Out More
             <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-1 transition-transform" />
