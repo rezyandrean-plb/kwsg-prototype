@@ -1211,8 +1211,8 @@ export default function SpringleafResidenceLanding() {
         {/* Background elements */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/springleaf-residence/springleaf-hero.jpg"
-            alt="Springleaf Residence Hero"
+            src="/images/penrith/penrith-hero-background.webp"
+            alt="Penrith Hero"
             fill
             className="object-cover"
             priority
@@ -1229,7 +1229,7 @@ export default function SpringleafResidenceLanding() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Badge className="bg-[#ce001f] text-white px-4 py-2 text-sm font-medium rounded-full animate-pulse">
-                OFFICIAL PREVIEW LAUNCH 2025
+                OFFICIAL PREVIEW LAUNCH OCT 2025
               </Badge>
             </div>
 
@@ -1703,59 +1703,61 @@ export default function SpringleafResidenceLanding() {
             {/* First Row - 2 Cards on Mobile, 3 Cards on Desktop */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
               {[
-                { icon: <Train className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "4-min Walk to Queenstown MRT" },
-                { icon: <ChartLine className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "strong rental demand from professionals in CBD & One-North" },
-                { icon: <MapPin className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "City-Fringe Location in D03" }
+                { icon: <Train className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: '4-min Walk to Queenstown MRT', subtitle: 'strong rental demand from professionals in CBD & One-North' },
+                { icon: <MapPin className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'City-Fringe Location in D03', subtitle: 'proven resilience and sustained buyer demand' },
+                { icon: <Clock className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'First GLS Launch in Queenstown Since 2017', subtitle: 'limited new supply drives scarcity premium' }
               ].map((benefit, index) => (
                 <div 
-                  key={index} 
-                  className={`text-left hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
+                  key={index}
+                  className={`hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
                     animatedSections.has('investor-benefits') ? 'animate' : ''
-                  } ${index === 2 ? 'hidden md:block' : ''}`} 
+                  } ${index === 2 ? 'hidden md:block' : ''}`}
                   style={{ 
                     transitionDelay: `${index * 200}ms`,
                     opacity: animatedSections.has('investor-benefits') ? 1 : 0,
                     transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
                   }}
                 >
-                  <div className="p-4 md:p-6 flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-4 min-h-[100px] md:min-h-[120px]">
-                    <div>{benefit.icon}</div>
-                    <p className="text-xs md:text-lg text-gray-300 font-light text-center md:text-center">{benefit.text}</p>
+                  <div className="p-4 md:p-6 flex flex-col items-center text-center space-y-2">
+                    <div className="flex-shrink-0">{benefit.icon}</div>
+                    <h3 className="text-sm md:text-lg text-white font-semibold leading-snug">{benefit.title}</h3>
+                    <p className="text-xs md:text-sm text-gray-300 font-light">{benefit.subtitle}</p>
                   </div>
                 </div>
               ))}
             </div>
-            
+
             {/* Second Row - 2 Cards on Mobile, 2 Cards on Desktop */}
             <div className="grid grid-cols-2 md:grid-cols-2 gap-6 mb-6">
               {[
-                { icon: <ChartLine className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "proven resilience and sustained buyer demand" },
-                { icon: <Clock className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "First GLS Launch in Queenstown Since 2017" }
+                { icon: <Compass className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Close to Key Growth Hubs', subtitle: 'Orchard, CBD, and One-North business park in minutes' },
+                { icon: <Building className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Blue-Chip Developers', subtitle: 'GuocoLand + Hong Leong track record in premium city projects' }
               ].map((benefit, index) => (
                 <div 
-                  key={index + 3} 
-                  className={`text-center hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
+                  key={index + 3}
+                  className={`hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
                     animatedSections.has('investor-benefits') ? 'animate' : ''
-                  }`} 
+                  }`}
                   style={{ 
                     transitionDelay: `${(index + 3) * 200}ms`,
                     opacity: animatedSections.has('investor-benefits') ? 1 : 0,
                     transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
                   }}
                 >
-                  <div className="p-4 md:p-6 flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-4 min-h-[100px] md:min-h-[120px]">
-                    <div>{benefit.icon}</div>
-                    <p className="text-xs md:text-lg text-gray-300 font-light text-center">{benefit.text}</p>
+                  <div className="p-4 md:p-6 flex flex-col items-center text-center space-y-2">
+                    <div className="flex-shrink-0">{benefit.icon}</div>
+                    <h3 className="text-sm md:text-lg text-white font-semibold leading-snug">{benefit.title}</h3>
+                    <p className="text-xs md:text-sm text-gray-300 font-light">{benefit.subtitle}</p>
                   </div>
                 </div>
               ))}
             </div>
-            
+
             {/* Third Row - 1 Card Centered on Mobile, Hidden on Desktop */}
             <div className="grid grid-cols-4 md:hidden gap-6">
               <div className="col-span-1"></div>
               <div 
-                className={`col-span-2 text-center hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
+                className={`col-span-2 hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
                   animatedSections.has('investor-benefits') ? 'animate' : ''
                 }`} 
                 style={{ 
@@ -1764,38 +1766,13 @@ export default function SpringleafResidenceLanding() {
                   transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
                 }}
               >
-                <div className="p-4 md:p-6 flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-4 min-h-[100px] md:min-h-[120px]">
-                  <div><ChartLine className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} /></div>
-                  <p className="text-xs md:text-lg text-gray-300 font-light text-center">limited new supply drives scarcity premium</p>
+                <div className="p-4 md:p-6 flex flex-col items-center text-center space-y-2">
+                  <div className="flex-shrink-0"><Clock className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} /></div>
+                  <h3 className="text-sm md:text-lg text-white font-semibold leading-snug">First GLS Launch in Queenstown Since 2017</h3>
+                  <p className="text-xs md:text-sm text-gray-300 font-light">limited new supply drives scarcity premium</p>
                 </div>
               </div>
               <div className="col-span-1"></div>
-            </div>
-
-            {/* Additional Row for Desktop - 3 Cards */}
-            <div className="hidden md:grid grid-cols-3 gap-6 mb-6">
-              {[
-                { icon: <Compass className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "Close to Key Growth Hubs" },
-                { icon: <MapPin className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "Orchard, CBD, and One-North business park in minutes" },
-                { icon: <Building className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, text: "Blue-Chip Developers – GuocoLand + Hong Leong track record in premium city projects" }
-              ].map((benefit, index) => (
-                <div 
-                  key={index + 5} 
-                  className={`text-center hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
-                    animatedSections.has('investor-benefits') ? 'animate' : ''
-                  }`} 
-                  style={{ 
-                    transitionDelay: `${(index + 5) * 200}ms`,
-                    opacity: animatedSections.has('investor-benefits') ? 1 : 0,
-                    transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
-                  }}
-                >
-                  <div className="p-4 md:p-6 flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-4 min-h-[100px] md:min-h-[120px]">
-                    <div>{benefit.icon}</div>
-                    <p className="text-xs md:text-lg text-gray-300 font-light text-center">{benefit.text}</p>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         </div>
