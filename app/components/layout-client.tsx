@@ -36,7 +36,7 @@ export function Header() {
   const isSpringleafBackupPage = pathname?.startsWith('/springleaf-backup')
   const isAureaPage = pathname?.startsWith('/aurea')
   const isPenrithPage = pathname?.startsWith('/penrith')
-  const isPenrithEventPage = pathname?.startsWith('/penrith-event')
+  const isPenrithEventPage = pathname?.startsWith('/penrith-consumer-event')
   const [isScrolled, setIsScrolled] = useState(false)
   const { isSignedIn, user } = useUser()
 
