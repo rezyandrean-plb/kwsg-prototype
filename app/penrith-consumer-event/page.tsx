@@ -662,7 +662,7 @@ export default function SpringleafResidenceLanding() {
   }
 
   const scrollToLeadForm = () => {
-    const leadFormSection = document.getElementById('lead-form')
+    const leadFormSection = document.getElementById('event-registration')
     if (leadFormSection) {
       leadFormSection.scrollIntoView({ 
         behavior: 'smooth',
@@ -1251,7 +1251,7 @@ export default function SpringleafResidenceLanding() {
           </div>
 
           {/* Event Registration Form - Centered below content */}
-          <motion.div
+          <motion.div id="event-registration"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
@@ -1390,129 +1390,6 @@ export default function SpringleafResidenceLanding() {
         </div>
       </section>
 
-      {/* Enhanced Explore Section */}
-      {/* <section id="media" className="pt-4 pb-4 bg-[#1c1c1d] flex items-center justify-center">
-        <div className="container mx-auto px-4 text-left">
-          <div className={`text-center mb-8 md:mb-16 transition-all duration-1000 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            <h2 className="text-2xl md:text-3xl font-light mb-3 text-white text-center tracking-wide">Explore Penrith</h2>
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-1 bg-[#ce001f] rounded" />
-            </div>
-            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-              Immerse yourself in the luxury and elegance of our latest development through our comprehensive media
-              gallery
-            </p>
-          </div>
-
-          
-          <div className={`space-y-8 md:space-y-20 transition-all duration-1000 delay-300 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            
-            <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
-              <div className="space-y-6 order-2 lg:order-1">
-                <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
-                <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
-                  Penrith New Launch Analysis
-                </h3>
-                <p className="text-gray-300 leading-relaxed text-base md:text-lg">
-                  District 3's latest high-rise condominium with full facilities. 
-                  Developed by visionary GuocoLand and Hong Leong, this 462-unit project offers unbeatable connectivity, city-fringe location, and a strategic entry price. 
-                  Discover how you can capitalise on this rare opportunity.
-                </p>
-                  <Button 
-                    className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
-                    onClick={() => window.open('https://newlaunch.kwsingapore.com/springleaf-residence-new-launch-analysis', '_blank')}
-                  >
-                    <Play className="w-5 h-5 mr-2" />
-                    Watch Analysis
-                  </Button>
-              </div>
-              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-2">
-                <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
-                  <Image
-                    src="/images/springleaf-residence/new-launch-analysis.webp?height=320&width=500&text=Lentor+Mansion+Showflat+Tour"
-                    alt="Lentor Mansion Showflat Tour"
-                    fill
-                    className="object-contain md:object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
-              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-1">
-                <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
-                  <Image
-                    src="/images/springleaf-residence/new-launch-analysis-2.webp?height=320&width=500&text=Lentor+Rejuvenation+Analysis"
-                    alt="Lentor's Rejuvenation Analysis"
-                    fill
-                    className="object-contain md:object-cover"
-                  />
-                </div>
-              </div>
-              <div className="space-y-6 order-2 lg:order-2">
-                <Badge className="bg-green-100 text-green-800">NEW LAUNCH ANALYSIS</Badge>
-                <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
-                  Penrith vs. the Supply Surge: Can a Lower Land Bid Still Outperform in a Crowded District 3?
-                </h3>
-                <p className="text-gray-300 leading-relaxed text-base md:text-lg">
-                  Before you buy into the hype of D3, ask yourself: Are you investing… or just following the crowd? 
-                  In a market flooded with options, the wrong call could mean years of stagnant capital. 
-                  This webinar goes beyond brochures and showflat buzz to confront one critical question : 
-                  <strong> Can Penrith truly stand out — or will it be buried in the noise?</strong>
-                </p>
-                <Button 
-                    className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
-                    onClick={() => window.open('https://newlaunch.kwsingapore.com/webinars/springleaf-residence-vs-the-supply-surge', '_blank')}
-                  >
-                    <Play className="w-5 h-5 mr-2" />
-                    Watch Webinar
-                  </Button>
-              </div>
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
-              <div className="space-y-6 order-2 lg:order-1">
-                <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
-                <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
-                  As Queenstown Heats Up, Is Penrith a Smart Play — or Just Another Name in an Overcrowded District 3?
-                </h3>
-                <p className="text-gray-300 leading-relaxed text-base md:text-lg">
-                  Stop and think before you join the rush into Queenstown. 
-                  In a market flooded with thousands of new condo units in one small area, the greatest risk isn't missing out—it's buying in. 
-                  This webinar is a necessary warning about the illusion of safety in numbers and the potential for long-term capital stagnation that most agents won't discuss.
-                </p>
-                  <Button 
-                    className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
-                    onClick={() => window.open('https://newlaunch.kwsingapore.com/webinars/as-lentor-heats-up-is-springleaf-residence-a-smart-play', '_blank')}
-                  >
-                    <Play className="w-5 h-5 mr-2" />
-                    Watch Webinar
-                  </Button>
-              </div>
-              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-2">
-                <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
-                  <Image
-                    src="/images/springleaf-residence/new-launch-analysis-lentor.webp?height=320&width=500&text=Lentor+Mansion+Showflat+Tour"
-                    alt="Lentor Mansion Showflat Tour"
-                    fill
-                    className="object-contain md:object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
-      
-      {/* Two Column Image CTA Section */}
-      
-
-      
-
       {/* Location */}
        <section 
          id="nearby-amenities"
@@ -1549,10 +1426,10 @@ export default function SpringleafResidenceLanding() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                {/* Location Image */}
+                {/* Location Maps */}
                 <div className="w-full rounded-lg overflow-hidden shadow-lg">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10877.017147974153!2d103.80274218107014!3d1.2968611962702363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da1b590c541b6f%3A0xdcd4bd3dc6253e2!2sPenrith%20Condo!5e0!3m2!1sen!2sid!4v1758178257681!5m2!1sen!2sid"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.791583198789!2d103.8036607!3d1.2998703!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da1a398d401fdf%3A0x4a7deba39eca40a7!2s6A%20Margaret%20Dr%2C%20Singapore%20142006!5e0!3m2!1sen!2sid!4v1758191086855!5m2!1sen!2sid"
                     width="800"
                     height="450"
                     style={{ border: 0 }}
