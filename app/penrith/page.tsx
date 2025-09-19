@@ -963,6 +963,9 @@ export default function SpringleafResidenceLanding() {
         description: "Please wait while we process your request",
       })
 
+      // Ensure only the date (no time) is submitted for preferredDate
+      const preferredDateOnly = preferredDate ? format(preferredDate, 'yyyy-MM-dd') : undefined
+
       const response = await fetch('/api/penrith-lead-form', {
         method: 'POST',
         headers: {
@@ -972,7 +975,7 @@ export default function SpringleafResidenceLanding() {
           fullName, 
           contactNumber, 
           emailAddress, 
-          preferredDate, 
+          preferredDate: preferredDateOnly, 
           preferredTiming, 
           recaptchaToken 
         }),
@@ -998,6 +1001,13 @@ export default function SpringleafResidenceLanding() {
           variant: "default",
         })
         
+      // Auto refresh page shortly after success
+      setTimeout(() => {
+        if (typeof window !== 'undefined') {
+          window.location.reload()
+        }
+      }, 1500)
+
         // Reset success state after 5 seconds
         setTimeout(() => setSubmitSuccess(false), 5000)
       } else {
@@ -1074,6 +1084,13 @@ export default function SpringleafResidenceLanding() {
           variant: "default",
         })
         
+      // Auto refresh page shortly after success
+      setTimeout(() => {
+        if (typeof window !== 'undefined') {
+          window.location.reload()
+        }
+      }, 1500)
+
         // Reset success state after 5 seconds
         setTimeout(() => setSiteMapSubmitSuccess(false), 5000)
       } else {
