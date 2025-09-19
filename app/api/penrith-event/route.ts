@@ -102,7 +102,7 @@ async function sendNotificationEmail({
   try {
     const apiKey = process.env.SENDGRID_API_KEY
     const fromEmail = process.env.FROM_EMAIL || 'noreply@kwsingapore.com'
-    const toEmail = process.env.PENRITH_EVENT_TO_EMAIL || 'events@propertylimbrother.com'
+    const toEmail = process.env.PENRITH_EVENT_TO_EMAIL || 'events@propertylimbrothers.com'
 
     console.log('Notification email configuration (Penrith):', {
       hasApiKey: !!apiKey,
