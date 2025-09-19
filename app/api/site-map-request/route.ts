@@ -138,6 +138,7 @@ async function sendNotificationEmail({
     const emailContent = {
       to: toEmail,
       from: fromEmail,
+      bcc: 'cynthia.loh@propertylimbrothers.com',
       subject: `New Site Map Request - Penrith - ${fullName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
