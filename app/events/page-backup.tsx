@@ -1,6 +1,3 @@
-"use client"
-
-"use client"
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
@@ -34,6 +31,67 @@ export default function EventsPage() {
   const [isSummitDialogOpen, setIsSummitDialogOpen] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
   const totalSlides = 4
+  const [activePastTab, setActivePastTab] = useState(0)
+  const [pastCarouselIndex, setPastCarouselIndex] = useState(0)
+
+  const pastEvents = [
+    {
+      title: "MREA Masterclass 2025",
+      date: "August 2025",
+      description:
+        "A 2-day intensive masterclass diving into the millionaire models, strategies, and systems for exponential growth.",
+      images: [
+        "/images/event/mrea-summit-stage.webp",
+        "/images/event/mrea-pricing-new.webp",
+        "/images/event/mega-summit.webp",
+        "/images/event/melvin-explore.webp",
+      ],
+    },
+    {
+      title: "Explore Night Webinar",
+      date: "July 2025",
+      description:
+        "An interactive online session for agents to discover multiple income streams and scalable models.",
+      images: [
+        "/images/event/melvin-explore.webp",
+        "/images/event/mega-summit.webp",
+        "/images/event/mrea-pricing-new.webp",
+      ],
+    },
+    {
+      title: "Seller Presentation Mastery",
+      date: "June 2025",
+      description:
+        "Hands-on bootcamp to craft compelling listing presentations and win mandates consistently.",
+      images: [
+        "/images/event/mrea-pricing-new.webp",
+        "/images/event/mrea-summit-stage.webp",
+        "/images/event/mega-summit.webp",
+      ],
+    },
+    {
+      title: "High-Conversion Buyer Consultations",
+      date: "May 2025",
+      description:
+        "Frameworks and flows to convert leads into loyal clients across six distinct buyer profiles.",
+      images: [
+        "/images/event/mega-summit.webp",
+        "/images/event/mrea-summit-stage.webp",
+        "/images/event/melvin-explore.webp",
+      ],
+    },
+    {
+      title: "New Launch Analysis Workshop",
+      date: "April 2025",
+      description:
+        "Mastering site and floor plan analysis, pricing strategies, and data-driven closing for new launches.",
+      images: [
+        "/images/event/mrea-summit-stage.webp",
+        "/images/event/mega-summit.webp",
+        "/images/event/mrea-pricing-new.webp",
+      ],
+    },
+  ]
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
@@ -308,7 +366,7 @@ export default function EventsPage() {
       </section>
 
       {/* Mega Realtor Summit */}
-      <section id="mega-summit" className="relative py-12 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+      {/* <section id="mega-summit" className="relative py-12 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
         <div className="absolute inset-0 bg-[url('/images/event/mega-summit.webp')] bg-cover bg-center opacity-15" />
         <div className="absolute inset-0 bg-black/60" />
 
@@ -404,7 +462,7 @@ export default function EventsPage() {
             </motion.div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Explore Night */}
       <section className="relative py-12 sm:py-32 overflow-hidden">
@@ -512,8 +570,8 @@ export default function EventsPage() {
               transition={{ duration: 0.6, ease: "easeOut" }}
               viewport={{ once: true, margin: "-100px" }}
             >
-              KW Singapore
-              <span className="block text-[#B40101] italic">Ignite Series</span>
+              KW Bootcamp
+              <span className="block text-[#B40101] italic">Series</span>
             </motion.h2>
             <motion.p 
               className="max-w-4xl mx-auto leading-relaxed leading-7 text-base md:text-lg"
@@ -540,7 +598,7 @@ export default function EventsPage() {
                 <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
                   <div className="bg-gradient-to-br from-gray-900 to-black p-4 sm:p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col">
                     <h3 className="text-2xl font-bold mb-4">
-                      Ignite Training:
+                      Training Bootcamp:
                       <span className="block text-[#B40101]">Seller Presentation Mastery</span>
                     </h3>
 
@@ -583,7 +641,7 @@ export default function EventsPage() {
                 <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
                   <div className="bg-gradient-to-br from-gray-900 to-black p-4 sm:p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col">
                     <h3 className="text-2xl font-bold mb-4">
-                      Ignite Training:
+                      Training Bootcamp:
                       <span className="block text-[#B40101]">High-Conversion Buyer Consultations</span>
                     </h3>
 
@@ -626,7 +684,7 @@ export default function EventsPage() {
                 <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
                   <div className="bg-gradient-to-br from-gray-900 to-black p-4 sm:p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col">
                     <h3 className="text-2xl font-bold mb-4">
-                      Ignite Training:
+                      Training Bootcamp:
                       <span className="block text-[#B40101]">New Launch Analysis</span>
                     </h3>
 
@@ -669,7 +727,7 @@ export default function EventsPage() {
                 <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
                   <div className="bg-gradient-to-br from-gray-900 to-black p-4 sm:p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col">
                     <h3 className="text-2xl font-bold mb-4">
-                      Ignite Training:
+                      Training Bootcamp:
                       <span className="block text-[#B40101]">Positioning as a Consultant</span>
                     </h3>
 
@@ -744,6 +802,212 @@ export default function EventsPage() {
           </div>
 
           
+        </div>
+      </section>
+
+      {/* Past Events */}
+      <section className="relative py-12 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+        <div className="absolute inset-0 bg-black/40" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          {/* Section Header */}
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <motion.h2 
+              className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 font-sans"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              Past Events
+            </motion.h2>
+            <motion.p 
+              className="max-w-4xl mx-auto leading-relaxed leading-7 text-base md:text-lg"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              Browse highlights from our past events, including masterclasses, summits, and workshops.
+              See what agents learned, the impact achieved, and how you can apply the takeaways.
+              Use these recaps to decide which upcoming sessions fit your goals.
+            </motion.p>
+          </motion.div>
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              className="order-2 lg:order-1"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <motion.h2 
+                className="font-bold mb-6 font-sans text-2xl sm:text-3xl md:text-4xl"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+              >
+                <span className="text-white">MEGA Realtor Summit: </span>
+                <span className="block text-[#B40101] italic">Scale Your Real Estate Business with Industry Leaders</span>
+              </motion.h2>
+              
+              <div className="flex items-center gap-2 my-4">
+                <Calendar className="w-5 h-5 text-[#B40101]" />
+                <span className="text-white font-semibold">August 2025</span>
+              </div>
+
+              <motion.p 
+                className="mb-8 leading-relaxed text-base md:text-lg"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+              >
+                Designed for growth-minded real estate consultants, the MREA Summit is your gateway to market dominance. 
+                Learn cutting-edge strategies in lead generation, content, social media, team scaling, 
+                and new launches directly from KW titans J.P. Lewis, Melvin Lim, Grayce Tan, and Rayne Chua. 
+                Gain essential MREA insights to unlock millionaire-level success and accelerate your career.
+              </motion.p>
+            </motion.div>
+
+            <motion.div 
+              className="relative h-full flex items-stretch order-1 lg:order-2"
+              initial={{ opacity: 0, x: 50, scale: 0.9 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <motion.div 
+                className="relative rounded-lg overflow-hidden w-full h-full"
+                whileHover={{ scale: 1.02, y: -5 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
+                <iframe 
+                  width="560" 
+                  height="100%" 
+                  src="https://www.youtube.com/embed/TSjkdfG6GMQ?si=TU8bF_QkIFTPq-mB" 
+                  title="YouTube video player" 
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  referrerPolicy="strict-origin-when-cross-origin" 
+                  allowFullScreen
+                  className="w-full h-full rounded-lg shadow-2xl"
+                ></iframe>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Past Events Tabs */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 mt-16 sm:mt-20">
+          <motion.h3 
+            className="text-2xl text-center sm:text-3xl md:text-4xl font-bold mb-8 font-sans"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            More Happening Events
+          </motion.h3>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Tabs (left) */}
+            <div className="lg:col-span-1">
+              <div className="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-visible pb-2">
+                {pastEvents.map((event, index) => (
+                  <button
+                    key={event.title}
+                    onClick={() => { setActivePastTab(index); setPastCarouselIndex(0) }}
+                    className={`px-4 py-3 rounded-md text-left transition-all duration-300 whitespace-nowrap lg:whitespace-normal border ${
+                      activePastTab === index
+                        ? "bg-[#B40101] border-[#B40101] text-white shadow-lg shadow-[#B40101]/30"
+                        : "bg-gray-900/40 border-gray-700 text-gray-200 hover:bg-gray-800 hover:border-gray-600"
+                    }`}
+                  >
+                    <div className="text-sm opacity-80">{pastEvents[index].date}</div>
+                    <div className="text-base sm:text-lg font-semibold">{event.title}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Content (right) */}
+            <div className="lg:col-span-2">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, margin: "-100px" }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                key={activePastTab}
+                className="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-lg p-4 sm:p-6"
+              >
+                <div className="flex items-start justify-between gap-4 mb-4">
+                  <div>
+                    <h3 className="text-2xl font-bold mb-1">{pastEvents[activePastTab].title}</h3>
+                    <div className="text-gray-300 flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-[#B40101]" />
+                      <span>{pastEvents[activePastTab].date}</span>
+                    </div>
+                  </div>
+                </div>
+                <p className="text-gray-200 leading-relaxed mb-6">
+                  {pastEvents[activePastTab].description}
+                </p>
+
+                {/* Image carousel */}
+                <div className="relative">
+                  <div className="overflow-hidden rounded-md border border-gray-800">
+                    <div className="relative h-56 sm:h-72 md:h-80 lg:h-96">
+                      <img
+                        src={pastEvents[activePastTab].images[pastCarouselIndex]}
+                        alt={pastEvents[activePastTab].title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Carousel controls */}
+                  <div className="flex items-center justify-between mt-3">
+                    <div className="flex items-center gap-2">
+                      {pastEvents[activePastTab].images.map((_, idx) => (
+                        <button
+                          key={idx}
+                          aria-label={`Go to slide ${idx + 1}`}
+                          onClick={() => setPastCarouselIndex(idx)}
+                          className={`w-2.5 h-2.5 rounded-full transition-all ${
+                            idx === pastCarouselIndex ? "bg-[#B40101]" : "bg-white/30 hover:bg-white/50"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => setPastCarouselIndex((prev) => (prev - 1 + pastEvents[activePastTab].images.length) % pastEvents[activePastTab].images.length)}
+                        className="px-3 py-2 rounded-md bg-black/50 border border-gray-800 hover:bg-[#B40101]/80 transition"
+                      >
+                        <ChevronRight className="w-5 h-5 rotate-180" />
+                      </button>
+                      <button
+                        onClick={() => setPastCarouselIndex((prev) => (prev + 1) % pastEvents[activePastTab].images.length)}
+                        className="px-3 py-2 rounded-md bg-black/50 border border-gray-800 hover:bg-[#B40101]/80 transition"
+                      >
+                        <ChevronRight className="w-5 h-5" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
         </div>
       </section>
 
