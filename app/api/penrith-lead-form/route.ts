@@ -9,23 +9,24 @@ export async function POST(request: NextRequest) {
       fullName, 
       contactNumber, 
       emailAddress,
-      numberOfPax,
-      plbConsultant
+      preferredDate,
+      preferredTiming,
+      recaptchaToken
     } = body
 
-    console.log('Penrith Event registration form submission received:', { 
+    console.log('Penrith Lead Generation form submission received:', { 
       fullName, 
       contactNumber, 
       emailAddress,
-      numberOfPax,
-      plbConsultant
+      preferredDate,
+      preferredTiming
     })
 
     // Validate required fields
-    if (!fullName || !contactNumber || !emailAddress || !numberOfPax || !plbConsultant) {
+    if (!fullName || !contactNumber || !emailAddress) {
       console.log('Validation failed: Missing required fields')
       return NextResponse.json(
-        { error: 'Full name, contact number, email address, number of pax, and PLB consultant are required' },
+        { error: 'Full name, contact number, and email address are required' },
         { status: 400 }
       )
     }
@@ -35,8 +36,8 @@ export async function POST(request: NextRequest) {
       fullName,
       contactNumber,
       emailAddress,
-      numberOfPax,
-      plbConsultant
+      preferredDate,
+      preferredTiming
     })
 
     console.log('Notification email result:', notificationResult)
@@ -44,7 +45,7 @@ export async function POST(request: NextRequest) {
       console.error('Failed to send notification email:', notificationResult.error)
     }
 
-    // Send auto-reply email to the registrant
+    // Send auto-reply email to the registrant (same as Penrith event)
     const autoReplyResult = await sendAutoReplyEmail({
       fullName,
       emailAddress
@@ -60,8 +61,8 @@ export async function POST(request: NextRequest) {
       fullName,
       contactNumber,
       emailAddress,
-      numberOfPax,
-      plbConsultant
+      preferredDate,
+      preferredTiming
     })
 
     console.log('Google Sheets result:', sheetsResult)
@@ -71,14 +72,14 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Thank you for registering for the Penrith Event! We have sent you a confirmation email and will contact you soon with event details.',
+      message: 'Thank you for your interest in Penrith! We have sent you a confirmation email and our team will contact you soon to arrange your showflat visit.',
       notificationSent: notificationResult.success,
       autoReplySent: autoReplyResult.success,
       sheetsInserted: sheetsResult.success
     })
 
   } catch (error) {
-    console.error('Penrith Event registration form error:', error)
+    console.error('Penrith Lead Generation form error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -90,21 +91,21 @@ async function sendNotificationEmail({
   fullName, 
   contactNumber, 
   emailAddress,
-  numberOfPax,
-  plbConsultant
+  preferredDate,
+  preferredTiming
 }: {
   fullName: string
   contactNumber: string
   emailAddress: string
-  numberOfPax: string
-  plbConsultant: string
+  preferredDate: string | undefined
+  preferredTiming: string
 }) {
   try {
     const apiKey = process.env.SENDGRID_API_KEY
     const fromEmail = process.env.FROM_EMAIL || 'noreply@kwsingapore.com'
-    const toEmail = process.env.PENRITH_EVENT_TO_EMAIL || 'events@propertylimbrother.com'
+    const toEmail = process.env.PENRITH_LEAD_TO_EMAIL || 'consults@propertylimbrothers.com'
 
-    console.log('Notification email configuration (Penrith):', {
+    console.log('Notification email configuration (Penrith Lead):', {
       hasApiKey: !!apiKey,
       fromEmail,
       toEmail
@@ -120,16 +121,16 @@ async function sendNotificationEmail({
     const emailContent = {
       to: toEmail,
       from: fromEmail,
-      subject: 'New Penrith Event Registration - KW Singapore',
+      subject: 'New Penrith Lead Generation - KW Singapore',
       bcc: 'cynthia.loh@propertylimbrothers.com',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #B40101; color: white; padding: 20px; text-align: center;">
             <h1 style="margin: 0; font-size: 24px;">KW Singapore</h1>
-            <p style="margin: 5px 0 0 0; font-size: 16px;">Penrith Event Registration</p>
+            <p style="margin: 5px 0 0 0; font-size: 16px;">Penrith Lead Generation</p>
           </div>
           <div style="padding: 30px; background-color: #f9f9f9;">
-            <h2 style="color: #333; margin-bottom: 20px;">New Event Registration</h2>
+            <h2 style="color: #333; margin-bottom: 20px;">New Lead Generation Request</h2>
             <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
               <h3 style="color: #B40101; margin-top: 0;">Contact Information</h3>
               <table style="width: 100%; border-collapse: collapse;">
@@ -146,14 +147,19 @@ async function sendNotificationEmail({
                   <td style="padding: 8px 0; border-bottom: 1px solid #eee; color: #333;">${emailAddress}</td>
                 </tr>
                 <tr>
-                  <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #666;">Number of Pax:</td>
-                  <td style="padding: 8px 0; border-bottom: 1px solid #eee; color: #333;">${numberOfPax}</td>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #666;">Preferred Date:</td>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #eee; color: #333;">${preferredDate || 'Not specified'}</td>
                 </tr>
                 <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #666;">PLB Consultant:</td>
-                  <td style="padding: 8px 0; color: #333;">${plbConsultant}</td>
+                  <td style="padding: 8px 0; font-weight: bold; color: #666;">Preferred Timing:</td>
+                  <td style="padding: 8px 0; color: #333;">${preferredTiming || 'Not specified'}</td>
                 </tr>
               </table>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+              <a href="mailto:${emailAddress}" style="background-color: #B40101; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block;">
+                Reply to Lead
+              </a>
             </div>
           </div>
           <div style="background-color: #333; color: white; padding: 20px; text-align: center; font-size: 12px;">
@@ -166,7 +172,7 @@ async function sendNotificationEmail({
 
     try {
       await sgMail.send(emailContent)
-      console.log('✅ Notification email sent successfully via SendGrid (Penrith)')
+      console.log('✅ Notification email sent successfully via SendGrid (Penrith Lead)')
     } catch (sendError) {
       console.error('❌ SendGrid send error:', sendError)
       throw sendError
@@ -188,18 +194,18 @@ async function insertIntoGoogleSheets({
   fullName, 
   contactNumber, 
   emailAddress,
-  numberOfPax,
-  plbConsultant
+  preferredDate,
+  preferredTiming
 }: {
   fullName: string
   contactNumber: string
   emailAddress: string
-  numberOfPax: string
-  plbConsultant: string
+  preferredDate: string | undefined
+  preferredTiming: string
 }) {
   try {
     // Accept either a raw spreadsheet ID or a full Google Sheets URL in env
-    const rawSpreadsheetEnv = process.env.GOOGLE_SHEETS_PENRITH_EVENT_SPREADSHEET_ID
+    const rawSpreadsheetEnv = process.env.GOOGLE_SHEETS_PENRITH_LEAD_SPREADSHEET_ID
     let spreadsheetId = rawSpreadsheetEnv
     if (rawSpreadsheetEnv && rawSpreadsheetEnv.includes('/d/')) {
       const match = rawSpreadsheetEnv.match(/\/d\/([^/]+)/)
@@ -207,9 +213,9 @@ async function insertIntoGoogleSheets({
     }
     const clientEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL
     const privateKey = process.env.GOOGLE_SHEETS_PRIVATE_KEY
-    const targetRange = process.env.GOOGLE_SHEETS_PENRITH_EVENT_RANGE || 'EventRegistrations!A:H'
+    const targetRange = process.env.GOOGLE_SHEETS_PENRITH_LEAD_RANGE || 'ShowflatVisitRequests!A:J'
 
-    console.log('Google Sheets configuration (Penrith):', {
+    console.log('Google Sheets configuration (Penrith Lead):', {
       hasSpreadsheetId: !!spreadsheetId,
       hasClientEmail: !!clientEmail,
       hasPrivateKey: !!privateKey
@@ -246,10 +252,12 @@ async function insertIntoGoogleSheets({
       fullName,
       contactNumber,
       emailAddress,
-      numberOfPax,
-      plbConsultant,
-      'Event Registration',
-      'Penrith Event'
+      'Penrith',
+      'Margaret Drive, District 3 (Queenstown), Singapore',
+      'Hong Leong Holdings & GuocoLand (Margaret Rise Development Pte Ltd)',
+      preferredDate || '',
+      preferredTiming || '',
+      'Penrith Lead Generation'
     ]
 
     let response
@@ -269,7 +277,7 @@ async function insertIntoGoogleSheets({
         })
         const nextRow = (currentData.data.values?.length || 1) + 1
         const baseTab = targetRange.split('!')[0]
-        const range = `${baseTab}!A${nextRow}:H${nextRow}`
+        const range = `${baseTab}!A${nextRow}:J${nextRow}`
         response = await sheets.spreadsheets.values.update({
           spreadsheetId,
           range,
@@ -281,7 +289,7 @@ async function insertIntoGoogleSheets({
       }
     }
 
-    console.log('✅ Data inserted into Google Sheets successfully (Penrith)')
+    console.log('✅ Data inserted into Google Sheets successfully (Penrith Lead)')
     if ('updates' in response.data) {
       console.log('Sheets append response:', response.data.updates)
     }
@@ -305,7 +313,7 @@ async function sendAutoReplyEmail({ fullName, emailAddress }: {
     const apiKey = process.env.SENDGRID_API_KEY
     const fromEmail = process.env.FROM_EMAIL || 'noreply@kwsingapore.com'
 
-    console.log('Auto-reply email configuration (Penrith):', {
+    console.log('Auto-reply email configuration (Penrith Lead):', {
       hasApiKey: !!apiKey,
       fromEmail,
       toEmail: emailAddress
@@ -321,93 +329,52 @@ async function sendAutoReplyEmail({ fullName, emailAddress }: {
     const emailContent = {
       to: emailAddress,
       from: fromEmail,
-      subject: 'Penrith Consumer Event - Your Seat is Confirmed!',
+      subject: 'Penrith Showflat Visit Request Confirmation - KW Singapore',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #B40101; color: white; padding: 20px; text-align: center;">
             <h1 style="margin: 0; font-size: 24px;">KW Singapore</h1>
-            <p style="margin: 5px 0 0 0; font-size: 16px;">Penrith Consumer Event</p>
+            <p style="margin: 5px 0 0 0; font-size: 16px;">Penrith Showflat Visit</p>
           </div>
           
           <div style="padding: 30px; background-color: #f9f9f9;">
-            <div style="background-color: white; padding: 25px; border-radius: 8px; margin-bottom: 20px;">
-              <p style="color: #333; line-height: 1.6; margin: 0 0 15px 0; font-size: 16px;">
-                Hi ${fullName},
+            <h2 style="color: #333; margin-bottom: 20px;">Thank You for Your Interest!</h2>
+            
+            <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+              <p style="color: #666; line-height: 1.6; margin: 0;">
+                Dear ${fullName},
               </p>
-              <p style="color: #333; line-height: 1.6; margin: 0 0 15px 0; font-size: 16px;">
-                Thank you for registering for Penrith Consumer Event hosted by KW Singapore and PropertyLimBrothers.
+              <p style="color: #666; line-height: 1.6; margin: 10px 0 0 0;">
+                Thank you for your interest in Penrith! We have received your showflat visit request and our team will contact you within 24 business hours to arrange your visit.
               </p>
             </div>
             
-            <div style="background-color: white; padding: 25px; border-radius: 8px; margin-bottom: 20px;">
-              <div style="margin-bottom: 15px; display: flex; align-items: flex-start;">
-                <span style="color: #B40101; font-size: 18px; min-width: 20px; margin-right: 10px;">📍</span>
-                <div style="flex: 1;">
-                  <span style="color: #333; font-weight: bold;">Venue:</span>
-                  <span style="color: #333; margin-left: 10px;">Penrith Showflat, 6A Margaret Drive, Singapore 142006</span>
-                  <br>
-                  <a href="https://maps.google.com/?q=6A+Margaret+Drive+Singapore+142006" style="color: #B40101; text-decoration: none; font-size: 14px;">View on Google Maps</a>
-                </div>
-              </div>
-              
-              <div style="margin-bottom: 15px; display: flex; align-items: center;">
-                <span style="color: #B40101; font-size: 18px; min-width: 20px; margin-right: 10px;">📅</span>
-                <div style="flex: 1;">
-                  <span style="color: #333; font-weight: bold;">Date:</span>
-                  <span style="color: #333; margin-left: 10px;">Wednesday, 8 October 2025</span>
-                </div>
-              </div>
-              
-              <div style="margin-bottom: 15px; display: flex; align-items: center;">
-                <span style="color: #B40101; font-size: 18px; min-width: 20px; margin-right: 10px;">🕖</span>
-                <div style="flex: 1;">
-                  <span style="color: #333; font-weight: bold;">Time:</span>
-                  <span style="color: #333; margin-left: 10px;">7:00PM (Please arrive by 6:45PM for registration)</span>
-                </div>
-              </div>
-            </div>
-            
-            <div style="background-color: white; padding: 25px; border-radius: 8px; margin-bottom: 20px;">
-              <h3 style="color: #B40101; margin-top: 0; margin-bottom: 15px;">What You'll Learn:</h3>
-              <p style="color: #333; line-height: 1.6; margin: 0 0 15px 0;">
-                Join Melvin Lim (Operating Principal, KW Singapore) and Rayne Chua (New Launch Director, KW Singapore) as they walk you through:
-              </p>
-              <ul style="color: #333; line-height: 1.6; margin: 0; padding-left: 20px;">
-                <li style="margin-bottom: 8px;"><span style="color: #B40101;">✅</span> Framework to analyse projects near high-performing launches and assess their impact on current demand</li>
-                <li style="margin-bottom: 8px;"><span style="color: #B40101;">✅</span> District 3 historical performance insights, highlighting trends investor returns</li>
-                <li style="margin-bottom: 8px;"><span style="color: #B40101;">✅</span> Data-driven evaluation of price gaps between Queenstown resale and new launches to identify optimal entry points</li>
-                <li style="margin-bottom: 8px;"><span style="color: #B40101;">✅</span> Structured methodology to model exit risk and forecast upside for maximum returns</li>
+            <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+              <h3 style="color: #B40101; margin-top: 0;">What's Next?</h3>
+              <ul style="color: #666; line-height: 1.6; margin: 0; padding-left: 20px;">
+                <li>Our team will call you to confirm your preferred visit date and time</li>
+                <li>We'll provide you with detailed directions to the showflat</li>
+                <li>You'll receive exclusive information about unit availability and pricing</li>
+                <li>Our property experts will be available to answer all your questions</li>
               </ul>
-              <p style="color: #333; line-height: 1.6; margin: 15px 0 0 0; font-weight: bold;">
-                Plus: 1‑on‑1 portfolio consultation and guided showflat tour with our expert consultants
-              </p>
             </div>
             
-            <div style="background-color: white; padding: 25px; border-radius: 8px; margin-bottom: 20px;">
-              <p style="color: #333; line-height: 1.6; margin: 0 0 15px 0;">
-                You'll also get a full walkthrough of the showflat and have a chance to speak directly with our consultants on-site.
-              </p>
-              <p style="color: #333; line-height: 1.6; margin: 0; font-weight: bold;">
-                This is a one-night-only session and seats are limited — we're excited to have you join us!
-              </p>
+            <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+              <h3 style="color: #B40101; margin-top: 0;">About Penrith</h3>
+              <ul style="color: #666; line-height: 1.6; margin: 0; padding-left: 20px;">
+                <li>District 3, Queenstown - Prime location in Margaret Drive</li>
+                <li>Developed by Hong Leong Holdings & GuocoLand</li>
+                <li>Premium residential development with modern amenities</li>
+                <li>Strategic location near Queenstown MRT and amenities</li>
+                <li>Excellent investment potential in District 3</li>
+                <li>Limited units available for preview</li>
+              </ul>
             </div>
             
-            <div style="background-color: white; padding: 25px; border-radius: 8px; margin-bottom: 20px;">
-              <p style="color: #333; line-height: 1.6; margin: 0 0 15px 0;">
-                If you have any queries in the meantime, feel free to reach out to our team at: 
-                <a href="https://wa.me/6597457388" style="color: #B40101; text-decoration: none; font-weight: bold;">+65 9745 7388</a>
-              </p>
-              <p style="color: #333; line-height: 1.6; margin: 0 0 10px 0;">
-                See you soon!
-              </p>
-            </div>
-            
-            <div style="background-color: white; padding: 25px; border-radius: 8px; margin-bottom: 20px;">
-              <p style="color: #333; line-height: 1.6; margin: 0 0 10px 0;">
-                Best Regards,
-              </p>
-              <p style="color: #B40101; font-weight: bold; margin: 0;">
-                KW Singapore & PropertyLimBrothers
+            <div style="text-align: center; margin-top: 30px;">
+              <p style="color: #666; margin-bottom: 20px;">
+                Have questions? Contact our team at 
+                <a href="mailto:hello@kwsingapore.com" style="color: #B40101;">hello@kwsingapore.com</a>
               </p>
             </div>
           </div>
@@ -422,7 +389,7 @@ async function sendAutoReplyEmail({ fullName, emailAddress }: {
 
     try {
       await sgMail.send(emailContent)
-      console.log('✅ Auto-reply email sent successfully via SendGrid (Penrith)')
+      console.log('✅ Auto-reply email sent successfully via SendGrid (Penrith Lead)')
     } catch (sendError) {
       console.error('❌ SendGrid send error:', sendError)
       throw sendError
@@ -439,5 +406,3 @@ async function sendAutoReplyEmail({ fullName, emailAddress }: {
     return { success: false, error: errorMessage }
   }
 }
-
-

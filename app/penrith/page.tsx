@@ -641,11 +641,15 @@ function LeadGenerationForm({
                 selected={formData.preferredDate}
                 onSelect={(date) => setFormData((prev: any) => ({ ...prev, preferredDate: date }))}
                 initialFocus
-                defaultMonth={new Date(2025, 7, 1)} // August 2025 (month is 0-indexed, so 7 = August)
+                defaultMonth={new Date(2025, 9, 1)} // October 2025 (month is 0-indexed, so 9 = October)
                 disabled={(date) => {
-                  // Disable all dates up to and including July 31st, 2025
-                  const july31st = new Date(2025, 6, 31); // July 31st, 2025 (month is 0-indexed, so 6 = July)
-                  return date <= july31st;
+                  // Disable all dates before October 3rd, 2025
+                  const cutoff = new Date(2025, 9, 3); // Oct 3, 2025
+                  // Zero out time components for safe comparison
+                  cutoff.setHours(0, 0, 0, 0)
+                  const d = new Date(date)
+                  d.setHours(0, 0, 0, 0)
+                  return d < cutoff;
                 }}
               />
             </PopoverContent>
@@ -959,7 +963,7 @@ export default function SpringleafResidenceLanding() {
         description: "Please wait while we process your request",
       })
 
-      const response = await fetch('/api/springleaf-residence-form', {
+      const response = await fetch('/api/penrith-lead-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1483,7 +1487,7 @@ export default function SpringleafResidenceLanding() {
                         : currentImageIndex === 2
                         ? "Premium facilities and lifestyle amenities"
                         : currentImageIndex === 3
-                        ? "Stunning front facade and entrance"
+                        ? "Stunning main pool with aqua deck and alcove"
                         : "Comprehensive project overview and highlights"}
                     </p>
                   </div>
@@ -1878,119 +1882,6 @@ export default function SpringleafResidenceLanding() {
       {/* Enhanced Media Section */}
       <section id="media" className="pt-4 pb-4 bg-[#1c1c1d] flex items-center justify-center">
         <div className="container mx-auto px-4 text-left">
-          <div className={`text-center mb-8 md:mb-16 transition-all duration-1000 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            <h2 className="text-2xl md:text-3xl font-light mb-3 text-white text-center tracking-wide">Explore Penrith</h2>
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-1 bg-[#ce001f] rounded" />
-            </div>
-            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-              Immerse yourself in the luxury and elegance of our latest development through our comprehensive media
-              gallery
-            </p>
-          </div>
-
-          
-          <div className={`space-y-8 md:space-y-20 transition-all duration-1000 delay-300 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            
-            <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
-              <div className="space-y-6 order-2 lg:order-1">
-                <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
-                <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
-                  Penrith New Launch Analysis
-                </h3>
-                <p className="text-gray-300 leading-relaxed text-base md:text-lg">
-                  District 26's first high-rise mega condo with full facilities. 
-                  Developed by visionary GuocoLand and Hong Leong, this 941-unit project offers unbeatable connectivity, unparalleled green premium, and a strategic entry price. 
-                  Discover how you can capitalise on this rare opportunity.
-                </p>
-                  <Button 
-                    className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
-                    onClick={() => window.open('https://newlaunch.kwsingapore.com/springleaf-residence-new-launch-analysis', '_blank')}
-                  >
-                    <Play className="w-5 h-5 mr-2" />
-                    Watch Analysis
-                  </Button>
-              </div>
-              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-2">
-                <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
-                  <Image
-                    src="/images/springleaf-residence/new-launch-analysis.webp?height=320&width=500&text=Lentor+Mansion+Showflat+Tour"
-                    alt="Lentor Mansion Showflat Tour"
-                    fill
-                    className="object-contain md:object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
-              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-1">
-                <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
-                  <Image
-                    src="/images/springleaf-residence/new-launch-analysis-2.webp?height=320&width=500&text=Lentor+Rejuvenation+Analysis"
-                    alt="Lentor's Rejuvenation Analysis"
-                    fill
-                    className="object-contain md:object-cover"
-                  />
-                </div>
-              </div>
-              <div className="space-y-6 order-2 lg:order-2">
-                <Badge className="bg-green-100 text-green-800">NEW LAUNCH ANALYSIS</Badge>
-                <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
-                  Penrith vs. the Supply Surge: Can a Lower Land Bid Still Outperform in a Crowded District 26?
-                </h3>
-                <p className="text-gray-300 leading-relaxed text-base md:text-lg">
-                  Before you buy into the hype of D26, ask yourself: Are you investing… or just following the crowd? 
-                  In a market flooded with options, the wrong call could mean years of stagnant capital. 
-                  This webinar goes beyond brochures and showflat buzz to confront one critical question : 
-                  <strong> Can Springleaf truly stand out — or will it be buried in the noise?</strong>
-                </p>
-                <Button 
-                    className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
-                    onClick={() => window.open('https://newlaunch.kwsingapore.com/webinars/springleaf-residence-vs-the-supply-surge', '_blank')}
-                  >
-                    <Play className="w-5 h-5 mr-2" />
-                    Watch Webinar
-                  </Button>
-              </div>
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
-              <div className="space-y-6 order-2 lg:order-1">
-                <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
-                <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
-                  As Lentor Heats Up, Is Penrith a Smart Play — or Just Another Name in an Overcrowded District 26?
-                </h3>
-                <p className="text-gray-300 leading-relaxed text-base md:text-lg">
-                  Stop and think before you join the rush into Lentor. 
-                  In a market flooded with thousands of new condo units in one small area, the greatest risk isn't missing out—it's buying in. 
-                  This webinar is a necessary warning about the illusion of safety in numbers and the potential for long-term capital stagnation that most agents won't discuss.
-                </p>
-                  <Button 
-                    className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
-                    onClick={() => window.open('https://newlaunch.kwsingapore.com/webinars/as-lentor-heats-up-is-springleaf-residence-a-smart-play', '_blank')}
-                  >
-                    <Play className="w-5 h-5 mr-2" />
-                    Watch Webinar
-                  </Button>
-              </div>
-              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-2">
-                <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
-                  <Image
-                    src="/images/springleaf-residence/new-launch-analysis-lentor.webp?height=320&width=500&text=Lentor+Mansion+Showflat+Tour"
-                    alt="Lentor Mansion Showflat Tour"
-                    fill
-                    className="object-contain md:object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Call to Action */}
           <div className={`text-center mt-12 sm:mt-16 md:mt-18 lg:mt-12 mb-4 transition-all duration-1000 delay-500 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
