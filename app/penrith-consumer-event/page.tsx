@@ -1171,8 +1171,8 @@ export default function SpringleafResidenceLanding() {
             viewport={{ once: true, margin: "-100px" }}
           >
             <span className="text-white">
-              <span className="font-bold">Mastering New Launch Investments:</span>
-              <br /> 6 Strategies to Identify the Best Entry Points in 2025 In a 2025 New Launch
+              <span className="font-bold">District 3 in Focus:</span>
+              <br /> Resale Pricing Gaps & Exit Risk Assessment Strategy
             </span>
             <span className="block text-[#B40101] italic">
               Featuring Penrith
@@ -1214,9 +1214,11 @@ export default function SpringleafResidenceLanding() {
                 className="mb-8"
               >
                 <ul className="text-base md:text-md leading-relaxed space-y-2">
-                  <li>• 6 Proven Strategies for Identifying the Optimal Entry Price in 2025 New Launches</li>
-                  <li>• 7 High-Yield Investment Opportunities at Penrith with Maximum Upside Potential</li>
-                  <li>• How to Map Your Exit Strategy and Analyse Buyer Demand for Maximum Returns</li>
+                  <li>• Framework to assess nearby high-performing launches and their impact</li>
+                  <li>• District 3 performance trends and investor returns</li>
+                  <li>• Price gap analysis: Queenstown resale vs new launches</li>
+                  <li>• Methodology to model exit risk and upside potential for maximum returns</li>
+                  <li>• Exclusive: 1-on-1 consult & guided showflat tour</li>
                 </ul>
               </motion.div>
 
