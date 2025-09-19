@@ -114,14 +114,14 @@ async function sendNotificationEmail({
   try {
     const isDevelopment = process.env.NODE_ENV === 'development'
     const apiKey = process.env.SENDGRID_API_KEY
-    const fromEmail = process.env.FROM_EMAIL || 'noreply@kwsg.com'
-    const toEmails = ['dil.marc@propertylimbrothers.com', 'plbcare@propertylimbrothers.com']
+    const fromEmail = process.env.FROM_EMAIL || 'noreply@kwsingapore.com'
+    const toEmail = process.env.PENRITH_LEAD_TO_EMAIL || 'consults@propertylimbrothers.com'
     
     console.log('Notification email configuration:', {
       isDevelopment,
       hasApiKey: !!apiKey,
       fromEmail,
-      toEmails
+      toEmail
     })
     
     // If no API key is set, return error
@@ -136,21 +136,21 @@ async function sendNotificationEmail({
     sgMail.setApiKey(apiKey)
 
     const emailContent = {
-      to: toEmails,
+      to: toEmail,
       from: fromEmail,
-      subject: `New Site Map Request - Springleaf Residence - ${fullName}`,
+      subject: `New Site Map Request - Penrith - ${fullName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background-color: #ce001f; color: white; padding: 20px; text-align: center;">
+          <div style="background-color: #B40101; color: white; padding: 20px; text-align: center;">
             <h1 style="margin: 0; font-size: 24px;">KW Singapore</h1>
-            <p style="margin: 5px 0 0 0; font-size: 16px;">Site Map Request - Springleaf Residence</p>
+            <p style="margin: 5px 0 0 0; font-size: 16px;">Site Map Request - Penrith</p>
           </div>
           
           <div style="padding: 30px; background-color: #f9f9f9;">
             <h2 style="color: #333; margin-bottom: 20px;">New Site Map Request</h2>
             
             <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-              <h3 style="color: #ce001f; margin-top: 0;">Contact Information</h3>
+              <h3 style="color: #B40101; margin-top: 0;">Contact Information</h3>
               <table style="width: 100%; border-collapse: collapse;">
                 <tr>
                   <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #666;">Full Name:</td>
@@ -168,18 +168,18 @@ async function sendNotificationEmail({
             </div>
             
             <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-              <h3 style="color: #ce001f; margin-top: 0;">Request Details</h3>
+              <h3 style="color: #B40101; margin-top: 0;">Request Details</h3>
               <p style="color: #666; line-height: 1.6; margin: 0;">
                 <strong>Request Type:</strong> Site Map<br>
-                <strong>Project:</strong> Springleaf Residence<br>
-                <strong>Location:</strong> District 26, Upper Thomson<br>
-                <strong>Developer:</strong> GuocoLand & Hong Leong<br>
-                <strong>Target Preview:</strong> 1 August 2025
+                <strong>Project:</strong> Penrith<br>
+                <strong>Location:</strong> Margaret Drive, District 3 (Queenstown), Singapore<br>
+                <strong>Developer:</strong> Hong Leong Holdings & GuocoLand (Margaret Rise Development Pte Ltd)<br>
+                <strong>Target Preview:</strong> TBA
               </p>
             </div>
             
             <div style="text-align: center; margin-top: 30px;">
-              <a href="tel:${contactNumber}" style="background-color: #ce001f; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block; margin-right: 10px;">
+              <a href="tel:${contactNumber}" style="background-color: #B40101; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block; margin-right: 10px;">
                 Call Contact
               </a>
               <a href="mailto:${emailAddress}" style="background-color: #333; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block;">
@@ -190,7 +190,7 @@ async function sendNotificationEmail({
           
           <div style="background-color: #333; color: white; padding: 20px; text-align: center; font-size: 12px;">
             <p style="margin: 0;">© 2025 KW Singapore. All rights reserved.</p>
-            <p style="margin: 5px 0 0 0;">This notification was sent to ${toEmails.join(', ')}</p>
+            <p style="margin: 5px 0 0 0;">This notification was sent to ${toEmail}</p>
           </div>
         </div>
       `
@@ -198,7 +198,7 @@ async function sendNotificationEmail({
 
     console.log('📤 Sending notification email via SendGrid...')
     console.log('📧 Email details:', {
-      to: toEmails,
+      to: toEmail,
       from: fromEmail,
       subject: emailContent.subject,
       hasHtml: !!emailContent.html
@@ -265,12 +265,12 @@ async function sendAutoReplyEmail({ fullName, emailAddress }: {
     const emailContent = {
       to: emailAddress,
       from: fromEmail,
-      subject: `Site Map Request Confirmation - Springleaf Residence - KW Singapore`,
+      subject: `Penrith Site Map Request Confirmation - KW Singapore`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background-color: #ce001f; color: white; padding: 20px; text-align: center;">
+          <div style="background-color: #B40101; color: white; padding: 20px; text-align: center;">
             <h1 style="margin: 0; font-size: 24px;">KW Singapore</h1>
-            <p style="margin: 5px 0 0 0; font-size: 16px;">Site Map Request - Springleaf Residence</p>
+            <p style="margin: 5px 0 0 0; font-size: 16px;">Site Map Request - Penrith</p>
           </div>
           
           <div style="padding: 30px; background-color: #f9f9f9;">
@@ -281,12 +281,12 @@ async function sendAutoReplyEmail({ fullName, emailAddress }: {
                 Dear ${fullName},
               </p>
               <p style="color: #666; line-height: 1.6; margin: 10px 0 0 0;">
-                Thank you for your interest in Springleaf Residence! We have received your site map request and our team will contact you within 24 business hours to provide you with the detailed site map and additional project information.
+                Thank you for your interest in Penrith! We have received your site map request and our team will contact you within 24 business hours to provide you with the detailed site map and additional project information.
               </p>
             </div>
             
             <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-              <h3 style="color: #ce001f; margin-top: 0;">What's Next?</h3>
+              <h3 style="color: #B40101; margin-top: 0;">What's Next?</h3>
               <ul style="color: #666; line-height: 1.6; margin: 0; padding-left: 20px;">
                 <li>Our team will call you to confirm your request</li>
                 <li>We'll send you the detailed site map via email</li>
@@ -296,21 +296,20 @@ async function sendAutoReplyEmail({ fullName, emailAddress }: {
             </div>
             
             <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-              <h3 style="color: #ce001f; margin-top: 0;">About Springleaf Residence</h3>
+              <h3 style="color: #B40101; margin-top: 0;">About Penrith</h3>
               <ul style="color: #666; line-height: 1.6; margin: 0; padding-left: 20px;">
-                <li>District 26, Upper Thomson - 2 minutes' walk to Springleaf MRT</li>
-                <li>Developed by GuocoLand & Hong Leong</li>
-                <li>941 units across 5 towers + conservation block</li>
-                <li>1- to 5-bedroom units with full condo facilities</li>
-                <li>Attractive pricing averaging at ~$2250 PSF</li>
-                <li>Target preview: 1 August 2025</li>
+                <li>District 3, Queenstown - Prime location in Margaret Drive</li>
+                <li>Developed by Hong Leong Holdings & GuocoLand (Margaret Rise Development Pte Ltd)</li>
+                <li>Premium residential development with modern amenities</li>
+                <li>Strategic location near Queenstown MRT and amenities</li>
+                <li>Excellent investment potential in District 3</li>
               </ul>
             </div>
             
             <div style="text-align: center; margin-top: 30px;">
               <p style="color: #666; margin-bottom: 20px;">
                 Have questions? Contact our team at 
-                <a href="mailto:hello@kwsingapore.com" style="color: #ce001f;">hello@kwsingapore.com</a>
+                <a href="mailto:hello@kwsingapore.com" style="color: #B40101;">hello@kwsingapore.com</a>
               </p>
             </div>
           </div>
@@ -417,11 +416,18 @@ async function insertIntoGoogleSheets({
   contactNumber: string
 }) {
   try {
-    const spreadsheetId = process.env.GOOGLE_SHEETS_SPREADSHEET_ID
+    // Match Penrith Lead Form spreadsheet config
+    const rawSpreadsheetEnv = process.env.GOOGLE_SHEETS_PENRITH_LEAD_SPREADSHEET_ID
+    let spreadsheetId = rawSpreadsheetEnv
+    if (rawSpreadsheetEnv && rawSpreadsheetEnv.includes('/d/')) {
+      const match = rawSpreadsheetEnv.match(/\/d\/([^/]+)/)
+      spreadsheetId = match ? match[1] : rawSpreadsheetEnv
+    }
     const clientEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL
     const privateKey = process.env.GOOGLE_SHEETS_PRIVATE_KEY
+    const targetRange = process.env.GOOGLE_SHEETS_PENRITH_LEAD_RANGE || 'SiteMapRequests!A:F'
     
-    console.log('Google Sheets configuration:', {
+    console.log('Google Sheets configuration (Penrith Site Map):', {
       hasSpreadsheetId: !!spreadsheetId,
       hasClientEmail: !!clientEmail,
       hasPrivateKey: !!privateKey
@@ -433,7 +439,7 @@ async function insertIntoGoogleSheets({
       return { success: false, error: 'Google Sheets service not configured' }
     }
 
-    console.log('📊 Attempting to insert data into Google Sheets...')
+    console.log('📊 Attempting to insert data into Google Sheets (Penrith Site Map)...')
     
     // Process private key to handle different formats and OpenSSL compatibility
     const processPrivateKey = (key: string): string => {
@@ -465,34 +471,51 @@ async function insertIntoGoogleSheets({
     // Create Google Sheets API client
     const sheets = google.sheets({ version: 'v4', auth })
 
-    // Prepare data row
+    // Prepare data row to match Penrith Lead Form columns (A:J)
     const timestamp = new Date().toISOString()
     const dataRow = [
-      timestamp,
-      fullName,
-      emailAddress,
-      contactNumber,
-      'Site Map Request',
-      'Springleaf Residence'
+      timestamp,                       
+      fullName,                       
+      emailAddress,                   
+      contactNumber,                  
+      'Request Site Map',  
+      'Penrith'
     ]
 
     // Append data to the spreadsheet
-    const response = await sheets.spreadsheets.values.append({
-      spreadsheetId,
-      range: 'SiteMapRequests!A:F', // Use tab name without spaces, reduced to 6 columns
-      valueInputOption: 'RAW',
-      insertDataOption: 'INSERT_ROWS',
-      requestBody: {
-        values: [dataRow]
+    let response
+    try {
+      response = await sheets.spreadsheets.values.append({
+        spreadsheetId,
+        range: targetRange,
+        valueInputOption: 'RAW',
+        insertDataOption: 'INSERT_ROWS',
+        requestBody: { values: [dataRow] }
+      })
+    } catch (appendError) {
+      if (appendError instanceof Error && appendError.message.includes('protected cell or object')) {
+        const currentData = await sheets.spreadsheets.values.get({
+          spreadsheetId,
+          range: targetRange.split('!')[0] + '!A:A'
+        })
+        const nextRow = (currentData.data.values?.length || 1) + 1
+        const baseTab = targetRange.split('!')[0]
+        const range = `${baseTab}!A${nextRow}:J${nextRow}`
+        response = await sheets.spreadsheets.values.update({
+          spreadsheetId,
+          range,
+          valueInputOption: 'RAW',
+          requestBody: { values: [dataRow] }
+        })
+      } else {
+        throw appendError
       }
-    })
+    }
 
-    console.log('✅ Data inserted into Google Sheets successfully')
-    console.log('📊 Sheets response:', {
-      updatedRange: response.data.updates?.updatedRange,
-      updatedRows: response.data.updates?.updatedRows,
-      updatedColumns: response.data.updates?.updatedColumns
-    })
+    console.log('✅ Data inserted into Google Sheets successfully (Penrith Site Map)')
+    if ('updates' in response.data) {
+      console.log('📊 Sheets append response:', response.data.updates)
+    }
     
     return { success: true, message: 'Data inserted into Google Sheets successfully' }
 
