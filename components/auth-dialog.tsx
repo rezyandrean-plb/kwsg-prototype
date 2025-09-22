@@ -104,7 +104,12 @@ export default function AuthDialog({ open, onOpenChange, toolTitle }: AuthDialog
                     formFieldInputActionText: "text-gray-400",
                     formFieldInputActionButton: "text-gray-400 hover:text-white",
                     formFieldInputActionButtonText: "text-gray-400",
-                    formFieldInputActionButtonIcon: "text-gray-400"
+                    formFieldInputActionButtonIcon: "text-gray-400",
+                    // Hide email address input and options
+                    identifierInput: "hidden",
+                    formFieldInput__identifier: "hidden",
+                    formField__identifier: "hidden",
+                    formFieldRow__identifier: "hidden"
                   }
                 }}
                 redirectUrl="/tech-tool"

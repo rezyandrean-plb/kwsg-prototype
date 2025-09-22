@@ -942,6 +942,7 @@ export default function SpringleafResidenceLanding() {
         description: "Please wait while we process your registration",
       })
 
+      // Submit to existing API endpoint
       const response = await fetch('/api/penrith-event', {
         method: 'POST',
         headers: {
@@ -953,6 +954,28 @@ export default function SpringleafResidenceLanding() {
       const result = await response.json()
 
       if (response.ok && result.success) {
+        // Call Zapier webhook alongside existing submission
+        try {
+          await fetch('https://hooks.zapier.com/hooks/catch/13947521/u1oqynd/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              fullName: eventFormData.fullName,
+              contactNumber: eventFormData.contactNumber,
+              emailAddress: eventFormData.emailAddress,
+              numberOfPax: eventFormData.numberOfPax,
+              plbConsultant: eventFormData.plbConsultant,
+              eventType: 'Penrith Consumer Event Registration',
+              timestamp: new Date().toISOString()
+            }),
+          })
+        } catch (webhookError) {
+          // Log webhook error but don't affect the main form submission
+          console.warn('Webhook submission failed:', webhookError)
+        }
+
         setEventSubmitSuccess(true)
         setEventFormData({
           fullName: '',
