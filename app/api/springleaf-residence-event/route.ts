@@ -287,7 +287,16 @@ async function insertIntoGoogleSheets({
     const sheets = google.sheets({ version: 'v4', auth })
 
     // Prepare data row
-    const timestamp = new Date().toISOString()
+    const timestamp = new Date().toLocaleString('en-SG', { 
+      timeZone: 'Asia/Singapore',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    })
     const dataRow = [
       timestamp,
       fullName,

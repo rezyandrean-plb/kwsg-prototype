@@ -17,7 +17,7 @@ const tools = [
     title: "KW PropSage",
     description: "Handle the entire transaction process smoothly from start to finish, paperwork-free.",
     icon: Building2,
-    category: "Internal Tool",
+    category: "Business Tool",
     url: "app.propsage.com",
     image: "/images/tech-tool/kw-propsage.webp"
   },
@@ -26,7 +26,7 @@ const tools = [
     title: "KW Command",
     description: "Manage your real estate business easily from anywhere with one central hub.",
     icon: Calculator,
-    category: "Command Tools",
+    category: "Business Tool",
     url: "agent.kw.com",
     image: "/images/tech-tool/kw-command.webp"
   },
@@ -35,7 +35,7 @@ const tools = [
     title: "KW Contacts",
     description: "Organize leads and contacts intelligently, never forget important follow-ups again.",
     icon: Building2,
-    category: "Command Tools",
+    category: "Business Tool",
     url: "https://console.command.kw.com/command/contacts",
     image: "/images/tech-tool/kw-contacts.webp"
   },
@@ -44,7 +44,7 @@ const tools = [
     title: "KW Tasks",
     description: "Track every client’s to-do list carefully, ensuring no task gets missed.",
     icon: Calculator,
-    category: "Command Tools",
+    category: "Business Tool",
     url: "https://console.command.kw.com/command/task-manager",
     image: "/images/tech-tool/kw-tasks.webp"
   },
@@ -53,7 +53,7 @@ const tools = [
     title: "KW Campaigns",
     description: "Generate steady social media leads without needing complex ad platform expertise.",
     icon: TrendingUp,
-    category: "Command Tools",
+    category: "Business Tool",
     url: "https://campaigns.kw.com/",
     image: "/images/tech-tool/kw-campaigns.webp"
   },
@@ -62,7 +62,7 @@ const tools = [
     title: "KW Opportunities",
     description: "Track deals from new leads to closings, ensuring payments never missed.",
     icon: BarChart3,
-    category: "Command Tools",
+    category: "Business Tool",
     url: "https://console.command.kw.com/command/opportunities",
     image: "/images/tech-tool/kw-opportunities.webp"
   },
@@ -71,7 +71,7 @@ const tools = [
     title: "KW SmartPlans",
     description: "Automate client follow-ups and marketing campaigns, saving time while staying connected.",
     icon: Smartphone,
-    category: "Command Tools",
+    category: "Business Tool",
     url: "https://console.command.kw.com/command/smart-plans",
     image: "/images/tech-tool/kw-smartplans.webp"
   },
@@ -80,7 +80,7 @@ const tools = [
     title: "KW Listings",
     description: "Showcase properties beautifully with professional listing pages that attract serious buyers.",
     icon: Home,
-    category: "Command Tools",
+    category: "Business Tool",
     url: "https://console.command.kw.com/command/listings",
     image: "/images/tech-tool/kw-listings.webp"
   },
@@ -89,7 +89,7 @@ const tools = [
     title: "KW Website",
     description: "Create branded, user-friendly websites in minutes to capture online inquiries.",
     icon: MapPin,
-    category: "Command Tools",
+    category: "Business Tool",
     url: "https://console.command.kw.com/command/websites",
     image: "/images/tech-tool/kw-website.webp"
   },
@@ -98,7 +98,7 @@ const tools = [
     title: "KW University",
     description: "Access world-class real estate training and mentorship to sharpen skills continuously.",
     icon: TrendingUp,
-    category: "Command Tools",
+    category: "Learnings",
     url: "https://agent.kw.com/connect/learning/categories",
     image: "/images/tech-tool/kw-university.webp"
   },
@@ -126,7 +126,7 @@ const tools = [
     title: "KW Canva",
     description: "Design stunning brochures, posts, and materials easily, no design experience required.",
     icon: Building2,
-    category: "External Tools",
+    category: "Business Tool",
     url: "canva.kw.com",
     image: "/images/tech-tool/kw-canva.webp"
   },
@@ -308,7 +308,8 @@ const tools = [
     title: "Research Chart Mega Vault",
     description: "Compare BUC vs Resale financial outlays, analysing own-stay versus investment.",
     icon: BarChart3,
-    category: "Research Tools",
+    category: "Compass Tools",
+    subtitle: "Research Charts",
     url: "https://drive.google.com/drive/u/2/folders/16cpLVQWIGSmdsat2f9XONQkDbOESYV0m",
     image: "/images/tech-tool/research-charts.webp"
   },
@@ -318,7 +319,7 @@ const tools = [
     title: "Training Recording: KW PropTech Calculator, EdgeProp Inspector, Real Insights, etc.",
     description: "Learn PropTech calculators, EdgeProp Inspector, and Real Insights through recorded training.",
     icon: Play,
-    category: "Training Resource",
+    category: "Learnings",
     url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmAqEH3-QDXlGc4Opm9i3lGa0",
     image: "/images/tech-tool/kw-tutorial.webp"
   },
@@ -327,7 +328,7 @@ const tools = [
     title: "Training Recording: KW PropSage Deal Submission",
     description: "Watch step-by-step process for submitting and managing deals using PropSage.",
     icon: Play,
-    category: "Training Resource",
+    category: "Learnings",
     url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmAoqtN5dPkjshZgUhF735R9x",
     image: "/images/tech-tool/kw-tutorial.webp"
   },
@@ -336,7 +337,7 @@ const tools = [
     title: "Video Guide: KW Command",
     description: "Get a visual walkthrough of KW Command's main tools and features.",
     icon: Play,
-    category: "Training Resource",
+    category: "Learnings",
     url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmAr-TbCVIjwGGCItRE-mQ3Vg",
     image: "/images/tech-tool/kw-tutorial.webp"
   },
@@ -345,7 +346,7 @@ const tools = [
     title: "Step-by-step Guide: KW Command",
     description: "Follow detailed written steps to navigate KW Command confidently and effectively.",
     icon: Play,
-    category: "Training Resource",
+    category: "Learnings",
     url: "https://answers.kw.com/hc/en-us/categories/26283417706515-Command",
     image: "/images/tech-tool/kw-tutorial.webp"
   },
@@ -354,7 +355,7 @@ const tools = [
     title: "Step-by-step Guide: KW Command Mobile App",
     description: "Master KW Command mobile app functions with clear, easy instructions provided.",
     icon: Play,
-    category: "Training Resource",
+    category: "Learnings",
     url: "https://answers.kw.com/hc/en-us/categories/4402619174931-Command-App",
     image: "/images/tech-tool/kw-tutorial.webp"
   },
@@ -363,7 +364,7 @@ const tools = [
     title: "Step-by-step Guide: Real Insights",
     description: "Leverage Real Insights step-by-step for effective property research and analysis.",
     icon: Play,
-    category: "Training Resource",
+    category: "Learnings",
     url: "https://drive.google.com/file/d/1YkRJJebAJhWilzd2mvTMwMGbIvzvBzWY/view?usp=drive_link",
     image: "/images/tech-tool/kw-tutorial.webp"
   },
@@ -372,7 +373,7 @@ const tools = [
     title: "Step-by-step Guide: Real Insights Valuation Report",
     description: "Generate and interpret valuation reports from Real Insights with simple steps.",
     icon: Play,
-    category: "Training Resource",
+    category: "Learnings",
     url: "https://drive.google.com/file/d/1KnOVVO_2YtvDta0vS_t0nxCIlo1K0AK3/view?usp=drive_link",
     image: "/images/tech-tool/kw-tutorial.webp"
   },
@@ -380,17 +381,15 @@ const tools = [
 
 const categories = [
   "All",
-  "Command Tools",
-  "Internal Tool",
+  "Business Tool",
   "External Tools",
   "Compass Tools",
-  "Research Tools",
-  "Training Resource"
+  "Learnings"
 ]
 
 export default function TechToolPage() {
   const { isSignedIn, user, isLoaded } = useUser()
-  const [activeCategory, setActiveCategory] = useState("Command Tools")
+  const [activeCategory, setActiveCategory] = useState("Business Tool")
   const [searchQuery, setSearchQuery] = useState("")
   const [authDialogOpen, setAuthDialogOpen] = useState(false)
   const [selectedTool, setSelectedTool] = useState<any>(null)
