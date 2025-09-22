@@ -36,17 +36,17 @@ export default function EventsPage() {
   const [activePastTab, setActivePastTab] = useState(0)
   const [pastCarouselIndex, setPastCarouselIndex] = useState(0)
 
+
   const pastEvents = [
     {
       title: "Realtor Branding Workshop",
       date: "August 2025",
       description:
         "A 2-day intensive masterclass diving into the millionaire models, strategies, and systems for exponential growth.",
-      images: [
-        "/images/event/mrea-summit-stage.webp",
-        "/images/event/mrea-pricing-new.webp",
-        "/images/event/mega-summit.webp",
-        "/images/event/melvin-explore.webp",
+      images: [],
+      video: [
+        "/video/realtor-branding-highlight.mp4",
+        "/video/takeaway-video.mp4",
       ],
     },
     {
@@ -55,10 +55,15 @@ export default function EventsPage() {
       description:
         "An interactive online session for agents to discover multiple income streams and scalable models.",
       images: [
-        "/images/event/melvin-explore.webp",
-        "/images/event/mega-summit.webp",
-        "/images/event/mrea-pricing-new.webp",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/founder-insight-1.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/founder-insight-2.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/founder-insight-3.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/founder-insight-4.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/founder-insight-5.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/founder-insight-6.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/founder-insight-7.jpg",
       ],
+      video: [],
     },
     {
       title: "Past Welcome Dinner",
@@ -66,10 +71,14 @@ export default function EventsPage() {
       description:
         "Hands-on bootcamp to craft compelling listing presentations and win mandates consistently.",
       images: [
-        "/images/event/mrea-pricing-new.webp",
-        "/images/event/mrea-summit-stage.webp",
-        "/images/event/mega-summit.webp",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/welcome-dinner-1.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/welcome-dinner-2.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/welcome-dinner-3.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/welcome-dinner-4.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/welcome-dinner-5.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/welcome-dinner-6.jpg",
       ],
+      video: [],
     },
     {
       title: "Past Business Network",
@@ -77,11 +86,31 @@ export default function EventsPage() {
       description:
         "Frameworks and flows to convert leads into loyal clients across six distinct buyer profiles.",
       images: [
-        "/images/event/mega-summit.webp",
-        "/images/event/mrea-summit-stage.webp",
-        "/images/event/melvin-explore.webp",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-1.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-2.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-3.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-4.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-5.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-6.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-7.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-8.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-9.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-10.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-11.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-12.jpg",  
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-13.jpg",
       ],
+      video: [],
     },
+  ]
+
+  // Compute active past event media (images first, then videos)
+  const activeEvent = pastEvents[activePastTab] || {}
+  const activeImages = Array.isArray((activeEvent as any).images) ? (activeEvent as any).images.filter(Boolean) : []
+  const activeVideos = Array.isArray((activeEvent as any).video) ? (activeEvent as any).video.filter(Boolean) : []
+  const activeMedia = [
+    ...activeImages.map((src: string) => ({ type: "image" as const, src })),
+    ...activeVideos.map((src: string) => ({ type: "video" as const, src })),
   ]
 
   useEffect(() => {
@@ -899,48 +928,58 @@ export default function EventsPage() {
                 key={activePastTab}
                 className="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-lg p-4 sm:p-6"
               >
-                {/* Image carousel (moved to top) */}
-                <div className="relative">
-                  <div className="overflow-hidden rounded-md border border-gray-800">
-                    <div className="relative h-56 sm:h-72 md:h-80 lg:h-96">
-                      <img
-                        src={pastEvents[activePastTab].images[pastCarouselIndex]}
-                        alt={pastEvents[activePastTab].title}
-                        className="w-full h-full object-cover"
-                      />
+                {/* Image/Video carousel (moved to top) */}
+                {activeMedia.length > 0 && (
+                  <div className="relative w-full max-w-sm sm:max-w-md md:max-w-lg mx-auto">
+                    <div className="overflow-hidden rounded-md border border-gray-800">
+                      <div className={activeMedia[pastCarouselIndex]?.type === "image" ? "relative w-full aspect-square" : "relative h-56 sm:h-72 md:h-80 lg:h-96"}>
+                        {activeMedia[pastCarouselIndex]?.type === "image" ? (
+                          <img
+                            src={activeMedia[pastCarouselIndex]?.src}
+                            alt={activeEvent.title}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <video
+                            src={activeMedia[pastCarouselIndex]?.src}
+                            controls
+                            className="w-full h-full object-cover"
+                          />
+                        )}
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Carousel controls */}
-                  <div className="flex items-center justify-between mt-3">
-                    <div className="flex items-center gap-2">
-                      {pastEvents[activePastTab].images.map((_, idx) => (
+                    {/* Carousel controls */}
+                    <div className="flex items-center justify-between mt-3">
+                      <div className="flex items-center gap-2">
+                        {activeMedia.map((_, idx) => (
+                          <button
+                            key={idx}
+                            aria-label={`Go to slide ${idx + 1}`}
+                            onClick={() => setPastCarouselIndex(idx)}
+                            className={`w-2.5 h-2.5 rounded-full transition-all ${
+                              idx === pastCarouselIndex ? "bg-[#B40101]" : "bg-white/30 hover:bg-white/50"
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      <div className="flex items-center gap-2">
                         <button
-                          key={idx}
-                          aria-label={`Go to slide ${idx + 1}`}
-                          onClick={() => setPastCarouselIndex(idx)}
-                          className={`w-2.5 h-2.5 rounded-full transition-all ${
-                            idx === pastCarouselIndex ? "bg-[#B40101]" : "bg-white/30 hover:bg-white/50"
-                          }`}
-                        />
-                      ))}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => setPastCarouselIndex((prev) => (prev - 1 + pastEvents[activePastTab].images.length) % pastEvents[activePastTab].images.length)}
-                        className="px-3 py-2 rounded-md bg-black/50 border border-gray-800 hover:bg-[#B40101]/80 transition"
-                      >
-                        <ChevronRight className="w-5 h-5 rotate-180" />
-                      </button>
-                      <button
-                        onClick={() => setPastCarouselIndex((prev) => (prev + 1) % pastEvents[activePastTab].images.length)}
-                        className="px-3 py-2 rounded-md bg-black/50 border border-gray-800 hover:bg-[#B40101]/80 transition"
-                      >
-                        <ChevronRight className="w-5 h-5" />
-                      </button>
+                          onClick={() => setPastCarouselIndex((prev) => (prev - 1 + activeMedia.length) % activeMedia.length)}
+                          className="px-3 py-2 rounded-md bg-black/50 border border-gray-800 hover:bg-[#B40101]/80 transition"
+                        >
+                          <ChevronRight className="w-5 h-5 rotate-180" />
+                        </button>
+                        <button
+                          onClick={() => setPastCarouselIndex((prev) => (prev + 1) % activeMedia.length)}
+                          className="px-3 py-2 rounded-md bg-black/50 border border-gray-800 hover:bg-[#B40101]/80 transition"
+                        >
+                          <ChevronRight className="w-5 h-5" />
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
 
                 {/* Title and meta below images */}
                 <div className="flex items-start justify-between gap-4 mt-6">

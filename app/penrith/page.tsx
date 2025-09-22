@@ -1359,11 +1359,11 @@ export default function SpringleafResidenceLanding() {
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Developer:</span>
-                  <span className="font-semibold text-white">Hong Leong Holdings & GuocoLand<br/>(Margaret Rise Development Pte Ltd)</span>
+                  <span className="font-semibold text-white text-right">Hong Leong Holdings & GuocoLand<br/>(Margaret Rise Development Pte Ltd)</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Tenure:</span>
-                  <span className="font-semibold text-white">99 years Leasehold from 4 November 2024</span>
+                  <span className="font-semibold text-white text-right">99 years Leasehold from <br/> 4 November 2024</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">District:</span>
@@ -1387,7 +1387,7 @@ export default function SpringleafResidenceLanding() {
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">TOP:</span>
-                  <span className="font-semibold text白">1 April 2029 (non-commitment basis)</span>
+                  <span className="font-semibold text-right">1 April 2029 <br/> (non-commitment basis)</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Target Preview:</span>
@@ -1977,8 +1977,8 @@ export default function SpringleafResidenceLanding() {
                     Watch Analysis
                   </Button>
               </div>
-              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-2">
-                <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
+              <div className="relative hover:scale-105 transition-transform duration-500 p-0 md:p-0 order-1 lg:order-2">
+                <div className="relative h-64 md:h-80 rounded-xl overflow-hidden shadow-2xl">
                   <Image
                     src="/images/penrith/explore-1.webp?height=320&width=500&text=Lentor+Mansion+Showflat+Tour"
                     alt="Explore Penrith"
