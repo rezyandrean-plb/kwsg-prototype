@@ -1960,7 +1960,7 @@ export default function SpringleafResidenceLanding() {
             
             <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
               <div className="space-y-6 order-2 lg:order-1">
-                <Badge className="bg-white text-[#ce001f]">Use back the on-demand that one</Badge>
+                <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
                 <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
                   Does Penrith's Future Promise Live Up to Queenstown's Proven Past?
                 </h3>
