@@ -32,13 +32,13 @@ export default function EventsPage() {
   const [isJoinDialogOpen, setIsJoinDialogOpen] = useState(false)
   const [isSummitDialogOpen, setIsSummitDialogOpen] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
-  const totalSlides = 4
+  const totalSlides = 3
   const [activePastTab, setActivePastTab] = useState(0)
   const [pastCarouselIndex, setPastCarouselIndex] = useState(0)
 
   const pastEvents = [
     {
-      title: "MREA Masterclass 2025",
+      title: "Realtor Branding Workshop",
       date: "August 2025",
       description:
         "A 2-day intensive masterclass diving into the millionaire models, strategies, and systems for exponential growth.",
@@ -50,7 +50,7 @@ export default function EventsPage() {
       ],
     },
     {
-      title: "Explore Night Webinar",
+      title: "Past Founders Insights",
       date: "July 2025",
       description:
         "An interactive online session for agents to discover multiple income streams and scalable models.",
@@ -61,7 +61,7 @@ export default function EventsPage() {
       ],
     },
     {
-      title: "Seller Presentation Mastery",
+      title: "Past Welcome Dinner",
       date: "June 2025",
       description:
         "Hands-on bootcamp to craft compelling listing presentations and win mandates consistently.",
@@ -72,7 +72,7 @@ export default function EventsPage() {
       ],
     },
     {
-      title: "High-Conversion Buyer Consultations",
+      title: "Past Business Network",
       date: "May 2025",
       description:
         "Frameworks and flows to convert leads into loyal clients across six distinct buyer profiles.",
@@ -80,17 +80,6 @@ export default function EventsPage() {
         "/images/event/mega-summit.webp",
         "/images/event/mrea-summit-stage.webp",
         "/images/event/melvin-explore.webp",
-      ],
-    },
-    {
-      title: "New Launch Analysis Workshop",
-      date: "April 2025",
-      description:
-        "Mastering site and floor plan analysis, pricing strategies, and data-driven closing for new launches.",
-      images: [
-        "/images/event/mrea-summit-stage.webp",
-        "/images/event/mega-summit.webp",
-        "/images/event/mrea-pricing-new.webp",
       ],
     },
   ]
@@ -162,8 +151,9 @@ export default function EventsPage() {
           nextSlide()
         }
       } else {
-        // Return to current position
-        const translateX = -(currentSlide * 50)
+        // Return to current position (mobile vs desktop)
+        const isMobile = window.innerWidth < 1024
+        const translateX = -(currentSlide * (isMobile ? 100 : 50))
         carousel.style.transform = `translateX(${translateX}%)`
       }
     }
@@ -725,48 +715,7 @@ export default function EventsPage() {
                   </div>
                 </div>
 
-                {/* Card 4: Positioning as a Consultant: */}
-                <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
-                  <div className="bg-gradient-to-br from-gray-900 to-black p-4 sm:p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col">
-                    <h3 className="text-2xl font-bold mb-4">
-                      Training Bootcamp:
-                      <span className="block text-[#B40101]">Positioning as a Consultant</span>
-                    </h3>
-
-                    <div className="flex-grow">
-                      <p className="mb-6 leading-relaxed sm:h-32">
-                        Transform complex data into clear, actionable market intelligence. This intensive series
-                        empowers you to become an expert advisor, master interpreting market charts, and craft
-                        compelling communication frameworks that secure client trust.
-                      </p>
-
-                      <div className="space-y-3 mb-8">
-                        <div className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
-                          <span className="text-sm text-slate-100">Single Session Event</span>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
-                          <span className="text-sm text-slate-100">In-Depth Training Session</span>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
-                          <span className="text-sm text-slate-100">Limited Seats</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-center sm:justify-start mt-auto">
-                      <Button 
-                        className="w-full sm:w-auto bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 rounded-md"
-                        onClick={() => window.open("https://explore.kwsingapore.com/positioning-as-data-centric-consultant", "_blank")}
-                      >
-                        Tell Me More
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
+                {/* Removed Card 4: Positioning as a Consultant */}
               </div>
             </div>
 
@@ -836,9 +785,7 @@ export default function EventsPage() {
               transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
               viewport={{ once: true, margin: "-100px" }}
             >
-              Browse highlights from our past events, including masterclasses, summits, and workshops.
-              See what agents learned, the impact achieved, and how you can apply the takeaways.
-              Use these recaps to decide which upcoming sessions fit your goals.
+              Relive the highlights from our previous events and see the impact we've made in the real estate community.
             </motion.p>
           </motion.div>
         </div>
@@ -952,20 +899,7 @@ export default function EventsPage() {
                 key={activePastTab}
                 className="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-lg p-4 sm:p-6"
               >
-                <div className="flex items-start justify-between gap-4 mb-4">
-                  <div>
-                    <h3 className="text-2xl font-bold mb-1">{pastEvents[activePastTab].title}</h3>
-                    <div className="text-gray-300 flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-[#B40101]" />
-                      <span>{pastEvents[activePastTab].date}</span>
-                    </div>
-                  </div>
-                </div>
-                <p className="text-gray-200 leading-relaxed mb-6">
-                  {pastEvents[activePastTab].description}
-                </p>
-
-                {/* Image carousel */}
+                {/* Image carousel (moved to top) */}
                 <div className="relative">
                   <div className="overflow-hidden rounded-md border border-gray-800">
                     <div className="relative h-56 sm:h-72 md:h-80 lg:h-96">
@@ -1004,6 +938,17 @@ export default function EventsPage() {
                       >
                         <ChevronRight className="w-5 h-5" />
                       </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Title and meta below images */}
+                <div className="flex items-start justify-between gap-4 mt-6">
+                  <div>
+                    <h3 className="text-2xl font-bold mb-1">{pastEvents[activePastTab].title}</h3>
+                    <div className="text-gray-300 flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-[#B40101]" />
+                      <span>{pastEvents[activePastTab].date}</span>
                     </div>
                   </div>
                 </div>

@@ -954,26 +954,20 @@ export default function SpringleafResidenceLanding() {
       const result = await response.json()
 
       if (response.ok && result.success) {
-        // Call Zapier webhook alongside existing submission
-        try {
-          await fetch('https://hooks.zapier.com/hooks/catch/13947521/u1oqynd/', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              fullName: eventFormData.fullName,
-              contactNumber: eventFormData.contactNumber,
-              emailAddress: eventFormData.emailAddress,
-              numberOfPax: eventFormData.numberOfPax,
-              plbConsultant: eventFormData.plbConsultant,
-              eventType: 'Penrith Consumer Event Registration',
-              timestamp: new Date().toISOString()
-            }),
-          })
-        } catch (webhookError) {
-          // Log webhook error but don't affect the main form submission
-          console.warn('Webhook submission failed:', webhookError)
+        // Server route now notifies Zapier; reflect status via result.webhookSent when available
+        if (typeof result.webhookSent !== 'undefined') {
+          if (result.webhookSent) {
+            toast({
+              title: "Notification Sent",
+              description: "We've also notified our team successfully.",
+            })
+          } else {
+            toast({
+              title: "Notification Issue",
+              description: "Registration received, but notifying our team had an issue.",
+              variant: "destructive",
+            })
+          }
         }
 
         setEventSubmitSuccess(true)
