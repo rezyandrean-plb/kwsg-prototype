@@ -1302,7 +1302,8 @@ export default function SpringleafResidenceLanding() {
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Penrith is a new 462-unit condominium along Margaret Drive, developed by GuocoLand and Hong Leong. Situated in the heart of Queenstown, it is just a 5-minute walk from Queenstown MRT, with everyday conveniences and schools close by — while Orchard, the CBD, and One-North are only a short train ride away.
+            Penrith is a new 462-unit condominium along Margaret Drive, developed by Hong Leong and GuocoLand. 
+            Situated in the heart of Queenstown, it is just a 5-minute walk from Queenstown MRT, with everyday conveniences and schools close by — while Orchard, the CBD, and One-North are only a short train ride away.
             </p>
           </div>
 
@@ -1761,7 +1762,7 @@ export default function SpringleafResidenceLanding() {
             <div className="grid grid-cols-2 md:grid-cols-2 gap-6 mb-6">
               {[
                 { icon: <Compass className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Close to Key Growth Hubs', subtitle: 'Orchard, CBD, and One-North business park in minutes' },
-                { icon: <Building className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Blue-Chip Developers', subtitle: 'GuocoLand + Hong Leong track record in premium city projects' }
+                { icon: <Building className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Blue-Chip Developers', subtitle: 'Hong Leong + GuocoLand track record in premium city projects' }
               ].map((benefit, index) => (
                 <div 
                   key={index + 3}
@@ -1939,6 +1940,56 @@ export default function SpringleafResidenceLanding() {
       {/* Enhanced Media Section */}
       <section id="media" className="pt-4 pb-4 bg-[#1c1c1d] flex items-center justify-center">
         <div className="container mx-auto px-4 text-left">
+        <div className={`text-center mb-8 md:mb-16 transition-all duration-1000 ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+          }`}>
+            <h2 className="text-2xl md:text-3xl font-light mb-3 text-white text-center tracking-wide">Explore Penrith</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-[#ce001f] rounded" />
+            </div>
+            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+              Immerse yourself in the luxury and elegance of our latest development through our comprehensive media
+              gallery
+            </p>
+          </div>
+
+          
+          <div className={`space-y-8 md:space-y-20 transition-all duration-1000 delay-300 ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+          }`}>
+            
+            <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
+              <div className="space-y-6 order-2 lg:order-1">
+                <Badge className="bg-white text-[#ce001f]">Use back the on-demand that one</Badge>
+                <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
+                  Does Penrith's Future Promise Live Up to Queenstown's Proven Past?
+                </h3>
+                <p className="text-gray-300 leading-relaxed text-base md:text-lg">
+                  In a mature estate like Queenstown, a new launch presents a rare opportunity—and a critical choice. 
+                  This exclusive on-demand webinar provides the exact frameworks used by veteran investors to analyse Penrith against proven resale performers. 
+                  Learn to calculate a safe entry price, identify real growth drivers, and engineer a profitable exit from Day 1.
+                </p>
+                  <Button 
+                    className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
+                    onClick={() => window.open('https://newlaunch.kwsingapore.com/penrith-queenstown-webinar', '_blank')}
+                  >
+                    <Play className="w-5 h-5 mr-2" />
+                    Watch Analysis
+                  </Button>
+              </div>
+              <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-2">
+                <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
+                  <Image
+                    src="/images/penrith/explore-1.webp?height=320&width=500&text=Lentor+Mansion+Showflat+Tour"
+                    alt="Explore Penrith"
+                    fill
+                    className="object-contain md:object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Call to Action */}
           <div className={`text-center mt-12 sm:mt-16 md:mt-18 lg:mt-12 mb-4 transition-all duration-1000 delay-500 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
@@ -1950,7 +2001,7 @@ export default function SpringleafResidenceLanding() {
               </p>
               <div className="cta-buttons-container justify-center">
                 <Button 
-                  className="bg白 text-[#ce001f] hover:bg-gray-100 px-8 py-3 text-lg hover:scale-105 transition-all duration-300"
+                  className="bg-white text-[#ce001f] hover:bg-gray-100 px-8 py-3 text-lg hover:scale-105 transition-all duration-300"
                   onClick={scrollToLeadForm}
                 >
                   <Calendar className="w-5 h-5 mr-2" />
