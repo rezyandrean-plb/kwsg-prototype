@@ -69,12 +69,26 @@ export async function POST(request: NextRequest) {
       console.error('Failed to insert into Google Sheets:', sheetsResult.error)
     }
 
+    // Notify Zapier webhook
+    const webhookResult = await notifyZapierPenrithEvent({
+      fullName,
+      contactNumber,
+      emailAddress,
+      numberOfPax,
+      plbConsultant,
+      eventType: 'Penrith Consumer Event Registration',
+      timestamp: new Date().toISOString()
+    })
+
+    console.log('Zapier webhook result (Penrith):', webhookResult)
+
     return NextResponse.json({
       success: true,
       message: 'Thank you for registering for the Penrith Event! We have sent you a confirmation email and will contact you soon with event details.',
       notificationSent: notificationResult.success,
       autoReplySent: autoReplyResult.success,
-      sheetsInserted: sheetsResult.success
+      sheetsInserted: sheetsResult.success,
+      webhookSent: webhookResult.success
     })
 
   } catch (error) {
@@ -442,6 +456,59 @@ async function sendAutoReplyEmail({ fullName, emailAddress }: {
   } catch (error) {
     console.error('❌ Auto-reply email sending error:', error)
     let errorMessage = 'Failed to send auto-reply email'
+    if (error instanceof Error) {
+      errorMessage = error.message
+    }
+    return { success: false, error: errorMessage }
+  }
+}
+
+async function notifyZapierPenrithEvent({
+  fullName,
+  contactNumber,
+  emailAddress,
+  numberOfPax,
+  plbConsultant,
+  eventType,
+  timestamp
+}: {
+  fullName: string
+  contactNumber: string
+  emailAddress: string
+  numberOfPax: string
+  plbConsultant: string
+  eventType: string
+  timestamp: string
+}) {
+  try {
+    const webhookUrl = process.env.ZAPIER_PENRITH_EVENT_WEBHOOK_URL || 'https://hooks.zapier.com/hooks/catch/13947521/u1oqynd/'
+    console.log('Sending Zapier webhook (Penrith):', { webhookUrlConfigured: !!process.env.ZAPIER_PENRITH_EVENT_WEBHOOK_URL })
+
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fullName,
+        contactNumber,
+        emailAddress,
+        numberOfPax,
+        plbConsultant,
+        eventType,
+        timestamp,
+      })
+    })
+
+    if (!response.ok) {
+      const text = await response.text().catch(() => '')
+      console.error('❌ Zapier webhook non-OK response:', response.status, text)
+      return { success: false, error: `Zapier responded ${response.status}` }
+    }
+
+    console.log('✅ Zapier webhook sent successfully (Penrith)')
+    return { success: true }
+  } catch (error) {
+    console.error('❌ Zapier webhook error:', error)
+    let errorMessage = 'Failed to notify Zapier'
     if (error instanceof Error) {
       errorMessage = error.message
     }
