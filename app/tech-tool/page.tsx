@@ -894,7 +894,7 @@ export default function TechToolPage() {
                   transition: { duration: 0.2 }
                 }}
               >
-                <h3 className="text-lg sm:text-xl font-bold text-white border-b border-gray-700 pb-2 mb-3 sm:mb-4">November</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-white border-b border-gray-700 pb-2 mb-3 sm:mb-4">October</h3>
                 <div className="space-y-2 sm:space-y-3">
                   <motion.div 
                     className="text-green-400 text-sm sm:text-base font-medium"
@@ -944,7 +944,7 @@ export default function TechToolPage() {
                   transition: { duration: 0.2 }
                 }}
               >
-                <h3 className="text-lg sm:text-xl font-bold text-white border-b border-gray-700 pb-2 mb-3 sm:mb-4">December</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-white border-b border-gray-700 pb-2 mb-3 sm:mb-4">November</h3>
                 <div className="space-y-2 sm:space-y-3">
                   <motion.div 
                     className="text-white text-sm sm:text-base"
@@ -1002,7 +1002,7 @@ export default function TechToolPage() {
                   transition: { duration: 0.2 }
                 }}
               >
-                <h3 className="text-lg sm:text-xl font-bold text-white border-b border-gray-700 pb-2 mb-3 sm:mb-4">November</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-white border-b border-gray-700 pb-2 mb-3 sm:mb-4">December</h3>
                 <div className="space-y-2 sm:space-y-3">
                   <motion.div 
                     className="text-white text-sm sm:text-base"
