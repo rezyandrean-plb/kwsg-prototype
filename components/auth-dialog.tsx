@@ -58,8 +58,10 @@ export default function AuthDialog({ open, onOpenChange, toolTitle }: AuthDialog
                     card: "bg-gray-800 border-gray-600 shadow-none",
                     main: "bg-gray-800",
                     header: "bg-gray-800",
-                    headerTitle: "text-white",
-                    headerSubtitle: "text-gray-300",
+                    headerTitle: "text-white text-lg font-semibold",
+                    headerSubtitle: "text-gray-300 text-sm",
+                    formHeaderTitle: "text-white text-lg font-semibold",
+                    formHeaderSubtitle: "text-gray-300 text-sm",
                     badge: "bg-gray-800 text-gray-300 border border-gray-600",
                     socialButtonsBlock: "bg-gray-800",
                     socialButtonsBlockButton: "bg-gray-600 border-gray-500 text-white hover:bg-gray-500",
@@ -79,8 +81,6 @@ export default function AuthDialog({ open, onOpenChange, toolTitle }: AuthDialog
                     dividerText: "hidden",
                     formResendCodeLink: "text-[#b40101] hover:text-[#8a0101]",
                     otpCodeFieldInput: "bg-gray-600 border-gray-500 text-white focus:border-[#b40101] focus:ring-[#b40101]/20",
-                    formHeaderTitle: "text-white",
-                    formHeaderSubtitle: "text-gray-300",
                     alertText: "text-gray-300",
                     formFieldRow: "bg-transparent",
                     formField: "bg-transparent",
@@ -115,6 +115,64 @@ export default function AuthDialog({ open, onOpenChange, toolTitle }: AuthDialog
                 redirectUrl="/tech-tool"
               />
             </div>
+            <style dangerouslySetInnerHTML={{
+              __html: `
+                .cl-headerTitle,
+                .cl-formHeaderTitle {
+                  position: relative;
+                  min-height: 1.5rem;
+                }
+                .cl-headerTitle::after,
+                .cl-formHeaderTitle::after {
+                  content: "Sign in to KW Singapore Tool";
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  right: 0;
+                  color: white;
+                  font-size: 1.125rem;
+                  font-weight: 600;
+                  text-align: center;
+                  z-index: 2;
+                  line-height: 1.5rem;
+                }
+                .cl-headerTitle > *,
+                .cl-formHeaderTitle > * {
+                  display: none !important;
+                }
+                .cl-headerTitle,
+                .cl-formHeaderTitle {
+                  font-size: 0 !important;
+                }
+                .cl-headerSubtitle,
+                .cl-formHeaderSubtitle {
+                  position: relative;
+                  min-height: 1.25rem;
+                }
+                .cl-headerSubtitle::after,
+                .cl-formHeaderSubtitle::after {
+                  content: "Sign in with your KW Singapore Email";
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  right: 0;
+                  color: #d1d5db;
+                  font-size: 0.875rem;
+                  font-weight: 400;
+                  text-align: center;
+                  z-index: 2;
+                  line-height: 1.25rem;
+                }
+                .cl-headerSubtitle > *,
+                .cl-formHeaderSubtitle > * {
+                  display: none !important;
+                }
+                .cl-headerSubtitle,
+                .cl-formHeaderSubtitle {
+                  font-size: 0 !important;
+                }
+              `
+            }} />
           </motion.div>
         </motion.div>
       </DialogContent>
