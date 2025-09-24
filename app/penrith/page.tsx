@@ -764,6 +764,8 @@ export default function SpringleafResidenceLanding() {
   const [isVisible, setIsVisible] = useState(false)
   const [animatedSections, setAnimatedSections] = useState<Set<string>>(new Set())
   const [showSiteMapPopup, setShowSiteMapPopup] = useState(false)
+  const [unitsActiveTab, setUnitsActiveTab] = useState(0)
+  const [floorPlanIndex, setFloorPlanIndex] = useState(0)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -805,13 +807,41 @@ export default function SpringleafResidenceLanding() {
     }
   }, [])
 
-  const projectImages = [
-    "/images/penrith/penrith-hero-background.webp",
-    "/images/penrith/penrith-exterior-view.webp",
-    "/images/penrith/penrith-facilities.webp",
-    "/images/penrith/penrith-drone-view.webp",
-    "/images/penrith/penrith-balcony.webp",
-  ]
+  useEffect(() => {
+    setFloorPlanIndex(0)
+  }, [unitsActiveTab])
+
+  const [projectImages, setProjectImages] = useState<string[]>([])
+
+  useEffect(() => {
+    const loadGallery = async () => {
+      try {
+        const res = await fetch('/api/penrith/gallery')
+        if (!res.ok) throw new Error('Failed to load gallery')
+        const data = await res.json()
+        if (Array.isArray(data?.images) && data.images.length > 0) {
+          setProjectImages(data.images)
+        } else {
+          setProjectImages([
+            "/images/penrith/penrith-hero-background.webp",
+            "/images/penrith/penrith-exterior-view.webp",
+            "/images/penrith/penrith-facilities.webp",
+            "/images/penrith/penrith-drone-view.webp",
+            "/images/penrith/penrith-balcony.webp",
+          ])
+        }
+      } catch (e) {
+        setProjectImages([
+          "/images/penrith/penrith-hero-background.webp",
+          "/images/penrith/penrith-exterior-view.webp",
+          "/images/penrith/penrith-facilities.webp",
+          "/images/penrith/penrith-drone-view.webp",
+          "/images/penrith/penrith-balcony.webp",
+        ])
+      }
+    }
+    loadGallery()
+  }, [])
 
 
   const amenities = [
@@ -915,6 +945,26 @@ export default function SpringleafResidenceLanding() {
     }
   }
 
+  const scrollToFloorPlans = () => {
+    const gallerySection = document.getElementById('floor-plans')
+    if (gallerySection) {
+      gallerySection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+  }
+
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId)
+    if (section) {
+      section.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+  }
+
   const [formData, setFormData] = useState({
     fullName: '',
     contactNumber: '',
@@ -930,6 +980,144 @@ export default function SpringleafResidenceLanding() {
   const [isSiteMapSubmitting, setIsSiteMapSubmitting] = useState(false)
   const [siteMapSubmitSuccess, setSiteMapSubmitSuccess] = useState(false)
   const [siteMapSubmitError, setSiteMapSubmitError] = useState<string | null>(null)
+
+  // Build likely floor-plan filenames from unit type/subtype to match files placed in public/images/penrith/floor-plan
+  const generatePenrithFloorPlanCandidates = (subtype: any, unitType: string) => {
+    const base = '/images/penrith/floor-plan/'
+    const candidates: string[] = []
+
+    const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+    const ut = normalize(unitType.replace(' Units', ''))
+    const st = normalize(subtype?.subtype || '')
+
+    const extractBedroomLabel = (raw: string) => {
+      const m = (raw || '').match(/(\d+)\s*-?\s*bedroom/i)
+      if (m) return `${m[1]} Bedroom`
+      const m2 = (unitType || '').match(/(\d+)\s*-?\s*bedroom/i)
+      if (m2) return `${m2[1]} Bedroom`
+      return ''
+    }
+    const bedroomLabel = extractBedroomLabel(subtype?.subtype || unitType)
+
+    if (bedroomLabel) {
+      const typeLetters = ['A','B','C','D','E','F']
+      const extsPriority = ['jpg', 'jpeg', 'png', 'webp']
+      for (const L of typeLetters) {
+        // Variants WITHOUT numbers (e.g., "Type A.jpg")
+        for (const ext of extsPriority) {
+          candidates.push(`${base}${bedroomLabel} - Type ${L}.${ext}`)
+        }
+        // Variants WITH numbers (e.g., "Type A1.jpg" and "Type A1H.jpg")
+        for (let n = 1; n <= 9; n++) {
+          for (const ext of extsPriority) {
+            candidates.push(`${base}${bedroomLabel} - Type ${L}${n}.${ext}`)
+            candidates.push(`${base}${bedroomLabel} - Type ${L}${n}H.${ext}`)
+          }
+        }
+      }
+    }
+
+    const patterns = [st, ut, st.replace('bedroom-', 'br-'), ut.replace('bedroom-', 'br-')].filter(Boolean)
+    for (const p of patterns) {
+      const exts = ['jpg', 'jpeg', 'png', 'webp']
+      for (const ext of exts) {
+        candidates.push(`${base}${p}.${ext}`)
+      }
+      for (let i = 1; i <= 9; i++) {
+        for (const ext of exts) {
+          candidates.push(`${base}${p}-${i}.${ext}`)
+          candidates.push(`${base}${p} ${i}.${ext}`)
+        }
+      }
+    }
+
+    if (subtype?.floor_plan_image) {
+      candidates.unshift(subtype.floor_plan_image)
+    }
+
+    const seen = new Set<string>()
+    return candidates.filter((c) => (seen.has(c) ? false : (seen.add(c), true)))
+  }
+
+  // Mock data and helpers for unit availability (align with Aurea implementation)
+  const mockUnitPricing = [
+    {
+      unitType: "2-Bedroom",
+      subtypes: [
+        {
+          subtype: "2-Bedroom",
+          bedrooms: 2,
+          bathrooms: 2,
+          size: "614 - 678 sqft",
+          price: "$1.9M - $2.2M",
+          price_per_sqft: 2400,
+          currency: "SGD",
+          total: 150,
+          available: 60,
+          status: 40,
+          floor_plan_images: [
+            "/images/penrith/floor-plan/2 Bedroom - Type A.jpg",
+            "/images/penrith/floor-plan/2 Bedroom - Type B.jpg",
+          ],
+        }
+      ]
+    },
+    {
+      unitType: "3-Bedroom",
+      subtypes: [
+        {
+          subtype: "3-Bedroom",
+          bedrooms: 3,
+          bathrooms: 2,
+          size: "786 - 1066 sqft",
+          price: "$2.5M - $2.9M",
+          price_per_sqft: 2450,
+          currency: "SGD",
+          total: 200,
+          available: 80,
+          status: 40,
+          floor_plan_images: [
+            "/images/penrith/floor-plan/3 Bedroom - Type A.jpg",
+            "/images/penrith/floor-plan/3 Bedroom - Type B.jpg",
+            "/images/penrith/floor-plan/3 Bedroom - Type C.jpg",
+            "/images/penrith/floor-plan/3 Bedroom - Type D.jpg"
+          ],
+        }
+      ]
+    },
+    {
+      unitType: "4-Bedroom",
+      subtypes: [
+        {
+          subtype: "4-Bedroom",
+          bedrooms: 4,
+          bathrooms: 3,
+          size: "1173 - 1281 sqft",
+          price: "$3.2M - $3.9M",
+          price_per_sqft: 2550,
+          currency: "SGD",
+          total: 112,
+          available: 40,
+          status: 36,
+          floor_plan_images: [
+            "/images/penrith/floor-plan/4 Bedroom - Type A.jpg",
+            "/images/penrith/floor-plan/4 Bedroom - Type B.jpg",
+          ],
+        }
+      ]
+    },
+  ]
+
+  const processUnitAvailabilityData = (unitPricing: any[]) => {
+    if (!unitPricing || unitPricing.length === 0) {
+      return mockUnitPricing
+    }
+    return unitPricing
+  }
+
+  const project = {
+    unitPricing: mockUnitPricing,
+  }
 
   const handleLeadFormSubmit = async (formDataWithToken: any) => {
     const { fullName, contactNumber, emailAddress, preferredDate, preferredTiming, recaptchaToken } = formDataWithToken
@@ -1164,14 +1352,17 @@ export default function SpringleafResidenceLanding() {
                 >
                   Project Info
                 </button>
-                {/* <a href="#floor-plans" className="text-white hover:text-[#ce001f] transition-colors duration-300">
-                  Floor Plans
-                </a> */}
                 <button 
                   onClick={scrollToGallery}
                   className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
                 >
                   Gallery
+                </button>
+                <button 
+                  onClick={scrollToFloorPlans}
+                  className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
+                >
+                  Floor Plans
                 </button>
                 <button 
                   onClick={scrollToMedia}
@@ -1241,7 +1432,7 @@ export default function SpringleafResidenceLanding() {
                 <p className="text-lg text-gray-200 font-light">District 3, Queenstown</p>
               </div>
 
-              <p className={`text-xl md:text-2xl text白/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
+              <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
                 The Margaret Drive Address That Brings You Closer to Everything
@@ -1261,7 +1452,7 @@ export default function SpringleafResidenceLanding() {
               </Button>
               {/* <Button
                 variant="outline"
-                className="border-2 border-white text-gray-900 hover:bg-transparent hover:text-white px-8 py-4 text-lg font-medium rounded-lg transition-all duration-300 hover:scale-105 bg白 hover-lift flex-shrink-0"
+                className="border-2 border-white text-gray-900 hover:bg-transparent hover:text-white px-8 py-4 text-lg font-medium rounded-lg transition-all duration-300 hover:scale-105 bg-white hover-lift flex-shrink-0"
               >
                 <Download className="w-5 h-5 mr-2" />
                 Download Brochure
@@ -1383,7 +1574,7 @@ export default function SpringleafResidenceLanding() {
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Unit Mix:</span>
-                  <span className="font-semibold text白">2- to 5-bedroom</span>
+                  <span className="font-semibold text-white">2- to 5-bedroom</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">TOP:</span>
@@ -1391,7 +1582,7 @@ export default function SpringleafResidenceLanding() {
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Target Preview:</span>
-                  <span className="font-semibold text白">3 October 2025</span>
+                  <span className="font-semibold text-white">3 October 2025</span>
                 </div>
               </CardContent>
             </Card>
@@ -1411,7 +1602,7 @@ export default function SpringleafResidenceLanding() {
                       <h4 className="font-semibold text-white">Site Map</h4>
                     </div>
                     <Image
-                      src="/images/springleaf-residence/site-plan-dummy.webp"
+                      src="/images/penrith/penrith-site-map.webp"
                       alt="Penrith Site Map"
                       width={800}
                       height={500}
@@ -1515,11 +1706,19 @@ export default function SpringleafResidenceLanding() {
               </div>
 
               
-              <div className="flex justify-center mt-6 space-x-3">
+              <div className="flex items-center justify-center mt-6 space-x-3 overflow-x-auto px-2">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="w-10 h-10 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                  onClick={prevImage}
+                >
+                  <ChevronLeft className="w-4 h-4 text-[#ce001f]" />
+                </Button>
                 {projectImages.map((image, index) => (
                   <button
                     key={index}
-                    className={`relative w-20 h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-110 ${
+                    className={`relative w-20 h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-110 flex-shrink-0 ${
                       index === currentImageIndex
                         ? "border-primary-red shadow-lg scale-105"
                         : "border-gray-200 hover:border-gray-300"
@@ -1534,6 +1733,14 @@ export default function SpringleafResidenceLanding() {
                     />
                   </button>
                 ))}
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="w-10 h-10 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                  onClick={nextImage}
+                >
+                  <ChevronRight className="w-4 h-4 text-[#ce001f]" />
+                </Button>
               </div>
             </div>
           </div>  
@@ -1568,106 +1775,196 @@ export default function SpringleafResidenceLanding() {
         </div>
       </section>
 
-      
-
       {/* Floor Plans Section */}
-      {/* <section id="floor-plans" className="py-16 bg-[#1c1c1d]">
+      <section 
+        id="floor-plans"
+        className="py-16 bg-[#242728] section-entrance"
+        data-section-id="floor-plans"
+        style={{ 
+          opacity: animatedSections.has('floor-plans') ? 1 : 0,
+          transform: animatedSections.has('floor-plans') ? 'translateY(0)' : 'translateY(60px)'
+        }}
+      >
         <div className="container mx-auto px-4">
-          <div className={`text-center mb-12 transition-all duration-1000 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+          <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
+            animatedSections.has('floor-plans') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Floor Plans & Pricing</h2>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Floor Plans</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
-            <p className="text-xl text-gray-300">Choose from the following thoughtfully designed unit layouts</p>
+            <p className="text-xl text-gray-300">Discover your perfect home from our collection of meticulously designed residences</p>
           </div>
 
-          <Tabs value={selectedFloorPlan} onValueChange={setSelectedFloorPlan} className={`w-full transition-all duration-1000 delay-300 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-                        <TabsList className="w-full mb-8">
-              <div className="flex flex-nowrap gap-3 justify-center overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent px-4" style={{ WebkitOverflowScrolling: 'touch' }}>
-                {Object.entries(floorPlans).map(([key, plan]) => (
-                  <TabsTrigger 
-                    key={key} 
-                    value={key} 
-                    className="px-6 py-3 rounded-full font-medium flex items-center gap-2 text-sm transition-all duration-300 border-2 focus:outline-none whitespace-nowrap flex-shrink-0 data-[state=active]:bg-[#ce001f] data-[state=active]:border-[#ce001f] data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=inactive]:bg-transparent data-[state=inactive]:border-gray-600 data-[state=inactive]:text-gray-300 hover:bg-gray-800 hover:border-gray-500 hover:text-white"
-                  >
-                    {plan.name}
-                  </TabsTrigger>
-                ))}
+          <div className={`max-w-7xl mx-auto transition-all duration-1000 delay-500 ${
+            animatedSections.has('floor-plans') ? 'animate-fade-in-up' : ''
+          }`} style={{
+            opacity: animatedSections.has('floor-plans') ? 1 : 0,
+            transform: animatedSections.has('floor-plans') ? 'translateY(0)' : 'translateY(50px)'
+          }}>
+            {/* Tabs for unit types */}
+            <div className="w-full px-2 sm:px-6 pt-4 sm:pt-6 pb-2 border-b border-gray-700 mb-6 sm:mb-8">
+              <div className="flex flex-nowrap gap-1 sm:gap-2 justify-center overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent" style={{ WebkitOverflowScrolling: 'touch' }}>
+                {(() => {
+                  const dynamicUnitData = processUnitAvailabilityData(project?.unitPricing || [])
+                  
+                  // If no API data, show message
+                  if (dynamicUnitData.length === 0) {
+                    return (
+                      <div className="col-span-full text-center py-8">
+                        <p className="text-gray-400">No unit information available at the moment.</p>
+                        <p className="text-sm text-gray-500 mt-2">Please check back later or contact our agents for more details.</p>
+                      </div>
+                    )
+                  }
+                  
+                  return dynamicUnitData.map((unit, idx) => {
+                    // Calculate total available units for this type
+                    const totalAvailable = unit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.available, 0)
+                    const totalUnits = unit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.total, 0)
+                    
+                    return (
+                      <button
+                        key={unit.unitType}
+                        onClick={() => setUnitsActiveTab(idx)}
+                        className={`px-2 sm:px-4 py-2 rounded-full font-light flex items-center gap-1 sm:gap-2 text-xs sm:text-sm transition-colors border focus:outline-none whitespace-nowrap ${unitsActiveTab === idx ? 'bg-gray-800 border-[#ce001f] text-white' : 'bg-[#18191b] border-gray-700 text-gray-300 hover:bg-[#ce001f]/10 hover:text-[#ce001f]'}`}
+                      >
+                        <span>{unit.unitType.replace(' Units', '')}</span>
+                        {totalAvailable > 0 && (
+                          <span className="bg-green-500 text-white text-xs px-1 sm:px-2 py-1 rounded-full">
+                            {totalAvailable}
+                          </span>
+                        )}
+                      </button>
+                    )
+                  })
+                })()}
               </div>
-            </TabsList>
+            </div>
 
-            {Object.entries(floorPlans).map(([key, plan]) => (
-              <TabsContent key={key} value={key}>
-                <div className="grid md:grid-cols-2 gap-8 items-center">
-                  <div className="hover:scale-105 transition-transform duration-500">
-                    <Image
-                      src={plan.image || "/placeholder.svg"}
-                      alt={`${plan.name} Floor Plan`}
-                      width={600}
-                      height={400}
-                      className="w-full rounded-lg shadow-lg"
-                    />
+            {/* Card layout for selected unit type */}
+            {(() => {
+              const dynamicUnitData = processUnitAvailabilityData(project?.unitPricing || [])
+              const currentUnit = dynamicUnitData[unitsActiveTab] || dynamicUnitData[0]
+              
+              // If no data available, show fallback
+              if (!currentUnit) {
+                return (
+                  <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 justify-center items-stretch bg-[#111] rounded-xl p-4 lg:p-8 max-w-5xl mx-auto shadow-lg pricing-container">
+                    <div className="w-full text-center text-gray-400 py-8">
+                      <p>No unit information available at the moment.</p>
+                      <p className="text-sm mt-2">Please check back later or contact our agents for more details.</p>
+                    </div>
                   </div>
-                  <div className="space-y-6">
-                    <div>
-                      <h3 className="text-3xl font-bold text-primary-red mb-2">{plan.name}</h3>
-                      <p className="text-xl text-gray-300 mb-4">{plan.size}</p>
-                      <p className="text-2xl font-bold text-green-400">{plan.price}</p>
-                    </div>
-                    <div className="space-y-4">
-                      <div className="flex items-center space-x-3">
-                        <Ruler className="w-5 h-5" style={{ color: '#ce001f' }} />
-                        <span className="text-white font-light">Spacious and well-ventilated layout</span>
+                )
+              }
+              
+              // Calculate total availability for this unit type
+              const totalAvailable = currentUnit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.available, 0)
+              const totalUnits = currentUnit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.total, 0)
+              
+              return (
+                <div className="space-y-4 sm:space-y-6">
+                  {/* Cards */}
+                  <div className="w-full">
+                    {currentUnit.subtypes.slice(0, 1).map((subtype: any, subtypeIndex: number) => (
+                      <div key={subtypeIndex} className="bg-[#111] rounded-xl p-4 sm:p-6 shadow-lg border border-gray-800 w-full">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 w-full items-center">
+                          {/* Floor Plan Image - Left Side */}
+                          <div>
+                            {(() => {
+                              const images = Array.isArray(subtype.floor_plan_images) && subtype.floor_plan_images.length > 0
+                                ? subtype.floor_plan_images
+                                : generatePenrithFloorPlanCandidates(subtype, currentUnit.unitType)
+                              const hasImages = images && images.length > 0
+
+                              const prev = () => setFloorPlanIndex((i) => (i - 1 + images.length) % images.length)
+                              const next = () => setFloorPlanIndex((i) => (i + 1) % images.length)
+
+                              return (
+                                <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden border border-gray-700">
+                                  {hasImages ? (
+                                  <Image
+                                      key={images[floorPlanIndex % images.length]}
+                                      src={images[floorPlanIndex % images.length]}
+                                    alt={`${currentUnit.unitType.replace(' Units', '')} Floor Plan`}
+                                    fill
+                                      className="object-contain bg-black"
+                                    />
+                                  ) : (
+                                    <div className="absolute inset-0 flex items-center justify-center bg-black text-white text-xs">No floor plan images</div>
+                                  )}
+                                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
+                                  {hasImages && images.length > 1 && (
+                                    <>
+                                      <button
+                                        aria-label="Previous floor plan"
+                                        className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow"
+                                        onClick={prev}
+                                      >
+                                        <ChevronLeft className="w-4 h-4" />
+                                      </button>
+                                      <button
+                                        aria-label="Next floor plan"
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow"
+                                        onClick={next}
+                                      >
+                                        <ChevronRight className="w-4 h-4" />
+                                      </button>
+                                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+                                        {images.slice(0, 8).map((_img: string, idx: number) => (
+                                          <span
+                                            key={idx}
+                                            className={`w-2 h-2 rounded-full ${idx === (floorPlanIndex % images.length) ? 'bg-white' : 'bg-white/40'}`}
+                                          />
+                                        ))}
+                                      </div>
+                                    </>
+                                  )}
+                                  <div className="absolute bottom-1 left-1 text-white text-xs font-medium">
+                                    Floor Plan
+                                  </div>
+                                </div>
+                              )
+                            })()}
+                          </div>
+
+                          {/* Information - Right Side */}
+                          <div className="flex flex-col justify-center">
+                            <div>
+                              {/* Unit Type Header */}
+                              <div className="mb-4">
+                                <h4 className="text-xl font-bold text-white mb-2">{subtype.subtype}</h4>
+                                <p className="text-gray-300 text-sm">{subtype.size}</p>
+                              </div>
+                            </div>
+                            
+                            {/* CTA Buttons */}
+                            <div className="space-y-3">
+                              <button 
+                                onClick={() => scrollToSection('lead-form')}
+                                className="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-4 rounded-lg text-sm transition-colors"
+                              >
+                                Book Showflat Visit
+                              </button>
+                              <button 
+                                onClick={() => scrollToSection('lead-form')}
+                                className="w-full bg-white text-red-500 hover:bg-white-600 text-red-500 font-medium py-3 px-4 rounded-lg text-sm transition-colors"
+                              >
+                                Required Brochure
+                              </button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div className="flex items-center space-x-3">
-                        <Eye className="w-5 h-5" style={{ color: '#ce001f' }} />
-                        <span className="text-white font-light">Unblocked views from most units</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <Home className="w-5 h-5" style={{ color: '#ce001f' }} />
-                        <span className="text-white font-light">Premium fittings and finishes</span>
-                      </div>
-                    </div>
-                    <div className="flex space-x-4">
-                      <Button className="bg-[#ce001f] hover:bg-[#b3001a] hover:scale-105 transition-all duration-300">Book Showflat Visit</Button>
-                      <Button variant="outline" className="border-[#ce001f] text-[#ce001f] bg-transparent hover:scale-105 transition-all duration-300">
-                        <Download className="w-4 h-4 mr-2" />
-                        Download Floor Plan
-                      </Button>
-                    </div>
+                    ))}
                   </div>
                 </div>
-              </TabsContent>
-            ))}
-          </Tabs>
-          
-          <div className={`mt-16 transition-all duration-1000 delay-300 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-light text-white mb-2">Safe entry price compared to other OCR areas:</h3>
-            </div>
-            <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-              <div className="text-center">
-                <h4 className="text-lg font-semibold text-white mb-3">Woodlands</h4>
-                <p className="text-3xl font-bold text-[#ce001f]">~$2,300 PSF</p>
-              </div>
-              <div className="text-center">
-                <h4 className="text-lg font-semibold text-white mb-3">Lakeside</h4>
-                <p className="text-3xl font-bold text-[#ce001f]">~$2,600 PSF</p>
-              </div>
-              <div className="text-center">
-                <h4 className="text-lg font-semibold text-white mb-3">Bayshore</h4>
-                <p className="text-3xl font-bold text-[#ce001f]">~$2,900 PSF</p>
-              </div>
-            </div>
+              )
+            })()}
           </div>
         </div>
-      </section> */}
+      </section>
 
       {/* Trusted Developer Section */}
       <section id="trusted-developer" className="bg-[#1c1c1d] text-white mt-8 md:mt-10 border-t border-gray-700 py-12 md:py-16">
@@ -1823,7 +2120,7 @@ export default function SpringleafResidenceLanding() {
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('nearby-amenities') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-light mb-3 text白 text-center tracking-wide">Location</h2>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Location</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
@@ -1847,36 +2144,35 @@ export default function SpringleafResidenceLanding() {
               <CardContent className="space-y-6">
                 {/* Location Image */}
                 <div className="w-full rounded-lg overflow-hidden shadow-lg">
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10877.017147974153!2d103.80274218107014!3d1.2968611962702363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da1b590c541b6f%3A0xdcd4bd3dc6253e2!2sPenrith%20Condo!5e0!3m2!1sen!2sid!4v1758178257681!5m2!1sen!2sid"
-                    width="800"
-                    height="450"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    className="w-full h-[450px]"
+                  <Image
+                    src="/images/penrith/penrith-location-map.webp"
+                    alt="Penrith Location Map"
+                    width={1200}
+                    height={800}
+                    quality={90}
+                    className="w-full h-auto object-contain"
+                    priority
                   />
                 </div>
                 <div className="grid md:grid-cols-3 gap-6">
                   <div className="flex items-center space-x-3">
                     <MapPin className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
-                      <p className="font-semibold text白">Address</p>
+                    <p className="font-semibold text-white">Address</p>
                       <p className="text-sm text-gray-300 font-light">Margaret Drive, Queenstown</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Train className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
-                      <p className="font-semibold text白">MRT</p>
+                      <p className="font-semibold text-white">MRT</p>
                       <p className="text-sm text-gray-300 font-light">Queenstown MRT (EW Line)</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Car className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
-                      <p className="font-semibold text白">Access</p>
+                      <p className="font-semibold text-white">Access</p>
                       <p className="text-sm text-gray-300 font-light">AYE | PIE | CTE</p>
                     </div>
                   </div>
@@ -1891,7 +2187,7 @@ export default function SpringleafResidenceLanding() {
                 <TabsTrigger 
                   key={cat} 
                   value={cat} 
-                  className="bg-[#18191b] text白 data-[state=active]:bg-[#ce001f] data-[state=active]:text白 border border-gray-700 min-w-max snap-start rounded-full px-4 py-2 flex items-center gap-2"
+                  className="bg-[#18191b] text-white data-[state=active]:bg-[#ce001f] data-[state=active]:text-white border border-gray-700 min-w-max snap-start rounded-full px-4 py-2 flex items-center gap-2"
                 >
                   {cat === 'All' && <Layers className="w-4 h-4" />}
                   {cat === 'Transport' && <Train className="w-4 h-4" />}
@@ -1923,7 +2219,7 @@ export default function SpringleafResidenceLanding() {
                         <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:items-center md:justify-start md:space-y-0 md:space-x-4 w-full">
                           <div className="flex-shrink-0" style={{ color: '#ce001f' }}>{amenity.icon}</div>
                           <div className="text-center md:text-center flex-1 min-w-0">
-                            <h3 className="font-semibold text-xs md:text-lg text白 break-words">{amenity.name}</h3>
+                            <h3 className="font-semibold text-xs md:text-lg text-white break-words">{amenity.name}</h3>
                             <p className="text-gray-300 font-light text-xs md:text-sm break-words">{amenity.distance}</p>
                           </div>
                         </div>
@@ -1994,7 +2290,7 @@ export default function SpringleafResidenceLanding() {
           <div className={`text-center mt-12 sm:mt-16 md:mt-18 lg:mt-12 mb-4 transition-all duration-1000 delay-500 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
-            <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text白 rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
+            <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
               <h3 className="text-xl md:text-2xl font-normal md:font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
               <p className="text-base md:text-lg mb-6 opacity-90">
                 Register now for an exclusive preview of Penrith
@@ -2009,7 +2305,7 @@ export default function SpringleafResidenceLanding() {
                 </Button>
                 {/* <Button
                   variant="outline"
-                  className="border-white text白 hover:bg白 hover:text-[#ce001f] px-8 py-3 text-lg bg-transparent hover:scale-105 transition-all duration-300"
+                  className="border-white text-white hover:bg-white hover:text-[#ce001f] px-8 py-3 text-lg bg-transparent hover:scale-105 transition-all duration-300"
                 >
                   <Download className="w-5 h-5 mr-2" />
                   Download Brochure
