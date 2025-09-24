@@ -881,7 +881,7 @@ export default function TechToolPage() {
               animate={roadmapInView ? { opacity: 1 } : { opacity: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
-              {/* September */}
+              {/* October */}
               <motion.div 
                 className="bg-gray-900/30 rounded-lg p-4 sm:p-6 border border-gray-800"
                 initial={{ opacity: 0, y: 30, scale: 0.95 }}
@@ -894,7 +894,7 @@ export default function TechToolPage() {
                   transition: { duration: 0.2 }
                 }}
               >
-                <h3 className="text-lg sm:text-xl font-bold text-white border-b border-gray-700 pb-2 mb-3 sm:mb-4">September</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-white border-b border-gray-700 pb-2 mb-3 sm:mb-4">November</h3>
                 <div className="space-y-2 sm:space-y-3">
                   <motion.div 
                     className="text-green-400 text-sm sm:text-base font-medium"
@@ -931,7 +931,7 @@ export default function TechToolPage() {
                 </div>
               </motion.div>
 
-              {/* October */}
+              {/* December */}
               <motion.div 
                 className="bg-gray-900/30 rounded-lg p-4 sm:p-6 border border-gray-800"
                 initial={{ opacity: 0, y: 30, scale: 0.95 }}
@@ -944,7 +944,7 @@ export default function TechToolPage() {
                   transition: { duration: 0.2 }
                 }}
               >
-                <h3 className="text-lg sm:text-xl font-bold text-white border-b border-gray-700 pb-2 mb-3 sm:mb-4">October</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-white border-b border-gray-700 pb-2 mb-3 sm:mb-4">December</h3>
                 <div className="space-y-2 sm:space-y-3">
                   <motion.div 
                     className="text-white text-sm sm:text-base"
