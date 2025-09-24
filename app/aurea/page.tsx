@@ -1473,8 +1473,6 @@ export default function AureaLanding() {
             }`}>
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-2 sm:mb-2 md:mb-2 lg:mb-4 leading-tight">
                 <span className={`transition-all duration-1000 delay-900 ${isVisible ? 'animate-fade-in-left' : ''}`}>AUREA</span>
-                <br />
-                <span className={`text-4xl md:text-6xl font-light text-white/90 transition-all duration-1000 delay-1100 ${isVisible ? 'animate-fade-in-right' : ''}`}>RESIDENCE</span>
               </h1>
 
               <div className={`flex items-center mb-2 sm:mb-2 md:mb-2 lg:mb-4 transition-all duration-700 delay-1300 ${
@@ -1487,7 +1485,7 @@ export default function AureaLanding() {
               <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
-                The Golden Mile's Premier Residential Address
+                The New Benchmark of Golden Mile Living
               </p>
             </div>
 
@@ -1545,7 +1543,9 @@ export default function AureaLanding() {
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Your future home awaits in District 7 – just <strong>5 minutes' walk</strong> to Nicoll Highway MRT. Discover exclusive 2- to 5-bedroom residences designed for today's modern lifestyle, seamlessly linked to The Golden Mile conserved icon.
+              Aurea is the latest luxury residential landmark developed by Far East Organization together with Perennial Holdings and Sino Land in the Core Central Region (CCR). 
+              Set in the heart of District 7, it is just a short 5-minute stroll from Nicoll Highway MRT. 
+              Choose from a curated selection of 2- to 5-bedroom homes crafted for contemporary lifestyles and seamlessly connected to the iconic, conserved and revitalised Golden Mile.
             </p>
           </div>
 
@@ -1575,14 +1575,14 @@ export default function AureaLanding() {
           {/* Feature Cards */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {[
-              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "&lt;5 mins' walk to <strong>Nicoll Highway MRT</strong> (Circle Line)" },
-              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Seamlessly linked to <strong>The Golden Mile</strong> conserved icon via elevated bridge" },
-              { icon: <BedDouble className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Exclusive <strong>188 units only</strong> | 2- to 5-Bedroom Residences & Penthouses" },
-              { icon: <MountainSnow className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Over <strong>30 Sky & Lifestyle Facilities</strong> across Levels 3, 17 & 33" },
-              { icon: <Eye className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Panoramic Views of <strong>Marina Bay, Kallang Basin & City Skyline</strong>" },
-              { icon: <Home className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Smart Home Ready with <strong>Premium Appliances</strong> (SMEG & Miele)" },
-              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Developed by <strong>Perennial Holdings & Far East Organization</strong>" },
-              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "<strong>99-Year Leasehold</strong> | Completion Q2 2029 (Residential)" }
+              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "&lt;5 mins’ walk to <strong>Nicoll Highway MRT</strong> (Circle Line)" },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Seamlessly linked to <strong>The Golden Mile</strong> via link bridge" },
+              { icon: <BedDouble className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "<strong>188</strong> exclusive residential units | 2- to 5-Bedroom units & Penthouses" },
+              { icon: <MountainSnow className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Multiple sky & lifestyle facilities" },
+              { icon: <Eye className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Panoramic views of <strong>Marina Bay, Kallang Basin & City skyline</strong>" },
+              { icon: <Home className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "<strong> Premium </strong>appliances" },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Developed by <br /> <strong>Far East Organization, Perennial Holdings & Sino Land</strong>" },
+              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "<strong>99-year leasehold</strong> | Expected TOP (Residential): Q2 2029" }
             ].map((card, index) => (
               <Card 
                 key={index} 

@@ -1830,11 +1830,11 @@ export default function SpringleafResidenceLanding() {
                         className={`px-2 sm:px-4 py-2 rounded-full font-light flex items-center gap-1 sm:gap-2 text-xs sm:text-sm transition-colors border focus:outline-none whitespace-nowrap ${unitsActiveTab === idx ? 'bg-gray-800 border-[#ce001f] text-white' : 'bg-[#18191b] border-gray-700 text-gray-300 hover:bg-[#ce001f]/10 hover:text-[#ce001f]'}`}
                       >
                         <span>{unit.unitType.replace(' Units', '')}</span>
-                        {totalAvailable > 0 && (
+                        {/* {totalAvailable > 0 && (
                           <span className="bg-green-500 text-white text-xs px-1 sm:px-2 py-1 rounded-full">
                             {totalAvailable}
                           </span>
-                        )}
+                        )} */}
                       </button>
                     )
                   })
