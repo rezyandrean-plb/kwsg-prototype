@@ -35,6 +35,7 @@ export default function EventsPage() {
   const totalSlides = 3
   const [activePastTab, setActivePastTab] = useState(0)
   const [pastCarouselIndex, setPastCarouselIndex] = useState(0)
+  const [isCarouselPaused, setIsCarouselPaused] = useState(false)
 
 
   const pastEvents = [
@@ -141,6 +142,34 @@ export default function EventsPage() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  // Auto-scroll carousel (only for images, skip videos)
+  useEffect(() => {
+    if (activeMedia.length <= 1 || isCarouselPaused) return // Don't auto-scroll if there's only one item, no items, or paused
+
+    const interval = setInterval(() => {
+      setPastCarouselIndex((prev) => {
+        // If current slide is a video, don't auto-scroll
+        if (activeMedia[prev]?.type === "video") {
+          return prev
+        }
+        
+        let nextIndex = (prev + 1) % activeMedia.length
+        let attempts = 0
+        const maxAttempts = activeMedia.length
+        
+        // Skip videos and find next image
+        while (activeMedia[nextIndex]?.type === "video" && attempts < maxAttempts) {
+          nextIndex = (nextIndex + 1) % activeMedia.length
+          attempts++
+        }
+        
+        return nextIndex
+      })
+    }, 2000) // Change slide every 2 seconds
+
+    return () => clearInterval(interval)
+  }, [activeMedia.length, activePastTab, isCarouselPaused, activeMedia]) // Reset when active tab changes or pause state changes
 
   // Auto-scroll to section based on URL hash
   useEffect(() => {
@@ -949,11 +978,22 @@ export default function EventsPage() {
                 transition={{ duration: 0.5, ease: "easeOut" }}
                 key={activePastTab}
                 className="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-lg p-4 sm:p-6"
-              >
-                {/* Image/Video carousel (moved to top) */}
-                {activeMedia.length > 0 && (
-                  <div className="relative w-full max-w-sm sm:max-w-md md:max-w-lg mx-auto">
-                    <div className="overflow-hidden rounded-md border border-gray-800">
+              > 
+                {/* Title and meta below images */}
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 className="text-2xl font-bold mb-1">{pastEvents[activePastTab].title}</h3>
+                  </div>
+                </div>
+
+                  {/* Image/Video carousel (moved to top) */}
+                  {activeMedia.length > 0 && (
+                    <div 
+                      className="relative w-full max-w-sm sm:max-w-md md:max-w-lg mx-auto mt-6"
+                      onMouseEnter={() => setIsCarouselPaused(true)}
+                      onMouseLeave={() => setIsCarouselPaused(false)}
+                    >
+                      <div className="overflow-hidden rounded-md border border-gray-800">
                       <div className="relative w-full aspect-[3/4]">
                         {activeMedia[pastCarouselIndex]?.type === "image" ? (
                           <img
@@ -978,7 +1018,12 @@ export default function EventsPage() {
                           <button
                             key={idx}
                             aria-label={`Go to slide ${idx + 1}`}
-                            onClick={() => setPastCarouselIndex(idx)}
+                            onClick={() => {
+                              setPastCarouselIndex(idx)
+                              setIsCarouselPaused(true)
+                              // Resume auto-scroll after 5 seconds of inactivity
+                              setTimeout(() => setIsCarouselPaused(false), 5000)
+                            }}
                             className={`w-2.5 h-2.5 rounded-full transition-all ${
                               idx === pastCarouselIndex ? "bg-[#B40101]" : "bg-white/30 hover:bg-white/50"
                             }`}
@@ -987,13 +1032,21 @@ export default function EventsPage() {
                       </div>
                       <div className="flex items-center gap-2">
                         <button
-                          onClick={() => setPastCarouselIndex((prev) => (prev - 1 + activeMedia.length) % activeMedia.length)}
+                          onClick={() => {
+                            setPastCarouselIndex((prev) => (prev - 1 + activeMedia.length) % activeMedia.length)
+                            setIsCarouselPaused(true)
+                            setTimeout(() => setIsCarouselPaused(false), 5000)
+                          }}
                           className="px-3 py-2 rounded-md bg-black/50 border border-gray-800 hover:bg-[#B40101]/80 transition"
                         >
                           <ChevronRight className="w-5 h-5 rotate-180" />
                         </button>
                         <button
-                          onClick={() => setPastCarouselIndex((prev) => (prev + 1) % activeMedia.length)}
+                          onClick={() => {
+                            setPastCarouselIndex((prev) => (prev + 1) % activeMedia.length)
+                            setIsCarouselPaused(true)
+                            setTimeout(() => setIsCarouselPaused(false), 5000)
+                          }}
                           className="px-3 py-2 rounded-md bg-black/50 border border-gray-800 hover:bg-[#B40101]/80 transition"
                         >
                           <ChevronRight className="w-5 h-5" />
@@ -1002,13 +1055,6 @@ export default function EventsPage() {
                     </div>
                   </div>
                 )}
-
-                {/* Title and meta below images */}
-                <div className="flex items-start justify-between gap-4 mt-6">
-                  <div>
-                    <h3 className="text-2xl font-bold mb-1">{pastEvents[activePastTab].title}</h3>
-                  </div>
-                </div>
               </motion.div>
             </div>
           </div>
