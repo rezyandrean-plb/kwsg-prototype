@@ -947,7 +947,7 @@ export default function EventsPage() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            More Happening Events
+            More Past Events
           </motion.h3>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Tabs (left) */}
