@@ -50,6 +50,29 @@ export default function EventsPage() {
       ],
     },
     {
+      title: "Past Explore Night Event",
+      date: "August 2025",
+      description:
+        "A 2-day intensive masterclass diving into the millionaire models, strategies, and systems for exponential growth.",
+      images: [
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-1.jpeg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-2.jpeg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-3.jpeg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-4.jpeg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-5.jpeg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-6.jpeg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-7.jpeg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-8.jpeg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-9.jpeg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-10.jpeg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-11.jpeg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-12.jpeg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-13.jpeg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-14.jpeg",
+      ],
+      video: [],
+    },
+    {
       title: "Past Founders Insights",
       date: "July 2025",
       description:
@@ -911,7 +934,6 @@ export default function EventsPage() {
                         : "bg-gray-900/40 border-gray-700 text-gray-200 hover:bg-gray-800 hover:border-gray-600"
                     }`}
                   >
-                    <div className="text-sm opacity-80">{pastEvents[index].date}</div>
                     <div className="text-base sm:text-lg font-semibold">{event.title}</div>
                   </button>
                 ))}
@@ -932,7 +954,7 @@ export default function EventsPage() {
                 {activeMedia.length > 0 && (
                   <div className="relative w-full max-w-sm sm:max-w-md md:max-w-lg mx-auto">
                     <div className="overflow-hidden rounded-md border border-gray-800">
-                      <div className={activeMedia[pastCarouselIndex]?.type === "image" ? "relative w-full aspect-square" : "relative h-56 sm:h-72 md:h-80 lg:h-96"}>
+                      <div className="relative w-full aspect-[3/4]">
                         {activeMedia[pastCarouselIndex]?.type === "image" ? (
                           <img
                             src={activeMedia[pastCarouselIndex]?.src}
@@ -985,10 +1007,6 @@ export default function EventsPage() {
                 <div className="flex items-start justify-between gap-4 mt-6">
                   <div>
                     <h3 className="text-2xl font-bold mb-1">{pastEvents[activePastTab].title}</h3>
-                    <div className="text-gray-300 flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-[#B40101]" />
-                      <span>{pastEvents[activePastTab].date}</span>
-                    </div>
                   </div>
                 </div>
               </motion.div>
