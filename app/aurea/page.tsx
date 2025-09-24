@@ -1445,7 +1445,7 @@ export default function AureaLanding() {
         {/* Background elements */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/aurea/aurea-hero.webp"
+            src="/images/aurea/hero-aurea.webp"
             alt="Aurea Hero"
             fill
             className="object-cover"
