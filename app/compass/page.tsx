@@ -389,7 +389,7 @@ const categories = [
 
 export default function TechToolPage() {
   const { isSignedIn, user, isLoaded } = useUser()
-  const [activeCategory, setActiveCategory] = useState("Business Tool")
+  const [activeCategory, setActiveCategory] = useState("All")
   const [searchQuery, setSearchQuery] = useState("")
   const [authDialogOpen, setAuthDialogOpen] = useState(false)
   const [selectedTool, setSelectedTool] = useState<any>(null)
