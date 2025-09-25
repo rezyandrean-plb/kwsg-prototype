@@ -855,36 +855,39 @@ export default function SpringleafResidenceLanding() {
     { icon: <Car className="w-6 h-6" />, name: "CTE (Central Expressway)", distance: "7-Mins drive", category: "Transport" },
     
     // RETAIL AND F&B
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Queensway Shopping Centre", distance: "6-Mins walk", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "IKEA Alexandra", distance: "8-Mins walk", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Alexandra Central", distance: "7-Mins walk", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Anchorpoint", distance: "8-Mins walk", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Mei Ling Market & Food Centre", distance: "4-Mins walk", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Dawson Place", distance: "3-Mins drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Skyville at Dawson", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Margaret Drive Food Court", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Holland Village", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Queensway Shopping Centre", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "IKEA Alexandra", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Alexandra Central", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Anchorpoint", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Mei Ling Market & Food Centre", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Dawson Place", category: "Retail & F&B" },
     
     // NATURE AND LEISURE
-    { icon: <Trees className="w-6 h-6" />, name: "Alexandra Canal Linear Park", distance: "5-Mins walk", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "Rail Corridor (Alexandra stretch)", distance: "7-Mins walk", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "HortPark", distance: "8-Mins drive", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "Dempsey Hill dining & lifestyle", distance: "8-Mins drive", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "Labrador Nature Reserve", distance: "10-Mins drive", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "Botanic Gardens", distance: "10-Mins drive", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Alexandra Canal Linear Park", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Rail Corridor (Alexandra stretch)", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "HortPark", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Dempsey Hill dining & lifestyle", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Labrador Nature Reserve", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Botanic Gardens", category: "Nature & Leisure" },
     
     // EDUCATION
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Queenstown Primary School", distance: "6-Mins walk", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Queenstown Secondary School", distance: "8-Mins walk", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Queensway Secondary School", distance: "9-Mins walk", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Alexandra Primary School", distance: "5-Mins drive", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Gan Eng Seng Primary School", distance: "7-Mins drive", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "New Town Primary School", distance: "8-Mins drive", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "ACS International", distance: "10-Mins drive", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Invictus International / Melbourne International", distance: "12-Mins drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Queenstown Primary School", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Queenstown Secondary School", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Queensway Secondary School", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Alexandra Primary School", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Gan Eng Seng Primary School", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "New Town Primary School", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "ACS International", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Invictus International / Melbourne International", category: "Education" },
     
     // HEALTHCARE
-    { icon: <Hospital className="w-6 h-6" />, name: "Alexandra Hospital", distance: "6-Mins drive", category: "Healthcare" },
-    { icon: <Hospital className="w-6 h-6" />, name: "National University Hospital (NUH)", distance: "10-Mins drive", category: "Healthcare" },
-    { icon: <Hospital className="w-6 h-6" />, name: "Gleneagles Hospital", distance: "12-Mins drive", category: "Healthcare" },
-    { icon: <Hospital className="w-6 h-6" />, name: "Khoo Teck Puat Hospital", distance: "8-Stops MRT", category: "Healthcare" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Alexandra Hospital", category: "Healthcare" },
+    { icon: <Hospital className="w-6 h-6" />, name: "National University Hospital (NUH)", category: "Healthcare" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Gleneagles Hospital", category: "Healthcare" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Khoo Teck Puat Hospital", category: "Healthcare" },
   ]
 
   const nextImage = () => {
@@ -2220,7 +2223,9 @@ export default function SpringleafResidenceLanding() {
                           <div className="flex-shrink-0" style={{ color: '#ce001f' }}>{amenity.icon}</div>
                           <div className="text-center md:text-center flex-1 min-w-0">
                             <h3 className="font-semibold text-xs md:text-lg text-white break-words">{amenity.name}</h3>
-                            <p className="text-gray-300 font-light text-xs md:text-sm break-words">{amenity.distance}</p>
+                            {amenity.distance && (
+                              <p className="text-gray-300 font-light text-xs md:text-sm break-words">{amenity.distance}</p>
+                            )}
                           </div>
                         </div>
                       </CardContent>
