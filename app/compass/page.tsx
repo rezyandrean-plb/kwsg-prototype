@@ -542,7 +542,7 @@ export default function TechToolPage() {
             animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            KW Singapore Tech Tools
+            KW Singapore Tech Tools & Resources
           </motion.h1>
         </div>
       </section>
