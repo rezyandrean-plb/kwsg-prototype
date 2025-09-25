@@ -37,6 +37,7 @@ import {
   BedDouble,
   ChartLine,
   Compass,
+  Users,
   Layers,
   Info,
   X,
@@ -2031,18 +2032,21 @@ export default function SpringleafResidenceLanding() {
             opacity: animatedSections.has('investor-benefits') ? 1 : 0,
             transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(50px)'
           }}>
-            {/* First Row - 2 Cards on Mobile, 3 Cards on Desktop */}
+            {/* Investor Benefits Grid - 2 per row on mobile, 3 per row on desktop */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
               {[
                 { icon: <Train className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: '4-min Walk to Queenstown MRT', subtitle: 'strong rental demand from professionals in CBD & One-North' },
                 { icon: <MapPin className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'City-Fringe Location in D03', subtitle: 'proven resilience and sustained buyer demand' },
-                { icon: <Clock className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'First GLS Launch in Queenstown Since 2017', subtitle: 'limited new supply drives scarcity premium' }
+                { icon: <Clock className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'First GLS Launch in Queenstown Since 2017', subtitle: 'limited new supply drives scarcity premium' },
+                { icon: <Compass className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Close to Key Growth Hubs', subtitle: 'Orchard, CBD, and One-North business park in minutes' },
+                { icon: <Building className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Blue-Chip Developers', subtitle: 'Hong Leong + GuocoLand track record in premium city projects' },
+                { icon: <Users className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Strong Tenant Pool', subtitle: 'Attracting professionals and long-term tenants seeking convenience' }
               ].map((benefit, index) => (
                 <div 
                   key={index}
                   className={`hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
                     animatedSections.has('investor-benefits') ? 'animate' : ''
-                  } ${index === 2 ? 'hidden md:block' : ''}`}
+                  }`}
                   style={{ 
                     transitionDelay: `${index * 200}ms`,
                     opacity: animatedSections.has('investor-benefits') ? 1 : 0,
@@ -2058,53 +2062,7 @@ export default function SpringleafResidenceLanding() {
               ))}
             </div>
 
-            {/* Second Row - 2 Cards on Mobile, 2 Cards on Desktop */}
-            <div className="grid grid-cols-2 md:grid-cols-2 gap-6 mb-6">
-              {[
-                { icon: <Compass className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Close to Key Growth Hubs', subtitle: 'Orchard, CBD, and One-North business park in minutes' },
-                { icon: <Building className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Blue-Chip Developers', subtitle: 'Hong Leong + GuocoLand track record in premium city projects' }
-              ].map((benefit, index) => (
-                <div 
-                  key={index + 3}
-                  className={`hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
-                    animatedSections.has('investor-benefits') ? 'animate' : ''
-                  }`}
-                  style={{ 
-                    transitionDelay: `${(index + 3) * 200}ms`,
-                    opacity: animatedSections.has('investor-benefits') ? 1 : 0,
-                    transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
-                  }}
-                >
-                  <div className="p-4 md:p-6 flex flex-col items-center text-center space-y-2">
-                    <div className="flex-shrink-0">{benefit.icon}</div>
-                    <h3 className="text-sm md:text-lg text-white font-semibold leading-snug">{benefit.title}</h3>
-                    <p className="text-xs md:text-sm text-gray-300 font-light">{benefit.subtitle}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Third Row - 1 Card Centered on Mobile, Hidden on Desktop */}
-            <div className="grid grid-cols-4 md:hidden gap-6">
-              <div className="col-span-1"></div>
-              <div 
-                className={`col-span-2 hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
-                  animatedSections.has('investor-benefits') ? 'animate' : ''
-                }`} 
-                style={{ 
-                  transitionDelay: `1000ms`,
-                  opacity: animatedSections.has('investor-benefits') ? 1 : 0,
-                  transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
-                }}
-              >
-                <div className="p-4 md:p-6 flex flex-col items-center text-center space-y-2">
-                  <div className="flex-shrink-0"><Clock className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} /></div>
-                  <h3 className="text-sm md:text-lg text-white font-semibold leading-snug">First GLS Launch in Queenstown Since 2017</h3>
-                  <p className="text-xs md:text-sm text-gray-300 font-light">limited new supply drives scarcity premium</p>
-                </div>
-              </div>
-              <div className="col-span-1"></div>
-            </div>
+            {/* Removed mobile-only centered row to maintain 2 cards per row consistently */}
           </div>
         </div>
       </section>
