@@ -1619,7 +1619,7 @@ export default function SpringleafResidenceLanding() {
                       onClick={() => setShowSiteMapPopup(true)}
                     >
                       <Download className="w-4 h-4 mr-2" />
-                      Required Site Map
+                      Request Site Map
                     </Button>
                   </div>
                 </div>
@@ -1951,7 +1951,7 @@ export default function SpringleafResidenceLanding() {
                                 onClick={() => scrollToSection('lead-form')}
                                 className="w-full bg-white text-red-500 hover:bg-white-600 text-red-500 font-medium py-3 px-4 rounded-lg text-sm transition-colors"
                               >
-                                Required Brochure
+                                Request Brochure
                               </button>
                             </div>
                           </div>
