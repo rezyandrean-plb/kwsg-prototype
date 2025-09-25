@@ -24,7 +24,7 @@ const navItems = [
   { href: "/events", label: "Events" },
   { href: "/press", label: "Press" },
   { href: "/about-us", label: "About Us" },
-  { href: "/compass", label: "KW Compass" },
+  { href: "/compass", label: "Tools & Resources" },
   { href: "/contact", label: "Contact" }
 ]
 
