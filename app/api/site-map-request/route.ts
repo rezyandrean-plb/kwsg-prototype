@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
       recaptchaToken
     } = body
 
-    console.log('Site Map request form submission received:', { 
+    console.log('Site Map & Floor Plan request form submission received:', { 
       fullName, 
       emailAddress, 
       contactNumber,
@@ -87,14 +87,14 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Thank you for your interest! We have sent you a confirmation email and our team will contact you soon with the site map.',
+      message: 'Thank you for your interest! We have sent you a confirmation email and our team will contact you soon with the site map & floor plan.',
       notificationSent: notificationResult.success,
       autoReplySent: autoReplyResult.success,
       sheetsInserted: sheetsResult.success
     })
 
   } catch (error) {
-    console.error('Site Map request form error:', error)
+    console.error('Site Map & Floor Plan request form error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -139,16 +139,16 @@ async function sendNotificationEmail({
       to: toEmail,
       from: fromEmail,
       bcc: 'cynthia.loh@propertylimbrothers.com',
-      subject: `New Site Map Request - Penrith - ${fullName}`,
+      subject: `New Site Map & Floor Plan Request - Penrith - ${fullName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #B40101; color: white; padding: 20px; text-align: center;">
             <h1 style="margin: 0; font-size: 24px;">KW Singapore</h1>
-            <p style="margin: 5px 0 0 0; font-size: 16px;">Site Map Request - Penrith</p>
+            <p style="margin: 5px 0 0 0; font-size: 16px;">Site Map & Floor Plan Request - Penrith</p>
           </div>
           
           <div style="padding: 30px; background-color: #f9f9f9;">
-            <h2 style="color: #333; margin-bottom: 20px;">New Site Map Request</h2>
+            <h2 style="color: #333; margin-bottom: 20px;">New Site Map & Floor Plan Request</h2>
             
             <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
               <h3 style="color: #B40101; margin-top: 0;">Contact Information</h3>
@@ -171,7 +171,7 @@ async function sendNotificationEmail({
             <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
               <h3 style="color: #B40101; margin-top: 0;">Request Details</h3>
               <p style="color: #666; line-height: 1.6; margin: 0;">
-                <strong>Request Type:</strong> Site Map<br>
+                <strong>Request Type:</strong> Site Map & Floor Plan<br>
                 <strong>Project:</strong> Penrith<br>
                 <strong>Location:</strong> Margaret Drive, District 3 (Queenstown), Singapore<br>
                 <strong>Developer:</strong> Hong Leong Holdings & GuocoLand (Margaret Rise Development Pte Ltd)<br>
@@ -266,12 +266,12 @@ async function sendAutoReplyEmail({ fullName, emailAddress }: {
     const emailContent = {
       to: emailAddress,
       from: fromEmail,
-      subject: `Penrith Site Map Request Confirmation - KW Singapore`,
+      subject: `Penrith Site Map & Floor Plan Request Confirmation - KW Singapore`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #B40101; color: white; padding: 20px; text-align: center;">
             <h1 style="margin: 0; font-size: 24px;">KW Singapore</h1>
-            <p style="margin: 5px 0 0 0; font-size: 16px;">Site Map Request - Penrith</p>
+            <p style="margin: 5px 0 0 0; font-size: 16px;">Site Map & Floor Plan Request - Penrith</p>
           </div>
           
           <div style="padding: 30px; background-color: #f9f9f9;">
@@ -282,7 +282,7 @@ async function sendAutoReplyEmail({ fullName, emailAddress }: {
                 Dear ${fullName},
               </p>
               <p style="color: #666; line-height: 1.6; margin: 10px 0 0 0;">
-                Thank you for your interest in Penrith! We have received your site map request and our team will contact you within 24 business hours to provide you with the detailed site map and additional project information.
+                Thank you for your interest in Penrith! We have received your request for the site map & floor plan, and our team will contact you within 24 business hours to provide you with the detailed materials and additional project information.
               </p>
             </div>
             
@@ -290,7 +290,7 @@ async function sendAutoReplyEmail({ fullName, emailAddress }: {
               <h3 style="color: #B40101; margin-top: 0;">What's Next?</h3>
               <ul style="color: #666; line-height: 1.6; margin: 0; padding-left: 20px;">
                 <li>Our team will call you to confirm your request</li>
-                <li>We'll send you the detailed site map via email</li>
+                <li>We'll send you the detailed site map & floor plan via email</li>
                 <li>You'll receive exclusive information about unit layouts and facilities</li>
                 <li>Our property experts will be available to answer all your questions</li>
               </ul>
@@ -428,7 +428,7 @@ async function insertIntoGoogleSheets({
     const privateKey = process.env.GOOGLE_SHEETS_PRIVATE_KEY
     const targetRange = process.env.GOOGLE_SHEETS_PENRITH_LEAD_RANGE || 'SiteMapRequests!A:F'
     
-    console.log('Google Sheets configuration (Penrith Site Map):', {
+    console.log('Google Sheets configuration (Penrith Site Map & Floor Plan):', {
       hasSpreadsheetId: !!spreadsheetId,
       hasClientEmail: !!clientEmail,
       hasPrivateKey: !!privateKey
@@ -440,7 +440,7 @@ async function insertIntoGoogleSheets({
       return { success: false, error: 'Google Sheets service not configured' }
     }
 
-    console.log('📊 Attempting to insert data into Google Sheets (Penrith Site Map)...')
+    console.log('📊 Attempting to insert data into Google Sheets (Penrith Site Map & Floor Plan)...')
     
     // Process private key to handle different formats and OpenSSL compatibility
     const processPrivateKey = (key: string): string => {
@@ -488,7 +488,7 @@ async function insertIntoGoogleSheets({
       fullName,                       
       emailAddress,                   
       contactNumber,                  
-      'Request Site Map',  
+      'Request Site Map & Floor Plan',  
       'Penrith'
     ]
 
@@ -522,7 +522,7 @@ async function insertIntoGoogleSheets({
       }
     }
 
-    console.log('✅ Data inserted into Google Sheets successfully (Penrith Site Map)')
+    console.log('✅ Data inserted into Google Sheets successfully (Penrith Site Map & Floor Plan)')
     if ('updates' in response.data) {
       console.log('📊 Sheets append response:', response.data.updates)
     }

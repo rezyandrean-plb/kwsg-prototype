@@ -302,7 +302,7 @@ function SiteMapForm({
       <div className="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Request Site Map</h2>
+            <h2 className="text-2xl font-bold text-gray-900">Request Site Map & Floor Plan</h2>
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -319,7 +319,7 @@ function SiteMapForm({
           
           {submitSuccess && (
             <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-600 text-sm">
-              Thank you for your interest! We will contact you soon with the site map.
+              Thank you for your interest! We will contact you soon with the site map & floor plan.
             </div>
           )}
 
@@ -493,7 +493,7 @@ function SiteMapForm({
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                       </svg>
                     </div>
-                    Request Site Map
+                    Request Site Map & Floor Plan
                   </>
                 )}
               </Button>
@@ -1274,8 +1274,8 @@ export default function SpringleafResidenceLanding() {
         setShowSiteMapPopup(false)
         
         toast({
-          title: "Site Map Request Submitted!",
-          description: "Thank you for your interest! We will contact you soon with the site map.",
+          title: "Site Map & Floor Plan Request Submitted!",
+          description: "Thank you for your interest! We will contact you soon with the site map & floor plan.",
           variant: "default",
         })
         
@@ -1952,10 +1952,10 @@ export default function SpringleafResidenceLanding() {
                                 Book Showflat Visit
                               </button>
                               <button 
-                                onClick={() => scrollToSection('lead-form')}
+                                onClick={() => setShowSiteMapPopup(true)}
                                 className="w-full bg-white text-red-500 hover:bg-white-600 text-red-500 font-medium py-3 px-4 rounded-lg text-sm transition-colors"
                               >
-                                Request Brochure
+                                Site Map & Floor Plan
                               </button>
                             </div>
                           </div>
