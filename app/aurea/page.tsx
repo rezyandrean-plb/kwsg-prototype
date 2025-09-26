@@ -882,9 +882,9 @@ export default function AureaLanding() {
   
   // Site Plan images for carousel
   const sitePlanImages = [
-    "/images/aurea/site-plan/Aurea - Site Plan 1.png",
-    "/images/aurea/site-plan/Aurea - Site Plan 2.png",
-    "/images/aurea/site-plan/Aurea - Site Plan 3.png"
+    "/images/aurea/site-plan/Aurea - Site Plan L03.webp",
+    "/images/aurea/site-plan/Aurea - Site Plan L17.webp",
+    "/images/aurea/site-plan/Aurea - Site Plan L33.webp"
   ]
   
   useEffect(() => {
@@ -966,7 +966,7 @@ export default function AureaLanding() {
     // PARKS & RECREATION
     { icon: <Trees className="w-6 h-6" />, name: "Kallang Riverside Park", distance: "3 mins' walk (~0.3 km)" },
     { icon: <Trees className="w-6 h-6" />, name: "Esplanade – Theatres on the Bay", distance: "5 mins' drive" },
-    { icon: <Trees className="w-6 h-6" />, name: "Sands Expo and Convention Centre", distance: "5 mins' drive" },
+    { icon: <Trees className="w-6 h-6" />, name: "Sands Expo and Convention Centre", distance: "10 mins' drive" },
     { icon: <Trees className="w-6 h-6" />, name: "Gardens by the Bay", distance: "9 mins' drive" },
     { icon: <Trees className="w-6 h-6" />, name: "Singapore Sports Hub & Indoor Stadium", distance: "9 mins' drive" },
     
@@ -996,11 +996,11 @@ export default function AureaLanding() {
           bedrooms: 2,
           bathrooms: 2,
           size: "635 - 710 sqft",
-          price: "$2.1M - $2.5M",
+          price: "From $1.7M",
           price_per_sqft: 2470,
           currency: "SGD",
-          total: 80,
-          available: 20,
+          total: 84,
+          available: 68,
           status: 50,
           floor_plan_images: [
             "/images/aurea/floor-plan/2 Bedroom - Type B1.jpg",
@@ -1023,12 +1023,12 @@ export default function AureaLanding() {
           bedrooms: 3,
           bathrooms: 2,
           size: "1,001 sqft",
-          price: "$3.0M - $3.7M",
+          price: "From $2.6M",
           price_per_sqft: 2510,
           currency: "SGD",
           total: 70,
           available: 21,
-          status: 58,
+          status: 28,
           floor_plan_images: [
             "/images/aurea/floor-plan/3 Bedroom - Type C1.jpg",
             "/images/aurea/floor-plan/3 Bedroom - Type C1H.jpg"
@@ -1046,11 +1046,11 @@ export default function AureaLanding() {
           bedrooms: 4,
           bathrooms: 3,
           size: "1,442 – 1,798 sqft",
-          price: "$4.2M - $5.2M",
+          price: "From $4.0M",
           price_per_sqft: 2640,
           currency: "SGD",
-          total: 45,
-          available: 14,
+          total: 56,
+          available: 48,
           status: 60,
           floor_plan_images: [
             "/images/aurea/floor-plan/4 Bedroom - Type D1.jpg",
@@ -1075,11 +1075,11 @@ export default function AureaLanding() {
           bedrooms: 5,
           bathrooms: 4,
           size: "2,852 - 3251 sqft",
-          price: "$6.5M - $7.2M",
+          price: "From $9.7M",
           price_per_sqft: 2955,
           currency: "SGD",
-          total: 8,
-          available: 2,
+          total: 18,
+          available: 17,
           status: 25,
           floor_plan_images: [
             "/images/aurea/floor-plan/5 Bedroom - Type E1.jpg",
