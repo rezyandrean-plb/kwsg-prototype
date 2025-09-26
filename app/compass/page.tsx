@@ -299,7 +299,7 @@ const tools = [
     icon: BarChart3,
     category: "Compass Tools",
     subtitle: "Concept Calculators",
-    url: "https://proptech.kwsingapore.com/tech-tools/property-comparison",
+    url: "https://proptech.kwsingapore.com/calculator/property-comparison",
     image: "/images/tech-tool/buc-calculator.webp"
   },
   // Research Tools items
