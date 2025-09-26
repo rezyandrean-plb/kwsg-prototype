@@ -8,9 +8,10 @@ interface AuthDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   toolTitle?: string
+  redirectUrl?: string
 }
 
-export default function AuthDialog({ open, onOpenChange, toolTitle }: AuthDialogProps) {
+export default function AuthDialog({ open, onOpenChange, toolTitle, redirectUrl = "/compass" }: AuthDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-gray-800 border-gray-700 max-w-md">
@@ -112,7 +113,7 @@ export default function AuthDialog({ open, onOpenChange, toolTitle }: AuthDialog
                     formFieldRow__identifier: "hidden"
                   }
                 }}
-                redirectUrl="/compass"
+                redirectUrl={redirectUrl}
               />
             </div>
             <style dangerouslySetInnerHTML={{
