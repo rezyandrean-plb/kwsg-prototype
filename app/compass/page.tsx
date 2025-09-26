@@ -1074,7 +1074,6 @@ export default function TechToolPage() {
             className="fixed bottom-4 left-4 z-50 bg-gray-900/95 backdrop-blur-sm border border-gray-700 rounded-lg px-4 py-2 shadow-lg"
           >
             <p className="text-sm text-gray-300">
-              <span className="text-gray-400">Destination:</span>{" "}
               <span className="text-white font-mono text-xs">
                 {hoveredTool.url.startsWith('http') ? hoveredTool.url : `https://${hoveredTool.url}`}
               </span>
