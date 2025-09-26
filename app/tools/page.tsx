@@ -391,7 +391,7 @@ const categories = [
 export default function TechToolPage() {
   const { isSignedIn, user, isLoaded } = useUser()
   const router = useRouter()
-  const [activeCategory, setActiveCategory] = useState("Compass Tools")
+  const [activeCategory, setActiveCategory] = useState("All")
   const [searchQuery, setSearchQuery] = useState("")
   const [authDialogOpen, setAuthDialogOpen] = useState(false)
   const [selectedTool, setSelectedTool] = useState<any>(null)
@@ -453,9 +453,9 @@ export default function TechToolPage() {
 
   const handleCategoryClick = (category: string) => {
     if (category === "Compass Tools") {
-      setActiveCategory(category)
+      router.push('/compass')
     } else {
-      router.push('/tools')
+      setActiveCategory(category)
     }
   }
 
