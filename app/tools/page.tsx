@@ -1099,6 +1099,7 @@ export default function TechToolPage() {
         open={authDialogOpen} 
         onOpenChange={setAuthDialogOpen}
         toolTitle={selectedTool?.title}
+        redirectUrl="/tools"
       />
     </motion.main>
   )
