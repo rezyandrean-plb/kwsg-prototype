@@ -1,7 +1,7 @@
 # Clerk Authentication Setup Guide
 
 ## Overview
-The tech-tool page now uses Clerk authentication instead of a hardcoded password. Users must sign in to access the tools.
+The compass page now uses Clerk authentication instead of a hardcoded password. Users must sign in to access the tools.
 
 ## Setup Steps
 
@@ -40,7 +40,7 @@ In your Clerk dashboard:
 
 ### 5. Test the Integration
 1. Start your development server: `bun dev`
-2. Navigate to `/tech-tool`
+2. Navigate to `/compass`
 3. Click on any tool - you should see the authentication dialog
 4. Sign in with your credentials
 5. After authentication, the tool should open in a new tab
@@ -49,7 +49,7 @@ In your Clerk dashboard:
 
 1. **Unauthenticated users**: When clicking on a tool, they see a Clerk SignIn dialog
 2. **Authenticated users**: Tools open directly without any authentication prompt
-3. **After sign-in**: Users are redirected back to the tech-tool page and can access tools
+3. **After sign-in**: Users are redirected back to the compass page and can access tools
 
 ## Customization
 
