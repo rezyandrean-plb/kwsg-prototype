@@ -112,7 +112,7 @@ export default function AuthDialog({ open, onOpenChange, toolTitle }: AuthDialog
                     formFieldRow__identifier: "hidden"
                   }
                 }}
-                redirectUrl="/tech-tool"
+                redirectUrl="/compass"
               />
             </div>
             <style dangerouslySetInnerHTML={{

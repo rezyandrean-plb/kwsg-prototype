@@ -67,7 +67,7 @@ export default function MobileMenu() {
                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-red transition-all duration-300 group-hover:w-full"></span>
                   </Link>
                   <Link
-                    href="/compass"
+                    href="/tools"
                     className="block text-lg font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
                     onClick={() => setIsOpen(false)}
                   >
