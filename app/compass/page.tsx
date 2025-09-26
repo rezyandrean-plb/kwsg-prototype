@@ -156,7 +156,7 @@ const tools = [
     icon: Calculator,
     category: "Compass Tools",
     subtitle: "Sales Proceed",
-    url: "https://proptech.kwsingapore.com/calculators/sales-proceed",
+    url: "https://proptech.kwsingapore.com/calculator/sales-proceed",
     image: "/images/tech-tool/sales-proceed.webp"
   },
   {
@@ -166,7 +166,7 @@ const tools = [
     icon: TrendingUp,
     category: "Compass Tools",
     subtitle: "Sales Proceed",
-    url: "https://proptech.kwsingapore.com/calculators/timeline-planning",
+    url: "https://proptech.kwsingapore.com/calculator/timeline-planning",
     image: "/images/tech-tool/timeline-planning.webp"
   },
   {
@@ -176,7 +176,7 @@ const tools = [
     icon: Building2,
     category: "Compass Tools",
     subtitle: "Sales Proceed",
-    url: "https://proptech.kwsingapore.com/calculators/decoupling",
+    url: "https://proptech.kwsingapore.com/calculator/decoupling",
     image: "/images/tech-tool/decoupling.webp"
   },
   {
@@ -186,7 +186,7 @@ const tools = [
     icon: DollarSign,
     category: "Compass Tools",
     subtitle: "Sales Proceed",
-    url: "https://proptech.kwsingapore.com/calculators/equity-term-loan",
+    url: "https://proptech.kwsingapore.com/calculator/equity-term-loan",
     image: "/images/tech-tool/equity-term-loan.webp"
   },
   // Compass Tools items - Buyer Affordability
@@ -197,7 +197,7 @@ const tools = [
     icon: Calculator,
     category: "Compass Tools",
     subtitle: "Buyer Affordability",
-    url: "https://proptech.kwsingapore.com/calculators/tdsr-msr",
+    url: "https://proptech.kwsingapore.com/calculator/tdsr-msr",
     image: "/images/tech-tool/tdsr-msr.webp"
   },
   {
@@ -207,7 +207,7 @@ const tools = [
     icon: Home,
     category: "Compass Tools",
     subtitle: "Buyer Affordability",
-    url: "https://proptech.kwsingapore.com/calculators/buc",
+    url: "https://proptech.kwsingapore.com/calculator/buc",
     image: "/images/tech-tool/buc-calculator.webp"
   },
   {
@@ -217,7 +217,7 @@ const tools = [
     icon: Home,
     category: "Compass Tools",
     subtitle: "Buyer Affordability",
-    url: "https://proptech.kwsingapore.com/calculators/ec",
+    url: "https://proptech.kwsingapore.com/calculator/ec",
     image: "/images/tech-tool/buc-calculator.webp"
   },
   {
@@ -227,7 +227,7 @@ const tools = [
     icon: Building2,
     category: "Compass Tools",
     subtitle: "Buyer Affordability",
-    url: "https://proptech.kwsingapore.com/calculators/timeline-payment"
+    url: "https://proptech.kwsingapore.com/calculator/timeline-payment"
   },
   {
     id: 22,
@@ -236,7 +236,7 @@ const tools = [
     icon: Calculator,
     category: "Compass Tools",
     subtitle: "Buyer Affordability",
-    url: "https://proptech.kwsingapore.com/calculators/mortgage-loan",
+    url: "https://proptech.kwsingapore.com/calculator/mortgage-loan",
     image: "/images/tech-tool/mortgage-loan.webp"
   },
   {
@@ -246,7 +246,7 @@ const tools = [
     icon: DollarSign,
     category: "Compass Tools",
     subtitle: "Buyer Affordability",
-    url: "https://proptech.kwsingapore.com/calculators/pledge-unpledge",
+    url: "https://proptech.kwsingapore.com/calculator/pledge-unpledge",
     image: "/images/tech-tool/pledge-unpledge.webp"
   },
   // Compass Tools items - Stamp Duty
@@ -257,7 +257,7 @@ const tools = [
     icon: Calculator,
     category: "Compass Tools",
     subtitle: "Stamp Duty",
-    url: "https://proptech.kwsingapore.com/calculators/absd-bsd",
+    url: "https://proptech.kwsingapore.com/calculator/absd-bsd",
     image: "/images/tech-tool/absd-bsd.webp"
   },
   {
@@ -267,7 +267,7 @@ const tools = [
     icon: Calculator,
     category: "Compass Tools",
     subtitle: "Stamp Duty",
-    url: "https://proptech.kwsingapore.com/calculators/ssd",
+    url: "https://proptech.kwsingapore.com/calculator/ssd",
     image: "/images/tech-tool/ssd.webp"
   },
   {
@@ -277,7 +277,7 @@ const tools = [
     icon: Calculator,
     category: "Compass Tools",
     subtitle: "Stamp Duty",
-    url: "https://proptech.kwsingapore.com/calculators/rental-stamp-duty",
+    url: "https://proptech.kwsingapore.com/calculator/rental-stamp-duty",
     image: "/images/tech-tool/rental-stamp-duty.webp"
   },
   // Compass Tools items - Research Charts
@@ -905,7 +905,7 @@ export default function TechToolPage() {
                     Property Comparison Tool
                   </motion.div>
                   <motion.div 
-                    className="text-white text-sm sm:text-base"
+                    className="text-green-400 text-sm sm:text-base font-medium"
                     initial={{ opacity: 0, x: -20 }}
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 0.9 }}
@@ -952,7 +952,7 @@ export default function TechToolPage() {
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 0.9 }}
                   >
-                    Valuation Tool
+                    Landed MOAT
                   </motion.div>
                   <motion.div 
                     className="text-white text-sm sm:text-base"
@@ -960,7 +960,7 @@ export default function TechToolPage() {
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.0 }}
                   >
-                    School-based Property Finder
+                    Valuation Tool
                   </motion.div>
                   <motion.div 
                     className="text-white text-sm sm:text-base"
@@ -968,7 +968,7 @@ export default function TechToolPage() {
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.1 }}
                   >
-                    KW Resource Hub
+                    School-based Property Finder
                   </motion.div>
                   <motion.div 
                     className="text-white text-sm sm:text-base"
@@ -976,15 +976,7 @@ export default function TechToolPage() {
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.2 }}
                   >
-                    DisparityEffect 2.0
-                  </motion.div>
-                  <motion.div 
-                    className="text-white text-sm sm:text-base"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                    transition={{ duration: 0.4, delay: 1.3 }}
-                  >
-                    Condo Ranker 2.0
+                    KW Resource Hub
                   </motion.div>
                 </div>
               </motion.div>
@@ -1029,12 +1021,36 @@ export default function TechToolPage() {
                     AI Chatbot 2.0
                   </motion.div>
                   <motion.div 
-                    className="text-gray-400 text-sm sm:text-base italic"
+                    className="text-white text-sm sm:text-base"
                     initial={{ opacity: 0, x: -20 }}
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.3 }}
                   >
-                    ...and more
+                    MyInfo Integration (Singpass)
+                  </motion.div>
+                  <motion.div 
+                    className="text-white text-sm sm:text-base"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                    transition={{ duration: 0.4, delay: 1.4 }}
+                  >
+                    DisparityEffect 2.0
+                  </motion.div>
+                  <motion.div 
+                    className="text-white text-sm sm:text-base"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                    transition={{ duration: 0.4, delay: 1.5 }}
+                  >
+                    Condo Ranker 2.0
+                  </motion.div>
+                  <motion.div 
+                    className="text-gray-400 text-sm sm:text-base italic"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                    transition={{ duration: 0.4, delay: 1.6 }}
+                  >
+                    … and more
                   </motion.div>
                 </div>
               </motion.div>
