@@ -393,6 +393,7 @@ export default function TechToolPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [authDialogOpen, setAuthDialogOpen] = useState(false)
   const [selectedTool, setSelectedTool] = useState<any>(null)
+  const [hoveredTool, setHoveredTool] = useState<any>(null)
  
   const { scrollYProgress, scrollY } = useScroll()
   const scrollYValue = useTransform(scrollY, (value) => value * 0.5)
@@ -715,6 +716,8 @@ export default function TechToolPage() {
                                     tool.url ? 'cursor-pointer' : 'cursor-default'
                                   }`}
                                   onClick={() => handleCardClick(tool)}
+                                  onMouseEnter={() => tool.url && setHoveredTool(tool)}
+                                  onMouseLeave={() => setHoveredTool(null)}
                                 >
                                   <CardContent className="p-6 px-3 py-3 h-full flex flex-col">
                                     <div className="flex items-start space-x-4 h-full">
@@ -793,6 +796,8 @@ export default function TechToolPage() {
                               tool.url ? 'cursor-pointer' : 'cursor-default'
                             }`}
                             onClick={() => handleCardClick(tool)}
+                            onMouseEnter={() => tool.url && setHoveredTool(tool)}
+                            onMouseLeave={() => setHoveredTool(null)}
                           >
                             <CardContent className="p-6 px-3 py-3 h-full flex flex-col">
                               <div className="flex items-start space-x-4 h-full">
@@ -1058,6 +1063,25 @@ export default function TechToolPage() {
           </div>
         </div>
       </section>
+
+      {/* URL Display on Hover */}
+      <AnimatePresence>
+        {hoveredTool && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="fixed bottom-4 left-4 z-50 bg-gray-900/95 backdrop-blur-sm border border-gray-700 rounded-lg px-4 py-2 shadow-lg"
+          >
+            <p className="text-sm text-gray-300">
+              <span className="text-gray-400">Destination:</span>{" "}
+              <span className="text-white font-mono text-xs">
+                {hoveredTool.url.startsWith('http') ? hoveredTool.url : `https://${hoveredTool.url}`}
+              </span>
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Authentication Dialog */}
       <AuthDialog 
