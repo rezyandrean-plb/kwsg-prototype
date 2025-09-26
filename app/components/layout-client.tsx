@@ -36,7 +36,7 @@ export function Header() {
   const isSpringleafPage = pathname?.startsWith('/springleaf-residence')
   const isSpringleafBackupPage = pathname?.startsWith('/springleaf-backup')
   const isAureaPage = pathname?.startsWith('/aurea')
-  const isPenrithPage = pathname?.startsWith('/penrith')
+  const isPenrithPage = pathname === '/penrith' || pathname?.startsWith('/penrith/')
   const isPenrithEventPage = pathname?.startsWith('/penrith-consumer-event')
   const [isScrolled, setIsScrolled] = useState(false)
   const { isSignedIn, user } = useUser()
@@ -159,7 +159,7 @@ export function Footer() {
   const isSpringleafPage = pathname?.startsWith('/springleaf-residence')
   const isSpringleafBackupPage = pathname?.startsWith('/springleaf-backup')
   const isAureaPage = pathname?.startsWith('/aurea')
-  const isPenrithPage = pathname?.startsWith('/penrith')
+  const isPenrithPage = pathname === '/penrith' || pathname?.startsWith('/penrith/')
   const isPenrithEventPage = pathname?.startsWith('/penrith-event')
 
   if (isAdminPage || isSpringleafPage || isSpringleafBackupPage || isAureaPage || isPenrithPage || isPenrithEventPage) return null
