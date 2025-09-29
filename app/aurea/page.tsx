@@ -952,38 +952,38 @@ export default function AureaLanding() {
 
   const amenities = [
     // MRT & CONNECTIVITY
-    { icon: <Train className="w-6 h-6" />, name: "Nicoll Highway MRT (Circle Line)", distance: "5 mins' walk (~0.4 km)" },
-    { icon: <Train className="w-6 h-6" />, name: "Lavender MRT (East-West Line)", distance: "9 mins' walk (~0.8 km)" },
-    { icon: <Train className="w-6 h-6" />, name: "Major Expressways (ECP, KPE, Nicoll Highway)", distance: "Quick Access" },
+    { icon: <Train className="w-6 h-6" />, name: "Nicoll Highway MRT (Circle Line)", distance: "5 mins' walk (~0.4 km)", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Lavender MRT (East-West Line)", distance: "9 mins' walk (~0.8 km)", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Major Expressways (ECP, KPE, Nicoll Highway)", distance: "Quick Access", category: "Transport" },
     
     // SHOPPING & LIFESTYLE
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Golden Mile Food Centre", distance: "2 mins' walk (~0.2 km)" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Kampong Glam Heritage District", distance: "9 mins' walk (~0.8 km)" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Bugis Junction", distance: "3 mins' drive" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Raffles City / Suntec City", distance: "3–4 mins' drive" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "The Shoppes at Marina Bay Sands", distance: "6 mins' drive" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Golden Mile Food Centre", distance: "2 mins' walk (~0.2 km)", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Kampong Glam Heritage District", distance: "9 mins' walk (~0.8 km)", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Bugis Junction", distance: "3 mins' drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Raffles City / Suntec City", distance: "3–4 mins' drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "The Shoppes at Marina Bay Sands", distance: "6 mins' drive", category: "Retail & F&B" },
     
     // PARKS & RECREATION
-    { icon: <Trees className="w-6 h-6" />, name: "Kallang Riverside Park", distance: "3 mins' walk (~0.3 km)" },
-    { icon: <Trees className="w-6 h-6" />, name: "Esplanade – Theatres on the Bay", distance: "5 mins' drive" },
-    { icon: <Trees className="w-6 h-6" />, name: "Sands Expo and Convention Centre", distance: "10 mins' drive" },
-    { icon: <Trees className="w-6 h-6" />, name: "Gardens by the Bay", distance: "9 mins' drive" },
-    { icon: <Trees className="w-6 h-6" />, name: "Singapore Sports Hub & Indoor Stadium", distance: "9 mins' drive" },
+    { icon: <Trees className="w-6 h-6" />, name: "Kallang Riverside Park", distance: "3 mins' walk (~0.3 km)", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Esplanade – Theatres on the Bay", distance: "5 mins' drive", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Sands Expo and Convention Centre", distance: "10 mins' drive", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Gardens by the Bay", distance: "9 mins' drive", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Singapore Sports Hub & Indoor Stadium", distance: "9 mins' drive", category: "Nature & Leisure" },
     
     // SCHOOLS & EDUCATION
-    { icon: <GraduationCap className="w-6 h-6" />, name: "HWA International School - MSQ Campus", distance: "3 mins' drive" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Nanyang Academy of Fine Arts (NAFA) Bencoolen", distance: "3 mins' drive" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Singapore Management University (SMU)", distance: "4 mins' drive" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "LASALLE College of the Arts / NAFA", distance: "3–4 mins' drive" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Farrer Park Primary School", distance: "6 mins' drive" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Anglo-Chinese School (Junior)", distance: "7 mins' drive" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Dunman High School", distance: "8 mins' drive" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "HWA International School - MSQ Campus", distance: "3 mins' drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Nanyang Academy of Fine Arts (NAFA) Bencoolen", distance: "3 mins' drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Singapore Management University (SMU)", distance: "4 mins' drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "LASALLE College of the Arts / NAFA", distance: "3–4 mins' drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Farrer Park Primary School", distance: "6 mins' drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Anglo-Chinese School (Junior)", distance: "7 mins' drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Dunman High School", distance: "8 mins' drive", category: "Education" },
     
     // MEDICAL
-    { icon: <Hospital className="w-6 h-6" />, name: "Raffles Hospital", distance: "2 mins' drive" },
-    { icon: <Hospital className="w-6 h-6" />, name: "Farrer Park Hospital", distance: "4 mins' drive" },
-    { icon: <Hospital className="w-6 h-6" />, name: "Mount Elizabeth Hospital", distance: "11 mins' drive" },
-    { icon: <Hospital className="w-6 h-6" />, name: "Singapore General Hospital", distance: "11 mins' drive" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Raffles Hospital", distance: "2 mins' drive", category: "Healthcare" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Farrer Park Hospital", distance: "4 mins' drive", category: "Healthcare" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Mount Elizabeth Hospital", distance: "11 mins' drive", category: "Healthcare" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Singapore General Hospital", distance: "11 mins' drive", category: "Healthcare" },
   ]
 
   // Mock data for Aurea units and pricing
@@ -1084,6 +1084,29 @@ export default function AureaLanding() {
           floor_plan_images: [
             "/images/aurea/floor-plan/5 Bedroom - Type E1.jpg",
             "/images/aurea/floor-plan/5 Bedroom - Type E2.jpg"
+          ],
+          payment_terms: "20% Down Payment",
+          discount_info: "Ultra-Luxury Collection"
+        }
+      ]
+    },
+    {
+      unitType: "Penthouse",
+      subtypes: [
+        {
+          subtype: "Penthouse",
+          bedrooms: 5,
+          bathrooms: 4,
+          size: "Coming Soon",
+          price: "Coming Soon",
+          price_per_sqft: "Coming Soon",
+          currency: "SGD",
+          total: 0,
+          available: 0,
+          status: 25,
+          floor_plan_images: [
+            "/images/springleaf-residence/site-plan-dummy.webp",
+            "/images/springleaf-residence/site-plan-dummy.webp"
           ],
           payment_terms: "20% Down Payment",
           discount_info: "Ultra-Luxury Collection"
@@ -2132,31 +2155,58 @@ export default function AureaLanding() {
             </Card>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-            {amenities.map((amenity, index) => (
-              <Card 
-                key={index} 
-                className={`hover:shadow-lg transition-all duration-700 border-gray-700 bg-[#18191b] rounded-xl hover:scale-105 stagger-animation ${
-                  animatedSections.has('nearby-amenities') ? 'animate' : ''
-                }`} 
-                style={{ 
-                  transitionDelay: `${index * 200}ms`,
-                  opacity: animatedSections.has('nearby-amenities') ? 1 : 0,
-                  transform: animatedSections.has('nearby-amenities') ? 'translateY(0)' : 'translateY(40px)'
-                }}
-              >
-                <CardContent className="p-4 md:p-6 min-h-[100px] md:min-h-[120px] w-full">
-                  <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:items-center md:justify-start md:space-y-0 md:space-x-4 w-full">
-                    <div className="flex-shrink-0" style={{ color: '#ce001f' }}>{amenity.icon}</div>
-                    <div className="text-center md:text-center flex-1 min-w-0">
-                      <h3 className="font-semibold text-xs md:text-lg text-white break-words">{amenity.name}</h3>
-                      <p className="text-gray-300 font-light text-xs md:text-sm break-words">{amenity.distance}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+          {/* Amenities Filter */}
+          <Tabs defaultValue="All" className="w-full">
+            <TabsList className="flex justify-start gap-2 bg-transparent p-0 mb-6 overflow-x-auto whitespace-nowrap snap-x snap-mandatory">
+              {['All','Transport','Retail & F&B','Nature & Leisure','Education','Healthcare'].map((cat) => (
+                <TabsTrigger 
+                  key={cat} 
+                  value={cat} 
+                  className="bg-[#18191b] text-white data-[state=active]:bg-[#ce001f] data-[state=active]:text-white border border-gray-700 min-w-max snap-start rounded-full px-4 py-2 flex items-center gap-2"
+                >
+                  {cat === 'All' && <Layers className="w-4 h-4" />}
+                  {cat === 'Transport' && <Train className="w-4 h-4" />}
+                  {cat === 'Retail & F&B' && <ShoppingBag className="w-4 h-4" />}
+                  {cat === 'Nature & Leisure' && <Trees className="w-4 h-4" />}
+                  {cat === 'Education' && <GraduationCap className="w-4 h-4" />}
+                  {cat === 'Healthcare' && <Hospital className="w-4 h-4" />}
+                  {cat}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+
+            {['All','Transport','Retail & F&B','Nature & Leisure','Education','Healthcare'].map((cat) => (
+              <TabsContent key={cat} value={cat}>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+                  {amenities.filter(a => cat === 'All' ? true : a.category === cat).map((amenity, index) => (
+                    <Card 
+                      key={`${cat}-${index}`}
+                      className={`hover:shadow-lg transition-all duration-700 border-gray-700 bg-[#18191b] rounded-xl hover:scale-105 stagger-animation ${
+                        animatedSections.has('nearby-amenities') ? 'animate' : ''
+                      }`}
+                      style={{ 
+                        transitionDelay: `${index * 150}ms`,
+                        opacity: animatedSections.has('nearby-amenities') ? 1 : 0,
+                        transform: animatedSections.has('nearby-amenities') ? 'translateY(0)' : 'translateY(40px)'
+                      }}
+                    >
+                      <CardContent className="p-4 md:p-6 min-h-[100px] md:min-h-[120px] w-full">
+                        <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:items-center md:justify-start md:space-y-0 md:space-x-4 w-full">
+                          <div className="flex-shrink-0" style={{ color: '#ce001f' }}>{amenity.icon}</div>
+                          <div className="text-center md:text-center flex-1 min-w-0">
+                            <h3 className="font-semibold text-xs md:text-lg text-white break-words">{amenity.name}</h3>
+                            {amenity.distance && (
+                              <p className="text-gray-300 font-light text-xs md:text-sm break-words">{amenity.distance}</p>
+                            )}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
             ))}
-          </div>
+          </Tabs>
         </div>
       </section>
 
