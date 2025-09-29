@@ -2142,6 +2142,7 @@ export default function SpringleafResidenceLanding() {
             </Card>
           </div>
 
+          {/* Amenities Filter */}
           <Tabs defaultValue="All" className="w-full">
             <TabsList className="flex justify-start gap-2 bg-transparent p-0 mb-6 overflow-x-auto whitespace-nowrap snap-x snap-mandatory">
               {['All','Transport','Retail & F&B','Nature & Leisure','Education','Healthcare'].map((cat) => (
