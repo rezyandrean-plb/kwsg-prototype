@@ -16,7 +16,7 @@ const newLaunches = [
     status: "Registration Open",
     type: "Condo",
     bedrooms: "1-5 BR",
-    price: "From $1.360.000",
+    price: "From $1,360,000",
     url: "/springleaf-residence",
   },
   {
@@ -44,7 +44,7 @@ const newLaunches = [
     status: "Coming Soon",
     type: "Condo",
     bedrooms: "2-5",
-    price: "From $1.765.000",
+    price: "From $1,765,000",
     url: "",
   },
   {
@@ -58,7 +58,7 @@ const newLaunches = [
     status: "Coming Soon",
     type: "Condo",
     bedrooms: "1-5 BR",
-    price: "From $1.848.000",
+    price: "From $1,848,000",
     url: "",
   },
 ]
