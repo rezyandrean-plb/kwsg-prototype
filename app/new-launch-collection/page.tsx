@@ -16,7 +16,7 @@ const newLaunches = [
     status: "Registration Open",
     type: "Condo",
     bedrooms: "1-5 BR",
-    price: "From $1.1M",
+    price: "From $1.360.000",
     url: "/springleaf-residence",
   },
   {
@@ -44,7 +44,7 @@ const newLaunches = [
     status: "Coming Soon",
     type: "Condo",
     bedrooms: "2-5",
-    price: "From $1.7M",
+    price: "From $1.765.000",
     url: "",
   },
   {
@@ -58,7 +58,7 @@ const newLaunches = [
     status: "Coming Soon",
     type: "Condo",
     bedrooms: "1-5 BR",
-    price: "From $1.8M",
+    price: "From $1.848.000",
     url: "",
   },
 ]
@@ -92,7 +92,7 @@ export default function NewLaunchCollectionPage() {
   return (
     <main className="min-h-screen bg-black">
       {/* Hero Section */}
-      <section className="px-4 sm:px-6 py-20 sm:py-24 md:py-28 lg:py-32 bg-black border-b border-[#666666]/20">
+      <section className="relative px-4 sm:px-6 bg-black border-b border-[#666666]/20 min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center pt-20 sm:pt-20 md:pt-12">
         <div className="container mx-auto max-w-5xl">
           <div className="text-center space-y-4 sm:space-y-5 md:space-y-6">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 sm:mb-8 leading-tight font-sans text-white">
@@ -176,7 +176,9 @@ export default function NewLaunchCollectionPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-12 sm:mb-16 md:mb-20">
+
+          {/* Projects Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[22px] sm:gap-[30px] mb-12 sm:mb-16 md:mb-20">
             {filteredLaunches.map((launch) => (
               <div key={launch.id} className="group space-y-6">
                 {/* Property Image */}
@@ -209,12 +211,12 @@ export default function NewLaunchCollectionPage() {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-2xl sm:text-3xl font-sans font-light text-white leading-tight min-h-[3.5rem] sm:min-h-[5rem]">
+                <h3 className="text-2xl sm:text-3xl font-sans font-semibold text-white leading-tight sm:min-h-[5rem]">
                   {launch.title}
                 </h3>
 
                 {/* Summary */}
-                <p className="text-xs sm:text-sm text-white/80 leading-relaxed min-h-[3.5rem] sm:min-h-[4rem] line-clamp-4 font-sans">
+                <p className="text-xs sm:text-sm text-white/80 leading-relaxed sm:min-h-[4rem] line-clamp-4 font-sans">
                   {launch.summary}
                 </p>
 
