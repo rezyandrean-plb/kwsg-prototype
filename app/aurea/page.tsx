@@ -996,8 +996,8 @@ export default function AureaLanding() {
           bedrooms: 2,
           bathrooms: 2,
           size: "635 - 710 sqft",
-          price: "From $1.7M",
-          price_per_sqft: 2470,
+          price: "From $1.765.000",
+          price_per_sqft: "From $2.780",
           currency: "SGD",
           total: 84,
           available: 68,
@@ -1023,8 +1023,8 @@ export default function AureaLanding() {
           bedrooms: 3,
           bathrooms: 2,
           size: "1,001 sqft",
-          price: "From $2.6M",
-          price_per_sqft: 2510,
+          price: "From $2.632.000",
+          price_per_sqft: "From $2.629",
           currency: "SGD",
           total: 70,
           available: 21,
@@ -1046,8 +1046,8 @@ export default function AureaLanding() {
           bedrooms: 4,
           bathrooms: 3,
           size: "1,442 – 1,798 sqft",
-          price: "From $4.0M",
-          price_per_sqft: 2640,
+          price: "From $4.080.510",
+          price_per_sqft: "From $2.830",
           currency: "SGD",
           total: 56,
           available: 48,
@@ -1075,8 +1075,8 @@ export default function AureaLanding() {
           bedrooms: 5,
           bathrooms: 4,
           size: "2,852 - 3251 sqft",
-          price: "From $9.7M",
-          price_per_sqft: 2955,
+          price: "From $9.726.890",
+          price_per_sqft: "From $3.397",
           currency: "SGD",
           total: 18,
           available: 17,
@@ -2044,7 +2044,7 @@ export default function AureaLanding() {
                                 <p className="text-green-400 font-semibold text-lg">{subtype.price}</p>
                                 {subtype.price_per_sqft && (
                                   <p className="text-gray-400 text-sm">
-                                    ${subtype.price_per_sqft.toLocaleString()} {subtype.currency || 'SGD'} per sqft
+                                    {subtype.price_per_sqft.toLocaleString()} {subtype.currency || 'SGD'} per sqft
                                   </p>
                                 )}
                               </div>
