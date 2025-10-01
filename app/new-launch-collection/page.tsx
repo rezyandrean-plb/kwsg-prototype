@@ -92,14 +92,14 @@ export default function NewLaunchCollectionPage() {
   return (
     <main className="min-h-screen bg-black">
       {/* Hero Section */}
-      <section className="relative px-4 sm:px-6 bg-black border-b border-[#666666]/20 min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center pt-20 sm:pt-20 md:pt-12">
-        <div className="container mx-auto max-w-5xl">
+      <section className="relative bg-black border-b border-[#666666]/20 min-h-[50vh] sm:min-h-[40vh] md:min-h-[40vh] lg:min-h-[60vh] flex items-center justify-center pt-20 sm:pt-20 md:pt-16">
+        <div className="container mx-auto max-w-6xl px-6">
           <div className="text-center space-y-4 sm:space-y-5 md:space-y-6">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 sm:mb-8 leading-tight font-sans text-white">
               KW Singapore
               <span className="block text-[#B40101] italic">New Launch Collection</span>
             </h1>
-            <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-8 sm:mb-12 max-w-4xl mx-auto leading-relaxed text-white px-2">
+            <p className="text-sm sm:text-base md:text-xl lg:text-xl mb-8 md:mb-12 max-w-4xl mx-auto leading-relaxed text-white">
               Explore Singapore's most exclusive new property developments. <br /> Each project represents exceptional value and prime locations across the island.
             </p>
           </div>
@@ -107,8 +107,8 @@ export default function NewLaunchCollectionPage() {
       </section>
 
       {/* Catalog Section */}
-      <section className="py-14 sm:py-16 md:py-20 px-4 sm:px-6 bg-black">
-        <div className="container mx-auto max-w-7xl">
+      <section className="py-14 sm:py-16 md:py-20 bg-black mx-0 lg:mx-[84px]">
+        <div className="container mx-auto max-w-screen-2xl px-[14px] sm:px-[22px]">
           <div className="mb-10 sm:mb-12 md:mb-16 space-y-3 md:space-y-4">
             
             {/* Filter Groups */}
@@ -203,7 +203,7 @@ export default function NewLaunchCollectionPage() {
                 </div>
 
                 {/* Property Details */}
-                <div className="space-y-4">
+                <div className="space-y-2">
                 {/* Location */}
                 <div className="flex items-center text-white/60 text-xs sm:text-sm">
                   <MapPin className="w-4 h-4 mr-2 shrink-0" />
