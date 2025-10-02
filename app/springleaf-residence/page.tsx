@@ -641,11 +641,12 @@ function LeadGenerationForm({
                 selected={formData.preferredDate}
                 onSelect={(date) => setFormData((prev: any) => ({ ...prev, preferredDate: date }))}
                 initialFocus
-                defaultMonth={new Date(2025, 7, 1)} // August 2025 (month is 0-indexed, so 7 = August)
+                defaultMonth={new Date()} // Current month
                 disabled={(date) => {
-                  // Disable all dates up to and including July 31st, 2025
-                  const july31st = new Date(2025, 6, 31); // July 31st, 2025 (month is 0-indexed, so 6 = July)
-                  return date <= july31st;
+                  // Disable past dates (yesterday or more past)
+                  const today = new Date();
+                  today.setHours(0, 0, 0, 0); // Reset time to start of day
+                  return date < today;
                 }}
               />
             </PopoverContent>

@@ -301,7 +301,7 @@ function SiteMapForm({
       <div className="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Request Site Plan</h2>
+            <h2 className="text-2xl font-bold text-gray-900">Request Site Map & Floor Plan</h2>
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -318,7 +318,7 @@ function SiteMapForm({
           
           {submitSuccess && (
             <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-600 text-sm">
-              Thank you for your interest! We will contact you soon with the site map.
+              Thank you for your interest! We will contact you soon with the site map and floor plan.
             </div>
           )}
 
@@ -492,7 +492,7 @@ function SiteMapForm({
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                       </svg>
                     </div>
-                    Request Site Plan
+                    Request Site Map & Floor Plan
                   </>
                 )}
               </Button>
@@ -644,11 +644,12 @@ function LeadGenerationForm({
                 selected={formData.preferredDate}
                 onSelect={(date) => setFormData((prev: any) => ({ ...prev, preferredDate: date }))}
                 initialFocus
-                defaultMonth={new Date(2025, 7, 1)} // August 2025 (month is 0-indexed, so 7 = August)
+                defaultMonth={new Date()} // Current month
                 disabled={(date) => {
-                  // Disable all dates up to and including July 31st, 2025
-                  const july31st = new Date(2025, 6, 31); // July 31st, 2025 (month is 0-indexed, so 6 = July)
-                  return date <= july31st;
+                  // Disable past dates (yesterday or more past)
+                  const today = new Date();
+                  today.setHours(0, 0, 0, 0); // Reset time to start of day
+                  return date < today;
                 }}
               />
             </PopoverContent>
@@ -1196,6 +1197,16 @@ export default function AureaLanding() {
     }
   }
 
+  const scrollToFloorPlans = () => {
+    const floorPlansSection = document.getElementById('floor-plans')
+    if (floorPlansSection) {
+      floorPlansSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+  }
+
   const [formData, setFormData] = useState({
     fullName: '',
     contactNumber: '',
@@ -1333,7 +1344,7 @@ export default function AureaLanding() {
 
     try {
       // Submit the form with the reCAPTCHA token
-      const response = await fetch('/api/site-map-request', {
+      const response = await fetch('/api/aurea-site-map-request', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1353,8 +1364,8 @@ export default function AureaLanding() {
         setShowSiteMapPopup(false)
         
         toast({
-          title: "Site Plan Request Submitted!",
-          description: "Thank you for your interest! We will contact you soon with the site map.",
+          title: "Site Map & Floor Plan Request Submitted!",
+          description: "Thank you for your interest! We will contact you soon with the site map and floor plan.",
           variant: "default",
         })
         
@@ -1428,9 +1439,12 @@ export default function AureaLanding() {
                 >
                   Project Info
                 </button>
-                {/* <a href="#floor-plans" className="text-white hover:text-[#ce001f] transition-colors duration-300">
+                <button 
+                  onClick={scrollToFloorPlans}
+                  className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
+                >
                   Floor Plans
-                </a> */}
+                </button>
                 <button 
                   onClick={scrollToGallery}
                   className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
@@ -2044,7 +2058,7 @@ export default function AureaLanding() {
                                 <p className="text-green-400 font-semibold text-lg">{subtype.price}</p>
                                 {subtype.price_per_sqft && (
                                   <p className="text-gray-400 text-sm">
-                                    {subtype.price_per_sqft.toLocaleString()} {subtype.currency || 'SGD'} per sqft
+                                    {subtype.price_per_sqft.toLocaleString()} per sqft
                                   </p>
                                 )}
                               </div>
@@ -2061,10 +2075,10 @@ export default function AureaLanding() {
                                 Book Showflat Visit
                               </button>
                               <button 
-                                onClick={() => scrollToSection('lead-form')}
+                                onClick={() => setShowSiteMapPopup(true)}
                                 className="w-full bg-white text-red-500 hover:bg-white-600 text-red-500 font-medium py-3 px-4 rounded-lg text-sm transition-colors"
                               >
-                                Required Brochure
+                                Request Floor Plan
                               </button>
                             </div>
                           </div>

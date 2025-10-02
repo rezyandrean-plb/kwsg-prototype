@@ -162,7 +162,7 @@ export function Footer() {
   const isPenrithPage = pathname === '/penrith' || pathname?.startsWith('/penrith/')
   const isPenrithEventPage = pathname?.startsWith('/penrith-event')
 
-  if (isAdminPage || isSpringleafPage || isSpringleafBackupPage || isAureaPage || isPenrithPage || isPenrithEventPage) return null
+  if (isAdminPage) return null
 
   return (
     <>
