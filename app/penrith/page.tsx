@@ -645,15 +645,12 @@ function LeadGenerationForm({
                 selected={formData.preferredDate}
                 onSelect={(date) => setFormData((prev: any) => ({ ...prev, preferredDate: date }))}
                 initialFocus
-                defaultMonth={new Date(2025, 9, 1)} // October 2025 (month is 0-indexed, so 9 = October)
+                defaultMonth={new Date()} // Current month
                 disabled={(date) => {
-                  // Disable all dates before October 3rd, 2025
-                  const cutoff = new Date(2025, 9, 3); // Oct 3, 2025
-                  // Zero out time components for safe comparison
-                  cutoff.setHours(0, 0, 0, 0)
-                  const d = new Date(date)
-                  d.setHours(0, 0, 0, 0)
-                  return d < cutoff;
+                  // Disable past dates (yesterday or more past)
+                  const today = new Date();
+                  today.setHours(0, 0, 0, 0); // Reset time to start of day
+                  return date < today;
                 }}
               />
             </PopoverContent>
@@ -1053,8 +1050,8 @@ export default function SpringleafResidenceLanding() {
           bedrooms: 2,
           bathrooms: 2,
           size: "614 - 678 sqft",
-          price: "$1.9M - $2.2M",
-          price_per_sqft: 2400,
+          price: "From $1,495,000",
+          price_per_sqft: "From $2,437",
           currency: "SGD",
           total: 150,
           available: 60,
@@ -1074,8 +1071,8 @@ export default function SpringleafResidenceLanding() {
           bedrooms: 3,
           bathrooms: 2,
           size: "786 - 1066 sqft",
-          price: "$2.5M - $2.9M",
-          price_per_sqft: 2450,
+          price: "From $1,973,000",
+          price_per_sqft: "From $2,511",
           currency: "SGD",
           total: 200,
           available: 80,
@@ -1097,8 +1094,8 @@ export default function SpringleafResidenceLanding() {
           bedrooms: 4,
           bathrooms: 3,
           size: "1173 - 1281 sqft",
-          price: "$3.2M - $3.9M",
-          price_per_sqft: 2550,
+          price: "From $3,078,000",
+          price_per_sqft: "From $2,623",
           currency: "SGD",
           total: 112,
           available: 40,
@@ -1793,7 +1790,7 @@ export default function SpringleafResidenceLanding() {
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('floor-plans') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Floor Plans</h2>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Floor Plans & Pricing</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
@@ -1941,6 +1938,17 @@ export default function SpringleafResidenceLanding() {
                                 <h4 className="text-xl font-bold text-white mb-2">{subtype.subtype}</h4>
                                 <p className="text-gray-300 text-sm">{subtype.size}</p>
                               </div>
+                              
+                              {/* Price */}
+                              <div className="mb-6">
+                                <p className="text-green-400 font-semibold text-lg">{subtype.price}</p>
+                                {subtype.price_per_sqft && (
+                                  <p className="text-gray-400 text-sm">
+                                    {subtype.price_per_sqft} per sqft
+                                  </p>
+                                )}
+                              </div>
+                              
                             </div>
                             
                             {/* CTA Buttons */}

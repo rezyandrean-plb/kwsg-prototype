@@ -38,10 +38,23 @@ This guide will help you set up Google Sheets integration for the Springleaf Res
 
 ## Step 4: Create Google Spreadsheet
 
+### For Springleaf Residence:
 1. Go to [Google Sheets](https://sheets.google.com/)
 2. Create a new spreadsheet
 3. Name it "Springleaf Residence - Form Submissions"
 4. Create two separate tabs with the following headers:
+
+### For Aurea:
+1. Go to [Google Sheets](https://sheets.google.com/)
+2. Create a new spreadsheet
+3. Name it "Aurea - Lead Generation"
+4. Create a tab with the following headers:
+
+### For Penrith:
+1. Go to [Google Sheets](https://sheets.google.com/)
+2. Create a new spreadsheet
+3. Name it "Penrith - Lead Generation"
+4. Create a tab with the following headers:
 
 ### Tab 1: "ShowflatVisitRequests"
 Set up the headers in the first row:
@@ -68,6 +81,47 @@ E1: Request Type
 F1: Project
 ```
 
+### Aurea Tab: "ShowflatVisitRequests"
+Set up the headers in the first row:
+```
+A1: Timestamp
+B1: Full Name
+C1: Contact Number
+D1: Email Address
+E1: Project
+F1: Location
+G1: Developer
+H1: Preferred Date
+I1: Preferred Time
+J1: Request Type
+```
+
+### Aurea Tab: "SiteMapRequests"
+Set up the headers in the first row:
+```
+A1: Timestamp
+B1: Full Name
+C1: Email Address
+D1: Contact Number
+E1: Request Type
+F1: Project
+```
+
+### Penrith Tab: "ShowflatVisitRequests"
+Set up the headers in the first row:
+```
+A1: Timestamp
+B1: Full Name
+C1: Contact Number
+D1: Email Address
+E1: Project
+F1: Location
+G1: Developer
+H1: Preferred Date
+I1: Preferred Time
+J1: Request Type
+```
+
 ## Step 5: Share Spreadsheet with Service Account
 
 1. In your Google Spreadsheet, click "Share"
@@ -83,6 +137,18 @@ Add these environment variables to your `.env.local` file:
 GOOGLE_SHEETS_SPREADSHEET_ID=your_spreadsheet_id_here
 GOOGLE_SHEETS_CLIENT_EMAIL=your_service_account_email@project.iam.gserviceaccount.com
 GOOGLE_SHEETS_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYour private key here\n-----END PRIVATE KEY-----\n"
+
+# Project-specific Spreadsheet IDs
+GOOGLE_SHEETS_PENRITH_LEAD_SPREADSHEET_ID=your_penrith_spreadsheet_id_here
+GOOGLE_SHEETS_AUREA_LEAD_SPREADSHEET_ID=your_aurea_spreadsheet_id_here
+
+# Project-specific Range Configuration (optional)
+GOOGLE_SHEETS_AUREA_SITE_MAP_RANGE=SiteMapRequests!A:F
+GOOGLE_SHEETS_PENRITH_LEAD_RANGE=ShowflatVisitRequests!A:J
+
+# Email Configuration
+AUREA_LEAD_TO_EMAIL=consults@propertylimbrothers.com
+PENRITH_LEAD_TO_EMAIL=consults@propertylimbrothers.com
 ```
 
 ### How to get these values:
@@ -161,7 +227,7 @@ GOOGLE_SHEETS_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0B
 
 Each form submission will create a new row in the appropriate tab with the following data:
 
-### Showflat Visit Request Form (Tab 1: "ShowflatVisitRequests"):
+### Springleaf Residence - Showflat Visit Request Form (Tab 1: "ShowflatVisitRequests"):
 | Column | Data |
 |--------|------|
 | A | Timestamp (ISO format) |
@@ -174,7 +240,7 @@ Each form submission will create a new row in the appropriate tab with the follo
 | H | Preferred Date (formatted date or "Not specified") |
 | I | Preferred Time (selected time or "Not specified") |
 
-### Site Map Request Form (Tab 2: "SiteMapRequests"):
+### Springleaf Residence - Site Map Request Form (Tab 2: "SiteMapRequests"):
 | Column | Data |
 |--------|------|
 | A | Timestamp (ISO format) |
@@ -184,9 +250,47 @@ Each form submission will create a new row in the appropriate tab with the follo
 | E | Request Type (always "Site Map Request") |
 | F | Project (always "Springleaf Residence") |
 
+### Aurea - Lead Generation Form (Tab: "ShowflatVisitRequests"):
+| Column | Data |
+|--------|------|
+| A | Timestamp (ISO format) |
+| B | Full Name |
+| C | Contact Number |
+| D | Email Address |
+| E | Project (always "Aurea") |
+| F | Location (always "District 7, Beach Road") |
+| G | Developer (always "Far East Organization, Perennial Holdings & Sino Land") |
+| H | Preferred Date (formatted date or "Not specified") |
+| I | Preferred Time (selected time or "Not specified") |
+| J | Request Type (always "Aurea Lead Generation") |
+
+### Aurea - Site Map Request Form (Tab: "SiteMapRequests"):
+| Column | Data |
+|--------|------|
+| A | Timestamp (ISO format) |
+| B | Full Name |
+| C | Email Address |
+| D | Contact Number |
+| E | Request Type (always "Request Site Map & Floor Plan") |
+| F | Project (always "Aurea") |
+
+### Penrith - Lead Generation Form (Tab: "ShowflatVisitRequests"):
+| Column | Data |
+|--------|------|
+| A | Timestamp (ISO format) |
+| B | Full Name |
+| C | Contact Number |
+| D | Email Address |
+| E | Project (always "Penrith") |
+| F | Location (always "Margaret Drive, District 3 (Queenstown), Singapore") |
+| G | Developer (always "Hong Leong Holdings & GuocoLand (Margaret Rise Development Pte Ltd)") |
+| H | Preferred Date (formatted date or "Not specified") |
+| I | Preferred Time (selected time or "Not specified") |
+| J | Request Type (always "Penrith Lead Generation") |
+
 ## Form Types
 
-The integration handles two different form types:
+The integration handles multiple form types across different projects:
 
 1. **Site Map Request Form** (`/api/site-map-request`):
    - Triggered by clicking "Required Site Map" button
@@ -194,11 +298,29 @@ The integration handles two different form types:
    - Sends notification emails to the team
    - Sends auto-reply to the contact
 
-2. **Showflat Visit Request Form** (`/api/springleaf-residence-form`):
+2. **Springleaf Residence - Showflat Visit Request Form** (`/api/springleaf-residence-form`):
    - Triggered by submitting the main form at the bottom
    - Collects: Full Name, Contact Number, Email Address (optional), Preferred Date, Preferred Time
    - Sends notification emails to the team
    - Sends auto-reply to the contact (if email provided)
+
+3. **Aurea - Lead Generation Form** (`/api/aurea-form`):
+   - Triggered by submitting the main form on the Aurea page
+   - Collects: Full Name, Contact Number, Email Address, Preferred Date, Preferred Time
+   - Sends notification emails to the team
+   - Sends auto-reply to the contact
+
+4. **Aurea - Site Map Request Form** (`/api/aurea-site-map-request`):
+   - Triggered by clicking "Required Site Plan" button on the Aurea page
+   - Collects: Full Name, Email Address, Contact Number
+   - Sends notification emails to the team
+   - Sends auto-reply to the contact
+
+5. **Penrith - Lead Generation Form** (`/api/penrith-lead-form`):
+   - Triggered by submitting the main form on the Penrith page
+   - Collects: Full Name, Contact Number, Email Address, Preferred Date, Preferred Time
+   - Sends notification emails to the team
+   - Sends auto-reply to the contact
 
 ## Monitoring
 
