@@ -1293,8 +1293,11 @@ export default function AureaLanding() {
           variant: "default",
         })
         
-        // Reset success state after 5 seconds
-        setTimeout(() => setSubmitSuccess(false), 5000)
+        // Reset success state after 5 seconds and reload page
+        setTimeout(() => {
+          setSubmitSuccess(false)
+          window.location.reload()
+        }, 5000)
       } else {
         throw new Error(result.error || 'Failed to submit form')
       }
@@ -1369,8 +1372,11 @@ export default function AureaLanding() {
           variant: "default",
         })
         
-        // Reset success state after 5 seconds
-        setTimeout(() => setSiteMapSubmitSuccess(false), 5000)
+        // Reset success state after 5 seconds and reload page
+        setTimeout(() => {
+          setSiteMapSubmitSuccess(false)
+          window.location.reload()
+        }, 5000)
       } else {
         throw new Error(result.error || 'Failed to submit site map request')
       }
