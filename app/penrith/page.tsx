@@ -1475,6 +1475,66 @@ export default function SpringleafResidenceLanding() {
         </div>
       </section>
 
+      {/* Seminar Section */}
+      <section 
+        id="seminar"
+        className="py-12 bg-[#1c1c1d] section-entrance"
+        data-section-id="seminar"
+        style={{ 
+          opacity: animatedSections.has('seminar') ? 1 : 0,
+          transform: animatedSections.has('seminar') ? 'translateY(0)' : 'translateY(60px)'
+        }}
+      >
+        <div className="container mx-auto px-4">
+          <div className={`max-w-6xl mx-auto text-center transition-all duration-1000 delay-300 ${
+            animatedSections.has('seminar') ? 'animate-slide-in-top' : ''
+          }`}>
+            <div className="relative w-full max-w-6xl mx-auto mb-6 md:mb-8">
+              <div className="relative w-full h-[220px] sm:h-[340px] md:h-[500px] lg:h-[600px] rounded-xl overflow-hidden shadow-2xl">
+                <Image
+                  src="/images/penrith/penrith-seminar-v2.webp"
+                  alt="District 3 in Focus Seminar"
+                  fill
+                  className="object-contain md:object-cover bg-[#0b0b0c]"
+                  priority
+                />
+              </div>
+            </div>
+
+            <h2 className="text-2xl md:text-3xl font-semibold md:font-bold mb-4 md:mb-6 leading-snug">
+              District 3 in Focus: Resale Pricing Gaps & Exit Risk Assessment Strategy <br/> Featuring Penrith
+            </h2>
+            <p className="text-base md:text-lg text-gray-300 max-w-5xl mx-auto mb-6 md:mb-8">
+              Penrith, the new landmark by Hong Leong & GuocoLand, is set to redefine District 3. As the first Government Land Sale (GLS) launch in the area in over seven years, it presents a rare opportunity in one of Singapore’s most tightly held corridors. But with high demand comes high risk. This exclusive seminar is designed to equip you with the strategic framework to evaluate this launch—and all new launches in 2025—not on hype, but on hard data.
+            </p>
+
+            <div className="text-center text-gray-300 mb-1 md:mb-2 font-semibold">Event Details:</div>
+            {/* Mobile-only stacked event details */}
+            <div className="md:hidden flex flex-col items-center justify-center gap-1 text-xs sm:text-sm text-gray-300 mb-3 px-2">
+              <span className="whitespace-pre">08 October 2025, Wednesday</span>
+              <span>07:00 PM</span>
+              <span className="whitespace-pre">Penrith Showflat, 6A Margaret Drive, Singapore 142006</span>
+            </div>
+
+            {/* Tablet/Desktop horizontal event details */}
+            <div className="hidden md:flex flex-row flex-nowrap items-center justify-center gap-2 md:gap-6 text-sm md:text-base text-gray-300 mb-6 md:mb-8 whitespace-nowrap px-2">
+              <span className="whitespace-pre">08 October 2025, Wednesday</span>
+              <span className="inline">|</span>
+              <span>07:00 PM</span>
+              <span className="inline">|</span>
+              <span className="whitespace-pre">Penrith Showflat, 6A Margaret Drive, Singapore 142006</span>
+            </div>
+
+            <Button 
+              className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-medium inline-flex items-center gap-2 hover:scale-105 transition-all duration-300"
+              onClick={() => window.open('https://www.kwsingapore.com/penrith-consumer-event', '_blank')}
+            >
+              Secure My Spot! <ChevronRight className="w-4 h-4" />
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Enhanced Project Information Section */}
       <section 
         id="project-info" 
@@ -2202,6 +2262,49 @@ export default function SpringleafResidenceLanding() {
               </TabsContent>
             ))}
           </Tabs>
+        </div>
+      </section>
+
+      {/* 3D Model Section */}
+      <section 
+        id="3d-model"
+        className="py-8 bg-[#1c1c1d] section-entrance"
+        data-section-id="3d-model"
+        style={{ 
+          opacity: animatedSections.has('3d-model') ? 1 : 0,
+          transform: animatedSections.has('3d-model') ? 'translateY(0)' : 'translateY(60px)'
+        }}
+      >
+        <div className="container mx-auto px-4">
+          <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
+            animatedSections.has('3d-model') ? 'animate-slide-in-top' : ''
+          }`}>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">3D Model</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-[#ce001f] rounded" />
+            </div>
+            <p className="text-xl text-gray-300">Explore our development in immersive 3D</p>
+          </div>
+          
+          <div className={`transition-all duration-1000 delay-500 ${
+            animatedSections.has('3d-model') ? 'animate-fade-in-up' : ''
+          }`} style={{
+            opacity: animatedSections.has('3d-model') ? 1 : 0,
+            transform: animatedSections.has('3d-model') ? 'translateY(0)' : 'translateY(50px)'
+          }}>
+            <div className="w-full rounded-lg overflow-hidden shadow-lg">
+              <iframe 
+                width='1280' 
+                height='500' 
+                src='https://tubear.co/3d-model/kwsg-penrith/fullscreen/' 
+                frameBorder='0' 
+                allow='vr' 
+                allowFullScreen={true}
+                className="w-full h-[500px] rounded-lg"
+                title="3D Model of KWSG Penrith"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
