@@ -20,6 +20,7 @@ const FloatingWhatsApp = dynamic(() => import("@/components/floating-whatsapp"),
 
 // Memoize the navigation items to prevent unnecessary re-renders
 const navItems = [
+  { href: "/new-launch-collection", label: "New Launch Collection" },
   { href: "/model", label: "KW Income Model" },
   { href: "/events", label: "Events" },
   { href: "/press", label: "Press" },

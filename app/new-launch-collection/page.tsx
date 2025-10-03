@@ -28,7 +28,7 @@ const newLaunches = [
     launchDate: "April 2024",
     location: "Queenstown",
     district: "District 3",
-    status: "Early Interest",
+    status: "Preview Available",
     type: "Condo",
     bedrooms: "2-5",
     price: "From $1,495,000",

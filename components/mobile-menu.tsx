@@ -43,6 +43,13 @@ export default function MobileMenu() {
               <div className="-my-6 divide-y divide-gray-800">
                 <div className="space-y-4 py-6">
                   <Link
+                    href="/new-launch-collection"
+                    className="block text-lg font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    New Launch Collection
+                  </Link>
+                  <Link
                     href="/model"
                     className="block text-lg font-semibold leading-7 text-white hover:text-primary-red transition-colors duration-300 relative group"
                     onClick={() => setIsOpen(false)}
