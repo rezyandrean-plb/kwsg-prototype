@@ -16,7 +16,7 @@ const newLaunches = [
     district: "District 26",
     status: "Registration Open",
     type: "Condo",
-    bedrooms: "3-5 BR",
+    bedrooms: "3-5",
     price: "From $2,300,000",
     url: "/springleaf-residence",
   },
@@ -31,7 +31,7 @@ const newLaunches = [
     status: "Early Interest",
     type: "Condo",
     bedrooms: "2-5",
-    price: "Coming Soon",
+    price: "From $1,495,000",
     url: "/penrith",
   },
   {
