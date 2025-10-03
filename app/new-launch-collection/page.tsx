@@ -16,8 +16,8 @@ const newLaunches = [
     district: "District 26",
     status: "Registration Open",
     type: "Condo",
-    bedrooms: "1-5 BR",
-    price: "From $1,360,000",
+    bedrooms: "3-5 BR",
+    price: "From $2,300,000",
     url: "/springleaf-residence",
   },
   {
