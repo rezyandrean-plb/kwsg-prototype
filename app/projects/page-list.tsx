@@ -122,41 +122,55 @@ const mapStatus = (status: string | null | undefined): 'upcoming' | 'ongoing' | 
   return 'completed'
 }
 
-// Function to fetch projects from API (server-driven pagination)
+// Function to fetch projects from API with server-side filtering
 const fetchProjects = async (
   page: number,
   pageSize: number,
   searchQuery: string,
-  sortBy: string
+  sortBy: string,
+  filters: {
+    districts: number[]
+    tenures: string[]
+    propertyTypes: string[]
+    statuses: string[]
+    bedrooms: string[]
+    priceMin: number
+    priceMax: number
+  }
 ): Promise<{ projects: Project[]; pagination: { page: number; pageSize: number; pageCount: number; total: number } }> => {
   const controller = new AbortController()
   const timeoutId = setTimeout(() => {
-    controller.abort('Request timeout after 10 seconds')
-  }, 10000)
+    controller.abort('Request timeout after 15 seconds')
+  }, 15000)
 
   try {
     // Map sort options to API sort param
-    // Allowed fields: created_at, updated_at, name, price, status
     let sortParam = 'created_at:desc'
     if (sortBy === 'price-low-high') sortParam = 'price:asc'
     else if (sortBy === 'price-high-low') sortParam = 'price:desc'
     else if (sortBy === 'completion') sortParam = 'completion:asc'
 
-    // Basic filters for search (name/location containsi)
+    // Build query parameters
     const searchParams = new URLSearchParams()
     searchParams.set('page', String(page))
     searchParams.set('pageSize', String(pageSize))
     searchParams.set('sort', sortParam)
-    searchParams.set('populate', 'developer') // to get developer object if available
 
+    // Add search query
     if (searchQuery && searchQuery.trim()) {
-      // Strapi v4 filters syntax: filters[field][$containsi]=value
-      // We'll OR name/location via multiple params (Strapi uses AND by default; full OR requires more complex filters)
-      searchParams.set('filters[name][$containsi]', searchQuery.trim())
-      searchParams.set('filters[location][$containsi]', searchQuery.trim())
+      searchParams.set('search', searchQuery.trim())
     }
 
-    const url = `${API_BASE}/api/projects?${searchParams.toString()}`
+    // Add filters
+    filters.districts.forEach(district => searchParams.append('districts', String(district)))
+    filters.tenures.forEach(tenure => searchParams.append('tenures', tenure))
+    filters.propertyTypes.forEach(type => searchParams.append('propertyTypes', type))
+    filters.statuses.forEach(status => searchParams.append('statuses', status))
+    filters.bedrooms.forEach(bedroom => searchParams.append('bedrooms', bedroom))
+    searchParams.set('priceMin', String(filters.priceMin))
+    searchParams.set('priceMax', String(filters.priceMax))
+
+    const url = `/api/projects?${searchParams.toString()}`
     const response = await fetch(url, {
       signal: controller.signal,
       headers: { 'Content-Type': 'application/json' },
@@ -169,99 +183,14 @@ const fetchProjects = async (
     }
 
     const data = await response.json()
-    const apiProjects: ApiProject[] = data.data || []
+    const projects: Project[] = data.data || []
     const meta = data.meta || {}
-    const pagination = meta.pagination || { page, pageSize, pageCount: 1, total: apiProjects.length }
-
-    // Transform API data to match our Project type
-    const projects = apiProjects.map((apiProject): Project => {
-      // District number (D05 → 5)
-      const districtNumber = apiProject.district
-        ? (() => {
-            const match = apiProject.district.match(/D(\d+)/i)
-            return match ? parseInt(match[1], 10) : undefined
-          })()
-        : undefined
-
-      const priceFromMillions = asMillions(apiProject.price_from)
-
-      let price = 'Price on request'
-      let lowerPrice: string | undefined = undefined
-      if (priceFromMillions) {
-        lowerPrice = priceFromMillions
-        price = `From $${priceFromMillions}M`
-      } else if (apiProject.display_price) {
-        const match = apiProject.display_price.match(/([\$]?[0-9,]+(\.[0-9]+)?)/)
-        if (match) {
-          const m = asMillions(match[1])
-          if (m && m !== '0') {
-            lowerPrice = m
-            price = `From $${m}M`
-          } else {
-            price = apiProject.display_price
-          }
-        } else {
-          price = apiProject.display_price
-        }
-      } else if (apiProject.price) {
-        price = apiProject.price
-      }
-
-      const developerName =
-        typeof apiProject.developer === 'string'
-          ? apiProject.developer
-          : (apiProject.developer && typeof apiProject.developer === 'object' && 'name' in apiProject.developer)
-            ? (apiProject.developer as any).name
-            : ''
-
-      const latNum =
-        typeof apiProject.latitude === 'number' ? apiProject.latitude
-          : apiProject.latitude ? Number(apiProject.latitude) : undefined
-      const lngNum =
-        typeof apiProject.longitude === 'number' ? apiProject.longitude
-          : apiProject.longitude ? Number(apiProject.longitude) : undefined
-
-      const coordinates = latNum != null && lngNum != null
-        ? { lat: latNum, lng: lngNum }
-        : { lat: 1.3521, lng: 103.8198 }
-
-      const image = apiProject.image_url_banner || '/images/placeholder/project-banner.webp'
-
-      const bedrooms =
-        apiProject.bedrooms
-          ? apiProject.bedrooms.split(',').map(b => b.trim()).filter(b => b && b !== 'N/A')
-          : undefined
-
-      return {
-        slug: apiProject.slug,
-        name: apiProject.name || apiProject.project_name,
-        location: apiProject.location,
-        address: apiProject.address,
-        price,
-        priceRange: apiProject.display_price || undefined,
-        pricePerSqFt: apiProject.price_per_sqft,
-        image,
-        units: apiProject.units ? `${apiProject.units} Units` : undefined,
-        unitsAvailable: apiProject.total_units ? `${apiProject.total_units} Units` : undefined,
-        propertySizeRange: apiProject.size,
-        developer: developerName,
-        completion: apiProject.completion,
-        description: apiProject.description,
-        features: apiProject.features || [],
-        type: apiProject.type || apiProject.property_type,
-        status: mapStatus(apiProject.status),
-        district: districtNumber,
-        tenure: apiProject.tenure,
-        propertyType: apiProject.property_type,
-        bedrooms,
-        coordinates,
-        lowerPrice,
-      }
-    })
+    const pagination = meta.pagination || { page, pageSize, pageCount: 1, total: projects.length }
 
     return { projects, pagination }
   } catch (error) {
     clearTimeout(timeoutId)
+    console.error('Error fetching projects:', error)
     // fallback to local data if available
     try {
       const { projects } = await import('@/data/projects')
@@ -304,63 +233,52 @@ export default function NewLaunchDirectory() {
     setIsClient(true)
   }, [])
 
-  // Fetch projects on changes (server-driven pagination)
+  // Debounced search effect
+  useEffect(() => {
+    if (!isClient) return
+    const timeoutId = setTimeout(() => {
+      setSearchQuery(searchInput)
+      setCurrentPage(1)
+    }, 500) // 500ms debounce
+
+    return () => clearTimeout(timeoutId)
+  }, [searchInput, isClient])
+
+  // Fetch projects on changes (server-driven pagination with filtering)
   useEffect(() => {
     if (!isClient) return
     const load = async () => {
       setIsLoading(true)
-      const { projects: fetched, pagination } = await fetchProjects(currentPage, projectsPerPage, searchQuery, sortBy)
+      const filters = {
+        districts: selectedDistricts,
+        tenures: selectedTenures,
+        propertyTypes: selectedPropertyTypes,
+        statuses: selectedStatus,
+        bedrooms: selectedBedrooms,
+        priceMin,
+        priceMax
+      }
+      const { projects: fetched, pagination } = await fetchProjects(
+        currentPage, 
+        projectsPerPage, 
+        searchQuery, 
+        sortBy, 
+        filters
+      )
       setProjects(fetched)
       setTotalPages(pagination.pageCount ?? 1)
       setTotalItems(pagination.total ?? fetched.length)
       setIsLoading(false)
     }
     load()
-  }, [isClient, currentPage, projectsPerPage, searchQuery, sortBy])
+  }, [isClient, currentPage, projectsPerPage, searchQuery, sortBy, selectedDistricts, selectedTenures, selectedPropertyTypes, selectedStatus, selectedBedrooms, priceMin, priceMax])
 
   const scrollToSearch = () => {
     searchSectionRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  // Since we now page on the server, we show the current page results directly.
-  // We still keep client filters UI; if you want server-side filters, we can pass them via query (next step).
-  const filteredProjects = isClient ? projects
-    .filter((project) => {
-      const matchesSearch =
-        project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        project.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (typeof project.developer === 'string'
-          ? project.developer.toLowerCase()
-          : '').includes(searchQuery.toLowerCase())
-
-      const matchesDistrict = selectedDistricts.length === 0 || (project.district && selectedDistricts.includes(project.district))
-      const matchesTenure = selectedTenures.length === 0 || (project.tenure && selectedTenures.includes(project.tenure))
-      const matchesPropertyType = selectedPropertyTypes.length === 0 || (project.propertyType && selectedPropertyTypes.includes(project.propertyType))
-      const matchesStatus = selectedStatus.length === 0 || (project.status && selectedStatus.includes(project.status))
-      const matchesBedrooms = selectedBedrooms.length === 0 || (() => {
-        if (!project.bedrooms || project.bedrooms.length === 0) return false
-        return selectedBedrooms.some(selectedBedroom => {
-          if (selectedBedroom === 'Studio') {
-            return project.bedrooms?.includes('Studio') || project.bedrooms?.includes('0')
-          } else if (selectedBedroom === '5 or more') {
-            return project.bedrooms?.some(bedroom => {
-              const num = parseInt(bedroom)
-              return !isNaN(num) && num >= 5
-            })
-          } else {
-            return project.bedrooms?.includes(selectedBedroom)
-          }
-        })
-      })()
-
-      const [projectMin, projectMax] = (project.priceRange || '').split(" - ").map(price => parseInt(price.replace(/[^0-9]/g, "")))
-      const matchesPriceRange = (priceMin === 0 && priceMax === 5000000) ||
-        (projectMax >= priceMin && projectMin <= priceMax)
-
-      return matchesSearch && matchesDistrict && matchesTenure && matchesPropertyType && matchesStatus && matchesBedrooms && matchesPriceRange
-    })
-    // Sorting here is now secondary since server sorts; keep for client UI consistency
-    : []
+  // Projects are now filtered server-side, so we display them directly
+  const currentProjects = isClient ? projects : []
 
   // Derive filter options from current page’s projects (can be made global by another call if needed)
   const districts = isClient ? Array.from(new Set(projects.map(p => p.district).filter((d): d is number => d !== undefined))).sort((a, b) => a - b) : []
@@ -469,7 +387,6 @@ export default function NewLaunchDirectory() {
     return rangeWithDots
   }
 
-  const currentProjects = filteredProjects // server already paged; filtered client-side display only
 
   return (
     <main className="min-h-screen flex flex-col bg-black text-white">
