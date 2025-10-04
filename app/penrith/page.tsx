@@ -1513,7 +1513,8 @@ export default function SpringleafResidenceLanding() {
             {/* Event details */}
             <div className="md:flex flex-row flex-nowrap items-center justify-center gap-2 md:gap-6 text-sm md:text-base text-gray-300 mb-6 md:mb-8 whitespace-nowrap px-2">
               <span className="whitespace-pre">08 October 2025, Wednesday</span>
-              <span className="inline">|</span>
+              <span className="hidden md:inline">|</span>
+              <br className="md:hidden" />
               <span>07:00 PM</span>
               <span className="hidden md:inline">|</span>
               <br className="md:hidden" />
