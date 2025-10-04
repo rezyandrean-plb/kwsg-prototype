@@ -1478,7 +1478,7 @@ export default function SpringleafResidenceLanding() {
       {/* Seminar Section */}
       <section 
         id="seminar"
-        className="py-12 bg-[#1c1c1d] section-entrance"
+        className="py-8 bg-[#1c1c1d] section-entrance"
         data-section-id="seminar"
         style={{ 
           opacity: animatedSections.has('seminar') ? 1 : 0,
@@ -1495,7 +1495,7 @@ export default function SpringleafResidenceLanding() {
                   src="/images/penrith/penrith-seminar-v2.webp"
                   alt="District 3 in Focus Seminar"
                   fill
-                  className="object-contain md:object-cover bg-[#0b0b0c]"
+                  className="object-contain lg:object-cover bg-[#0b0b0c]"
                   priority
                 />
               </div>
@@ -1509,19 +1509,14 @@ export default function SpringleafResidenceLanding() {
             </p>
 
             <div className="text-center text-gray-300 mb-1 md:mb-2 font-semibold">Event Details:</div>
-            {/* Mobile-only stacked event details */}
-            <div className="md:hidden flex flex-col items-center justify-center gap-1 text-xs sm:text-sm text-gray-300 mb-3 px-2">
-              <span className="whitespace-pre">08 October 2025, Wednesday</span>
-              <span>07:00 PM</span>
-              <span className="whitespace-pre">Penrith Showflat, 6A Margaret Drive, Singapore 142006</span>
-            </div>
 
-            {/* Tablet/Desktop horizontal event details */}
-            <div className="hidden md:flex flex-row flex-nowrap items-center justify-center gap-2 md:gap-6 text-sm md:text-base text-gray-300 mb-6 md:mb-8 whitespace-nowrap px-2">
+            {/* Event details */}
+            <div className="md:flex flex-row flex-nowrap items-center justify-center gap-2 md:gap-6 text-sm md:text-base text-gray-300 mb-6 md:mb-8 whitespace-nowrap px-2">
               <span className="whitespace-pre">08 October 2025, Wednesday</span>
               <span className="inline">|</span>
               <span>07:00 PM</span>
-              <span className="inline">|</span>
+              <span className="hidden md:inline">|</span>
+              <br className="md:hidden" />
               <span className="whitespace-pre">Penrith Showflat, 6A Margaret Drive, Singapore 142006</span>
             </div>
 
