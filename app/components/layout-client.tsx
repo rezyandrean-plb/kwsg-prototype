@@ -38,6 +38,7 @@ export function Header() {
   const isSpringleafBackupPage = pathname?.startsWith('/springleaf-backup')
   const isAureaPage = pathname?.startsWith('/aurea')
   const isPenrithPage = pathname === '/penrith' || pathname?.startsWith('/penrith/')
+  const isWResidencePage = pathname === '/w-residences' || pathname?.startsWith('/w-residence')
   const isPenrithEventPage = pathname?.startsWith('/penrith-consumer-event')
   const [isScrolled, setIsScrolled] = useState(false)
   const { isSignedIn, user } = useUser()
@@ -51,7 +52,7 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  if (isAdminPage || isSpringleafPage || isSpringleafBackupPage || isAureaPage || isPenrithPage || isPenrithEventPage) return null
+  if (isAdminPage || isSpringleafPage || isSpringleafBackupPage || isAureaPage || isPenrithPage || isPenrithEventPage || isWResidencePage) return null
 
   return (
     <header 
