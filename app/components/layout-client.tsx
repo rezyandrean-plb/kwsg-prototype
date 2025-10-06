@@ -163,12 +163,12 @@ export function Footer() {
   const isAureaPage = pathname?.startsWith('/aurea')
   const isPenrithPage = pathname === '/penrith' || pathname?.startsWith('/penrith/')
   const isPenrithEventPage = pathname?.startsWith('/penrith-event')
-
+  const isWResidencePage = pathname === '/w-residences' || pathname?.startsWith('/w-residence')
   if (isAdminPage) return null
 
   return (
     <>
-      {!isSpringleafPage && !isSpringleafBackupPage && !isAureaPage && !isPenrithPage && !isPenrithEventPage && <FloatingWhatsApp />}
+      {!isSpringleafPage && !isSpringleafBackupPage && !isAureaPage && !isPenrithPage && !isPenrithEventPage && !isWResidencePage && <FloatingWhatsApp />}
       <footer className="border-t py-8 md:py-12 bg-black text-white">
         <div className="container grid gap-8 md:grid-cols-3">
           <div className="space-y-4">

@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { motion, useScroll, useTransform, Variants } from "framer-motion"
 import Image from "next/image"
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import dynamic from "next/dynamic"
 import { ArrowRight, Brain, Share2, Video, BarChart3, Users, Building2, Award, Globe, TrendingUp, Calculator, Zap, Camera, Star, ChevronRight } from "lucide-react"
 
@@ -185,6 +185,9 @@ const TypingText = ({ children, className = "" }: { children: React.ReactNode; c
 };
 
 export default function JoinKW() {
+  useEffect(() => {
+    document.title = 'Join KW Singapore - KW Singapore'
+  }, [])
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const { scrollYProgress, scrollY } = useScroll()
   const pathLength = useTransform(scrollYProgress, [0, 1], [0, 1])

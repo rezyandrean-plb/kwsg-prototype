@@ -1568,6 +1568,15 @@ export default function AureaLanding() {
             <MoveDownIcon className="w-5 h-5 rotate-90 animate-bounce" />
           </div>
         </div>
+
+        {/* Disclaimer Text */}
+        <div className={`absolute bottom-4 right-4 transition-all duration-1000 delay-2000 ${
+          isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+        }`}>
+          <p className="text-xs text-white/70 bg-black/30 backdrop-blur-sm px-3 py-2 rounded-lg whitespace-nowrap">
+            Images are for illustrative purposes only and may not reflect the final design of Aurea.
+          </p>
+        </div>
       </section>
 
       {/* Enhanced Project Information Section */}

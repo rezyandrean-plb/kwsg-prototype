@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Search, Building2, Calculator, TrendingUp, BarChart3, MapPin, DollarSign, Smartphone, Home, ChevronRight, Play } from "lucide-react"
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion"
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
 import { useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
@@ -389,6 +389,9 @@ const categories = [
 ]
 
 export default function TechToolPage() {
+  useEffect(() => {
+    document.title = 'Tool & Resources - KW Singapore'
+  }, [])
   const { isSignedIn, user, isLoaded } = useUser()
   const router = useRouter()
   const [activeCategory, setActiveCategory] = useState("Compass Tools")

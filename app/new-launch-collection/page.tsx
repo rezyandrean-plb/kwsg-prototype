@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { MapPin, Bed } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 
@@ -70,6 +70,9 @@ const filterOptions = {
 }
 
 export default function NewLaunchCollectionPage() {
+  useEffect(() => {
+    document.title = 'New Launch Collection - KW Singapore'
+  }, [])
   const [activeFilters, setActiveFilters] = useState({
     districts: [] as string[],
     status: "All",

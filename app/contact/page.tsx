@@ -334,6 +334,7 @@ export default function ContactPage() {
   const [scrollY, setScrollY] = useState(0)
 
   useEffect(() => {
+    document.title = 'Contact - KW Singapore'
     const handleScroll = () => {
       setScrollY(window.scrollY)
     }
