@@ -760,6 +760,9 @@ export default function SpringleafResidenceLanding() {
   const [showSiteMapPopup, setShowSiteMapPopup] = useState(false)
 
   useEffect(() => {
+    // Set page title
+    document.title = 'Springleaf Residence - KW Singapore'
+    
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0)
     }

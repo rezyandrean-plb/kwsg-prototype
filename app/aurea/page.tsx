@@ -840,6 +840,9 @@ export default function AureaLanding() {
   }
 
   useEffect(() => {
+    // Set page title
+    document.title = 'Aurea - KW Singapore'
+    
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0)
     }
