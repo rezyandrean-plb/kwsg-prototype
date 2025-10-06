@@ -1537,11 +1537,11 @@ export default function SpringleafResidenceLanding() {
                 <p className="text-lg text-gray-200 font-light">D01 - Boat Quay / Raffles Place</p>
               </div>
 
-              <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
+              {/* <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
-              </p>
+              </p> */}
             </div>
 
             {/* Clean CTA Buttons */}
