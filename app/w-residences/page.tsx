@@ -767,6 +767,9 @@ export default function SpringleafResidenceLanding() {
   const [floorPlanIndex, setFloorPlanIndex] = useState(0)
 
   useEffect(() => {
+    // Set page title
+    document.title = 'W Residence Marina View - KW Singapore'
+    
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0)
     }
@@ -1583,6 +1586,17 @@ export default function SpringleafResidenceLanding() {
         }}
       >
         <div className="container mx-auto px-4">
+          <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
+            animatedSections.has('project-info') ? 'animate-slide-in-top' : ''
+          }`}>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">TBC</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-[#ce001f] rounded" />
+            </div>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              TBC
+            </p>
+          </div>
 
           {/* Detailed Information Grid */}
           <div className={`grid lg:grid-cols-10 gap-8 mb-12 transition-all duration-1000 delay-500 ${

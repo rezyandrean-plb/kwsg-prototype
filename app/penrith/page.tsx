@@ -766,6 +766,9 @@ export default function SpringleafResidenceLanding() {
   const [floorPlanIndex, setFloorPlanIndex] = useState(0)
 
   useEffect(() => {
+    // Set page title
+    document.title = 'Penrith - KW Singapore'
+    
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0)
     }
