@@ -5,7 +5,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle, Building2, Users, Award, Brain, Share2, Video, BarChart3, Target, Heart, Lightbulb, Users2, Briefcase, ChevronRight } from "lucide-react"
 import { motion, useScroll, useTransform } from "framer-motion"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { JoinFormDialog } from "@/components/join-form-dialog"
 
 // Animation variants
@@ -35,6 +35,9 @@ const itemVariants = {
 }
 
 export default function AboutUsPage() {
+  useEffect(() => {
+    document.title = 'About Us - KW Singapore'
+  }, [])
   const [openModal, setOpenModal] = useState<string | null>(null)
   const [isJoinFormOpen, setIsJoinFormOpen] = useState(false)
   const [selectedMember, setSelectedMember] = useState(0)

@@ -564,7 +564,7 @@ function LeadGenerationForm({
     <Card className={`bg-white/20 backdrop-blur-sm text-white p-6 md:p-12 shadow-2xl border-0 rounded-xl hover:shadow-3xl transition-all duration-700 hover:scale-105`}>
       <h2 className="text-4xl font-bold mb-4 text-white text-center">Book Your Showflat Visit Today</h2>
       <p className="text-md mb-8 opacity-90 text-white text-center">
-        Be the first to own a home that combines convenience, luxury, and nature. Register now for an exclusive preview of Penrith.
+        Be the first to own a home that combines convenience, luxury, and nature. Register now for an exclusive preview of W Residences .
       </p>
       {submitError && (
         <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
@@ -754,7 +754,7 @@ function LeadGenerationForm({
   )
 }
 
-export default function SpringleafResidenceLanding() {
+export default function WResidenceLanding() {
   const { toast } = useToast()
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [selectedFloorPlan, setSelectedFloorPlan] = useState("1br")
@@ -1012,7 +1012,7 @@ export default function SpringleafResidenceLanding() {
 
   // Build likely floor-plan filenames from unit type/subtype to match files placed in public/images/penrith/floor-plan
   const generatePenrithFloorPlanCandidates = (subtype: any, unitType: string) => {
-    const base = '/images/penrith/floor-plan/'
+    const base = '/images/w-residences/floor-plan/'
     const candidates: string[] = []
 
     const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
@@ -1081,8 +1081,8 @@ export default function SpringleafResidenceLanding() {
           price: "From $1,778,000",
           currency: "SGD",
           total: 171,
-          available: "",
-          status: 0,
+          available: 171,
+          status: 171,
           floor_plan_images: [
             "/images/w-residences/floor-plan/1 Bedroom - Type A1.png",
             "/images/w-residences/floor-plan/1 Bedroom - Type A2a.png",
@@ -1102,7 +1102,7 @@ export default function SpringleafResidenceLanding() {
           price: "From $2,383,000",
           currency: "SGD",
           total: 310,
-          available: "",
+          available: 310,
           status: 0,
           floor_plan_images: [
             "/images/w-residences/floor-plan/2 Bedroom - Type B1.png",
@@ -1127,7 +1127,7 @@ export default function SpringleafResidenceLanding() {
           price: "From $3,860,000",
           currency: "SGD",
           total: 103,
-          available: "",
+          available: 103,
           status: 0,
           floor_plan_images: [
             "/images/w-residences/floor-plan/3 Bedroom - Type C1.png",
@@ -1148,7 +1148,7 @@ export default function SpringleafResidenceLanding() {
           price: "From $8,700,000",
           currency: "SGD",
           total: 32,
-          available: "",
+          available: 32,
           status: 0,
           floor_plan_images: [
             "/images/w-residences/floor-plan/4 Bedroom - Type D1.png",
@@ -1167,7 +1167,7 @@ export default function SpringleafResidenceLanding() {
           price: "From $11,360,000",
           currency: "SGD",
           total: 64,
-          available: "",
+          available: 64,
           status: 0,
           floor_plan_images: [
             "/images/w-residences/floor-plan/5 Bedroom - Type E1a.png",
@@ -1187,7 +1187,7 @@ export default function SpringleafResidenceLanding() {
           price: "Coming Soon",
           currency: "SGD",
           total: 2,
-          available: "",
+          available: 2,
           status: 0,
           floor_plan_images: [
             "/images/springleaf-residence/site-plan-dummy.webp",
@@ -1206,7 +1206,7 @@ export default function SpringleafResidenceLanding() {
           price: "Coming Soon",
           currency: "SGD",
           total: 1,
-          available: "",
+          available: 1,
           status: 0,
           floor_plan_images: [
             "/images/springleaf-residence/site-plan-dummy.webp",
@@ -1296,7 +1296,7 @@ export default function SpringleafResidenceLanding() {
         // Show success toast
         toast({
           title: "Request Submitted Successfully!",
-          description: "Thank you for your interest in Penrith! We have sent you a confirmation email and our team will contact you soon to arrange your showflat visit.",
+          description: "Thank you for your interest in W Residences ! We have sent you a confirmation email and our team will contact you soon to arrange your showflat visit.",
           variant: "default",
         })
         
@@ -1573,6 +1573,15 @@ export default function SpringleafResidenceLanding() {
             <MoveDownIcon className="w-5 h-5 rotate-90 animate-bounce" />
           </div>
         </div>
+
+        {/* Disclaimer Text */}
+        <div className={`absolute bottom-4 right-4 transition-all duration-1000 delay-2000 ${
+          isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+        }`}>
+          <p className="text-xs text-white/70 bg-black/30 backdrop-blur-sm px-3 py-2 rounded-lg whitespace-nowrap">
+            Images are for illustrative purposes only and may not reflect the final design of W Residences.
+          </p>
+        </div>
       </section>
 
       {/* Enhanced Project Information Section */}
@@ -1753,7 +1762,7 @@ export default function SpringleafResidenceLanding() {
               <div className="relative h-[500px] rounded-xl overflow-hidden shadow-2xl">
                 <Image
                   src={projectImages[currentImageIndex] || "/placeholder.svg"}
-                  alt={`Penrith - Image ${currentImageIndex + 1}`}
+                  alt={`W Residences  - Image ${currentImageIndex + 1}`}
                   fill
                   className="object-cover transition-all duration-500"
                 />
@@ -1777,34 +1786,6 @@ export default function SpringleafResidenceLanding() {
                 </Button>
 
                 
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
-                  <div className="text-white">
-                    <h4 className="text-lg font-semibold mb-1">
-                      {currentImageIndex === 0
-                        ? "Aerial View"
-                        : currentImageIndex === 1
-                        ? "Condo Exterior Look"
-                        : currentImageIndex === 2
-                        ? "Facilities & Amenities"
-                        : currentImageIndex === 3
-                        ? "Drone View"
-                        : currentImageIndex === 4
-                        ? "Balcony View"
-                        : "Project Overview"}
-                    </h4>
-                    <p className="text-sm opacity-90">
-                      {currentImageIndex === 0
-                        ? "Breathtaking aerial perspective of Penrith"
-                        : currentImageIndex === 1
-                        ? "Modern condo exterior with contemporary design"
-                        : currentImageIndex === 2
-                        ? "Premium facilities and lifestyle amenities"
-                        : currentImageIndex === 3
-                        ? "Stunning main pool with aqua deck and alcove"
-                        : "Comprehensive project overview and highlights"}
-                    </p>
-                  </div>
-                </div>
               </div>
 
               
@@ -1854,7 +1835,7 @@ export default function SpringleafResidenceLanding() {
             <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
               <h3 className="text-2xl font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
               <p className="text-lg mb-6 opacity-90">
-                Register now for an exclusive preview of Penrith
+                Register now for an exclusive preview of W Residences 
               </p>
               <div className="cta-buttons-container justify-center">
                 <Button 
@@ -1932,11 +1913,11 @@ export default function SpringleafResidenceLanding() {
                         className={`px-2 sm:px-4 py-2 rounded-full font-light flex items-center gap-1 sm:gap-2 text-xs sm:text-sm transition-colors border focus:outline-none whitespace-nowrap ${unitsActiveTab === idx ? 'bg-gray-800 border-[#ce001f] text-white' : 'bg-[#18191b] border-gray-700 text-gray-300 hover:bg-[#ce001f]/10 hover:text-[#ce001f]'}`}
                       >
                         <span>{unit.unitType.replace(' Units', '')}</span>
-                        {/* {totalAvailable > 0 && (
+                        {totalAvailable > 0 && (
                           <span className="bg-green-500 text-white text-xs px-1 sm:px-2 py-1 rounded-full">
                             {totalAvailable}
                           </span>
-                        )} */}
+                        )}
                       </button>
                     )
                   })
@@ -2220,7 +2201,7 @@ export default function SpringleafResidenceLanding() {
             <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
               <h3 className="text-xl md:text-2xl font-normal md:font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
               <p className="text-base md:text-lg mb-6 opacity-90">
-                Register now for an exclusive preview of Penrith
+                Register now for an exclusive preview of W Residences 
               </p>
               <div className="cta-buttons-container justify-center">
                 <Button 
@@ -2249,7 +2230,7 @@ export default function SpringleafResidenceLanding() {
         className={`py-8 md:py-16 relative bg-cover bg-center section-entrance`}
         data-section-id="lead-form"
         style={{ 
-          backgroundImage: "url('/images/springleaf-residence/form-background.jpg')",
+          backgroundImage: "url('/images/w-residences/wmv-hero-background.webp')",
           opacity: animatedSections.has('lead-form') ? 1 : 0,
           transform: animatedSections.has('lead-form') ? 'translateY(0)' : 'translateY(60px)'
         }}
