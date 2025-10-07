@@ -564,7 +564,7 @@ function LeadGenerationForm({
     <Card className={`bg-white/20 backdrop-blur-sm text-white p-6 md:p-12 shadow-2xl border-0 rounded-xl hover:shadow-3xl transition-all duration-700 hover:scale-105`}>
       <h2 className="text-4xl font-bold mb-4 text-white text-center">Book Your Showflat Visit Today</h2>
       <p className="text-md mb-8 opacity-90 text-white text-center">
-        Be the first to own a home that combines convenience, luxury, and nature. Register now for an exclusive preview of W Residences .
+        Be the first to own a home that combines convenience, luxury, and nature. Register now for an exclusive preview of Arina East Residences .
       </p>
       {submitError && (
         <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
@@ -764,11 +764,32 @@ export default function ArinaEastLanding() {
   const [animatedSections, setAnimatedSections] = useState<Set<string>>(new Set())
   const [showSiteMapPopup, setShowSiteMapPopup] = useState(false)
   const [unitsActiveTab, setUnitsActiveTab] = useState(0)
+  const unitTabsScrollRef = useRef<HTMLDivElement | null>(null)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(false)
+
+  useEffect(() => {
+    const el = unitTabsScrollRef.current
+    if (!el) return
+    const updateScrollState = () => {
+      const left = el.scrollLeft
+      const maxLeft = el.scrollWidth - el.clientWidth
+      setCanScrollLeft(left > 0)
+      setCanScrollRight(left < maxLeft - 1)
+    }
+    updateScrollState()
+    el.addEventListener('scroll', updateScrollState, { passive: true } as any)
+    window.addEventListener('resize', updateScrollState)
+    return () => {
+      el.removeEventListener('scroll', updateScrollState as any)
+      window.removeEventListener('resize', updateScrollState)
+    }
+  }, [])
   const [floorPlanIndex, setFloorPlanIndex] = useState(0)
 
   useEffect(() => {
     // Set page title
-    document.title = 'W Residence Marina View - KW Singapore'
+    document.title = 'Arina East - KW Singapore'
     
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0)
@@ -815,14 +836,6 @@ export default function ArinaEastLanding() {
 
   const [projectImages, setProjectImages] = useState<string[]>([])
   
-  // Site Plan images for carousel (replace with W Residences assets when ready)
-  const sitePlanImages: string[] = [
-    "/images/w-residences/site-plan/wmv-site-plan-01.webp",
-    "/images/w-residences/site-plan/wmv-site-plan-02.webp",
-    "/images/w-residences/site-plan/wmv-site-plan-03.webp",
-    "/images/w-residences/site-plan/wmv-site-plan-04.webp"
-  ]
-
   useEffect(() => {
     const loadGallery = async () => {
       try {
@@ -833,42 +846,30 @@ export default function ArinaEastLanding() {
           setProjectImages(data.images)
         } else {
           setProjectImages([
-            "/images/w-residences/gallery/WMV- Day Aerial View.jpg",
-            "/images/w-residences/gallery/WMV- Magic hour aerial view.jpg",
-            "/images/w-residences/gallery/WMV- Frontal Elevation - Facade.jpg",
-            "/images/w-residences/gallery/WMV- Residential Drop off on Level 4.jpg",
-            "/images/w-residences/gallery/WMV- Lvl 51 25m infinity edge heated pool.jpg",
-            "/images/w-residences/gallery/WMV- Onsen on Level 51.jpg",
-            "/images/w-residences/gallery/WMV- Clubhouse- Private Dining on Lvl 34.jpg",
-            "/images/w-residences/gallery/WMV- VIP Lounge for 4 & 5 Bedroom (Level 4).jpg",
-            "/images/w-residences/gallery/WMV- Cellar at 34 (1).jpg",
-            "/images/w-residences/gallery/WMV- Cellar at 34 (2).jpg",
-            "/images/w-residences/gallery/WMV- Lvl 34 BBQ Pavillion.jpg",
-            "/images/w-residences/gallery/WMV- Pulse Studio on Level 15 (Gym).jpg",
-            "/images/w-residences/gallery/WMV- Meditation Room.jpg",
-            "/images/w-residences/gallery/WMV- Spa Retreat Concierge on Level 51.jpg",
-            "/images/w-residences/gallery/WMV- Treatment room on level 51.jpg",
-            "/images/w-residences/gallery/WMV- Club 51.jpg",
+            "/images/arina-east/gallery/172-6C6D LaVille-v9.jpg",
+            "/images/arina-east/gallery/172-6C6D LaVille-v8-2.jpg",
+            "/images/arina-east/gallery/172-6C6D LaVille-v8-2-1.jpg",
+            "/images/arina-east/gallery/172-6C6D LaVille-V7-6.jpg",
+            "/images/arina-east/gallery/172-6C6D LaVille-v6-333(1).jpg",
+            "/images/arina-east/gallery/172-6C6D LaVille-v5-4.jpg",
+            "/images/arina-east/gallery/172-6C6D LaVille-v4-1.jpg",
+            "/images/arina-east/gallery/172-6C6D LaVille-v3-2.jpg",
+            "/images/arina-east/gallery/172-6C6D LaVille-V2-6.jpg",
+            "/images/arina-east/gallery/172-6C6D LaVille-v1-2-opt1.jpg",
           ])
         }
       } catch (e) {
         setProjectImages([
-          "/images/w-residences/gallery/WMV- Day Aerial View.jpg",
-          "/images/w-residences/gallery/WMV- Magic hour aerial view.jpg",
-          "/images/w-residences/gallery/WMV- Frontal Elevation - Facade.jpg",
-          "/images/w-residences/gallery/WMV- Residential Drop off on Level 4.jpg",
-          "/images/w-residences/gallery/WMV- Lvl 51 25m infinity edge heated pool.jpg",
-          "/images/w-residences/gallery/WMV- Onsen on Level 51.jpg",
-          "/images/w-residences/gallery/WMV- Clubhouse- Private Dining on Lvl 34.jpg",
-          "/images/w-residences/gallery/WMV- VIP Lounge for 4 & 5 Bedroom (Level 4).jpg",
-          "/images/w-residences/gallery/WMV- Cellar at 34 (1).jpg",
-          "/images/w-residences/gallery/WMV- Cellar at 34 (2).jpg",
-          "/images/w-residences/gallery/WMV- Lvl 34 BBQ Pavillion.jpg",
-          "/images/w-residences/gallery/WMV- Pulse Studio on Level 15 (Gym).jpg",
-          "/images/w-residences/gallery/WMV- Meditation Room.jpg",
-          "/images/w-residences/gallery/WMV- Spa Retreat Concierge on Level 51.jpg",
-          "/images/w-residences/gallery/WMV- Treatment room on level 51.jpg",
-          "/images/w-residences/gallery/WMV- Club 51.jpg",
+          "/images/arina-east/gallery/172-6C6D LaVille-v9.jpg",
+          "/images/arina-east/gallery/172-6C6D LaVille-v8-2.jpg",
+          "/images/arina-east/gallery/172-6C6D LaVille-v8-2-1.jpg",
+          "/images/arina-east/gallery/172-6C6D LaVille-V7-6.jpg",
+          "/images/arina-east/gallery/172-6C6D LaVille-v6-333(1).jpg",
+          "/images/arina-east/gallery/172-6C6D LaVille-v5-4.jpg",
+          "/images/arina-east/gallery/172-6C6D LaVille-v4-1.jpg",
+          "/images/arina-east/gallery/172-6C6D LaVille-v3-2.jpg",
+          "/images/arina-east/gallery/172-6C6D LaVille-V2-6.jpg",
+          "/images/arina-east/gallery/172-6C6D LaVille-v1-2-opt1.jpg",
         ])
       }
     }
@@ -878,43 +879,63 @@ export default function ArinaEastLanding() {
 
   const amenities = [
     // TRANSPORT
-    { icon: <Train className="w-6 h-6" />, name: "Shenton Way MRT", distance: "3-minute walk • TEL", category: "Transport" },
-    { icon: <Train className="w-6 h-6" />, name: "Marina Bay MRT", distance: "4-minute walk • NSL/CCL/DTL/TEL", category: "Transport" },
-    { icon: <Train className="w-6 h-6" />, name: "Tanjong Pagar MRT", distance: "7-minute walk • EWL", category: "Transport" },
-    { icon: <Train className="w-6 h-6" />, name: "Prince Edward MRT", distance: "7-minute walk • CCL", category: "Transport" },
-    { icon: <Car className="w-6 h-6" />, name: "Central Expressway (CTE)", category: "Transport" },
-    { icon: <Car className="w-6 h-6" />, name: "East Coast Parkway (ECP)", category: "Transport" },
-    { icon: <Car className="w-6 h-6" />, name: "Ayer Rajah Expressway (AYE)", category: "Transport" },
-    { icon: <Car className="w-6 h-6" />, name: "Marina Coastal Expressway (MCE)", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Katong Park MRT Station", distance: "3-Mins walk", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Tanjong Katong MRT Station", distance: "2-Stops MRT", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Mountbatten MRT Station", distance: "6-Mins drive", category: "Transport" },
+    { icon: <Car className="w-6 h-6" />, name: "East Coast Parkway (ECP)", distance: "2-Mins drive", category: "Transport" },
+    { icon: <Car className="w-6 h-6" />, name: "Kallang Paya Lebar Expressway (KPE)", distance: "4-Mins drive", category: "Transport" },
+    { icon: <Car className="w-6 h-6" />, name: "Pan Island Expressway (PIE)", distance: "5-Mins drive", category: "Transport" },
+    { icon: <Car className="w-6 h-6" />, name: "Marina Coastal Expressway (MCE)", distance: "6-Mins drive", category: "Transport" },
 
     // RETAIL & F&B
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "The Shoppes at Marina Bay Sands", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Lau Pa Sat", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Marina Bay Link Mall", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Suntec City", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Satay by the Bay", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Raffles City", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "CHIJMES", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "KINEX", distance: "6-Mins drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Parkway Parade", distance: "6-Mins drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Kallang Wave Mall", distance: "7-Mins drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "I12 Katong", distance: "7-Mins drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "PLQ Mall", distance: "7-Mins drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Jewel Changi Airport", distance: "19-Mins drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Jalan Batu Market & Food Centre", distance: "4-Mins walk", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Old Airport Road Food Centre", distance: "4-Mins drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "East Coast Lagoon Food Village", distance: "10-Mins drive", category: "Retail & F&B" },
+
+    // CITY HUBS
+    { icon: <Trees className="w-6 h-6" />, name: "Goodman Arts Centre", distance: "5-Mins drive", category: "City Hubs" },
+    { icon: <Trees className="w-6 h-6" />, name: "Marina Bay Sands", distance: "9-Mins drive", category: "City Hubs" },
+    { icon: <Trees className="w-6 h-6" />, name: "Suntec Singapore Convention & Exhibition Centre", distance: "9-Mins drive", category: "City Hubs" },
+    { icon: <Trees className="w-6 h-6" />, name: "Singapore Flyer", distance: "10-Mins drive", category: "City Hubs" },
+    { icon: <Trees className="w-6 h-6" />, name: "ArtScience Museum", distance: "11-Mins drive", category: "City Hubs" },
+    { icon: <Trees className="w-6 h-6" />, name: "Esplanade - Theatres on the Bay", distance: "11-Mins drive", category: "City Hubs" },
 
     // NATURE & LEISURE
-    { icon: <Trees className="w-6 h-6" />, name: "Central Linear Park", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "Marina Barrage", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "The Commons", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "Marina Bay Sands", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "Gardens by the Bay", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "Cloud Forest & Flower Dome (Inside Gardens by the Bay)", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "Merlion Park", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Katong Park", distance: "5-Mins walk", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Wilkinson Interim Park", distance: "10-Mins walk", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Kallang Leisure Park", distance: "4-Mins drive", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Tanjong Rhu Promenade Park Connector", distance: "4-Mins drive", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Bay East Garden", distance: "6-Mins drive", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Coastal Playgrove", distance: "6-Mins drive", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Marina East Park", distance: "7-Mins drive", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Kallang Riverside Park", distance: "8-Mins drive", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "East Coast Park", distance: "9-Mins drive", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Gardens by the Bay", distance: "12-Mins drive", category: "Nature & Leisure" },
 
     // EDUCATION
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Duke-NUS Medical School", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Singapore Management University", category: "Education" },
-
-    // HEALTHCARE
-    { icon: <Hospital className="w-6 h-6" />, name: "Singapore General Hospital (SGH)", category: "Healthcare" },
-    { icon: <Hospital className="w-6 h-6" />, name: "Raffles Hospital", category: "Healthcare" },
-    { icon: <Hospital className="w-6 h-6" />, name: "Mount Elizabeth Hospital", category: "Healthcare" },
-    { icon: <Hospital className="w-6 h-6" />, name: "Gleneagles Hospital", category: "Healthcare" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "EtonHouse International School", distance: "4-Mins drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Odyssey The Global Preschool", distance: "8-Mins drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "The Schoolhouse by Busy Bees", distance: "8-Mins drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Kong Hwa School", distance: "8-Mins drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Ngee Ann Primary School", distance: "8-Mins drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Tanjong Katong Primary", distance: "8-Mins drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Tao Nan School", distance: "8-Mins drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Dunman High", distance: "3-Mins walk", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Chung Cheng High (Main)", distance: "4-Mins drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Tanjong Katong Girls’ School", distance: "6-Mins drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Tanjong Katong Secondary School", distance: "8-Mins drive", category: "Education" },
   ]
+
+  // Compute available amenity categories dynamically in a preferred order
+  const amenityCategoryOrder = ['Transport', 'Retail & F&B', 'City Hubs', 'Nature & Leisure', 'Education', 'Healthcare']
+  const availableAmenityCategories = amenityCategoryOrder.filter((category) => amenities.some((a) => a.category === category))
+  const tabsCategories = ['All', ...availableAmenityCategories]
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % projectImages.length)
@@ -1077,140 +1098,133 @@ export default function ArinaEastLanding() {
           subtype: "1-Bedroom",
           bedrooms: 1,
           bathrooms: 1,
-          size: "538 - 570 sqft",
-          price: "From $1,778,000",
+          size: "495 sqft",
+          price: "From $1,298,000",
           currency: "SGD",
-          total: 171,
-          available: 171,
-          status: 171,
+          total: 17,
+          available: 11,
+          status: 0,
           floor_plan_images: [
-            "/images/w-residences/floor-plan/1 Bedroom - Type A1.png",
-            "/images/w-residences/floor-plan/1 Bedroom - Type A2a.png",
-            "/images/w-residences/floor-plan/1 Bedroom - Type A2b.png",
+            "/images/arina-east/floor-plan/1BD - A1.png",
           ],
         }
       ]
     },
     {
-      unitType: "2-Bedroom",
+      unitType: "2-Bedroom Deluxe",
       subtypes: [
         {
-          subtype: "2-Bedroom",
+          subtype: "2-Bedroom Deluxe",
           bedrooms: 2,
           bathrooms: 2,
-          size: "710 - 850 sqft",
-          price: "From $2,383,000",
+          size: "678 sqft",
+          price: "From $1,930,000",
           currency: "SGD",
-          total: 310,
-          available: 310,
+          total: 17,
+          available: 8,
           status: 0,
           floor_plan_images: [
-            "/images/w-residences/floor-plan/2 Bedroom - Type B1.png",
-            "/images/w-residences/floor-plan/2 Bedroom - Type B2A.png",
-            "/images/w-residences/floor-plan/2 Bedroom - Type B2B.png",
-            "/images/w-residences/floor-plan/2 Bedroom - Type B3.png",
-            "/images/w-residences/floor-plan/2 Bedroom - Type B4.png",
-            "/images/w-residences/floor-plan/2 Bedroom - Type B5.png",
-            "/images/w-residences/floor-plan/2 Bedroom - Type B6.png",
+            "/images/arina-east/floor-plan/2BD Deluxe - B1.png",
           ],
         }
       ]
     },
     {
-      unitType: "3-Bedroom",
+      unitType: "2-Bedroom Premium",
       subtypes: [
         {
-          subtype: "3-Bedroom",
+          subtype: "2-Bedroom Premium",
+          bedrooms: 2,
+          bathrooms: 2,
+          size: "797 – 861 sqft",
+          price: "From $2,277,000",
+          currency: "SGD",
+          total: 26,
+          available: 13,
+          status: 0,
+          floor_plan_images: [
+            "/images/arina-east/floor-plan/2BD Premium - B2.png",
+            "/images/arina-east/floor-plan/2BD Premium - B3.png",
+          ],
+        }
+      ]
+    },
+    {
+      unitType: "3-Bedroom Deluxe",
+      subtypes: [
+        {
+          subtype: "3-Bedroom Deluxe",
           bedrooms: 3,
           bathrooms: 2,
-          size: "1,195 - 1,249 sqft",
-          price: "From $3,860,000",
+          size: "969 sqft",
+          price: "From $2,888,888",
           currency: "SGD",
-          total: 103,
-          available: 103,
+          total: 9,
+          available: 3,
           status: 0,
           floor_plan_images: [
-            "/images/w-residences/floor-plan/3 Bedroom - Type C1.png",
-            "/images/w-residences/floor-plan/3 Bedroom - Type C2.png",
-            "/images/w-residences/floor-plan/3 Bedroom - Type C3.png",
+            "/images/arina-east/floor-plan/3BD Deluxe - C1.png",
           ],
         }
       ]
     },
     {
-      unitType: "4-Bedroom",
+      unitType: "3-Bedroom Premium",
       subtypes: [
         {
-          subtype: "4-Bedroom",
+          subtype: "3-Bedroom Premium",
+          bedrooms: 3,
+          bathrooms: 2,
+          size: "1,087 sqft",
+          price: "From $3,120,000",
+          currency: "SGD",
+          total: 18,
+          available: 9,
+          status: 0,
+          floor_plan_images: [
+            "/images/arina-east/floor-plan/3BD Premium - C2.png",
+            "/images/arina-east/floor-plan/3BD Premium - C3.png",
+          ],
+        }
+      ]
+    },
+    {
+      unitType: "3-Bedroom Premium (Private Lift)",
+      subtypes: [
+        {
+          subtype: "3-Bedroom Premium (Private Lift)",
+          bedrooms: 3,
+          bathrooms: 3,
+          size: "1,238 sqft",
+          price: "From $3,660,000",
+          currency: "SGD",
+          total: 5,
+          available: 5,
+          status: 0,
+          floor_plan_images: [
+            "/images/arina-east/floor-plan/3BD Premium w Lift - C4.png",
+          ],
+        }
+      ]
+    },
+    {
+      unitType: "4-Bedroom (Private Lift)",
+      subtypes: [
+        {
+          subtype: "4-Bedroom (Private Lift)",
           bedrooms: 4,
           bathrooms: 3,
-          size: "2,250 sqft",
-          price: "From $8,700,000",
+          size: "1,389 sqft",
+          price: "From $4,587,028",
           currency: "SGD",
-          total: 32,
-          available: 32,
+          total: 15,
+          available: 6,
           status: 0,
           floor_plan_images: [
-            "/images/w-residences/floor-plan/4 Bedroom - Type D1.png",
+            "/images/arina-east/floor-plan/4BD - D1.png",
+            "/images/arina-east/floor-plan/4BD - D2.png",
+            "/images/arina-east/floor-plan/4BD - DS.png",
           ],
-        }
-      ]
-    },
-    {
-      unitType: "5-Bedroom",
-      subtypes: [
-        {
-          subtype: "5-Bedroom",
-          bedrooms: 5,
-          bathrooms: 4,
-          size: "2,809 sqft",
-          price: "From $11,360,000",
-          currency: "SGD",
-          total: 64,
-          available: 64,
-          status: 0,
-          floor_plan_images: [
-            "/images/w-residences/floor-plan/5 Bedroom - Type E1a.png",
-            "/images/w-residences/floor-plan/5 Bedroom - Type E1b.png",
-          ],
-        }
-      ]
-    },
-    {
-      unitType: "Penthouse – Simplex",
-      subtypes: [
-        {
-          subtype: "Penthouse – Simplex",
-          bedrooms: 5,
-          bathrooms: 5,
-          size: "5,199 sqft",
-          price: "Coming Soon",
-          currency: "SGD",
-          total: 2,
-          available: 2,
-          status: 0,
-          floor_plan_images: [
-            "/images/springleaf-residence/site-plan-dummy.webp",
-          ]
-        }
-      ]
-    },
-    {
-      unitType: "Penthouse – Duplex",
-      subtypes: [
-        {
-          subtype: "Penthouse – Duplex",
-          bedrooms: 5,
-          bathrooms: 6,
-          size: "5,350 sqft",
-          price: "Coming Soon",
-          currency: "SGD",
-          total: 1,
-          available: 1,
-          status: 0,
-          floor_plan_images: [
-            "/images/springleaf-residence/site-plan-dummy.webp",
-          ]
         }
       ]
     }
@@ -1296,7 +1310,7 @@ export default function ArinaEastLanding() {
         // Show success toast
         toast({
           title: "Request Submitted Successfully!",
-          description: "Thank you for your interest in W Residences ! We have sent you a confirmation email and our team will contact you soon to arrange your showflat visit.",
+          description: "Thank you for your interest in Arina East Residences ! We have sent you a confirmation email and our team will contact you soon to arrange your showflat visit.",
           variant: "default",
         })
         
@@ -1503,8 +1517,8 @@ export default function ArinaEastLanding() {
         {/* Background elements */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/w-residences/wmv-hero-background.webp"
-            alt="W Residences Marina View Hero"
+            src="/images/arina-east/arina-hero-background.webp"
+            alt="Arina East Residences Marina View Hero"
             fill
             className="object-cover"
             priority
@@ -1530,14 +1544,14 @@ export default function ArinaEastLanding() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-2 sm:mb-2 md:mb-2 lg:mb-4 leading-tight">
-                <span className={`transition-all duration-1000 delay-900 ${isVisible ? 'animate-fade-in-left' : ''}`}>W Residences</span>
+                <span className={`transition-all duration-1000 delay-900 ${isVisible ? 'animate-fade-in-left' : ''}`}>Arina East Residences</span>
               </h1>
 
               <div className={`flex items-center mb-2 sm:mb-2 md:mb-2 lg:mb-4 transition-all duration-700 delay-1300 ${
                 isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
               }`}>
                 <div className="w-12 h-px bg-[#ce001f] mr-4"></div>
-                <p className="text-lg text-gray-200 font-light">D01 - Boat Quay / Raffles Place</p>
+                <p className="text-lg text-gray-200 font-light">D15 - East Coast / Marine Parade</p>
               </div>
 
               {/* <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
@@ -1579,7 +1593,7 @@ export default function ArinaEastLanding() {
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
         }`}>
           <p className="text-xs text-white/70 bg-black/30 backdrop-blur-sm px-3 py-2 rounded-lg whitespace-nowrap">
-            Images are for illustrative purposes only and may not reflect the final design of W Residences.
+            Images are for illustrative purposes only and may not reflect the final design of Arina East Residences.
           </p>
         </div>
       </section>
@@ -1625,39 +1639,39 @@ export default function ArinaEastLanding() {
               <CardContent className="space-y-6">
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Project Name:</span>
-                  <span className="font-semibold text-white text-right">W Residences Singapore – Marina View</span>
+                  <span className="font-semibold text-white text-right">Arina East Residences</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Developer:</span>
-                  <span className="font-semibold text-white text-right">Boulevard Development Pte Ltd <br/>(IOI Properties Singapore)</span>
+                  <span className="font-semibold text-white text-right">ZACD LV Development Pte. Ltd.</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Tenure:</span>
-                  <span className="font-semibold text-white text-right">99 years</span>
+                  <span className="font-semibold text-white text-right">Freehold</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">District:</span>
-                  <span className="font-semibold text-white">D01 - Boat Quay / Raffles Place</span>
+                  <span className="font-semibold text-white">D15 - East Coast / Marine Parade</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Address:</span>
-                  <span className="font-semibold text-white text-right">22 Marina View</span>
+                  <span className="font-semibold text-white text-right">6C & 6D Tanjong Rhu Road</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Site Area:</span>
-                  <span className="font-semibold text-white text-right">Plot 1 - 7,817.6 sqm / 84,148 sqft<br/>Plot 2 – 18 sqm / 194 sqft (subterranean space)</span>
+                  <span className="font-semibold text-white text-right">4367.60 sqm / 47012.45 sqft</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Blocks:</span>
-                  <span className="font-semibold text-white text-right sm:text-left">1 storey</span>
+                  <span className="font-semibold text-white text-right sm:text-left">20 storey</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Total Units:</span>
-                  <span className="font-semibold text-white">683 residential units</span>
+                  <span className="font-semibold text-white">107</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Unit Mix:</span>
-                  <span className="font-semibold text-white text-right">1-to 5-bedroom, including 3 Penthouses</span>
+                  <span className="font-semibold text-white text-right">1-to 4-bedroom</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Architect:</span>
@@ -1669,7 +1683,7 @@ export default function ArinaEastLanding() {
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">TOP:</span>
-                  <span className="font-semibold text-right">Q1 2029</span>
+                  <span className="font-semibold text-right">Dec 2028</span>
                 </div>
               </CardContent>
             </Card>
@@ -1686,41 +1700,17 @@ export default function ArinaEastLanding() {
                 <div className="space-y-4">
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-semibold text-white">Site Plan</h4>
+                      <h4 className="font-semibold text-white">Site Map</h4>
                     </div>
-                    <div className="relative">
-                      <Carousel className="w-full">
-                        <CarouselContent>
-                          {sitePlanImages.map((image, index) => (
-                            <CarouselItem key={index}>
-                              <div className="relative">
-                                 <Image
-                                   src={image}
-                                   alt={`W Residences Site Plan ${index + 1}`}
-                                  width={800}
-                                  height={500}
-                                  quality={90}
-                                  className="w-full rounded mb-3 object-contain"
-                                />
-                              </div>
-                            </CarouselItem>
-                          ))}
-                        </CarouselContent>
-                        <CarouselPrevious className="left-2 bg-white/90 hover:bg-white text-gray-800 border-gray-300 shadow-lg" />
-                        <CarouselNext className="right-2 bg-white/90 hover:bg-white text-gray-800 border-gray-300 shadow-lg" />
-                      </Carousel>
-                      {/* Carousel indicators */}
-                      <div className="flex justify-center space-x-2 mt-3">
-                        {sitePlanImages.map((_, index) => (
-                          <button
-                            key={index}
-                            className="w-2 h-2 rounded-full bg-gray-400 hover:bg-gray-300 transition-colors duration-200"
-                            aria-label={`Go to slide ${index + 1}`}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                    <p className="text-sm text-gray-300 mb-3 mt-3">
+                    <Image
+                      src="/images/arina-east/arina-east-site-map.webp"
+                      alt="Penrith Site Map"
+                      width={800}
+                      height={500}
+                      quality={90}
+                      className="w-full rounded mb-3 hover:scale-95 transition-transform duration-500 object-contain"
+                    />
+                    <p className="text-sm text-gray-300 mb-3">
                       View the overall development layout and facilities distribution
                     </p>
                     <Button 
@@ -1730,7 +1720,7 @@ export default function ArinaEastLanding() {
                       onClick={() => setShowSiteMapPopup(true)}
                     >
                       <Download className="w-4 h-4 mr-2" />
-                      Required Site Plan
+                      Request Site Map
                     </Button>
                   </div>
                 </div>
@@ -1762,7 +1752,7 @@ export default function ArinaEastLanding() {
               <div className="relative h-[500px] rounded-xl overflow-hidden shadow-2xl">
                 <Image
                   src={projectImages[currentImageIndex] || "/placeholder.svg"}
-                  alt={`W Residences  - Image ${currentImageIndex + 1}`}
+                  alt={`Arina East - Image ${currentImageIndex + 1}`}
                   fill
                   className="object-cover transition-all duration-500"
                 />
@@ -1835,7 +1825,7 @@ export default function ArinaEastLanding() {
             <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
               <h3 className="text-2xl font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
               <p className="text-lg mb-6 opacity-90">
-                Register now for an exclusive preview of W Residences 
+                Register now for an exclusive preview of Arina East Residences 
               </p>
               <div className="cta-buttons-container justify-center">
                 <Button 
@@ -1887,7 +1877,21 @@ export default function ArinaEastLanding() {
           }}>
             {/* Tabs for unit types */}
             <div className="w-full px-2 sm:px-6 pt-4 sm:pt-6 pb-2 border-b border-gray-700 mb-6 sm:mb-8">
-              <div className="flex flex-nowrap gap-1 sm:gap-2 justify-center overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent" style={{ WebkitOverflowScrolling: 'touch' }}>
+              <div className="relative">
+                <div className={`hidden md:flex items-center absolute -left-1 top-1/2 -translate-y-1/2 z-10 transition-opacity ${canScrollLeft ? 'opacity-100' : 'opacity-30 pointer-events-none'}`}>
+                  <button
+                    aria-label="Scroll left"
+                    onClick={() => {
+                      const el = unitTabsScrollRef.current
+                      if (el) el.scrollBy({ left: -300, behavior: 'smooth' })
+                    }}
+                    className="p-2 rounded-full bg-[#18191b] border border-gray-700 hover:border-[#ce001f] hover:bg-[#ce001f]/10"
+                  >
+                    <ChevronLeft className="w-4 h-4 text-white" />
+                  </button>
+                </div>
+                <span className="block text-center text-xs text-gray-400 py-2">Scroll to view all unit types</span>
+                <div id="unit-type-tabs-scroll" ref={unitTabsScrollRef as any} className="flex flex-nowrap gap-2 justify-start overflow-x-auto whitespace-nowrap scrollbar-none md:scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent snap-x snap-mandatory -mx-2 px-2" style={{ WebkitOverflowScrolling: 'touch' }}>
                 {(() => {
                   const dynamicUnitData = processUnitAvailabilityData(project?.unitPricing || [])
                   
@@ -1910,7 +1914,7 @@ export default function ArinaEastLanding() {
                       <button
                         key={unit.unitType}
                         onClick={() => setUnitsActiveTab(idx)}
-                        className={`px-2 sm:px-4 py-2 rounded-full font-light flex items-center gap-1 sm:gap-2 text-xs sm:text-sm transition-colors border focus:outline-none whitespace-nowrap ${unitsActiveTab === idx ? 'bg-gray-800 border-[#ce001f] text-white' : 'bg-[#18191b] border-gray-700 text-gray-300 hover:bg-[#ce001f]/10 hover:text-[#ce001f]'}`}
+                        className={`px-2 sm:px-4 py-2 rounded-full font-light flex items-center gap-1 sm:gap-2 text-xs sm:text-sm transition-colors border focus:outline-none whitespace-nowrap min-w-max snap-start ${unitsActiveTab === idx ? 'bg-gray-800 border-[#ce001f] text-white' : 'bg-[#18191b] border-gray-700 text-gray-300 hover:bg-[#ce001f]/10 hover:text-[#ce001f]'}`}
                       >
                         <span>{unit.unitType.replace(' Units', '')}</span>
                         {totalAvailable > 0 && (
@@ -1922,6 +1926,19 @@ export default function ArinaEastLanding() {
                     )
                   })
                 })()}
+                </div>
+                <div className={`hidden md:flex items-center absolute -right-1 top-1/2 -translate-y-1/2 z-10 transition-opacity ${canScrollRight ? 'opacity-100' : 'opacity-30 pointer-events-none'}`}>
+                  <button
+                    aria-label="Scroll right"
+                    onClick={() => {
+                      const el = unitTabsScrollRef.current
+                      if (el) el.scrollBy({ left: 300, behavior: 'smooth' })
+                    }}
+                    className="p-2 rounded-full bg-[#18191b] border border-gray-700 hover:border-[#ce001f] hover:bg-[#ce001f]/10"
+                  >
+                    <ChevronRight className="w-4 h-4 text-white" />
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -2099,8 +2116,8 @@ export default function ArinaEastLanding() {
                 {/* Location Image */}
                 <div className="w-full rounded-lg overflow-hidden shadow-lg">
                   <Image
-                    src="/images/w-residences/wmv-location-map.webp"
-                    alt="W Residences Marina View Location Map"
+                    src="/images/arina-east/arina-east-location-map.webp"
+                    alt="Arina East Location Map"
                     width={1200}
                     height={800}
                     quality={90}
@@ -2113,21 +2130,21 @@ export default function ArinaEastLanding() {
                     <MapPin className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
                     <p className="font-semibold text-white">Address</p>
-                      <p className="text-sm text-gray-300 font-light">22 Marina View</p>
+                      <p className="text-sm text-gray-300 font-light">6C & 6D Tanjong Rhu Road</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Train className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
                       <p className="font-semibold text-white">MRT</p>
-                      <p className="text-sm text-gray-300 font-light">Shenton Way (TEL) <br /> Marina Bay (NSL/CCL/DTL/TEL)</p>
+                      <p className="text-sm text-gray-300 font-light">Katong Park (TEL) <br /> Mountbatten (CCL)</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Car className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
                       <p className="font-semibold text-white">Access</p>
-                      <p className="text-sm text-gray-300 font-light">CTE | ECP | AYE | MCE</p>
+                      <p className="text-sm text-gray-300 font-light">ECP | KPE | PIE | MCE</p>
                     </div>
                   </div>
                 </div>
@@ -2138,7 +2155,7 @@ export default function ArinaEastLanding() {
           {/* Amenities Filter */}
           <Tabs defaultValue="All" className="w-full">
             <TabsList className="flex justify-start gap-2 bg-transparent p-0 mb-6 overflow-x-auto whitespace-nowrap snap-x snap-mandatory">
-              {['All','Transport','Retail & F&B','Nature & Leisure','Education','Healthcare'].map((cat) => (
+              {tabsCategories.map((cat) => (
                 <TabsTrigger 
                   key={cat} 
                   value={cat} 
@@ -2147,6 +2164,7 @@ export default function ArinaEastLanding() {
                   {cat === 'All' && <Layers className="w-4 h-4" />}
                   {cat === 'Transport' && <Train className="w-4 h-4" />}
                   {cat === 'Retail & F&B' && <ShoppingBag className="w-4 h-4" />}
+                  {cat === 'City Hubs' && <Trees className="w-4 h-4" />}
                   {cat === 'Nature & Leisure' && <Trees className="w-4 h-4" />}
                   {cat === 'Education' && <GraduationCap className="w-4 h-4" />}
                   {cat === 'Healthcare' && <Hospital className="w-4 h-4" />}
@@ -2155,7 +2173,7 @@ export default function ArinaEastLanding() {
               ))}
             </TabsList>
 
-            {['All','Transport','Retail & F&B','Nature & Leisure','Education','Healthcare'].map((cat) => (
+            {tabsCategories.map((cat) => (
               <TabsContent key={cat} value={cat}>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                   {amenities.filter(a => cat === 'All' ? true : a.category === cat).map((amenity, index) => (
@@ -2201,7 +2219,7 @@ export default function ArinaEastLanding() {
             <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
               <h3 className="text-xl md:text-2xl font-normal md:font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
               <p className="text-base md:text-lg mb-6 opacity-90">
-                Register now for an exclusive preview of W Residences 
+                Register now for an exclusive preview of Arina East Residences 
               </p>
               <div className="cta-buttons-container justify-center">
                 <Button 
@@ -2230,7 +2248,7 @@ export default function ArinaEastLanding() {
         className={`py-8 md:py-16 relative bg-cover bg-center section-entrance`}
         data-section-id="lead-form"
         style={{ 
-          backgroundImage: "url('/images/w-residences/wmv-hero-background.webp')",
+          backgroundImage: "url('/images/arina-east/arina-hero-background.webp')",
           opacity: animatedSections.has('lead-form') ? 1 : 0,
           transform: animatedSections.has('lead-form') ? 'translateY(0)' : 'translateY(60px)'
         }}

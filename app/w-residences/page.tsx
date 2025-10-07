@@ -41,6 +41,7 @@ import {
   Layers,
   Info,
   X,
+  Footprints,
 } from "lucide-react"
 import { Calendar as CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
@@ -924,7 +925,7 @@ export default function WResidenceLanding() {
     setCurrentImageIndex((prev) => (prev - 1 + projectImages.length) % projectImages.length)
   }
 
-  const scrollToLeadForm = () => {
+  const scrollToLeadForm: () => void = () => {
     const leadFormSection = document.getElementById('lead-form')
     if (leadFormSection) {
       leadFormSection.scrollIntoView({ 
@@ -1605,6 +1606,36 @@ export default function WResidenceLanding() {
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               TBC
             </p>
+          </div>
+
+          {/* Feature Cards */}
+          <div className="flex flex-wrap gap-6 lg:gap-4 mb-12 justify-center">
+            {[
+              { icon: <Footprints className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "3 mins walk to Shenton Way MRT (TEL)" },
+              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "1–2 MRT stops to Marina Bay, Raffles Place & Downtown Core" },
+              { icon: <Car className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Seamless access to ECP, MCE and AYE expressways" },
+              { icon: <GraduationCap className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Within 1km of schools such as Cantonment Primary and Outram Secondary" },
+              { icon: <BedDouble className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "1- to 5-Bedroom Units (including Penthouses) with full hotel-style facilities and concierge services" },
+              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "99-Year Leasehold in Singapore’s most iconic waterfront estates" },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Developed by Boulevard Development Pte Ltd (IOI Properties Singapore)" }
+            ].map((card, index) => (
+              <Card 
+                key={index} 
+                className={`basis-full md:basis-[calc(50%-12px)] lg:basis-[calc(25%-12px)] text-center hover:shadow-lg transition-all duration-700 border-gray-700 bg-[#18191b] hover:scale-105 hover-lift stagger-animation ${
+                  animatedSections.has('project-info') ? 'animate' : ''
+                }`} 
+                style={{ 
+                  transitionDelay: `${index * 150}ms`,
+                  opacity: animatedSections.has('project-info') ? 1 : 0,
+                  transform: animatedSections.has('project-info') ? 'translateY(0)' : 'translateY(40px)'
+                }}
+              >
+                <CardContent className="p-6">
+                  {card.icon}
+                  <p className="text-gray-300" dangerouslySetInnerHTML={{ __html: card.desc }}></p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
 
           {/* Detailed Information Grid */}
