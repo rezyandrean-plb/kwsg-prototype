@@ -1522,7 +1522,7 @@ export default function WResidenceLanding() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Badge className="bg-[#ce001f] text-white px-4 py-2 text-sm font-medium rounded-full animate-pulse">
-                PUBLIC LAUNCH 25 OCT 2025
+                OFFICIAL LAUNCH OCT 2025
               </Badge>
             </div>
 
@@ -1531,21 +1531,24 @@ export default function WResidenceLanding() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-2 sm:mb-2 md:mb-2 lg:mb-4 leading-tight">
-                <span className={`transition-all duration-1000 delay-900 ${isVisible ? 'animate-fade-in-left' : ''}`}>W Residences</span>
+                <span className={`transition-all duration-1000 delay-900 ${isVisible ? 'animate-fade-in-left' : ''}`}>W RESIDENCES
+                </span>
+                <br />
+                <span className={`text-4xl md:text-6xl font-light text-white/90 transition-all duration-1000 delay-1100 ${isVisible ? 'animate-fade-in-right' : ''}`}>MARINA VIEW</span>
               </h1>
 
               <div className={`flex items-center mb-2 sm:mb-2 md:mb-2 lg:mb-4 transition-all duration-700 delay-1300 ${
                 isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
               }`}>
                 <div className="w-12 h-px bg-[#ce001f] mr-4"></div>
-                <p className="text-lg text-gray-200 font-light">D01 - Boat Quay / Raffles Place</p>
+                <p className="text-lg text-gray-200 font-light">D01 - Marina Bay</p>
               </div>
 
-              {/* <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
+              <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
-              </p> */}
+                Bringing New York-Inspired Luxury to the Heart of Marina Bay
+              </p>
             </div>
 
             {/* Clean CTA Buttons */}
@@ -1599,25 +1602,28 @@ export default function WResidenceLanding() {
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('project-info') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">TBC</h2>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">The Marina Bay Address That Puts You at the Heart of Everything</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              TBC
+            W Residences Marina View is a premium branded development, offering a lifestyle unlike any other. 
+            Situated in the heart of Marina Bay, this new iconic development is just a 5-minute walk from Bayfront MRT, with world-class dining, shopping, and entertainment options at your doorstep. 
+            With the Central Business District (CBD) and Orchard Road just a short MRT ride away, it’s the ideal location for those who seek both convenience and luxury.
             </p>
           </div>
 
           {/* Feature Cards */}
           <div className="flex flex-wrap gap-6 lg:gap-4 mb-12 justify-center">
             {[
-              { icon: <Footprints className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "3 mins walk to Shenton Way MRT (TEL)" },
-              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "1–2 MRT stops to Marina Bay, Raffles Place & Downtown Core" },
-              { icon: <Car className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Seamless access to ECP, MCE and AYE expressways" },
-              { icon: <GraduationCap className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Within 1km of schools such as Cantonment Primary and Outram Secondary" },
-              { icon: <BedDouble className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "1- to 5-Bedroom Units (including Penthouses) with full hotel-style facilities and concierge services" },
-              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "99-Year Leasehold in Singapore's most iconic waterfront estates" },
-              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Developed by Boulevard Development Pte Ltd (IOI Properties Singapore)" }
+              { icon: <Footprints className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "5 mins walk to Bayfront MRT (Circle & Downtown Lines)" },
+              { icon: <Footprints className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "7 mins walk to Marina Bay MRT (North-South & Circle Lines)" },
+              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "3-4 MRT stops to Raffles Place, Tanjong Pagar, and Marina Bay" },
+              { icon: <Car className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Easy access to ECP, MCE, AYE expressways" },
+              { icon: <Trees className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Surrounded by Marina Bay Sands, Gardens by the Bay, and Esplanade" },
+              { icon: <BedDouble className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "1- to 5-Bedroom Units with Branded Living & Full Condo Facilities" },
+              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "99-Year Leasehold in Marina Bay, Singapore’s Global Financial Hub" },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Jointly developed by IOI Properties Group (IOIPG), Boulevard Development Pte. Ltd. and Marriott International" }
             ].map((card, index) => (
               <Card 
                 key={index} 
@@ -1918,7 +1924,7 @@ export default function WResidenceLanding() {
           }}>
             {/* Tabs for unit types */}
             <div className="w-full px-2 sm:px-6 pt-4 sm:pt-6 pb-2 border-b border-gray-700 mb-6 sm:mb-8">
-              <div className="flex flex-nowrap gap-1 sm:gap-2 justify-center overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent" style={{ WebkitOverflowScrolling: 'touch' }}>
+              <div className="flex flex-nowrap gap-1 sm:gap-2 justify-start sm:justify-center overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent" style={{ WebkitOverflowScrolling: 'touch' }}>
                 {(() => {
                   const dynamicUnitData = processUnitAvailabilityData(project?.unitPricing || [])
                   
@@ -2087,6 +2093,110 @@ export default function WResidenceLanding() {
                 </div>
               )
             })()}
+          </div>
+        </div>
+      </section>
+
+      {/* Investor Benefits & Pricing Comparison */}
+      <section 
+        className="py-16 bg-[#242728] section-entrance"
+        data-section-id="investor-benefits"
+        style={{ 
+          opacity: animatedSections.has('investor-benefits') ? 1 : 0,
+          transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(60px)'
+        }}
+      >
+        <div className="container mx-auto px-4">
+          <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
+            animatedSections.has('investor-benefits') ? 'animate-slide-in-top' : ''
+          }`}>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">For Investors</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-[#ce001f] rounded" />
+            </div>
+          </div>
+
+          {/* Investor Benefits */}
+          <div className={`max-w-6xl mx-auto transition-all duration-1000 delay-500 ${
+            animatedSections.has('investor-benefits') ? 'animate-fade-in-up' : ''
+          }`} style={{
+            opacity: animatedSections.has('investor-benefits') ? 1 : 0,
+            transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(50px)'
+          }}>
+            {/* First Row - 2 Cards on Mobile, 3 Cards on Desktop */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+              {[
+                { icon: <Train className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "5-min Walk to Bayfront MRT", subtitle: "Strong rental demand from professionals working in the CBD and Marina Bay Financial Centre (MBFC)" },
+                { icon: <Compass className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "Close to Key Growth Hubs", subtitle: "Orchard, the CBD, and Sentosa are just moments away, with direct access to world-class retail, dining, and business districts" },
+                { icon: <MapPin className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "Prime Waterfront Location in D1", subtitle: "Proven resilience and sustained buyer demand in the Marina Bay area" }
+              ].map((benefit, index) => (
+                <div 
+                  key={index} 
+                  className={`hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
+                    animatedSections.has('investor-benefits') ? 'animate' : ''
+                  } ${index === 2 ? 'hidden md:block' : ''}`} 
+                  style={{ 
+                    transitionDelay: `${index * 200}ms`,
+                    opacity: animatedSections.has('investor-benefits') ? 1 : 0,
+                    transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
+                  }}
+                >
+                  <div className="p-4 md:p-6 flex flex-col items-center text-center space-y-2">
+                    <div className="flex-shrink-0">{benefit.icon}</div>
+                    <h3 className="text-sm md:text-lg text-white font-semibold leading-snug">{benefit.title}</h3>
+                    <p className="text-xs md:text-sm text-gray-300 font-light">{benefit.subtitle}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            {/* Second Row - 2 Cards on Mobile, 2 Cards on Desktop */}
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-6 mb-6">
+              {[
+                { icon: <Building className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "Blue-Chip Developers", subtitle: "Boulevard Development and Marriott International bring extensive experience in delivering luxury, branded residences, including globally recognised projects" },
+                { icon: <Users className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "Strong Tenant Pool", subtitle: "Attracting high-income professionals, expatriates, and long-term tenants seeking luxury and convenience" }
+              ].map((benefit, index) => (
+                <div 
+                  key={index + 3} 
+                  className={`hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
+                    animatedSections.has('investor-benefits') ? 'animate' : ''
+                  }`} 
+                  style={{ 
+                    transitionDelay: `${(index + 3) * 200}ms`,
+                    opacity: animatedSections.has('investor-benefits') ? 1 : 0,
+                    transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
+                  }}
+                >
+                  <div className="p-4 md:p-6 flex flex-col items-center text-center space-y-2">
+                    <div className="flex-shrink-0">{benefit.icon}</div>
+                    <h3 className="text-sm md:text-lg text-white font-semibold leading-snug">{benefit.title}</h3>
+                    <p className="text-xs md:text-sm text-gray-300 font-light">{benefit.subtitle}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            {/* Third Row - 1 Card Centered on Mobile, Hidden on Desktop */}
+            <div className="grid grid-cols-4 md:hidden gap-6">
+              <div className="col-span-1"></div>
+              <div 
+                className={`col-span-2 hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
+                  animatedSections.has('investor-benefits') ? 'animate' : ''
+                }`} 
+                style={{ 
+                  transitionDelay: `1000ms`,
+                  opacity: animatedSections.has('investor-benefits') ? 1 : 0,
+                  transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
+                }}
+              >
+                <div className="p-4 flex flex-col items-center text-center space-y-2">
+                  <div className="flex-shrink-0"><MapPin className="w-6 h-6" style={{ color: '#ce001f' }} /></div>
+                  <h3 className="text-sm text-white font-semibold leading-snug">Prime Waterfront Location in D1</h3>
+                  <p className="text-xs text-gray-300 font-light">Proven resilience and sustained buyer demand in the Marina Bay area</p>
+                </div>
+              </div>
+              <div className="col-span-1"></div>
+            </div>
           </div>
         </div>
       </section>
