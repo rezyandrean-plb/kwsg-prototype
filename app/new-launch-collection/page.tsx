@@ -92,8 +92,13 @@ const newLaunches = [
   },
 ]
 
+// Derive district options from data
+const districtOptions = [
+  "All",
+  ...Array.from(new Set(newLaunches.map((l) => l.district)))
+]
+
 const filterOptions = {
-  district: ["All", "District 1", "District 3", "District 7", "District 26"],
   status: ["All", "Preview Available", "Coming Soon", "Registration Open", "Early Interest"],
 }
 
@@ -197,7 +202,7 @@ export default function NewLaunchCollectionPage() {
                 District {activeFilters.districts.length > 0 && `(${activeFilters.districts.length})`}
               </h3>
                 <div className="flex gap-2 overflow-x-auto whitespace-nowrap snap-x snap-mandatory pb-2 min-w-0" style={{ WebkitOverflowScrolling: 'touch' }}>
-                  {filterOptions.district.map((district, index) => {
+                  {districtOptions.map((district, index) => {
                     const isAll = district === 'All'
                     const isActive = isAll ? activeFilters.districts.length === 0 : activeFilters.districts.includes(district)
                     return (

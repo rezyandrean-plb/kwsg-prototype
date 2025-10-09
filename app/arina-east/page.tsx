@@ -1579,7 +1579,7 @@ export default function ArinaEastLanding() {
         </div>
 
         {/* Clean Scroll Indicator */}
-        <div className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-1000 delay-2000 ${
+        <div className={`absolute z-20 bottom-16 sm:bottom-28 md:bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-1000 delay-2000 ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
         }`}>
           <div className="flex flex-col items-center text-white/60">
@@ -1589,11 +1589,11 @@ export default function ArinaEastLanding() {
         </div>
 
         {/* Disclaimer Text */}
-        <div className={`absolute bottom-4 right-4 transition-all duration-1000 delay-2000 ${
+        <div className={`absolute bottom-2 right-2 sm:bottom-4 sm:right-4 transition-all duration-1000 delay-2000 ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
         }`}>
-          <p className="text-xs text-white/70 bg-black/30 backdrop-blur-sm px-3 py-2 rounded-lg whitespace-nowrap">
-            Images are for illustrative purposes only and may not reflect the final design of Arina East Residences.
+          <p className="text-[9px] sm:text-xs text-white/70 bg-black/30 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-2 rounded-lg whitespace-nowrap">
+            Images are for illustrative purposes only and may <br className="sm:hidden"/> not reflect the final design of Arina East Residences.
           </p>
         </div>
       </section>
@@ -1878,18 +1878,6 @@ export default function ArinaEastLanding() {
             {/* Tabs for unit types */}
             <div className="w-full px-2 sm:px-6 pt-4 sm:pt-6 pb-2 border-b border-gray-700 mb-6 sm:mb-8">
               <div className="relative">
-                <div className={`hidden md:flex items-center absolute -left-1 top-1/2 -translate-y-1/2 z-10 transition-opacity ${canScrollLeft ? 'opacity-100' : 'opacity-30 pointer-events-none'}`}>
-                  <button
-                    aria-label="Scroll left"
-                    onClick={() => {
-                      const el = unitTabsScrollRef.current
-                      if (el) el.scrollBy({ left: -300, behavior: 'smooth' })
-                    }}
-                    className="p-2 rounded-full bg-[#18191b] border border-gray-700 hover:border-[#ce001f] hover:bg-[#ce001f]/10"
-                  >
-                    <ChevronLeft className="w-4 h-4 text-white" />
-                  </button>
-                </div>
                 <span className="block text-center text-xs text-gray-400 py-2">Scroll to view all unit types</span>
                 <div id="unit-type-tabs-scroll" ref={unitTabsScrollRef as any} className="flex flex-nowrap gap-2 justify-start overflow-x-auto whitespace-nowrap scrollbar-none md:scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent snap-x snap-mandatory -mx-2 px-2" style={{ WebkitOverflowScrolling: 'touch' }}>
                 {(() => {
@@ -1926,18 +1914,6 @@ export default function ArinaEastLanding() {
                     )
                   })
                 })()}
-                </div>
-                <div className={`hidden md:flex items-center absolute -right-1 top-1/2 -translate-y-1/2 z-10 transition-opacity ${canScrollRight ? 'opacity-100' : 'opacity-30 pointer-events-none'}`}>
-                  <button
-                    aria-label="Scroll right"
-                    onClick={() => {
-                      const el = unitTabsScrollRef.current
-                      if (el) el.scrollBy({ left: 300, behavior: 'smooth' })
-                    }}
-                    className="p-2 rounded-full bg-[#18191b] border border-gray-700 hover:border-[#ce001f] hover:bg-[#ce001f]/10"
-                  >
-                    <ChevronRight className="w-4 h-4 text-white" />
-                  </button>
                 </div>
               </div>
             </div>

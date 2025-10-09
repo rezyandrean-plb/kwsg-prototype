@@ -1482,64 +1482,8 @@ export default function SpringleafResidenceLanding() {
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
         }`}>
           <p className="text-[10px] sm:text-xs text-white/70 bg-black/30 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-2 rounded-lg whitespace-nowrap">
-            Images are for illustrative purposes only and may not reflect the final design of Penrith.
+            Images are for illustrative purposes only and may <br className="sm:hidden"/> not reflect the final design of Penrith.
           </p>
-        </div>
-      </section>
-
-      {/* Seminar Section */}
-      <section 
-        id="seminar"
-        className="py-8 bg-[#1c1c1d] section-entrance"
-        data-section-id="seminar"
-        style={{ 
-          opacity: animatedSections.has('seminar') ? 1 : 0,
-          transform: animatedSections.has('seminar') ? 'translateY(0)' : 'translateY(60px)'
-        }}
-      >
-        <div className="container mx-auto px-4">
-          <div className={`max-w-6xl mx-auto text-center transition-all duration-1000 delay-300 ${
-            animatedSections.has('seminar') ? 'animate-slide-in-top' : ''
-          }`}>
-            <div className="relative w-full max-w-6xl mx-auto mb-6 md:mb-8">
-              <div className="relative w-full h-[220px] sm:h-[340px] md:h-[500px] lg:h-[600px] rounded-xl overflow-hidden shadow-2xl">
-                <Image
-                  src="/images/penrith/penrith-seminar-v2.webp"
-                  alt="District 3 in Focus Seminar"
-                  fill
-                  className="object-contain lg:object-cover bg-[#0b0b0c]"
-                  priority
-                />
-              </div>
-            </div>
-
-            <h2 className="text-2xl md:text-3xl font-semibold md:font-bold mb-4 md:mb-6 leading-snug">
-              District 3 in Focus: Resale Pricing Gaps & Exit Risk Assessment Strategy <br/> Featuring Penrith
-            </h2>
-            <p className="text-base md:text-lg text-gray-300 max-w-5xl mx-auto mb-6 md:mb-8">
-              Penrith, the new landmark by Hong Leong & GuocoLand, is set to redefine District 3. As the first Government Land Sale (GLS) launch in the area in over seven years, it presents a rare opportunity in one of Singapore’s most tightly held corridors. But with high demand comes high risk. This exclusive seminar is designed to equip you with the strategic framework to evaluate this launch—and all new launches in 2025—not on hype, but on hard data.
-            </p>
-
-            <div className="text-center text-gray-300 mb-1 md:mb-2 font-semibold">Event Details:</div>
-
-            {/* Event details */}
-            <div className="md:flex flex-row flex-nowrap items-center justify-center gap-2 md:gap-6 text-sm md:text-base text-gray-300 mb-6 md:mb-8 whitespace-nowrap px-2">
-              <span className="whitespace-pre">08 October 2025, Wednesday</span>
-              <span className="hidden md:inline">|</span>
-              <br className="md:hidden" />
-              <span>07:00 PM</span>
-              <span className="hidden md:inline">|</span>
-              <br className="md:hidden" />
-              <span className="whitespace-pre">Penrith Showflat, 6A Margaret Drive, Singapore 142006</span>
-            </div>
-
-            <Button 
-              className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-medium inline-flex items-center gap-2 hover:scale-105 transition-all duration-300"
-              onClick={() => window.open('https://www.kwsingapore.com/penrith-consumer-event', '_blank')}
-            >
-              Secure My Spot! <ChevronRight className="w-4 h-4" />
-            </Button>
-          </div>
         </div>
       </section>
 

@@ -1574,7 +1574,7 @@ export default function AureaLanding() {
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
         }`}>
           <p className="text-[10px] sm:text-xs text-white/70 bg-black/30 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-2 rounded-lg whitespace-nowrap">
-            Images are for illustrative purposes only and may not reflect the final design of Aurea.
+            Images are for illustrative purposes only and may <br className="sm:hidden"/> not reflect the final design of Aurea.
           </p>
         </div>
       </section>
