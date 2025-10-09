@@ -1566,7 +1566,7 @@ export default function WResidenceLanding() {
         </div>
 
         {/* Clean Scroll Indicator */}
-        <div className={`absolute bottom-16 sm:bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-1000 delay-2000 ${
+        <div className={`absolute z-20 bottom-16 sm:bottom-28 md:bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-1000 delay-2000 ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
         }`}>
           <div className="flex flex-col items-center text-white/60">
@@ -1580,7 +1580,7 @@ export default function WResidenceLanding() {
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
         }`}>
           <p className="text-[9px] sm:text-xs text-white/70 bg-black/30 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-2 rounded-lg whitespace-nowrap">
-            Images are for illustrative purposes only and may not reflect the final design of W Residences.
+            Images are for illustrative purposes only and may <br className="sm:hidden"/> not reflect the final design of W Residences.
           </p>
         </div>
       </section>
@@ -1616,7 +1616,7 @@ export default function WResidenceLanding() {
               { icon: <Car className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Seamless access to ECP, MCE and AYE expressways" },
               { icon: <GraduationCap className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Within 1km of schools such as Cantonment Primary and Outram Secondary" },
               { icon: <BedDouble className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "1- to 5-Bedroom Units (including Penthouses) with full hotel-style facilities and concierge services" },
-              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "99-Year Leasehold in Singapore’s most iconic waterfront estates" },
+              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "99-Year Leasehold in Singapore's most iconic waterfront estates" },
               { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Developed by Boulevard Development Pte Ltd (IOI Properties Singapore)" }
             ].map((card, index) => (
               <Card 
@@ -1668,7 +1668,7 @@ export default function WResidenceLanding() {
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">District:</span>
-                  <span className="font-semibold text-white">D01 - Boat Quay / Raffles Place</span>
+                  <span className="font-semibold text-white text-right sm:text-left">D01 - Boat Quay <br className="sm:hidden"/> Raffles Place</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Address:</span>
