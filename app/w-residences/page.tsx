@@ -1685,8 +1685,8 @@ export default function WResidenceLanding() {
                   <span className="font-semibold text-white text-right">Plot 1 - 7,817.6 sqm / 84,148 sqft<br/>Plot 2 – 18 sqm / 194 sqft (subterranean space)</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Blocks:</span>
-                  <span className="font-semibold text-white text-right sm:text-left">1 storey</span>
+                  <span className="font-medium text-gray-300">No. of floors:</span>
+                  <span className="font-semibold text-white text-right sm:text-left">51 Storeys</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Total Units:</span>
