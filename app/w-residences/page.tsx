@@ -565,7 +565,7 @@ function LeadGenerationForm({
     <Card className={`bg-white/20 backdrop-blur-sm text-white p-6 md:p-12 shadow-2xl border-0 rounded-xl hover:shadow-3xl transition-all duration-700 hover:scale-105`}>
       <h2 className="text-4xl font-bold mb-4 text-white text-center">Book Your Showflat Visit Today</h2>
       <p className="text-md mb-8 opacity-90 text-white text-center">
-        Be the first to own a home that combines convenience, luxury, and nature. Register now for an exclusive preview of W Residences .
+        Be the first to own a home that combines convenience, luxury, and nature. Register now for an exclusive preview of W Residences Marina View .
       </p>
       {submitError && (
         <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
@@ -816,7 +816,7 @@ export default function WResidenceLanding() {
 
   const [projectImages, setProjectImages] = useState<string[]>([])
   
-  // Site Plan images for carousel (replace with W Residences assets when ready)
+  // Site Plan images for carousel (replace with W Residences Marina View assets when ready)
   const sitePlanImages: string[] = [
     "/images/w-residences/site-plan/wmv-site-plan-01.webp",
     "/images/w-residences/site-plan/wmv-site-plan-02.webp",
@@ -1297,7 +1297,7 @@ export default function WResidenceLanding() {
         // Show success toast
         toast({
           title: "Request Submitted Successfully!",
-          description: "Thank you for your interest in W Residences ! We have sent you a confirmation email and our team will contact you soon to arrange your showflat visit.",
+          description: "Thank you for your interest in W Residences Marina View ! We have sent you a confirmation email and our team will contact you soon to arrange your showflat visit.",
           variant: "default",
         })
         
@@ -1589,7 +1589,7 @@ export default function WResidenceLanding() {
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
         }`}>
           <p className="text-[9px] sm:text-xs text-white/70 bg-black/30 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-2 rounded-lg whitespace-nowrap">
-            Images are for illustrative purposes only and may <br className="sm:hidden"/> not reflect the final design of W Residences.
+            Images are for illustrative purposes only and may <br className="sm:hidden"/> not reflect the final design of W Residences Marina View.
           </p>
         </div>
       </section>
@@ -1995,7 +1995,7 @@ export default function WResidenceLanding() {
             <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
               <h3 className="text-2xl font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
               <p className="text-lg mb-6 opacity-90">
-                Register now for an exclusive preview of W Residences 
+                Register now for an exclusive preview of W Residences Marina View 
               </p>
               <div className="cta-buttons-container justify-center">
                 <Button 
@@ -2465,7 +2465,7 @@ export default function WResidenceLanding() {
             <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
               <h3 className="text-xl md:text-2xl font-normal md:font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
               <p className="text-base md:text-lg mb-6 opacity-90">
-                Register now for an exclusive preview of W Residences 
+                Register now for an exclusive preview of W Residences Marina View 
               </p>
               <div className="cta-buttons-container justify-center">
                 <Button 
