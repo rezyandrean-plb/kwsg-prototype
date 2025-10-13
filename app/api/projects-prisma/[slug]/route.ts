@@ -226,6 +226,9 @@ export async function GET(
       layout_info: sp.layout_info
     }))
 
+    // Revert: keep unitPricing empty for now
+    const unitPricing: any[] = []
+
     const projectDetails: ProjectDetails = {
       id: dbProject.id,
       document_id: dbProject.document_id,
@@ -274,7 +277,7 @@ export async function GET(
       brochures: [],
       imageGallery: formattedImageGallery,
       sitePlans: formattedSitePlans,
-      unitPricing: []
+      unitPricing
     }
 
     return NextResponse.json({ data: projectDetails })
@@ -287,6 +290,7 @@ export async function GET(
     }, { status: 500 })
   }
 }
+
 
 
 
