@@ -1266,7 +1266,7 @@ export default function WResidenceLanding() {
       // Ensure only the date (no time) is submitted for preferredDate
       const preferredDateOnly = preferredDate ? format(preferredDate, 'yyyy-MM-dd') : undefined
 
-      const response = await fetch('/api/penrith-lead-form', {
+      const response = await fetch('/api/w-residences-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1359,7 +1359,7 @@ export default function WResidenceLanding() {
 
     try {
       // Submit the form with the reCAPTCHA token
-      const response = await fetch('/api/site-map-request', {
+      const response = await fetch('/api/w-residences-site-map-request', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1460,6 +1460,12 @@ export default function WResidenceLanding() {
                   className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
                 >
                   Project Info
+                </button>
+                <button 
+                  onClick={() => scrollToSection('facilities')}
+                  className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
+                >
+                  Facilities
                 </button>
                 <button 
                   onClick={scrollToGallery}
