@@ -879,10 +879,10 @@ export default function WResidenceLanding() {
 
   const amenities = [
     // TRANSPORT
-    { icon: <Train className="w-6 h-6" />, name: "Shenton Way MRT", distance: "3-minute walk • TEL", category: "Transport" },
-    { icon: <Train className="w-6 h-6" />, name: "Marina Bay MRT", distance: "4-minute walk • NSL/CCL/DTL/TEL", category: "Transport" },
-    { icon: <Train className="w-6 h-6" />, name: "Tanjong Pagar MRT", distance: "7-minute walk • EWL", category: "Transport" },
-    { icon: <Train className="w-6 h-6" />, name: "Prince Edward MRT", distance: "7-minute walk • CCL", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Shenton Way MRT", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Marina Bay MRT", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Tanjong Pagar MRT", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Prince Edward MRT", category: "Transport" },
     { icon: <Car className="w-6 h-6" />, name: "Central Expressway (CTE)", category: "Transport" },
     { icon: <Car className="w-6 h-6" />, name: "East Coast Parkway (ECP)", category: "Transport" },
     { icon: <Car className="w-6 h-6" />, name: "Ayer Rajah Expressway (AYE)", category: "Transport" },
@@ -1614,7 +1614,7 @@ export default function WResidenceLanding() {
             </div>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             W Residences Marina View is a premium branded development, offering a lifestyle unlike any other. 
-            Situated in the heart of Marina Bay, this new iconic development is just a 5-minute walk from Bayfront MRT, with world-class dining, shopping, and entertainment options at your doorstep. 
+            Situated in the heart of Marina Bay, this new iconic development is just next to Shenton Way MRT, with world-class dining, shopping, and entertainment options at your doorstep. 
             With the Central Business District (CBD) and Orchard Road just a short MRT ride away, it’s the ideal location for those who seek both convenience and luxury.
             </p>
           </div>
@@ -1668,7 +1668,7 @@ export default function WResidenceLanding() {
               <CardContent className="space-y-6">
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Project Name:</span>
-                  <span className="font-semibold text-white text-right">W Residences Singapore – Marina View</span>
+                  <span className="font-semibold text-white text-right">W Residences Marina View</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Developer:</span>
@@ -1791,7 +1791,9 @@ export default function WResidenceLanding() {
               transform: animatedSections.has('facilities') ? 'translateY(0)' : 'translateY(60px)'
             }}
           >
-            <div className="container mx-auto px-4">
+            <div className={`mb-20 transition-all duration-1000 delay-700 ${
+              isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+            }`}>
               <div className="text-center mb-12">
                 <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Facilities</h2>
                 <div className="flex justify-center mb-4">
@@ -2300,10 +2302,9 @@ export default function WResidenceLanding() {
             </div>
             
             {/* Third Row - 1 Card Centered on Mobile, Hidden on Desktop */}
-            <div className="grid grid-cols-4 md:hidden gap-6">
-              <div className="col-span-1"></div>
+            <div className="grid grid-cols-1 md:hidden gap-6">
               <div 
-                className={`col-span-2 hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
+                className={`w-full hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
                   animatedSections.has('investor-benefits') ? 'animate' : ''
                 }`} 
                 style={{ 
@@ -2318,7 +2319,6 @@ export default function WResidenceLanding() {
                   <p className="text-xs text-gray-300 font-light">Proven resilience and sustained buyer demand in the Marina Bay area</p>
                 </div>
               </div>
-              <div className="col-span-1"></div>
             </div>
           </div>
         </div>
@@ -2439,9 +2439,6 @@ export default function WResidenceLanding() {
                           <div className="flex-shrink-0" style={{ color: '#ce001f' }}>{amenity.icon}</div>
                           <div className="text-center md:text-center flex-1 min-w-0">
                             <h3 className="font-semibold text-xs md:text-lg text-white break-words">{amenity.name}</h3>
-                            {amenity.distance && (
-                              <p className="text-gray-300 font-light text-xs md:text-sm break-words">{amenity.distance}</p>
-                            )}
                           </div>
                         </div>
                       </CardContent>
