@@ -1,5 +1,11 @@
 {
   "buildCommand": "bun run build",
   "installCommand": "bun install",
-  "framework": "nextjs"
+  "framework": "nextjs",
+  "crons": [
+    {
+      "path": "/api/cron/sync-daily",
+      "schedule": "0 2 * * *"
+    }
+  ]
 } 

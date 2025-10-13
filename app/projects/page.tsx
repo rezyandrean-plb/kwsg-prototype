@@ -43,36 +43,29 @@ const staggerContainer = {
 type ApiProject = {
   id: number
   name: string
-  project_name: string
   slug: string
-  title: string
   location: string
-  address: string
-  type: string
+  address?: string
+  type?: string
   price: string
-  price_from: string
-  display_price: string
-  price_per_sqft: string
-  bedrooms: string
-  bathrooms: string
-  size: string
-  units: string
-  developer: string | { name?: string }
-  completion: string
-  description: string
-  features: string[]
-  district: string
-  tenure: string
-  property_type: string
-  status: string
-  total_units: string
-  total_floors: string
-  site_area: string
-  latitude: number | string | null
-  longitude: number | string | null
-  created_at: string
-  updated_at: string
-  image_url_banner: string | null
+  lowerPrice?: string
+  pricePerSqFt?: string
+  bedrooms?: string[]
+  bathrooms?: string
+  size?: string
+  units?: string
+  developer?: string
+  completion?: string
+  description?: string
+  features?: string[]
+  district?: string | number
+  tenure?: string
+  propertyType?: string
+  status?: string
+  totalUnits?: string
+  coordinates?: { lat: number; lng: number }
+  image?: string
+  image_url_banner?: string
 }
 
 // Add type definition for Project
@@ -106,7 +99,7 @@ type Project = {
   bedrooms?: string[]
 }
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://striking-hug-052e89dfad.strapiapp.com'
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api'
 
 const normalizeMoney = (s?: string) => (s || '').replace(/[\$,]/g, '').trim()
 const asMillions = (raw?: string) => {
@@ -179,14 +172,32 @@ export default function NewLaunchDirectory() {
         params.set('page', String(currentPage))
         params.set('pageSize', String(projectsPerPage))
         params.set('sort', sortParam)
-        params.set('populate', 'developer')
         if (searchQuery.trim()) {
-          // basic containsi on two fields
-          params.set('filters[name][$containsi]', searchQuery.trim())
-          params.set('filters[location][$containsi]', searchQuery.trim())
+          params.set('search', searchQuery.trim())
+        }
+        
+        // Add filter parameters
+        if (selectedDistricts.length > 0) {
+          selectedDistricts.forEach(district => params.append('districts', String(district)))
+        }
+        if (selectedTenures.length > 0) {
+          selectedTenures.forEach(tenure => params.append('tenures', tenure))
+        }
+        if (selectedPropertyTypes.length > 0) {
+          selectedPropertyTypes.forEach(type => params.append('propertyTypes', type))
+        }
+        if (selectedStatus.length > 0) {
+          selectedStatus.forEach(status => params.append('statuses', status))
+        }
+        if (selectedBedrooms.length > 0) {
+          selectedBedrooms.forEach(bedroom => params.append('bedrooms', bedroom))
+        }
+        if (priceMin > 0 || priceMax < 5000000) {
+          params.set('priceMin', String(priceMin))
+          params.set('priceMax', String(priceMax))
         }
 
-        const url = `${API_BASE}/api/projects?${params.toString()}`
+        const url = `${API_BASE}/projects-prisma?${params.toString()}`
         const resp = await fetch(url, {
           signal: controller.signal,
           headers: { 'Content-Type': 'application/json' },
@@ -198,94 +209,74 @@ export default function NewLaunchDirectory() {
         const json = await resp.json()
         const apiProjects: ApiProject[] = json.data || []
         const meta = json.meta?.pagination || { page: currentPage, pageSize: projectsPerPage, pageCount: 1, total: apiProjects.length }
-
-        const mapped: Project[] = apiProjects.map((p) => {
-          // district
+        try {
+          const mapped: Project[] = apiProjects.map((p) => {
+          // district - handle both string "D10" and number 10 formats
           const districtNumber = p.district ? (() => {
-            const m = p.district.match(/D(\d+)/i)
-            return m ? parseInt(m[1], 10) : undefined
+            if (typeof p.district === 'number') {
+              return p.district
+            } else if (typeof p.district === 'string') {
+              const m = p.district.match(/D(\d+)/i)
+              return m ? parseInt(m[1], 10) : undefined
+            }
+            return undefined
           })() : undefined
 
-          // price
-          const priceFromM = asMillions(p.price_from)
-          let price = 'Price on request'
-          let lowerPrice: string | undefined = undefined
-          if (priceFromM) {
-            lowerPrice = priceFromM
-            price = `From $${priceFromM}M`
-          } else if (p.display_price) {
-            const m = p.display_price.match(/([\$]?[0-9,]+(\.[0-9]+)?)/)
-            if (m) {
-              const million = asMillions(m[1])
-              if (million && million !== '0') {
-                lowerPrice = million
-                price = `From $${million}M`
-              } else {
-                price = p.display_price
-              }
-            } else {
-              price = p.display_price
-            }
-          } else if (p.price) {
-            price = p.price
-          }
+          // price - API already provides transformed price data
+          const price = p.price || 'Price on request'
+          const lowerPrice = p.lowerPrice
 
-          // developer
-          const developerName =
-            typeof p.developer === 'string'
-              ? p.developer
-              : (p.developer && typeof p.developer === 'object' && 'name' in p.developer)
-                ? (p.developer as any).name
-                : ''
+          // developer - API already provides string
+          const developerName = p.developer || 'Developer not specified'
 
-          // coords
-          const lat = typeof p.latitude === 'number' ? p.latitude : p.latitude ? Number(p.latitude) : undefined
-          const lng = typeof p.longitude === 'number' ? p.longitude : p.longitude ? Number(p.longitude) : undefined
-          const coordinates = lat != null && lng != null ? { lat, lng } : { lat: 1.3521, lng: 103.8198 }
+          // coordinates - API already provides coordinates
+          const coordinates = p.coordinates || { lat: 1.3521, lng: 103.8198 }
 
-          // image
-          const image = p.image_url_banner && p.image_url_banner.trim() !== ''
-            ? p.image_url_banner
-            : '/images/new-launch/new-launch-preview.webp'
+          // image - API already provides image URL
+          const image = p.image || '/images/new-launch/new-launch-preview.webp'
+          const image_url_banner = p.image_url_banner || image
 
-          // bedrooms
-          const bedrooms = p.bedrooms ? p.bedrooms.split(',').map(b => b.trim()).filter(b => b && b !== 'N/A') : undefined
+          // bedrooms - API already provides array
+          const bedrooms = p.bedrooms
 
           return {
             slug: p.slug,
-            name: p.name || p.project_name,
+            name: p.name,
             location: p.location,
             address: p.address,
             price,
-            priceRange: p.display_price || undefined,
-            pricePerSqFt: p.price_per_sqft,
+            priceRange: lowerPrice ? `From $${lowerPrice}M` : undefined,
+            pricePerSqFt: p.pricePerSqFt,
             image,
-            image_url_banner: p.image_url_banner,
+            image_url_banner,
             units: p.units ? `${p.units} Units` : undefined,
-            unitsAvailable: p.total_units ? `${p.total_units} Units` : undefined,
+            unitsAvailable: p.totalUnits ? `${p.totalUnits} Units` : undefined,
             propertySizeRange: p.size,
             developer: developerName,
             completion: p.completion,
             description: p.description,
             features: p.features || [],
-            type: p.type || p.property_type,
+            type: p.type || p.propertyType,
             status: mapStatus(p.status),
             district: districtNumber,
             tenure: p.tenure,
-            propertyType: p.property_type,
+            propertyType: p.propertyType,
             bedrooms,
             coordinates,
             lowerPrice,
           }
         })
 
-        setProjects(mapped)
-        setPaginationMeta({
-          total: meta.total ?? mapped.length,
-          page: meta.page ?? currentPage,
-          pageSize: meta.pageSize ?? projectsPerPage,
-          pageCount: meta.pageCount ?? 1,
-        })
+          setProjects(mapped)
+          setPaginationMeta({
+            total: meta.total ?? mapped.length,
+            page: meta.page ?? currentPage,
+            pageSize: meta.pageSize ?? projectsPerPage,
+            pageCount: meta.pageCount ?? 1,
+          })
+        } catch (error) {
+          console.error('Error in mapping:', error)
+        }
         setIsLoading(false)
       } catch (err) {
         clearTimeout(timeoutId)
@@ -302,44 +293,12 @@ export default function NewLaunchDirectory() {
 
     loadProjects()
     return () => controller.abort()
-  }, [isClient, currentPage, projectsPerPage, searchQuery, sortBy])
+  }, [isClient, currentPage, projectsPerPage, searchQuery, sortBy, selectedDistricts, selectedTenures, selectedPropertyTypes, selectedStatus, selectedBedrooms, priceMin, priceMax])
 
   const scrollToSearch = () => { searchSectionRef.current?.scrollIntoView({ behavior: 'smooth' }) }
 
-  // Client-side filtering of current page (optional; server already paginated)
-  const filteredProjects = projects.filter((project) => {
-    const matchesSearch =
-      project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      project.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (typeof project.developer === 'string' ? project.developer.toLowerCase() : '').includes(searchQuery.toLowerCase())
-
-    const matchesDistrict = selectedDistricts.length === 0 || (project.district && selectedDistricts.includes(project.district))
-    const matchesTenure = selectedTenures.length === 0 || (project.tenure && selectedTenures.includes(project.tenure))
-    const matchesPropertyType = selectedPropertyTypes.length === 0 || (project.propertyType && selectedPropertyTypes.includes(project.propertyType))
-    const matchesStatus = selectedStatus.length === 0 || (project.status && selectedStatus.includes(project.status))
-    const matchesBedrooms = selectedBedrooms.length === 0 || (() => {
-      if (!project.bedrooms || project.bedrooms.length === 0) return false
-      return selectedBedrooms.some(selectedBedroom => {
-        if (selectedBedroom === 'Studio') {
-          return project.bedrooms?.includes('Studio') || project.bedrooms?.includes('0')
-        } else if (selectedBedroom === '5 or more') {
-          return project.bedrooms?.some(bedroom => {
-            const num = parseInt(bedroom)
-            return !isNaN(num) && num >= 5
-          })
-        } else {
-          return project.bedrooms?.includes(selectedBedroom)
-        }
-      })
-    })()
-
-    const [projectMin, projectMax] = (project.priceRange || '').split(" - ").map(price => parseInt(price.replace(/[^0-9]/g, "")))
-    const matchesPriceRange =
-      (priceMin === 0 && priceMax === 5000000) ||
-      (projectMax >= priceMin && projectMin <= priceMax)
-
-    return matchesSearch && matchesDistrict && matchesTenure && matchesPropertyType && matchesStatus && matchesBedrooms && matchesPriceRange
-  })
+  // Server-side filtering is now handled by the API
+  const filteredProjects = projects
 
   const districts = Array.from(new Set(projects.map(p => p.district).filter((d): d is number => d !== undefined))).sort((a, b) => a - b)
   const tenures = Array.from(new Set(projects.map(p => p.tenure).filter((t): t is string => t != null && t.trim() !== '')))
@@ -437,11 +396,524 @@ export default function NewLaunchDirectory() {
         </div>
       </section>
 
+      {/* Search and Filters Row */}
       <section ref={searchSectionRef} className="container mx-auto px-4 mt-[-4rem] mb-12 relative z-10">
         <div className="bg-[#242728] rounded-2xl shadow-lg p-4 sm:p-6">
-          {/* Mobile controls (omitted here for brevity, same as your original) */}
-          {/* Desktop controls (omitted for brevity) */}
-          {/* Keep your full controls as in your code; logic above wires data */}
+          {/* Mobile Layout - Stacked */}
+          <div className="block sm:hidden">
+            {/* Search Bar - Full width on mobile */}
+            <div className="relative mb-4">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Input
+                type="search"
+                placeholder="Search projects by name, location, or developer..."
+                className="w-full pl-4 h-[52px] text-base bg-[#242728] border-gray-600 text-white placeholder:text-gray-400 focus:border-primary-red focus:ring-primary-red/20 backdrop-blur-sm rounded-md"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    setSearchQuery(searchInput)
+                    setCurrentPage(1)
+                  }
+                }}
+              />
+            </div>
+            
+            {/* Filter Controls - Stack on mobile */}
+            <div className="flex flex-col items-stretch gap-3">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    className="h-[52px] px-4 flex items-center justify-center gap-2 border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 rounded-md transition-colors whitespace-nowrap text-sm"
+                  >
+                    <Filter className="h-4 w-4" />
+                    <span>Filters</span>
+                    {(selectedDistricts.length > 0 || selectedTenures.length > 0 || selectedPropertyTypes.length > 0 || 
+                      selectedStatus.length > 0 || selectedBedrooms.length > 0 || (priceMin > 0 || priceMax < 5000000)) && (
+                      <Badge variant="secondary" className="ml-1 bg-primary-red/20 text-primary-red rounded-full text-xs">
+                        {selectedDistricts.length + selectedTenures.length + selectedPropertyTypes.length + 
+                         selectedStatus.length + selectedBedrooms.length + ((priceMin > 0 || priceMax < 5000000) ? 1 : 0)}
+                      </Badge>
+                    )}
+                  </Button>
+                </SheetTrigger>
+                <SheetContent className="w-full bg-[#242728] border-gray-700 text-white">
+                  <SheetHeader>
+                    <SheetTitle className="text-white">Filter Projects</SheetTitle>
+                  </SheetHeader>
+                  <div className="mt-6 space-y-6 max-h-[calc(100vh-200px)] overflow-y-auto pr-2">
+                    {/* District Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">District</h3>
+                      <div className="space-y-3">
+                        <Button
+                          variant={selectedDistricts.length === districts.length ? "default" : "outline"}
+                          className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 text-sm py-2"
+                          onClick={handleSelectAllDistricts}
+                        >
+                          {selectedDistricts.length === districts.length && <Check className="mr-2 h-4 w-4" />}
+                          {selectedDistricts.length === districts.length ? "Deselect All" : "Select All"}
+                        </Button>
+                        <div className="grid grid-cols-4 gap-1.5 max-h-48 overflow-y-auto pr-2">
+                          {districts.map((district) => (
+                            <Button
+                              key={district}
+                              variant={selectedDistricts.includes(district) ? "default" : "outline"}
+                              className={`w-full justify-center text-xs py-1.5 px-2 min-h-[32px] transition-all duration-200 ${
+                                selectedDistricts.includes(district)
+                                  ? "bg-primary-red text-white border-primary-red shadow-lg transform scale-105"
+                                  : "border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                              }`}
+                              onClick={() => handleDistrictChange(district)}
+                            >
+                              {selectedDistricts.includes(district) && <Check className="mr-1 h-3 w-3" />}
+                              D{district}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Tenure Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">Tenure</h3>
+                      <div className="space-y-2">
+                        <Button
+                          variant={selectedTenures.length === tenures.length ? "default" : "outline"}
+                          className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                          onClick={handleSelectAllTenures}
+                        >
+                          {selectedTenures.length === tenures.length && <Check className="mr-2 h-4 w-4" />}
+                          {selectedTenures.length === tenures.length ? "Deselect All" : "Select All"}
+                        </Button>
+                        {tenures.map((tenure) => (
+                          <Button
+                            key={tenure}
+                            variant={selectedTenures.includes(tenure) ? "default" : "outline"}
+                            className={`w-full justify-start text-sm py-2 transition-all duration-200 ${
+                              selectedTenures.includes(tenure)
+                                ? "bg-primary-red text-white border-primary-red shadow-lg transform scale-[1.02]"
+                                : "border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                            }`}
+                            onClick={() => handleTenureChange(tenure)}
+                          >
+                            {selectedTenures.includes(tenure) && <Check className="mr-2 h-4 w-4" />}
+                            {tenure}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Property Type Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">Property Type</h3>
+                      <div className="space-y-2">
+                        {propertyTypes.map((type) => (
+                          <Button
+                            key={type}
+                            variant={selectedPropertyTypes.includes(type) ? "default" : "outline"}
+                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 text-sm py-2"
+                            onClick={() => handlePropertyTypeChange(type)}
+                          >
+                            {selectedPropertyTypes.includes(type) && <Check className="mr-2 h-4 w-4" />}
+                            {type}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Status Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">Status</h3>
+                      <div className="space-y-2">
+                        {statuses.map((status) => (
+                          <Button
+                            key={status}
+                            variant={selectedStatus.includes(status) ? "default" : "outline"}
+                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 capitalize text-sm py-2"
+                            onClick={() => handleStatusChange(status)}
+                          >
+                            {selectedStatus.includes(status) && <Check className="mr-2 h-4 w-4" />}
+                            {status}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Bedroom Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">Bedrooms</h3>
+                      <div className="grid grid-cols-2 gap-2">
+                        {bedrooms.map((bedroom) => (
+                          <Button
+                            key={bedroom}
+                            variant={selectedBedrooms.includes(bedroom) ? "default" : "outline"}
+                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 text-sm py-2"
+                            onClick={() => handleBedroomChange(bedroom)}
+                          >
+                            {selectedBedrooms.includes(bedroom) && <Check className="mr-2 h-4 w-4" />}
+                            {bedroom}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Price Range Filter */}
+                    <div>
+                      <h3 className="font-medium mb-4 text-white">Price Range</h3>
+                      <div className="space-y-4">
+                        <div className="px-1">
+                          <Slider
+                            defaultValue={[priceMin, priceMax]}
+                            max={5000000}
+                            step={100000}
+                            onValueChange={(value) => {
+                              setPriceMin(value[0])
+                              setPriceMax(value[1])
+                              setCurrentPage(1)
+                            }}
+                            className="mb-6"
+                          />
+                        </div>
+                        
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="bg-gray-800/50 border border-gray-600 rounded-lg p-3">
+                            <div className="text-xs text-gray-400 mb-1">Min Price</div>
+                            <div className="text-white font-semibold">${priceMin.toLocaleString()}</div>
+                          </div>
+                          <div className="bg-gray-800/50 border border-gray-600 rounded-lg p-3">
+                            <div className="text-xs text-gray-400 mb-1">Max Price</div>
+                            <div className="text-white font-semibold">${priceMax.toLocaleString()}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </SheetContent>
+              </Sheet>
+
+              <Select value={sortBy} onValueChange={(v) => { setSortBy(v); setCurrentPage(1) }}>
+                <SelectTrigger className="h-[52px] px-4 bg-[#242728] border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 rounded-md text-sm">
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#242728] border-gray-700 text-white">
+                  <SelectItem value="latest" className="text-white">Latest</SelectItem>
+                  <SelectItem value="price-low-high" className="text-white">Price: Low to High</SelectItem>
+                  <SelectItem value="price-high-low" className="text-white">Price: High to Low</SelectItem>
+                  <SelectItem value="completion" className="text-white">Completion Date</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* Desktop Layout - Horizontal Row */}
+          <div className="hidden sm:flex items-center gap-4">
+            {/* Search Bar */}
+            <div className="relative flex-1">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Input
+                type="search"
+                placeholder="Search projects by name, location, or developer..."
+                className="w-full pl-4 h-[52px] text-lg bg-[#242728] border-gray-600 text-white placeholder:text-gray-400 focus:border-primary-red focus:ring-primary-red/20 backdrop-blur-sm rounded-md"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    setSearchQuery(searchInput)
+                    setCurrentPage(1)
+                  }
+                }}
+              />
+            </div>
+
+            {/* Filter Controls */}
+            <div className="flex items-center gap-3">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    className="h-[52px] px-4 flex items-center gap-2 border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 rounded-md transition-colors whitespace-nowrap"
+                  >
+                    <Filter className="h-4 w-4" />
+                    Filter
+                    {(selectedDistricts.length > 0 || selectedTenures.length > 0 || selectedPropertyTypes.length > 0 || 
+                      selectedStatus.length > 0 || selectedBedrooms.length > 0 || (priceMin > 0 || priceMax < 5000000)) && (
+                      <Badge variant="secondary" className="ml-1 bg-primary-red/20 text-primary-red rounded-full">
+                        {selectedDistricts.length + selectedTenures.length + selectedPropertyTypes.length + 
+                         selectedStatus.length + selectedBedrooms.length + ((priceMin > 0 || priceMax < 5000000) ? 1 : 0)}
+                      </Badge>
+                    )}
+                  </Button>
+                </SheetTrigger>
+                <SheetContent className="w-[400px] bg-[#242728] border-gray-700 text-white">
+                  <SheetHeader>
+                    <SheetTitle className="text-white">Filter Projects</SheetTitle>
+                  </SheetHeader>
+                  <div className="mt-6 space-y-6 max-h-[calc(100vh-200px)] overflow-y-auto pr-2">
+                    {/* District Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">District</h3>
+                      <div className="space-y-3">
+                        <Button
+                          variant={selectedDistricts.length === districts.length ? "default" : "outline"}
+                          className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 text-sm py-2"
+                          onClick={handleSelectAllDistricts}
+                        >
+                          {selectedDistricts.length === districts.length && <Check className="mr-2 h-4 w-4" />}
+                          {selectedDistricts.length === districts.length ? "Deselect All" : "Select All"}
+                        </Button>
+                        <div className="grid grid-cols-4 gap-1.5 max-h-48 overflow-y-auto pr-2">
+                          {districts.map((district) => (
+                            <Button
+                              key={district}
+                              variant={selectedDistricts.includes(district) ? "default" : "outline"}
+                              className={`w-full justify-center text-xs py-1.5 px-2 min-h-[32px] transition-all duration-200 ${
+                                selectedDistricts.includes(district)
+                                  ? "bg-primary-red text-white border-primary-red shadow-lg transform scale-105"
+                                  : "border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                              }`}
+                              onClick={() => handleDistrictChange(district)}
+                            >
+                              {selectedDistricts.includes(district) && <Check className="mr-1 h-3 w-3" />}
+                              D{district}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Tenure Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">Tenure</h3>
+                      <div className="space-y-2">
+                        <Button
+                          variant={selectedTenures.length === tenures.length ? "default" : "outline"}
+                          className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                          onClick={handleSelectAllTenures}
+                        >
+                          {selectedTenures.length === tenures.length && <Check className="mr-2 h-4 w-4" />}
+                          {selectedTenures.length === tenures.length ? "Deselect All" : "Select All"}
+                        </Button>
+                        {tenures.map((tenure) => (
+                          <Button
+                            key={tenure}
+                            variant={selectedTenures.includes(tenure) ? "default" : "outline"}
+                            className={`w-full justify-start text-sm py-2 transition-all duration-200 ${
+                              selectedTenures.includes(tenure)
+                                ? "bg-primary-red text-white border-primary-red shadow-lg transform scale-[1.02]"
+                                : "border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                            }`}
+                            onClick={() => handleTenureChange(tenure)}
+                          >
+                            {selectedTenures.includes(tenure) && <Check className="mr-2 h-4 w-4" />}
+                            {tenure}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Property Type Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">Property Type</h3>
+                      <div className="space-y-2">
+                        {propertyTypes.map((type) => (
+                          <Button
+                            key={type}
+                            variant={selectedPropertyTypes.includes(type) ? "default" : "outline"}
+                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 text-sm py-2"
+                            onClick={() => handlePropertyTypeChange(type)}
+                          >
+                            {selectedPropertyTypes.includes(type) && <Check className="mr-2 h-4 w-4" />}
+                            {type}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Status Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">Status</h3>
+                      <div className="space-y-2">
+                        {statuses.map((status) => (
+                          <Button
+                            key={status}
+                            variant={selectedStatus.includes(status) ? "default" : "outline"}
+                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 capitalize text-sm py-2"
+                            onClick={() => handleStatusChange(status)}
+                          >
+                            {selectedStatus.includes(status) && <Check className="mr-2 h-4 w-4" />}
+                            {status}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Bedroom Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-white">Bedrooms</h3>
+                      <div className="grid grid-cols-2 gap-2">
+                        {bedrooms.map((bedroom) => (
+                          <Button
+                            key={bedroom}
+                            variant={selectedBedrooms.includes(bedroom) ? "default" : "outline"}
+                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 text-sm py-2"
+                            onClick={() => handleBedroomChange(bedroom)}
+                          >
+                            {selectedBedrooms.includes(bedroom) && <Check className="mr-2 h-4 w-4" />}
+                            {bedroom}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Price Range Filter */}
+                    <div>
+                      <h3 className="font-medium mb-4 text-white">Price Range</h3>
+                      <div className="space-y-4">
+                        <div className="px-1">
+                          <Slider
+                            defaultValue={[priceMin, priceMax]}
+                            max={5000000}
+                            step={100000}
+                            onValueChange={(value) => {
+                              setPriceMin(value[0])
+                              setPriceMax(value[1])
+                              setCurrentPage(1)
+                            }}
+                            className="mb-6"
+                          />
+                        </div>
+                        
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="bg-gray-800/50 border border-gray-600 rounded-lg p-3">
+                            <div className="text-xs text-gray-400 mb-1">Min Price</div>
+                            <div className="text-white font-semibold">${priceMin.toLocaleString()}</div>
+                          </div>
+                          <div className="bg-gray-800/50 border border-gray-600 rounded-lg p-3">
+                            <div className="text-xs text-gray-400 mb-1">Max Price</div>
+                            <div className="text-white font-semibold">${priceMax.toLocaleString()}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </SheetContent>
+              </Sheet>
+
+              <Select value={sortBy} onValueChange={(v) => { setSortBy(v); setCurrentPage(1) }}>
+                <SelectTrigger className="h-[52px] px-4 bg-[#242728] border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 rounded-md">
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#242728] border-gray-700 text-white">
+                  <SelectItem value="latest" className="text-white">Latest</SelectItem>
+                  <SelectItem value="price-low-high" className="text-white">Price: Low to High</SelectItem>
+                  <SelectItem value="price-high-low" className="text-white">Price: High to Low</SelectItem>
+                  <SelectItem value="completion" className="text-white">Completion Date</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          
+          {/* Active Filters */}
+          {(selectedDistricts.length > 0 || selectedTenures.length > 0 || selectedPropertyTypes.length > 0 || 
+            selectedStatus.length > 0 || selectedBedrooms.length > 0 || (priceMin > 0 || priceMax < 5000000)) && (
+            <div className="mt-4 space-y-3">
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-400 whitespace-nowrap">Active filters:</span>
+                <Button
+                  variant="ghost"
+                  className="text-gray-400 hover:text-white text-xs sm:text-sm transition-colors"
+                  onClick={() => {
+                    setSelectedDistricts([])
+                    setSelectedTenures([])
+                    setSelectedPropertyTypes([])
+                    setSelectedStatus([])
+                    setSelectedBedrooms([])
+                    setPriceMin(0)
+                    setPriceMax(5000000)
+                    setSearchQuery("")
+                    setSearchInput("")
+                    setCurrentPage(1)
+                  }}
+                >
+                  Clear all
+                </Button>
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                {selectedDistricts.map((district) => (
+                  <Badge 
+                    key={district}
+                    variant="secondary" 
+                    className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-2 sm:px-3 py-1 transition-colors text-xs sm:text-sm"
+                    onClick={() => handleDistrictChange(district)}
+                  >
+                    <span className="sm:hidden">D{district}</span>
+                    <span className="hidden sm:inline">District {district}</span>
+                    <X className="ml-1 h-3 w-3" />
+                  </Badge>
+                ))}
+                {selectedTenures.map((tenure) => (
+                  <Badge 
+                    key={tenure}
+                    variant="secondary" 
+                    className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-2 sm:px-3 py-1 transition-colors text-xs sm:text-sm"
+                    onClick={() => handleTenureChange(tenure)}
+                  >
+                    {tenure}
+                    <X className="ml-1 h-3 w-3" />
+                  </Badge>
+                ))}
+                {selectedPropertyTypes.map((type) => (
+                  <Badge 
+                    key={type}
+                    variant="secondary" 
+                    className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-2 sm:px-3 py-1 transition-colors text-xs sm:text-sm"
+                    onClick={() => handlePropertyTypeChange(type)}
+                  >
+                    {type}
+                    <X className="ml-1 h-3 w-3" />
+                  </Badge>
+                ))}
+                {selectedStatus.map((status) => (
+                  <Badge 
+                    key={status}
+                    variant="secondary" 
+                    className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-2 sm:px-3 py-1 transition-colors text-xs sm:text-sm capitalize"
+                    onClick={() => handleStatusChange(status)}
+                  >
+                    {status}
+                    <X className="ml-1 h-3 w-3" />
+                  </Badge>
+                ))}
+                {selectedBedrooms.map((bedroom) => (
+                  <Badge 
+                    key={bedroom}
+                    variant="secondary" 
+                    className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-2 sm:px-3 py-1 transition-colors text-xs sm:text-sm"
+                    onClick={() => handleBedroomChange(bedroom)}
+                  >
+                    {bedroom}
+                    <X className="ml-1 h-3 w-3" />
+                  </Badge>
+                ))}
+                {(priceMin > 0 || priceMax < 5000000) && (
+                  <Badge 
+                    variant="secondary" 
+                    className="bg-gray-800/50 text-gray-300 hover:bg-gray-800/70 cursor-pointer border border-gray-600 rounded-full px-2 sm:px-3 py-1 transition-colors text-xs sm:text-sm"
+                    onClick={() => {
+                      setPriceMin(0)
+                      setPriceMax(5000000)
+                      setCurrentPage(1)
+                    }}
+                  >
+                    ${priceMin.toLocaleString()} - ${priceMax.toLocaleString()}
+                    <X className="ml-1 h-3 w-3" />
+                  </Badge>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 

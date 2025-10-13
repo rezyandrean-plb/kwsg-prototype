@@ -9,14 +9,14 @@ import { usePathname } from 'next/navigation'
 // Dynamically import layout components with loading fallbacks
 const Header = dynamic(() => import("./layout-client").then(mod => ({ default: mod.Header })), {
   loading: () => <div className="h-16" />,
-  // Reduce initial bundle size
-  ssr: false
+  // Enable SSR for better performance
+  ssr: true
 })
 
 const Footer = dynamic(() => import("./layout-client").then(mod => ({ default: mod.Footer })), {
   loading: () => <div className="h-64" />,
-  // Reduce initial bundle size
-  ssr: false
+  // Enable SSR for better performance
+  ssr: true
 })
 
 // Lazy load ThemeProvider with loading fallback
