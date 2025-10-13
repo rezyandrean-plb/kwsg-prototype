@@ -1266,7 +1266,7 @@ export default function WResidenceLanding() {
       // Ensure only the date (no time) is submitted for preferredDate
       const preferredDateOnly = preferredDate ? format(preferredDate, 'yyyy-MM-dd') : undefined
 
-      const response = await fetch('/api/penrith-lead-form', {
+      const response = await fetch('/api/w-residences-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1359,7 +1359,7 @@ export default function WResidenceLanding() {
 
     try {
       // Submit the form with the reCAPTCHA token
-      const response = await fetch('/api/site-map-request', {
+      const response = await fetch('/api/w-residences-site-map-request', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1460,6 +1460,12 @@ export default function WResidenceLanding() {
                   className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
                 >
                   Project Info
+                </button>
+                <button 
+                  onClick={() => scrollToSection('facilities')}
+                  className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
+                >
+                  Facilities
                 </button>
                 <button 
                   onClick={scrollToGallery}
@@ -1773,6 +1779,123 @@ export default function WResidenceLanding() {
                 </div>
               </CardContent>
             </Card>
+          </div>
+
+          {/* Facilities Section */}
+          <div 
+            id="facilities"
+            className="py-16 section-entrance"
+            data-section-id="facilities"
+            style={{ 
+              opacity: animatedSections.has('facilities') ? 1 : 0,
+              transform: animatedSections.has('facilities') ? 'translateY(0)' : 'translateY(60px)'
+            }}
+          >
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Facilities</h2>
+                <div className="flex justify-center mb-4">
+                  <div className="w-16 h-1 bg-[#ce001f] rounded" />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                {/* Column 1 */}
+                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl overflow-hidden">
+                  <div className="px-6 py-4 bg-black/20">
+                    <h3 className="text-xl font-semibold text-white">Level 15 – Wet® & Fit</h3>
+                  </div>
+                  <div className="px-6 py-6">
+                    <ol className="list-decimal list-inside space-y-2 text-gray-300">
+                      <li>The Cocoon</li>
+                      <li>Tiny Explorers’ Land</li>
+                      <li>Adventureland</li>
+                      <li>Yoga Lawn</li>
+                      <li>Energy Zone</li>
+                      <li>Aqua Lounge</li>
+                      <li>Energy Pod</li>
+                      <li>Wet Deck</li>
+                      <li>Lap Pool</li>
+                      <li>Vista Lounge</li>
+                      <li>Splash Pool</li>
+                      <li>Aqua Maze</li>
+                      <li>Reflexology Path</li>
+                      <li>Swing Haven</li>
+                      <li>Napping Nook</li>
+                      <li>Hydrotherapy Pod</li>
+                      <li>
+                        Pulse Studio
+                        <ul className="list-disc list-inside ml-5 mt-2 space-y-1 text-gray-400">
+                          <li>Pulse Studio Concierge</li>
+                          <li>Power Gym</li>
+                          <li>Yoga Room</li>
+                          <li>Refreshment Area</li>
+                          <li>Male Changing Room</li>
+                          <li>Female Changing Room</li>
+                          <li>Accessible</li>
+                          <li>Changing Room</li>
+                        </ul>
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+
+                {/* Column 2 */}
+                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl overflow-hidden">
+                  <div className="px-6 py-4 bg-black/20">
+                    <h3 className="text-xl font-semibold text-white">Level 34 – Living Room</h3>
+                  </div>
+                  <div className="px-6 py-6">
+                    <ol className="list-decimal list-inside space-y-2 text-gray-300">
+                      <li>Gourmet Pavilions</li>
+                      <li>The Connection</li>
+                      <li>Reflection Bay</li>
+                      <li>Cellar @34</li>
+                      <li>The Feast @34</li>
+                      <li>The Savoury Suite @34</li>
+                      <li>Par-fection</li>
+                      <li>The Socials</li>
+                      <li>Stargaze</li>
+                      <li>Citylights Veranda</li>
+                      <li>Scented Haven</li>
+                      <li>Baywatch</li>
+                      <li>The Lawn</li>
+                    </ol>
+                  </div>
+                </div>
+
+                {/* Column 3 */}
+                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl overflow-hidden">
+                  <div className="px-6 py-4 bg-black/20">
+                    <h3 className="text-xl font-semibold text-white">Level 51 – AWAY®</h3>
+                  </div>
+                  <div className="px-6 py-6">
+                    <ol className="list-decimal list-inside space-y-2 text-gray-300">
+                      <li>Sky Pool</li>
+                      <li>Chill Deck</li>
+                      <li>The Hangout</li>
+                      <li>Club 51</li>
+                      <li>
+                        Sky Retreat
+                        <ul className="list-disc list-inside ml-5 mt-2 space-y-1 text-gray-400">
+                          <li>Sky Retreat</li>
+                          <li>Concierge</li>
+                          <li>Zen Garden</li>
+                          <li>Meditation Room</li>
+                          <li>Treatment Room</li>
+                          <li>Rock Garden</li>
+                          <li>Sauna</li>
+                          <li>Steam Room</li>
+                          <li>Onsen</li>
+                          <li>Toilet</li>
+                          <li>Accessible Toilet</li>
+                        </ul>
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Image Gallery Section */}
