@@ -1146,7 +1146,7 @@ export default function WResidenceLanding() {
           bedrooms: 4,
           bathrooms: 3,
           size: "2,250 sqft",
-          price: "From $8,700,000",
+          price: "From $8,740,000",
           currency: "SGD",
           total: 32,
           available: 32,
@@ -1616,8 +1616,8 @@ export default function WResidenceLanding() {
           {/* Feature Cards */}
           <div className="flex flex-wrap gap-6 lg:gap-4 mb-12 justify-center">
             {[
-              { icon: <Footprints className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "5 mins walk to Bayfront MRT (Circle & Downtown Lines)" },
-              { icon: <Footprints className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "7 mins walk to Marina Bay MRT (North-South & Circle Lines)" },
+              { icon: <Footprints className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Next to Shenton Way MRT (Thomson-East Coast Line)" },
+              { icon: <Footprints className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Walking distance to Marina Bay MRT (North-South and Circle Lines)" },
               { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "3-4 MRT stops to Raffles Place, Tanjong Pagar, and Marina Bay" },
               { icon: <Car className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Easy access to ECP, MCE, AYE expressways" },
               { icon: <Trees className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Surrounded by Marina Bay Sands, Gardens by the Bay, and Esplanade" },
@@ -2126,7 +2126,7 @@ export default function WResidenceLanding() {
             {/* First Row - 2 Cards on Mobile, 3 Cards on Desktop */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
               {[
-                { icon: <Train className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "5-min Walk to Bayfront MRT", subtitle: "Strong rental demand from professionals working in the CBD and Marina Bay Financial Centre (MBFC)" },
+                { icon: <Train className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "Next to Shenton Way MRT", subtitle: "Strong rental demand from professionals working in the CBD and Marina Bay Financial Centre (MBFC)" },
                 { icon: <Compass className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "Close to Key Growth Hubs", subtitle: "Orchard, the CBD, and Sentosa are just moments away, with direct access to world-class retail, dining, and business districts" },
                 { icon: <MapPin className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "Prime Waterfront Location in D1", subtitle: "Proven resilience and sustained buyer demand in the Marina Bay area" }
               ].map((benefit, index) => (
