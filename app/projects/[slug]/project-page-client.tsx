@@ -761,7 +761,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
   const fetchProject = async (projectSlug: string): Promise<Project | null> => {
     try {
       // 1) Try local proxy API first (handles slug/id and field mapping)
-      const proxyRes = await fetch(`/api/projects/${encodeURIComponent(projectSlug)}`, { cache: 'no-store' })
+      const proxyRes = await fetch(`/api/projects-prisma/${encodeURIComponent(projectSlug)}`, { cache: 'no-store' })
       if (proxyRes.ok) {
         const proxyJson = await proxyRes.json()
         const p = proxyJson?.data
@@ -782,16 +782,16 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             address: p.address || '',
             type: p.type || p.propertyType || '',
             price: p.price || 'Price on request',
-            priceFrom: p.lowerPrice || '',
-            pricePerSqFt: p.pricePerSqFt || '',
+            priceFrom: p.price_from || '',
+            pricePerSqFt: p.price_per_sqft || '',
             bedrooms: Array.isArray(p.bedrooms) ? p.bedrooms.join(', ') : (p.bedrooms || ''),
             bathrooms: p.bathrooms || '',
             size: p.size || '',
             images,
             image_url_banner: p.image_url_banner || null,
-            imageGallery: p.galleryImages || [],
+            imageGallery: p.imageGallery || [],
             units: p.units || '',
-            developer: p.developer || 'Developer not specified',
+            developer: typeof p.developer === 'object' ? p.developer?.name || 'Developer not specified' : p.developer || 'Developer not specified',
             completion: p.completion || '',
             description: p.description || '',
             features: p.features || [],
@@ -810,12 +810,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               { type: "3 Bedroom", size: "1,076 - 1,184 sq ft", price: "From $2.8M" },
               { type: "4 Bedroom", size: "1,518 - 1,636 sq ft", price: "From $4.2M" },
             ],
-            floorPlans: [
-              { type: "1 Bedroom", image: "/placeholder.svg?height=400&width=600&text=1+Bedroom+Floor+Plan" },
-              { type: "2 Bedroom", image: "/placeholder.svg?height=400&width=600&text=2+Bedroom+Floor+Plan" },
-              { type: "3 Bedroom", image: "/placeholder.svg?height=400&width=600&text=3+Bedroom+Floor+Plan" },
-              { type: "4 Bedroom", image: "/placeholder.svg?height=400&width=600&text=4+Bedroom+Floor+Plan" },
-            ],
+            floorPlans: p.floorPlans || [],
             locationAnalytics: {
               mrt: [ { name: "Nearest MRT", distance: "n/a" } ],
               schools: [ { name: "Nearby School", distance: "n/a" } ],

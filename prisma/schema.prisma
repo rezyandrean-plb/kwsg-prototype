@@ -1,0 +1,181 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id                                              Int                  @id @default(autoincrement())
+  name                                            String?              @db.VarChar(255)
+  project_name                                    String?              @db.VarChar(255)
+  slug                                            String?              @unique @db.VarChar(255)
+  title                                           String?              @db.VarChar(255)
+  location                                        String?              @db.VarChar(255)
+  address                                         String?
+  type                                            String?              @db.VarChar(100)
+  price                                           String?              @db.VarChar(100)
+  price_from                                      String?              @db.VarChar(50)
+  price_per_sqft                                  String?              @db.VarChar(100)
+  bedrooms                                        String?              @db.VarChar(50)
+  bathrooms                                       String?              @db.VarChar(50)
+  size                                            String?              @db.VarChar(100)
+  units                                           String?              @db.VarChar(100)
+  developer                                       String?              @db.VarChar(255)
+  completion                                      String?              @db.VarChar(10)
+  description                                     String?
+  district                                        String?              @db.VarChar(10)
+  tenure                                          String?              @db.VarChar(255)
+  property_type                                   String?              @db.VarChar(255)
+  status                                          String?              @db.VarChar(255)
+  total_units                                     String?              @db.VarChar(100)
+  total_floors                                    String?              @db.VarChar(100)
+  site_area                                       String?              @db.VarChar(100)
+  created_at                                      DateTime?            @db.Timestamp(6)
+  updated_at                                      DateTime?            @db.Timestamp(6)
+  image_url_banner                                String?              @db.VarChar(255)
+  latitude                                        String?              @db.VarChar(255)
+  longitude                                       String?              @db.VarChar(255)
+  document_id                                     String?              @db.VarChar(255)
+  published_at                                    DateTime?            @db.Timestamp(6)
+  created_by_id                                   Int?
+  updated_by_id                                   Int?
+  locale                                          String?              @db.VarChar(255)
+  features                                        Json?                @default("[]")
+  project_facilities                              project_facilities[]
+
+  @@index([district], map: "idx_projects_district")
+  @@index([slug], map: "idx_projects_slug")
+  @@index([status], map: "idx_projects_status")
+  @@map("projects")
+}
+
+model developers {
+  id                                                Int          @id @default(autoincrement())
+  document_id                                       String?      @db.VarChar(255)
+  name                                              String?      @db.VarChar(255)
+  description                                       String?
+  logo_url                                          String?      @db.VarChar(255)
+  website                                           String?      @db.VarChar(255)
+  contact_email                                     String?      @db.VarChar(255)
+  contact_phone                                     String?      @db.VarChar(255)
+  created_at                                        DateTime?    @db.Timestamp(6)
+  updated_at                                        DateTime?    @db.Timestamp(6)
+  published_at                                      DateTime?    @db.Timestamp(6)
+  created_by_id                                     Int?
+  updated_by_id                                     Int?
+  locale                                            String?      @db.VarChar(255)
+
+  @@index([created_by_id], map: "developers_created_by_id_fk")
+  @@index([document_id, locale, published_at], map: "developers_documents_idx")
+  @@index([updated_by_id], map: "developers_updated_by_id_fk")
+}
+
+model facilities {
+  id                                                Int                  @id @default(autoincrement())
+  document_id                                       String?              @db.VarChar(255)
+  name                                              String?              @db.VarChar(255)
+  description                                       String?
+  icon                                              String?              @db.VarChar(255)
+  created_at                                        DateTime?            @db.Timestamp(6)
+  updated_at                                        DateTime?            @db.Timestamp(6)
+  published_at                                      DateTime?            @db.Timestamp(6)
+  created_by_id                                     Int?
+  updated_by_id                                     Int?
+  locale                                            String?              @db.VarChar(255)
+  project_facilities                                project_facilities[]
+
+  @@index([created_by_id], map: "facilities_created_by_id_fk")
+  @@index([document_id, locale, published_at], map: "facilities_documents_idx")
+  @@index([updated_by_id], map: "facilities_updated_by_id_fk")
+}
+
+model project_facilities {
+  id          Int         @id @default(autoincrement())
+  project_id  Int?
+  facility_id Int?
+  created_at  DateTime?   @default(now()) @db.Timestamp(6)
+  facilities  facilities? @relation(fields: [facility_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  projects    Project?    @relation(fields: [project_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([project_id, facility_id])
+}
+
+model floor_plans {
+  id                                                 Int          @id @default(autoincrement())
+  document_id                                        String?      @db.VarChar(255)
+  project_name                                       String?      @db.VarChar(255)
+  floor_plan_id                                      String?      @db.VarChar(255)
+  floor_plan_type                                    String?      @db.VarChar(255)
+  floor_plan_name                                    String?      @db.VarChar(255)
+  unit_type                                          String?      @db.VarChar(255)
+  bedrooms                                           String?      @db.VarChar(255)
+  bathrooms                                          String?      @db.VarChar(255)
+  size_sqft                                          Decimal?     @db.Decimal(10, 2)
+  price                                              String?      @db.VarChar(255)
+  img                                                String?      @db.VarChar(255)
+  floor_plan_image                                   String?      @db.VarChar(255)
+  description                                        String?
+  is_available                                       Boolean?
+  created_at                                         DateTime?    @db.Timestamp(6)
+  updated_at                                         DateTime?    @db.Timestamp(6)
+  published_at                                       DateTime?    @db.Timestamp(6)
+  created_by_id                                      Int?
+  updated_by_id                                      Int?
+  locale                                             String?      @db.VarChar(255)
+
+  @@index([created_by_id], map: "floor_plans_created_by_id_fk")
+  @@index([document_id, locale, published_at], map: "floor_plans_documents_idx")
+  @@index([updated_by_id], map: "floor_plans_updated_by_id_fk")
+}
+
+model image_galleries {
+  id                                                     Int          @id @default(autoincrement())
+  project_name                                           String?      @db.VarChar(255)
+  image_title                                            String?      @db.VarChar(255)
+  image_url                                              String?      @db.VarChar(255)
+  image_description                                      String?
+  image_category                                         String?      @db.VarChar(255)
+  display_order                                          Int?
+  is_featured                                            Boolean?
+  alt_text                                               String?      @db.VarChar(255)
+  image_size                                             String?      @db.VarChar(255)
+  is_active                                              Boolean?
+  created_at                                             DateTime?    @db.Timestamp(6)
+  updated_at                                             DateTime?    @db.Timestamp(6)
+  document_id                                            String?      @db.VarChar(255)
+  published_at                                           DateTime?    @db.Timestamp(6)
+  created_by_id                                          Int?
+  updated_by_id                                          Int?
+  locale                                                 String?      @db.VarChar(255)
+
+  @@index([created_by_id], map: "image_galleries_created_by_id_fk")
+  @@index([document_id, locale, published_at], map: "image_galleries_documents_idx")
+  @@index([updated_by_id], map: "image_galleries_updated_by_id_fk")
+}
+
+model site_plans {
+  id                                                 Int          @id @default(autoincrement())
+  document_id                                        String?      @db.VarChar(255)
+  project_id                                         Int?
+  project_name                                       String?      @db.VarChar(255)
+  site_plan_id                                       String?      @db.VarChar(255)
+  site_plan_name                                     String?      @db.VarChar(255)
+  image_url                                          String?      @db.VarChar(255)
+  description                                        String?
+  is_primary                                         Boolean?
+  layout_info                                        String?
+  created_at                                         DateTime?    @db.Timestamp(6)
+  updated_at                                         DateTime?    @db.Timestamp(6)
+  published_at                                       DateTime?    @db.Timestamp(6)
+  created_by_id                                      Int?
+  updated_by_id                                      Int?
+  locale                                             String?      @db.VarChar(255)
+
+  @@index([created_by_id], map: "site_plans_created_by_id_fk")
+  @@index([document_id, locale, published_at], map: "site_plans_documents_idx")
+  @@index([project_id], map: "site_plans_project_id_fk")
+  @@index([updated_by_id], map: "site_plans_updated_by_id_fk")
+}

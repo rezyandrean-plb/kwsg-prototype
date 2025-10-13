@@ -100,10 +100,15 @@ export default function ProjectCard({
       {/* Image Container */}
       <div className="relative aspect-[4/3] overflow-hidden">
         <Image
-          src={image_url_banner && image_url_banner.trim() !== '' ? image_url_banner : image}
+          src={image_url_banner && image_url_banner.trim() !== '' ? image_url_banner : (image || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80')}
           alt={name}
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-105"
+          onError={(e) => {
+            console.log('Image failed to load:', e.currentTarget.src);
+            console.log('image_url_banner:', image_url_banner);
+            console.log('image:', image);
+          }}
         />
         {/* Status Badge */}
         <div className="absolute top-4 left-4 flex gap-2">
@@ -156,17 +161,22 @@ export default function ProjectCard({
               <div className="text-xs text-gray-400 mb-1">From</div>
               <div className="text-xl font-semibold text-white">
                 {(() => {
-                  if (lowerPrice && lowerPrice !== '0' && lowerPrice !== '0M') {
-                    return `${lowerPrice}M`
-                  } else if (priceRange && priceRange !== '0') {
+                  // If we have a valid lowerPrice (numeric value)
+                  if (lowerPrice && lowerPrice !== '0' && lowerPrice !== '0M' && !isNaN(Number(lowerPrice))) {
+                    // Display full price with comma formatting
+                    const numPrice = Number(lowerPrice)
+                    return `$${numPrice.toLocaleString()}`
+                  } 
+                  // If we have a priceRange
+                  else if (priceRange && priceRange !== '0') {
                     return priceRange
-                  } else if (lowerPrice && lowerPrice !== '0') {
-                    // If price is "Price per request", display it with proper styling
-                    if (lowerPrice === 'Price per request') {
-                      return <span className="text-white italic text-lg">Price per request</span>
-                    }
-                    return lowerPrice
-                  } else {
+                  } 
+                  // If lowerPrice is "Price per request" or similar text
+                  else if (lowerPrice && (lowerPrice === 'Price per request' || lowerPrice.toLowerCase().includes('request'))) {
+                    return <span className="text-white italic text-lg">Price per request</span>
+                  }
+                  // Fallback to "Price per request"
+                  else {
                     return <span className="text-white italic text-lg">Price per request</span>
                   }
                 })()}

@@ -4,7 +4,7 @@ export interface Project {
   location: string
   price: string
   type: string
-  image: string
+  image: string | null
   coordinates: {
     lat: number
     lng: number

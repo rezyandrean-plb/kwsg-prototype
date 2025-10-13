@@ -23,6 +23,17 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { motion } from "framer-motion"
 import { Slider } from "@/components/ui/slider"
+import { Project as BaseProject } from "@/data/projects"
+
+// Extend the base Project type with additional properties needed for this component
+type Project = BaseProject & {
+  address?: string
+  district?: number
+  tenure?: string
+  propertyType?: string
+  bedrooms?: string[]
+  image_url_banner?: string
+}
 
 // Animation variants
 const fadeInUp = {
@@ -75,35 +86,6 @@ type ApiProject = {
   image_url_banner?: string
 }
 
-// Add type definition for Project
-type Project = {
-  slug: string
-  name: string
-  location: string
-  address?: string
-  price: string
-  type?: string
-  image: string
-  coordinates?: {
-    lat: number
-    lng: number
-  }
-  priceRange?: string
-  lowerPrice?: string
-  units?: string
-  unitsAvailable?: string
-  propertySizeRange?: string
-  developer?: string
-  completion?: string
-  description?: string
-  pricePerSqFt?: string
-  features?: string[]
-  status?: 'upcoming' | 'ongoing' | 'completed'
-  district?: number
-  tenure?: string
-  propertyType?: string
-  bedrooms?: string[]
-}
 
 // Helpers
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://striking-hug-052e89dfad.strapiapp.com'
@@ -170,7 +152,7 @@ const fetchProjects = async (
     searchParams.set('priceMin', String(filters.priceMin))
     searchParams.set('priceMax', String(filters.priceMax))
 
-    const url = `/api/projects?${searchParams.toString()}`
+    const url = `/api/projects-prisma?${searchParams.toString()}`
     const response = await fetch(url, {
       signal: controller.signal,
       headers: { 'Content-Type': 'application/json' },
