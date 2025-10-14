@@ -1773,7 +1773,7 @@ export default function AureaLanding() {
                       onClick={() => setShowSiteMapPopup(true)}
                     >
                       <Download className="w-4 h-4 mr-2" />
-                      Required Site Plan
+                      Request Site Plan
                     </Button>
                   </div>
                 </div>
