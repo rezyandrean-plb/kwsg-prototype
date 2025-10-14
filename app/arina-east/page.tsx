@@ -41,6 +41,8 @@ import {
   Layers,
   Info,
   X,
+  Footprints,
+  Infinity,
 } from "lucide-react"
 import { Calendar as CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
@@ -1554,14 +1556,14 @@ export default function ArinaEastLanding() {
                 isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
               }`}>
                 <div className="w-12 h-px bg-[#ce001f] mr-4"></div>
-                <p className="text-lg text-gray-200 font-light">D15 - East Coast / Marine Parade</p>
+                <p className="text-lg text-gray-200 font-light">District 15 Freehold Homes at Tanjong Rhu</p>
               </div>
 
-              {/* <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
+              <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
-              </p> */}
+                 A Coastline Sanctuary Above the City Lights
+              </p>
             </div>
 
             {/* Clean CTA Buttons */}
@@ -1615,13 +1617,49 @@ export default function ArinaEastLanding() {
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('project-info') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">TBC</h2>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Marina East’s Signature Freehold Waterfront Residence</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              TBC
+            <p className="text-xl text-gray-300 max-w-4xl mx-auto">
+            Arina East Residences is the latest freehold landmark by ZACD Group, FRX Capital, and Welltech Construction, located along the coveted Tanjong Rhu waterfront in District 15. <br/>
+            Just a 3-minute walk to Katong Park MRT (TEL) and minutes from Marina Bay, it blends city connectivity with coastal tranquillity.
             </p>
+            <p className="text-xl text-gray-300 max-w-4xl mx-auto">
+            This exclusive twin-tower development offers a collection of 1- to 4-bedroom homes, each corner-facing and meticulously designed by ONG&ONG and Design Intervention. 
+            With 270° panoramic views, sky terraces, and resort-style facilities, Arina East Residences defines a new benchmark for Marina East luxury living—where the heart of the city meets the soul of the beach.
+            </p>
+          </div>
+
+          {/* Feature Cards */}
+          <div className="flex flex-wrap gap-6 lg:gap-4 mb-12 justify-center">
+            {[
+              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "3 mins’ walk to Katong Park MRT (Thomson–East Coast Line)" },
+              { icon: <MapPin className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Prime Tanjong Rhu waterfront address in District 15" },
+              { icon: <Trees className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "270° panoramic views of Marina Bay, Kallang Basin & the city skyline" },
+              { icon: <Eye className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Twin-tower architecture designed by ONG&ONG with sky terraces" },
+              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Freehold tenure in the Marina East precinct—legacy ownership for generations" },
+              { icon: <Home className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Interiors by Design Intervention, fitted with premium appliances" },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Developed by ZACD Group & FRX Capital, built by Welltech Construction" },
+              { icon: <Calendar className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Expected TOP: 2028 | Completion: 2031" }
+            ].map((card, index) => (
+              <Card 
+                key={index} 
+                className={`basis-full md:basis-[calc(50%-12px)] lg:basis-[calc(25%-12px)] text-center hover:shadow-lg transition-all duration-700 border-gray-700 bg-[#18191b] hover:scale-105 hover-lift stagger-animation ${
+                  animatedSections.has('project-info') ? 'animate' : ''
+                }`} 
+                style={{ 
+                  transitionDelay: `${index * 150}ms`,
+                  opacity: animatedSections.has('project-info') ? 1 : 0,
+                  transform: animatedSections.has('project-info') ? 'translateY(0)' : 'translateY(40px)'
+                }}
+              >
+                <CardContent className="p-6">
+                  {card.icon}
+                  <p className="text-gray-300" dangerouslySetInnerHTML={{ __html: card.desc }}></p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
 
           {/* Detailed Information Grid */}
@@ -2056,6 +2094,89 @@ export default function ArinaEastLanding() {
         </div>
       </section>
 
+      {/* Investor Benefits & Pricing Comparison */}
+      <section 
+        className="py-16 bg-[#242728] section-entrance"
+        data-section-id="investor-benefits"
+        style={{ 
+          opacity: animatedSections.has('investor-benefits') ? 1 : 0,
+          transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(60px)'
+        }}
+      >
+        <div className="container mx-auto px-4">
+          <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
+            animatedSections.has('investor-benefits') ? 'animate-slide-in-top' : ''
+          }`}>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Investor Benefits</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-[#ce001f] rounded" />
+            </div>
+          </div>
+
+          {/* Investor Benefits */}
+          <div className={`max-w-6xl mx-auto transition-all duration-1000 delay-500 ${
+            animatedSections.has('investor-benefits') ? 'animate-fade-in-up' : ''
+          }`} style={{
+            opacity: animatedSections.has('investor-benefits') ? 1 : 0,
+            transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(50px)'
+          }}>
+            {/* First Row - 2 Cards on Mobile, 3 Cards on Desktop */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+              {[
+                { icon: <Train className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "3-min Walk to Katong Park MRT (TEL)", subtitle: "Direct train to Marina Bay and Orchard—ideal for professionals working in the CBD and Marina Bay Financial Centre." },
+                { icon: <Layers className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "Rare Freehold in an MRT-Linked Precinct", subtitle: "New freehold projects within 300 m of Thomson–East Coast Line station are increasingly scarce, driving long-term value retention." },
+                { icon: <Compass className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "Next to the Kallang Alive Growth Corridor", subtitle: "Positioned beside major waterfront renewal plans—with future retail, sports, and leisure infrastructure fuelling rental demand." }
+              ].map((benefit, index) => (
+                <div 
+                  key={index} 
+                  className={`hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
+                    animatedSections.has('investor-benefits') ? 'animate' : ''
+                  } ${index === 2 ? 'hidden md:block' : ''}`} 
+                  style={{ 
+                    transitionDelay: `${index * 200}ms`,
+                    opacity: animatedSections.has('investor-benefits') ? 1 : 0,
+                    transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
+                  }}
+                >
+                  <div className="p-4 md:p-6 flex flex-col items-center text-center space-y-2">
+                    <div className="flex-shrink-0">{benefit.icon}</div>
+                    <h3 className="text-sm md:text-lg text-white font-semibold leading-snug">{benefit.title}</h3>
+                    <p className="text-xs md:text-sm text-gray-300 font-light">{benefit.subtitle}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            {/* Second Row - 2 Cards on Mobile, 3 Cards on Desktop */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+              {[
+                { icon: <Eye className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "Architectural Differentiation as a Value Moat", subtitle: "Twin-tower form, 270° skyline views, and elevated podium landscaping create strong resale visibility among high-net-worth buyers." },
+                { icon: <Building className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "Established Developer Consortium", subtitle: "Backed by ZACD Group and FRX Capital — firms with proven capital discipline and a record of timely project execution." },
+                { icon: <Users className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "Tight Supply, Deep Tenant Pool", subtitle: "District 15 remains one of Singapore’s most liquid residential sub-markets — supported by expatriates, professionals, and affluent locals." }
+              ].map((benefit, index) => (
+                <div 
+                  key={index + 3} 
+                  className={`hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
+                    animatedSections.has('investor-benefits') ? 'animate' : ''
+                  }`} 
+                  style={{ 
+                    transitionDelay: `${(index + 3) * 200}ms`,
+                    opacity: animatedSections.has('investor-benefits') ? 1 : 0,
+                    transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
+                  }}
+                >
+                  <div className="p-4 md:p-6 flex flex-col items-center text-center space-y-2">
+                    <div className="flex-shrink-0">{benefit.icon}</div>
+                    <h3 className="text-sm md:text-lg text-white font-semibold leading-snug">{benefit.title}</h3>
+                    <p className="text-xs md:text-sm text-gray-300 font-light">{benefit.subtitle}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Nearby Amenities */}
       <section 
         id="nearby-amenities"
@@ -2172,9 +2293,6 @@ export default function ArinaEastLanding() {
                           <div className="flex-shrink-0" style={{ color: '#ce001f' }}>{amenity.icon}</div>
                           <div className="text-center md:text-center flex-1 min-w-0">
                             <h3 className="font-semibold text-xs md:text-lg text-white break-words">{amenity.name}</h3>
-                            {amenity.distance && (
-                              <p className="text-gray-300 font-light text-xs md:text-sm break-words">{amenity.distance}</p>
-                            )}
                           </div>
                         </div>
                       </CardContent>
