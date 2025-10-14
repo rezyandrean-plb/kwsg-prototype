@@ -1769,6 +1769,98 @@ export default function ArinaEastLanding() {
             </Card>
           </div>
 
+          {/* Facilities */}
+          <section 
+            id="facilities"
+            className="py-16 bg-[#1c1c1d] section-entrance"
+            data-section-id="facilities"
+            style={{ 
+              opacity: animatedSections.has('facilities') ? 1 : 1,
+              transform: animatedSections.has('facilities') ? 'translateY(0)' : 'translateY(0)'
+            }}
+          >
+            <div className="container mx-auto px-4">
+              <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
+                animatedSections.has('facilities') ? 'animate-slide-in-top' : 'animate-slide-in-top'
+              }`}>
+                <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Facilities</h2>
+                <div className="flex justify-center mb-4">
+                  <div className="w-16 h-1 bg-[#ce001f] rounded" />
+                </div>
+              </div>
+
+              <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 transition-all duration-1000 delay-500 ${
+                animatedSections.has('facilities') ? 'animate-fade-in-up' : 'animate-fade-in-up'
+              }`} style={{
+                opacity: animatedSections.has('facilities') ? 1 : 1,
+                transform: animatedSections.has('facilities') ? 'translateY(0)' : 'translateY(0)'
+              }}>
+                {/* 1st Storey */}
+                <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
+                  <CardHeader>
+                    <CardTitle className="text-white">1st Storey</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="list-disc list-inside space-y-1 text-gray-300">
+                      <li>Guard House</li>
+                      <li>Side Gate</li>
+                      <li>Bin Centre</li>
+                      <li>Genset</li>
+                      <li>Transformer Room</li>
+                      <li>Cable Chamber</li>
+                      <li>Reflection Pool</li>
+                    </ul>
+                  </CardContent>
+                </Card>
+
+                {/* 2nd Storey */}
+                <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
+                  <CardHeader>
+                    <CardTitle className="text-white">2nd Storey</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="list-disc list-inside space-y-1 text-gray-300">
+                      <li>Swimming Pool</li>
+                      <li>Aqua Gym</li>
+                      <li>Jacuzzi</li>
+                      <li>Club House</li>
+                      <li>Kids Pool</li>
+                      <li>Kids Play Area</li>
+                    </ul>
+                  </CardContent>
+                </Card>
+
+                {/* L19 Sky Terrace */}
+                <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
+                  <CardHeader>
+                    <CardTitle className="text-white">L19 Sky Terrace</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="list-disc list-inside space-y-1 text-gray-300">
+                      <li>Lounge</li>
+                      <li>Communal Planter</li>
+                    </ul>
+                  </CardContent>
+                </Card>
+
+                {/* L20 Sky Terrace */}
+                <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
+                  <CardHeader>
+                    <CardTitle className="text-white">L20 Sky Terrace</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="list-disc list-inside space-y-1 text-gray-300">
+                      <li>Gym</li>
+                      <li>Sky Pool</li>
+                      <li>Pool Deck Lounge</li>
+                      <li>Pavilion with BBQ</li>
+                    </ul>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </section>
+
           {/* Image Gallery Section */}
           <div 
             id="project-gallery"
@@ -2131,7 +2223,7 @@ export default function ArinaEastLanding() {
                   key={index} 
                   className={`hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
                     animatedSections.has('investor-benefits') ? 'animate' : ''
-                  } ${index === 2 ? 'hidden md:block' : ''}`} 
+                  }`} 
                   style={{ 
                     transitionDelay: `${index * 200}ms`,
                     opacity: animatedSections.has('investor-benefits') ? 1 : 0,

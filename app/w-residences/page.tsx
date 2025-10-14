@@ -1688,7 +1688,7 @@ export default function WResidenceLanding() {
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Site Area:</span>
-                  <span className="font-semibold text-white text-right">Plot 1 - 7,817.6 sqm / 84,148 sqft<br/>Plot 2 – 18 sqm / 194 sqft (subterranean space)</span>
+                  <span className="font-semibold text-white text-right">84,148 sqft</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">No. of floors:</span>
@@ -1773,7 +1773,7 @@ export default function WResidenceLanding() {
                       onClick={() => setShowSiteMapPopup(true)}
                     >
                       <Download className="w-4 h-4 mr-2" />
-                      Required Site Plan
+                      Request Site Plan
                     </Button>
                   </div>
                 </div>
