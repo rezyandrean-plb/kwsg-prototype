@@ -1621,11 +1621,11 @@ export default function ArinaEastLanding() {
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
-            <p className="text-xl text-gray-300 max-w-4xl mx-auto">
+            <p className="text-sm md:text-xl text-gray-300 max-w-4xl mx-auto">
             Arina East Residences is the latest freehold landmark by ZACD Group, FRX Capital, and Welltech Construction, located along the coveted Tanjong Rhu waterfront in District 15. <br/>
             Just a 3-minute walk to Katong Park MRT (TEL) and minutes from Marina Bay, it blends city connectivity with coastal tranquillity.
             </p>
-            <p className="text-xl text-gray-300 max-w-4xl mx-auto">
+            <p className="text-sm md:text-xl text-gray-300 max-w-4xl mx-auto">
             This exclusive twin-tower development offers a collection of 1- to 4-bedroom homes, each corner-facing and meticulously designed by ONG&ONG and Design Intervention. 
             With 270° panoramic views, sky terraces, and resort-style facilities, Arina East Residences defines a new benchmark for Marina East luxury living—where the heart of the city meets the soul of the beach.
             </p>
@@ -1692,7 +1692,7 @@ export default function ArinaEastLanding() {
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">District:</span>
-                  <span className="font-semibold text-white">D15 - East Coast / Marine Parade</span>
+                  <span className="font-semibold text-white text-right">D15 - East Coast / Marine Parade</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Address:</span>
@@ -1802,10 +1802,10 @@ export default function ArinaEastLanding() {
                 {/* 1st Storey */}
                 <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
                   <CardHeader>
-                    <CardTitle className="text-white">1st Storey</CardTitle>
+                    <CardTitle className="text-white text-[20px]">1st Storey</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <ul className="list-disc list-inside space-y-1 text-gray-300">
+                    <ul className="list-disc list-inside space-y-1 text-gray-300 text-[16px]">
                       <li>Guard House</li>
                       <li>Side Gate</li>
                       <li>Bin Centre</li>
@@ -1820,10 +1820,10 @@ export default function ArinaEastLanding() {
                 {/* 2nd Storey */}
                 <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
                   <CardHeader>
-                    <CardTitle className="text-white">2nd Storey</CardTitle>
+                    <CardTitle className="text-white text-[20px]">2nd Storey</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <ul className="list-disc list-inside space-y-1 text-gray-300">
+                    <ul className="list-disc list-inside space-y-1 text-gray-300 text-[16px]">
                       <li>Swimming Pool</li>
                       <li>Aqua Gym</li>
                       <li>Jacuzzi</li>
@@ -1837,10 +1837,10 @@ export default function ArinaEastLanding() {
                 {/* L19 Sky Terrace */}
                 <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
                   <CardHeader>
-                    <CardTitle className="text-white">L19 Sky Terrace</CardTitle>
+                    <CardTitle className="text-white text-[20px]">L19 Sky Terrace</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <ul className="list-disc list-inside space-y-1 text-gray-300">
+                    <ul className="list-disc list-inside space-y-1 text-gray-300 text-[16px]">
                       <li>Lounge</li>
                       <li>Communal Planter</li>
                     </ul>
@@ -1850,10 +1850,10 @@ export default function ArinaEastLanding() {
                 {/* L20 Sky Terrace */}
                 <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
                   <CardHeader>
-                    <CardTitle className="text-white">L20 Sky Terrace</CardTitle>
+                    <CardTitle className="text-white text-[20px]">L20 Sky Terrace</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <ul className="list-disc list-inside space-y-1 text-gray-300">
+                    <ul className="list-disc list-inside space-y-1 text-gray-300 text-[16px]">
                       <li>Gym</li>
                       <li>Sky Pool</li>
                       <li>Pool Deck Lounge</li>
@@ -1886,7 +1886,7 @@ export default function ArinaEastLanding() {
 
             {/* Main Image Display */}
             <div className="relative max-w-6xl mx-auto mb-8">
-              <div className="relative h-[500px] rounded-xl overflow-hidden shadow-2xl">
+              <div className="relative w-full h-[220px] sm:h-[320px] md:h-[500px] rounded-xl overflow-hidden shadow-2xl">
                 <Image
                   src={projectImages[currentImageIndex] || "/placeholder.svg"}
                   alt={`Arina East - Image ${currentImageIndex + 1}`}
@@ -2043,7 +2043,7 @@ export default function ArinaEastLanding() {
                       >
                         <span>{unit.unitType.replace(' Units', '')}</span>
                         {totalAvailable > 0 && (
-                          <span className="bg-green-500 text-white text-xs px-1 sm:px-2 py-1 rounded-full">
+                          <span className="inline-flex items-center justify-center bg-green-500 text-white text-xs w-5 h-5 sm:w-6 sm:h-6 rounded-full leading-none">
                             {totalAvailable}
                           </span>
                         )}
@@ -2216,12 +2216,15 @@ export default function ArinaEastLanding() {
             opacity: animatedSections.has('investor-benefits') ? 1 : 0,
             transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(50px)'
           }}>
-            {/* First Row - 2 Cards on Mobile, 3 Cards on Desktop */}
+            {/* Unified Grid - 2 on mobile (2-2-2), 3 on desktop */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
               {[
                 { icon: <Train className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "3-min Walk to Katong Park MRT (TEL)", subtitle: "Direct train to Marina Bay and Orchard—ideal for professionals working in the CBD and Marina Bay Financial Centre." },
                 { icon: <Layers className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "Rare Freehold in an MRT-Linked Precinct", subtitle: "New freehold projects within 300 m of Thomson–East Coast Line station are increasingly scarce, driving long-term value retention." },
-                { icon: <Compass className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "Next to the Kallang Alive Growth Corridor", subtitle: "Positioned beside major waterfront renewal plans—with future retail, sports, and leisure infrastructure fuelling rental demand." }
+                { icon: <Compass className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "Next to the Kallang Alive Growth Corridor", subtitle: "Positioned beside major waterfront renewal plans—with future retail, sports, and leisure infrastructure fuelling rental demand." },
+                { icon: <Eye className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "Architectural Differentiation as a Value Moat", subtitle: "Twin-tower form, 270° skyline views, and elevated podium landscaping create strong resale visibility among high-net-worth buyers." },
+                { icon: <Building className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "Established Developer Consortium", subtitle: "Backed by ZACD Group and FRX Capital — firms with proven capital discipline and a record of timely project execution." },
+                { icon: <Users className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "Tight Supply, Deep Tenant Pool", subtitle: "District 15 remains one of Singapore’s most liquid residential sub-markets — supported by expatriates, professionals, and affluent locals." }
               ].map((benefit, index) => (
                 <div 
                   key={index} 
@@ -2230,33 +2233,6 @@ export default function ArinaEastLanding() {
                   }`} 
                   style={{ 
                     transitionDelay: `${index * 200}ms`,
-                    opacity: animatedSections.has('investor-benefits') ? 1 : 0,
-                    transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
-                  }}
-                >
-                  <div className="p-4 md:p-6 flex flex-col items-center text-center space-y-2">
-                    <div className="flex-shrink-0">{benefit.icon}</div>
-                    <h3 className="text-sm md:text-lg text-white font-semibold leading-snug">{benefit.title}</h3>
-                    <p className="text-xs md:text-sm text-gray-300 font-light">{benefit.subtitle}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            
-            {/* Second Row - 2 Cards on Mobile, 3 Cards on Desktop */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
-              {[
-                { icon: <Eye className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "Architectural Differentiation as a Value Moat", subtitle: "Twin-tower form, 270° skyline views, and elevated podium landscaping create strong resale visibility among high-net-worth buyers." },
-                { icon: <Building className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "Established Developer Consortium", subtitle: "Backed by ZACD Group and FRX Capital — firms with proven capital discipline and a record of timely project execution." },
-                { icon: <Users className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: "Tight Supply, Deep Tenant Pool", subtitle: "District 15 remains one of Singapore’s most liquid residential sub-markets — supported by expatriates, professionals, and affluent locals." }
-              ].map((benefit, index) => (
-                <div 
-                  key={index + 3} 
-                  className={`hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
-                    animatedSections.has('investor-benefits') ? 'animate' : ''
-                  }`} 
-                  style={{ 
-                    transitionDelay: `${(index + 3) * 200}ms`,
                     opacity: animatedSections.has('investor-benefits') ? 1 : 0,
                     transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
                   }}
