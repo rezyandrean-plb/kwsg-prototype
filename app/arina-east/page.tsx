@@ -1537,7 +1537,7 @@ export default function ArinaEastLanding() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Badge className="bg-[#ce001f] text-white px-4 py-2 text-sm font-medium rounded-full animate-pulse">
-                PUBLIC LAUNCH 25 OCT 2025
+               OPEN FOR BOOKING
               </Badge>
             </div>
 
@@ -1704,7 +1704,11 @@ export default function ArinaEastLanding() {
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Blocks:</span>
-                  <span className="font-semibold text-white text-right sm:text-left">20 storey</span>
+                  <span className="font-semibold text-white text-right sm:text-left">2</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">No. of Storeys:</span>
+                  <span className="font-semibold text-white text-right sm:text-left">20</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Total Units:</span>
