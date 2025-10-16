@@ -1101,7 +1101,7 @@ export default function ArinaEastLanding() {
           bedrooms: 1,
           bathrooms: 1,
           size: "495 sqft",
-          price: "From $1,298,000",
+          price: "From $1,268,000",
           currency: "SGD",
           total: 17,
           available: 11,
@@ -1113,38 +1113,20 @@ export default function ArinaEastLanding() {
       ]
     },
     {
-      unitType: "2-Bedroom Deluxe",
+      unitType: "2-Bedroom",
       subtypes: [
         {
-          subtype: "2-Bedroom Deluxe",
+          subtype: "2-Bedroom",
           bedrooms: 2,
           bathrooms: 2,
-          size: "678 sqft",
-          price: "From $1,930,000",
+          size: "678 - 861 sqft",
+          price: "From $1,880,000",
           currency: "SGD",
           total: 17,
-          available: 8,
+          available: 11,
           status: 0,
           floor_plan_images: [
             "/images/arina-east/floor-plan/2BD Deluxe - B1.png",
-          ],
-        }
-      ]
-    },
-    {
-      unitType: "2-Bedroom Premium",
-      subtypes: [
-        {
-          subtype: "2-Bedroom Premium",
-          bedrooms: 2,
-          bathrooms: 2,
-          size: "797 – 861 sqft",
-          price: "From $2,277,000",
-          currency: "SGD",
-          total: 26,
-          available: 13,
-          status: 0,
-          floor_plan_images: [
             "/images/arina-east/floor-plan/2BD Premium - B2.png",
             "/images/arina-east/floor-plan/2BD Premium - B3.png",
           ],
@@ -1152,58 +1134,22 @@ export default function ArinaEastLanding() {
       ]
     },
     {
-      unitType: "3-Bedroom Deluxe",
+      unitType: "3-Bedroom",
       subtypes: [
         {
-          subtype: "3-Bedroom Deluxe",
+          subtype: "3-Bedroom",
           bedrooms: 3,
           bathrooms: 2,
-          size: "969 sqft",
-          price: "From $2,888,888",
+          size: "969 - 1238 sqft",
+          price: "From $2,808,888",
           currency: "SGD",
-          total: 9,
-          available: 3,
+          total: 32,
+          available: 17,
           status: 0,
           floor_plan_images: [
             "/images/arina-east/floor-plan/3BD Deluxe - C1.png",
-          ],
-        }
-      ]
-    },
-    {
-      unitType: "3-Bedroom Premium",
-      subtypes: [
-        {
-          subtype: "3-Bedroom Premium",
-          bedrooms: 3,
-          bathrooms: 2,
-          size: "1,087 sqft",
-          price: "From $3,120,000",
-          currency: "SGD",
-          total: 18,
-          available: 9,
-          status: 0,
-          floor_plan_images: [
             "/images/arina-east/floor-plan/3BD Premium - C2.png",
             "/images/arina-east/floor-plan/3BD Premium - C3.png",
-          ],
-        }
-      ]
-    },
-    {
-      unitType: "3-Bedroom Premium (Private Lift)",
-      subtypes: [
-        {
-          subtype: "3-Bedroom Premium (Private Lift)",
-          bedrooms: 3,
-          bathrooms: 3,
-          size: "1,238 sqft",
-          price: "From $3,660,000",
-          currency: "SGD",
-          total: 5,
-          available: 5,
-          status: 0,
-          floor_plan_images: [
             "/images/arina-east/floor-plan/3BD Premium w Lift - C4.png",
           ],
         }
@@ -1217,7 +1163,7 @@ export default function ArinaEastLanding() {
           bedrooms: 4,
           bathrooms: 3,
           size: "1,389 sqft",
-          price: "From $4,587,028",
+          price: "From $4,030,028",
           currency: "SGD",
           total: 15,
           available: 6,
@@ -2016,7 +1962,7 @@ export default function ArinaEastLanding() {
             <div className="w-full px-2 sm:px-6 pt-4 sm:pt-6 pb-2 border-b border-gray-700 mb-6 sm:mb-8">
               <div className="relative">
                 <span className="block text-center text-xs text-gray-400 py-2">Scroll to view all unit types</span>
-                <div id="unit-type-tabs-scroll" ref={unitTabsScrollRef as any} className="flex flex-nowrap gap-2 justify-start overflow-x-auto whitespace-nowrap scrollbar-none md:scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent snap-x snap-mandatory -mx-2 px-2" style={{ WebkitOverflowScrolling: 'touch' }}>
+                <div id="unit-type-tabs-scroll" ref={unitTabsScrollRef as any} className="flex flex-nowrap gap-2 justify-start md:justify-center overflow-x-auto whitespace-nowrap scrollbar-none md:scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent snap-x snap-mandatory -mx-2 px-2" style={{ WebkitOverflowScrolling: 'touch' }}>
                 {(() => {
                   const dynamicUnitData = processUnitAvailabilityData(project?.unitPricing || [])
                   
