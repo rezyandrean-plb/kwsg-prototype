@@ -1622,8 +1622,8 @@ export default function ArinaEastLanding() {
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
             <p className="text-sm md:text-xl text-gray-300 max-w-4xl mx-auto">
-            Arina East Residences is the latest freehold landmark by ZACD Group, FRX Capital, and Welltech Construction, located along the coveted Marina East precinct in District 15.
-            Just a 3-minute walk to Katong Park MRT (TEL) and a short drive from Marina Bay, it blends city connectivity with coastal tranquillity.
+            Arina East Residences is the latest freehold landmark by ZACD Group, Fraxtor Singapore, and Welltech Construction, located along the coveted Marina East precinct in District 15.
+            Just a 3-minute walk to Katong Park MRT (TEL) and minutes from Marina Bay, it blends city connectivity with coastal tranquillity. 
             </p>
             <p className="text-sm md:text-xl text-gray-300 max-w-4xl mx-auto">
             This exclusive twin-tower development offers a collection of 1- to 4-bedroom homes, each corner-facing and meticulously designed by ONG&ONG and Design Intervention. 
