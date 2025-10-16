@@ -1123,7 +1123,7 @@ export default function ArinaEastLanding() {
           price: "From $1,880,000",
           currency: "SGD",
           total: 17,
-          available: 11,
+          available: 21,
           status: 0,
           floor_plan_images: [
             "/images/arina-east/floor-plan/2BD Deluxe - B1.png",
@@ -1141,7 +1141,7 @@ export default function ArinaEastLanding() {
           bedrooms: 3,
           bathrooms: 2,
           size: "969 - 1238 sqft",
-          price: "From $2,808,888",
+          price: "From $2,808,000",
           currency: "SGD",
           total: 32,
           available: 17,
@@ -1163,7 +1163,7 @@ export default function ArinaEastLanding() {
           bedrooms: 4,
           bathrooms: 3,
           size: "1,389 sqft",
-          price: "From $4,030,028",
+          price: "From $4,030,000",
           currency: "SGD",
           total: 15,
           available: 6,
@@ -1961,7 +1961,6 @@ export default function ArinaEastLanding() {
             {/* Tabs for unit types */}
             <div className="w-full px-2 sm:px-6 pt-4 sm:pt-6 pb-2 border-b border-gray-700 mb-6 sm:mb-8">
               <div className="relative">
-                <span className="block text-center text-xs text-gray-400 py-2">Scroll to view all unit types</span>
                 <div id="unit-type-tabs-scroll" ref={unitTabsScrollRef as any} className="flex flex-nowrap gap-2 justify-start md:justify-center overflow-x-auto whitespace-nowrap scrollbar-none md:scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent snap-x snap-mandatory -mx-2 px-2" style={{ WebkitOverflowScrolling: 'touch' }}>
                 {(() => {
                   const dynamicUnitData = processUnitAvailabilityData(project?.unitPricing || [])
