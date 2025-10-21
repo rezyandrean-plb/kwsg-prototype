@@ -1,347 +1,231 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
 
-// Create a new Prisma client instance
 const prisma = new PrismaClient({
-  log: ['query', 'info', 'warn', 'error'],
+  log: ['error'],
 })
-
-type ApiProject = {
-  id: number
-  name?: string
-  project_name?: string
-  slug: string
-  title?: string
-  location?: string
-  address?: string
-  type?: string
-  price?: string
-  price_from?: string
-  display_price?: string
-  price_per_sqft?: string
-  bedrooms?: string
-  bathrooms?: string
-  size?: string
-  units?: string
-  developer?: string
-  completion?: string
-  description?: string
-  features?: string[]
-  district?: string
-  tenure?: string
-  property_type?: string
-  status?: string
-  total_units?: string
-  total_floors?: string
-  site_area?: string
-  latitude?: number | null
-  longitude?: number | null
-  image_url_banner?: string | null
-  image_banner_url?: string | null
-  gallery_images?: string[]
-  unit_pricing?: any[]
-  facilities?: any[]
-  created_at: string
-  updated_at: string
-}
-
-type Project = {
-  id: number
-  name: string
-  location: string
-  address?: string
-  price: string
-  price_from: string
-  lowerPrice?: string
-  pricePerSqFt?: string
-  developer: {
-    name: string | null
-    description: string | null
-    logo_url: string | null
-    website: string | null
-    contact_email: string | null
-    contact_phone: string | null
-  }
-  completion: string
-  status: string
-  image_url_banner: string | null
-  created_at: Date | null
-  updated_at: Date | null
-  description: string | null
-  type: string
-  bedrooms: string
-  bathrooms: string
-  slug: string
-  tenure: string
-  units: string
-}
-
-function mapStatus(status?: string | null): 'upcoming' | 'ongoing' | 'completed' {
-  if (!status) return 'upcoming'
-  const s = status.toLowerCase()
-  if (s.includes('launching soon') || s.includes('coming soon') || s.includes('upcoming')) return 'upcoming'
-  if (s.includes('under construction') || s.includes('ongoing')) return 'ongoing'
-  return 'completed'
-}
-
-function normalizeMoney(s?: string) {
-  return (s || '').replace(/[\$,]/g, '').trim()
-}
-
-function asMillions(raw?: string) {
-  const n = Number(normalizeMoney(raw))
-  if (!isFinite(n) || n <= 0) return undefined
-  const inMillions = n >= 1000000 ? (n / 1_000_000).toFixed(2).replace(/\.00$/, '') : (n / 1_000_000).toFixed(2)
-  return inMillions
-}
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     
-    // Pagination
+    // Query parameters
     const page = parseInt(searchParams.get('page') || '1')
-    const pageSize = parseInt(searchParams.get('pageSize') || '8')
-    const skip = (page - 1) * pageSize
-
-    // Validate parameters
-    if (page < 1 || pageSize < 1 || pageSize > 100) {
-      return NextResponse.json({ error: 'Invalid pagination parameters' }, { status: 400 })
-    }
-
-    // Build where clause with search functionality
-    const where: any = {}
-    const orderBy: any = { created_at: 'desc' }
-
-    // Handle search parameter
-    const searchQuery = searchParams.get('search')
-    if (searchQuery && searchQuery.trim()) {
-      const searchTerm = searchQuery.trim()
-      where.OR = [
-        { name: { contains: searchTerm, mode: 'insensitive' } },
-        { project_name: { contains: searchTerm, mode: 'insensitive' } },
-        { location: { contains: searchTerm, mode: 'insensitive' } },
-        { address: { contains: searchTerm, mode: 'insensitive' } },
-        { developer: { contains: searchTerm, mode: 'insensitive' } },
-        { description: { contains: searchTerm, mode: 'insensitive' } },
-        { type: { contains: searchTerm, mode: 'insensitive' } },
-        { property_type: { contains: searchTerm, mode: 'insensitive' } }
-      ]
-    }
-
-    // Handle filter parameters
-    const districts = searchParams.getAll('districts').map(d => parseInt(d)).filter(d => !isNaN(d))
-    if (districts.length > 0) {
-      const districtFormats = districts.map(d => `D${d.toString().padStart(2, '0')}`)
-      where.location = { in: districtFormats }
-    }
-
-    const tenures = searchParams.getAll('tenures')
-    if (tenures.length > 0) {
-      where.tenure = { in: tenures }
-    }
-
-    const propertyTypes = searchParams.getAll('propertyTypes')
-    if (propertyTypes.length > 0) {
-      where.OR = where.OR ? [
-        ...where.OR,
-        { type: { in: propertyTypes } },
-        { property_type: { in: propertyTypes } }
-      ] : [
-        { type: { in: propertyTypes } },
-        { property_type: { in: propertyTypes } }
-      ]
-    }
-
-    const statuses = searchParams.getAll('statuses')
-    if (statuses.length > 0) {
-      where.status = { in: statuses }
-    }
-
-    const bedrooms = searchParams.getAll('bedrooms')
-    if (bedrooms.length > 0) {
-      where.bedrooms = { in: bedrooms }
-    }
-
-    const priceMin = parseInt(searchParams.get('priceMin') || '0')
-    const priceMax = parseInt(searchParams.get('priceMax') || '5000000')
-    if (priceMin > 0 || priceMax < 5000000) {
-      where.AND = where.AND || []
-      if (priceMin > 0) {
-        where.AND.push({
-          OR: [
-            { price_from: { gte: priceMin.toString() } },
-            { price: { gte: priceMin.toString() } }
-          ]
-        })
-      }
-      if (priceMax < 5000000) {
-        where.AND.push({
-          OR: [
-            { price_from: { lte: priceMax.toString() } },
-            { price: { lte: priceMax.toString() } }
-          ]
-        })
-      }
-    }
-
-    // Get total count for pagination
-    const totalCount = await prisma.project.count({ where })
-
-    // Fetch projects from database with developer information
-    const dbProjects = await prisma.project.findMany({
-      where,
-      orderBy,
-      skip,
-      take: pageSize,
-    })
-
-    // Get all unique developer names from the projects
-    const developerNames = [...new Set(dbProjects.map(p => p.developer).filter(Boolean))]
+    const limit = Math.min(parseInt(searchParams.get('limit') || searchParams.get('pageSize') || '20'), 100) // Max 100 items
+    const search = searchParams.get('search') || ''
+    const location = searchParams.get('location') || ''
+    const type = searchParams.get('type') || ''
+    const status = searchParams.get('status') || ''
+    const sortBy = searchParams.get('sort') || 'updated_at:desc'
+    const sortOrder = searchParams.get('sortOrder') || 'desc'
     
-    // Fetch developer details from developers table
-    const developers = await prisma.developers.findMany({
+    // Calculate offset
+    const offset = (page - 1) * limit
+
+    // Build where clause
+    const where: any = {}
+    
+    if (search) {
+      where.OR = [
+        { name: { contains: search, mode: 'insensitive' } },
+        { project_name: { contains: search, mode: 'insensitive' } },
+        { title: { contains: search, mode: 'insensitive' } },
+        { location: { contains: search, mode: 'insensitive' } },
+        { address: { contains: search, mode: 'insensitive' } },
+        { developer: { contains: search, mode: 'insensitive' } },
+      ]
+    }
+    
+    if (location) {
+      where.location = { contains: location, mode: 'insensitive' }
+    }
+    
+    if (type) {
+      where.type = { contains: type, mode: 'insensitive' }
+    }
+    
+    if (status) {
+      where.status = { contains: status, mode: 'insensitive' }
+    }
+
+    // Build orderBy clause
+    const orderBy: any = {}
+    
+    // Parse sort parameter (format: "field:direction")
+    const [sortField, sortDirection] = sortBy.split(':')
+    const direction = sortDirection === 'asc' ? 'asc' : 'desc'
+    
+    
+    if (sortField === 'price_from') {
+      orderBy.price_from = direction
+    } else if (sortField === 'name') {
+      orderBy.name = direction
+    } else if (sortField === 'location') {
+      orderBy.location = direction
+    } else if (sortField === 'created_at') {
+      orderBy.created_at = direction
+    } else if (sortField === 'updated_at') {
+      orderBy.updated_at = direction
+    } else if (sortField === 'price') {
+      orderBy.price_from = direction
+    } else if (sortField === 'completion') {
+      orderBy.completion = direction
+    } else {
+      // Default to updated_at desc for latest entries first
+      orderBy.updated_at = 'desc'
+    }
+    
+
+    // Execute queries in parallel
+    const [projects, totalCount] = await Promise.all([
+      prisma.project.findMany({
+        where,
+        orderBy,
+        skip: offset,
+        take: limit,
+        select: {
+          id: true,
+          name: true,
+          project_name: true,
+          slug: true,
+          title: true,
+          location: true,
+          address: true,
+          type: true,
+          price: true,
+          price_from: true,
+          price_per_sqft: true,
+          bedrooms: true,
+          bathrooms: true,
+          size: true,
+          units: true,
+          developer: true,
+          completion: true,
+          description: true,
+          district: true,
+          tenure: true,
+          property_type: true,
+          status: true,
+          total_units: true,
+          total_floors: true,
+          site_area: true,
+          latitude: true,
+          longitude: true,
+          image_url_banner: true,
+          features: true,
+          created_at: true,
+          updated_at: true,
+        },
+      }),
+      prisma.project.count({ where }),
+    ])
+
+    // Get unit pricing summary for each project
+    const projectIds = projects.map(p => p.id)
+    const unitPricingSummary = await prisma.unit_pricing.groupBy({
+      by: ['project_id'],
       where: {
-        name: {
-          in: developerNames
-        }
+        project_id: { in: projectIds },
+      },
+      _count: {
+        id: true,
+      },
+      _min: {
+        price_from: true,
+      },
+      _max: {
+        price_to: true,
+      },
+    })
+
+    // Create a map for quick lookup
+    const pricingMap = new Map()
+    unitPricingSummary.forEach(pricing => {
+      if (pricing.project_id) {
+        pricingMap.set(pricing.project_id, {
+          unit_count: pricing._count.id,
+          min_price: pricing._min.price_from,
+          max_price: pricing._max.price_to,
+        })
       }
     })
 
-    // Create a map for quick developer lookup
-    const developerMap = new Map(developers.map(d => [d.name, d]))
-
-    // Transform database data to our format
-    const projects: Project[] = dbProjects.map((dbProject): Project => {
-      // Extract district number from district string (e.g., "D05" -> 5)
-      const districtNumber = dbProject.district ? 
-        (() => {
-          const match = dbProject.district.match(/D(\d+)/)
-          return match ? parseInt(match[1]) : undefined
-        })() : undefined
-
-      // Generate price display to match expected format
-      let price = 'Price on request'
-      let priceFrom = '0'
-      let lowerPrice: string | undefined = undefined
-      let pricePerSqFt: string | undefined = undefined
-
-      if (dbProject.price_from && dbProject.price_from !== '0') {
-        priceFrom = dbProject.price_from
-        // If price_from is a number, format it properly
-        if (!isNaN(Number(dbProject.price_from.replace(/[$,]/g, '')))) {
-          const numPrice = Number(dbProject.price_from.replace(/[$,]/g, ''))
-          if (numPrice > 0) {
-            price = `$${numPrice.toLocaleString()}`
-            // Store the full price value for lowerPrice
-            lowerPrice = numPrice.toString()
-          }
-        } else {
-          price = dbProject.price_from
-        }
-      } else if (dbProject.price) {
-        price = dbProject.price
-        // Extract the first price from range if it's a range
-        const priceMatch = dbProject.price.match(/\$([0-9,]+)/)
-        if (priceMatch) {
-          priceFrom = priceMatch[1]
-          const numPrice = Number(priceMatch[1].replace(/,/g, ''))
-          if (numPrice > 0) {
-            // Store the full price value for lowerPrice
-            lowerPrice = numPrice.toString()
-          }
-        }
-      }
-
-      // Set price per sqft if available
-      if (dbProject.price_per_sqft) {
-        pricePerSqFt = dbProject.price_per_sqft
-      }
-
-        // Generate coordinates
-        const lat = dbProject.latitude ? parseFloat(dbProject.latitude) : 1.3521
-        const lng = dbProject.longitude ? parseFloat(dbProject.longitude) : 103.8198
-        const coordinates = { lat, lng }
-
-      // Generate bedrooms array
-      const bedrooms = dbProject.bedrooms ? 
-        dbProject.bedrooms.split(',').map(b => b.trim()).filter(b => b && b !== 'N/A') : 
-        undefined
-
-      // Generate image URL
-      const bannerFromDb = (dbProject.image_url_banner ?? dbProject.image_banner_url ?? '').trim()
-      const image = bannerFromDb !== ''
-        ? bannerFromDb
-        : `https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80`
-
-      // Get developer object
-      const developerData = developerMap.get(dbProject.developer || '') || {
-        name: dbProject.developer || null,
-        description: null,
-        logo_url: null,
-        website: null,
-        contact_email: null,
-        contact_phone: null
-      }
-
+    
+    // Transform projects with pricing summary
+    const transformedProjects = projects.map(project => {
+      const pricing = pricingMap.get(project.id)
+      
+      
       return {
-        id: dbProject.id,
-        name: dbProject.name || dbProject.project_name || 'Unnamed Project',
-        location: dbProject.location || 'Location not specified',
-        address: dbProject.address,
-        price,
-        price_from: priceFrom,
-        lowerPrice,
-        pricePerSqFt,
-        developer: developerData,
-        completion: dbProject.completion || '',
-        status: dbProject.status || 'Active',
-        image_url_banner: dbProject.image_url_banner || image,
-        created_at: dbProject.created_at,
-        updated_at: dbProject.updated_at,
-        description: dbProject.description,
-        type: dbProject.type || dbProject.property_type || '',
-        bedrooms: dbProject.bedrooms || '',
-        bathrooms: dbProject.bathrooms || '',
-        slug: dbProject.slug,
-        tenure: dbProject.tenure,
-        units: dbProject.units || '0'
+        id: project.id,
+        name: project.name || project.project_name || project.title || `Project ${project.id}`,
+        project_name: project.project_name || project.name,
+        slug: project.slug || `project-${project.id}`,
+        title: project.title || project.name,
+        location: project.location,
+        address: project.address,
+        type: project.type || project.property_type,
+        price: project.price,
+        price_from: project.price_from,
+        price_per_sqft: project.price_per_sqft,
+        bedrooms: project.bedrooms,
+        bathrooms: project.bathrooms,
+        size: project.size,
+        units: project.units,
+        developer: project.developer,
+        completion: project.completion,
+        description: project.description,
+        district: project.district,
+        tenure: project.tenure,
+        property_type: project.property_type,
+        status: project.status,
+        total_units: project.total_units,
+        total_floors: project.total_floors,
+        site_area: project.site_area,
+        latitude: project.latitude ? parseFloat(project.latitude) : null,
+        longitude: project.longitude ? parseFloat(project.longitude) : null,
+        image_url_banner: project.image_url_banner,
+        features: Array.isArray(project.features) ? project.features : [],
+        unit_pricing_summary: pricing ? {
+          unit_count: pricing.unit_count,
+          price_range: pricing.min_price && pricing.max_price 
+            ? `${pricing.min_price} - ${pricing.max_price}`
+            : pricing.min_price || pricing.max_price || null,
+        } : null,
+        created_at: project.created_at,
+        updated_at: project.updated_at,
       }
     })
 
-    // For now, return all projects without additional filtering
-    // TODO: Implement proper filtering based on the new response structure
-    const finalProjects = projects
-
-    const pageCount = Math.ceil(totalCount / pageSize)
+    // Calculate pagination info
+    const totalPages = Math.ceil(totalCount / limit)
+    const hasNextPage = page < totalPages
+    const hasPrevPage = page > 1
 
     return NextResponse.json({
-      data: finalProjects,
+      data: transformedProjects,
       meta: {
         pagination: {
           page,
-          pageSize,
-          pageCount,
-          total: totalCount
-        }
-      }
+          pageSize: limit,
+          pageCount: totalPages,
+          total: totalCount,
+          hasNextPage,
+          hasPrevPage,
+        },
+        search,
+        location,
+        type,
+        status,
+        sortBy,
+        sortOrder,
+      },
     })
-
   } catch (error) {
     console.error('Error in projects-prisma API:', error)
-    console.error('Error stack:', error.stack)
-    return NextResponse.json({ 
-      error: 'Failed to fetch projects',
-      errorDetails: error.message,
-      data: [],
-      meta: {
-        pagination: {
-          page: 1,
-          pageSize: 8,
-          pageCount: 0,
-          total: 0
-        }
-      }
-    }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
   }
 }

@@ -257,25 +257,29 @@ interface GooglePlace {
   isNearest?: boolean
 }
 
-// New interfaces for API data
+// New interfaces for API data (matching Strapi response format)
 interface UnitPricing {
   id: number
   project_id: number
   project_name: string
   unit_type: string
+  price_from: string | number | null
+  price_to: string | number | null
+  available_unit: string | number
+  total_unit: string | number
   bedrooms: string
   bathrooms: string
   size_sqft: number
-  price_from: number
-  price_to: number | null
   price_per_sqft: number | null
   currency: string
   payment_terms: string
   discount_info: string
-  is_available: boolean
-  floor_plan_image?: string
-  created_at: string
-  updated_at: string
+  price: string | null
+  price_range: string | null
+  floor_plan_image: string | null
+  floor_plan_id: number | null
+  floor_plan_name: string | null
+  is_available?: boolean
 }
 
 interface Facility {
@@ -324,7 +328,11 @@ const processUnitMixData = (unitPricing: UnitPricing[]): UnitMixData[] => {
 
   // Group units by bedroom count
   const bedroomGroups = unitPricing.reduce((acc, unit) => {
-    const bedroomCount = parseInt(unit.bedrooms) || 0
+    // Parse bedrooms safely, handle both string and number
+    const bedroomCount = typeof unit.bedrooms === 'string' 
+      ? parseInt(unit.bedrooms) || 0 
+      : unit.bedrooms || 0
+    
     if (bedroomCount > 0) {
       if (!acc[bedroomCount]) {
         acc[bedroomCount] = {
@@ -334,8 +342,18 @@ const processUnitMixData = (unitPricing: UnitPricing[]): UnitMixData[] => {
           unitTypes: []
         }
       }
-      acc[bedroomCount].count += 1
-      if (!acc[bedroomCount].unitTypes.includes(unit.unit_type)) {
+      
+      // Count units based on total_unit field if available, otherwise count as 1
+      const unitCount = typeof unit.total_unit === 'number' 
+        ? unit.total_unit 
+        : typeof unit.total_unit === 'string' 
+          ? parseInt(unit.total_unit) || 1 
+          : 1
+      
+      acc[bedroomCount].count += unitCount
+      
+      // Add unique unit types
+      if (unit.unit_type && !acc[bedroomCount].unitTypes.includes(unit.unit_type)) {
         acc[bedroomCount].unitTypes.push(unit.unit_type)
       }
     }
@@ -357,114 +375,109 @@ const processUnitMixData = (unitPricing: UnitPricing[]): UnitMixData[] => {
     })
 }
 
+// Utility function to format completion date to show only month and year
+const formatCompletionDate = (completion: string | undefined): string => {
+  if (!completion) return 'N/A'
+  
+  try {
+    // Handle different date formats
+    let date: Date
+    
+    if (completion.includes('-')) {
+      // Handle YYYY-MM-DD or YYYY-MM format
+      const parts = completion.split('-')
+      if (parts.length >= 2) {
+        const year = parseInt(parts[0])
+        const month = parseInt(parts[1])
+        date = new Date(year, month - 1) // month is 0-indexed in Date constructor
+      } else {
+        return completion
+      }
+    } else {
+      // Try to parse as a date string
+      date = new Date(completion)
+    }
+    
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+      return completion
+    }
+    
+    // Format as "Month YYYY"
+    return date.toLocaleDateString('en-US', { 
+      month: 'long', 
+      year: 'numeric' 
+    })
+  } catch (error) {
+    return completion
+  }
+}
+
 // Utility function to process unit availability data from API
-const processUnitAvailabilityData = (unitPricing: UnitPricing[]) => {
+const processUnitAvailabilityData = (unitPricing: any[]) => {
   if (!unitPricing || unitPricing.length === 0) {
     return [] // Return empty array if no data
   }
 
-  // Group units by bedroom count
-  const bedroomGroups = unitPricing.reduce((acc, unit) => {
-    const bedroomCount = parseInt(unit.bedrooms) || 0
-    if (bedroomCount > 0) {
-      if (!acc[bedroomCount]) {
-        acc[bedroomCount] = {
-          unitType: `${bedroomCount} Bedroom Units`,
-          subtypes: []
-        }
-      }
-      
-      // Check if this unit type already exists
-      const existingSubtype = acc[bedroomCount].subtypes.find((s: any) => s.subtype === unit.unit_type)
-      if (!existingSubtype) {
-        // Format price range
-        let priceDisplay = 'Price on request'
-        if (unit.price_from) {
-          if (unit.price_to && unit.price_to > unit.price_from) {
-            const fromPrice = (unit.price_from / 1000000).toFixed(1)
-            const toPrice = (unit.price_to / 1000000).toFixed(1)
-            priceDisplay = `$${fromPrice}M - $${toPrice}M`
-          } else {
-            priceDisplay = `$${(unit.price_from / 1000000).toFixed(1)}M`
-          }
-        }
+  // Group units by unit_type (Strapi format)
+  const unitGroups = unitPricing.reduce((acc, unit) => {
+    const unitType = unit.unit_type
+    if (!unitType) return acc
 
-        // Format size range
-        const sizeDisplay = unit.size_sqft ? `${unit.size_sqft.toLocaleString()} sqft` : 'Size N/A'
-
-        acc[bedroomCount].subtypes.push({
-          subtype: unit.unit_type,
-          size: sizeDisplay,
-          price: priceDisplay,
-          price_from: unit.price_from,
-          price_to: unit.price_to,
-          price_per_sqft: unit.price_per_sqft,
-          total: 1,
-          available: unit.is_available ? 1 : 0,
-          status: unit.is_available ? 100 : 0,
-          bedrooms: unit.bedrooms,
-          bathrooms: unit.bathrooms,
-          currency: unit.currency,
-          payment_terms: unit.payment_terms,
-          discount_info: unit.discount_info,
-          floor_plan_image: unit.floor_plan_image
-        })
-      } else {
-        existingSubtype.total += 1
-        if (unit.is_available) {
-          existingSubtype.available += 1
-        }
-        
-        // Update price range if this unit has different pricing
-        if (unit.price_from) {
-          if (!existingSubtype.price_from || unit.price_from < existingSubtype.price_from) {
-            existingSubtype.price_from = unit.price_from
-          }
-          if (unit.price_to && (!existingSubtype.price_to || unit.price_to > existingSubtype.price_to)) {
-            existingSubtype.price_to = unit.price_to
-          }
-        }
-        
-        // Update size range
-        if (unit.size_sqft) {
-          if (!existingSubtype.size_min || unit.size_sqft < existingSubtype.size_min) {
-            existingSubtype.size_min = unit.size_sqft
-          }
-          if (!existingSubtype.size_max || unit.size_sqft > existingSubtype.size_max) {
-            existingSubtype.size_max = unit.size_sqft
-          }
-        }
-        
-        existingSubtype.status = Math.round((existingSubtype.available / existingSubtype.total) * 100)
+    if (!acc[unitType]) {
+      acc[unitType] = {
+        unitType: unitType,
+        subtypes: []
       }
     }
-    return acc
-  }, {} as Record<number, any>)
-
-  // Process the grouped data to format price and size ranges
-  Object.values(bedroomGroups).forEach(group => {
-    group.subtypes.forEach((subtype: any) => {
-      // Format price range for subtypes with multiple units
-      if (subtype.price_from && subtype.price_to && subtype.price_to > subtype.price_from) {
-        const fromPrice = (subtype.price_from / 1000000).toFixed(1)
-        const toPrice = (subtype.price_to / 1000000).toFixed(1)
-        subtype.price = `$${fromPrice}M - $${toPrice}M`
-      } else if (subtype.price_from) {
-        subtype.price = `$${(subtype.price_from / 1000000).toFixed(1)}M`
+    
+    // Format price range based on Strapi data
+    let priceDisplay = 'Price on request'
+    if (unit.price_from) {
+      const fromPrice = parseInt(unit.price_from.toString().replace(/[^0-9]/g, ''))
+      if (unit.price_to && unit.price_to > unit.price_from) {
+        const toPrice = parseInt(unit.price_to.toString().replace(/[^0-9]/g, ''))
+        priceDisplay = `$${fromPrice.toLocaleString()} - $${toPrice.toLocaleString()}`
+      } else {
+        priceDisplay = `$${fromPrice.toLocaleString()}`
       }
+    } else if (unit.price_range) {
+      priceDisplay = unit.price_range
+    }
 
-      // Format size range for subtypes with multiple units
-      if (subtype.size_min && subtype.size_max && subtype.size_max > subtype.size_min) {
-        subtype.size = `${subtype.size_min.toLocaleString()} - ${subtype.size_max.toLocaleString()} sqft`
-      } else if (subtype.size_min) {
-        subtype.size = `${subtype.size_min.toLocaleString()} sqft`
-      }
+    // Format size range
+    const sizeDisplay = unit.size_sqft ? `${unit.size_sqft.toLocaleString()} sqft` : 'Size N/A'
+
+    // Calculate availability
+    const totalUnits = parseInt(unit.total_unit) || 0
+    const availableUnits = parseInt(unit.available_unit) || 0
+
+    acc[unitType].subtypes.push({
+      subtype: unit.unit_type,
+      size: sizeDisplay,
+      price: priceDisplay,
+      price_from: unit.price_from,
+      price_to: unit.price_to,
+      price_per_sqft: unit.price_per_sqft,
+      total: totalUnits,
+      available: availableUnits,
+      status: totalUnits > 0 ? Math.round((availableUnits / totalUnits) * 100) : 0,
+      bedrooms: unit.bedrooms,
+      bathrooms: unit.bathrooms,
+      currency: unit.currency || 'SGD',
+      payment_terms: unit.payment_terms,
+      discount_info: unit.discount_info,
+      floor_plan_image: unit.floor_plan_image
     })
-  })
 
-  return Object.values(bedroomGroups).sort((a, b) => {
-    const aBedrooms = parseInt(a.unitType.split(' ')[0])
-    const bBedrooms = parseInt(b.unitType.split(' ')[0])
+    return acc
+  }, {} as Record<string, any>)
+
+  // Sort by unit type name for consistent ordering
+  return Object.values(unitGroups).sort((a: any, b: any) => {
+    // Extract bedroom count for sorting if possible
+    const aBedrooms = parseInt(a.unitType.match(/(\d+)/)?.[1] || '0')
+    const bBedrooms = parseInt(b.unitType.match(/(\d+)/)?.[1] || '0')
     return aBedrooms - bBedrooms
   })
 }
@@ -757,7 +770,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
     }
   }, [project]) // Re-run when project loads
 
-  // Function to fetch project data from Strapi API
+  // Function to fetch project data
   const fetchProject = async (projectSlug: string): Promise<Project | null> => {
     try {
       // 1) Try local proxy API first (handles slug/id and field mapping)
@@ -1643,7 +1656,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                   </div>
                   <div className="flex flex-col items-center min-w-[80px] sm:min-w-[100px]">
                     <span className="text-lg sm:text-xl lg:text-2xl font-bold text-[#ce001f]">
-                      {project?.completion ? project.completion.split('-')[0] : 'N/A'}
+                      {formatCompletionDate(project?.completion)}
                     </span>
                     <span className="text-xs text-gray-300 mt-1">Expected TOP</span>
                   </div>
@@ -1725,7 +1738,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 <div className="min-w-0 flex-1">
                   <div className="text-gray-400 text-xs sm:text-sm">Expected TOP</div>
                   <div className="text-white font-light text-sm sm:text-base">
-                    {`Q${project.completion?.slice(0,1) === '2' ? '2' : '1'} ${displayValue(project.completion)}`}
+                    {formatCompletionDate(project?.completion)}
                   </div>
                 </div>
               </div>
@@ -1881,7 +1894,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                       </div>
                       <div className="flex justify-between">
                         <span>Completion:</span>
-                        <span className="text-white">{project?.completion || 'TBA'}</span>
+                        <span className="text-white">{formatCompletionDate(project?.completion) || 'TBA'}</span>
                       </div>
                     </div>
                   </div>
@@ -2175,29 +2188,46 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       <div className="w-full flex flex-col items-center py-4">
         <div className="max-w-7xl w-full py-10 px-4 flex flex-col items-center">
           <h3 className="text-xl font-light text-red-400 mb-8 text-center tracking-wide">Unit Mix</h3>
-          <div className="w-full flex flex-row gap-6 overflow-x-auto sm:overflow-x-visible scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent px-2" style={{ WebkitOverflowScrolling: 'touch' }}>
+          <div className={`w-full flex flex-row gap-6 px-2 ${(() => {
+            const unitMixData = processUnitAvailabilityData(project?.unitPricing || [])
+            return unitMixData.length > 6 
+              ? 'overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent' 
+              : 'overflow-x-visible'
+          })()}`} style={{ WebkitOverflowScrolling: 'touch' }}>
             {(() => {
-              // Process unit mix data from API
-              const unitMixData = processUnitMixData(project?.unitPricing || [])
+              // Process unit mix data from API using the same function as Units & Pricing Section
+              const unitMixData = processUnitAvailabilityData(project?.unitPricing || [])
               
-              // Fallback to default data if no API data available
-              const displayData = unitMixData.length > 0 ? unitMixData : [
-                { bedroomType: "1-Bedroom", count: 85, percentage: 18, unitTypes: [] },
-                { bedroomType: "2-Bedroom", count: 180, percentage: 38, unitTypes: [] },
-                { bedroomType: "3-Bedroom", count: 220, percentage: 46, unitTypes: [] },
-                { bedroomType: "4-Bedroom", count: 95, percentage: 20, unitTypes: [] },
-                { bedroomType: "5-Bedroom", count: 25, percentage: 5, unitTypes: [] },
-              ]
+              // Show message if no data available
+              if (unitMixData.length === 0) {
+                return (
+                  <div className="w-full text-center py-8">
+                    <p className="text-gray-400 text-sm">Unit mix data not available</p>
+                  </div>
+                )
+              }
 
-              return displayData.map((unit, index) => (
-                <div key={unit.bedroomType} className="flex-1 bg-[#232324] rounded-xl py-8 flex flex-col items-center justify-center hover:bg-[#2a2b2c] transition-colors duration-300">
-                  <span className="text-3xl font-light text-white mb-2">{unit.count}</span>
-                  <span className="text-gray-400 font-light">{unit.bedroomType}</span>
-                  {unit.percentage > 0 && (
-                    <span className="text-xs text-gray-500 mt-1">({unit.percentage}%)</span>
-                  )}
-                </div>
-              ))
+              return unitMixData.map((unit: any, index: number) => {
+                // Calculate total available units for this type
+                const totalAvailable = unit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.available, 0)
+                const totalUnits = unit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.total, 0)
+                const percentage = totalUnits > 0 ? Math.round((totalAvailable / totalUnits) * 100) : 0
+                
+                return (
+                  <div key={unit.unitType} className={`bg-[#232324] rounded-xl py-8 flex flex-col items-center justify-center hover:bg-[#2a2b2c] transition-colors duration-300 min-w-[120px] ${unitMixData.length > 6 ? 'flex-shrink-0' : 'flex-1'}`}>
+                    <span className="text-3xl font-light text-white mb-2">{totalUnits}</span>
+                    <span className="text-gray-400 font-light text-center">{unit.unitType.replace(' Units', '')}</span>
+                    {percentage > 0 && (
+                      <span className="text-xs text-gray-500 mt-1">({percentage}% available)</span>
+                    )}
+                    {unit.subtypes.length > 0 && (
+                      <div className="mt-2 text-xs text-gray-500 text-center">
+                        <span className="block">{unit.subtypes.length} type{unit.subtypes.length > 1 ? 's' : ''}</span>
+                      </div>
+                    )}
+                  </div>
+                )
+              })
             })()}
           </div>
           {/* Additional unit mix information */}
@@ -2205,13 +2235,37 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-400">
                 {(() => {
-                  const totalUnits = project.unitPricing.length
-                  const availableUnits = project.unitPricing.filter(u => u.is_available).length
-                  const priceRange = project.unitPricing.filter(u => u.price_from)
-                  const minPrice = priceRange.length > 0 ? Math.min(...priceRange.map(u => u.price_from)) : 0
-                  const maxPrice = priceRange.length > 0 ? Math.max(...priceRange.map(u => u.price_from)) : 0
+                  // Use the same data processing as Units & Pricing Section
+                  const unitMixData: any[] = processUnitAvailabilityData(project?.unitPricing || [])
                   
-                  return `Total Unit Types: ${totalUnits} | Available: ${availableUnits} | Price Range: ${minPrice > 0 ? `$${(minPrice / 1000000).toFixed(1)}M - $${(maxPrice / 1000000).toFixed(1)}M` : 'Price on request'}`
+                  if (unitMixData.length === 0) {
+                    return 'No unit information available'
+                  }
+                  
+                  // Calculate totals across all unit types
+                  const totalUnits = unitMixData.reduce((sum: number, unit: any) => 
+                    sum + unit.subtypes.reduce((subSum: number, subtype: any) => subSum + subtype.total, 0), 0)
+                  const totalAvailable = unitMixData.reduce((sum: number, unit: any) => 
+                    sum + unit.subtypes.reduce((subSum: number, subtype: any) => subSum + subtype.available, 0), 0)
+                  
+                  // Calculate price range from all units
+                  const priceRange = project.unitPricing.filter(u => u.price_from && u.price_from !== '0' && u.price_from !== 0)
+                  
+                  let priceInfo = 'Price on request'
+                  if (priceRange.length > 0) {
+                    const prices = priceRange.map(u => {
+                      const price = typeof u.price_from === 'number' ? u.price_from : (u.price_from ? parseFloat(u.price_from.toString()) : 0)
+                      return price
+                    }).filter(p => p > 0)
+                    
+                    if (prices.length > 0) {
+                      const minPrice = Math.min(...prices)
+                      const maxPrice = Math.max(...prices)
+                      priceInfo = `$${minPrice.toLocaleString()} - $${maxPrice.toLocaleString()}`
+                    }
+                  }
+                  
+                  return `Total Units: ${totalUnits} | Available: ${totalAvailable} | Price Range: ${priceInfo}`
                 })()}
               </p>
             </div>
@@ -2221,6 +2275,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
 
       {/* Units & Pricing Section */}
       <section id="pricing" className="w-full py-6 sm:py-8 mb-4">
+        {/* Header Section */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-light mb-3 text-white text-center tracking-wide">Unit & Pricing</h2>
           <div className="flex justify-center mb-4 sm:mb-6">
@@ -2244,7 +2299,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                   )
                 }
                 
-                return dynamicUnitData.map((unit, idx) => {
+                return dynamicUnitData.map((unit: any, idx: number) => {
                   // Calculate total available units for this type
                   const totalAvailable = unit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.available, 0)
                   const totalUnits = unit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.total, 0)
@@ -2267,154 +2322,169 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               })()}
             </div>
           </div>
+        </div>
 
-          {/* Card layout for selected unit type */}
-          {(() => {
-            const dynamicUnitData = processUnitAvailabilityData(project?.unitPricing || [])
-            const currentUnit = dynamicUnitData[unitsActiveTab] || dynamicUnitData[0]
-            
-            // If no data available, show fallback
-            if (!currentUnit) {
-              return (
-                <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 justify-center items-stretch bg-[#111] rounded-xl p-4 lg:p-8 max-w-5xl mx-auto shadow-lg pricing-container">
-                  <div className="w-full text-center text-gray-400 py-8">
-                    <p>No unit information available at the moment.</p>
-                    <p className="text-sm mt-2">Please check back later or contact our agents for more details.</p>
-                  </div>
-                </div>
-              )
-            }
-            
-            // Calculate total availability for this unit type
-            const totalAvailable = currentUnit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.available, 0)
-            const totalUnits = currentUnit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.total, 0)
-            
+        {/* Card layout for selected unit type - Full width section */}
+        {(() => {
+          const dynamicUnitData = processUnitAvailabilityData(project?.unitPricing || [])
+          const currentUnit = dynamicUnitData[unitsActiveTab] || dynamicUnitData[0]
+          
+          // If no data available, show fallback
+          if (!currentUnit) {
             return (
-              <div className="space-y-4 sm:space-y-6">
-                {/* Unit type header */}
-                <div className="text-center mb-4 sm:mb-6">
-                  <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">{currentUnit.unitType.replace(' Units', '')}</h3>
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm">
-                    <span className="text-gray-400">Total Units: <span className="text-white font-medium">{totalUnits}</span></span>
-                    <span className="text-gray-400">Available: <span className="text-green-400 font-medium">{totalAvailable}</span></span>
-                    <span className="text-gray-400">Availability: <span className="text-white font-medium">{totalUnits > 0 ? Math.round((totalAvailable / totalUnits) * 100) : 0}%</span></span>
-                  </div>
-                </div>
-                
-                {/* Subtype cards */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-                  {currentUnit.subtypes.map((subtype: any, subtypeIndex: number) => (
-                    <div key={subtypeIndex} className="bg-[#111] rounded-xl p-4 sm:p-6 shadow-lg border border-gray-800">
-                      {/* Subtype header */}
-                      <div className="flex items-center justify-between mb-3 sm:mb-4">
-                        <h4 className="text-base sm:text-lg font-semibold text-white">{subtype.subtype}</h4>
-                        <div className="flex flex-col items-end">
-                          <span className="text-green-400 font-semibold text-sm sm:text-lg">{subtype.available} of {subtype.total}</span>
-                          <span className="text-gray-400 text-xs">Available</span>
-                        </div>
-                      </div>
-                      
-                      {/* Unit specifications */}
-                      <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-3 sm:mb-4">
-                        <div className="text-center">
-                          <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-red-900/60 mx-auto mb-1 sm:mb-2">
-                            <Home className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
-                          </div>
-                          <span className="text-white text-xs">{subtype.bedrooms || 'N/A'} Bedrooms</span>
-                        </div>
-                        <div className="text-center">
-                          <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-red-900/60 mx-auto mb-1 sm:mb-2">
-                            <Bath className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
-                          </div>
-                          <span className="text-white text-xs">{subtype.bathrooms || 'N/A'} Bathrooms</span>
-                        </div>
-                        <div className="text-center">
-                          <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-red-900/60 mx-auto mb-1 sm:mb-2">
-                            <Layout className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
-                          </div>
-                          <span className="text-white text-xs">{subtype.size}</span>
-                        </div>
-                      </div>
-                      
-                      {/* Floor Plan Image */}
-                      {(() => {
-                        const floorPlanImage = subtype.floor_plan_image
-                        return (
-                          <div className="mb-4">
-                            <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden border border-gray-700">
-                              <Image
-                                src={floorPlanImage || `/placeholder.svg?height=400&width=600&text=${encodeURIComponent(currentUnit.unitType.replace(' Units', '') + ' Floor Plan')}`}
-                                alt={`${currentUnit.unitType.replace(' Units', '')} Floor Plan`}
-                                fill
-                                className="object-cover"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                              <div className="absolute bottom-2 left-2 text-white text-xs font-medium">
-                                Floor Plan
-                              </div>
-                            </div>
-                          </div>
-                        )
-                      })()}
-                      
-                      {/* Pricing information */}
-                      <div className="space-y-2 mb-4">
-                        <div className="flex items-center justify-between">
-                          <span className="text-gray-400 text-sm">Price Range:</span>
-                          <span className="text-white font-medium">{subtype.price}</span>
-                        </div>
-                        {subtype.price_per_sqft && (
-                          <div className="flex items-center justify-between">
-                            <span className="text-gray-400 text-sm">Price per sqft:</span>
-                            <span className="text-white text-sm">
-                              ${subtype.price_per_sqft.toLocaleString()} {subtype.currency || 'SGD'}
-                            </span>
-                          </div>
-                        )}
-                        {subtype.payment_terms && (
-                          <div className="flex items-center justify-between">
-                            <span className="text-gray-400 text-sm">Payment Terms:</span>
-                            <span className="text-white text-sm">{subtype.payment_terms}</span>
-                          </div>
-                        )}
-                        {subtype.discount_info && (
-                          <div className="flex items-center justify-between">
-                            <span className="text-green-400 text-sm">Special Offer:</span>
-                            <span className="text-white text-sm">{subtype.discount_info}</span>
-                          </div>
-                        )}
-                      </div>
-                      
-                      {/* Availability status */}
-                      <div className="mb-4">
-                        <div className="flex items-center justify-between text-sm mb-1">
-                          <span className="text-gray-400">Availability</span>
-                          <span className="text-white">{subtype.status}%</span>
-                        </div>
-                        <div className="w-full bg-gray-700 rounded-full h-2">
-                          <div 
-                            className="bg-green-500 h-2 rounded-full transition-all duration-300" 
-                            style={{ width: `${subtype.status}%` }}
-                          />
-                        </div>
-                      </div>
-                      
-                      {/* CTA Button */}
-                      <button 
-                        onClick={() => scrollToSection('contact')}
-                        className="w-full bg-red-500 hover:bg-red-600 text-white font-light py-3 px-4 rounded-full text-sm transition-colors"
-                      >
-                        Enquire About This Unit Type
-                      </button>
+              <div className="w-full px-4 sm:px-6">
+                <div className="max-w-5xl mx-auto">
+                  <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 justify-center items-stretch bg-[#111] rounded-xl p-4 lg:p-8 shadow-lg pricing-container">
+                    <div className="w-full text-center text-gray-400 py-8">
+                      <p>No unit information available at the moment.</p>
+                      <p className="text-sm mt-2">Please check back later or contact our agents for more details.</p>
                     </div>
-                  ))}
+                  </div>
                 </div>
               </div>
             )
-          })()}
-
-
-        </div>
+          }
+          
+          // Calculate total availability for this unit type
+          const totalAvailable = (currentUnit as any).subtypes.reduce((sum: number, subtype: any) => sum + subtype.available, 0)
+          const totalUnits = (currentUnit as any).subtypes.reduce((sum: number, subtype: any) => sum + subtype.total, 0)
+          
+          return (
+            <div className="w-full">
+              {/* Unit type header */}
+              {/* <div className="text-center mb-4 sm:mb-6">
+                <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">{(currentUnit as any).unitType.replace(' Units', '')}</h3>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm">
+                  <span className="text-gray-400">Total Units: <span className="text-white font-medium">{totalUnits}</span></span>
+                  <span className="text-gray-400">Available: <span className="text-green-400 font-medium">{totalAvailable}</span></span>
+                  <span className="text-gray-400">Availability: <span className="text-white font-medium">{totalUnits > 0 ? Math.round((totalAvailable / totalUnits) * 100) : 0}%</span></span>
+                </div>
+              </div> */}
+              
+              {/* Subtype cards - Constrained width container */}
+              <div className="w-full">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                  <div className="w-full space-y-6">
+                  {(currentUnit as any).subtypes.map((subtype: any, subtypeIndex: number) => (
+                    <div key={subtypeIndex} className="w-full bg-[#111] rounded-xl shadow-lg border border-gray-800 overflow-hidden">
+                      <div className="grid grid-cols-1 md:grid-cols-2 min-h-[400px]">
+                        {/* Left Column - Floor Plan Image */}
+                        <div className="order-1">
+                          {(() => {
+                            const floorPlanImage = subtype.floor_plan_image
+                            return (
+                              <div className="relative w-full h-80 md:h-full min-h-[400px]">
+                                <Image
+                                  src={floorPlanImage || `/placeholder.svg?height=400&width=600&text=${encodeURIComponent((currentUnit as any).unitType.replace(' Units', '') + ' Floor Plan')}`}
+                                  alt={`${(currentUnit as any).unitType.replace(' Units', '')} Floor Plan`}
+                                  fill
+                                  className="object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                                <div className="absolute bottom-4 left-4 text-white text-sm font-medium">
+                                  Floor Plan
+                                </div>
+                              </div>
+                            )
+                          })()}
+                        </div>
+                        
+                        {/* Right Column - Content */}
+                        <div className="p-6 sm:p-8 order-2 flex flex-col justify-between">
+                          <div className="space-y-6">
+                            {/* Subtype header */}
+                            <div className="flex items-center justify-between">
+                              <h4 className="text-lg sm:text-xl font-semibold text-white">{subtype.subtype}</h4>
+                              <div className="flex flex-col items-end">
+                                <span className="text-green-400 font-semibold text-sm sm:text-lg">{subtype.available} of {subtype.total}</span>
+                                <span className="text-gray-400 text-xs">Available</span>
+                              </div>
+                            </div>
+                            
+                            {/* Unit specifications */}
+                            <div className="grid grid-cols-3 gap-4 sm:gap-6">
+                              <div className="text-center">
+                                <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-900/60 mx-auto mb-3">
+                                  <Home className="h-6 w-6 sm:h-7 sm:w-7 text-red-400" />
+                                </div>
+                                <span className="text-white text-sm font-medium">{subtype.bedrooms || 'N/A'} Bedrooms</span>
+                              </div>
+                              <div className="text-center">
+                                <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-900/60 mx-auto mb-3">
+                                  <Bath className="h-6 w-6 sm:h-7 sm:w-7 text-red-400" />
+                                </div>
+                                <span className="text-white text-sm font-medium">{subtype.bathrooms || 'N/A'} Bathrooms</span>
+                              </div>
+                              <div className="text-center">
+                                <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-900/60 mx-auto mb-3">
+                                  <Layout className="h-6 w-6 sm:h-7 sm:w-7 text-red-400" />
+                                </div>
+                                <span className="text-white text-sm font-medium">{subtype.size}</span>
+                              </div>
+                            </div>
+                            
+                            {/* Pricing information */}
+                            <div className="space-y-4">
+                              <div className="flex items-center justify-between py-2 border-b border-gray-700">
+                                <span className="text-gray-400 text-sm">Price Range:</span>
+                                <span className="text-white font-medium">{subtype.price}</span>
+                              </div>
+                              {subtype.price_per_sqft && (
+                                <div className="flex items-center justify-between py-2 border-b border-gray-700">
+                                  <span className="text-gray-400 text-sm">Price per sqft:</span>
+                                  <span className="text-white text-sm">
+                                    ${subtype.price_per_sqft.toLocaleString()} {subtype.currency || 'SGD'}
+                                  </span>
+                                </div>
+                              )}
+                              {subtype.payment_terms && (
+                                <div className="flex items-center justify-between py-2 border-b border-gray-700">
+                                  <span className="text-gray-400 text-sm">Payment Terms:</span>
+                                  <span className="text-white text-sm">{subtype.payment_terms}</span>
+                                </div>
+                              )}
+                              {subtype.discount_info && (
+                                <div className="flex items-center justify-between py-2 border-b border-gray-700">
+                                  <span className="text-green-400 text-sm">Special Offer:</span>
+                                  <span className="text-white text-sm">{subtype.discount_info}</span>
+                                </div>
+                              )}
+                            </div>
+                            
+                            {/* Availability status */}
+                            <div className="space-y-3">
+                              <div className="flex items-center justify-between text-sm">
+                                <span className="text-gray-400">Availability</span>
+                                <span className="text-white font-medium">{subtype.status}%</span>
+                              </div>
+                              <div className="w-full bg-gray-700 rounded-full h-3">
+                                <div 
+                                  className="bg-green-500 h-3 rounded-full transition-all duration-300" 
+                                  style={{ width: `${subtype.status}%` }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {/* CTA Button */}
+                          <div className="mt-6">
+                            <button 
+                              onClick={() => scrollToSection('contact')}
+                              className="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-6 rounded-full text-sm transition-colors duration-200"
+                            >
+                              Enquire About This Unit Type
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        })()}
       </section>
 
       {/* Mortgage Loan Calculator - Full Width */}
@@ -2487,11 +2557,11 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                       <span className="text-xs text-gray-400">Units</span>
                     </div>
                     <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
-                      <span className="text-white font-bold">{project?.completion}</span>
+                      <span className="text-white font-bold">{formatCompletionDate(project?.completion)}</span>
                       <span className="text-xs text-gray-400">TOP</span>
                     </div>
                     <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
-                      <span className="text-white font-bold">{project?.priceFrom ? `$${(parseInt(project.priceFrom.replace(/[^0-9]/g, '')) / 1000000).toFixed(1)}M` : 'N/A'}</span>
+                      <span className="text-white font-bold">{project?.priceFrom ? `$${parseInt(project.priceFrom.replace(/[^0-9]/g, '')).toLocaleString()}` : 'N/A'}</span>
                       <span className="text-xs text-gray-400">From</span>
                     </div>
                   </div>

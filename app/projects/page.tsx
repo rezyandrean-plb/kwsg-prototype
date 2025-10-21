@@ -48,6 +48,7 @@ type ApiProject = {
   address?: string
   type?: string
   price: string
+  price_from?: string
   lowerPrice?: string
   pricePerSqFt?: string
   bedrooms?: string[]
@@ -245,6 +246,7 @@ export default function NewLaunchDirectory() {
             location: p.location,
             address: p.address,
             price,
+            price_from: p.price_from, // Add price_from field from API
             priceRange: lowerPrice ? `From $${lowerPrice}M` : undefined,
             pricePerSqFt: p.pricePerSqFt,
             image,
@@ -942,8 +944,8 @@ export default function NewLaunchDirectory() {
               animate="animate"
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
-              {filteredProjects.map((project) => (
-                <motion.div key={project.slug} variants={fadeInUp}>
+              {filteredProjects.map((project, index) => (
+                <motion.div key={project.slug || `project-${index}`} variants={fadeInUp}>
                   <ProjectCard 
                     {...project}
                     type={project.type || 'Mixed Development'}
