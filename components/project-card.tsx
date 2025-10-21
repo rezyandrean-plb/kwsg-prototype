@@ -137,17 +137,17 @@ export default function ProjectCard({
         {/* Badges for tenure and TOP */}
         <div className="flex flex-wrap gap-1.5 mb-3">
           {tenure && (
-            <span className="bg-gray-800 text-gray-300 px-2.5 py-1 rounded-full text-xs font-medium border border-gray-700 hover:bg-gray-700 transition-colors">
+            <span className="bg-gray-800 text-gray-300 px-2.5 py-1 rounded-full text-[10px] font-light border border-gray-700 hover:bg-gray-700 transition-colors">
               {tenure}
             </span>
           )}
           {completion && (
-            <span className="bg-gray-800 text-gray-300 px-2.5 py-1 rounded-full text-xs font-medium border border-gray-700 hover:bg-gray-700 transition-colors">
+            <span className="bg-gray-800 text-gray-300 px-2.5 py-1 rounded-full text-[10px] font-light border border-gray-700 hover:bg-gray-700 transition-colors">
               TOP: {completion.split('-')[0]}
             </span>
           )}
           {units && (
-            <span className="flex items-center bg-gray-800 text-gray-300 px-2.5 py-1 rounded-full text-xs font-medium border border-gray-700 hover:bg-gray-700 transition-colors">
+            <span className="flex items-center bg-gray-800 text-gray-300 px-2.5 py-1 rounded-full text-[10px] font-light border border-gray-700 hover:bg-gray-700 transition-colors">
               <Home className="h-3 w-3 mr-1.5 text-gray-400" />
               {units}
             </span>

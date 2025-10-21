@@ -705,6 +705,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
   }, [galleryOpen])
   const [galleryIdx, setGalleryIdx] = useState(0)
   const [selectedPlan, setSelectedPlan] = useState<{ type: string; image: string } | null>(null)
+  const [selectedSitePlan, setSelectedSitePlan] = useState(0)
   const [selectedAmenityType, setSelectedAmenityType] = useState("schools")
   const [selectedAmenity, setSelectedAmenity] = useState<GooglePlace | null>(null)
   const [realAmenitiesData, setRealAmenitiesData] = useState<Record<string, GooglePlace[]>>({})
@@ -835,7 +836,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             unitPricing: p.unitPricing || [],
             facilities: p.facilities || [],
             brochures: [],
-            sitePlans: [],
+            sitePlans: p.sitePlans || [],
             apiFloorPlans: p.floorPlans || [],
             moat: {
               project: p.name || p.project_name || '',
@@ -1864,12 +1865,53 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
           {/* Responsive Flex Container */}
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 min-h-[400px] site-plan-container">
             {/* Site Plan Left */}
-            <div className="flex-1 bg-[#242728] rounded-lg flex flex-col items-center justify-center min-h-[300px] lg:min-h-[400px] site-plan-left">
-              <img
-                src={project?.sitePlans && project.sitePlans.length > 0 ? project.sitePlans[0].image_url : "/siteplan-dummy.jpg"}
-                alt="Site Plan"
-                className="w-full h-auto max-w-full rounded-lg object-contain"
-              />
+            <div className="flex-1 bg-[#242728] rounded-lg flex flex-col items-center justify-center min-h-[300px] lg:min-h-[400px] site-plan-left relative">
+              {project?.sitePlans && project.sitePlans.length > 0 ? (
+                <>
+                  <img
+                    src={project.sitePlans[selectedSitePlan].image_url}
+                    alt={`Site Plan ${selectedSitePlan + 1}`}
+                    className="w-full h-auto max-w-full rounded-lg object-contain"
+                  />
+                  
+                  {/* Navigation Controls - Only show if more than 1 site plan */}
+                  {project.sitePlans.length > 1 && (
+                    <>
+                      <button
+                        className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors z-10"
+                        onClick={() => setSelectedSitePlan(prev => 
+                          prev === 0 ? project.sitePlans!.length - 1 : prev - 1
+                        )}
+                        aria-label="Previous site plan"
+                      >
+                        <ChevronLeft className="w-5 h-5 text-white" />
+                      </button>
+                      <button
+                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors z-10"
+                        onClick={() => setSelectedSitePlan(prev => 
+                          (prev + 1) % project.sitePlans!.length
+                        )}
+                        aria-label="Next site plan"
+                      >
+                        <ChevronRight className="w-5 h-5 text-white" />
+                      </button>
+                    </>
+                  )}
+                  
+                  {/* Site Plan Counter */}
+                  {project.sitePlans.length > 1 && (
+                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/60 rounded-full px-3 py-1 text-white text-sm">
+                      {selectedSitePlan + 1} / {project.sitePlans.length}
+                    </div>
+                  )}
+                </>
+              ) : (
+                <img
+                  src="/siteplan-dummy.jpg"
+                  alt="Site Plan"
+                  className="w-full h-auto max-w-full rounded-lg object-contain"
+                />
+              )}
             </div>
             {/* Legend Right */}
             <div className="w-full lg:w-80 bg-[#242728] border border-gray-700 rounded-lg p-4 lg:p-6 flex flex-col justify-between min-h-[300px] lg:min-h-[400px] site-plan-right">
@@ -1938,6 +1980,31 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               </button>
             </div>
           </div>
+          
+          {/* Site Plan Thumbnail Strip - Only show if multiple site plans */}
+          {project?.sitePlans && project.sitePlans.length > 1 && (
+            <div className="mt-4 p-2 bg-gray-800 rounded-lg">
+              <div className="flex gap-2 overflow-x-auto pb-2">
+                {project.sitePlans.map((sitePlan, index) => (
+                  <div
+                    key={sitePlan.id || index}
+                    className={`flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${
+                      selectedSitePlan === index 
+                        ? 'border-[#ce001f]' 
+                        : 'border-gray-600 hover:border-gray-400'
+                    }`}
+                    onClick={() => setSelectedSitePlan(index)}
+                  >
+                    <img
+                      src={sitePlan.image_url}
+                      alt={`Site Plan ${index + 1} thumbnail`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -2192,7 +2259,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             const unitMixData = processUnitAvailabilityData(project?.unitPricing || [])
             return unitMixData.length > 6 
               ? 'overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent' 
-              : 'overflow-x-visible'
+              : 'overflow-x-visible justify-center'
           })()}`} style={{ WebkitOverflowScrolling: 'touch' }}>
             {(() => {
               // Process unit mix data from API using the same function as Units & Pricing Section
@@ -2214,7 +2281,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 const percentage = totalUnits > 0 ? Math.round((totalAvailable / totalUnits) * 100) : 0
                 
                 return (
-                  <div key={unit.unitType} className={`bg-[#232324] rounded-xl py-8 flex flex-col items-center justify-center hover:bg-[#2a2b2c] transition-colors duration-300 min-w-[120px] ${unitMixData.length > 6 ? 'flex-shrink-0' : 'flex-1'}`}>
+                  <div key={unit.unitType} className="bg-[#232324] rounded-xl py-8 flex flex-col items-center justify-center hover:bg-[#2a2b2c] transition-colors duration-300 w-[150px] flex-shrink-0">
                     <span className="text-3xl font-light text-white mb-2">{totalUnits}</span>
                     <span className="text-gray-400 font-light text-center">{unit.unitType.replace(' Units', '')}</span>
                     {percentage > 0 && (
