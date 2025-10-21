@@ -11,7 +11,7 @@ interface ProjectCardProps extends Project {
   className?: string
   address?: string
   priceRange?: string
-  lowerPrice?: string
+  price_from?: string
   units?: string
   unitsAvailable?: string
   propertySizeRange?: string
@@ -37,7 +37,7 @@ export default function ProjectCard({
   image_url_banner,
   className = "",
   priceRange,
-  lowerPrice,
+  price_from,
   units,
   unitsAvailable,
   propertySizeRange,
@@ -160,26 +160,7 @@ export default function ProjectCard({
             <div>
               <div className="text-xs text-gray-400 mb-1">From</div>
               <div className="text-xl font-semibold text-white">
-                {(() => {
-                  // If we have a valid lowerPrice (numeric value)
-                  if (lowerPrice && lowerPrice !== '0' && lowerPrice !== '0M' && !isNaN(Number(lowerPrice))) {
-                    // Display full price with comma formatting
-                    const numPrice = Number(lowerPrice)
-                    return `$${numPrice.toLocaleString()}`
-                  } 
-                  // If we have a priceRange
-                  else if (priceRange && priceRange !== '0') {
-                    return priceRange
-                  } 
-                  // If lowerPrice is "Price per request" or similar text
-                  else if (lowerPrice && (lowerPrice === 'Price per request' || lowerPrice.toLowerCase().includes('request'))) {
-                    return <span className="text-white italic text-lg">Price per request</span>
-                  }
-                  // Fallback to "Price per request"
-                  else {
-                    return <span className="text-white italic text-lg">Price per request</span>
-                  }
-                })()}
+                {price_from && price_from !== '0' ? price_from : 'Price per request'}
               </div>
             </div>
             {pricePerSqFt && (

@@ -4,7 +4,7 @@
   "framework": "nextjs",
   "crons": [
     {
-      "path": "/api/cron/sync-daily",
+      "path": "/api/cron/sync-projects",
       "schedule": "0 2 * * *"
     }
   ]

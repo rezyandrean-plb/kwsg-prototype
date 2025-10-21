@@ -1,3 +1,6 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,47 +11,58 @@ datasource db {
 }
 
 model Project {
-  id                                              Int                  @id @default(autoincrement())
-  name                                            String?              @db.VarChar(255)
-  project_name                                    String?              @db.VarChar(255)
-  slug                                            String?              @unique @db.VarChar(255)
-  title                                           String?              @db.VarChar(255)
-  location                                        String?              @db.VarChar(255)
-  address                                         String?
-  type                                            String?              @db.VarChar(100)
-  price                                           String?              @db.VarChar(100)
-  price_from                                      String?              @db.VarChar(50)
-  price_per_sqft                                  String?              @db.VarChar(100)
-  bedrooms                                        String?              @db.VarChar(50)
-  bathrooms                                       String?              @db.VarChar(50)
-  size                                            String?              @db.VarChar(100)
-  units                                           String?              @db.VarChar(100)
-  developer                                       String?              @db.VarChar(255)
-  completion                                      String?              @db.VarChar(10)
-  description                                     String?
-  district                                        String?              @db.VarChar(10)
-  tenure                                          String?              @db.VarChar(255)
-  property_type                                   String?              @db.VarChar(255)
-  status                                          String?              @db.VarChar(255)
-  total_units                                     String?              @db.VarChar(100)
-  total_floors                                    String?              @db.VarChar(100)
-  site_area                                       String?              @db.VarChar(100)
-  created_at                                      DateTime?            @db.Timestamp(6)
-  updated_at                                      DateTime?            @db.Timestamp(6)
-  image_url_banner                                String?              @db.VarChar(255)
-  latitude                                        String?              @db.VarChar(255)
-  longitude                                       String?              @db.VarChar(255)
-  document_id                                     String?              @db.VarChar(255)
-  published_at                                    DateTime?            @db.Timestamp(6)
-  created_by_id                                   Int?
-  updated_by_id                                   Int?
-  locale                                          String?              @db.VarChar(255)
-  features                                        Json?                @default("[]")
-  project_facilities                              project_facilities[]
+  id                                                Int          @id @default(autoincrement())
+  document_id                                       String?      @db.VarChar(255)
+  name                                              String?      @db.VarChar(255)
+  project_name                                      String?      @db.VarChar(255)
+  slug                                              String?      @db.VarChar(255)
+  title                                             String?      @db.VarChar(255)
+  location                                          String?      @db.VarChar(255)
+  address                                           String?      @db.VarChar(255)
+  type                                              String?      @db.VarChar(255)
+  property_type                                     String?      @db.VarChar(255)
+  price                                             String?      @db.VarChar(255)
+  price_from                                        String?      @db.VarChar(255)
+  price_per_sqft                                    String?      @db.VarChar(255)
+  bedrooms                                          String?      @db.VarChar(255)
+  bathrooms                                         String?      @db.VarChar(255)
+  size                                              String?      @db.VarChar(255)
+  units                                             String?      @db.VarChar(255)
+  developer                                         String?      @db.VarChar(255)
+  completion                                        String?      @db.VarChar(255)
+  description                                       String?
+  district                                          String?      @db.VarChar(255)
+  tenure                                            String?      @db.VarChar(255)
+  status                                            String?      @db.VarChar(255)
+  total_units                                       String?      @db.VarChar(255)
+  total_floors                                      String?      @db.VarChar(255)
+  site_area                                         String?      @db.VarChar(255)
+  created_at                                        DateTime?    @db.Timestamp(6)
+  updated_at                                        DateTime?    @db.Timestamp(6)
+  published_at                                      DateTime?    @db.Timestamp(6)
+  created_by_id                                     Int?
+  updated_by_id                                     Int?
+  locale                                            String?      @db.VarChar(255)
+  image_url_banner                                  String?      @db.VarChar(255)
+  latitude                                          String?      @db.VarChar(255)
+  longitude                                         String?      @db.VarChar(255)
+  features                                          Json?
+  overview_quote                                    String?
+  facilities                                        Json?
+  images                                            Json?
+  project_details                                   project_details[]
+  project_facilities                                project_facilities[]
+  site_plans                                        site_plans[]
+  unit_availability                                 unit_availability[]
+  unit_pricing                                      unit_pricing[]
 
-  @@index([district], map: "idx_projects_district")
-  @@index([slug], map: "idx_projects_slug")
-  @@index([status], map: "idx_projects_status")
+  @@index([slug])
+  @@index([status])
+  @@index([created_at(sort: Desc)])
+  @@index([developer])
+  @@index([created_by_id])
+  @@index([document_id, locale, published_at])
+  @@index([updated_by_id])
   @@map("projects")
 }
 
@@ -68,9 +82,10 @@ model developers {
   updated_by_id                                     Int?
   locale                                            String?      @db.VarChar(255)
 
-  @@index([created_by_id], map: "developers_created_by_id_fk")
-  @@index([document_id, locale, published_at], map: "developers_documents_idx")
-  @@index([updated_by_id], map: "developers_updated_by_id_fk")
+  @@index([created_by_id])
+  @@index([document_id, locale, published_at])
+  @@index([updated_by_id])
+  @@map("developers")
 }
 
 model facilities {
@@ -87,9 +102,10 @@ model facilities {
   locale                                            String?              @db.VarChar(255)
   project_facilities                                project_facilities[]
 
-  @@index([created_by_id], map: "facilities_created_by_id_fk")
-  @@index([document_id, locale, published_at], map: "facilities_documents_idx")
-  @@index([updated_by_id], map: "facilities_updated_by_id_fk")
+  @@index([created_by_id])
+  @@index([document_id, locale, published_at])
+  @@index([updated_by_id])
+  @@map("facilities")
 }
 
 model project_facilities {
@@ -100,22 +116,28 @@ model project_facilities {
   facilities  facilities? @relation(fields: [facility_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   projects    Project?    @relation(fields: [project_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
-  @@unique([project_id, facility_id])
+  @@map("project_facilities")
+}
+
+model project_details {
+  id         Int      @id @default(autoincrement())
+  project_id Int?
+  key        String?  @db.VarChar(255)
+  value      String?
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  projects   Project? @relation(fields: [project_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("project_details")
 }
 
 model floor_plans {
   id                                                 Int          @id @default(autoincrement())
   document_id                                        String?      @db.VarChar(255)
-  project_name                                       String?      @db.VarChar(255)
-  floor_plan_id                                      String?      @db.VarChar(255)
-  floor_plan_type                                    String?      @db.VarChar(255)
-  floor_plan_name                                    String?      @db.VarChar(255)
   unit_type                                          String?      @db.VarChar(255)
   bedrooms                                           String?      @db.VarChar(255)
   bathrooms                                          String?      @db.VarChar(255)
   size_sqft                                          Decimal?     @db.Decimal(10, 2)
   price                                              String?      @db.VarChar(255)
-  img                                                String?      @db.VarChar(255)
   floor_plan_image                                   String?      @db.VarChar(255)
   description                                        String?
   is_available                                       Boolean?
@@ -125,57 +147,116 @@ model floor_plans {
   created_by_id                                      Int?
   updated_by_id                                      Int?
   locale                                             String?      @db.VarChar(255)
+  project_name                                       String?      @db.VarChar
+  floor_plan_id                                      String?      @db.VarChar
+  floor_plan_type                                    String?      @db.VarChar
+  floor_plan_name                                    String?      @db.VarChar
+  img                                                String?      @db.VarChar
 
-  @@index([created_by_id], map: "floor_plans_created_by_id_fk")
-  @@index([document_id, locale, published_at], map: "floor_plans_documents_idx")
-  @@index([updated_by_id], map: "floor_plans_updated_by_id_fk")
+  @@index([created_by_id])
+  @@index([document_id, locale, published_at])
+  @@index([updated_by_id])
+  @@index([floor_plan_id])
+  @@index([project_name])
+  @@map("floor_plans")
 }
 
 model image_galleries {
   id                                                     Int          @id @default(autoincrement())
+  document_id                                            String?      @db.VarChar(255)
   project_name                                           String?      @db.VarChar(255)
   image_title                                            String?      @db.VarChar(255)
   image_url                                              String?      @db.VarChar(255)
-  image_description                                      String?
   image_category                                         String?      @db.VarChar(255)
   display_order                                          Int?
   is_featured                                            Boolean?
-  alt_text                                               String?      @db.VarChar(255)
-  image_size                                             String?      @db.VarChar(255)
   is_active                                              Boolean?
   created_at                                             DateTime?    @db.Timestamp(6)
   updated_at                                             DateTime?    @db.Timestamp(6)
-  document_id                                            String?      @db.VarChar(255)
   published_at                                           DateTime?    @db.Timestamp(6)
   created_by_id                                          Int?
   updated_by_id                                          Int?
   locale                                                 String?      @db.VarChar(255)
 
-  @@index([created_by_id], map: "image_galleries_created_by_id_fk")
-  @@index([document_id, locale, published_at], map: "image_galleries_documents_idx")
-  @@index([updated_by_id], map: "image_galleries_updated_by_id_fk")
+  @@index([created_by_id])
+  @@index([document_id, locale, published_at])
+  @@index([updated_by_id])
+  @@index([display_order])
+  @@index([image_category])
+  @@index([is_active])
+  @@index([is_featured])
+  @@index([project_name])
+  @@map("image_galleries")
 }
 
 model site_plans {
-  id                                                 Int          @id @default(autoincrement())
-  document_id                                        String?      @db.VarChar(255)
-  project_id                                         Int?
-  project_name                                       String?      @db.VarChar(255)
-  site_plan_id                                       String?      @db.VarChar(255)
-  site_plan_name                                     String?      @db.VarChar(255)
-  image_url                                          String?      @db.VarChar(255)
-  description                                        String?
-  is_primary                                         Boolean?
-  layout_info                                        String?
-  created_at                                         DateTime?    @db.Timestamp(6)
-  updated_at                                         DateTime?    @db.Timestamp(6)
-  published_at                                       DateTime?    @db.Timestamp(6)
-  created_by_id                                      Int?
-  updated_by_id                                      Int?
-  locale                                             String?      @db.VarChar(255)
+  id                                                Int          @id @default(autoincrement())
+  project_id                                        Int?
+  project_name                                      String?      @db.VarChar(255)
+  site_plan_id                                      String?      @db.VarChar(255)
+  site_plan_name                                    String?      @db.VarChar(255)
+  image_url                                         String?      @db.VarChar(255)
+  description                                       String?
+  layout_info                                       Json?
+  is_primary                                        Boolean?
+  created_at                                        DateTime?    @db.Timestamp(6)
+  updated_at                                        DateTime?    @db.Timestamp(6)
+  document_id                                       String?      @db.VarChar(255)
+  published_at                                      DateTime?    @db.Timestamp(6)
+  created_by_id                                     Int?
+  updated_by_id                                     Int?
+  locale                                            String?      @db.VarChar(255)
+  projects                                          Project?     @relation(fields: [project_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
-  @@index([created_by_id], map: "site_plans_created_by_id_fk")
-  @@index([document_id, locale, published_at], map: "site_plans_documents_idx")
-  @@index([project_id], map: "site_plans_project_id_fk")
-  @@index([updated_by_id], map: "site_plans_updated_by_id_fk")
+  @@index([created_by_id])
+  @@index([document_id, locale, published_at])
+  @@index([updated_by_id])
+  @@index([project_id])
+  @@index([project_name])
+  @@index([site_plan_id])
+  @@map("site_plans")
+}
+
+model unit_pricing {
+  id             Int      @id @default(autoincrement())
+  project_id     Int?
+  project_name   String?  @db.VarChar(255)
+  unit_type      String?  @db.VarChar(255)
+  bedrooms       String?  @db.VarChar(255)
+  bathrooms      String?  @db.VarChar(255)
+  size_sqft      Decimal? @db.Decimal(10, 2)
+  price_from     Decimal? @db.Decimal(15, 2)
+  price_to       Decimal? @db.Decimal(15, 2)
+  price_per_sqft Decimal? @db.Decimal(10, 2)
+  currency       String?  @default("SGD") @db.VarChar(255)
+  payment_terms  String?  @db.VarChar(255)
+  discount_info  String?  @db.VarChar(255)
+  is_available   Boolean? @default(true)
+  created_at     DateTime @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime @default(now()) @db.Timestamptz(6)
+  available_unit String?  @default("") @db.VarChar(255)
+  total_unit     String?  @default("") @db.VarChar(255)
+  projects       Project? @relation(fields: [project_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("unit_pricing")
+}
+
+model unit_availability {
+  id              Int      @id @default(autoincrement())
+  project_id      Int?
+  project_name    String?  @db.VarChar(255)
+  unit_type       String?  @db.VarChar(255)
+  bedrooms        String?  @db.VarChar(255)
+  bathrooms       String?  @db.VarChar(255)
+  size_sqft       Decimal? @db.Decimal(10, 2)
+  price           String?  @db.VarChar(255)
+  available_units Int?     @default(0)
+  img             String?  @db.VarChar(255)
+  description     String?
+  is_available    Boolean? @default(true)
+  created_at      DateTime @default(now()) @db.Timestamptz(6)
+  updated_at      DateTime @default(now()) @db.Timestamptz(6)
+  projects        Project? @relation(fields: [project_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("unit_availability")
 }

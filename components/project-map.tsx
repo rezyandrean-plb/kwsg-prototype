@@ -44,7 +44,7 @@ export default function ProjectMap() {
           />
           {projects.map((project) => (
             <Marker
-              key={project.slug}
+              key={project.id}
               position={[project.coordinates.lat, project.coordinates.lng]}
             >
               <Popup>

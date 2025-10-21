@@ -27,12 +27,14 @@ import { Project as BaseProject } from "@/data/projects"
 
 // Extend the base Project type with additional properties needed for this component
 type Project = BaseProject & {
+  id?: number // Add id field for unique keys
   address?: string
   district?: number
   tenure?: string
   propertyType?: string
   bedrooms?: string[]
   image_url_banner?: string
+  price_from?: string // Add price_from field for direct API usage
 }
 
 // Animation variants
@@ -127,10 +129,11 @@ const fetchProjects = async (
 
   try {
     // Map sort options to API sort param
-    let sortParam = 'created_at:desc'
-    if (sortBy === 'price-low-high') sortParam = 'price:asc'
-    else if (sortBy === 'price-high-low') sortParam = 'price:desc'
+    let sortParam = 'updated_at:desc' // Default to latest entries first
+    if (sortBy === 'price-low-high') sortParam = 'price_from:asc'
+    else if (sortBy === 'price-high-low') sortParam = 'price_from:desc'
     else if (sortBy === 'completion') sortParam = 'completion:asc'
+    else if (sortBy === 'latest') sortParam = 'updated_at:desc'
 
     // Build query parameters
     const searchParams = new URLSearchParams()
@@ -165,7 +168,51 @@ const fetchProjects = async (
     }
 
     const data = await response.json()
-    const projects: Project[] = data.data || []
+    const apiProjects = data.data || []
+    
+    // Debug: Log the first API project to see what we're working with
+    if (apiProjects.length > 0) {
+      console.log('FIRST API PROJECT:', {
+        name: apiProjects[0].name,
+        price_from: apiProjects[0].price_from,
+        hasPriceFrom: 'price_from' in apiProjects[0],
+        allKeys: Object.keys(apiProjects[0])
+      })
+    }
+    
+    // Transform API projects to match ProjectCard component expectations
+    const projects: Project[] = apiProjects.map((apiProject: any) => {
+      // Debug: Log the first project to see what we're working with
+      if (apiProjects.indexOf(apiProject) === 0) {
+        console.log('API Project before transformation:', {
+          name: apiProject.name,
+          price_from: apiProject.price_from,
+          hasPriceFrom: 'price_from' in apiProject
+        })
+      }
+      
+      const transformed = {
+        ...apiProject,
+        price_from: apiProject.price_from, // Explicitly set price_from
+      }
+      
+      // Force set price_from if it's missing
+      if (!transformed.price_from && apiProject.price_from) {
+        transformed.price_from = apiProject.price_from
+      }
+      
+      // Debug: Log after transformation
+      if (apiProjects.indexOf(apiProject) === 0) {
+        console.log('Project after transformation:', {
+          name: transformed.name,
+          price_from: transformed.price_from,
+          hasPriceFrom: 'price_from' in transformed
+        })
+      }
+      
+      return transformed
+    })
+    
     const meta = data.meta || {}
     const pagination = meta.pagination || { page, pageSize, pageCount: 1, total: projects.length }
 
@@ -816,15 +863,29 @@ export default function NewLaunchDirectory() {
               animate="animate"
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
-              {currentProjects.map((project) => (
-                <motion.div key={project.slug} variants={fadeInUp}>
-                  <ProjectCard 
-                    {...project}
-                    type={project.type || 'Mixed Development'}
-                    coordinates={project.coordinates || { lat: 1.3521, lng: 103.8198 }}
-                  />
-                </motion.div>
-              ))}
+              {currentProjects.map((project, index) => {
+                // Debug: Log what we're passing to ProjectCard
+                if (index === 0) {
+                  console.log('Project data being passed to ProjectCard:', {
+                    name: project.name,
+                    price_from: project.price_from,
+                    hasPriceFrom: 'price_from' in project,
+                    allKeys: Object.keys(project),
+                    rawProject: project
+                  })
+                }
+                
+                return (
+                  <motion.div key={project.id || project.slug || `project-${index}`} variants={fadeInUp}>
+                    <ProjectCard 
+                      {...project}
+                      price_from={project.price_from}
+                      type={project.type || 'Mixed Development'}
+                      coordinates={project.coordinates || { lat: 1.3521, lng: 103.8198 }}
+                    />
+                  </motion.div>
+                )
+              })}
             </motion.div>
           )}
 
