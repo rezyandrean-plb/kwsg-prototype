@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
@@ -711,14 +711,6 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
   const [realAmenitiesData, setRealAmenitiesData] = useState<Record<string, GooglePlace[]>>({})
   const [isLoadingAmenities, setIsLoadingAmenities] = useState(false)
   const [showAllFacilities, setShowAllFacilities] = useState(false)
-  // Brochure dialog state
-  const [brochureDialogOpen, setBrochureDialogOpen] = useState(false)
-  const [isSubmittingBrochure, setIsSubmittingBrochure] = useState(false)
-  const [brochureFormData, setBrochureFormData] = useState({
-    name: '',
-    email: '',
-    phone: ''
-  })
 
   // Floor Plan state
   const [bedroomTab, setBedroomTab] = useState<BedroomTabKey>('1')
@@ -1049,6 +1041,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
   const tabs = [
     { id: "overview", label: "Project Overview", icon: Info },
     { id: "details", label: "Project Details", icon: FileText },
+    { id: "site-plan", label: "Site Plan", icon: Layout },
     { id: "facilities", label: "Facilities", icon: Home },
     { id: "location", label: "Location", icon: MapPin },
     // { id: "ai-moat", label: "AI MOAT", icon: BarChart2 },
@@ -1113,36 +1106,13 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       ? Object.values(realAmenitiesData).flat()
       : realAmenitiesData[selectedAmenityType] || [];
     
-    // De-duplicate by placeId (or name+address as fallback key)
-    const seen = new Set<string>();
-    const unique = rawArray.filter((item) => {
-      const key = item.placeId || `${item.name}-${item.address}`;
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    });
-
     // Sort by distance (nearest first)
-    return unique.sort((a, b) => {
+    return rawArray.sort((a, b) => {
       const distanceA = extractNumericDistance(a.distance);
       const distanceB = extractNumericDistance(b.distance);
       return distanceA - distanceB;
     });
   })()
-
-  // Compute nearest MRT using fetched amenities (transport) with fallback to project.locationAnalytics
-  const nearestMrt = useMemo(() => {
-    const transitList = realAmenitiesData?.transport || []
-    if (transitList.length > 0) {
-      const sortedByDistance = [...transitList].sort((a, b) => extractNumericDistance(a.distance) - extractNumericDistance(b.distance))
-      return sortedByDistance[0]
-    }
-    const fallback = project?.locationAnalytics?.mrt?.[0]
-    if (fallback?.name) {
-      return { name: fallback.name, distance: fallback.distance || 'n/a' } as any
-    }
-    return null
-  }, [realAmenitiesData, project])
 
   // Handle download site plan
   const handleDownloadSitePlan = () => {
@@ -1152,48 +1122,12 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
     })
   }
 
-  // Handle brochure dialog open
+  // Handle download brochure
   const handleDownloadBrochure = () => {
-    setBrochureDialogOpen(true)
-  }
-
-  const handleBrochureFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setBrochureFormData(prev => ({ ...prev, [name]: value }))
-  }
-
-  const handleBrochureFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!brochureFormData.name.trim() || !brochureFormData.email.trim() || !brochureFormData.phone.trim()) {
-      toast({ title: 'Please fill in all required fields', variant: 'destructive' })
-      return
-    }
-    setIsSubmittingBrochure(true)
-    try {
-      const res = await fetch('/api/contact-form', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: brochureFormData.name,
-          email: brochureFormData.email,
-          phone: brochureFormData.phone,
-          message: `Requesting brochure for ${project?.title || 'Project'}`,
-          projectTitle: project?.title || 'Project'
-        })
-      })
-      const json = await res.json()
-      if (res.ok && json.success) {
-        toast({ title: 'Request received', description: 'We will email you the brochure shortly.' })
-        setBrochureDialogOpen(false)
-        setBrochureFormData({ name: '', email: '', phone: '' })
-      } else {
-        throw new Error(json.error || 'Failed to submit request')
-      }
-    } catch (err) {
-      toast({ title: 'Failed to submit request', variant: 'destructive' })
-    } finally {
-      setIsSubmittingBrochure(false)
-    }
+    toast({
+      title: "Brochure will be downloaded...",
+      description: "Your project brochure is being prepared for download.",
+    })
   }
 
   // Handle form input changes
@@ -1744,163 +1678,344 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
         </div>
       </section>
 
-      {/* Project Details Section - merged with Site Plan like Penrith Detailed Information Grid */}
+      {/* Project Details Section */}
       <section id="details" className="w-full py-6 sm:py-8 mb-6 sm:mb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h2 className="text-2xl sm:text-3xl font-light mb-3 text-white text-center tracking-wide">Project Details</h2>
           <div className="flex justify-center mb-4 sm:mb-6">
             <div className="w-12 sm:w-16 h-1 bg-[#ce001f] rounded" />
           </div>
-
-          {/* Detailed Information Grid */}
-          <div className="grid lg:grid-cols-10 gap-6 sm:gap-8 mb-6">
-            {/* Project Information Card */}
-            <div className="lg:col-span-4 bg-[#18191b] border border-gray-700 rounded-lg overflow-hidden">
-              <div className="px-4 py-4 border-b border-gray-700">
-                <div className="text-[#ce001f] flex items-center gap-2 font-medium">
-                  <Building2 className="h-5 w-5" />
-                  <span>Project Information</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {/* HIGH PRIORITY - Location & Connectivity */}
+            {/* Address */}
+            {shouldDisplayValue(project?.address) && (
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <MapPin className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Address</div>
+                  <div className="text-white font-light text-sm sm:text-base truncate">{displayValue(project?.address?.replace(/,?\s*\d{6}$/, ''))}</div>
                 </div>
               </div>
-              <div className="p-4 sm:p-6 space-y-4">
-                {/* Name */}
-                {shouldDisplayValue(project?.title) && (
-                  <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
-                    <span className="text-gray-300 text-sm">Name:</span>
-                    <span className="text-white text-sm text-right">{displayValue(project?.title)}</span>
+            )}
+            {/* District */}
+            {shouldDisplayValue(project?.district) && (
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <MapPin className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">District</div>
+                  <div className="text-white font-light text-sm sm:text-base">{`District ${displayValue(project.district)}`}</div>
+                </div>
+              </div>
+            )}
+            {/* Nearest MRT */}
+            {project?.locationAnalytics?.mrt[0]?.name && (
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Train className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Nearest MRT</div>
+                  <div className="text-white font-light text-sm sm:text-base truncate">
+                    {`${project.locationAnalytics.mrt[0].name} (${project.locationAnalytics.mrt[0].distance})`}
+                  </div>
+                </div>
+              </div>
+            )}
+            {/* Tenure */}
+            {shouldDisplayValue(project?.tenure) && (
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Calendar className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Tenure</div>
+                  <div className="text-white font-light text-sm sm:text-base">{displayValue(project?.tenure)}</div>
+                </div>
+              </div>
+            )}
+
+            {/* HIGH PRIORITY - Pricing & Investment */}
+            {/* Average PSF */}
+            {shouldDisplayValue(project?.pricePerSqFt) && (
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <BadgeDollarSign className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Average PSF</div>
+                  <div className="text-white font-light text-sm sm:text-base">{`From ${displayValue(project.pricePerSqFt)}`}</div>
+                </div>
+              </div>
+            )}
+            {/* Expected TOP */}
+            {shouldDisplayValue(project?.completion) && (
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Calendar className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Expected TOP</div>
+                  <div className="text-white font-light text-sm sm:text-base">
+                    {formatCompletionDate(project?.completion)}
+                  </div>
+                </div>
+              </div>
+            )}
+            {/* Property Type */}
+            {shouldDisplayValue(project?.propertyType) && (
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Building2 className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Property Type</div>
+                  <div className="text-white font-light text-sm sm:text-base">{displayValue(project?.propertyType)}</div>
+                </div>
               </div>
             )}
             {/* Developer */}
             {shouldDisplayValue(project?.developer) && (
-                  <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
-                    <span className="text-gray-300 text-sm">Developer:</span>
-                    <span className="text-white text-sm text-right">{displayValue(project?.developer)}</span>
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Building2 className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Developer</div>
+                  <div className="text-white font-light text-sm sm:text-base truncate">{displayValue(project?.developer)}</div>
+                </div>
               </div>
             )}
-                {/* District */}
-                {shouldDisplayValue(project?.district) && (
-                  <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
-                    <span className="text-gray-300 text-sm">District:</span>
-                    <span className="text-white text-sm text-right">{displayValue(project?.district)}</span>
+
+            {/* MEDIUM PRIORITY - Unit Configuration */}
+            {/* Total Units */}
+            {shouldDisplayValue(project?.totalUnits) && (
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Home className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Total Units</div>
+                  <div className="text-white font-light text-sm sm:text-base">{displayValue(project?.totalUnits)}</div>
+                </div>
               </div>
             )}
-                {/* Property Type */}
-                {shouldDisplayValue(project?.propertyType) && (
-                  <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
-                    <span className="text-gray-300 text-sm">Property Type:</span>
-                    <span className="text-white text-sm text-right">{displayValue(project?.propertyType)}</span>
+            {/* Bedrooms */}
+            {shouldDisplayValue(project?.bedrooms) && (
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Home className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Bedrooms</div>
+                  <div className="text-white font-light text-sm sm:text-base">{`${displayValue(project.bedrooms)} bedrooms`}</div>
+                </div>
               </div>
             )}
-                {/* Tenure */}
-                {shouldDisplayValue(project?.tenure) && (
-                  <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
-                    <span className="text-gray-300 text-sm">Tenure:</span>
-                    <span className="text-white text-sm text-right">{displayValue(project?.tenure)}</span>
+            {/* Floor Size */}
+            {shouldDisplayValue(project?.size) && (
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Layout className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Floor Size</div>
+                  <div className="text-white font-light text-sm sm:text-base">{displayValue(project?.size)}</div>
+                </div>
               </div>
             )}
+            {/* Floors */}
+            {shouldDisplayValue(project?.totalFloors) && (
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Building2 className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Floors</div>
+                  <div className="text-white font-light text-sm sm:text-base">{displayValue(project?.totalFloors)}</div>
+                </div>
+              </div>
+            )}
+
+            {/* LOWER PRIORITY - Technical Details */}
             {/* Site Area */}
             {shouldDisplayValue(project?.siteArea) && (
-                  <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
-                    <span className="text-gray-300 text-sm">Site Area:</span>
-                    <span className="text-white text-sm text-right">{displayValue(project?.siteArea)}</span>
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Layout className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Site Area</div>
+                  <div className="text-white font-light text-sm sm:text-base">{displayValue(project?.siteArea)}</div>
+                </div>
               </div>
             )}
             {/* Blocks */}
             {shouldDisplayValue(project?.totalUnits) && (
-                  <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
-                    <span className="text-gray-300 text-sm">Blocks:</span>
-                    <span className="text-white text-sm text-right">{`${Math.ceil(Number(project.totalUnits.replace(/[^0-9]/g, '')) / 7)}`}</span>
-              </div>
-            )}
-                {/* Total Units */}
-            {shouldDisplayValue(project?.totalUnits) && (
-                  <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
-                    <span className="text-gray-300 text-sm">Total Units:</span>
-                    <span className="text-white text-sm text-right">{displayValue(project?.totalUnits)}</span>
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Building2 className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Blocks</div>
+                  <div className="text-white font-light text-sm sm:text-base">
+                    {`${Math.ceil(Number(project.totalUnits.replace(/[^0-9]/g, '')) / 7)} blocks`}
                   </div>
-                )}
-                {/* Unit Mix */}
-                {shouldDisplayValue(project?.bedrooms) && (
-                  <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
-                    <span className="text-gray-300 text-sm">Unit Mix:</span>
-                    <span className="text-white text-sm text-right">{displayValue(project?.bedrooms)}</span>
                 </div>
-                )}
-                {/* Nearest MRT - computed from amenities with fallback */}
-                {nearestMrt && (
-                  <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
-                    <span className="text-gray-300 text-sm">Nearest MRT:</span>
-                    <span className="text-white text-sm text-right">{`${(nearestMrt as any).name} (${(nearestMrt as any).distance || 'n/a'})`}</span>
               </div>
             )}
-                {/* Expected TOP */}
-                {shouldDisplayValue(project?.completion) && (
-                  <div className="flex justify-between pb-1 gap-4">
-                    <span className="text-gray-300 text-sm">Expected TOP:</span>
-                    <span className="text-white text-sm text-right">{formatCompletionDate(project?.completion)}</span>
+            {/* Car Park Lots */}
+            {shouldDisplayValue(project?.totalUnits) && (
+              <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+                <Home className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+                <div className="min-w-0 flex-1">
+                  <div className="text-gray-400 text-xs sm:text-sm">Car Park Lots</div>
+                  <div className="text-white font-light text-sm sm:text-base">
+                    {`${project.totalUnits.replace(/[^0-9]/g, '')} lots`}
+                  </div>
+                </div>
               </div>
-                )}
+            )}
+            {/* Zoning */}
+            <div className="bg-[#18191b] rounded-lg p-4 sm:p-6 flex items-center gap-2 sm:gap-3 border border-gray-700">
+              <Building2 className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 flex-shrink-0" style={{ color: '#ce001f' }} />
+              <div className="min-w-0 flex-1">
+                <div className="text-gray-400 text-xs sm:text-sm">Zoning</div>
+                <div className="text-white font-light text-sm sm:text-base">Residential</div>
+              </div>
             </div>
           </div>
+        </div>
+      </section>
 
-            {/* Site Plan and Key Details Card */}
-            <div className="lg:col-span-6 bg-[#18191b] border border-gray-700 rounded-lg overflow-hidden">
-              <div className="px-4 py-4 border-b border-gray-700">
-                <div className="text-[#ce001f] flex items-center gap-2 font-medium">
-                  <Layout className="h-5 w-5" />
-                  <span>Plans & Layout</span>
+      {/* Site Plan Section */}
+      <section id="site-plan" className="w-full py-8 mb-2">
+        <div className="max-w-screen-xl mx-auto px-4">
+          <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Site Plan</h2>
+          <div className="flex justify-center mb-4">
+            <div className="w-16 h-1 bg-[#ce001f] rounded" />
           </div>
-              </div>
-              <div className="p-4 sm:p-6 space-y-4">
-                {/* Site Plan Image or Fallback */}
-                <div className="relative w-full bg-[#242728] rounded-lg overflow-hidden">
+
+          {/* Responsive Flex Container */}
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 min-h-[400px] site-plan-container">
+            {/* Site Plan Left */}
+            <div className="flex-1 bg-[#242728] rounded-lg flex flex-col items-center justify-center min-h-[300px] lg:min-h-[400px] site-plan-left relative">
               {project?.sitePlans && project.sitePlans.length > 0 ? (
+                <>
                   <img
                     src={project.sitePlans[selectedSitePlan].image_url}
                     alt={`Site Plan ${selectedSitePlan + 1}`}
-                      className="w-full h-auto max-w-full object-contain"
-                    />
-                  ) : (
-                    <img
-                      src="/siteplan-dummy.jpg"
-                      alt="Site Plan"
-                      className="w-full h-auto max-w-full object-contain"
-                    />
-                  )}
-                  {/* Controls */}
-                  {project?.sitePlans && project.sitePlans.length > 1 && (
+                    className="w-full h-auto max-w-full rounded-lg object-contain"
+                  />
+                  
+                  {/* Navigation Controls - Only show if more than 1 site plan */}
+                  {project.sitePlans.length > 1 && (
                     <>
                       <button
                         className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors z-10"
-                        onClick={() => setSelectedSitePlan(prev => prev === 0 ? project.sitePlans!.length - 1 : prev - 1)}
+                        onClick={() => setSelectedSitePlan(prev => 
+                          prev === 0 ? project.sitePlans!.length - 1 : prev - 1
+                        )}
                         aria-label="Previous site plan"
                       >
                         <ChevronLeft className="w-5 h-5 text-white" />
                       </button>
                       <button
                         className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-2 transition-colors z-10"
-                        onClick={() => setSelectedSitePlan(prev => (prev + 1) % project.sitePlans!.length)}
+                        onClick={() => setSelectedSitePlan(prev => 
+                          (prev + 1) % project.sitePlans!.length
+                        )}
                         aria-label="Next site plan"
                       >
                         <ChevronRight className="w-5 h-5 text-white" />
                       </button>
+                    </>
+                  )}
+                  
+                  {/* Site Plan Counter */}
+                  {project.sitePlans.length > 1 && (
                     <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/60 rounded-full px-3 py-1 text-white text-sm">
                       {selectedSitePlan + 1} / {project.sitePlans.length}
                     </div>
-                    </>
                   )}
+                </>
+              ) : (
+                <img
+                  src="/siteplan-dummy.jpg"
+                  alt="Site Plan"
+                  className="w-full h-auto max-w-full rounded-lg object-contain"
+                />
+              )}
+            </div>
+            {/* Legend Right */}
+            <div className="w-full lg:w-80 bg-[#242728] border border-gray-700 rounded-lg p-4 lg:p-6 flex flex-col justify-between min-h-[300px] lg:min-h-[400px] site-plan-right">
+              <div>
+                <h4 className="text-lg lg:text-xl font-light text-left text-[#ce001f] mb-4">Site Plan Details</h4>
+                <div className="space-y-4">
+                  {/* Project Info */}
+                  <div className="border-b border-gray-700 pb-3">
+                    <h5 className="text-white font-medium text-sm mb-2">Project Information</h5>
+                    <div className="space-y-2 text-xs text-gray-300">
+                      <div className="flex justify-between">
+                        <span>Developer:</span>
+                        <span className="text-white">{project?.developer || 'TBA'}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Total Units:</span>
+                        <span className="text-white">{project?.totalUnits || 'TBA'}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Site Area:</span>
+                        <span className="text-white">{project?.siteArea || 'TBA'}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Completion:</span>
+                        <span className="text-white">{formatCompletionDate(project?.completion) || 'TBA'}</span>
+                      </div>
+                    </div>
                   </div>
 
-                <button className="w-full bg-[#ce001f] hover:bg-[#b3001a] text-white font-light py-3 rounded-full text-base transition-colors" onClick={handleDownloadSitePlan}>
+                  {/* Unit Types */}
+                  {project?.unitTypes && project.unitTypes.length > 0 && (
+                    <div className="border-b border-gray-700 pb-3">
+                      <h5 className="text-white font-medium text-sm mb-2">Unit Types</h5>
+                      <div className="space-y-2">
+                        {project.unitTypes.slice(0, 4).map((unitType, index) => (
+                          <div key={index} className="flex items-center gap-2">
+                            <span className={`inline-block w-2 h-2 rounded-full ${index === 0 ? 'bg-[#ce001f]' : index === 1 ? 'bg-blue-500' : index === 2 ? 'bg-cyan-400' : 'bg-green-500'} flex-shrink-0`} />
+                            <div className="text-xs text-gray-300">
+                              <span className="text-white">{unitType.type}</span>
+                              <div className="text-gray-400">{unitType.size}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Key Features */}
+                  {project?.features && project.features.length > 0 && (
+                    <div>
+                      <h5 className="text-white font-medium text-sm mb-2">Key Features</h5>
+                      <div className="space-y-2">
+                        {project.features.slice(0, 3).map((feature, index) => (
+                          <div key={index} className="flex items-center gap-2">
+                            <span className={`inline-block w-2 h-2 rounded-full ${index === 0 ? 'bg-yellow-400' : index === 1 ? 'bg-purple-500' : 'bg-pink-400'} flex-shrink-0`} />
+                            <span className="text-xs text-gray-300">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <button className="mt-6 lg:mt-8 w-full bg-[#ce001f] hover:bg-[#b3001a] text-white font-light py-3 rounded-full text-base lg:text-lg transition-colors" onClick={handleDownloadSitePlan}>
                 Download Site Plan
               </button>
             </div>
           </div>
+          
+          {/* Site Plan Thumbnail Strip - Only show if multiple site plans */}
+          {project?.sitePlans && project.sitePlans.length > 1 && (
+            <div className="mt-4 p-2 bg-gray-800 rounded-lg">
+              <div className="flex gap-2 overflow-x-auto pb-2">
+                {project.sitePlans.map((sitePlan, index) => (
+                  <div
+                    key={sitePlan.id || index}
+                    className={`flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${
+                      selectedSitePlan === index 
+                        ? 'border-[#ce001f]' 
+                        : 'border-gray-600 hover:border-gray-400'
+                    }`}
+                    onClick={() => setSelectedSitePlan(index)}
+                  >
+                    <img
+                      src={sitePlan.image_url}
+                      alt={`Site Plan ${index + 1} thumbnail`}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
-
-      {/* Site Plan Section removed - merged into details */}
 
       {/* Facilities Section */}
       <section id="facilities" className="w-full py-8 sm:py-12 lg:py-16 mb-2 bg-[#1c1c1d]">
@@ -2051,7 +2166,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                     ) : amenitiesArray.length > 0 ? (
                       amenitiesArray.map((place) => (
                         <div
-                          key={place.placeId || `${place.name}-${place.address}`}
+                          key={place.placeId}
                           className={`p-3 lg:p-4 rounded-lg cursor-pointer transition-colors ${selectedAmenity?.placeId === place.placeId ? "bg-[#ce001f]/10 border border-[#ce001f]/20" : "bg-gray-800/50 border border-gray-700 hover:bg-gray-800"}`}
                           onClick={() => setSelectedAmenity(place)}
                         >
@@ -2145,7 +2260,94 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
         </div>
       </section> */}
 
-      
+      {/* Unit Mix Section */}
+      <div className="w-full flex flex-col items-center py-4">
+        <div className="max-w-7xl w-full py-10 px-4 flex flex-col items-center">
+          <h3 className="text-xl font-light text-red-400 mb-8 text-center tracking-wide">Unit Mix</h3>
+          <div className={`w-full flex flex-row gap-6 px-2 ${(() => {
+            const unitMixData = processUnitAvailabilityData(project?.unitPricing || [])
+            return unitMixData.length > 6 
+              ? 'overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent' 
+              : 'overflow-x-visible justify-center'
+          })()}`} style={{ WebkitOverflowScrolling: 'touch' }}>
+            {(() => {
+              // Process unit mix data from API using the same function as Units & Pricing Section
+              const unitMixData = processUnitAvailabilityData(project?.unitPricing || [])
+              
+              // Show message if no data available
+              if (unitMixData.length === 0) {
+                return (
+                  <div className="w-full text-center py-8">
+                    <p className="text-gray-400 text-sm">Unit mix data not available</p>
+                  </div>
+                )
+              }
+
+              return unitMixData.map((unit: any, index: number) => {
+                // Calculate total available units for this type
+                const totalAvailable = unit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.available, 0)
+                const totalUnits = unit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.total, 0)
+                const percentage = totalUnits > 0 ? Math.round((totalAvailable / totalUnits) * 100) : 0
+                
+                return (
+                  <div key={unit.unitType} className="bg-[#232324] rounded-xl py-8 flex flex-col items-center justify-center hover:bg-[#2a2b2c] transition-colors duration-300 w-[150px] flex-shrink-0">
+                    <span className="text-3xl font-light text-white mb-2">{totalUnits}</span>
+                    <span className="text-gray-400 font-light text-center">{unit.unitType.replace(' Units', '')}</span>
+                    {percentage > 0 && (
+                      <span className="text-xs text-gray-500 mt-1">({percentage}% available)</span>
+                    )}
+                    {unit.subtypes.length > 0 && (
+                      <div className="mt-2 text-xs text-gray-500 text-center">
+                        <span className="block">{unit.subtypes.length} type{unit.subtypes.length > 1 ? 's' : ''}</span>
+                      </div>
+                    )}
+                  </div>
+                )
+              })
+            })()}
+          </div>
+          {/* Additional unit mix information */}
+          {project?.unitPricing && project.unitPricing.length > 0 && (
+            <div className="mt-6 text-center">
+              <p className="text-sm text-gray-400">
+                {(() => {
+                  // Use the same data processing as Units & Pricing Section
+                  const unitMixData: any[] = processUnitAvailabilityData(project?.unitPricing || [])
+                  
+                  if (unitMixData.length === 0) {
+                    return 'No unit information available'
+                  }
+                  
+                  // Calculate totals across all unit types
+                  const totalUnits = unitMixData.reduce((sum: number, unit: any) => 
+                    sum + unit.subtypes.reduce((subSum: number, subtype: any) => subSum + subtype.total, 0), 0)
+                  const totalAvailable = unitMixData.reduce((sum: number, unit: any) => 
+                    sum + unit.subtypes.reduce((subSum: number, subtype: any) => subSum + subtype.available, 0), 0)
+                  
+                  // Calculate price range from all units
+                  const priceRange = project.unitPricing.filter(u => u.price_from && u.price_from !== '0' && u.price_from !== 0)
+                  
+                  let priceInfo = 'Price on request'
+                  if (priceRange.length > 0) {
+                    const prices = priceRange.map(u => {
+                      const price = typeof u.price_from === 'number' ? u.price_from : (u.price_from ? parseFloat(u.price_from.toString()) : 0)
+                      return price
+                    }).filter(p => p > 0)
+                    
+                    if (prices.length > 0) {
+                      const minPrice = Math.min(...prices)
+                      const maxPrice = Math.max(...prices)
+                      priceInfo = `$${minPrice.toLocaleString()} - $${maxPrice.toLocaleString()}`
+                    }
+                  }
+                  
+                  return `Total Units: ${totalUnits} | Available: ${totalAvailable} | Price Range: ${priceInfo}`
+                })()}
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
 
       {/* Units & Pricing Section */}
       <section id="pricing" className="w-full py-6 sm:py-8 mb-4">
@@ -2225,6 +2427,15 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
           
           return (
             <div className="w-full">
+              {/* Unit type header */}
+              {/* <div className="text-center mb-4 sm:mb-6">
+                <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">{(currentUnit as any).unitType.replace(' Units', '')}</h3>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm">
+                  <span className="text-gray-400">Total Units: <span className="text-white font-medium">{totalUnits}</span></span>
+                  <span className="text-gray-400">Available: <span className="text-green-400 font-medium">{totalAvailable}</span></span>
+                  <span className="text-gray-400">Availability: <span className="text-white font-medium">{totalUnits > 0 ? Math.round((totalAvailable / totalUnits) * 100) : 0}%</span></span>
+                </div>
+              </div> */}
               
               {/* Subtype cards - Constrained width container */}
               <div className="w-full">
@@ -2268,6 +2479,18 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                             
                             {/* Unit specifications */}
                             <div className="grid grid-cols-3 gap-4 sm:gap-6">
+                              <div className="text-center">
+                                <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-900/60 mx-auto mb-3">
+                                  <Home className="h-6 w-6 sm:h-7 sm:w-7 text-red-400" />
+                                </div>
+                                <span className="text-white text-sm font-medium">{subtype.bedrooms || 'N/A'} Bedrooms</span>
+                              </div>
+                              <div className="text-center">
+                                <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-900/60 mx-auto mb-3">
+                                  <Bath className="h-6 w-6 sm:h-7 sm:w-7 text-red-400" />
+                                </div>
+                                <span className="text-white text-sm font-medium">{subtype.bathrooms || 'N/A'} Bathrooms</span>
+                              </div>
                               <div className="text-center">
                                 <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-900/60 mx-auto mb-3">
                                   <Layout className="h-6 w-6 sm:h-7 sm:w-7 text-red-400" />
@@ -2386,11 +2609,38 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                       <div className="text-xs text-gray-300">{project?.location}</div>
                     </div>
                   </div>
+                  {/* Image indicators */}
+                  <div className="flex justify-center gap-2">
+                    {project?.images.slice(0, 3).map((_, idx) => (
+                      <div
+                        key={idx}
+                        className={`w-2 h-2 rounded-full ${
+                          idx === 0 ? 'bg-[#ce001f]' : 'bg-gray-600'
+                        }`}
+                      />
+                    ))}
+                  </div>
                 </div>
                 {/* Project Info */}
                 <div className="text-center mb-6">
                   <div className="text-white text-xl font-semibold mb-2">{project?.title}</div>
-                  <div className="text-red-400 text-sm font-medium mb-1">Request Brochure</div>
+                  <div className="text-red-400 text-sm font-medium mb-1">Project Brochure</div>
+                  <div className="text-gray-400 text-xs mb-4 text-center">Complete project information and floor plans</div>
+                  {/* Key Project Stats */}
+                  <div className="flex gap-4 mb-4 w-full justify-center">
+                    <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
+                      <span className="text-white font-bold">{project?.totalUnits}</span>
+                      <span className="text-xs text-gray-400">Units</span>
+                    </div>
+                    <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
+                      <span className="text-white font-bold">{formatCompletionDate(project?.completion)}</span>
+                      <span className="text-xs text-gray-400">TOP</span>
+                    </div>
+                    <div className="bg-[#18191b] rounded-lg px-4 py-2 flex flex-col items-center min-w-[80px]">
+                      <span className="text-white font-bold">{project?.priceFrom ? `$${parseInt(project.priceFrom.replace(/[^0-9]/g, '')).toLocaleString()}` : 'N/A'}</span>
+                      <span className="text-xs text-gray-400">From</span>
+                    </div>
+                  </div>
                 </div>
                 {/* Download Button */}
                 <div className="w-full">
@@ -2402,6 +2652,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                     Download Brochure
                   </button>
                 </div>
+                <div className="text-xs text-gray-500 w-full text-center mt-4">PDF format • 2.5MB • Updated weekly</div>
               </div>
             </div>
             
@@ -2425,8 +2676,8 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 </div>
               ) : (
                 <form onSubmit={handleFormSubmit} className="bg-[#23232a] rounded-2xl p-8 w-full shadow-md flex flex-col gap-4 h-full">
-                  <div className="text-white text-lg font-semibold mb-2">Get More Information About {project?.title}</div>
-                  <div className="text-gray-400 text-xs mb-4">Fill in your details below, and our team will reach out to guide you through the next steps.</div>
+                  <div className="text-white text-lg font-semibold mb-2">Send Us a Message</div>
+                  <div className="text-gray-400 text-xs mb-4">Get personalized assistance for {project?.title}</div>
                   
                   {submitError && (
                     <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3 text-red-400 text-sm">
@@ -2519,69 +2770,6 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
           </div>
         </div>
       </section>
-
-      {/* Brochure Request Dialog */}
-      <Dialog open={brochureDialogOpen} onOpenChange={setBrochureDialogOpen}>
-        <DialogContent className="max-w-md w-[95vw] sm:w-full bg-white text-black border border-gray-200">
-          <DialogTitle>
-            <div className="text-black text-xl font-semibold">Request Brochure</div>
-          </DialogTitle>
-          <form onSubmit={handleBrochureFormSubmit} className="space-y-4">
-            <div className="flex flex-col gap-2">
-              <label htmlFor="brochure-name" className="text-black text-sm font-medium">Full Name *</label>
-              <input
-                id="brochure-name"
-                name="name"
-                value={brochureFormData.name}
-                onChange={handleBrochureFormChange}
-                className="rounded-lg bg-white text-black px-4 py-3 text-sm border border-gray-300 focus:border-[#ce001f] focus:outline-none transition-colors"
-                placeholder="Enter your full name"
-                required
-                disabled={isSubmittingBrochure}
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="brochure-email" className="text-black text-sm font-medium">Email Address *</label>
-              <input
-                id="brochure-email"
-                name="email"
-                type="email"
-                value={brochureFormData.email}
-                onChange={handleBrochureFormChange}
-                className="rounded-lg bg-white text-black px-4 py-3 text-sm border border-gray-300 focus:border-[#ce001f] focus:outline-none transition-colors"
-                placeholder="Enter your email address"
-                required
-                disabled={isSubmittingBrochure}
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="brochure-phone" className="text-black text-sm font-medium">Phone Number *</label>
-              <input
-                id="brochure-phone"
-                name="phone"
-                type="tel"
-                value={brochureFormData.phone}
-                onChange={handleBrochureFormChange}
-                className="rounded-lg bg-white text-black px-4 py-3 text-sm border border-gray-300 focus:border-[#ce001f] focus:outline-none transition-colors"
-                placeholder="Enter your phone number"
-                required
-                disabled={isSubmittingBrochure}
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={isSubmittingBrochure}
-              className="w-full bg-[#ce001f] hover:bg-[#b3001a] disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-full text-lg transition-colors mt-2"
-            >
-              {isSubmittingBrochure ? (
-                <span className="inline-flex items-center gap-2"><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />Submitting...</span>
-              ) : (
-                'Submit Request'
-              )}
-            </button>
-          </form>
-        </DialogContent>
-      </Dialog>
     </main>
   )
 } 
