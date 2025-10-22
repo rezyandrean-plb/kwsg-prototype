@@ -155,6 +155,7 @@ export default function NewLaunchDirectory() {
 
   useEffect(() => { setIsClient(true) }, [])
 
+
   useEffect(() => {
     if (!isClient) return
     const controller = new AbortController()
@@ -297,12 +298,14 @@ export default function NewLaunchDirectory() {
     return () => controller.abort()
   }, [isClient, currentPage, projectsPerPage, searchQuery, sortBy, selectedDistricts, selectedTenures, selectedPropertyTypes, selectedStatus, selectedBedrooms, priceMin, priceMax])
 
+
   const scrollToSearch = () => { searchSectionRef.current?.scrollIntoView({ behavior: 'smooth' }) }
 
   // Server-side filtering is now handled by the API
   const filteredProjects = projects
 
-  const districts = Array.from(new Set(projects.map(p => p.district).filter((d): d is number => d !== undefined))).sort((a, b) => a - b)
+  // Get unique districts from current projects
+  const districts = Array.from(new Set(projects.map(p => p.district).filter((d): d is number => typeof d === 'number'))).sort((a, b) => a - b)
   const tenures = Array.from(new Set(projects.map(p => p.tenure).filter((t): t is string => t != null && t.trim() !== '')))
   const propertyTypes = Array.from(new Set(projects.map(p => p.propertyType).filter((t): t is string => t !== undefined)))
   const statuses: ("upcoming" | "ongoing" | "completed")[] = ["upcoming", "ongoing", "completed"]
