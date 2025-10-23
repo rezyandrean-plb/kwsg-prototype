@@ -28,33 +28,89 @@ export async function GET(request: NextRequest) {
     const sortBy = searchParams.get('sort') || 'updated_at:desc'
     const sortOrder = searchParams.get('sortOrder') || 'desc'
     
+    // Filter parameters
+    const districts = searchParams.getAll('districts').map(d => parseInt(d)).filter(d => !isNaN(d))
+    const tenures = searchParams.getAll('tenures')
+    const propertyTypes = searchParams.getAll('propertyTypes')
+    const statuses = searchParams.getAll('statuses')
+    const bedrooms = searchParams.getAll('bedrooms')
+    const priceMin = parseFloat(searchParams.get('priceMin') || '0')
+    const priceMax = parseFloat(searchParams.get('priceMax') || '5000000')
+    
     // Calculate offset
     const offset = (page - 1) * limit
 
     // Build where clause
     const where: any = {}
+    const andConditions: any[] = []
     
     if (search) {
-      where.OR = [
-        { name: { contains: search, mode: 'insensitive' } },
-        { project_name: { contains: search, mode: 'insensitive' } },
-        { title: { contains: search, mode: 'insensitive' } },
-        { location: { contains: search, mode: 'insensitive' } },
-        { address: { contains: search, mode: 'insensitive' } },
-        { developer: { contains: search, mode: 'insensitive' } },
-      ]
+      andConditions.push({
+        OR: [
+          { name: { contains: search, mode: 'insensitive' } },
+          { project_name: { contains: search, mode: 'insensitive' } },
+          { title: { contains: search, mode: 'insensitive' } },
+          { location: { contains: search, mode: 'insensitive' } },
+          { address: { contains: search, mode: 'insensitive' } },
+          { developer: { contains: search, mode: 'insensitive' } },
+        ]
+      })
     }
     
     if (location) {
-      where.location = { contains: location, mode: 'insensitive' }
+      andConditions.push({ location: { contains: location, mode: 'insensitive' } })
     }
     
     if (type) {
-      where.type = { contains: type, mode: 'insensitive' }
+      andConditions.push({ type: { contains: type, mode: 'insensitive' } })
     }
     
     if (status) {
-      where.status = { contains: status, mode: 'insensitive' }
+      andConditions.push({ status: { contains: status, mode: 'insensitive' } })
+    }
+    
+    // District filter - handle both string (D19) and numeric (19) formats
+    if (districts.length > 0) {
+      const districtConditions = districts.map(district => ({
+        OR: [
+          { district: { equals: `D${district.toString().padStart(2, '0')}` } },
+          { district: { equals: district.toString() } },
+          { district: { equals: `D${district}` } }
+        ]
+      }))
+      andConditions.push({ OR: districtConditions })
+    }
+    
+    // Tenure filter
+    if (tenures.length > 0) {
+      andConditions.push({ tenure: { in: tenures } })
+    }
+    
+    // Property type filter
+    if (propertyTypes.length > 0) {
+      andConditions.push({ property_type: { in: propertyTypes } })
+    }
+    
+    // Status filter (multiple statuses)
+    if (statuses.length > 0) {
+      andConditions.push({ status: { in: statuses } })
+    }
+    
+    // Bedrooms filter - this might need special handling depending on how bedrooms are stored
+    if (bedrooms.length > 0) {
+      // For now, we'll search in the bedrooms field as a string
+      andConditions.push({ bedrooms: { in: bedrooms } })
+    }
+    
+    // Price range filter
+    if (priceMin > 0 || priceMax < 5000000) {
+      // This will need to be implemented based on how prices are stored
+      // For now, we'll skip this as it might require joining with unit pricing tables
+    }
+    
+    // Apply all conditions with AND logic
+    if (andConditions.length > 0) {
+      where.AND = andConditions
     }
 
     // Build orderBy clause
