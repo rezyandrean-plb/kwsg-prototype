@@ -1674,7 +1674,11 @@ export default function ArinaEastLanding() {
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">TOP:</span>
-                  <span className="font-semibold text-right">Dec 2028</span>
+                  <span className="font-semibold text-right">Q2 2027</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Vacant Possession:</span>
+                  <span className="font-semibold text-right">31 Dec 2028</span>
                 </div>
               </CardContent>
             </Card>
