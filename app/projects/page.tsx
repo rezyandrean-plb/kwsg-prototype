@@ -124,6 +124,7 @@ export default function NewLaunchDirectory() {
   const [searchQuery, setSearchQuery] = useState("")
   const [sortBy, setSortBy] = useState("latest")
   const [selectedDistricts, setSelectedDistricts] = useState<number[]>([])
+  const [allDistricts, setAllDistricts] = useState<number[]>([])
   const [selectedTenures, setSelectedTenures] = useState<string[]>([])
   const [selectedPropertyTypes, setSelectedPropertyTypes] = useState<string[]>([])
   const [selectedStatus, setSelectedStatus] = useState<("upcoming" | "ongoing" | "completed")[]>([])
@@ -154,6 +155,18 @@ export default function NewLaunchDirectory() {
   })
 
   useEffect(() => { setIsClient(true) }, [])
+
+  // Helper function to parse district numbers from various formats (D03, 03, 3, etc.)
+  const parseDistrictNumber = (value: unknown): number | null => {
+    if (value == null) return null
+    if (typeof value === 'number' && Number.isFinite(value)) return value
+    const s = String(value).trim()
+    const match = s.match(/(\d{1,2})/)
+    if (!match) return null
+    const n = parseInt(match[1], 10)
+    if (Number.isNaN(n)) return null
+    return n
+  }
 
 
   useEffect(() => {
@@ -298,14 +311,52 @@ export default function NewLaunchDirectory() {
     return () => controller.abort()
   }, [isClient, currentPage, projectsPerPage, searchQuery, sortBy, selectedDistricts, selectedTenures, selectedPropertyTypes, selectedStatus, selectedBedrooms, priceMin, priceMax])
 
+  // Load ALL districts from all projects for the District Filter (independent of pagination)
+  useEffect(() => {
+    if (!isClient) return
+    let aborted = false
+    const loadAllDistricts = async () => {
+      try {
+        const API_BASE = process.env.NEXT_PUBLIC_API_BASE || ''
+        const params = new URLSearchParams()
+        // Request all projects with large page size to get all districts
+        params.set('pagination[pageSize]', '2000')
+        const url = `${API_BASE}/projects-prisma?${params.toString()}`
+        const resp = await fetch(url, { 
+          headers: { 'Content-Type': 'application/json' }, 
+          cache: 'no-store' 
+        })
+        if (!resp.ok) throw new Error('Failed to load districts')
+        const json = await resp.json()
+        const list = Array.isArray(json?.data) ? json.data : (Array.isArray(json) ? json : [])
+        const extracted = Array.from(new Set<number>(
+          list
+            .map((p: any) => parseDistrictNumber(p?.district))
+            .filter((d: number | null): d is number => typeof d === 'number' && Number.isFinite(d))
+        )).sort((a: number, b: number) => a - b)
+        if (!aborted && extracted.length) setAllDistricts(extracted)
+      } catch (e) {
+        // Silently ignore errors; fallback to current page projects-derived districts
+        console.warn('Failed to load all districts:', e)
+      }
+    }
+    loadAllDistricts()
+    return () => { aborted = true }
+  }, [isClient])
 
   const scrollToSearch = () => { searchSectionRef.current?.scrollIntoView({ behavior: 'smooth' }) }
 
   // Server-side filtering is now handled by the API
   const filteredProjects = projects
 
-  // Get unique districts from current projects
-  const districts = Array.from(new Set(projects.map(p => p.district).filter((d): d is number => typeof d === 'number'))).sort((a, b) => a - b)
+  // Use allDistricts if available, otherwise fallback to current page projects
+  const districts = allDistricts.length > 0 
+    ? allDistricts 
+    : Array.from(new Set(
+        projects
+          .map(p => parseDistrictNumber(p.district))
+          .filter((d): d is number => typeof d === 'number' && Number.isFinite(d))
+      )).sort((a, b) => a - b)
   const tenures = Array.from(new Set(projects.map(p => p.tenure).filter((t): t is string => t != null && t.trim() !== '')))
   const propertyTypes = Array.from(new Set(projects.map(p => p.propertyType).filter((t): t is string => t !== undefined)))
   const statuses: ("upcoming" | "ongoing" | "completed")[] = ["upcoming", "ongoing", "completed"]
