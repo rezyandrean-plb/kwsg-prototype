@@ -125,6 +125,7 @@ export default function NewLaunchDirectory() {
   const [sortBy, setSortBy] = useState("latest")
   const [selectedDistricts, setSelectedDistricts] = useState<number[]>([])
   const [allDistricts, setAllDistricts] = useState<number[]>([])
+  const [districtsLoaded, setDistrictsLoaded] = useState(false)
   const [selectedTenures, setSelectedTenures] = useState<string[]>([])
   const [selectedPropertyTypes, setSelectedPropertyTypes] = useState<string[]>([])
   const [selectedStatus, setSelectedStatus] = useState<("upcoming" | "ongoing" | "completed")[]>([])
@@ -317,24 +318,32 @@ export default function NewLaunchDirectory() {
     let aborted = false
     const loadAllDistricts = async () => {
       try {
-        const API_BASE = process.env.NEXT_PUBLIC_API_BASE || ''
+        const API_BASE = process.env.NEXT_PUBLIC_API_BASE || '/api'
         const params = new URLSearchParams()
         // Request all projects with large page size to get all districts
-        params.set('pagination[pageSize]', '2000')
+        params.set('pageSize', '2000')
         const url = `${API_BASE}/projects-prisma?${params.toString()}`
+        console.log('Loading all districts from URL:', url)
         const resp = await fetch(url, { 
           headers: { 'Content-Type': 'application/json' }, 
           cache: 'no-store' 
         })
         if (!resp.ok) throw new Error('Failed to load districts')
         const json = await resp.json()
+        console.log('API response for all districts:', json)
         const list = Array.isArray(json?.data) ? json.data : (Array.isArray(json) ? json : [])
+        console.log('Total projects loaded for districts:', list.length)
         const extracted = Array.from(new Set<number>(
           list
             .map((p: any) => parseDistrictNumber(p?.district))
             .filter((d: number | null): d is number => typeof d === 'number' && Number.isFinite(d))
         )).sort((a: number, b: number) => a - b)
-        if (!aborted && extracted.length) setAllDistricts(extracted)
+        console.log('All districts extracted:', extracted)
+        if (!aborted && extracted.length) {
+          setAllDistricts(extracted)
+          setDistrictsLoaded(true)
+          console.log('allDistricts state updated to:', extracted)
+        }
       } catch (e) {
         // Silently ignore errors; fallback to current page projects-derived districts
         console.warn('Failed to load all districts:', e)
@@ -350,13 +359,20 @@ export default function NewLaunchDirectory() {
   const filteredProjects = projects
 
   // Use allDistricts if available, otherwise fallback to current page projects
-  const districts = allDistricts.length > 0 
+  const districts = (districtsLoaded && allDistricts.length > 0) 
     ? allDistricts 
     : Array.from(new Set(
         projects
           .map(p => parseDistrictNumber(p.district))
           .filter((d): d is number => typeof d === 'number' && Number.isFinite(d))
       )).sort((a, b) => a - b)
+  
+  // Debug logging
+  console.log('districtsLoaded:', districtsLoaded)
+  console.log('allDistricts:', allDistricts)
+  console.log('projects length:', projects.length)
+  console.log('districts being used:', districts)
+  
   const tenures = Array.from(new Set(projects.map(p => p.tenure).filter((t): t is string => t != null && t.trim() !== '')))
   const propertyTypes = Array.from(new Set(projects.map(p => p.propertyType).filter((t): t is string => t !== undefined)))
   const statuses: ("upcoming" | "ongoing" | "completed")[] = ["upcoming", "ongoing", "completed"]

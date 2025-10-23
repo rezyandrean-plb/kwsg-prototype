@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     
     // Query parameters
     const page = parseInt(searchParams.get('page') || '1')
-    const limit = Math.min(parseInt(searchParams.get('limit') || searchParams.get('pageSize') || '20'), 100) // Max 100 items
+    const limit = Math.min(parseInt(searchParams.get('limit') || searchParams.get('pageSize') || '20'), 2000) // Max 2000 items
     const search = searchParams.get('search') || ''
     const location = searchParams.get('location') || ''
     const type = searchParams.get('type') || ''
