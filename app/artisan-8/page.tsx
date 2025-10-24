@@ -1442,12 +1442,12 @@ export default function Artisan8Landing() {
                 >
                   Project Info
                 </button>
-                <button 
+                {/* <button 
                   onClick={scrollToGallery}
                   className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
                 >
                   Gallery
-                </button>
+                </button> */}
                 <button 
                   onClick={scrollToFloorPlans}
                   className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
