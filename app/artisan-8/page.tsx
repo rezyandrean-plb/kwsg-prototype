@@ -797,7 +797,7 @@ export default function Artisan8Landing() {
 
   useEffect(() => {
     // Set page title
-    document.title = 'Arina East - KW Singapore'
+    document.title = 'Artisan 8 - KW Singapore'
     
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0)
