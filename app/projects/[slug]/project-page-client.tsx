@@ -48,6 +48,7 @@ import {
   CheckCircle,
   Download,
   Bath,
+  X,
   Droplets,
   Heart,
   Thermometer,
@@ -255,6 +256,7 @@ interface GooglePlace {
   duration: string
   transportMode: string
   isNearest?: boolean
+  isMRT?: boolean
 }
 
 // New interfaces for API data (matching Strapi response format)
@@ -724,6 +726,10 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
   const [bedroomTab, setBedroomTab] = useState<BedroomTabKey>('1')
   const [subtype, setSubtype] = useState<string>(floorPlanSubtypes['1'][0])
   const [code, setCode] = useState<string>(floorPlanCodes[floorPlanSubtypes['1'][0] as keyof typeof floorPlanCodes][0])
+  
+  // Floor plan fullscreen dialog state
+  const [isFloorPlanDialogOpen, setIsFloorPlanDialogOpen] = useState(false)
+  const [currentFloorPlanImage, setCurrentFloorPlanImage] = useState<string | null>(null)
 
   // Update subtypes and code when bedroomTab changes
   const handleBedroomTab = (key: BedroomTabKey) => {
@@ -2238,7 +2244,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                           {(() => {
                             const floorPlanImage = subtype.floor_plan_image
                             return (
-                              <div className="relative w-full h-80 md:h-full min-h-[400px]">
+                              <div className="relative w-full h-80 md:h-full min-h-[400px] group">
                                 <Image
                                   src={floorPlanImage || `/placeholder.svg?height=400&width=600&text=${encodeURIComponent((currentUnit as any).unitType.replace(' Units', '') + ' Floor Plan')}`}
                                   alt={`${(currentUnit as any).unitType.replace(' Units', '')} Floor Plan`}
@@ -2249,6 +2255,17 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                                 <div className="absolute bottom-4 left-4 text-white text-sm font-medium">
                                   Floor Plan
                                 </div>
+                                {/* Fullscreen button */}
+                                <button
+                                  onClick={() => {
+                                    setCurrentFloorPlanImage(floorPlanImage || `/placeholder.svg?height=400&width=600&text=${encodeURIComponent((currentUnit as any).unitType.replace(' Units', '') + ' Floor Plan')}`)
+                                    setIsFloorPlanDialogOpen(true)
+                                  }}
+                                  className="absolute bottom-4 right-4 p-2 bg-black/50 hover:bg-black/70 rounded-full transition-all duration-200 opacity-0 group-hover:opacity-100"
+                                  aria-label="View fullscreen floor plan"
+                                >
+                                  <Maximize2 className="h-4 w-4 text-white" />
+                                </button>
                               </div>
                             )
                           })()}
@@ -2580,6 +2597,31 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               )}
             </button>
           </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Floor Plan Fullscreen Dialog */}
+      <Dialog open={isFloorPlanDialogOpen} onOpenChange={setIsFloorPlanDialogOpen}>
+        <DialogContent className="max-w-7xl w-full h-[90vh] p-0">
+          <DialogTitle className="sr-only">Floor Plan Fullscreen View</DialogTitle>
+          <div className="relative w-full h-full">
+            {currentFloorPlanImage && (
+              <Image
+                src={currentFloorPlanImage}
+                alt="Floor Plan Fullscreen"
+                fill
+                className="object-contain"
+                priority
+              />
+            )}
+            <button
+              onClick={() => setIsFloorPlanDialogOpen(false)}
+              className="absolute top-4 right-4 p-2 bg-black/50 hover:bg-black/70 rounded-full transition-all duration-200"
+              aria-label="Close fullscreen"
+            >
+              <X className="h-4 w-4 text-white" />
+            </button>
+          </div>
         </DialogContent>
       </Dialog>
     </main>

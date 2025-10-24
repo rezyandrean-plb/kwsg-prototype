@@ -11,10 +11,30 @@ export async function GET(request: Request) {
 
   const GOOGLE_MAPS_API_KEY = 'AIzaSyATaKZX6SiWUM43vZletpWeI1KPLo2Hftw';
 
-  // Fetch nearby places from Google Places API
-  const placesUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=${radius}&type=${type}&key=${GOOGLE_MAPS_API_KEY}`;
-  const placesRes = await fetch(placesUrl);
-  const placesData = await placesRes.json();
+  let placesData: any;
+
+  // Special handling for transport type - prioritize MRT stations
+  if (type === 'transit_station') {
+    // First try to find MRT stations specifically
+    const mrtUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=${radius}&keyword=MRT&type=subway_station&key=${GOOGLE_MAPS_API_KEY}`;
+    const mrtRes = await fetch(mrtUrl);
+    const mrtData = await mrtRes.json();
+    
+    // If we found MRT stations, use them; otherwise fall back to general transit stations
+    if (mrtData.results && mrtData.results.length > 0) {
+      placesData = mrtData;
+    } else {
+      // Fallback to general transit stations
+      const transitUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=${radius}&type=transit_station&key=${GOOGLE_MAPS_API_KEY}`;
+      const transitRes = await fetch(transitUrl);
+      placesData = await transitRes.json();
+    }
+  } else {
+    // For other types, use the original logic
+    const placesUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=${radius}&type=${type}&key=${GOOGLE_MAPS_API_KEY}`;
+    const placesRes = await fetch(placesUrl);
+    placesData = await placesRes.json();
+  }
 
   if (!placesData.results) {
     return new Response(JSON.stringify([]), { status: 200 });
@@ -28,6 +48,12 @@ export async function GET(request: Request) {
       const distanceRes = await fetch(distanceUrl);
       const distanceData = await distanceRes.json();
       const element = distanceData.rows[0]?.elements[0];
+      
+      // Check if this is an MRT station for prioritization
+      const isMRT = place.name.toLowerCase().includes('mrt') || 
+                   place.name.toLowerCase().includes('mass rapid transit') ||
+                   place.types?.includes('subway_station');
+      
       return {
         placeId: place.place_id,
         name: place.name,
@@ -40,22 +66,29 @@ export async function GET(request: Request) {
         distance: element?.distance?.text || '',
         duration: element?.duration?.text || '',
         transportMode: 'driving',
+        isMRT: isMRT,
       };
     })
   );
 
-  // Mark the nearest as isNearest
-  let nearestIdx = 0;
-  let minDistance = Number.MAX_VALUE;
-  for (let i = 0; i < places.length; i++) {
-    const dist = Number(places[i].distance.replace(/[^0-9.]/g, ''));
-    if (!isNaN(dist) && dist < minDistance) {
-      minDistance = dist;
-      nearestIdx = i;
-    }
-  }
-  if (places[nearestIdx]) {
-    places[nearestIdx].isNearest = true;
+  // Sort places to prioritize MRT stations, then by distance
+  places.sort((a, b) => {
+    // First priority: MRT stations
+    if (a.isMRT && !b.isMRT) return -1;
+    if (!a.isMRT && b.isMRT) return 1;
+    
+    // Second priority: distance
+    const distA = Number(a.distance.replace(/[^0-9.]/g, ''));
+    const distB = Number(b.distance.replace(/[^0-9.]/g, ''));
+    if (isNaN(distA) && isNaN(distB)) return 0;
+    if (isNaN(distA)) return 1;
+    if (isNaN(distB)) return -1;
+    return distA - distB;
+  });
+
+  // Mark the nearest as isNearest (first item after sorting)
+  if (places.length > 0) {
+    places[0].isNearest = true;
   }
 
   return new Response(JSON.stringify(places), { status: 200 });
