@@ -322,7 +322,7 @@ function SiteMapForm({
           
           {submitSuccess && (
             <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-600 text-sm">
-              Thank you for your interest! We will contact you soon with the site map & floor plan.
+              Thank you for your interest in Arina East! We will contact you soon with the site map & floor plan.
             </div>
           )}
 
@@ -576,7 +576,7 @@ function LeadGenerationForm({
       
       {submitSuccess && (
         <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400 text-sm">
-          Thank you for your interest! We will contact you soon to arrange your showflat visit.
+          Thank you for your interest in Arina East! We will contact you soon to arrange your showflat visit.
         </div>
       )}
       
@@ -1227,7 +1227,7 @@ export default function ArinaEastLanding() {
       // Ensure only the date (no time) is submitted for preferredDate
       const preferredDateOnly = preferredDate ? format(preferredDate, 'yyyy-MM-dd') : undefined
 
-      const response = await fetch('/api/penrith-lead-form', {
+      const response = await fetch('/api/arina-east-lead-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1320,7 +1320,7 @@ export default function ArinaEastLanding() {
 
     try {
       // Submit the form with the reCAPTCHA token
-      const response = await fetch('/api/site-map-request', {
+      const response = await fetch('/api/arina-east-site-map-request', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1341,7 +1341,7 @@ export default function ArinaEastLanding() {
         
         toast({
           title: "Site Map & Floor Plan Request Submitted!",
-          description: "Thank you for your interest! We will contact you soon with the site map & floor plan.",
+          description: "Thank you for your interest in Arina East! We will contact you soon with the site map & floor plan.",
           variant: "default",
         })
         
