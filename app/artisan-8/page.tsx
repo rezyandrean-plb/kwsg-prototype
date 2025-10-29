@@ -2022,14 +2022,14 @@ export default function Artisan8Landing() {
                     <Train className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
                       <p className="font-semibold text-white">MRT</p>
-                      <p className="text-sm text-gray-300 font-light">Ang Mo Kio (NSL) <br /> Bishan (NSL/CCL)</p>
+                      <p className="text-sm text-gray-300 font-light">Upper Thomson (TEL) <br /> Marymount (CCL)</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Car className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
                       <p className="font-semibold text-white">Access</p>
-                      <p className="text-sm text-gray-300 font-light">CTE | PIE | SLE</p>
+                      <p className="text-sm text-gray-300 font-light">ECP | KPE | PIE | MCE</p>
                     </div>
                   </div>
                 </div>
@@ -2078,6 +2078,7 @@ export default function Artisan8Landing() {
                           <div className="flex-shrink-0" style={{ color: '#ce001f' }}>{amenity.icon}</div>
                           <div className="text-center md:text-center flex-1 min-w-0">
                             <h3 className="font-semibold text-xs md:text-lg text-white break-words">{amenity.name}</h3>
+                            <p className="text-sm text-gray-300 font-light">{amenity.distance}</p>
                           </div>
                         </div>
                       </CardContent>

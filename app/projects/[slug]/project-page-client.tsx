@@ -1362,7 +1362,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
   }
 
   return (
-    <main className="min-h-screen flex flex-col bg-[#1c1c1d] text-white">
+    <main className="min-h-screen flex flex-col text-white bg-gradient-to-b from-black to-gray-900">
       {/* 
         Responsive Breakpoint Strategy:
         - Mobile: < 1024px (lg) - Stacked layout
@@ -1696,7 +1696,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       </div>
 
       {/* Overview Section */}
-      <section id="overview" className="w-full bg-[#1c1c1d] py-6 sm:py-8">
+      <section id="overview" className="w-full py-6 sm:py-8">
         <div className="container mx-auto px-4 sm:px-6 max-w-screen-xl">
           <h2 className="text-2xl sm:text-3xl font-light mb-3 text-white text-center tracking-wide">Project Overview</h2>
           <div className="flex justify-center mb-4 sm:mb-6">
@@ -1954,7 +1954,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       {/* Site Plan Section removed - merged into details */}
 
       {/* Facilities Section */}
-      <section className="px-6 py-20 bg-black relative overflow-hidden">
+      <section className="px-6 py-20 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-red-600/10 rounded-full blur-3xl"></div>
         <div className="max-w-7xl mx-auto relative z-10">
           {/* Title and Subtitle */}
@@ -2069,7 +2069,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       </section>
 
       {/* Location Section */}
-      <section id="location" className="w-full py-8 mb-2 bg-[#1c1c1d]">
+      <section id="location" className="w-full py-8 mb-2">
         <div className="max-w-screen-xl mx-auto px-4">
           {/* Title and Subtitle */}
           <div className="text-center mb-4">
@@ -2434,7 +2434,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       </div>
 
       {/* Contact Agent Section */}
-      <section id="contact" className="w-full py-8 sm:py-12 lg:py-16 mb-6 sm:mb-8 bg-[#18191b]">
+      <section id="contact" className="w-full py-8 sm:py-12 lg:py-16 mb-6 sm:mb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-light text-white text-center mb-3 tracking-wide">Contact Our Expert Agents</h2>
           <div className="flex justify-center mb-4 sm:mb-6">
