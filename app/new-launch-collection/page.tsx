@@ -280,7 +280,9 @@ export default function NewLaunchCollectionPage() {
                   <div className="absolute top-3 sm:top-4 md:top-6 left-3 sm:left-4 md:left-6">
                     <span
                     className={`inline-block px-3 sm:px-4 py-1.5 sm:py-2 text-[11px] sm:text-xs tracking-wider backdrop-blur-sm ${
-                      launch.status === "Coming Soon" || launch.status === "Registration Open"
+                      launch.status === "Launched"
+                        ? "bg-[#B40101] text-white"
+                        : launch.status === "Coming Soon" || launch.status === "Registration Open"
                         ? "bg-[#B40101] text-white"
                         : "bg-black/90 text-white"
                     }`}
