@@ -1698,7 +1698,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       {/* Overview Section */}
       <section id="overview" className="w-full py-6 sm:py-8">
         <div className="container mx-auto px-4 sm:px-6 max-w-screen-xl">
-          <h2 className="text-2xl sm:text-3xl font-light mb-3 text-white text-center tracking-wide">Project Overview</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-3 text-white text-center tracking-wide">Project Overview</h2>
           <div className="flex justify-center mb-4 sm:mb-6">
             <div className="w-12 sm:w-16 h-1 bg-[#ce001f] rounded" />
           </div>
@@ -1798,7 +1798,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       {/* Project Details Section - merged with Site Plan like Penrith Detailed Information Grid */}
       <section id="details" className="w-full py-6 sm:py-8 mb-6 sm:mb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <h2 className="text-2xl sm:text-3xl font-light mb-3 text-white text-center tracking-wide">Project Details</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-3 text-white text-center tracking-wide">Project Details</h2>
           <div className="flex justify-center mb-4 sm:mb-6">
             <div className="w-12 sm:w-16 h-1 bg-[#ce001f] rounded" />
           </div>
@@ -1942,8 +1942,8 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                   )}
                   </div>
 
-                <button className="w-full bg-[#ce001f] hover:bg-[#b3001a] text-white font-light py-3 rounded-full text-base transition-colors" onClick={handleDownloadSitePlan}>
-                Download Site Plan
+                <button className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 sm:px-12 py-3 text-base sm:text-lg md:text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md" onClick={handleDownloadSitePlan}>
+                Request Site Plan
               </button>
             </div>
           </div>
@@ -1959,7 +1959,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
         <div className="max-w-7xl mx-auto relative z-10">
           {/* Title and Subtitle */}
           <div className="text-center mb-4">
-            <h2 className="text-4xl font-light text-white mb-3 tracking-wide">Facilities</h2>
+            <h2 className="text-4xl font-bold text-white mb-3 tracking-wide">Facilities</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
@@ -2022,7 +2022,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               // Only show gradient overlay if there are more than 15 facilities and not showing all
               if (!showAllFacilities && validFacilities.length > 15) {
                 return (
-                  <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black via-black/80 to-transparent pointer-events-none" />
+                  <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black via-gray-900/90 to-transparent pointer-events-none" />
                 )
               }
               
@@ -2047,7 +2047,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 <div className="flex justify-center mt-12">
                   <button
                     onClick={() => setShowAllFacilities(!showAllFacilities)}
-                    className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-lg transition-colors duration-300 font-semibold"
+                    className="flex items-center gap-2 bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 py-3 text-base sm:text-lg md:text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
                   >
                     {showAllFacilities ? (
                       <>
@@ -2073,7 +2073,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
         <div className="max-w-screen-xl mx-auto px-4">
           {/* Title and Subtitle */}
           <div className="text-center mb-4">
-            <h2 className="text-4xl font-light text-white mb-3 tracking-wide">Location & Connectivity</h2>
+            <h2 className="text-4xl font-bold text-white mb-3 tracking-wide">Location & Connectivity</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
@@ -2214,7 +2214,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       <section id="pricing" className="w-full py-6 sm:py-8 mb-4">
         {/* Header Section */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-light mb-3 text-white text-center tracking-wide">Unit & Pricing</h2>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 text-white text-center tracking-wide">Unit & Pricing</h2>
           <div className="flex justify-center mb-4 sm:mb-6">
             <div className="w-12 sm:w-16 h-1 bg-[#ce001f] rounded" />
           </div>
@@ -2397,7 +2397,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                           <div className="mt-6">
                             <button 
                               onClick={() => scrollToSection('contact')}
-                              className="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-6 rounded-full text-sm transition-colors duration-200"
+                              className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 sm:px-12 py-3 text-base sm:text-lg md:text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
                             >
                               Enquire About This Unit Type
                             </button>
@@ -2417,7 +2417,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       {/* Mortgage Loan Calculator - Full Width */}
       <div className="w-full py-6 sm:py-8 mb-6 sm:mb-8">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 text-center">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-light text-white mb-3 tracking-wide">Mortgage Loan Calculator</h2>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 tracking-wide">Mortgage Loan Calculator</h2>
           <div className="flex justify-center mb-4 sm:mb-6">
             <div className="w-12 sm:w-16 h-1 bg-[#ce001f] rounded" />
           </div>
@@ -2436,7 +2436,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       {/* Contact Agent Section */}
       <section id="contact" className="w-full py-8 sm:py-12 lg:py-16 mb-6 sm:mb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-light text-white text-center mb-3 tracking-wide">Contact Our Expert Agents</h2>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white text-center mb-3 tracking-wide">Contact Our Expert Agents</h2>
           <div className="flex justify-center mb-4 sm:mb-6">
             <div className="w-12 sm:w-16 h-1 bg-[#ce001f] rounded" />
           </div>
@@ -2470,10 +2470,10 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 <div className="w-full">
                   <button 
                     onClick={handleDownloadBrochure}
-                    className="w-full bg-[#ce001f] hover:bg-[#b3001a] text-white font-semibold py-3 rounded-full text-lg transition-colors flex items-center justify-center gap-2"
+                    className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 sm:px-12 py-3 text-base sm:text-lg md:text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md flex items-center justify-center gap-2"
                   >
                     <Download className="h-5 w-5" />
-                    Download Brochure
+                    Request Brochure
                   </button>
                 </div>
               </div>
@@ -2491,7 +2491,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                     </p>
                     <button 
                       onClick={() => setSubmitSuccess(false)}
-                      className="bg-[#ce001f] hover:bg-[#b3001a] text-white font-semibold py-3 px-6 rounded-full text-sm transition-colors"
+                      className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 sm:px-12 py-3 text-base sm:text-lg md:text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
                     >
                       Send Another Message
                     </button>
@@ -2575,7 +2575,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                   <button 
                     type="submit" 
                     disabled={isSubmitting}
-                    className="bg-red-500 hover:bg-red-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-full text-lg transition-colors mt-2 flex items-center justify-center gap-2"
+                    className="w-full bg-[#B40101] hover:bg-[#B40101]/90 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-8 sm:px-12 py-3 text-base sm:text-lg md:text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md mt-2 flex items-center justify-center gap-2"
                   >
                     {isSubmitting ? (
                       <>
@@ -2645,7 +2645,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             <button
               type="submit"
               disabled={isSubmittingBrochure}
-              className="w-full bg-[#ce001f] hover:bg-[#b3001a] disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-full text-lg transition-colors mt-2"
+              className="w-full bg-[#B40101] hover:bg-[#B40101]/90 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-8 sm:px-12 py-3 text-base sm:text-lg md:text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md mt-2"
             >
               {isSubmittingBrochure ? (
                 <span className="inline-flex items-center gap-2"><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />Submitting...</span>

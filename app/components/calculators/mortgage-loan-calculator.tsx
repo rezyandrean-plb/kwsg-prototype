@@ -336,7 +336,7 @@ export function MortgageLoanCalculator() {
                 )}
               </div>
 
-              <Button className="w-full bg-[#ce001f] hover:bg-[#b3001a] text-white" size="lg" onClick={handleCalculate}>
+              <Button className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 sm:px-12 py-4 sm:py-5 text-base sm:text-lg md:text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md" onClick={handleCalculate}>
                 Calculate Mortgage Loan
               </Button>
             </div>
