@@ -14,7 +14,7 @@ const newLaunches = [
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/springleaf-collection.webp",
     location: "Upper Thomson",
     district: "District 26",
-    status: "Registration Open",
+    status: "Launched",
     type: "Condo",
     bedrooms: "3-5",
     price: "From $2,300,000",
@@ -28,7 +28,7 @@ const newLaunches = [
     launchDate: "April 2024",
     location: "Queenstown",
     district: "District 3",
-    status: "Preview Available",
+    status: "Launched",
     type: "Condo",
     bedrooms: "2-5",
     price: "From $1,495,000",
@@ -42,7 +42,7 @@ const newLaunches = [
     launchDate: "May 2024",
     location: "Beach Road",
     district: "District 7",
-    status: "Coming Soon",
+    status: "Launched",
     type: "Condo",
     bedrooms: "2-5",
     price: "From $1,765,000",
@@ -56,11 +56,11 @@ const newLaunches = [
     launchDate: "June 2024",
     location: "Marina View",
     district: "District 1",
-    status: "Coming Soon",
+    status: "Launched",
     type: "Condo",
     bedrooms: "1-5 BR",
     price: "From $1,848,000",
-    url: "",
+    url: "/w-residences",
   },
   {
     id: 5,
@@ -70,36 +70,28 @@ const newLaunches = [
     launchDate: "June 2024",
     location: "East Coast",
     district: "District 15",
-    status: "Coming Soon",
+    status: "Launched",
     type: "Condo",
     bedrooms: "1-4",
     price: "From $1,298,000",
-    url: "",
-  },
-  {
-    id: 6,
-    title: "Artisan 8",
-    summary: "TBC",
-    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/coming-soon.webp",
-    launchDate: "June 2024",
-    location: "Sin Ming Road",
-    district: "District 20",
-    status: "Coming Soon",
-    type: "Condo",
-    bedrooms: "TBC",
-    price: "TBC",
-    url: "",
+    url: "/arina-east",
   },
 ]
 
-// Derive district options from data
+// Derive district options from data and sort from lowest to highest
 const districtOptions = [
   "All",
   ...Array.from(new Set(newLaunches.map((l) => l.district)))
+    .filter(district => district !== "All")
+    .sort((a, b) => {
+      const numA = parseInt(a.replace(/\D/g, ''))
+      const numB = parseInt(b.replace(/\D/g, ''))
+      return numA - numB
+    })
 ]
 
 const filterOptions = {
-  status: ["All", "Preview Available", "Coming Soon", "Registration Open", "Early Interest"],
+  status: ["All", "Launched", "Preview Available", "Coming Soon", "Registration Open", "Early Interest"],
 }
 
 export default function NewLaunchCollectionPage() {
@@ -288,7 +280,9 @@ export default function NewLaunchCollectionPage() {
                   <div className="absolute top-3 sm:top-4 md:top-6 left-3 sm:left-4 md:left-6">
                     <span
                     className={`inline-block px-3 sm:px-4 py-1.5 sm:py-2 text-[11px] sm:text-xs tracking-wider backdrop-blur-sm ${
-                      launch.status === "Coming Soon" || launch.status === "Registration Open"
+                      launch.status === "Launched"
+                        ? "bg-[#B40101] text-white"
+                        : launch.status === "Coming Soon" || launch.status === "Registration Open"
                         ? "bg-[#B40101] text-white"
                         : "bg-black/90 text-white"
                     }`}
