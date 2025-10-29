@@ -979,6 +979,51 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
     return s
   }
 
+  // Helper function to get district name from district code
+  const getDistrictName = (districtCode: string): string => {
+    const districtMap: { [key: string]: string } = {
+      'D01': 'Boat Quay / Raffles / Marina',
+      'D02': 'Chinatown / Tanjong Pagar',
+      'D03': 'Alexandra / Commonwealth',
+      'D04': 'Harbourfront / Telok Blangah',
+      'D05': 'Buona Vista / West Coast / Clementi',
+      'D06': 'City Hall / Clarke Quay',
+      'D07': 'Beach Road / Bugis / Rochor',
+      'D08': 'Farrer Park / Serangoon Rd',
+      'D09': 'Orchard / River Valley',
+      'D10': 'Tanglin / Holland / Bukit Timah',
+      'D11': 'Newton / Novena',
+      'D12': 'Balestier / Toa Payoh',
+      'D13': 'Macpherson / Potong Pasir',
+      'D14': 'Eunos / Geylang / Paya Lebar',
+      'D15': 'East Coast / Marine Parade',
+      'D16': 'Bedok / Upper East Coast',
+      'D17': 'Changi Airport / Changi Village',
+      'D18': 'Pasir Ris / Tampines',
+      'D19': 'Hougang / Punggol / Sengkang',
+      'D20': 'Ang Mo Kio / Bishan / Thomson',
+      'D21': 'Clementi Park / Upp. Bukit Timah',
+      'D22': 'Boon Lay / Jurong / Tuas',
+      'D23': 'Dairy Farm / Bukit Panjang / Choa Chu Kang',
+      'D24': 'Lim Chu Kang / Tengah',
+      'D25': 'Admiralty / Woodlands',
+      'D26': 'Mandai / Upper Thomson',
+      'D27': 'Sembawang / Yishun',
+      'D28': 'Seletar / Yio Chu Kang'
+    }
+    
+    return districtMap[districtCode] || ''
+  }
+
+  // Helper function to display district with name
+  const displayDistrict = (district: unknown): string => {
+    const districtValue = displayValue(district)
+    if (districtValue === 'n/a') return 'n/a'
+    
+    const districtName = getDistrictName(districtValue)
+    return districtName ? `${districtValue} ${districtName}` : districtValue
+  }
+
   // Helper function to check if a value should be displayed (not 'n/a')
   const shouldDisplayValue = (value: unknown): boolean => {
     if (value === undefined || value === null) return false
@@ -1769,81 +1814,81 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 </div>
               </div>
               <div className="p-4 sm:p-6 space-y-4">
-                {/* Name */}
-                {shouldDisplayValue(project?.title) && (
-                  <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
-                    <span className="text-gray-300 text-sm">Name:</span>
-                    <span className="text-white text-sm text-right">{displayValue(project?.title)}</span>
+            {/* Name */}
+            {shouldDisplayValue(project?.title) && (
+              <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
+                <span className="text-gray-300 text-sm">Name:</span>
+                <span className="text-white text-sm text-right">{displayValue(project?.title)}</span>
               </div>
             )}
             {/* Developer */}
             {shouldDisplayValue(project?.developer) && (
-                  <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
-                    <span className="text-gray-300 text-sm">Developer:</span>
-                    <span className="text-white text-sm text-right">{displayValue(project?.developer)}</span>
+              <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
+                <span className="text-gray-300 text-sm">Developer:</span>
+                <span className="text-white text-sm text-right">{displayValue(project?.developer)}</span>
               </div>
             )}
-                {/* District */}
-                {shouldDisplayValue(project?.district) && (
-                  <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
-                    <span className="text-gray-300 text-sm">District:</span>
-                    <span className="text-white text-sm text-right">{displayValue(project?.district)}</span>
+            {/* District */}
+            {shouldDisplayValue(project?.district) && (
+              <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
+                <span className="text-gray-300 text-sm">District:</span>
+                <span className="text-white text-sm text-right">{displayDistrict(project?.district)}</span>
               </div>
             )}
-                {/* Property Type */}
-                {shouldDisplayValue(project?.propertyType) && (
-                  <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
-                    <span className="text-gray-300 text-sm">Property Type:</span>
-                    <span className="text-white text-sm text-right">{displayValue(project?.propertyType)}</span>
+            {/* Property Type */}
+            {shouldDisplayValue(project?.propertyType) && (
+              <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
+                <span className="text-gray-300 text-sm">Property Type:</span>
+                <span className="text-white text-sm text-right">{displayValue(project?.propertyType)}</span>
               </div>
             )}
-                {/* Tenure */}
-                {shouldDisplayValue(project?.tenure) && (
-                  <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
-                    <span className="text-gray-300 text-sm">Tenure:</span>
-                    <span className="text-white text-sm text-right">{displayValue(project?.tenure)}</span>
+            {/* Tenure */}
+            {shouldDisplayValue(project?.tenure) && (
+              <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
+                <span className="text-gray-300 text-sm">Tenure:</span>
+                <span className="text-white text-sm text-right">{displayValue(project?.tenure)}</span>
               </div>
             )}
             {/* Site Area */}
             {shouldDisplayValue(project?.siteArea) && (
-                  <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
-                    <span className="text-gray-300 text-sm">Site Area:</span>
-                    <span className="text-white text-sm text-right">{displayValue(project?.siteArea)}</span>
+              <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
+                <span className="text-gray-300 text-sm">Site Area:</span>
+                <span className="text-white text-sm text-right">{displayValue(project?.siteArea)}</span>
               </div>
             )}
             {/* Blocks */}
             {shouldDisplayValue(project?.totalUnits) && (
-                  <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
-                    <span className="text-gray-300 text-sm">Blocks:</span>
-                    <span className="text-white text-sm text-right">{`${Math.ceil(Number(project.totalUnits.replace(/[^0-9]/g, '')) / 7)}`}</span>
+              <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
+                <span className="text-gray-300 text-sm">Blocks:</span>
+                <span className="text-white text-sm text-right">{`${Math.ceil(Number(project.totalUnits.replace(/[^0-9]/g, '')) / 7)}`}</span>
               </div>
             )}
-                {/* Total Units */}
+            {/* Total Units */}
             {shouldDisplayValue(project?.totalUnits) && (
-                  <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
-                    <span className="text-gray-300 text-sm">Total Units:</span>
-                    <span className="text-white text-sm text-right">{displayValue(project?.totalUnits)}</span>
-                  </div>
-                )}
-                {/* Unit Mix */}
-                {shouldDisplayValue(project?.bedrooms) && (
-                  <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
-                    <span className="text-gray-300 text-sm">Unit Mix:</span>
-                    <span className="text-white text-sm text-right">{displayValue(project?.bedrooms)}</span>
-                </div>
-                )}
-                {/* Nearest MRT - computed from amenities with fallback */}
-                {nearestMrt && (
-                  <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
-                    <span className="text-gray-300 text-sm">Nearest MRT:</span>
-                    <span className="text-white text-sm text-right">{`${(nearestMrt as any).name} (${(nearestMrt as any).distance || 'n/a'})`}</span>
+              <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
+                <span className="text-gray-300 text-sm">Total Units:</span>
+                <span className="text-white text-sm text-right">{displayValue(project?.totalUnits)}</span>
               </div>
             )}
-                {/* Expected TOP */}
-                {shouldDisplayValue(project?.completion) && (
-                  <div className="flex justify-between pb-1 gap-4">
-                    <span className="text-gray-300 text-sm">Expected TOP:</span>
-                    <span className="text-white text-sm text-right">{formatCompletionDate(project?.completion)}</span>
+            {/* Unit Mix */}
+            {shouldDisplayValue(project?.bedrooms) && (
+              <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
+                <span className="text-gray-300 text-sm">Unit Mix:</span>
+                <span className="text-white text-sm text-right">{displayValue(project?.bedrooms)}</span>
+            </div>
+            )}
+            {/* Nearest MRT - computed from amenities with fallback */}
+            {nearestMrt && (
+              <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
+                <span className="text-gray-300 text-sm">Nearest MRT:</span>
+                <span className="text-white text-sm text-right">{`${(nearestMrt as any).name} (${(nearestMrt as any).distance || 'n/a'})`}</span>
+              </div>
+            )}
+            {/* Expected TOP */}
+            {shouldDisplayValue(project?.completion) && (
+              <div className="flex justify-between pb-1 gap-4">
+                <span className="text-gray-300 text-sm">Expected TOP:</span>
+                <span className="text-white text-sm text-right">{formatCompletionDate(project?.completion)}</span>
               </div>
                 )}
             </div>
