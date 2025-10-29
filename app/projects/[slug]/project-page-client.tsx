@@ -1954,19 +1954,20 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       {/* Site Plan Section removed - merged into details */}
 
       {/* Facilities Section */}
-      <section id="facilities" className="w-full py-8 sm:py-12 lg:py-16 mb-2 bg-[#1c1c1d]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+      <section className="px-6 py-20 bg-black relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-red-600/10 rounded-full blur-3xl"></div>
+        <div className="max-w-7xl mx-auto relative z-10">
           {/* Title and Subtitle */}
-          <h2 className="text-2xl sm:text-3xl font-light mb-3 text-white text-center tracking-wide">Facilities</h2>
-          <div className="flex justify-center mb-4 sm:mb-6">
-            <div className="w-12 sm:w-16 h-1 bg-[#ce001f] rounded" />
+          <div className="text-center mb-4">
+            <h2 className="text-4xl font-light text-white mb-3 tracking-wide">Facilities</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-[#ce001f] rounded" />
+            </div>
+            <p className="text-gray-400 text-base font-light">Premium amenities designed for modern luxury living</p>
           </div>
-          <p className="text-center font-light text-gray-400 mb-6 sm:mb-8 lg:mb-10 text-sm sm:text-base">
-            Premium amenities designed for modern luxury living
-          </p>
-          {/* Facilities Grid */}
-          <div className="space-y-4 sm:space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+
+          <div className="relative">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
               {(() => {
                 // Use API facilities data if available
                 const displayFacilities = project?.facilities && project.facilities.length > 0 
@@ -1986,33 +1987,27 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 // If no valid facilities, show a message
                 if (validFacilities.length === 0) {
                   return (
-                    <div className="col-span-full text-center py-8">
+                    <div className="col-span-2 md:col-span-4 text-center py-8">
                       <p className="text-gray-400">No facilities information available at the moment.</p>
                       <p className="text-sm text-gray-500 mt-2">Please check back later for updated facility information.</p>
                     </div>
                   )
                 }
                 
-                // Show only first 9 facilities initially, or all if showAllFacilities is true
-                const facilitiesToShow = showAllFacilities ? validFacilities : validFacilities.slice(0, 9)
+                // Show only first 15 facilities initially, or all if showAllFacilities is true
+                const facilitiesToShow = showAllFacilities ? validFacilities : validFacilities.slice(0, 15)
                 
                 return facilitiesToShow.map((facility: any, idx: number) => (
                   <div
                     key={facility.id || idx}
-                    className="flex items-center gap-2 sm:gap-3 bg-[#232324] rounded-lg px-3 sm:px-4 py-3 sm:py-4 shadow-sm"
+                    className="group flex items-center justify-center bg-[#1C1C1D] px-4 py-4 rounded-lg border border-gray-800 hover:border-red-600 transition-all duration-300 min-h-[52px]"
                   >
-                    <span className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#ce001f]/20 flex-shrink-0">
-                      {facilityIconMap[facility.name] || (
-                        <Layout className="h-4 w-4 sm:h-5 sm:w-5" style={{ color: '#ce001f' }} />
-                      )}
-                    </span>
-                    <span className="text-white font-light text-sm sm:text-base truncate">{facility.name}</span>
+                    <span className="text-white text-sm font-medium text-center">{facility.name}</span>
                   </div>
                 ))
               })()}
             </div>
-            
-            {/* Show More/Less Button */}
+
             {(() => {
               const displayFacilities = project?.facilities && project.facilities.length > 0 
                 ? project.facilities 
@@ -2024,35 +2019,52 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 return cleanName.length > 0
               })
               
-              // Only show button if there are more than 9 facilities
-              if (validFacilities.length > 9) {
+              // Only show gradient overlay if there are more than 15 facilities and not showing all
+              if (!showAllFacilities && validFacilities.length > 15) {
                 return (
-                  <div className="flex justify-center mt-4 sm:mt-6">
-                    <button
-                      onClick={() => setShowAllFacilities(!showAllFacilities)}
-                      className="bg-[#ce001f] hover:bg-[#b3001a] text-white font-medium py-2 sm:py-3 px-4 sm:px-6 rounded-full transition-colors flex items-center gap-1 sm:gap-2 text-sm sm:text-base"
-                    >
-                      {showAllFacilities ? (
-                        <>
-                          <ChevronUp className="h-3 w-3 sm:h-4 sm:w-4" />
-                          <span className="hidden sm:inline">Show Less</span>
-                          <span className="sm:hidden">Less</span>
-                        </>
-                      ) : (
-                        <>
-                          <ChevronDown className="h-3 w-3 sm:h-4 sm:w-4" />
-                          <span className="hidden sm:inline">Show More ({validFacilities.length - 9} more)</span>
-                          <span className="sm:hidden">More ({validFacilities.length - 9})</span>
-                        </>
-                      )}
-                    </button>
-                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black via-black/80 to-transparent pointer-events-none" />
                 )
               }
               
               return null
             })()}
           </div>
+
+          {(() => {
+            const displayFacilities = project?.facilities && project.facilities.length > 0 
+              ? project.facilities 
+              : []
+            
+            const validFacilities = displayFacilities.filter((facility: any) => {
+              if (!facility.name) return false
+              const cleanName = facility.name.replace(/\s/g, '').replace(/[\u200B-\u200D\uFEFF]/g, '')
+              return cleanName.length > 0
+            })
+            
+            // Only show button if there are more than 15 facilities
+            if (validFacilities.length > 15) {
+              return (
+                <div className="flex justify-center mt-12">
+                  <button
+                    onClick={() => setShowAllFacilities(!showAllFacilities)}
+                    className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-lg transition-colors duration-300 font-semibold"
+                  >
+                    {showAllFacilities ? (
+                      <>
+                        Show Less <ChevronUp className="w-5 h-5" />
+                      </>
+                    ) : (
+                      <>
+                        See More Facilities <ChevronDown className="w-5 h-5" />
+                      </>
+                    )}
+                  </button>
+                </div>
+              )
+            }
+            
+            return null
+          })()}
         </div>
       </section>
 
