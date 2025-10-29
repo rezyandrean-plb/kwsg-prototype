@@ -844,6 +844,13 @@ export default function Artisan8Landing() {
 
   const [projectImages, setProjectImages] = useState<string[]>([])
   
+  // Site Plan images for carousel
+  const sitePlanImages = [
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/site-plan/Siteplan-01.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/site-plan/Siteplan-02.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/site-plan/Siteplan-03.jpg"
+  ]
+  
   useEffect(() => {
     const loadGallery = async () => {
       try {
@@ -1089,14 +1096,16 @@ export default function Artisan8Landing() {
           subtype: "1-Bedroom",
           bedrooms: 1,
           bathrooms: 1,
-          size: "495-506 sqft",
+          size: "495 - 506 sqft",
           price: "From $1,292,000",
           currency: "SGD",
           total: 6,
           available: 4,
           status: 0,
           floor_plan_images: [
-            "/images/springleaf-residence/site-plan-dummy.webp",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/1+Bedroom+-+A1.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/1+Bedroom+-+A2.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/1+Bedroom+-+A3.png",
           ],
         }
       ]
@@ -1108,14 +1117,42 @@ export default function Artisan8Landing() {
           subtype: "2-Bedroom",
           bedrooms: 2,
           bathrooms: 2,
-          size: "678 sqft",
+          size: "678 - 786 sqft",
           price: "From $1,771,000",
           currency: "SGD",
           total: 13,
           available: 4,
           status: 0,
           floor_plan_images: [
-            "/images/springleaf-residence/site-plan-dummy.webp",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/2+Bedroom+-+B1.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/2+Bedroom+-+B2.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/2+Bedroom+-+B3.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/2+Bedroom+-+B4.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/2+Bedroom+-+B4H.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/2+Bedroom+-+B5.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/2+Bedroom+-+B6.png",
+          ],
+        }
+      ]
+    },
+    {
+      unitType: "3-Bedroom",
+      subtypes: [
+        {
+          subtype: "3-Bedroom",
+          bedrooms: 3,
+          bathrooms: 2,
+          size: "850 - 1,259 sqft",
+          price: "SOLD OUT",
+          currency: "SGD",
+          total: 7,
+          available: 0,
+          status: 0,
+          floor_plan_images: [
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/3+Bedroom+-+C1.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/3+Bedroom+-+C2.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/3+Bedroom+-+C3S.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/3+Bedroom+-+C4-PH.png",
           ],
         }
       ]
@@ -1127,52 +1164,20 @@ export default function Artisan8Landing() {
           subtype: "4-Bedroom",
           bedrooms: 4,
           bathrooms: 3,
-          size: "797-861 sqft",
+          size: "797 - 2,174 sqft",
           price: "From $3,156,000",
           currency: "SGD",
-          total: 4,
-          available: 3,
+          total: 7,
+          available: 5,
           status: 0,
           floor_plan_images: [
-            "/images/springleaf-residence/site-plan-dummy.webp",
-          ],
-        }
-      ]
-    },
-    {
-      unitType: "4-Bedroom + 1 Study",
-      subtypes: [
-        {
-          subtype: "4-Bedroom + 1 Study",
-          bedrooms: 4,
-          bathrooms: 3,
-          size: "969 sqft",
-          price: "From $4,032,000",
-          currency: "SGD",
-          total: 2,
-          available: 1,
-          status: 0,
-          floor_plan_images: [
-            "/images/springleaf-residence/site-plan-dummy.webp",
-          ],
-        }
-      ]
-    },
-    {
-      unitType: "4-Bedroom + 2 Study",
-      subtypes: [
-        {
-          subtype: "4-Bedroom + 2 Study",
-          bedrooms: 4,
-          bathrooms: 3,
-          size: "1,087 sqft",
-          price: "From $5,019,000",
-          currency: "SGD",
-          total: 1,
-          available: 1,
-          status: 0,
-          floor_plan_images: [
-            "/images/springleaf-residence/site-plan-dummy.webp",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/3+Bedroom+-+C1.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/3+Bedroom+-+C2.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/3+Bedroom+-+C3S.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/3+Bedroom+-+C4-PH.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/4+Bedroom+-+D5S-PH.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/4+Bedroom+-+D6S-PH.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/4+Bedroom+-+F1-PH.png",
           ],
         }
       ]
@@ -1191,7 +1196,7 @@ export default function Artisan8Landing() {
           available: 1,
           status: 0,
           floor_plan_images: [
-            "/images/springleaf-residence/site-plan-dummy.webp",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/5+Bedroom+-+E1-PH.png",
           ],
         }
       ]
@@ -1662,26 +1667,41 @@ export default function Artisan8Landing() {
                 <div className="space-y-4">
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-semibold text-white">Site Map</h4>
+                      <h4 className="font-semibold text-white">Site Plan</h4>
                     </div>
-                    <div className="relative w-full rounded mb-3 overflow-hidden">
-                      <Image
-                        src="/images/penrith/penrith-site-map.webp"
-                        alt="Penrith Site Map"
-                        width={800}
-                        height={500}
-                        quality={90}
-                        className="w-full hover:scale-95 transition-transform duration-500 object-contain"
-                      />
-                      {/* White overlay with Coming Soon */}
-                      <div className="absolute inset-0 bg-white/80 flex items-center justify-center">
-                        <div className="text-center">
-                          <h3 className="text-3xl font-bold text-gray-800 mb-2">Coming Soon</h3>
-                          <p className="text-lg text-gray-600">Site plan will be available soon</p>
-                        </div>
+                    <div className="relative">
+                      <Carousel className="w-full">
+                        <CarouselContent>
+                          {sitePlanImages.map((image, index) => (
+                            <CarouselItem key={index}>
+                              <div className="relative">
+                                <Image
+                                  src={image}
+                                  alt={`Aurea Site Plan ${index + 1}`}
+                                  width={800}
+                                  height={500}
+                                  quality={90}
+                                  className="w-full rounded mb-3 object-contain"
+                                />
+                              </div>
+                            </CarouselItem>
+                          ))}
+                        </CarouselContent>
+                        <CarouselPrevious className="left-2 bg-white/90 hover:bg-white text-gray-800 border-gray-300 shadow-lg" />
+                        <CarouselNext className="right-2 bg-white/90 hover:bg-white text-gray-800 border-gray-300 shadow-lg" />
+                      </Carousel>
+                      {/* Carousel indicators */}
+                      <div className="flex justify-center space-x-2 mt-3">
+                        {sitePlanImages.map((_, index) => (
+                          <button
+                            key={index}
+                            className="w-2 h-2 rounded-full bg-gray-400 hover:bg-gray-300 transition-colors duration-200"
+                            aria-label={`Go to slide ${index + 1}`}
+                          />
+                        ))}
                       </div>
                     </div>
-                    <p className="text-sm text-gray-300 mb-3">
+                    <p className="text-sm text-gray-300 mb-3 mt-3">
                       View the overall development layout and facilities distribution
                     </p>
                     <Button 
@@ -1691,7 +1711,7 @@ export default function Artisan8Landing() {
                       onClick={() => setShowSiteMapPopup(true)}
                     >
                       <Download className="w-4 h-4 mr-2" />
-                      Request Site Map
+                      Request Site Plan
                     </Button>
                   </div>
                 </div>
@@ -1978,17 +1998,16 @@ export default function Artisan8Landing() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                {/* Location Map */}
+                {/* Location Image */}
                 <div className="w-full rounded-lg overflow-hidden shadow-lg">
-                  <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.703870285011!2d103.83463950063148!3d1.3542582356062005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da172f515324b9%3A0x5e25c1589ac92bee!2sArtisan%208!5e0!3m2!1sen!2sid!4v1761298132292!5m2!1sen!2sid" 
-                    width="100%" 
-                    height="450" 
-                    style={{border:0}} 
-                    allowFullScreen 
-                    loading="lazy" 
-                    referrerPolicy="no-referrer-when-downgrade"
-                    className="w-full h-[450px] rounded-lg"
+                  <Image
+                    src="https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/site-plan/Artisan-8-LocationMap.jpg"
+                    alt="Penrith Location Map"
+                    width={1200}
+                    height={800}
+                    quality={90}
+                    className="w-full h-auto object-contain"
+                    priority
                   />
                 </div>
                 <div className="grid md:grid-cols-3 gap-6">
