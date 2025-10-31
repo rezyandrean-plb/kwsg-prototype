@@ -96,7 +96,7 @@ export function Header() {
               <div className="flex items-center gap-2 text-white">
                 <User className="w-4 h-4" />
                 <span className="text-sm font-medium">
-                  {user?.emailAddresses[0]?.emailAddress || 'User'}
+                  {user?.fullName || (user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : user?.firstName) || user?.username || user?.emailAddresses[0]?.emailAddress || 'User'}
                 </span>
               </div>
               <UserButton 
