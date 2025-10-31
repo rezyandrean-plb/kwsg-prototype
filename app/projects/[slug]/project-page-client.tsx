@@ -1942,7 +1942,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                   )}
                   </div>
 
-                <button className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 sm:px-12 py-3 text-base sm:text-lg md:text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md" onClick={handleDownloadSitePlan}>
+                <button className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 sm:px-12 py-3 text-sm sm:text-base md:text-lg font-semibold transition-all duration-300 hover:scale-105 group rounded-md" onClick={handleDownloadSitePlan}>
                 Request Site Plan
               </button>
             </div>
@@ -1954,7 +1954,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       {/* Site Plan Section removed - merged into details */}
 
       {/* Facilities Section */}
-      <section className="px-6 py-20 relative overflow-hidden">
+      <section id="facilities" className="px-6 py-20 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-red-600/10 rounded-full blur-3xl"></div>
         <div className="max-w-7xl mx-auto relative z-10">
           {/* Title and Subtitle */}
@@ -2022,7 +2022,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               // Only show gradient overlay if there are more than 15 facilities and not showing all
               if (!showAllFacilities && validFacilities.length > 15) {
                 return (
-                  <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black via-gray-900/90 to-transparent pointer-events-none" />
+                  <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/80 to-transparent pointer-events-none" />
                 )
               }
               
@@ -2047,7 +2047,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 <div className="flex justify-center mt-12">
                   <button
                     onClick={() => setShowAllFacilities(!showAllFacilities)}
-                    className="flex items-center gap-2 bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 py-3 text-base sm:text-lg md:text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
+                    className="flex items-center gap-2 bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 py-3 text-sm sm:text-base md:text-lg font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
                   >
                     {showAllFacilities ? (
                       <>
@@ -2397,7 +2397,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                           <div className="mt-6">
                             <button 
                               onClick={() => scrollToSection('contact')}
-                              className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 sm:px-12 py-3 text-base sm:text-lg md:text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
+                              className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 sm:px-12 py-3 text-sm sm:text-base md:text-lg font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
                             >
                               Enquire About This Unit Type
                             </button>
@@ -2470,7 +2470,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 <div className="w-full">
                   <button 
                     onClick={handleDownloadBrochure}
-                    className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 sm:px-12 py-3 text-base sm:text-lg md:text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md flex items-center justify-center gap-2"
+                    className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 sm:px-12 py-3 text-sm sm:text-base md:text-lg font-semibold transition-all duration-300 hover:scale-105 group rounded-md flex items-center justify-center gap-2"
                   >
                     <Download className="h-5 w-5" />
                     Request Brochure
@@ -2491,7 +2491,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                     </p>
                     <button 
                       onClick={() => setSubmitSuccess(false)}
-                      className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 sm:px-12 py-3 text-base sm:text-lg md:text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
+                      className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 sm:px-12 py-3 text-sm sm:text-base md:text-lg font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
                     >
                       Send Another Message
                     </button>
@@ -2575,7 +2575,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                   <button 
                     type="submit" 
                     disabled={isSubmitting}
-                    className="w-full bg-[#B40101] hover:bg-[#B40101]/90 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-8 sm:px-12 py-3 text-base sm:text-lg md:text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md mt-2 flex items-center justify-center gap-2"
+                    className="w-full bg-[#B40101] hover:bg-[#B40101]/90 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-8 sm:px-12 py-3 text-sm sm:text-base md:text-lg font-semibold transition-all duration-300 hover:scale-105 group rounded-md mt-2 flex items-center justify-center gap-2"
                   >
                     {isSubmitting ? (
                       <>
@@ -2645,7 +2645,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             <button
               type="submit"
               disabled={isSubmittingBrochure}
-              className="w-full bg-[#B40101] hover:bg-[#B40101]/90 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-8 sm:px-12 py-3 text-base sm:text-lg md:text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md mt-2"
+              className="w-full bg-[#B40101] hover:bg-[#B40101]/90 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-8 sm:px-12 py-3 text-sm sm:text-base md:text-lg font-semibold transition-all duration-300 hover:scale-105 group rounded-md mt-2"
             >
               {isSubmittingBrochure ? (
                 <span className="inline-flex items-center gap-2"><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />Submitting...</span>

@@ -76,6 +76,21 @@ const newLaunches = [
     price: "From $1,298,000",
     url: "/arina-east",
   },
+  {
+    id: 6,
+    title: "Artisan 8",
+    summary: "Be the first to own a home that combines convenience, luxury, and nature.",
+    image: "/images/artisan8/artisan8-hero-background.webp",
+    launchDate: "TBC",
+    location: "Sin Ming",
+    district: "District 20",
+    status: "Coming Soon",
+    type: "Condo",
+    bedrooms: "1-4",
+    price: "TBC",
+    url: "/artisan-8",
+  },
+  
 ]
 
 // Derive district options from data and sort from lowest to highest
