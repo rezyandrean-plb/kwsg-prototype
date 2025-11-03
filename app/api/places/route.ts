@@ -4,6 +4,8 @@ export async function GET(request: Request) {
   const lng = searchParams.get('lng');
   const type = searchParams.get('type');
   const radius = searchParams.get('radius') || '5000';
+  const modeParam = (searchParams.get('mode') || 'driving').toLowerCase();
+  const mode = ['driving', 'walking', 'bicycling', 'transit'].includes(modeParam) ? modeParam : 'driving';
 
   if (!lat || !lng || !type) {
     return new Response(JSON.stringify({ error: 'Missing required parameters' }), { status: 400 });
@@ -44,7 +46,7 @@ export async function GET(request: Request) {
   const places = await Promise.all(
     placesData.results.slice(0, 8).map(async (place: any) => {
       // Get distance and duration from Distance Matrix API
-      const distanceUrl = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${lat},${lng}&destinations=${place.geometry.location.lat},${place.geometry.location.lng}&mode=driving&key=${GOOGLE_MAPS_API_KEY}`;
+      const distanceUrl = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${lat},${lng}&destinations=${place.geometry.location.lat},${place.geometry.location.lng}&mode=${mode}&key=${GOOGLE_MAPS_API_KEY}`;
       const distanceRes = await fetch(distanceUrl);
       const distanceData = await distanceRes.json();
       const element = distanceData.rows[0]?.elements[0];
@@ -65,7 +67,7 @@ export async function GET(request: Request) {
         type: type,
         distance: element?.distance?.text || '',
         duration: element?.duration?.text || '',
-        transportMode: 'driving',
+        transportMode: mode,
         isMRT: isMRT,
       };
     })
