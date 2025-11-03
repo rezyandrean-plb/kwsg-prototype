@@ -568,7 +568,7 @@ function LeadGenerationForm({
     <Card className={`bg-white/20 backdrop-blur-sm text-white p-6 md:p-12 shadow-2xl border-0 rounded-xl hover:shadow-3xl transition-all duration-700 hover:scale-105`}>
       <h2 className="text-4xl font-bold mb-4 text-white text-center">Book Your Showflat Visit Today</h2>
       <p className="text-md mb-8 opacity-90 text-white text-center">
-        Be the first to own a home that combines convenience, luxury, and nature. Register now for an exclusive preview of Artisan 8 .
+        Be the first to own a home that combines convenience, luxury, and nature.  <br /> Register now for an exclusive preview of Artisan 8 .
       </p>
       {submitError && (
         <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
@@ -894,8 +894,8 @@ export default function Artisan8Landing() {
 
   const amenities = [
     // TRANSPORT
-    { icon: <Train className="w-6 h-6" />, name: "Upper Thomson MRT", distance: "3-Mins walk", category: "Transport" },
-    { icon: <Train className="w-6 h-6" />, name: "Marymount MRT Station", distance: "10-Mins walk", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Upper Thomson MRT", distance: "3-Mins Walk", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Marymount MRT Station", distance: "10-Mins Walk", category: "Transport" },
     { icon: <Train className="w-6 h-6" />, name: "Caldecott MRT Station", distance: "1-Stop MRT", category: "Transport" },
     { icon: <Train className="w-6 h-6" />, name: "Stevens MRT Station", distance: "2-Stops MRT", category: "Transport" },
     { icon: <Car className="w-6 h-6" />, name: "East Coast Parkway (ECP)", distance: "2-Mins drive", category: "Transport" },
@@ -904,11 +904,12 @@ export default function Artisan8Landing() {
     { icon: <Car className="w-6 h-6" />, name: "Marina Coastal Expressway (MCE)", distance: "6-Mins drive", category: "Transport" },
 
     // RETAIL & F&B
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Upper Thomson eateries", distance: "Nearby", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Shunfu Mart (food centre & market)", distance: "Nearby", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Thomson Plaza", distance: "Nearby", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Junction 8", distance: "Nearby", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "AMK Hub", distance: "Nearby", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Upper Thomson Road Restaurant", distance: "2-Mins Walk", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Shunfu Mart (food centre & market)", distance: "4-Mins Walk", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Thomson Plaza", distance: "2-Mins Drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Junction 8", distance: "8-Mins Drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "AMK Hub", distance: "9-Mins Drive", category: "Retail & F&B" },
+    
     // CITY HUBS
     { icon: <Trees className="w-6 h-6" />, name: "Goodman Arts Centre", distance: "5-Mins drive", category: "City Hubs" },
     { icon: <Trees className="w-6 h-6" />, name: "Marina Bay Sands", distance: "9-Mins drive", category: "City Hubs" },
@@ -918,16 +919,16 @@ export default function Artisan8Landing() {
     { icon: <Trees className="w-6 h-6" />, name: "Esplanade - Theatres on the Bay", distance: "11-Mins drive", category: "City Hubs" },
 
     // NATURE & LEISURE
-    { icon: <Trees className="w-6 h-6" />, name: "MacRitchie Reservoir", distance: "5-Mins drive", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "Bishan–Ang Mo Kio Park", distance: "5-Mins drive", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "Lower Peirce Reservoir Park", distance: "5-Mins drive", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "Singapore Island Country Club", distance: "5-Mins drive", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "MacRitchie Reservoir", distance: "5-Mins Drive", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Bishan-Ang Mo Kio Park", distance: "5-Mins Drive", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Lower Peirce Reservoir Park", distance: "5-Mins Drive", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Singapore Island Country Club", distance: "5-Mins Drive", category: "Nature & Leisure" },
 
     // EDUCATION
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Ai Tong School", distance: "Nearby", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Catholic High School", distance: "Nearby", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Eunoia Junior College", distance: "Nearby", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Raffles Institution", distance: "Nearby", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Ai Tong School", distance: "5-Mins Drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Eunoia Junior College", distance: "5-Mins Drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Raffles Institution", distance: "5-Mins Drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Catholic High School", distance: "7-Mins Drive", category: "Education" },
   ]
 
   // Compute available amenity categories dynamically in a preferred order
@@ -1189,7 +1190,7 @@ export default function Artisan8Landing() {
           subtype: "5-Bedroom",
           bedrooms: 5,
           bathrooms: 4,
-          size: "1,238 sqft",
+          size: "1,884 sqft",
           price: "From $4,458,000",
           currency: "SGD",
           total: 1,
@@ -1508,7 +1509,7 @@ export default function Artisan8Landing() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Badge className="bg-[#ce001f] text-white px-4 py-2 text-sm font-medium rounded-full animate-pulse">
-               COMING SOON
+               LIMITED UNITS
               </Badge>
             </div>
 
@@ -1681,7 +1682,7 @@ export default function Artisan8Landing() {
                 </div>
                 <div className="flex justify-between pb-1">
                   <span className="font-medium text-gray-300">TOP:</span>
-                  <span className="font-semibold text-white text-right">Jun 2027</span>
+                  <span className="font-semibold text-white text-right">December 2028</span>
                 </div>
               </CardContent>
             </Card>
@@ -1831,11 +1832,9 @@ export default function Artisan8Landing() {
                         className={`px-2 sm:px-4 py-2 rounded-full font-light flex items-center gap-1 sm:gap-2 text-xs sm:text-sm transition-colors border focus:outline-none whitespace-nowrap min-w-max snap-start ${unitsActiveTab === idx ? 'bg-gray-800 border-[#ce001f] text-white' : 'bg-[#18191b] border-gray-700 text-gray-300 hover:bg-[#ce001f]/10 hover:text-[#ce001f]'}`}
                       >
                         <span>{unit.unitType.replace(' Units', '')}</span>
-                        {totalAvailable > 0 && (
-                          <span className="inline-flex items-center justify-center bg-green-500 text-white text-xs w-5 h-5 sm:w-6 sm:h-6 rounded-full leading-none">
-                            {totalAvailable}
-                          </span>
-                        )}
+                        <span className={`inline-flex items-center justify-center text-white text-xs w-5 h-5 sm:w-6 sm:h-6 rounded-full leading-none ${totalAvailable > 0 ? 'bg-green-500' : 'bg-red-500'}`}>
+                          {totalAvailable}
+                        </span>
                       </button>
                     )
                   })
@@ -1996,6 +1995,20 @@ export default function Artisan8Landing() {
       <section id="trusted-developer" className="bg-[#1c1c1d] text-white mt-8 md:mt-10 border-t border-gray-700 py-12 md:py-16">
         <div className="container mx-auto px-4 text-center max-w-6xl">
           <h3 className="text-2xl md:text-4xl font-semibold mb-8 md:mb-10">Trusted Developer with Proven Success</h3>
+          <div className="flex items-center justify-center gap-8 md:gap-16 mb-8 md:mb-10 flex-wrap">
+            <div className="flex items-center gap-4">
+              <div className="rounded-md bg-white/70">
+                <Image
+                  src="https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/artisan-8/apex-asia.png"
+                  alt="Hong Leong Holdings Limited"
+                  width={280}
+                  height={120}
+                  className="h-16 w-auto opacity-90"
+                />
+              </div>
+              <span className="hidden sm:block text-sm md:text-base opacity-90">Apex Asia (2) Pte Ltd </span>
+            </div>
+          </div>
           <p className="text-base md:text-xl text-gray-300 leading-relaxed max-w-5xl mx-auto">
             Backed by a track record of niche freehold developments, Apex Asia (2) Pte Ltd specialises in high-craft, low-density projects that combine timeless design with lasting functionality.
           </p>
