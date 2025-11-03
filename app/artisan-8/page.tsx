@@ -1252,7 +1252,7 @@ export default function Artisan8Landing() {
       // Ensure only the date (no time) is submitted for preferredDate
       const preferredDateOnly = preferredDate ? format(preferredDate, 'yyyy-MM-dd') : undefined
 
-      const response = await fetch('/api/penrith-lead-form', {
+      const response = await fetch('/api/artisan-8-lead-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1345,7 +1345,7 @@ export default function Artisan8Landing() {
 
     try {
       // Submit the form with the reCAPTCHA token
-      const response = await fetch('/api/site-map-request', {
+      const response = await fetch('/api/artisan-8-site-map-request', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1524,13 +1524,13 @@ export default function Artisan8Landing() {
                 isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
               }`}>
                 <div className="w-12 h-px bg-[#ce001f] mr-4"></div>
-                <p className="text-lg text-gray-200 font-light">D20 - Ang Mo Kio / Bishan / Thomson</p>
+                <p className="text-lg text-gray-200 font-light">District 20, Upper Thomson</p>
               </div>
 
               <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
-                 A New Freehold Waterfront Residence in District 20
+                 Exceptionally Crafted Homes With Enduring Value 
               </p>
             </div>
 
@@ -1585,16 +1585,47 @@ export default function Artisan8Landing() {
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('project-info') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">TBC</h2>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Upper Thomson’s First Freehold Mixed-Use Development Since 2019</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
             <p className="text-sm md:text-xl text-gray-300 max-w-4xl mx-auto">
-            TBC
+            Artisan 8 is a boutique freehold development by Apex Asia (2) Pte Ltd, strategically located at 8 Sin Ming Road in District 20. 
+            Nestled in the heart of Upper Thomson, it is just 200 metres (3-minute walk) from Upper Thomson MRT and within 1 km of Ai Tong and Catholic High School. 
+            With 34 exclusive residences and 8 retail units, Artisan 8 blends contemporary neoclassical architecture with practical living designs that maximise usable space.
             </p>
           </div>
 
-          
+          {/* Feature Cards */}
+          <div className="flex flex-wrap gap-6 lg:gap-4 mb-12 justify-center">
+            {[
+              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "3 mins' walk to Upper Thomson MRT (TEL)" },
+              { icon: <GraduationCap className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Within 1 km of Ai Tong & Catholic High School" },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Boutique Freehold Mixed-Use Development comprising 34 residences + 8 retail units" },
+              { icon: <Trees className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Minutes to MacRitchie Reservoir & Bishan-Ang Mo Kio Park, alongside Upper Thomson's café belt." },
+              { icon: <Maximize2 className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Maximised usable space with practical living zones and low monthly maintenance fees." },
+              { icon: <Eye className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Contemporary Neoclassical Architecture with refined classical detailing for timeless appeal." },
+              { icon: <Home className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Premium Fittings & Appliances by Blum systems, Bosch & Samsung" },
+              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Freehold Tenure with Expected TOP in 2028" }
+            ].map((card, index) => (
+              <Card 
+                key={index} 
+                className={`basis-full md:basis-[calc(50%-12px)] lg:basis-[calc(25%-12px)] text-center hover:shadow-lg transition-all duration-700 border-gray-700 bg-[#18191b] hover:scale-105 hover-lift stagger-animation ${
+                  animatedSections.has('project-info') ? 'animate' : ''
+                }`} 
+                style={{ 
+                  transitionDelay: `${index * 150}ms`,
+                  opacity: animatedSections.has('project-info') ? 1 : 0,
+                  transform: animatedSections.has('project-info') ? 'translateY(0)' : 'translateY(40px)'
+                }}
+              >
+                <CardContent className="p-6">
+                  {card.icon}
+                  <p className="text-gray-300" dangerouslySetInnerHTML={{ __html: card.desc }}></p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
 
           {/* Detailed Information Grid */}
           <div className={`grid lg:grid-cols-10 gap-8 mb-12 transition-all duration-1000 delay-500 ${
@@ -1960,7 +1991,80 @@ export default function Artisan8Landing() {
           </div>
         </div>
       </section>
+      
+      {/* Trusted Developer Section */}
+      <section id="trusted-developer" className="bg-[#1c1c1d] text-white mt-8 md:mt-10 border-t border-gray-700 py-12 md:py-16">
+        <div className="container mx-auto px-4 text-center max-w-6xl">
+          <h3 className="text-2xl md:text-4xl font-semibold mb-8 md:mb-10">Trusted Developer with Proven Success</h3>
+          <p className="text-base md:text-xl text-gray-300 leading-relaxed max-w-5xl mx-auto">
+            Backed by a track record of niche freehold developments, Apex Asia (2) Pte Ltd specialises in high-craft, low-density projects that combine timeless design with lasting functionality.
+          </p>
+          <p className="text-base md:text-xl text-gray-300 leading-relaxed max-w-5xl mx-auto">
+            Together with M&Y Design Architects, the team behind Artisan 8 brings precision craftsmanship and contemporary elegance to Upper Thomson—creating a development defined by quality, proportion, and enduring value.
+          </p>
+        </div>
+      </section>
 
+      {/* Investor Benefits & Pricing Comparison */}
+      <section 
+        className="py-16 bg-[#242728] section-entrance"
+        data-section-id="investor-benefits"
+        style={{ 
+          opacity: animatedSections.has('investor-benefits') ? 1 : 0,
+          transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(60px)'
+        }}
+      >
+        <div className="container mx-auto px-4">
+          <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
+            animatedSections.has('investor-benefits') ? 'animate-slide-in-top' : ''
+          }`}>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">For Investors</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-[#ce001f] rounded" />
+            </div>
+          </div>
+
+          {/* Investor Benefits */}
+          <div className={`max-w-6xl mx-auto transition-all duration-1000 delay-500 ${
+            animatedSections.has('investor-benefits') ? 'animate-fade-in-up' : ''
+          }`} style={{
+            opacity: animatedSections.has('investor-benefits') ? 1 : 0,
+            transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(50px)'
+          }}>
+            {/* Investor Benefits Grid - 2 per row on mobile, 3 per row on desktop */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+              {[
+                { icon: <Layers className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Prime Freehold in Mature District 20', subtitle: 'Limited new supply + high owner-occupancy sustain value resilience' },
+                { icon: <ShoppingBag className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Mixed-Use with Retail Frontage', subtitle: 'Ground-floor shops drive visibility and added rental diversification' },
+                { icon: <Trees className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Strong Neighbourhood Ecosystem', subtitle: 'Anchored by 24-hour eateries, supermarkets, and cafés along Upper Thomson Road, ensuring stable footfall and lifestyle convenience' },
+                { icon: <ChartLine className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Proven Location Growth Story', subtitle: "Upper Thomson's gentrification and new rail connectivity boost capital gains" },
+                { icon: <Users className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Strong Rental Catchment', subtitle: 'Appeals to expats and families seeking city-fringe convenience with nature proximity' },
+                { icon: <Home className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Ideal Entry-Ticket for First-Time Freehold Investors', subtitle: "Sub-$2M 2-bedrooms with mixed-use exposure allows investors to participate in a freehold RCR asset class that's typically priced higher" }
+              ].map((benefit, index) => (
+                <div 
+                  key={index}
+                  className={`hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
+                    animatedSections.has('investor-benefits') ? 'animate' : ''
+                  }`}
+                  style={{ 
+                    transitionDelay: `${index * 200}ms`,
+                    opacity: animatedSections.has('investor-benefits') ? 1 : 0,
+                    transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
+                  }}
+                >
+                  <div className="p-4 md:p-6 flex flex-col items-center text-center space-y-2">
+                    <div className="flex-shrink-0">{benefit.icon}</div>
+                    <h3 className="text-sm md:text-lg text-white font-semibold leading-snug">{benefit.title}</h3>
+                    <p className="text-xs md:text-sm text-gray-300 font-light">{benefit.subtitle}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Removed mobile-only centered row to maintain 2 cards per row consistently */}
+          </div>
+        </div>
+      </section>
       
       {/* Nearby Amenities */}
       <section 
