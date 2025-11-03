@@ -62,6 +62,8 @@ import {
   Activity,
   Zap,
   Images,
+  Footprints,
+  Bus,
 } from "lucide-react"
 import dynamic from "next/dynamic"
 import {
@@ -77,6 +79,7 @@ import {
 import MoatRadarChart from "@/app/components/MoatRadarChart"
 import TdsrCalculator from "@/app/components/TdsrCalculator"
 import { MortgageLoanCalculator } from "@/app/components/calculators/mortgage-loan-calculator"
+import mrtStationsData from "../../../singapore-mrt-station.json"
 
 // TODO: Create these components
 interface MoatRadarChartProps {
@@ -1134,12 +1137,36 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       const results: Record<string, GooglePlace[]> = {};
       await Promise.all(categories.map(async (cat) => {
         try {
-          const res = await fetch(`/api/places?lat=${project.latitude}&lng=${project.longitude}&type=${cat.type}`);
-          if (res.ok) {
-            const data = await res.json();
-            results[cat.key] = data;
+          const isTransport = cat.key === 'transport';
+          const modeParam = isTransport ? '&mode=walking' : '';
+          if (isTransport) {
+            // Fetch MRT (subway) and Bus Stops separately, both walking
+            const [mrtRes, busRes] = await Promise.all([
+              fetch(`/api/places?lat=${project.latitude}&lng=${project.longitude}&type=${cat.type}${modeParam}`),
+              fetch(`/api/places?lat=${project.latitude}&lng=${project.longitude}&type=bus_station${modeParam}`),
+            ]);
+            const mrtData = mrtRes.ok ? await mrtRes.json() : [];
+            const busData = busRes.ok ? await busRes.json() : [];
+            // Normalize to walking mode
+            const mrtNormalized = (mrtData || []).map((p: any) => ({ ...p, transportMode: 'walking' }));
+            const busNormalized = (busData || []).map((p: any) => ({ ...p, transportMode: 'walking', isBus: true }));
+            // Sort by distance and take top 4 for each
+            const sortByDistance = (arr: any[]) => arr.slice().sort((a, b) => extractNumericDistance(a.distance) - extractNumericDistance(b.distance));
+            const topMrt = sortByDistance(mrtNormalized).slice(0, 4);
+            const topBus = sortByDistance(busNormalized).slice(0, 4);
+            // Mark nearest for each group
+            if (topMrt[0]) topMrt[0].isNearest = true;
+            if (topBus[0]) topBus[0].isNearest = true;
+            // Combine for display
+            results[cat.key] = [...topMrt, ...topBus];
           } else {
-            results[cat.key] = [];
+            const res = await fetch(`/api/places?lat=${project.latitude}&lng=${project.longitude}&type=${cat.type}${modeParam}`);
+            if (res.ok) {
+              const data = await res.json();
+              results[cat.key] = data;
+            } else {
+              results[cat.key] = [];
+            }
           }
         } catch {
           results[cat.key] = [];
@@ -1181,19 +1208,83 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
     });
   })()
 
-  // Compute nearest MRT using fetched amenities (transport) with fallback to project.locationAnalytics
-  const nearestMrt = useMemo(() => {
-    const transitList = realAmenitiesData?.transport || []
+  // Compute up to two nearest MRTs using fetched amenities (transport, MRT only) with fallback to project.locationAnalytics
+  const nearestMrts = useMemo(() => {
+    const transitList = (realAmenitiesData?.transport || []).filter((p: any) => p.isMRT)
     if (transitList.length > 0) {
       const sortedByDistance = [...transitList].sort((a, b) => extractNumericDistance(a.distance) - extractNumericDistance(b.distance))
-      return sortedByDistance[0]
+      return sortedByDistance.slice(0, 2)
     }
-    const fallback = project?.locationAnalytics?.mrt?.[0]
-    if (fallback?.name) {
-      return { name: fallback.name, distance: fallback.distance || 'n/a' } as any
+    const fallbackList = project?.locationAnalytics?.mrt || []
+    if (fallbackList.length > 0) {
+      return fallbackList.slice(0, 2).map((m) => ({ name: m.name, distance: (m as any).distance || 'n/a' })) as any[]
     }
-    return null
+    return []
   }, [realAmenitiesData, project])
+
+  // Helper: normalize station name for matching (removes "MRT Station", "MRT", etc.)
+  const normalizeStationName = (name: string): string => {
+    return name
+      .replace(/\s*MRT\s*Station\s*/gi, '')
+      .replace(/\s*MRT\s*/gi, '')
+      .replace(/\s*Mass\s*Rapid\s*Transit\s*/gi, '')
+      .trim();
+  };
+
+  // Helper: find MRT line(s) from station name using singapore-mrt-station.json
+  const getMrtLineFromStationName = (name: string | undefined | null): string | null => {
+    if (!name) return null;
+    
+    // Normalize the station name
+    const normalizedName = normalizeStationName(name);
+    
+    // Find all matching stations (interchange stations may appear multiple times)
+    const matchingStations = (mrtStationsData as Array<{ station_name: string; line: string }>).filter(
+      station => normalizeStationName(station.station_name).toLowerCase() === normalizedName.toLowerCase()
+    );
+    
+    if (matchingStations.length === 0) {
+      // Try partial match if exact match fails
+      const partialMatches = (mrtStationsData as Array<{ station_name: string; line: string }>).filter(
+        station => {
+          const stationNormalized = normalizeStationName(station.station_name).toLowerCase();
+          return stationNormalized.includes(normalizedName.toLowerCase()) || 
+                 normalizedName.toLowerCase().includes(stationNormalized);
+        }
+      );
+      
+      if (partialMatches.length > 0) {
+        // Get unique lines from partial matches
+        const uniqueLines = Array.from(new Set(partialMatches.map(s => s.line)));
+        return uniqueLines.join(' / ');
+      }
+      
+      return null;
+    }
+    
+    // Get unique lines (for interchange stations)
+    const uniqueLines = Array.from(new Set(matchingStations.map(s => s.line)));
+    return uniqueLines.join(' / ');
+  };
+
+  // Helper to get line string for a given place
+  const getLineForPlace = (place: any): string | null => {
+    if (!place) return null
+    if (place.line) return place.line as string
+    return getMrtLineFromStationName(place.name)
+  }
+
+  // Determine if there are valid facilities to show
+  const hasValidFacilities = useMemo(() => {
+    const displayFacilities = project?.facilities && project.facilities.length > 0 
+      ? project.facilities 
+      : []
+    return displayFacilities.some((facility: any) => {
+      if (!facility?.name) return false
+      const cleanName = String(facility.name).replace(/\s/g, '').replace(/[\u200B-\u200D\uFEFF]/g, '')
+      return cleanName.length > 0
+    })
+  }, [project?.facilities])
 
   // Handle download site plan
   const handleDownloadSitePlan = () => {
@@ -1836,12 +1927,12 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
               </div>
             )}
             {/* Property Type */}
-            {shouldDisplayValue(project?.propertyType) && (
+            {/* {shouldDisplayValue(project?.propertyType) && (
               <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
                 <span className="text-gray-300 text-sm">Property Type:</span>
                 <span className="text-white text-sm text-right">{displayValue(project?.propertyType)}</span>
               </div>
-            )}
+            )} */}
             {/* Tenure */}
             {shouldDisplayValue(project?.tenure) && (
               <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
@@ -1878,10 +1969,13 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             </div>
             )}
             {/* Nearest MRT - computed from amenities with fallback */}
-            {nearestMrt && (
+            {nearestMrts && nearestMrts.length > 0 && (
               <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
                 <span className="text-gray-300 text-sm">Nearest MRT:</span>
-                <span className="text-white text-sm text-right">{`${(nearestMrt as any).name} (${(nearestMrt as any).distance || 'n/a'})`}</span>
+                <span className="text-white text-sm text-right">{`${(nearestMrts[0] as any).name} (${getLineForPlace(nearestMrts[0]) || 'n/a'})`}</span>
+                {nearestMrts[1] && (
+                  <span className="text-white text-sm text-right">{`${(nearestMrts[1] as any).name} (${getLineForPlace(nearestMrts[1]) || 'n/a'})`}</span>
+                )}
               </div>
             )}
             {/* Expected TOP */}
@@ -1900,12 +1994,12 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 <div className="text-[#ce001f] flex items-center gap-2 font-medium">
                   <Layout className="h-5 w-5" />
                   <span>Plans & Layout</span>
-          </div>
+                </div>
               </div>
               <div className="p-4 sm:p-6 space-y-4">
                 {/* Site Plan Image or Fallback */}
                 <div className="relative w-full bg-[#242728] rounded-lg overflow-hidden">
-              {project?.sitePlans && project.sitePlans.length > 0 ? (
+                  {project?.sitePlans && project.sitePlans.length > 0 ? (
                   <img
                     src={project.sitePlans[selectedSitePlan].image_url}
                     alt={`Site Plan ${selectedSitePlan + 1}`}
@@ -1951,9 +2045,8 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
         </div>
       </section>
 
-      {/* Site Plan Section removed - merged into details */}
-
       {/* Facilities Section */}
+      {hasValidFacilities && (
       <section id="facilities" className="px-6 py-20 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-red-600/10 rounded-full blur-3xl"></div>
         <div className="max-w-7xl mx-auto relative z-10">
@@ -2067,6 +2160,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
           })()}
         </div>
       </section>
+      )}
 
       {/* Location Section */}
       <section id="location" className="w-full py-8 mb-2">
@@ -2122,7 +2216,13 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                             {/* Icon */}
                             <div className="flex-shrink-0 mt-1">
                               {selectedAmenityType === 'schools' && <School className="h-4 w-4 lg:h-5 lg:w-5" style={{ color: '#ce001f' }} />}
-                              {selectedAmenityType === 'transport' && <Train className="h-4 w-4 lg:h-5 lg:w-5" style={{ color: '#ce001f' }} />}
+                              {selectedAmenityType === 'transport' && (
+                                (place as any)?.isBus ? (
+                                  <Bus className="h-4 w-4 lg:h-5 lg:w-5" style={{ color: '#ce001f' }} />
+                                ) : (
+                                  <Train className="h-4 w-4 lg:h-5 lg:w-5" style={{ color: '#ce001f' }} />
+                                )
+                              )}
                               {selectedAmenityType === 'shopping' && <ShoppingBag className="h-4 w-4 lg:h-5 lg:w-5" style={{ color: '#ce001f' }} />}
                               {selectedAmenityType === 'food' && <Utensils className="h-4 w-4 lg:h-5 lg:w-5" style={{ color: '#ce001f' }} />}
                               {selectedAmenityType === 'groceries' && <ShoppingCart className="h-4 w-4 lg:h-5 lg:w-5" style={{ color: '#ce001f' }} />}
@@ -2135,7 +2235,13 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                               <div className="flex items-start justify-between gap-2">
                                 <div className="flex-1 min-w-0">
                                   <h4 className="font-light text-white mb-1 text-sm lg:text-base truncate">{place.name}</h4>
-                                  <p className="text-xs lg:text-sm text-gray-400 mb-2 line-clamp-2">{place.address}</p>
+                                  <p className="text-xs lg:text-sm text-gray-400 mb-2 line-clamp-2">{
+                                    selectedAmenityType === 'transport'
+                                      ? (place as any).isBus
+                                        ? place.address
+                                        : (getLineForPlace(place) || 'n/a')
+                                      : place.address
+                                  }</p>
                                 </div>
                                 {place.isNearest && (
                                   <Badge className="bg-[#ce001f]/10 text-[#ce001f] border border-[#ce001f]/20 text-xs lg:text-sm flex-shrink-0">Nearest</Badge>
@@ -2153,7 +2259,13 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                                   {place.duration}
                                 </span>
                                 <span className="text-gray-300 flex items-center gap-1">
-                                  <Train className="h-3 w-3 lg:h-4 lg:w-4" style={{ color: '#ce001f' }} />
+                                  {(place as any)?.isBus ? (
+                                    <Bus className="h-3 w-3 lg:h-4 lg:w-4" style={{ color: '#ce001f' }} />
+                                  ) : String(place.transportMode).toLowerCase() === 'walking' ? (
+                                    <Footprints className="h-3 w-3 lg:h-4 lg:w-4" style={{ color: '#ce001f' }} />
+                                  ) : (
+                                    <Car className="h-3 w-3 lg:h-4 lg:w-4" style={{ color: '#ce001f' }} />
+                                  )}
                                   {place.transportMode}
                                 </span>
                               </div>
@@ -2248,10 +2360,12 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                       className={`px-2 sm:px-4 py-2 rounded-full font-light flex items-center gap-1 sm:gap-2 text-xs sm:text-sm transition-colors border focus:outline-none whitespace-nowrap ${unitsActiveTab === idx ? 'bg-gray-800 border-[#ce001f] text-white' : 'bg-[#18191b] border-gray-700 text-gray-300 hover:bg-[#ce001f]/10 hover:text-[#ce001f]'}`}
                     >
                       <span>{unit.unitType.replace(' Units', '')}</span>
-                      {totalAvailable > 0 && (
+                      {totalAvailable > 0 ? (
                         <span className="bg-green-500 text-white text-xs px-1 sm:px-2 py-1 rounded-full">
                           {totalAvailable}
                         </span>
+                      ) : (
+                        <span className="bg-red-500 text-white text-xs px-1 sm:px-2 py-1 rounded-full">0</span>
                       )}
                     </button>
                   )
@@ -2464,7 +2578,6 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                 {/* Project Info */}
                 <div className="text-center mb-6">
                   <div className="text-white text-xl font-semibold mb-2">{project?.title}</div>
-                  <div className="text-red-400 text-sm font-medium mb-1">Request Brochure</div>
                 </div>
                 {/* Download Button */}
                 <div className="w-full">

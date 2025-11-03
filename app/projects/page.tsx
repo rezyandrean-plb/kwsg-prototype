@@ -127,6 +127,8 @@ export default function NewLaunchDirectory() {
   const [allDistricts, setAllDistricts] = useState<number[]>([])
   const [districtsLoaded, setDistrictsLoaded] = useState(false)
   const [selectedTenures, setSelectedTenures] = useState<string[]>([])
+  const [allTenures, setAllTenures] = useState<string[]>([])
+  const [tenuresLoaded, setTenuresLoaded] = useState(false)
   const [selectedPropertyTypes, setSelectedPropertyTypes] = useState<string[]>([])
   const [selectedStatus, setSelectedStatus] = useState<("upcoming" | "ongoing" | "completed")[]>([])
   const [selectedBedrooms, setSelectedBedrooms] = useState<string[]>([])
@@ -167,6 +169,44 @@ export default function NewLaunchDirectory() {
     const n = parseInt(match[1], 10)
     if (Number.isNaN(n)) return null
     return n
+  }
+
+  // Helper function to normalize tenure values (e.g., "99", "99 year", "99 years", "99 YEARS" -> "99 Years")
+  const normalizeTenure = (value: string | null | undefined): string | null => {
+    if (!value || typeof value !== 'string') return null
+    const trimmed = value.trim()
+    if (!trimmed) return null
+    
+    // Normalize to lowercase for matching
+    const lower = trimmed.toLowerCase()
+    
+    // Check for "freehold" variations
+    if (lower.includes('freehold')) {
+      return 'Freehold'
+    }
+    
+    // Extract number from tenure string (e.g., "99", "999")
+    const numberMatch = trimmed.match(/(\d+)/)
+    if (numberMatch) {
+      const number = numberMatch[1]
+      // Check for 999 year variations
+      if (number === '999' || lower.includes('999')) {
+        if (lower.includes('leasehold')) {
+          return '999-Year Leasehold'
+        }
+        return '999 Years'
+      }
+      // Check for 99 year variations
+      if (number === '99' || lower.includes('99')) {
+        if (lower.includes('leasehold')) {
+          return '99-Year Leasehold'
+        }
+        return '99 Years'
+        }
+    }
+    
+    // Return original if no pattern matches (preserve other tenure types)
+    return trimmed
   }
 
 
@@ -353,6 +393,49 @@ export default function NewLaunchDirectory() {
     return () => { aborted = true }
   }, [isClient])
 
+  // Load ALL tenures from all projects for the Tenure Filter (independent of pagination)
+  useEffect(() => {
+    if (!isClient) return
+    let aborted = false
+    const loadAllTenures = async () => {
+      try {
+        const API_BASE = process.env.NEXT_PUBLIC_API_BASE || '/api'
+        const params = new URLSearchParams()
+        // Request all projects with large page size to get all tenures
+        params.set('pageSize', '2000')
+        const url = `${API_BASE}/projects-prisma?${params.toString()}`
+        console.log('Loading all tenures from URL:', url)
+        const resp = await fetch(url, { 
+          headers: { 'Content-Type': 'application/json' }, 
+          cache: 'no-store' 
+        })
+        if (!resp.ok) throw new Error('Failed to load tenures')
+        const json = await resp.json()
+        console.log('API response for all tenures:', json)
+        const list = Array.isArray(json?.data) ? json.data : (Array.isArray(json) ? json : [])
+        console.log('Total projects loaded for tenures:', list.length)
+        const extracted = Array.from(new Set<string>(
+          list
+            .map((p: any) => normalizeTenure(p?.tenure))
+            .filter((t: string | null): t is string => 
+              t != null && t.trim() !== ''
+            )
+        )).sort()
+        console.log('All tenures extracted:', extracted)
+        if (!aborted && extracted.length) {
+          setAllTenures(extracted)
+          setTenuresLoaded(true)
+          console.log('allTenures state updated to:', extracted)
+        }
+      } catch (e) {
+        // Silently ignore errors; fallback to current page projects-derived tenures
+        console.warn('Failed to load all tenures:', e)
+      }
+    }
+    loadAllTenures()
+    return () => { aborted = true }
+  }, [isClient])
+
   const scrollToSearch = () => { searchSectionRef.current?.scrollIntoView({ behavior: 'smooth' }) }
 
   // Server-side filtering is now handled by the API
@@ -373,7 +456,14 @@ export default function NewLaunchDirectory() {
   console.log('projects length:', projects.length)
   console.log('districts being used:', districts)
   
-  const tenures = Array.from(new Set(projects.map(p => p.tenure).filter((t): t is string => t != null && t.trim() !== '')))
+  // Use allTenures if available, otherwise fallback to current page projects
+  const tenures = (tenuresLoaded && allTenures.length > 0)
+    ? allTenures
+    : Array.from(new Set(
+        projects
+          .map(p => normalizeTenure(p.tenure))
+          .filter((t): t is string => t != null && t.trim() !== '')
+      )).sort()
   const propertyTypes = Array.from(new Set(projects.map(p => p.propertyType).filter((t): t is string => t !== undefined)))
   const statuses: ("upcoming" | "ongoing" | "completed")[] = ["upcoming", "ongoing", "completed"]
 
