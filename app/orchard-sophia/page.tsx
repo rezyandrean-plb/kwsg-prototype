@@ -1209,7 +1209,7 @@ export default function Artisan8Landing() {
       // Ensure only the date (no time) is submitted for preferredDate
       const preferredDateOnly = preferredDate ? format(preferredDate, 'yyyy-MM-dd') : undefined
 
-      const response = await fetch('/api/penrith-lead-form', {
+      const response = await fetch('/api/orchard-sophia-lead-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1302,7 +1302,7 @@ export default function Artisan8Landing() {
 
     try {
       // Submit the form with the reCAPTCHA token
-      const response = await fetch('/api/site-map-request', {
+      const response = await fetch('/api/orchard-sophia-site-map-request', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
