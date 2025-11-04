@@ -149,31 +149,6 @@ const tools = [
     url: "https://drive.google.com/file/d/1GcNpqifBzKSurSmz7qkpIMjrjaVOD1Pm/view",
     image: "/images/tech-tool/spidergate.webp"
   },
-  // Tech Tools items
-  {
-    id: 200,
-    title: "Compass 10",
-    description: "Smart Property Scoring Framework condenses investment potential into one intuitive visual chart.",
-    icon: BarChart3,
-    category: "Tech Tools",
-    url: "https://compass.kwsingapore.com/tech-tools/compass-10"
-  },
-  {
-    id: 201,
-    title: "Supply & Demand Analysis",
-    description: "Aggregates market activity data to reveal real-time property demand and supply trends.",
-    icon: TrendingUp,
-    category: "Tech Tools",
-    url: "https://compass.kwsingapore.com/tech-tools/supply-demand-analysis"
-  },
-  {
-    id: 202,
-    title: "Property Analysis",
-    description: "Your All-In-One Property Deep Dive — Every Detail, Every Metric",
-    icon: Building2,
-    category: "Tech Tools",
-    url: "https://compass.kwsingapore.com/tech-tools/property-analysis/research"
-  },
   // Compass Tools items - Sales Proceed
   {
     id: 14,
@@ -306,6 +281,34 @@ const tools = [
     url: "https://proptech.kwsingapore.com/calculator/rental-stamp-duty",
     image: "/images/tech-tool/rental-stamp-duty.webp"
   },
+  // Compass Tools items - Tech Tools
+  {
+    id: 200,
+    title: "Compass10",
+    description: "Smart Property Scoring Framework condenses investment potential into one intuitive visual chart.",
+    icon: BarChart3,
+    category: "Compass Tools",
+    subtitle: "Tech Tools",
+    url: "https://compass.kwsingapore.com/tech-tools/compass-10"
+  },
+  {
+    id: 201,
+    title: "Supply & Demand Analysis",
+    description: "Aggregates market activity data to reveal real-time property demand and supply trends.",
+    icon: TrendingUp,
+    category: "Compass Tools",
+    subtitle: "Tech Tools",
+    url: "https://compass.kwsingapore.com/tech-tools/supply-demand-analysis"
+  },
+  {
+    id: 202,
+    title: "Property Analysis",
+    description: "Your All-In-One Property Deep Dive — Every Detail, Every Metric",
+    icon: Building2,
+    category: "Compass Tools",
+    subtitle: "Tech Tools",
+    url: "https://compass.kwsingapore.com/tech-tools/property-analysis/research"
+  },
   // Compass Tools items - Research Charts
   {
     id: 27,
@@ -409,7 +412,6 @@ const categories = [
   "All",
   "Business Tool",
   "External Tools",
-  "Tech Tools",
   "Compass Tools",
   "Learnings"
 ]
