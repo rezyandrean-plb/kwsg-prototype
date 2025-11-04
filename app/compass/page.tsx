@@ -961,7 +961,7 @@ export default function TechToolPage() {
                     Property Analysis
                   </motion.div>
                   <motion.div 
-                    className="text-white text-sm sm:text-base"
+                    className="text-green-400 text-sm sm:text-base font-medium"
                     initial={{ opacity: 0, x: -20 }}
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.0 }}
@@ -969,7 +969,7 @@ export default function TechToolPage() {
                     MegaMap
                   </motion.div>
                   <motion.div 
-                    className="text-white text-sm sm:text-base"
+                    className="text-green-400 text-sm sm:text-base font-medium"
                     initial={{ opacity: 0, x: -20 }}
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.1 }}
