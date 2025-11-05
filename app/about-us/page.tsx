@@ -79,34 +79,28 @@ export default function AboutUsPage() {
       image: "/images/about-us/core-team/siew-min-professional.webp",
     },
     {
-      name: "Marie Abalos",
-      title: "Market Center Administrator & Executive Assistant to OP",
-      bio: "Marie serves as both Market Center Administrator and Executive Assistant to the Operating Principal—leading with precision, clarity, and operational discipline. She oversees financials, compliance, and market center systems while supporting top-level strategy and execution. With prior HR experience at PropertyLimBrothers and a track record in executive support, Marie bridges leadership and operations with focus and reliability. Her background in medical technology and business management adds depth to her role in managing both people and process.",
-      image: "/images/about-us/core-team/marie-abalos-professional.webp",
-    },
-    {
       name: "Isabelle",
       title: "TBC",
       bio: "TBC",
-      image: "/images/about-us/core-team/marie-abalos-professional.webp",
+      image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80",
     },
     {
       name: "Vanessa",
       title: "TBC",
       bio: "TBC",
-      image: "/images/about-us/core-team/marie-abalos-professional.webp",
+      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1200&q=80",
     },
     {
       name: "Sheerra",
       title: "TBC",
       bio: "TBC",
-      image: "/images/about-us/core-team/marie-abalos-professional.webp",
+      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1200&q=80",
     },
     {
       name: "Suvarna",
       title: "TBC",
       bio: "TBC",
-      image: "/images/about-us/core-team/marie-abalos-professional.webp",
+      image: "https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?auto=format&fit=crop&w=1200&q=80",
     },
   ]
 

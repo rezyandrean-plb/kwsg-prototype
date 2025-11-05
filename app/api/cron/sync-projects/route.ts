@@ -23,7 +23,10 @@ async function sendCronEmail(subject: string, html: string) {
 export async function GET(request: NextRequest) {
   try {
     // Verify this is a legitimate cron request
-    const isVercelCron = request.headers.get('x-vercel-cron') === '1';
+    const isVercelCronHeader = request.headers.get('x-vercel-cron') === '1';
+    const userAgent = (request.headers.get('user-agent') || '').toLowerCase();
+    const isVercelCronUA = userAgent.includes('vercel-cron');
+    const isVercelCron = isVercelCronHeader || isVercelCronUA;
     const authHeader = request.headers.get('authorization');
     const cronSecret = process.env.CRON_SECRET;
     const hasBearer = !!cronSecret && authHeader === `Bearer ${cronSecret}`;
