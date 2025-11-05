@@ -84,6 +84,30 @@ export default function AboutUsPage() {
       bio: "Marie serves as both Market Center Administrator and Executive Assistant to the Operating Principal—leading with precision, clarity, and operational discipline. She oversees financials, compliance, and market center systems while supporting top-level strategy and execution. With prior HR experience at PropertyLimBrothers and a track record in executive support, Marie bridges leadership and operations with focus and reliability. Her background in medical technology and business management adds depth to her role in managing both people and process.",
       image: "/images/about-us/core-team/marie-abalos-professional.webp",
     },
+    {
+      name: "Isabelle",
+      title: "TBC",
+      bio: "TBC",
+      image: "/images/about-us/core-team/marie-abalos-professional.webp",
+    },
+    {
+      name: "Vanessa",
+      title: "TBC",
+      bio: "TBC",
+      image: "/images/about-us/core-team/marie-abalos-professional.webp",
+    },
+    {
+      name: "Sheerra",
+      title: "TBC",
+      bio: "TBC",
+      image: "/images/about-us/core-team/marie-abalos-professional.webp",
+    },
+    {
+      name: "Suvarna",
+      title: "TBC",
+      bio: "TBC",
+      image: "/images/about-us/core-team/marie-abalos-professional.webp",
+    },
   ]
 
   return (
@@ -125,6 +149,46 @@ export default function AboutUsPage() {
           </motion.p>
         </div>
 
+      </section>
+
+      {/* Inside KW Section */}
+      <section id="our-story" className="relative py-12 sm:py-32 bg-gradient-to-b from-black to-gray-900">
+        <div className="max-w-4xl mx-auto text-center px-6">
+          <motion.h2 
+            className="text-3xl font-bold text-white mb-8 md:text-4xl lg:text-5xl"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            Inside KW: The Real Story.
+          </motion.h2>
+          <motion.p 
+            className="text-white/90 leading-relaxed max-w-3xl mx-auto text-lg"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Beyond the transactions is a movement. Dive into our community, explore our core values, and see the <strong>Life at KW</strong> that agents are building—in their business, and their lives. 
+            <strong>See the journey and the celebration</strong> and hear it straight from the source.
+          </motion.p>
+          <motion.div 
+            className="relative w-48 h-1 mx-auto mt-8 overflow-hidden"
+            variants={itemVariants}
+          >
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: "-100%" }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              className="absolute top-0 left-0 h-full w-full bg-gradient-to-r from-transparent via-[#B40101] to-transparent"
+            />
+          </motion.div>
+        </div>
       </section>
 
       {/* Our Story */}

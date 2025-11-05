@@ -189,6 +189,12 @@ export class KWS3SyncService {
       floorPlans: number;
       sitePlans: number;
     };
+    details: {
+      projects: { created: number; updated: number };
+      units: { created: number; replaced: boolean };
+      floorPlans: { created: number; replaced: boolean };
+      sitePlans: { created: number; replaced: boolean };
+    };
     errors: string[];
   }> {
     const errors: string[] = [];
@@ -198,14 +204,22 @@ export class KWS3SyncService {
       floorPlans: 0,
       sitePlans: 0,
     };
+    const details = {
+      projects: { created: 0, updated: 0 },
+      units: { created: 0, replaced: false },
+      floorPlans: { created: 0, replaced: false },
+      sitePlans: { created: 0, replaced: false },
+    };
 
     try {
       console.log('Starting KW S3 data sync...');
 
       // Sync projects
       try {
-        results.projects = await this.syncProjects();
-        console.log(`Synced ${results.projects} projects`);
+        const p = await this.syncProjectsWithDetails();
+        results.projects = p.total;
+        details.projects = { created: p.created, updated: p.updated };
+        console.log(`Synced ${results.projects} projects (created: ${p.created}, updated: ${p.updated})`);
       } catch (error) {
         errors.push(`Projects sync failed: ${error}`);
         console.error('Projects sync error:', error);
@@ -213,8 +227,10 @@ export class KWS3SyncService {
 
       // Sync units (unit pricing)
       try {
-        results.units = await this.syncUnits();
-        console.log(`Synced ${results.units} units`);
+        const unitsCreated = await this.syncUnits();
+        results.units = unitsCreated;
+        details.units = { created: unitsCreated, replaced: true };
+        console.log(`Synced ${results.units} units (replaced existing records)`);
       } catch (error) {
         errors.push(`Units sync failed: ${error}`);
         console.error('Units sync error:', error);
@@ -222,8 +238,10 @@ export class KWS3SyncService {
 
       // Sync floor plans
       try {
-        results.floorPlans = await this.syncFloorPlans();
-        console.log(`Synced ${results.floorPlans} floor plans`);
+        const fpCreated = await this.syncFloorPlans();
+        results.floorPlans = fpCreated;
+        details.floorPlans = { created: fpCreated, replaced: true };
+        console.log(`Synced ${results.floorPlans} floor plans (replaced existing records)`);
       } catch (error) {
         errors.push(`Floor plans sync failed: ${error}`);
         console.error('Floor plans sync error:', error);
@@ -231,8 +249,10 @@ export class KWS3SyncService {
 
       // Sync site plans
       try {
-        results.sitePlans = await this.syncSitePlans();
-        console.log(`Synced ${results.sitePlans} site plans`);
+        const spCreated = await this.syncSitePlans();
+        results.sitePlans = spCreated;
+        details.sitePlans = { created: spCreated, replaced: true };
+        console.log(`Synced ${results.sitePlans} site plans (replaced existing records)`);
       } catch (error) {
         errors.push(`Site plans sync failed: ${error}`);
         console.error('Site plans sync error:', error);
@@ -242,6 +262,7 @@ export class KWS3SyncService {
       return {
         success: errors.length === 0,
         results,
+        details,
         errors,
       };
     } catch (error) {
@@ -249,6 +270,7 @@ export class KWS3SyncService {
       return {
         success: false,
         results,
+        details,
         errors: [...errors, `General sync error: ${error}`],
       };
     }
@@ -385,12 +407,14 @@ export class KWS3SyncService {
     return syncedCount;
   }
 
-  private async syncProjects(): Promise<number> {
+  private async syncProjectsWithDetails(): Promise<{ total: number; created: number; updated: number }> {
     const csvKey = `${this.basePath}/projects.csv`;
     const csvContent = await this.s3Service.downloadCSV(csvKey);
     const data = await this.parseCSV<KWProjectCSVData>(csvContent);
 
     let syncedCount = 0;
+    let createdCount = 0;
+    let updatedCount = 0;
     for (const item of data) {
       try {
         // Map S3 columns to DB fields
@@ -466,6 +490,7 @@ export class KWS3SyncService {
               updated_at: new Date(),
             },
           })
+          updatedCount++;
         } else {
           await prisma.project.create({
             data: {
@@ -504,13 +529,14 @@ export class KWS3SyncService {
               updated_at: new Date(),
             },
           })
+          createdCount++;
         }
         syncedCount++;
       } catch (error) {
         console.error(`Error syncing project ${item.id}:`, error);
       }
     }
-    return syncedCount;
+    return { total: syncedCount, created: createdCount, updated: updatedCount };
   }
 
   private async syncUnitsSample(): Promise<number> {
