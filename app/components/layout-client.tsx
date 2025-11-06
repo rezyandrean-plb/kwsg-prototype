@@ -24,6 +24,7 @@ const navItems = [
   { href: "/model", label: "KW Income Model" },
   { href: "/events", label: "Events" },
   { href: "/press", label: "Press" },
+  { href: "/awards", label: "Awards" },
   { href: "/about-us", label: "About Us" },
   { href: "/tools", label: "Tools & Resources" },
   { href: "/contact", label: "Contact" }
