@@ -1465,7 +1465,7 @@ export default function Artisan8Landing() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Badge className="bg-[#ce001f] text-white px-4 py-2 text-sm font-medium rounded-full animate-pulse">
-               TBC
+                LIMITED UNITS
               </Badge>
             </div>
 
@@ -1481,13 +1481,13 @@ export default function Artisan8Landing() {
                 isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
               }`}>
                 <div className="w-12 h-px bg-[#ce001f] mr-4"></div>
-                <p className="text-lg text-gray-200 font-light">D9 - Rocher / Mount Emily</p>
+                <p className="text-lg text-gray-200 font-light">District 9 - Sophia Road</p>
               </div>
 
               <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
-                 A New Freehold Waterfront Residence in District 9
+                 Experience Unrivalled Urban Sophistication.
               </p>
             </div>
 
@@ -1542,16 +1542,47 @@ export default function Artisan8Landing() {
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('project-info') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">TBC</h2>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">The Pinnacle of Contemporary Living in the City</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
             <p className="text-sm md:text-xl text-gray-300 max-w-4xl mx-auto">
-            TBC
+            Orchard Sophia offers something few can: a freehold home that’s a heartbeat away from Orchard Road, with 1- to 3-bedroom and dual-key residences built for the modern dweller This distinguished project by Ong & Ong Architects is just moments to Dhoby Ghaut MRT station, 
+            ensuring seamless access to Singapore’s premier attractions and business hubs. 
+            Live amidst luxury, where city vibrancy and comfort come together effortlessly.
             </p>
           </div>
 
-          
+          {/* Feature Cards */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {[
+              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "<strong>5-min walk</strong> to <strong>Dhoby Ghaut MRT</strong> (NSL, CCL, TEL)" },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Steps from <strong>Orchard Road</strong> — a prime central location" },
+              { icon: <BedDouble className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Exclusive collection of <strong>78</strong> 1- to 3-bedroom and dual-key units" },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Developed by <strong>Ong &amp; Ong Architects</strong>, blending beauty and functionality" },
+              { icon: <Home className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Premium fittings and appliances from <strong>Duravit</strong>, <strong>Hansgrohe</strong>, <strong>SMEG</strong>, and more" },
+              { icon: <Eye className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Panoramic views of <strong>Orchard Road</strong>, the Singapore skyline, and <strong>Fort Canning Park</strong>" },
+              { icon: <MountainSnow className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "First-class facilities including a lap pool, spa pool, rooftop dining, and fitness areas" },
+              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "<strong>Freehold</strong> tenure | Expected TOP: <strong>August 2027</strong>" }
+            ].map((card, index) => (
+              <Card 
+                key={index} 
+                className={`text-center hover:shadow-lg transition-all duration-700 border-gray-700 bg-[#18191b] hover:scale-105 hover-lift stagger-animation ${
+                  animatedSections.has('project-info') ? 'animate' : ''
+                }`} 
+                style={{ 
+                  transitionDelay: `${index * 150}ms`,
+                  opacity: animatedSections.has('project-info') ? 1 : 0,
+                  transform: animatedSections.has('project-info') ? 'translateY(0)' : 'translateY(40px)'
+                }}
+              >
+                <CardContent className="p-6">
+                  {card.icon}
+                  <p className="text-gray-300" dangerouslySetInnerHTML={{ __html: card.desc }}></p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>          
 
           {/* Detailed Information Grid */}
           <div className={`grid lg:grid-cols-10 gap-8 mb-12 transition-all duration-1000 delay-500 ${
@@ -2087,7 +2118,67 @@ export default function Artisan8Landing() {
         </div>
       </section>
 
-      
+      {/* Investor Benefits & Pricing Comparison */}
+      <section 
+        className="py-16 bg-[#242728] section-entrance"
+        data-section-id="investor-benefits"
+        style={{ 
+          opacity: animatedSections.has('investor-benefits') ? 1 : 0,
+          transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(60px)'
+        }}
+      >
+        <div className="container mx-auto px-4">
+          <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
+            animatedSections.has('investor-benefits') ? 'animate-slide-in-top' : ''
+          }`}>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">For Investors</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-[#ce001f] rounded" />
+            </div>
+          </div>
+
+          {/* Investor Benefits */}
+          <div className={`max-w-6xl mx-auto transition-all duration-1000 delay-500 ${
+            animatedSections.has('investor-benefits') ? 'animate-fade-in-up' : ''
+          }`} style={{
+            opacity: animatedSections.has('investor-benefits') ? 1 : 0,
+            transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(50px)'
+          }}>
+            {/* Investor Benefits Grid - 2 per row on mobile, 3 per row on desktop */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+              {[
+                { icon: <Layers className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Prime Freehold Asset in Orchard Road', subtitle: 'Ensuring long-term capital appreciation.' },
+                { icon: <Home className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Diverse Unit Mix', subtitle: 'Catering to a wide range of future potential buyers.' },
+                { icon: <ChartLine className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Strong Capital Upside', subtitle: 'Poised for long-term value growth as the Orchard district continues to thrive.' },
+                { icon: <Building className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Architectural Prestige by Ong & Ong', subtitle: 'Attracts discerning tenants and buyers, further enhancing its investment appeal.' },
+                { icon: <Train className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Exceptional Connectivity', subtitle: 'With seamless access to the CBD, Marina Bay, and other key economic zones.' },
+                { icon: <Users className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Prime Tenant Pool', subtitle: 'Ensuring a steady rental yield for investors.' }
+              ].map((benefit, index) => (
+                <div 
+                  key={index}
+                  className={`hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
+                    animatedSections.has('investor-benefits') ? 'animate' : ''
+                  }`}
+                  style={{ 
+                    transitionDelay: `${index * 200}ms`,
+                    opacity: animatedSections.has('investor-benefits') ? 1 : 0,
+                    transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
+                  }}
+                >
+                  <div className="p-4 md:p-6 flex flex-col items-center text-center space-y-2">
+                    <div className="flex-shrink-0">{benefit.icon}</div>
+                    <h3 className="text-sm md:text-lg text-white font-semibold leading-snug">{benefit.title}</h3>
+                    <p className="text-xs md:text-sm text-gray-300 font-light">{benefit.subtitle}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Removed mobile-only centered row to maintain 2 cards per row consistently */}
+          </div>
+        </div>
+      </section>
+
       {/* Nearby Amenities */}
       <section 
         id="nearby-amenities"
