@@ -281,13 +281,14 @@ const defaultCategories: AwardCategory[] = [
 
 export function AwardsGrid({ categories = defaultCategories }: AwardsGridProps) {
   return (
-    <section className="py-20 px-6 bg-background">
+    <motion.section className="py-20 px-6 bg-background" initial="hidden" animate="visible" variants={sectionVariants}>
       <div className="container mx-auto max-w-7xl">
         <div className="space-y-12">
           {categories.map((category, index) => (
-            <div
+            <motion.div
               key={category.id}
               className={`pb-16 ${index !== categories.length - 1 ? "border-b border-border/30" : ""}`}
+              variants={itemVariants}
             >
               <div className="mb-8 space-y-1.5">
                 <h3 className="text-foreground leading-tight text-2xl leading-6 tracking-normal font-sans font-bold">
@@ -297,9 +298,9 @@ export function AwardsGrid({ categories = defaultCategories }: AwardsGridProps) 
                   {category.description}
                 </p>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              <motion.div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" variants={containerVariants}>
                 {category.recipients.map((recipient) => (
-                  <div key={recipient.id} className="group relative overflow-hidden bg-muted aspect-[3/4]">
+                  <motion.div key={recipient.id} className="group relative overflow-hidden bg-muted aspect-[3/4]" variants={fadeInUp}>
                     {/* Profile Image */}
                     <img
                       src={recipient.image || "/placeholder.svg"}
@@ -317,14 +318,14 @@ export function AwardsGrid({ categories = defaultCategories }: AwardsGridProps) 
                         <p className="font-serif text-white text-sm leading-tight">{recipient.name}</p>
                       </div>
                     )}
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 
