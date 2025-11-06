@@ -289,7 +289,8 @@ const tools = [
     icon: BarChart3,
     category: "Compass Tools",
     subtitle: "Tech Tools",
-    url: "https://compass.kwsingapore.com/tech-tools/compass-10"
+    url: "https://compass.kwsingapore.com/tech-tools/compass-10",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/compass-10.webp"
   },
   {
     id: 201,
@@ -298,7 +299,8 @@ const tools = [
     icon: TrendingUp,
     category: "Compass Tools",
     subtitle: "Tech Tools",
-    url: "https://compass.kwsingapore.com/tech-tools/supply-demand-analysis"
+    url: "https://compass.kwsingapore.com/tech-tools/supply-demand-analysis",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/supply-demand-analysis.webp"
   },
   {
     id: 202,
@@ -307,7 +309,8 @@ const tools = [
     icon: Building2,
     category: "Compass Tools",
     subtitle: "Tech Tools",
-    url: "https://compass.kwsingapore.com/tech-tools/property-analysis/research"
+    url: "https://compass.kwsingapore.com/tech-tools/property-analysis/research",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/property-analysis.webp"
   },
   // Compass Tools items - Research Charts
   {
@@ -767,19 +770,17 @@ export default function TechToolPage() {
                                       <div className="flex-shrink-0">
                                         <motion.div 
                                           className={`w-12 h-12 rounded-lg flex items-center justify-center overflow-hidden relative ${
-                                            tool.image && tool.image.startsWith('/') 
-                                              ? 'bg-[#b40101]/20' 
-                                              : 'bg-white'
+                                            tool.image ? 'bg-[#b40101]/20' : 'bg-white'
                                           }`}
                                           whileHover={{ 
-                                            backgroundColor: tool.image && tool.image.startsWith('/') 
+                                            backgroundColor: tool.image 
                                               ? "rgba(180, 1, 1, 0.3)" 
                                               : "rgba(255, 255, 255, 0.8)",
                                             scale: 1.1,
                                             transition: { duration: 0.2 }
                                           }}
                                         >
-                                          {tool.image && tool.image.startsWith('/') ? (
+                                          {tool.image ? (
                                             <Image
                                               src={tool.image}
                                               alt={tool.title}
@@ -847,19 +848,17 @@ export default function TechToolPage() {
                                 <div className="flex-shrink-0">
                                   <motion.div 
                                     className={`w-12 h-12 rounded-lg flex items-center justify-center overflow-hidden relative ${
-                                      tool.image && tool.image.startsWith('/') 
-                                        ? 'bg-[#b40101]/20' 
-                                        : 'bg-white'
+                                      tool.image ? 'bg-[#b40101]/20' : 'bg-white'
                                     }`}
                                     whileHover={{ 
-                                      backgroundColor: tool.image && tool.image.startsWith('/') 
+                                      backgroundColor: tool.image 
                                         ? "rgba(180, 1, 1, 0.3)" 
                                         : "rgba(255, 255, 255, 0.8)",
                                       scale: 1.1,
                                       transition: { duration: 0.2 }
                                     }}
                                   >
-                                    {tool.image && tool.image.startsWith('/') ? (
+                                    {tool.image ? (
                                       <Image
                                         src={tool.image}
                                         alt={tool.title}
