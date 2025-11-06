@@ -99,9 +99,11 @@ const defaultCategories: AwardCategory[] = [
     description:
       "In recognition of securing the highest number of exclusive seller listings and demonstrating exceptional seller trust.",
     recipients: [
-      { id: 1, name: "Sarah Chen", title: "Senior Agent", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=600&fit=crop" },
-      { id: 2, name: "Michael Torres", title: "Team Leader", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop" },
-      { id: 3, name: "Emily Watson", title: "Sales Director", image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=600&fit=crop" },
+      { id: 1, name: "Shirlyn Chin", image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/executive-lister/1.jpg" },
+      { id: 2, name: "Lawrence Wong", image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/executive-lister/2.jpg" },
+      { id: 3, name: "Jordan Liew", image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/executive-lister/3.jpg" },
+      { id: 4, name: "Rayne Chua", image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/executive-lister/4.jpg" },
+      { id: 5, name: "Andrew Lim", image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/executive-lister/5.jpg" },
     ],
   },
   {
@@ -110,8 +112,11 @@ const defaultCategories: AwardCategory[] = [
     description:
       "In recognition of the outstanding Leasing Velocity, successfully closing the highest number of Residential & Commercial rental transactions.",
     recipients: [
-      { id: 1, name: "David Kim", title: "Associate Agent", image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=600&fit=crop" },
-      { id: 2, name: "Jessica Martinez", title: "Junior Agent", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=600&fit=crop" },
+        { id: 1, name: "Thea Ng", image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/leasing-translator/1.jpg" },
+        { id: 2, name: "Jolyn Fo", image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/leasing-translator/2.jpg" },
+        { id: 3, name: "Rayne Chua", image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/leasing-translator/3.jpg" },
+        { id: 4, name: "Shi Yao", image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/leasing-translator/4.jpg" },
+        { id: 5, name: "Lawrence Wong", image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/leasing-translator/5.jpg" },
     ],
   },
   {
