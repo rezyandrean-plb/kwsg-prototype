@@ -45,6 +45,7 @@ import {
   Footprints,
   Infinity,
   Maximize2,
+  Landmark,
 } from "lucide-react"
 import { Calendar as CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
@@ -568,7 +569,7 @@ function LeadGenerationForm({
     <Card className={`bg-white/20 backdrop-blur-sm text-white p-6 md:p-12 shadow-2xl border-0 rounded-xl hover:shadow-3xl transition-all duration-700 hover:scale-105`}>
       <h2 className="text-4xl font-bold mb-4 text-white text-center">Book Your Showflat Visit Today</h2>
       <p className="text-md mb-8 opacity-90 text-white text-center">
-        Be the first to own a home that combines convenience, luxury, and nature. Register now for an exclusive preview of Orchard Sophia.
+        Be the first to own a home that combines convenience, luxury, and nature. <br /> Register now for an exclusive preview of Orchard Sophia.
       </p>
       {submitError && (
         <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
@@ -888,9 +889,9 @@ export default function Artisan8Landing() {
     { icon: <Trees className="w-6 h-6" />, name: "Fort Canning Park", distance: "6-Mins Drive", category: "Nature & Leisure" },
 
     // CITY HUBS (Cultural & Arts Institutions)
-    { icon: <Trees className="w-6 h-6" />, name: "National Library", distance: "2-Mins Drive", category: "City Hubs" },
-    { icon: <Trees className="w-6 h-6" />, name: "National Museum of Singapore", distance: "4-Mins Drive", category: "City Hubs" },
-    { icon: <Trees className="w-6 h-6" />, name: "Singapore Art Museum", distance: "4-Mins Drive", category: "City Hubs" },
+    { icon: <Landmark className="w-6 h-6" />, name: "National Library", distance: "2-Mins Drive", category: "Cultural & Arts Institutions" },
+    { icon: <Landmark className="w-6 h-6" />, name: "National Museum of Singapore", distance: "4-Mins Drive", category: "Cultural & Arts Institutions" },
+    { icon: <Landmark className="w-6 h-6" />, name: "Singapore Art Museum", distance: "4-Mins Drive", category: "Cultural & Arts Institutions" },
 
     // EDUCATION
     { icon: <GraduationCap className="w-6 h-6" />, name: "St Margaret's Pri Sch", distance: "1-Min Walk", category: "Education" },
@@ -902,7 +903,7 @@ export default function Artisan8Landing() {
   ]
 
   // Compute available amenity categories dynamically in a preferred order
-  const amenityCategoryOrder = ['Transport', 'Retail & F&B', 'City Hubs', 'Nature & Leisure', 'Education', 'Healthcare']
+  const amenityCategoryOrder = ['Transport', 'Retail & F&B', 'Cultural & Arts Institutions', 'Nature & Leisure', 'Education', 'Healthcare']
   const availableAmenityCategories = amenityCategoryOrder.filter((category) => amenities.some((a) => a.category === category))
   const tabsCategories = ['All', ...availableAmenityCategories]
 
@@ -1614,7 +1615,7 @@ export default function Artisan8Landing() {
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">District:</span>
-                  <span className="font-semibold text-white text-right">D9 - Rocher, Mount Emily</span>
+                  <span className="font-semibold text-white text-right">D9 - Orchard / River Valley</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Address:</span>
@@ -1650,7 +1651,7 @@ export default function Artisan8Landing() {
                 </div>
                 <div className="flex justify-between pb-1">
                   <span className="font-medium text-gray-300">TOP:</span>
-                  <span className="font-semibold text-white text-right">Q1 2026</span>
+                  <span className="font-semibold text-white text-right">Q1 2027</span>
                 </div>
               </CardContent>
             </Card>
@@ -1962,6 +1963,11 @@ export default function Artisan8Landing() {
                             {totalAvailable}
                           </span>
                         )}
+                        {totalAvailable === 0 && (
+                          <span className="inline-flex items-center justify-center bg-red-500 text-white text-xs w-5 h-5 sm:w-6 sm:h-6 rounded-full leading-none">
+                            0
+                          </span>
+                        )}
                       </button>
                     )
                   })
@@ -2239,7 +2245,7 @@ export default function Artisan8Landing() {
                     <Train className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
                       <p className="font-semibold text-white">MRT</p>
-                      <p className="text-sm text-gray-300 font-light">Dhoby Ghaut MRT – 8-Mins Walk</p>
+                      <p className="text-sm text-gray-300 font-light">Dhoby Ghaut MRT</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
@@ -2266,7 +2272,7 @@ export default function Artisan8Landing() {
                   {cat === 'All' && <Layers className="w-4 h-4" />}
                   {cat === 'Transport' && <Train className="w-4 h-4" />}
                   {cat === 'Retail & F&B' && <ShoppingBag className="w-4 h-4" />}
-                  {cat === 'City Hubs' && <Trees className="w-4 h-4" />}
+                  {cat === 'Cultural & Arts Institutions' && <Landmark className="w-4 h-4" />}
                   {cat === 'Nature & Leisure' && <Trees className="w-4 h-4" />}
                   {cat === 'Education' && <GraduationCap className="w-4 h-4" />}
                   {cat === 'Healthcare' && <Hospital className="w-4 h-4" />}
