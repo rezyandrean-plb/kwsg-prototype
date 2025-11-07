@@ -197,7 +197,7 @@ async function sendNotificationEmail({
               <h3 style="color: #B40101; margin-top: 0;">Project Details</h3>
               <p style="color: #666; line-height: 1.6; margin: 0;">
                 <strong>Project:</strong> Orchard Sophia<br>
-                <strong>District:</strong> District 9 (Rocher / Mount Emily)<br>
+                <strong>District:</strong> District 9 (Orchard / River Valley)<br>
                 <strong>Location:</strong> 128/130 Sophia Road, Singapore<br>
                 <strong>Developer:</strong> DB2 Land Pte Ltd<br>
                 <strong>Request Type:</strong> Lead Generation
@@ -322,7 +322,7 @@ async function sendAutoReplyEmail({ fullName, emailAddress }: {
             <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
               <h3 style="color: #B40101; margin-top: 0;">About Orchard Sophia</h3>
               <ul style="color: #666; line-height: 1.6; margin: 0; padding-left: 20px;">
-                <li>District 9, Rocher / Mount Emily - Prime location at 128/130 Sophia Road</li>
+                <li>District 9, Orchard / River Valley - Prime location at 128/130 Sophia Road</li>
                 <li>Developed by DB2 Land Pte Ltd</li>
                 <li>Freehold residential development</li>
                 <li>Strategic location near Dhoby Ghaut MRT and city amenities</li>
