@@ -80,7 +80,7 @@ const newLaunches = [
     id: 6,
     title: "Artisan 8",
     summary: "Exceptionally Crafted Homes With Enduring Value",
-    image: "/images/artisan8/artisan8-hero-background.webp",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/artisan-8-collection.webp",
     launchDate: "TBC",
     location: "Sin Ming",
     district: "District 20",
