@@ -26,6 +26,9 @@ S3_CSV_KEY="projects.csv"
 
 # Cron Job Security
 CRON_SECRET="your-secure-random-string"
+
+# Cron Notifications (comma-separated list)
+CRON_NOTIFICATION_EMAILS="team@example.com,ops@example.com"
 ```
 
 ## Installation

@@ -94,148 +94,23 @@ interface AwardsGridProps {
 
 const defaultCategories: AwardCategory[] = [
   {
-    id: 1,
-    title: "TOP Exclusive Listers",
+    id: 15,
+    title: "Rainmaker MREA Millionaire Award",
+    description: "TBC",
+    recipients: [
+        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/rainmaker-mrea-millionaire/1.jpg" },
+        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/rainmaker-mrea-millionaire/2.jpg" },
+    ],
+  },
+  {
+    id: 14,
+    title: "MREA Millionaire In The Making",
     description:
-      "In recognition of securing the highest number of exclusive seller listings and demonstrating exceptional seller trust.",
+      "In recognition of your commitment to building wealth through real estate and demonstrating the potential to achieve millionaire status.",
     recipients: [
-      { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/executive-lister/1.jpg" },
-      { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/executive-lister/2.jpg" },
-      { id: 3, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/executive-lister/3.jpg" },
-      { id: 4, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/executive-lister/4.jpg" },
-      { id: 5, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/executive-lister/5.jpg" },
-    ],
-  },
-  {
-    id: 2,
-    title: "TOP Leasing Transactors",
-    description:
-      "In recognition of the outstanding Leasing Velocity, successfully closing the highest number of Residential & Commercial rental transactions.",
-    recipients: [
-        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/leasing-transactors/1.jpg" },
-        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/leasing-transactors/2.jpg" },
-        { id: 3, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/leasing-transactors/3.jpg" },
-        { id: 4, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/leasing-transactors/4.jpg" },
-        { id: 5, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/leasing-transactors/5.jpg" },
-    ],
-  },
-  {
-    id: 3,
-    title: "TOP HDB Transactors",
-    description:
-      "In recognition of your exceptional performance as an HDB Volume Leader, driving high-frequency transactions in HDB Sales & Purchase.",
-    recipients: [
-        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/hdb-transactors/1.jpg" },
-        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/hdb-transactors/2.jpg" },
-        { id: 3, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/hdb-transactors/3.jpg" },
-        { id: 4, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/hdb-transactors/4.jpg" },
-        { id: 5, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/hdb-transactors/5.jpg" },
-    ],
-  },
-  {
-    id: 4,
-    title: "TOP Private Property Transactors",
-    description:
-      "In recognition of the Market Dominance in Private Resale (Condo, Apartment) Sales & Purchase, achieving top transaction volume in this premium segment.",
-    recipients: [
-        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/private-property-transactors/1.jpg" },
-        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/private-property-transactors/2.jpg" },
-        { id: 3, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/private-property-transactors/3.jpg" },
-        { id: 4, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/private-property-transactors/4.jpg" },
-        { id: 5, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/private-property-transactors/5.jpg" },
-    ],
-  },
-  {
-    id: 5,
-    title: "TOP Growth Share Evangelist",
-    description:
-      "In recognition of the commitment to sharing the KW Model and Value, evidenced by the highest number of new associates joining KW Singapore this quarter.",
-    recipients: [
-        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/growth-share-evangelist/1.jpg" },
-        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/growth-share-evangelist/2.jpg" },
-        { id: 3, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/growth-share-evangelist/3.jpg" },
-    ],
-  },
-  {
-    id: 6,
-    title: "TOP Project Specialist",
-    description:
-      "In recognition of your outstanding success in New Launch Project Sales, achieving the highest GCI through expert analysis and successful client advisory.",
-    recipients: [
-        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/project-specialist/1.jpg" },
-        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/project-specialist/2.jpg" },
-        { id: 3, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/project-specialist/3.jpg" },
-        { id: 4, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/project-specialist/4.jpg" },
-        { id: 5, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/project-specialist/5.jpg" },
-    ],
-  },
-  {
-    id: 7,
-    title: "Consultant Achievement Award",
-    description:
-      "In recognition of your accelerated performance and achieving promotion to the 90% commission tier this quarter.",
-    recipients: [
-        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/consultant-achievement-award/1.jpg" },
-    ],
-  },
-  {
-    id: 8,
-    title: "TOP Rookie",
-    description:
-      "In recognition of achieving the highest transacted GCI among all the new RES Associates in your first year with KW Singapore.",
-    recipients: [
-        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/top-rookie/1.jpg" },
-    ],
-  },
-  {
-    id: 9,
-    title: "TOP Manager",
-    description:
-      "In recognition of exceptional leadership, team development, and outstanding management performance this quarter.",
-    recipients: [
-        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/top-manager/1.jpg" },
-        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/top-manager/2.jpg" },
-        { id: 3, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/top-manager/3.jpg" },
-    ],
-  },
-  {
-    id: 10,
-    title: "THE Achiever Award",
-    description: "In recognition of your excellent sales performance and GCI achievement this quarter.",
-    recipients: [
-        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/1.jpg" },
-        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/2.jpg" },
-        { id: 3, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/3.jpg" },
-        { id: 4, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/4.jpg" },
-        { id: 5, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/5.jpg" },
-        { id: 6, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/6.jpg" },
-        { id: 7, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/7.jpg" },
-        { id: 8, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/8.jpg" },
-        { id: 9, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/9.jpg" },
-        { id: 10, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/10.jpg" },
-        { id: 11, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/11.jpg" },
-        { id: 12, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/12.jpg" },
-        { id: 13, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/13.jpg" },
-        { id: 14, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/14.jpg" }
-    ],
-  },
-  {
-    id: 11,
-    title: "The SuperStar Realtor Award",
-    description: "In recognition of your exceptional GCI sales achievement for the quarter.",
-    recipients: [
-        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/superstar-realtor-award/1.jpg" },
-        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/superstar-realtor-award/2.jpg" },
-    ],
-  },
-  {
-    id: 12,
-    title: "The Rainmaker Consultant Award",
-    description:
-      "In recognition of generating exceptional revenue and consistently bringing in high-value transactions.",
-    recipients: [
-        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/rainmaker-millionaire-award/1.jpg" },
-        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/rainmaker-millionaire-award/2.jpg" },
+        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/millionaire-in-the-maker/1.jpg" },
+        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/millionaire-in-the-maker/2.jpg" },
+        { id: 3, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/millionaire-in-the-maker/3.jpg" }
     ],
   },
   {
@@ -267,14 +142,148 @@ const defaultCategories: AwardCategory[] = [
     ],
   },
   {
-    id: 14,
-    title: "MREA Millionaire In The Making",
+    id: 12,
+    title: "The Rainmaker Consultant Award",
     description:
-      "In recognition of your commitment to building wealth through real estate and demonstrating the potential to achieve millionaire status.",
+      "In recognition of generating exceptional revenue and consistently bringing in high-value transactions.",
     recipients: [
-        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/millionaire-in-the-maker/1.jpg" },
-        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/millionaire-in-the-maker/2.jpg" },
-        { id: 3, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/millionaire-in-the-maker/3.jpg" }
+        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/rainmaker-millionaire-award/1.jpg" },
+        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/rainmaker-millionaire-award/2.jpg" },
+    ],
+  },
+  {
+    id: 11,
+    title: "The SuperStar Realtor Award",
+    description: "In recognition of your exceptional GCI sales achievement for the quarter.",
+    recipients: [
+        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/superstar-realtor-award/1.jpg" },
+        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/superstar-realtor-award/2.jpg" },
+    ],
+  },
+  {
+    id: 10,
+    title: "THE Achiever Award",
+    description: "In recognition of your excellent sales performance and GCI achievement this quarter.",
+    recipients: [
+        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/1.jpg" },
+        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/2.jpg" },
+        { id: 3, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/3.jpg" },
+        { id: 4, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/4.jpg" },
+        { id: 5, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/5.jpg" },
+        { id: 6, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/6.jpg" },
+        { id: 7, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/7.jpg" },
+        { id: 8, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/8.jpg" },
+        { id: 9, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/9.jpg" },
+        { id: 10, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/10.jpg" },
+        { id: 11, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/11.jpg" },
+        { id: 12, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/12.jpg" },
+        { id: 13, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/13.jpg" },
+        { id: 14, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/14.jpg" }
+    ],
+  },
+  {
+    id: 9,
+    title: "TOP Manager",
+    description:
+      "In recognition of exceptional leadership, team development, and outstanding management performance this quarter.",
+    recipients: [
+        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/top-manager/1.jpg" },
+        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/top-manager/2.jpg" },
+        { id: 3, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/top-manager/3.jpg" },
+    ],
+  },
+  {
+    id: 8,
+    title: "TOP Rookie",
+    description:
+      "In recognition of achieving the highest transacted GCI among all the new RES Associates in your first year with KW Singapore.",
+    recipients: [
+        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/top-rookie/1.jpg" },
+    ],
+  },
+  {
+    id: 7,
+    title: "Consultant Achievement Award",
+    description:
+      "In recognition of your accelerated performance and achieving promotion to the 90% commission tier this quarter.",
+    recipients: [
+        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/consultant-achievement-award/1.jpg" },
+    ],
+  },
+  {
+    id: 6,
+    title: "TOP Project Specialist",
+    description:
+      "In recognition of your outstanding success in New Launch Project Sales, achieving the highest GCI through expert analysis and successful client advisory.",
+    recipients: [
+        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/project-specialist/1.jpg" },
+        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/project-specialist/2.jpg" },
+        { id: 3, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/project-specialist/3.jpg" },
+        { id: 4, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/project-specialist/4.jpg" },
+        { id: 5, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/project-specialist/5.jpg" },
+    ],
+  },
+  {
+    id: 5,
+    title: "TOP Growth Share Evangelist",
+    description:
+      "In recognition of the commitment to sharing the KW Model and Value, evidenced by the highest number of new associates joining KW Singapore this quarter.",
+    recipients: [
+        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/growth-share-evangelist/1.jpg" },
+        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/growth-share-evangelist/2.jpg" },
+        { id: 3, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/growth-share-evangelist/3.jpg" },
+    ],
+  },
+  {
+    id: 4,
+    title: "TOP Private Property Transactors",
+    description:
+      "In recognition of the Market Dominance in Private Resale (Condo, Apartment) Sales & Purchase, achieving top transaction volume in this premium segment.",
+    recipients: [
+        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/private-property-transactors/1.jpg" },
+        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/private-property-transactors/2.jpg" },
+        { id: 3, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/private-property-transactors/3.jpg" },
+        { id: 4, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/private-property-transactors/4.jpg" },
+        { id: 5, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/private-property-transactors/5.jpg" },
+    ],
+  },
+  {
+    id: 3,
+    title: "TOP HDB Transactors",
+    description:
+      "In recognition of your exceptional performance as an HDB Volume Leader, driving high-frequency transactions in HDB Sales & Purchase.",
+    recipients: [
+        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/hdb-transactors/1.jpg" },
+        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/hdb-transactors/2.jpg" },
+        { id: 3, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/hdb-transactors/3.jpg" },
+        { id: 4, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/hdb-transactors/4.jpg" },
+        { id: 5, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/hdb-transactors/5.jpg" },
+    ],
+  },
+  {
+    id: 2,
+    title: "TOP Leasing Transactors",
+    description:
+      "In recognition of the outstanding Leasing Velocity, successfully closing the highest number of Residential & Commercial rental transactions.",
+    recipients: [
+        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/leasing-transactors/1.jpg" },
+        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/leasing-transactors/2.jpg" },
+        { id: 3, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/leasing-transactors/3.jpg" },
+        { id: 4, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/leasing-transactors/4.jpg" },
+        { id: 5, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/leasing-transactors/5.jpg" },
+    ],
+  },
+  {
+    id: 1,
+    title: "TOP Exclusive Listers",
+    description:
+      "In recognition of securing the highest number of exclusive seller listings and demonstrating exceptional seller trust.",
+    recipients: [
+      { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/executive-lister/1.jpg" },
+      { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/executive-lister/2.jpg" },
+      { id: 3, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/executive-lister/3.jpg" },
+      { id: 4, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/executive-lister/4.jpg" },
+      { id: 5, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/executive-lister/5.jpg" },
     ],
   },
 ]
@@ -367,21 +376,49 @@ export default function ModelPage() {
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight"
             variants={itemVariants}
           >
-            Awards & Recognition
-            <span className="block text-red-700 italic">of Excellence.</span>
+            Celebrating
+            <span className="block text-red-700 italic">Excellence.</span>
           </motion.h1>
 
           <motion.p 
             className="text-lg md:text-xl text-white/80 mb-12 max-w-4xl mx-auto leading-relaxed"
             variants={itemVariants}
           >
-           Celebrating excellence in Quarter 3 2025. 
-           KW Singapore recognizes outstanding consultants who demonstrated exceptional performance in media production, AI automation, and training systems—building brands, growing businesses, and scaling sustainably.
+           This is where we celebrate the very best in Singapore real estate. 
+           Witness the dedication and world-class results that define our culture of excellence, updated with new achievements every quarter.
           </motion.p>
         </motion.div>
       </section>
 
-      
+      {/* Quarterly Excellence Section */}
+      <motion.section 
+        className="py-20 px-6 bg-background"
+        initial="hidden"
+        animate="visible"
+        variants={sectionVariants}
+      >
+        <div className="container mx-auto max-w-7xl">
+          <motion.div 
+            className="text-center max-w-4xl mx-auto space-y-6"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            <motion.h2 
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground"
+              variants={itemVariants}
+            >
+              Quarterly Excellence
+            </motion.h2>
+            <motion.p 
+              className="text-lg md:text-xl text-muted-foreground leading-relaxed"
+              variants={itemVariants}
+            >
+              We proudly honour the market-leading results and outstanding performance achieved by our Associates throughout the year, marking success every three months.
+            </motion.p>
+          </motion.div>
+        </div>
+      </motion.section>
 
       {/* Awards Grid Section */}
       <AwardsGrid />
