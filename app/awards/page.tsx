@@ -96,7 +96,7 @@ const defaultCategories: AwardCategory[] = [
   {
     id: 15,
     title: "Rainmaker MREA Millionaire Award",
-    description: "TBC",
+    description: "In recognition of achieving Millionaire Status by surpassing S$1,000,000 in Gross Commission Income (GCI) year-to-date, demonstrating the highest level of business production.",
     recipients: [
         { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/rainmaker-mrea-millionaire/1.jpg" },
         { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/rainmaker-mrea-millionaire/2.jpg" },
@@ -392,14 +392,14 @@ export default function ModelPage() {
 
       {/* Quarterly Excellence Section */}
       <motion.section 
-        className="py-20 px-6 bg-background"
+        className="pt-20 pb-10 px-6 bg-background"
         initial="hidden"
         animate="visible"
         variants={sectionVariants}
       >
         <div className="container mx-auto max-w-7xl">
-          <motion.div 
-            className="text-center max-w-4xl mx-auto space-y-6"
+        <motion.div 
+          className="max-w-4xl space-y-6"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
