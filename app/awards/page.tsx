@@ -363,7 +363,14 @@ export default function ModelPage() {
     >
       {/* Hero Section */}
       <section className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center pt-20 sm:pt-20 md:pt-12">
-        <div className="absolute inset-0 bg-black" />
+        <div
+          className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"
+          style={{
+            transform: `translateY(${scrollY * 0.5}px)`,
+          }}
+        />
+        <div className="absolute inset-0 bg-[url('https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/awards-hero.jpg')] bg-cover bg-center opacity-30" />
+        <div className="absolute inset-0 bg-black/60" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
 
         <motion.div 
