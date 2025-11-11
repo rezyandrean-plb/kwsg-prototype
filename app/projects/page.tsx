@@ -131,6 +131,8 @@ export default function NewLaunchDirectory() {
   const [tenuresLoaded, setTenuresLoaded] = useState(false)
   const [selectedPropertyTypes, setSelectedPropertyTypes] = useState<string[]>([])
   const [selectedStatus, setSelectedStatus] = useState<("upcoming" | "ongoing" | "completed")[]>([])
+  const [allStatuses, setAllStatuses] = useState<("upcoming" | "ongoing" | "completed")[]>([])
+  const [statusesLoaded, setStatusesLoaded] = useState(false)
   const [selectedBedrooms, setSelectedBedrooms] = useState<string[]>([])
   const [selectedPriceRange, setSelectedPriceRange] = useState<string[]>([])
   const [currentPage, setCurrentPage] = useState(1)
@@ -358,7 +360,6 @@ export default function NewLaunchDirectory() {
     let aborted = false
     const loadAllDistricts = async () => {
       try {
-        const API_BASE = process.env.NEXT_PUBLIC_API_BASE || '/api'
         const params = new URLSearchParams()
         // Request all projects with large page size to get all districts
         params.set('pageSize', '2000')
@@ -399,7 +400,6 @@ export default function NewLaunchDirectory() {
     let aborted = false
     const loadAllTenures = async () => {
       try {
-        const API_BASE = process.env.NEXT_PUBLIC_API_BASE || '/api'
         const params = new URLSearchParams()
         // Request all projects with large page size to get all tenures
         params.set('pageSize', '2000')
@@ -436,6 +436,51 @@ export default function NewLaunchDirectory() {
     return () => { aborted = true }
   }, [isClient])
 
+  // Load ALL statuses from all projects for the Status Filter (independent of pagination)
+  useEffect(() => {
+    if (!isClient) return
+    let aborted = false
+    const loadAllStatuses = async () => {
+      try {
+        const params = new URLSearchParams()
+        // Request all projects with large page size to get all statuses
+        params.set('pageSize', '2000')
+        const url = `${API_BASE}/projects-prisma?${params.toString()}`
+        console.log('Loading all statuses from URL:', url)
+        const resp = await fetch(url, { 
+          headers: { 'Content-Type': 'application/json' }, 
+          cache: 'no-store' 
+        })
+        if (!resp.ok) throw new Error('Failed to load statuses')
+        const json = await resp.json()
+        console.log('API response for all statuses:', json)
+        const list = Array.isArray(json?.data) ? json.data : (Array.isArray(json) ? json : [])
+        console.log('Total projects loaded for statuses:', list.length)
+        const extracted = Array.from(new Set<"upcoming" | "ongoing" | "completed">(
+          list
+            .map((p: any) => mapStatus(p?.status))
+        )).sort()
+        console.log('All statuses extracted:', extracted)
+        if (!aborted) {
+          // Always set statuses, even if empty (will fallback to default in statuses variable)
+          setAllStatuses(extracted.length > 0 ? extracted : ["upcoming", "ongoing", "completed"])
+          setStatusesLoaded(true)
+          console.log('allStatuses state updated to:', extracted.length > 0 ? extracted : ["upcoming", "ongoing", "completed"])
+        }
+      } catch (e) {
+        // Silently ignore errors; fallback to current page projects-derived statuses
+        console.warn('Failed to load all statuses:', e)
+        // Still mark as loaded with default statuses so UI doesn't wait forever
+        if (!aborted) {
+          setAllStatuses(["upcoming", "ongoing", "completed"])
+          setStatusesLoaded(true)
+        }
+      }
+    }
+    loadAllStatuses()
+    return () => { aborted = true }
+  }, [isClient])
+
   const scrollToSearch = () => { searchSectionRef.current?.scrollIntoView({ behavior: 'smooth' }) }
 
   // Server-side filtering is now handled by the API
@@ -465,7 +510,20 @@ export default function NewLaunchDirectory() {
           .filter((t): t is string => t != null && t.trim() !== '')
       )).sort()
   const propertyTypes = Array.from(new Set(projects.map(p => p.propertyType).filter((t): t is string => t !== undefined)))
-  const statuses: ("upcoming" | "ongoing" | "completed")[] = ["upcoming", "ongoing", "completed"]
+  
+  // Use allStatuses if loaded, otherwise fallback to current page projects or hardcoded list
+  const statuses: ("upcoming" | "ongoing" | "completed")[] = statusesLoaded
+    ? allStatuses
+    : (() => {
+        const fromProjects = Array.from(new Set(
+          projects
+            .map(p => p.status)
+            .filter((s): s is "upcoming" | "ongoing" | "completed" => 
+              s !== null && s !== undefined
+            )
+        )).sort()
+        return fromProjects.length > 0 ? fromProjects : ["upcoming", "ongoing", "completed"]
+      })()
 
   const bedrooms = (() => {
     const existing = Array.from(new Set(projects.flatMap(p => p.bedrooms || [])))
@@ -509,6 +567,10 @@ export default function NewLaunchDirectory() {
   }
   const handleSelectAllTenures = () => {
     setSelectedTenures(prev => prev.length === tenures.length ? [] : [...tenures])
+    setCurrentPage(1)
+  }
+  const handleSelectAllStatuses = () => {
+    setSelectedStatus(prev => prev.length === statuses.length ? [] : [...statuses])
     setCurrentPage(1)
   }
 
@@ -689,6 +751,14 @@ export default function NewLaunchDirectory() {
                     <div>
                       <h3 className="font-medium mb-3 text-white">Status</h3>
                       <div className="space-y-2">
+                        <Button
+                          variant={selectedStatus.length === statuses.length ? "default" : "outline"}
+                          className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                          onClick={handleSelectAllStatuses}
+                        >
+                          {selectedStatus.length === statuses.length && <Check className="mr-2 h-4 w-4" />}
+                          {selectedStatus.length === statuses.length ? "Deselect All" : "Select All"}
+                        </Button>
                         {statuses.map((status) => (
                           <Button
                             key={status}
@@ -875,28 +945,18 @@ export default function NewLaunchDirectory() {
                       </div>
                     </div>
 
-                    {/* Property Type Filter */}
-                    <div>
-                      <h3 className="font-medium mb-3 text-white">Property Type</h3>
-                      <div className="space-y-2">
-                        {propertyTypes.map((type) => (
-                          <Button
-                            key={type}
-                            variant={selectedPropertyTypes.includes(type) ? "default" : "outline"}
-                            className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 text-sm py-2"
-                            onClick={() => handlePropertyTypeChange(type)}
-                          >
-                            {selectedPropertyTypes.includes(type) && <Check className="mr-2 h-4 w-4" />}
-                            {type}
-                          </Button>
-                        ))}
-                      </div>
-                    </div>
-
                     {/* Status Filter */}
                     <div>
                       <h3 className="font-medium mb-3 text-white">Status</h3>
                       <div className="space-y-2">
+                        <Button
+                          variant={selectedStatus.length === statuses.length ? "default" : "outline"}
+                          className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                          onClick={handleSelectAllStatuses}
+                        >
+                          {selectedStatus.length === statuses.length && <Check className="mr-2 h-4 w-4" />}
+                          {selectedStatus.length === statuses.length ? "Deselect All" : "Select All"}
+                        </Button>
                         {statuses.map((status) => (
                           <Button
                             key={status}

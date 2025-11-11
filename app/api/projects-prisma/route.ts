@@ -92,8 +92,31 @@ export async function GET(request: NextRequest) {
     }
     
     // Status filter (multiple statuses)
+    // Map frontend status values to database status patterns
     if (statuses.length > 0) {
-      andConditions.push({ status: { in: statuses } })
+      const statusConditions: any[] = []
+      statuses.forEach(status => {
+        switch (status.toLowerCase()) {
+          case 'upcoming':
+            statusConditions.push({ status: { contains: 'launching soon', mode: 'insensitive' } })
+            statusConditions.push({ status: { contains: 'coming soon', mode: 'insensitive' } })
+            statusConditions.push({ status: { contains: 'upcoming', mode: 'insensitive' } })
+            break
+          case 'ongoing':
+            statusConditions.push({ status: { contains: 'under construction', mode: 'insensitive' } })
+            statusConditions.push({ status: { contains: 'ongoing', mode: 'insensitive' } })
+            break
+          case 'completed':
+            statusConditions.push({ status: { contains: 'completed', mode: 'insensitive' } })
+            break
+          default:
+            // Fallback to exact match for any other status values
+            statusConditions.push({ status: { contains: status, mode: 'insensitive' } })
+        }
+      })
+      if (statusConditions.length > 0) {
+        andConditions.push({ OR: statusConditions })
+      }
     }
     
     // Bedrooms filter - this might need special handling depending on how bedrooms are stored
