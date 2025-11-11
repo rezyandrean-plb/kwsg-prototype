@@ -1651,7 +1651,7 @@ export default function Artisan8Landing() {
                 </div>
                 <div className="flex justify-between pb-1">
                   <span className="font-medium text-gray-300">TOP:</span>
-                  <span className="font-semibold text-white text-right">Q1 2027</span>
+                  <span className="font-semibold text-white text-right">Q2 2027</span>
                 </div>
               </CardContent>
             </Card>

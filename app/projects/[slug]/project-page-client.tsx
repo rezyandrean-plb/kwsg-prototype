@@ -1286,6 +1286,25 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
     })
   }, [project?.facilities])
 
+  // Determine if there are valid unit pricing data to show
+  const hasValidUnitPricing = useMemo(() => {
+    const unitPricing = project?.unitPricing as any
+    if (!unitPricing) {
+      return false
+    }
+    // Handle empty string
+    if (typeof unitPricing === 'string' && unitPricing.trim() === '') {
+      return false
+    }
+    // Handle empty array
+    if (!Array.isArray(unitPricing) || unitPricing.length === 0) {
+      return false
+    }
+    // Process and check if there's valid data
+    const processedData = processUnitAvailabilityData(unitPricing)
+    return processedData.length > 0
+  }, [project?.unitPricing])
+
   // Handle download site plan
   const handleDownloadSitePlan = () => {
     toast({
@@ -1972,10 +1991,12 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
             {nearestMrts && nearestMrts.length > 0 && (
               <div className="flex justify-between border-b border-gray-700 pb-3 gap-4">
                 <span className="text-gray-300 text-sm">Nearest MRT:</span>
-                <span className="text-white text-sm text-right">{`${(nearestMrts[0] as any).name} (${getLineForPlace(nearestMrts[0]) || 'n/a'})`}</span>
-                {nearestMrts[1] && (
-                  <span className="text-white text-sm text-right">{`${(nearestMrts[1] as any).name} (${getLineForPlace(nearestMrts[1]) || 'n/a'})`}</span>
-                )}
+                <div className="flex flex-col items-end gap-1">
+                  <span className="text-white text-sm text-right">{`${(nearestMrts[0] as any).name} (${getLineForPlace(nearestMrts[0]) || 'n/a'})`}</span>
+                  {nearestMrts[1] && (
+                    <span className="text-white text-sm text-right">{`${(nearestMrts[1] as any).name} (${getLineForPlace(nearestMrts[1]) || 'n/a'})`}</span>
+                  )}
+                </div>
               </div>
             )}
             {/* Expected TOP */}
@@ -2259,14 +2280,31 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
                                   {place.duration}
                                 </span>
                                 <span className="text-gray-300 flex items-center gap-1">
-                                  {(place as any)?.isBus ? (
-                                    <Bus className="h-3 w-3 lg:h-4 lg:w-4" style={{ color: '#ce001f' }} />
-                                  ) : String(place.transportMode).toLowerCase() === 'walking' ? (
-                                    <Footprints className="h-3 w-3 lg:h-4 lg:w-4" style={{ color: '#ce001f' }} />
-                                  ) : (
-                                    <Car className="h-3 w-3 lg:h-4 lg:w-4" style={{ color: '#ce001f' }} />
-                                  )}
-                                  {place.transportMode}
+                                  {(() => {
+                                    // Extract numeric distance
+                                    const numericDistance = extractNumericDistance(place.distance);
+                                    // Determine transport mode based on distance
+                                    const isWalking = numericDistance < 1.5;
+                                    const transportMode = isWalking ? 'Walking' : 'Driving';
+                                    
+                                    // For walking (< 1.5km) or buses, show footprints icon
+                                    if (isWalking || (place as any)?.isBus) {
+                                      return (
+                                        <>
+                                          <Footprints className="h-3 w-3 lg:h-4 lg:w-4" style={{ color: '#ce001f' }} />
+                                          {transportMode}
+                                        </>
+                                      );
+                                    }
+                                    
+                                    // For driving (>= 1.5km), show car icon
+                                    return (
+                                      <>
+                                        <Car className="h-3 w-3 lg:h-4 lg:w-4" style={{ color: '#ce001f' }} />
+                                        {transportMode}
+                                      </>
+                                    );
+                                  })()}
                                 </span>
                               </div>
                             </div>
@@ -2323,6 +2361,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
       
 
       {/* Units & Pricing Section */}
+      {hasValidUnitPricing && (
       <section id="pricing" className="w-full py-6 sm:py-8 mb-4">
         {/* Header Section */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -2527,6 +2566,7 @@ export function ProjectPageClient({ slug }: ProjectPageClientProps) {
           )
         })()}
       </section>
+      )}
 
       {/* Mortgage Loan Calculator - Full Width */}
       <div className="w-full py-6 sm:py-8 mb-6 sm:mb-8">
