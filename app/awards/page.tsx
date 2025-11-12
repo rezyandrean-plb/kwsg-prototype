@@ -180,7 +180,7 @@ const defaultCategories: AwardCategory[] = [
   },
   {
     id: 9,
-    title: "Top Team Manager",
+    title: "TOP Manager",
     description: "<strong>Exceptional Leadership.</strong> Recognised for outstanding mentorship and team-building, measured by the highest combined Transacted GCI of your entire downline.",
     recipients: [
         { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/top-manager/1.jpg" },
@@ -368,7 +368,7 @@ export default function ModelPage() {
             variants={itemVariants}
           >
             Celebrating
-            <span className="block text-red-700 italic">Excellence.</span>
+            <span className="block text-red-700 italic">Excellence</span>
           </motion.h1>
 
           <motion.p 
