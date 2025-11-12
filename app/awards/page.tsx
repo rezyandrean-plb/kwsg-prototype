@@ -96,17 +96,16 @@ const defaultCategories: AwardCategory[] = [
   {
     id: 15,
     title: "Rainmaker MREA Millionaire Award",
-    description: "In recognition of achieving Millionaire Status by surpassing S$1,000,000 in Gross Commission Income (GCI) year-to-date, demonstrating the highest level of business production.",
+    description: "Millionaire Status Achieved. Celebrating the highest level of production by surpassing S$1,000,000 GCI year-to-date—the benchmark of an elite business.",
     recipients: [
-        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/rainmaker-mrea-millionaire/1.jpg" },
-        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/rainmaker-mrea-millionaire/2.jpg" },
+        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/rainmaker-millionaire-award/1.jpg" },
+        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/rainmaker-millionaire-award/2.jpg" },
     ],
   },
   {
-    id: 14,
+    id: 14, 
     title: "MREA Millionaire In The Making",
-    description:
-      "In recognition of your commitment to building wealth through real estate and demonstrating the potential to achieve millionaire status.",
+    description: "<strong>Millionaire in the Making.</strong> Celebrating the achievement of over S$500K GCI for the year, confirming your path to becoming a Millionaire Real Estate Agent (MREA).",
     recipients: [
         { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/millionaire-in-the-maker/1.jpg" },
         { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/millionaire-in-the-maker/2.jpg" },
@@ -116,8 +115,7 @@ const defaultCategories: AwardCategory[] = [
   {
     id: 13,
     title: "TOP 20 Producers",
-    description:
-      "In recognition of ranking among the top 20 highest-performing agents in overall production and GCI this quarter.",
+    description: "<strong>Elite Production Status.</strong> Recognized as a Top 20 Producer based on the total commission transacted—the mark of high financial success over the performance period.",
     recipients: [
         { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/top-20-producers/1.jpg" },
         { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/top-20-producers/2.jpg" },
@@ -143,18 +141,17 @@ const defaultCategories: AwardCategory[] = [
   },
   {
     id: 12,
-    title: "The Rainmaker Consultant Award",
-    description:
-      "In recognition of generating exceptional revenue and consistently bringing in high-value transactions.",
+    title: "RainMaker Consultant Award",
+    description: "<strong>RainMaker Production.</strong> The mark of massive sales results, celebrating <strong>GCI production of S$150,000 or more this quarter.</strong>",
     recipients: [
-        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/rainmaker-millionaire-award/1.jpg" },
-        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/rainmaker-millionaire-award/2.jpg" },
+        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/rainmaker-mrea-millionaire/1.jpg" },
+        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/rainmaker-mrea-millionaire/2.jpg" },
     ],
   },
   {
     id: 11,
-    title: "The SuperStar Realtor Award",
-    description: "In recognition of your exceptional GCI sales achievement for the quarter.",
+    title: "SuperStar Realtor Award",
+    description: "<strong>Superstar Status.</strong> Recognised for exceptional GCI production in the <strong>S$90,000–149,999 range</strong> and consistent high sales achievement for the quarter.",
     recipients: [
         { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/superstar-realtor-award/1.jpg" },
         { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/superstar-realtor-award/2.jpg" },
@@ -162,8 +159,8 @@ const defaultCategories: AwardCategory[] = [
   },
   {
     id: 10,
-    title: "THE Achiever Award",
-    description: "In recognition of your excellent sales performance and GCI achievement this quarter.",
+    title: "Achiever Award",
+    description: "<strong>Consistent High Achiever.</strong> Acknowledging reliable sales performance and solid GCI achievement in the <strong>S$45,000–89,999 range</strong> for the quarter.",
     recipients: [
         { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/1.jpg" },
         { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/the-achiever-award/2.jpg" },
@@ -183,9 +180,8 @@ const defaultCategories: AwardCategory[] = [
   },
   {
     id: 9,
-    title: "TOP Manager",
-    description:
-      "In recognition of exceptional leadership, team development, and outstanding management performance this quarter.",
+    title: "Top Team Manager",
+    description: "<strong>Exceptional Leadership.</strong> Recognised for outstanding mentorship and team-building, measured by the highest combined Transacted GCI of your entire downline.",
     recipients: [
         { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/top-manager/1.jpg" },
         { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/top-manager/2.jpg" },
@@ -194,9 +190,8 @@ const defaultCategories: AwardCategory[] = [
   },
   {
     id: 8,
-    title: "TOP Rookie",
-    description:
-      "In recognition of achieving the highest transacted GCI among all the new RES Associates in your first year with KW Singapore.",
+    title: "Top Rookie",
+    description: "<strong>Rookie Dominance.</strong> Celebrating the highest transacted GCI achieved by any new RES associate in their first year with KW Singapore.",
     recipients: [
         { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/top-rookie/1.jpg" },
     ],
@@ -204,17 +199,25 @@ const defaultCategories: AwardCategory[] = [
   {
     id: 7,
     title: "Consultant Achievement Award",
-    description:
-      "In recognition of your accelerated performance and achieving promotion to the 90% commission tier this quarter.",
+    description: "<strong>Accelerated Achievement.</strong> Highlighting rapid professional advancement and successful promotion to the elite 90% commission tier within the quarter.",
     recipients: [
         { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/consultant-achievement-award/1.jpg" },
     ],
   },
   {
     id: 6,
-    title: "TOP Project Specialist",
-    description:
-      "In recognition of your outstanding success in New Launch Project Sales, achieving the highest GCI through expert analysis and successful client advisory.",
+    title: "TOP Growth Share Evangelist",
+    description: "<strong>Culture Builders & Leaders.</strong> Recognized for driving the highest team growth, expanding our network, and sharing the KW value proposition.",
+    recipients: [
+        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/growth-share-evangelist/1.jpg" },
+        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/growth-share-evangelist/2.jpg" },
+        { id: 3, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/growth-share-evangelist/3.jpg" },
+    ],
+  },
+  {
+    id: 5,
+    title: "Top Project Specialist",
+    description: "<strong>New Launch Experts.</strong> Highest GCI success in New Launch Sales. This award highlights the financial results of specialized market knowledge.",
     recipients: [
         { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/project-specialist/1.jpg" },
         { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/project-specialist/2.jpg" },
@@ -224,21 +227,9 @@ const defaultCategories: AwardCategory[] = [
     ],
   },
   {
-    id: 5,
-    title: "TOP Growth Share Evangelist",
-    description:
-      "In recognition of the commitment to sharing the KW Model and Value, evidenced by the highest number of new associates joining KW Singapore this quarter.",
-    recipients: [
-        { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/growth-share-evangelist/1.jpg" },
-        { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/growth-share-evangelist/2.jpg" },
-        { id: 3, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/growth-share-evangelist/3.jpg" },
-    ],
-  },
-  {
     id: 4,
-    title: "TOP Private Property Transactors",
-    description:
-      "In recognition of the Market Dominance in Private Resale (Condo, Apartment) Sales & Purchase, achieving top transaction volume in this premium segment.",
+    title: "Top Private Property Transactors",
+    description: "<strong>Private Market Dominance.</strong> Recognized for commanding transaction volume and mastery in the high-value Private Resale segment.",
     recipients: [
         { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/private-property-transactors/1.jpg" },
         { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/private-property-transactors/2.jpg" },
@@ -249,9 +240,8 @@ const defaultCategories: AwardCategory[] = [
   },
   {
     id: 3,
-    title: "TOP HDB Transactors",
-    description:
-      "In recognition of your exceptional performance as an HDB Volume Leader, driving high-frequency transactions in HDB Sales & Purchase.",
+    title: "Top HDB Transactors",
+    description: "<strong>HDB Volume Leaders.</strong> Acknowledging high-frequency transaction volume and efficient operations in the core HDB market.",
     recipients: [
         { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/hdb-transactors/1.jpg" },
         { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/hdb-transactors/2.jpg" },
@@ -262,9 +252,8 @@ const defaultCategories: AwardCategory[] = [
   },
   {
     id: 2,
-    title: "TOP Leasing Transactors",
-    description:
-      "In recognition of the outstanding Leasing Velocity, successfully closing the highest number of Residential & Commercial rental transactions.",
+    title: "Top Leasing Transactors",
+    description: "<strong>Leasing Velocity.</strong> Rewarded for successfully closing the highest volume of Residential and Commercial rental deals—speed, scale, and profitability.",
     recipients: [
         { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/leasing-transactors/1.jpg" },
         { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/leasing-transactors/2.jpg" },
@@ -275,9 +264,8 @@ const defaultCategories: AwardCategory[] = [
   },
   {
     id: 1,
-    title: "TOP Exclusive Listers",
-    description:
-      "In recognition of securing the highest number of exclusive seller listings and demonstrating exceptional seller trust.",
+    title: "Top Exclusive Listers",
+    description: "<strong>Exclusive Listing Authority.</strong> Recognized for securing the highest volume of exclusive seller listings across all property types and demonstrating exceptional seller trust.",
     recipients: [
       { id: 1, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/executive-lister/1.jpg" },
       { id: 2, image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/awards/executive-lister/2.jpg" },
@@ -303,9 +291,7 @@ export function AwardsGrid({ categories = defaultCategories }: AwardsGridProps) 
                 <h3 className="text-foreground leading-tight text-2xl leading-6 tracking-normal font-sans font-bold">
                   {category.title}
                 </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl font-medium">
-                  {category.description}
-                </p>
+                <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl font-medium" dangerouslySetInnerHTML={{ __html: category.description }} />
               </div>
               <motion.div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" variants={containerVariants}>
                 {category.recipients.map((recipient) => (
@@ -404,7 +390,7 @@ export default function ModelPage() {
       >
         <div className="mx-auto max-w-7xl px-6">
         <motion.div 
-          className="max-w-4xl space-y-6"
+          className="max-w-4xl mx-auto space-y-6 text-center"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -413,14 +399,23 @@ export default function ModelPage() {
               className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground"
               variants={itemVariants}
             >
-              Quarterly Excellence
+              Q3 2025
             </motion.h2>
-            <motion.p 
-              className="text-lg md:text-xl text-muted-foreground leading-relaxed"
-              variants={itemVariants}
-            >
-              We proudly honour the market-leading results and outstanding performance achieved by our Associates throughout the year, marking success every three months.
-            </motion.p>
+            <motion.div 
+            className="relative w-48 h-1 mx-auto mt-8 overflow-hidden"
+            variants={itemVariants}
+          >
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: "-100%" }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              className="absolute top-0 left-0 h-full w-full bg-gradient-to-r from-transparent via-[#B40101] to-transparent"
+            />
+          </motion.div>
           </motion.div>
         </div>
       </motion.section>
