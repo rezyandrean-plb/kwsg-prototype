@@ -6,130 +6,73 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 
-const newLaunches = [
-  {
-    id: 1,
-    title: "Springleaf Residence",
-    summary: "The North's First Nature-Integrated, and Well-connected High-Rise",
-    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/springleaf-collection.webp",
-    location: "Upper Thomson",
-    district: "District 26",
-    status: "Launched",
-    type: "Condo",
-    bedrooms: "3-5",
-    price: "From $2,300,000",
-    url: "/springleaf-residence",
-  },
-  {
-    id: 2,
-    title: "Penrith",
-    summary: "The Margaret Drive Address That Brings You Closer to Everything",
-    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/penrith-collection.webp",
-    launchDate: "April 2024",
-    location: "Queenstown",
-    district: "District 3",
-    status: "Launched",
-    type: "Condo",
-    bedrooms: "2-5",
-    price: "From $1,495,000",
-    url: "/penrith",
-  },
-  {
-    id: 3,
-    title: "Aurea",
-    summary: "he Golden Mile's Premier Residential Development",
-    image: "/images/aurea/hero-aurea.webp",
-    launchDate: "May 2024",
-    location: "Beach Road",
-    district: "District 7",
-    status: "Launched",
-    type: "Condo",
-    bedrooms: "2-5",
-    price: "From $1,765,000",
-    url: "/aurea",
-  },
-  {
-    id: 4,
-    title: "W Residences Marina View",
-    summary: "Embrace liberated luxury with sleek, chic apartments that offer exclusive 5-star W facilities and services.",
-    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/w-residences-collection.webp",
-    launchDate: "June 2024",
-    location: "Marina View",
-    district: "District 1",
-    status: "Launched",
-    type: "Condo",
-    bedrooms: "1-5 BR",
-    price: "From $1,848,000",
-    url: "/w-residences",
-  },
-  {
-    id: 5,
-    title: "Arina East Residences",
-    summary: "The East Coast's First Nature-Integrated, and Well-connected High-Rise",
-    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/arina-east-collection.webp",
-    launchDate: "June 2024",
-    location: "East Coast",
-    district: "District 15",
-    status: "Launched",
-    type: "Condo",
-    bedrooms: "1-4",
-    price: "From $1,298,000",
-    url: "/arina-east",
-  },
-  {
-    id: 6,
-    title: "Artisan 8",
-    summary: "Exceptionally Crafted Homes With Enduring Value",
-    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/artisan-8-collection.webp",
-    launchDate: "Q2 2027",
-    location: "Sin Ming",
-    district: "District 20",
-    status: "Launched",
-    type: "Condo",
-    bedrooms: "1-5",
-    price: "From $1,292,000",
-    url: "/artisan-8",
-  },
-  {
-    id: 7,
-    title: "Orchard Sophia",
-    summary: "The Pinnacle of Contemporary Living in the City",
-    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/orchard-sophia-hero.jpg",
-    location: "Sophia Road",
-    district: "District 9",
-    status: "Launched",
-    type: "Condo",
-    bedrooms: "2",
-    price: "From $1,593,000",
-    url: "/orchard-sophia",
-  },
-  
-]
-
-// Derive district options from data and sort from lowest to highest
-const districtOptions = [
-  "All",
-  ...Array.from(new Set(newLaunches.map((l) => l.district)))
-    .filter(district => district !== "All")
-    .sort((a, b) => {
-      const numA = parseInt(a.replace(/\D/g, ''))
-      const numB = parseInt(b.replace(/\D/g, ''))
-      return numA - numB
-    })
-]
+interface Launch {
+  id: number
+  title: string
+  summary: string
+  image: string
+  location: string
+  district: string
+  status: string
+  type: string
+  bedrooms: string
+  price: string
+  url: string
+  launchDate?: string | null
+}
 
 const filterOptions = {
   status: ["All", "Launched", "Preview Available", "Coming Soon", "Registration Open", "Early Interest"],
 }
 
 export default function NewLaunchCollectionPage() {
-  useEffect(() => {
-    document.title = 'New Launch Collection - KW Singapore'
-  }, [])
+  const [newLaunches, setNewLaunches] = useState<Launch[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [activeFilters, setActiveFilters] = useState({
     districts: [] as string[],
     status: "All",
   })
+
+  useEffect(() => {
+    document.title = 'New Launch Collection - KW Singapore'
+    
+    // Fetch data from API
+    const fetchLaunches = async () => {
+      try {
+        setIsLoading(true)
+        const response = await fetch('/api/new-launch-collection')
+        const result = await response.json()
+        
+        if (response.ok && result.success) {
+          setNewLaunches(result.data || [])
+        } else {
+          setError(result.message || 'Failed to fetch launches')
+          setNewLaunches([])
+        }
+      } catch (err) {
+        console.error('Error fetching launches:', err)
+        setError('Failed to load new launches')
+        setNewLaunches([])
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchLaunches()
+  }, [])
+
+  // Derive district options from data and sort from lowest to highest
+  const districtOptions = [
+    "All",
+    ...Array.from(new Set(newLaunches.map((l) => l.district).filter(Boolean)))
+      .filter(district => district !== "All")
+      .sort((a, b) => {
+        const numA = parseInt(a.replace(/\D/g, ''))
+        const numB = parseInt(b.replace(/\D/g, ''))
+        return numA - numB
+      })
+  ]
 
   const filteredLaunches = newLaunches.filter((launch) => {
     if (activeFilters.districts.length > 0 && !activeFilters.districts.includes(launch.district)) return false
@@ -282,14 +225,38 @@ export default function NewLaunchCollectionPage() {
           </motion.div>
 
 
+          {/* Loading State */}
+          {isLoading && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-20"
+            >
+              <p className="text-white/60">Loading new launches...</p>
+            </motion.div>
+          )}
+
+          {/* Error State */}
+          {error && !isLoading && (
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center py-20"
+            >
+              <p className="text-red-400 mb-4">Error: {error}</p>
+              <p className="text-white/60 text-sm">Please try refreshing the page.</p>
+            </motion.div>
+          )}
+
           {/* Projects Grid */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 2.0, ease: "easeOut" }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[22px] sm:gap-[30px] mb-12 sm:mb-16 md:mb-20"
-          >
-            {filteredLaunches.map((launch, index) => (
+          {!isLoading && !error && (
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 2.0, ease: "easeOut" }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[22px] sm:gap-[30px] mb-12 sm:mb-16 md:mb-20"
+            >
+              {filteredLaunches.map((launch, index) => (
               <motion.div 
                 key={launch.id} 
                 initial={{ opacity: 0, y: 30 }}
@@ -373,11 +340,12 @@ export default function NewLaunchCollectionPage() {
                   </div>
                 </div>
               </motion.div>
-            ))}
-          </motion.div>
+              ))}
+            </motion.div>
+          )}
 
         {/* Results Count */}
-        {filteredLaunches.length === 0 && (
+        {!isLoading && !error && filteredLaunches.length === 0 && (
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

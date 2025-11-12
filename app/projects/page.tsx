@@ -3,9 +3,10 @@
 import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Search, Filter, X, Check } from "lucide-react"
+import { Search, Filter, X, Check, Map, List } from "lucide-react"
 import ProjectCard from "@/components/project-card"
 import Image from "next/image"
+import ProjectsMapView from "@/components/projects-map-view"
 import {
   Select,
   SelectContent,
@@ -65,6 +66,8 @@ type ApiProject = {
   status?: string
   totalUnits?: string
   coordinates?: { lat: number; lng: number }
+  latitude?: number | string | null
+  longitude?: number | string | null
   image?: string
   image_url_banner?: string
 }
@@ -150,8 +153,11 @@ export default function NewLaunchDirectory() {
   const searchSectionRef = useRef<HTMLDivElement>(null)
   
   const [projects, setProjects] = useState<Project[]>([])
+  const [allProjectsForMap, setAllProjectsForMap] = useState<Project[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [isLoadingMapProjects, setIsLoadingMapProjects] = useState(false)
   const [isClient, setIsClient] = useState(false)
+  const [viewMode, setViewMode] = useState<"list" | "map">("list")
   const [paginationMeta, setPaginationMeta] = useState({
     total: 0,
     page: 1,
@@ -287,8 +293,13 @@ export default function NewLaunchDirectory() {
           // developer - API already provides string
           const developerName = p.developer || 'Developer not specified'
 
-          // coordinates - API already provides coordinates
-          const coordinates = p.coordinates || { lat: 1.3521, lng: 103.8198 }
+          // coordinates - check for coordinates object, or latitude/longitude fields
+          const coordinates = p.coordinates || 
+            (p.latitude != null && p.longitude != null && 
+             typeof p.latitude !== 'undefined' && typeof p.longitude !== 'undefined' &&
+             !isNaN(Number(p.latitude)) && !isNaN(Number(p.longitude)))
+              ? { lat: Number(p.latitude), lng: Number(p.longitude) }
+              : undefined
 
           // image - API already provides image URL
           const image = p.image || '/images/new-launch/new-launch-preview.webp'
@@ -480,6 +491,129 @@ export default function NewLaunchDirectory() {
     loadAllStatuses()
     return () => { aborted = true }
   }, [isClient])
+
+  // Load all projects for map view (without pagination)
+  useEffect(() => {
+    if (!isClient || viewMode !== 'map') return
+    let aborted = false
+    const loadAllProjectsForMap = async () => {
+      setIsLoadingMapProjects(true)
+      try {
+        // Map sort to Strapi
+        let sortParam = 'created_at:desc'
+        if (sortBy === 'price-low-high') sortParam = 'price:asc'
+        else if (sortBy === 'price-high-low') sortParam = 'price:desc'
+        else if (sortBy === 'completion') sortParam = 'completion:asc'
+
+        const params = new URLSearchParams()
+        params.set('page', '1')
+        params.set('pageSize', '2000') // Load all projects
+        params.set('sort', sortParam)
+        if (searchQuery.trim()) {
+          params.set('search', searchQuery.trim())
+        }
+        
+        // Add filter parameters
+        if (selectedDistricts.length > 0) {
+          selectedDistricts.forEach(district => params.append('districts', String(district)))
+        }
+        if (selectedTenures.length > 0) {
+          selectedTenures.forEach(tenure => params.append('tenures', tenure))
+        }
+        if (selectedPropertyTypes.length > 0) {
+          selectedPropertyTypes.forEach(type => params.append('propertyTypes', type))
+        }
+        if (selectedStatus.length > 0) {
+          selectedStatus.forEach(status => params.append('statuses', status))
+        }
+        if (selectedBedrooms.length > 0) {
+          selectedBedrooms.forEach(bedroom => params.append('bedrooms', bedroom))
+        }
+        if (priceMin > 0 || priceMax < 5000000) {
+          params.set('priceMin', String(priceMin))
+          params.set('priceMax', String(priceMax))
+        }
+
+        const url = `${API_BASE}/projects-prisma?${params.toString()}`
+        const resp = await fetch(url, {
+          headers: { 'Content-Type': 'application/json' },
+          cache: 'no-cache',
+        })
+
+        if (!resp.ok) throw new Error(`HTTP error! status: ${resp.status}`)
+        const json = await resp.json()
+        const apiProjects: ApiProject[] = json.data || []
+        
+        const mapped: Project[] = apiProjects.map((p) => {
+          const districtNumber = p.district ? (() => {
+            if (typeof p.district === 'number') {
+              return p.district
+            } else if (typeof p.district === 'string') {
+              const m = p.district.match(/D(\d+)/i)
+              return m ? parseInt(m[1], 10) : undefined
+            }
+            return undefined
+          })() : undefined
+
+          const price = p.price || 'Price on request'
+          const lowerPrice = p.lowerPrice
+          const developerName = p.developer || 'Developer not specified'
+          // coordinates - check for coordinates object, or latitude/longitude fields
+          const coordinates = p.coordinates || 
+            (p.latitude != null && p.longitude != null && 
+             typeof p.latitude !== 'undefined' && typeof p.longitude !== 'undefined' &&
+             !isNaN(Number(p.latitude)) && !isNaN(Number(p.longitude)))
+              ? { lat: Number(p.latitude), lng: Number(p.longitude) }
+              : undefined
+          const image = p.image || '/images/new-launch/new-launch-preview.webp'
+          const image_url_banner = p.image_url_banner || image
+          const bedrooms = p.bedrooms
+
+          return {
+            slug: p.slug,
+            name: p.name,
+            location: p.location,
+            address: p.address,
+            price,
+            price_from: p.price_from,
+            priceRange: lowerPrice ? `From $${lowerPrice}M` : undefined,
+            pricePerSqFt: p.pricePerSqFt,
+            image,
+            image_url_banner,
+            units: p.units ? `${p.units} Units` : undefined,
+            unitsAvailable: p.totalUnits ? `${p.totalUnits} Units` : undefined,
+            propertySizeRange: p.size,
+            developer: developerName,
+            completion: p.completion,
+            description: p.description,
+            features: p.features || [],
+            type: p.type || p.propertyType,
+            status: mapStatus(p.status),
+            district: districtNumber,
+            tenure: p.tenure,
+            propertyType: p.propertyType,
+            bedrooms,
+            coordinates,
+            lowerPrice,
+          }
+        })
+
+        if (!aborted) {
+          setAllProjectsForMap(mapped)
+        }
+        setIsLoadingMapProjects(false)
+      } catch (err) {
+        console.error('Error loading projects for map:', err)
+        if (!aborted) {
+          setAllProjectsForMap([])
+          setIsLoadingMapProjects(false)
+        }
+      }
+    }
+
+    loadAllProjectsForMap()
+    return () => { aborted = true }
+  }, [isClient, viewMode, searchQuery, sortBy, selectedDistricts, selectedTenures, selectedPropertyTypes, selectedStatus, selectedBedrooms, priceMin, priceMax])
 
   const scrollToSearch = () => { searchSectionRef.current?.scrollIntoView({ behavior: 'smooth' }) }
 
@@ -836,6 +970,36 @@ export default function NewLaunchDirectory() {
                   <SelectItem value="completion" className="text-white">Completion Date</SelectItem>
                 </SelectContent>
               </Select>
+
+              {/* View Toggle */}
+              <div className="flex items-center gap-1 bg-[#242728] border border-gray-600 rounded-md p-1">
+                <Button
+                  variant={viewMode === "list" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("list")}
+                  className={`h-[44px] px-3 rounded-md transition-all ${
+                    viewMode === "list"
+                      ? "bg-primary-red text-white hover:bg-primary-red/90"
+                      : "text-gray-300 hover:text-white hover:bg-gray-800/50"
+                  }`}
+                >
+                  <List className="h-4 w-4 mr-2" />
+                  <span className="text-sm">List</span>
+                </Button>
+                <Button
+                  variant={viewMode === "map" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("map")}
+                  className={`h-[44px] px-3 rounded-md transition-all ${
+                    viewMode === "map"
+                      ? "bg-primary-red text-white hover:bg-primary-red/90"
+                      : "text-gray-300 hover:text-white hover:bg-gray-800/50"
+                  }`}
+                >
+                  <Map className="h-4 w-4 mr-2" />
+                  <span className="text-sm">Map</span>
+                </Button>
+              </div>
             </div>
           </div>
 
@@ -1034,6 +1198,36 @@ export default function NewLaunchDirectory() {
                   <SelectItem value="completion" className="text-white">Completion Date</SelectItem>
                 </SelectContent>
               </Select>
+
+              {/* View Toggle */}
+              <div className="flex items-center gap-1 bg-[#242728] border border-gray-600 rounded-md p-1">
+                <Button
+                  variant={viewMode === "list" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("list")}
+                  className={`h-[44px] px-3 rounded-md transition-all ${
+                    viewMode === "list"
+                      ? "bg-primary-red text-white hover:bg-primary-red/90"
+                      : "text-gray-300 hover:text-white hover:bg-gray-800/50"
+                  }`}
+                >
+                  <List className="h-4 w-4 mr-2" />
+                  <span className="text-sm">List</span>
+                </Button>
+                <Button
+                  variant={viewMode === "map" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("map")}
+                  className={`h-[44px] px-3 rounded-md transition-all ${
+                    viewMode === "map"
+                      ? "bg-primary-red text-white hover:bg-primary-red/90"
+                      : "text-gray-300 hover:text-white hover:bg-gray-800/50"
+                  }`}
+                >
+                  <Map className="h-4 w-4 mr-2" />
+                  <span className="text-sm">Map</span>
+                </Button>
+              </div>
             </div>
           </div>
           
@@ -1141,111 +1335,156 @@ export default function NewLaunchDirectory() {
 
       <section className="py-16 bg-black">
         <div className="container mx-auto px-4">
-          {isLoading && (
-            <div className="flex justify-center items-center h-64">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-red"></div>
-            </div>
-          )}
-
-          {!isLoading && projects.length > 0 && (
-            <div className="text-sm text-gray-400 mb-6">
-              {(() => {
-                const start = (paginationMeta.page - 1) * paginationMeta.pageSize + 1
-                const end = Math.min(paginationMeta.page * paginationMeta.pageSize, paginationMeta.total)
-                return `Showing ${start} to ${end} of ${paginationMeta.total} projects`
-              })()}
-            </div>
-          )}
-
-          {!isLoading && (
-            <motion.div
-              variants={staggerContainer}
-              initial="initial"
-              animate="animate"
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-            >
-              {filteredProjects.map((project, index) => (
-                <motion.div key={project.slug || `project-${index}`} variants={fadeInUp}>
-                  <ProjectCard 
-                    {...project}
-                    type={project.type || 'Mixed Development'}
-                    coordinates={project.coordinates || { lat: 1.3521, lng: 103.8198 }}
-                  />
-                </motion.div>
-              ))}
-            </motion.div>
-          )}
-
-          {!isLoading && projects.length === 0 && (
-            <div className="text-center py-16">
-              <p className="text-gray-400 text-lg">New Project Coming Soon</p>
-              <Button 
-                variant="outline" 
-                className="mt-4 border-gray-600 text-gray-300 hover:bg-gray-800/50"
-                onClick={() => {
-                  setSelectedDistricts([])
-                  setSelectedTenures([])
-                  setSelectedPropertyTypes([])
-                  setSelectedStatus([])
-                  setSelectedBedrooms([])
-                  setPriceMin(0)
-                  setPriceMax(5000000)
-                  setSearchQuery("")
-                  setSearchInput("")
-                  setCurrentPage(1)
-                }}
-              >
-                Clear all filters
-              </Button>
-            </div>
-          )}
-
-          {!isLoading && (paginationMeta.pageCount || 1) > 1 && projects.length > 0 && (
-            <div className="flex flex-col items-center mt-12 gap-4">
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                  disabled={currentPage === 1}
-                  className="border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Previous
-                </Button>
-                
-                <div className="flex items-center gap-1">
-                  {getPaginationRange(currentPage, paginationMeta.pageCount || 1).map((page, index) => (
-                    page === '...' ? (
-                      <span key={`ellipsis-${index}`} className="px-3 py-2 text-gray-400">...</span>
-                    ) : (
-                      <Button
-                        key={page}
-                        variant={currentPage === page ? "default" : "outline"}
-                        size="sm"
-                        onClick={() => typeof page === 'number' && setCurrentPage(page)}
-                        className={
-                          currentPage === page 
-                            ? "bg-primary-red text-white hover:bg-primary-red/90 border-primary-red" 
-                            : "border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
-                        }
-                      >
-                        {page}
-                      </Button>
-                    )
-                  ))}
+          {viewMode === "list" ? (
+            <>
+              {isLoading && (
+                <div className="flex justify-center items-center h-64">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-red"></div>
                 </div>
-                
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, paginationMeta.pageCount || 1))}
-                  disabled={currentPage === (paginationMeta.pageCount || 1)}
-                  className="border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              )}
+
+              {!isLoading && projects.length > 0 && (
+                <div className="text-sm text-gray-400 mb-6">
+                  {(() => {
+                    const start = (paginationMeta.page - 1) * paginationMeta.pageSize + 1
+                    const end = Math.min(paginationMeta.page * paginationMeta.pageSize, paginationMeta.total)
+                    return `Showing ${start} to ${end} of ${paginationMeta.total} projects`
+                  })()}
+                </div>
+              )}
+
+              {!isLoading && (
+                <motion.div
+                  variants={staggerContainer}
+                  initial="initial"
+                  animate="animate"
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
                 >
-                  Next
-                </Button>
-              </div>
-            </div>
+                  {filteredProjects.map((project, index) => (
+                    <motion.div key={`${project.slug}-${index}-${project.coordinates?.lat || ''}-${project.coordinates?.lng || ''}`} variants={fadeInUp}>
+                      <ProjectCard 
+                        {...project}
+                        type={project.type || 'Mixed Development'}
+                        coordinates={project.coordinates || { lat: 1.3521, lng: 103.8198 }}
+                      />
+                    </motion.div>
+                  ))}
+                </motion.div>
+              )}
+
+              {!isLoading && projects.length === 0 && (
+                <div className="text-center py-16">
+                  <p className="text-gray-400 text-lg">New Project Coming Soon</p>
+                  <Button 
+                    variant="outline" 
+                    className="mt-4 border-gray-600 text-gray-300 hover:bg-gray-800/50"
+                    onClick={() => {
+                      setSelectedDistricts([])
+                      setSelectedTenures([])
+                      setSelectedPropertyTypes([])
+                      setSelectedStatus([])
+                      setSelectedBedrooms([])
+                      setPriceMin(0)
+                      setPriceMax(5000000)
+                      setSearchQuery("")
+                      setSearchInput("")
+                      setCurrentPage(1)
+                    }}
+                  >
+                    Clear all filters
+                  </Button>
+                </div>
+              )}
+
+              {!isLoading && (paginationMeta.pageCount || 1) > 1 && projects.length > 0 && (
+                <div className="flex flex-col items-center mt-12 gap-4">
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                      disabled={currentPage === 1}
+                      className="border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Previous
+                    </Button>
+                    
+                    <div className="flex items-center gap-1">
+                      {getPaginationRange(currentPage, paginationMeta.pageCount || 1).map((page, index) => (
+                        page === '...' ? (
+                          <span key={`ellipsis-${index}`} className="px-3 py-2 text-gray-400">...</span>
+                        ) : (
+                          <Button
+                            key={page}
+                            variant={currentPage === page ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => typeof page === 'number' && setCurrentPage(page)}
+                            className={
+                              currentPage === page 
+                                ? "bg-primary-red text-white hover:bg-primary-red/90 border-primary-red" 
+                                : "border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500"
+                            }
+                          >
+                            {page}
+                          </Button>
+                        )
+                      ))}
+                    </div>
+                    
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setCurrentPage(prev => Math.min(prev + 1, paginationMeta.pageCount || 1))}
+                      disabled={currentPage === (paginationMeta.pageCount || 1)}
+                      className="border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Next
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              {isLoadingMapProjects && (
+                <div className="flex justify-center items-center h-64">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-red"></div>
+                </div>
+              )}
+
+              {!isLoadingMapProjects && allProjectsForMap.length > 0 && (
+                <div className="text-sm text-gray-400 mb-6">
+                  Showing {allProjectsForMap.length} project{allProjectsForMap.length !== 1 ? 's' : ''} on map
+                </div>
+              )}
+
+              {!isLoadingMapProjects && allProjectsForMap.length > 0 && (
+                <ProjectsMapView projects={allProjectsForMap} />
+              )}
+
+              {!isLoadingMapProjects && allProjectsForMap.length === 0 && (
+                <div className="text-center py-16">
+                  <p className="text-gray-400 text-lg">No projects found with location data</p>
+                  <Button 
+                    variant="outline" 
+                    className="mt-4 border-gray-600 text-gray-300 hover:bg-gray-800/50"
+                    onClick={() => {
+                      setSelectedDistricts([])
+                      setSelectedTenures([])
+                      setSelectedPropertyTypes([])
+                      setSelectedStatus([])
+                      setSelectedBedrooms([])
+                      setPriceMin(0)
+                      setPriceMax(5000000)
+                      setSearchQuery("")
+                      setSearchInput("")
+                    }}
+                  >
+                    Clear all filters
+                  </Button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </section>
