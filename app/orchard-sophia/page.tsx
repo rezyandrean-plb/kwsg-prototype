@@ -861,45 +861,45 @@ export default function Artisan8Landing() {
 
   const amenities = [
     // TRANSPORT
-    { icon: <Train className="w-6 h-6" />, name: "Dhoby Ghaut MRT", distance: "8-Mins Walk", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Dhoby Ghaut MRT", distance: "8-Min Walk", category: "Transport" },
     { icon: <Train className="w-6 h-6" />, name: "City Hall MRT", distance: "1-Stop MRT", category: "Transport" },
     { icon: <Train className="w-6 h-6" />, name: "Raffles Place MRT", distance: "2-Stops MRT", category: "Transport" },
     { icon: <Train className="w-6 h-6" />, name: "Orchard MRT", distance: "2-Stops MRT", category: "Transport" },
     { icon: <Train className="w-6 h-6" />, name: "Bayfront MRT", distance: "4-Stops MRT", category: "Transport" },
-    { icon: <Car className="w-6 h-6" />, name: "CTE (Central Expressway)", distance: "3-Mins Drive", category: "Transport" },
-    { icon: <Car className="w-6 h-6" />, name: "Nicoll Highway", distance: "4-Mins Drive", category: "Transport" },
+    { icon: <Car className="w-6 h-6" />, name: "CTE (Central Expressway)", distance: "3-Min Drive", category: "Transport" },
+    { icon: <Car className="w-6 h-6" />, name: "Nicoll Highway", distance: "4-Min Drive", category: "Transport" },
 
     // RETAIL & F&B
     { icon: <ShoppingBag className="w-6 h-6" />, name: "Wilkie Edge", distance: "4-Min Walk", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "The Cathay", distance: "5-Mins Walk", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "GR.iD", distance: "5-Mins Walk", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Plaza Singapura", distance: "5-Mins Walk", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "The Cathay", distance: "5-Min Walk", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "GR.iD", distance: "5-Min Walk", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Plaza Singapura", distance: "5-Min Walk", category: "Retail & F&B" },
     { icon: <ShoppingBag className="w-6 h-6" />, name: "313@Somerset", distance: "1-Stop MRT", category: "Retail & F&B" },
     { icon: <ShoppingBag className="w-6 h-6" />, name: "ION Orchard", distance: "2-Stops MRT", category: "Retail & F&B" },
     { icon: <ShoppingBag className="w-6 h-6" />, name: "Marina Bay Sands", distance: "4-Stops MRT", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Bugis+", distance: "2-Mins Drive", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Bugis Junction", distance: "2-Mins Drive", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Ngee Ann City", distance: "6-Mins Drive", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "The Paragon", distance: "7-Mins Drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Bugis+", distance: "2-Min Drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Bugis Junction", distance: "2-Min Drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Ngee Ann City", distance: "6-Min Drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "The Paragon", distance: "7-Min Drive", category: "Retail & F&B" },
 
     // NATURE & LEISURE
-    { icon: <Trees className="w-6 h-6" />, name: "Mount Emily Park", distance: "3-Mins Walk", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Mount Emily Park", distance: "3-Min Walk", category: "Nature & Leisure" },
     { icon: <Trees className="w-6 h-6" />, name: "Gardens By The Bay", distance: "3-Stops MRT", category: "Nature & Leisure" },
     { icon: <Trees className="w-6 h-6" />, name: "Singapore Botanic Gardens", distance: "4-Stops MRT", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "Fort Canning Park", distance: "6-Mins Drive", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Fort Canning Park", distance: "6-Min Drive", category: "Nature & Leisure" },
 
     // CITY HUBS (Cultural & Arts Institutions)
-    { icon: <Landmark className="w-6 h-6" />, name: "National Library", distance: "2-Mins Drive", category: "Cultural & Arts Institutions" },
-    { icon: <Landmark className="w-6 h-6" />, name: "National Museum of Singapore", distance: "4-Mins Drive", category: "Cultural & Arts Institutions" },
-    { icon: <Landmark className="w-6 h-6" />, name: "Singapore Art Museum", distance: "4-Mins Drive", category: "Cultural & Arts Institutions" },
+    { icon: <Landmark className="w-6 h-6" />, name: "National Library", distance: "2-Min Drive", category: "Cultural & Arts Institutions" },
+    { icon: <Landmark className="w-6 h-6" />, name: "National Museum of Singapore", distance: "4-Min Drive", category: "Cultural & Arts Institutions" },
+    { icon: <Landmark className="w-6 h-6" />, name: "Singapore Art Museum", distance: "4-Min Drive", category: "Cultural & Arts Institutions" },
 
     // EDUCATION
     { icon: <GraduationCap className="w-6 h-6" />, name: "St Margaret's Pri Sch", distance: "1-Min Walk", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Nanyang Academy of Fine Arts", distance: "5-Mins Walk", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "School of the Arts (SOTA)", distance: "6-Mins Walk", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "LASALLE College of the Arts", distance: "7-Mins Walk", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Singapore Management University (SMU)", distance: "8-Mins Walk", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Anglo-Chinese School Junior (within 1km)", distance: "3-Mins Drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Nanyang Academy of Fine Arts", distance: "5-Min Walk", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "School of the Arts (SOTA)", distance: "6-Min Walk", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "LASALLE College of the Arts", distance: "7-Min Walk", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Singapore Management University (SMU)", distance: "8-Min Walk", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Anglo-Chinese School Junior (within 1km)", distance: "3-Min Drive", category: "Education" },
   ]
 
   // Compute available amenity categories dynamically in a preferred order
@@ -1548,7 +1548,7 @@ export default function Artisan8Landing() {
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
             <p className="text-sm md:text-xl text-gray-300 max-w-4xl mx-auto">
-            Orchard Sophia offers something few can: a freehold home that’s a heartbeat away from Orchard Road, with 1- to 3-bedroom and dual-key residences built for the modern dweller This distinguished project by Ong & Ong Architects is just moments to Dhoby Ghaut MRT station, 
+            Orchard Sophia offers something few can: a freehold home that’s a heartbeat away from Orchard Road, with 1- to 3-bedroom and dual-key residences built for the modern dweller This distinguished project by ONG & ONG Architects is just moments to Dhoby Ghaut MRT station, 
             ensuring seamless access to Singapore’s premier attractions and business hubs. 
             Live amidst luxury, where city vibrancy and comfort come together effortlessly.
             </p>
@@ -1560,7 +1560,7 @@ export default function Artisan8Landing() {
               { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "<strong>5-min walk</strong> to <strong>Dhoby Ghaut MRT</strong> (NSL, CCL, TEL)" },
               { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Steps from <strong>Orchard Road</strong> — a prime central location" },
               { icon: <BedDouble className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Exclusive collection of <strong>78</strong> 1- to 3-bedroom and dual-key units" },
-              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Developed by <strong>Ong &amp; Ong Architects</strong>, blending beauty and functionality" },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Developed by <strong>ONG &amp; ONG Architects</strong>, blending beauty and functionality" },
               { icon: <Home className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Premium fittings and appliances from <strong>Duravit</strong>, <strong>Hansgrohe</strong>, <strong>SMEG</strong>, and more" },
               { icon: <Eye className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Panoramic views of <strong>Orchard Road</strong>, the Singapore skyline, and <strong>Fort Canning Park</strong>" },
               { icon: <MountainSnow className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "First-class facilities including a lap pool, spa pool, rooftop dining, and fitness areas" },
@@ -1643,7 +1643,7 @@ export default function Artisan8Landing() {
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Architect:</span>
-                  <span className="font-semibold text-white text-right">Ong & Ong Pte Ltd</span>
+                  <span className="font-semibold text-white text-right">ONG &amp; ONG Pte Ltd</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Landscape:</span>
@@ -2156,7 +2156,7 @@ export default function Artisan8Landing() {
                 { icon: <Layers className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Prime Freehold Asset in Orchard Road', subtitle: 'Ensuring long-term capital appreciation.' },
                 { icon: <Home className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Diverse Unit Mix', subtitle: 'Catering to a wide range of future potential buyers.' },
                 { icon: <ChartLine className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Strong Capital Upside', subtitle: 'Poised for long-term value growth as the Orchard district continues to thrive.' },
-                { icon: <Building className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Architectural Prestige by Ong & Ong', subtitle: 'Attracts discerning tenants and buyers, further enhancing its investment appeal.' },
+                { icon: <Building className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Architectural Prestige by ONG & ONG', subtitle: 'Attracts discerning tenants and buyers, further enhancing its investment appeal.' },
                 { icon: <Train className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Exceptional Connectivity', subtitle: 'With seamless access to the CBD, Marina Bay, and other key economic zones.' },
                 { icon: <Users className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Prime Tenant Pool', subtitle: 'Ensuring a steady rental yield for investors.' }
               ].map((benefit, index) => (

@@ -90,6 +90,19 @@ const newLaunches = [
     price: "From $1,292,000",
     url: "/artisan-8",
   },
+  {
+    id: 7,
+    title: "Orchard Sophia",
+    summary: "The Pinnacle of Contemporary Living in the City",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/orchard-sophia-hero.jpg",
+    location: "Sophia Road",
+    district: "District 9",
+    status: "Launched",
+    type: "Condo",
+    bedrooms: "2",
+    price: "From $1,593,000",
+    url: "/orchard-sophia",
+  },
   
 ]
 
