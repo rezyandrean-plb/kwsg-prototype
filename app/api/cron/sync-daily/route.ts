@@ -27,15 +27,44 @@ async function sendCronEmail(subject: string, html: string) {
       return;
     }
 
+    console.log('📧 Sending cron email notification to:', toEmails);
+
     sgMail.setApiKey(apiKey);
-    await sgMail.send({
-      to: toEmails,
-      from: fromEmail,
-      subject,
-      html,
-    });
+    
+    // Send individual emails to each recipient for better reliability
+    // This ensures each recipient gets their own copy, even if one fails
+    const emailPromises = toEmails.map((email) =>
+      sgMail.send({
+        to: email,
+        from: fromEmail,
+        subject,
+        html,
+      }).then(() => {
+        console.log(`✅ Email sent successfully to: ${email}`);
+        return { email, success: true };
+      }).catch((error) => {
+        console.error(`❌ Failed to send email to ${email}:`, error);
+        return { email, success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      })
+    );
+
+    const results = await Promise.allSettled(emailPromises);
+    const successful = results.filter(
+      (r) => r.status === 'fulfilled' && r.value && r.value.success
+    ).length;
+    const failed = results.filter(
+      (r) => r.status === 'rejected' || (r.status === 'fulfilled' && (!r.value || !r.value.success))
+    ).length;
+
+    console.log(`✅ Cron email notification: ${successful} sent successfully, ${failed} failed`);
   } catch (error) {
     console.error('Failed to send cron email notification:', error);
+    if (error instanceof Error) {
+      console.error('Error details:', {
+        message: error.message,
+        stack: error.stack,
+      });
+    }
   }
 }
 
