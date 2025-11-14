@@ -208,6 +208,59 @@ export default function AboutUsPage() {
         </div>
       </section>
 
+      {/* Excellence. Celebrated. Section */}
+      <section className="relative py-12 sm:py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-black" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#B40101]/10 via-black to-black" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(180,1,1,0.15),transparent_70%)]" />
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          {/* Header and Copy */}
+          <div className="text-center mb-12">
+            <motion.h2 
+              className="text-3xl font-bold text-white mb-6 md:text-4xl lg:text-5xl leading-relaxed"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              Excellence. <span className="text-[#B40101]">Celebrated.</span>
+            </motion.h2>
+            <motion.p 
+              className="text-white/90 leading-relaxed text-lg max-w-3xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              A visual walk down the red carpet. See the grand celebration, recognition, and energy of our top performers as we honor the remarkable success built within the KW Singapore community.
+            </motion.p>
+          </div>
+
+          {/* Gallery Image */}
+          <motion.div
+            className="relative w-full max-w-5xl mx-auto"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden bg-gradient-to-br from-[#B40101]/20 to-transparent shadow-2xl">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
+              <Image
+                src="/images/about-us/excellence-celebrated-gallery.webp"
+                alt="KW Singapore Excellence Celebration - Awards, Recognition, and Social Events"
+                fill
+                className="object-cover"
+                priority
+                unoptimized
+              />
+              {/* Overlay gradient for better text readability if needed */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 z-0" />
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Our Story */}
       <section id="our-story" className="relative py-12 sm:py-32 bg-gradient-to-b from-black to-gray-900">
         <div className="max-w-4xl mx-auto text-center px-6">
