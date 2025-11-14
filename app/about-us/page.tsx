@@ -147,41 +147,64 @@ export default function AboutUsPage() {
 
       {/* Inside KW Section */}
       <section id="our-story" className="relative py-12 sm:py-32 bg-gradient-to-b from-black to-gray-900">
-        <div className="max-w-4xl mx-auto text-center px-6">
-          <motion.h2 
-            className="text-3xl font-bold text-white mb-8 md:text-4xl lg:text-5xl"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            Inside KW: The Real Story.
-          </motion.h2>
-          <motion.p 
-            className="text-white/90 leading-relaxed max-w-3xl mx-auto text-lg"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            Beyond the transactions is a movement. Dive into our community, explore our core values, and see the <strong>Life at KW</strong> that agents are building—in their business, and their lives. 
-            <strong>See the journey and the celebration</strong> and hear it straight from the source.
-          </motion.p>
-          <motion.div 
-            className="relative w-48 h-1 mx-auto mt-8 overflow-hidden"
-            variants={itemVariants}
-          >
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Left Side - Text Content */}
             <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: "-100%" }}
-              transition={{ 
-                duration: 2,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-              className="absolute top-0 left-0 h-full w-full bg-gradient-to-r from-transparent via-[#B40101] to-transparent"
-            />
-          </motion.div>
+              className="w-full"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <motion.h2 
+                className="text-3xl font-bold text-white mb-6 md:text-4xl lg:text-5xl leading-relaxed"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+              >
+                Inside KW: <br/><span className="text-[#B40101]">The Real Story</span>
+              </motion.h2>
+              <motion.p 
+                className="text-white/90 leading-relaxed text-lg"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                Beyond the transactions is a movement. Dive into our community, explore our core values, and see the <strong>Life at KW</strong> that agents are building—in their business, and their lives.
+              </motion.p>
+            </motion.div>
+
+            {/* Right Side - YouTube Video + Special Sentence */}
+            <motion.div
+              className="w-full"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-gray-800 mb-6">
+                <iframe
+                  src="https://www.youtube.com/embed/vEoJTl5cQJI"
+                  title="Inside KW: The Real Story"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full"
+                />
+              </div>
+              <motion.p 
+                className="text-white leading-relaxed text-sm text-center italic font-medium"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                See the journey and the celebration and hear it straight from the source.
+              </motion.p>
+            </motion.div>
+          </div>
         </div>
       </section>
 
