@@ -278,7 +278,7 @@ const defaultCategories: AwardCategory[] = [
 
 export function AwardsGrid({ categories = defaultCategories }: AwardsGridProps) {
   return (
-    <motion.section className="py-20 bg-background" initial="hidden" animate="visible" variants={sectionVariants}>
+    <motion.section className="pt-12 pb-20 bg-background" initial="hidden" animate="visible" variants={sectionVariants}>
       <div className="mx-auto max-w-7xl px-6">
         <div className="space-y-12">
           {categories.map((category, index) => (
@@ -383,7 +383,7 @@ export default function ModelPage() {
 
       {/* Quarterly Excellence Section */}
       <motion.section 
-        className="pt-20 pb-10 bg-background"
+        className="pt-20 pb-4 bg-background"
         initial="hidden"
         animate="visible"
         variants={sectionVariants}
