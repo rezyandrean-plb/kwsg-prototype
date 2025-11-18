@@ -3,10 +3,11 @@
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, CheckCircle, Building2, Users, Award, Brain, Share2, Video, BarChart3, Target, Heart, Lightbulb, Users2, Briefcase, ChevronRight } from "lucide-react"
+import { ArrowRight, CheckCircle, Building2, Users, Award, Brain, Share2, Video, BarChart3, Target, Heart, Lightbulb, Users2, Briefcase, ChevronRight, ChevronLeft, ArrowLeft } from "lucide-react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useState, useEffect } from "react"
 import { JoinFormDialog } from "@/components/join-form-dialog"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel"
 
 // Animation variants
 const fadeInUp = {
@@ -41,9 +42,73 @@ export default function AboutUsPage() {
   const [openModal, setOpenModal] = useState<string | null>(null)
   const [isJoinFormOpen, setIsJoinFormOpen] = useState(false)
   const [selectedMember, setSelectedMember] = useState(0)
+  const [api, setApi] = useState<CarouselApi>()
+  const [current, setCurrent] = useState(0)
+  const [canScrollPrev, setCanScrollPrev] = useState(false)
+  const [canScrollNext, setCanScrollNext] = useState(false)
+  const [currentSlide, setCurrentSlide] = useState(0)
+  
+  // Celebration images array
+  const celebrationImages = [
+    { src: "/images/about-us/excellence-celebrated/Excellence-01.jpg", alt: "KW Singapore Excellence Celebration - Award Winners" },
+    { src: "/images/about-us/excellence-celebrated/Excellence-02.jpg", alt: "KW Singapore Excellence Celebration - Social Gathering" },
+    { src: "/images/about-us/excellence-celebrated/Excellence-03.jpg", alt: "KW Singapore Excellence Celebration - Recognition Event" },
+    { src: "/images/about-us/excellence-celebrated/Excellence-04.jpg", alt: "KW Singapore Excellence Celebration - Celebration Moment" },
+    { src: "/images/about-us/excellence-celebrated/Excellence-05.jpg", alt: "KW Singapore Excellence Celebration - Group Photo" },
+    { src: "/images/about-us/excellence-celebrated/Excellence-06.jpg", alt: "KW Singapore Excellence Celebration - Event Gathering" },
+    { src: "/images/about-us/excellence-celebrated/Excellence-07.jpg", alt: "KW Singapore Excellence Celebration - Award Presentation" },
+    { src: "/images/about-us/excellence-celebrated/Excellence-08.jpg", alt: "KW Singapore Excellence Celebration - Celebration" },
+    { src: "/images/about-us/excellence-celebrated/Excellence-09.jpg", alt: "KW Singapore Excellence Celebration - Social Event" },
+    { src: "/images/about-us/excellence-celebrated/Excellence-10.jpg", alt: "KW Singapore Excellence Celebration - Recognition" },
+  ]
+  
+  // Navigation functions for celebration carousel
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % celebrationImages.length)
+  }
+  
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + celebrationImages.length) % celebrationImages.length)
+  }
+  
+  // Auto-slide animation for celebration carousel (slow)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % celebrationImages.length)
+    }, 6000) // 6 seconds - slow auto-slide
+
+    return () => clearInterval(interval)
+  }, [celebrationImages.length])
+  
   const { scrollYProgress, scrollY } = useScroll()
   const pathLength = useTransform(scrollYProgress, [0, 1], [0, 1])
   const scrollYValue = useTransform(scrollY, (value) => value * 0.5)
+
+  // Auto-scroll carousel
+  useEffect(() => {
+    if (!api) return
+
+    const interval = setInterval(() => {
+      api.scrollNext()
+    }, 5000) // Change slide every 5 seconds (slower)
+
+    return () => clearInterval(interval)
+  }, [api])
+
+  // Track current slide and scroll availability
+  useEffect(() => {
+    if (!api) return
+
+    setCurrent(api.selectedScrollSnap())
+    setCanScrollPrev(api.canScrollPrev())
+    setCanScrollNext(api.canScrollNext())
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap())
+      setCanScrollPrev(api.canScrollPrev())
+      setCanScrollNext(api.canScrollNext())
+    })
+  }, [api])
 
   const handleJoinFormSubmit = (data: any) => {
     console.log('Form submitted:', data)
@@ -157,24 +222,24 @@ export default function AboutUsPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <motion.h2 
+          <motion.h2 
                 className="text-3xl font-bold text-white mb-6 md:text-4xl lg:text-5xl leading-relaxed"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
-              >
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
                 Inside KW: <br/><span className="text-[#B40101]">The Real Story</span>
-              </motion.h2>
-              <motion.p 
+          </motion.h2>
+          <motion.p 
                 className="text-white/90 leading-relaxed text-lg"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-              >
-                Beyond the transactions is a movement. Dive into our community, explore our core values, and see the <strong>Life at KW</strong> that agents are building—in their business, and their lives.
-              </motion.p>
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Beyond the transactions is a movement. Dive into our community, explore our core values, and see the <strong>Life at KW</strong> that agents are building—in their business, and their lives. 
+          </motion.p>
             </motion.div>
 
             {/* Right Side - YouTube Video + Special Sentence */}
@@ -203,130 +268,203 @@ export default function AboutUsPage() {
               >
                 See the journey and the celebration and hear it straight from the source.
               </motion.p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Excellence. Celebrated. Section */}
-      <section className="relative py-12 sm:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-black" />
-        <div className="absolute inset-0 bg-gradient-to-br from-[#B40101]/10 via-black to-black" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(180,1,1,0.15),transparent_70%)]" />
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
-          {/* Header and Copy */}
-          <div className="text-center mb-12">
-            <motion.h2 
-              className="text-3xl font-bold text-white mb-6 md:text-4xl lg:text-5xl leading-relaxed"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              Excellence. <span className="text-[#B40101]">Celebrated.</span>
-            </motion.h2>
-            <motion.p 
-              className="text-white/90 leading-relaxed text-lg max-w-3xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              A visual walk down the red carpet. See the grand celebration, recognition, and energy of our top performers as we honor the remarkable success built within the KW Singapore community.
-            </motion.p>
-          </div>
-
-          {/* Gallery Image */}
-          <motion.div
-            className="relative w-full max-w-5xl mx-auto"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden bg-gradient-to-br from-[#B40101]/20 to-transparent shadow-2xl">
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
-              <Image
-                src="/images/about-us/excellence-celebrated-gallery.webp"
-                alt="KW Singapore Excellence Celebration - Awards, Recognition, and Social Events"
-                fill
-                className="object-cover"
-                priority
-                unoptimized
-              />
-              {/* Overlay gradient for better text readability if needed */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 z-0" />
-            </div>
           </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Our Story */}
-      <section id="our-story" className="relative py-12 sm:py-32 bg-gradient-to-b from-black to-gray-900">
-        <div className="max-w-4xl mx-auto text-center px-6">
-          <motion.h2 
-            className="text-3xl font-bold text-white mb-8 md:text-4xl lg:text-5xl"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            Our Story
-          </motion.h2>
-          <motion.p 
-            className="text-white/90 leading-relaxed max-w-3xl mx-auto text-lg"
-            initial={{ opacity: 0, y: 20 }}
+      {/* Excellence. Celebrated. - Image Carousel */}
+      <section className="relative py-32 overflow-hidden bg-gradient-to-b from-black via-[#210101] to-black">
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white leading-tight">Excellence. <span className="text-[#B40101]">Celebrated.</span></h2>
+            <p className="text-base md:text-lg text-white/90 max-w-3xl mx-auto leading-relaxed">
+              A visual walk down the red carpet. See the grand celebration, recognition, and energy of our top performers
+              as we honor the remarkable success built within the KW Singapore community.
+            </p>
+          </div>
+
+          {/* Video Section */}
+          <motion.div 
+            className="relative w-full max-w-4xl mx-auto mb-16"
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
+            <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-gray-800 shadow-2xl">
+              <iframe
+                src="https://www.youtube.com/embed/EFkqgHdxTb0?modestbranding=1&rel=0&showinfo=0&controls=1&fs=1&autoplay=1&mute=1&playsinline=1&loop=1&playlist=EFkqgHdxTb0"
+                title="Excellence Celebrated"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full"
+                style={{ border: 'none' }}
+              />
+            </div>
+          </motion.div>
+
+          {/* Carousel Container */}
+          <div className="relative max-w-6xl mx-auto">
+            {/* Cards Display */}
+            <div className="relative h-[400px] md:h-[500px] flex items-center justify-center perspective-1000">
+              {celebrationImages.map((image, index) => {
+                const position = (index - currentSlide + celebrationImages.length) % celebrationImages.length
+
+                const isCenter = position === 0
+                const isLeft1 = position === celebrationImages.length - 1
+                const isLeft2 = position === celebrationImages.length - 2
+                const isRight1 = position === 1
+                const isRight2 = position === 2
+                
+                let transformStyle = ""
+                let zIndex = 0
+                let opacity = 0
+                let gradientOverlay = ""
+                
+                if (window.innerWidth < 768) {
+                  if (isCenter) {
+                    transformStyle = "translateX(0) scale(1)"
+                    zIndex = 50
+                    opacity = 1
+                    gradientOverlay = ""
+                  } else {
+                    transformStyle = "translateX(0) scale(0.5)"
+                    zIndex = 10
+                    opacity = 0
+                    gradientOverlay = ""
+                  }
+                } else {
+                  if (isCenter) {
+                    transformStyle = "translateX(0) scale(1.1) rotateY(0deg)"
+                    zIndex = 50
+                    opacity = 1
+                    gradientOverlay = ""
+                  } else if (isLeft1) {
+                    transformStyle = "translateX(-80%) scale(0.9) rotateY(10deg)"
+                    zIndex = 40
+                    opacity = 0.7
+                    gradientOverlay = "linear-gradient(to right, rgba(0, 0, 0, 0.3), transparent)"
+                  } else if (isLeft2) {
+                    transformStyle = "translateX(-160%) scale(0.75) rotateY(20deg)"
+                    zIndex = 30
+                    opacity = 0.5
+                    gradientOverlay = "linear-gradient(to right, rgba(0, 0, 0, 0.6), transparent 70%)"
+                  } else if (isRight1) {
+
+                    transformStyle = "translateX(80%) scale(0.9) rotateY(-10deg)"
+                    zIndex = 40
+                    opacity = 0.7
+                    gradientOverlay = "linear-gradient(to left, rgba(0, 0, 0, 0.3), transparent)"
+                  } else if (isRight2) {
+                    transformStyle = "translateX(160%) scale(0.75) rotateY(-20deg)"
+                    zIndex = 30
+                    opacity = 0.5
+                    gradientOverlay = "linear-gradient(to left, rgba(0, 0, 0, 0.6), transparent 70%)"
+                  } else {
+                    transformStyle = "translateX(0) scale(0.5)"
+                    zIndex = 10
+                    opacity = 0
+                    gradientOverlay = ""
+                  }
+                }
+
+                return (
+                  <div
+                    key={index}
+                    className="absolute transition-all duration-500 ease-out"
+                    style={{
+                      transform: transformStyle,
+                      zIndex: zIndex,
+                      opacity: opacity,
+                      pointerEvents: isCenter ? "auto" : "none",
+                    }}
+                  >
+                    <div className="relative w-[280px] md:w-[350px] h-[360px] md:h-[450px] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-gray-800 to-gray-900">
+                      <Image
+                        src={image.src || "/placeholder.svg"}
+                        alt={image.alt || `Celebration ${index + 1}`}
+                        fill
+                        className="object-cover"
+                        sizes="350px"
+                        unoptimized
+                        priority={isCenter}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                      {gradientOverlay && (
+                        <div 
+                          className="absolute inset-0" 
+                          style={{ background: gradientOverlay }}
+                        />
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+
+            {/* Combined Navigation Controls */}
+            <div className="flex justify-center items-center gap-3 md:gap-6 mt-8 md:mt-12">
+              <button
+                onClick={prevSlide}
+                className="bg-white/10 hover:bg-[#B40101] text-white p-2 md:p-3 rounded-full transition-all duration-300 backdrop-blur-sm hover:scale-110"
+                aria-label="Previous slide"
+              >
+                <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
+              </button>
+              
+              {/* Indicator Dots */}
+              <div className="flex justify-center gap-1.5 md:gap-2">
+                {celebrationImages.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentSlide(index)}
+                    className={`transition-all duration-300 rounded-full ${
+                      currentSlide === index ? "w-6 md:w-8 h-1.5 md:h-2 bg-[#B40101]" : "w-1.5 md:w-2 h-1.5 md:h-2 bg-white/30 hover:bg-white/50"
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
+              <button
+                onClick={nextSlide}
+                className="bg-white/10 hover:bg-[#B40101] text-white p-2 md:p-3 rounded-full transition-all duration-300 backdrop-blur-sm hover:scale-110"
+                aria-label="Next slide"
+              >
+                <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Story */}
+      <section className="relative py-32 bg-gradient-to-b from-black to-gray-900 pb-5">
+        <div className="max-w-4xl mx-auto text-center px-6">
+          <h2 className="text-5xl font-bold text-white mb-8">Our Story</h2>
+          <p className="text-white leading-relaxed max-w-3xl mx-auto text-lg mb-8">
             As the local embodiment of the world's largest real estate brand, we are built to empower Singapore's top
             realtors through elite systems, technology, and training.
-          </motion.p>
-          <motion.div 
-            className="relative w-48 h-1 mx-auto mt-8 overflow-hidden"
-            variants={itemVariants}
-          >
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: "-100%" }}
-              transition={{ 
-                duration: 2,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-              className="absolute top-0 left-0 h-full w-full bg-gradient-to-r from-transparent via-[#B40101] to-transparent"
-            />
-          </motion.div>
+          </p>
+          <div className="w-24 h-1 bg-[#B40101] mx-auto"></div>
         </div>
       </section>
 
       
 
       {/* Meet the Core Team - Redesigned */}
-      <section className="relative py-12 sm:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-black" />
+      <section className="relative py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+        <div className="absolute inset-0" />
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           {/* Section Header */}
-          <div className="text-center mb-16">
-            <motion.h2 
-              className="text-3xl font-bold mb-8 text-white leading-tight md:text-4xl lg:text-5xl"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
+          <div className="mb-16">
+            <h2 className="text-5xl font-bold mb-8 text-white text-center leading-tight">
               Meet the Core Team
-            </motion.h2>
-            <motion.p 
-              className="text-lg text-white/90 max-w-4xl mx-auto leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
+            </h2>
+            <p className="text-lg text-white leading-relaxed max-w-4xl mx-auto text-left">
               Our leadership isn't just operational — it's transformational. Each core leader at KW Singapore is handpicked for domain expertise, business acumen, and a commitment to building a scalable, consultant-first ecosystem.
-            </motion.p>
+            </p>
           </div>
           {/* Main Featured Area */}
           <div className="grid md:grid-cols-2 gap-16 items-center mb-20">

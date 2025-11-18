@@ -75,7 +75,7 @@ export function Header() {
             priority
             loading="eager"
             fetchPriority="high"
-            className="w-auto h-auto"
+            className="h-auto"
           />
         </Link>
         {/* Desktop Navigation */}
