@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle, Building2, Users, Award, Brain, Share2, Video, BarChart3, Target, Heart, Lightbulb, Users2, Briefcase, ChevronRight, ChevronLeft, ArrowLeft } from "lucide-react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { JoinFormDialog } from "@/components/join-form-dialog"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel"
 
@@ -36,6 +37,7 @@ const itemVariants = {
 }
 
 export default function AboutUsPage() {
+  const router = useRouter()
   useEffect(() => {
     document.title = 'About Us - KW Singapore'
   }, [])
@@ -47,6 +49,22 @@ export default function AboutUsPage() {
   const [canScrollPrev, setCanScrollPrev] = useState(false)
   const [canScrollNext, setCanScrollNext] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [isMobileView, setIsMobileView] = useState(false)
+
+  useEffect(() => {
+    const updateIsMobile = () => {
+      if (typeof window !== "undefined") {
+        setIsMobileView(window.innerWidth < 768)
+      }
+    }
+
+    updateIsMobile()
+    window.addEventListener("resize", updateIsMobile)
+
+    return () => {
+      window.removeEventListener("resize", updateIsMobile)
+    }
+  }, [])
   
   // Celebration images array
   const celebrationImages = [
@@ -323,7 +341,7 @@ export default function AboutUsPage() {
                 let opacity = 0
                 let gradientOverlay = ""
                 
-                if (window.innerWidth < 768) {
+                if (isMobileView) {
                   if (isCenter) {
                     transformStyle = "translateX(0) scale(1)"
                     zIndex = 50
@@ -563,7 +581,7 @@ export default function AboutUsPage() {
             <Button
               size="lg"
               className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
-              onClick={() => (window.location.href = "/join")}
+              onClick={() => router.push("/join")}
             >
               Join KW Singapore
               <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
