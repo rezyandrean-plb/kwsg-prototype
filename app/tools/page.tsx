@@ -20,7 +20,7 @@ const tools = [
     icon: Building2,
     category: "Business Tool",
     url: "app.propsage.com",
-    image: "/images/tech-tool/kw-propsage.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-propsage.webp"
   },
   {
     id: 2,
@@ -29,7 +29,7 @@ const tools = [
     icon: Calculator,
     category: "Business Tool",
     url: "agent.kw.com",
-    image: "/images/tech-tool/kw-command.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-command.webp"
   },
   {
     id: 101,
@@ -38,7 +38,7 @@ const tools = [
     icon: Building2,
     category: "Business Tool",
     url: "https://console.command.kw.com/command/contacts",
-    image: "/images/tech-tool/kw-contacts.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-contacts.webp"
   },
   {
     id: 102,
@@ -47,7 +47,7 @@ const tools = [
     icon: Calculator,
     category: "Business Tool",
     url: "https://console.command.kw.com/command/task-manager",
-    image: "/images/tech-tool/kw-tasks.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tasks.webp"
   },
   {
     id: 103,
@@ -56,7 +56,7 @@ const tools = [
     icon: TrendingUp,
     category: "Business Tool",
     url: "https://campaigns.kw.com/",
-    image: "/images/tech-tool/kw-campaigns.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-campaigns.webp"
   },
   {
     id: 104,
@@ -65,7 +65,7 @@ const tools = [
     icon: BarChart3,
     category: "Business Tool",
     url: "https://console.command.kw.com/command/opportunities",
-    image: "/images/tech-tool/kw-opportunities.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-opportunities.webp"
   },
   {
     id: 105,
@@ -74,7 +74,7 @@ const tools = [
     icon: Smartphone,
     category: "Business Tool",
     url: "https://console.command.kw.com/command/smart-plans",
-    image: "/images/tech-tool/kw-smartplans.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-smartplans.webp"
   },
   {
     id: 106,
@@ -83,7 +83,7 @@ const tools = [
     icon: Home,
     category: "Business Tool",
     url: "https://console.command.kw.com/command/listings",
-    image: "/images/tech-tool/kw-listings.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-listings.webp"
   },
   {
     id: 107,
@@ -92,7 +92,7 @@ const tools = [
     icon: MapPin,
     category: "Business Tool",
     url: "https://console.command.kw.com/command/websites",
-    image: "/images/tech-tool/kw-website.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-website.webp"
   },
   {
     id: 3,
@@ -101,7 +101,7 @@ const tools = [
     icon: TrendingUp,
     category: "Learnings",
     url: "https://agent.kw.com/connect/learning/categories",
-    image: "/images/tech-tool/kw-university.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-university.webp"
   },
   // External Tools items
   {
@@ -111,7 +111,7 @@ const tools = [
     icon: BarChart3,
     category: "External Tools",
     url: "https://rea-insight.com/",
-    image: "/images/tech-tool/rea-insights.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/rea-insights.webp"
   },
   {
     id: 13,
@@ -120,7 +120,7 @@ const tools = [
     icon: TrendingUp,
     category: "External Tools",
     url: "https://www.edgeprop.sg/analytic/inspector",
-    image: "/images/tech-tool/edgeprop-pro.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/edgeprop-pro.webp"
   },
   {
     id: 108,
@@ -129,7 +129,7 @@ const tools = [
     icon: Building2,
     category: "Business Tool",
     url: "canva.kw.com",
-    image: "/images/tech-tool/kw-canva.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-canva.webp"
   },
   {
     id: 118,
@@ -138,7 +138,7 @@ const tools = [
     icon: Home,
     category: "External Tools",
     url: "squarefoot.com.sg/component/users/login",
-    image: "/images/tech-tool/squarefoot.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/squarefoot.webp"
   },
   {
     id: 120,
@@ -147,7 +147,7 @@ const tools = [
     icon: Smartphone,
     category: "External Tools",
     url: "https://drive.google.com/file/d/1GcNpqifBzKSurSmz7qkpIMjrjaVOD1Pm/view",
-    image: "/images/tech-tool/spidergate.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/spidergate.webp"
   },
   // Compass Tools items - Sales Proceed
   {
@@ -158,7 +158,7 @@ const tools = [
     category: "Compass Tools",
     subtitle: "Sales Proceed",
     url: "https://proptech.kwsingapore.com/calculator/sales-proceed",
-    image: "/images/tech-tool/sales-proceed.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/sales-proceed.webp"
   },
   {
     id: 15,
@@ -168,7 +168,7 @@ const tools = [
     category: "Compass Tools",
     subtitle: "Sales Proceed",
     url: "https://proptech.kwsingapore.com/calculator/timeline-planning",
-    image: "/images/tech-tool/timeline-planning.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/timeline-planning.webp"
   },
   {
     id: 16,
@@ -178,7 +178,7 @@ const tools = [
     category: "Compass Tools",
     subtitle: "Sales Proceed",
     url: "https://proptech.kwsingapore.com/calculator/decoupling",
-    image: "/images/tech-tool/decoupling.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/decoupling.webp"
   },
   {
     id: 17,
@@ -188,7 +188,7 @@ const tools = [
     category: "Compass Tools",
     subtitle: "Sales Proceed",
     url: "https://proptech.kwsingapore.com/calculator/equity-term-loan",
-    image: "/images/tech-tool/equity-term-loan.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/equity-term-loan.webp"
   },
   // Compass Tools items - Buyer Affordability
   {
@@ -199,7 +199,7 @@ const tools = [
     category: "Compass Tools",
     subtitle: "Buyer Affordability",
     url: "https://proptech.kwsingapore.com/calculator/tdsr-msr",
-    image: "/images/tech-tool/tdsr-msr.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/tdsr-msr.webp"
   },
   {
     id: 19,
@@ -209,7 +209,7 @@ const tools = [
     category: "Compass Tools",
     subtitle: "Buyer Affordability",
     url: "https://proptech.kwsingapore.com/calculator/buc",
-    image: "/images/tech-tool/buc-calculator.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/buc-calculator.webp"
   },
   {
     id: 20,
@@ -219,7 +219,7 @@ const tools = [
     category: "Compass Tools",
     subtitle: "Buyer Affordability",
     url: "https://proptech.kwsingapore.com/calculator/ec",
-    image: "/images/tech-tool/buc-calculator.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/buc-calculator.webp"
   },
   {
     id: 21,
@@ -238,7 +238,7 @@ const tools = [
     category: "Compass Tools",
     subtitle: "Buyer Affordability",
     url: "https://proptech.kwsingapore.com/calculator/mortgage-loan",
-    image: "/images/tech-tool/mortgage-loan.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/mortgage-loan.webp"
   },
   {
     id: 23,
@@ -248,7 +248,7 @@ const tools = [
     category: "Compass Tools",
     subtitle: "Buyer Affordability",
     url: "https://proptech.kwsingapore.com/calculator/pledge-unpledge",
-    image: "/images/tech-tool/pledge-unpledge.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/pledge-unpledge.webp"
   },
   // Compass Tools items - Stamp Duty
   {
@@ -259,7 +259,7 @@ const tools = [
     category: "Compass Tools",
     subtitle: "Stamp Duty",
     url: "https://proptech.kwsingapore.com/calculator/absd-bsd",
-    image: "/images/tech-tool/absd-bsd.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/absd-bsd.webp"
   },
   {
     id: 25,
@@ -269,7 +269,7 @@ const tools = [
     category: "Compass Tools",
     subtitle: "Stamp Duty",
     url: "https://proptech.kwsingapore.com/calculator/ssd",
-    image: "/images/tech-tool/ssd.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/ssd.webp"
   },
   {
     id: 26,
@@ -279,7 +279,7 @@ const tools = [
     category: "Compass Tools",
     subtitle: "Stamp Duty",
     url: "https://proptech.kwsingapore.com/calculator/rental-stamp-duty",
-    image: "/images/tech-tool/rental-stamp-duty.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/rental-stamp-duty.webp"
   },
   // Compass Tools items - Research Charts
   {
@@ -290,7 +290,7 @@ const tools = [
     category: "Compass Tools",
     subtitle: "Research Charts",
     url: "https://proptech.kwsingapore.com/tech-tools/disparity-effect/charts?type=all",
-    image: "/images/tech-tool/disparity-effect.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/disparity-effect.webp"
   },
   // Compass Tools items - Concept Calculators
   {
@@ -301,7 +301,7 @@ const tools = [
     category: "Compass Tools",
     subtitle: "Concept Calculators",
     url: "https://proptech.kwsingapore.com/calculator/property-comparison",
-    image: "/images/tech-tool/buc-calculator.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/buc-calculator.webp"
   },
   // Research Tools items
   {
@@ -312,7 +312,7 @@ const tools = [
     category: "Compass Tools",
     subtitle: "Research Charts",
     url: "https://drive.google.com/drive/u/2/folders/16cpLVQWIGSmdsat2f9XONQkDbOESYV0m",
-    image: "/images/tech-tool/research-charts.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/research-charts.webp"
   },
   // Training Resource items
   {
@@ -322,7 +322,7 @@ const tools = [
     icon: Play,
     category: "Learnings",
     url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmAqEH3-QDXlGc4Opm9i3lGa0",
-    image: "/images/tech-tool/kw-tutorial.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
   {
     id: 31,
@@ -331,7 +331,7 @@ const tools = [
     icon: Play,
     category: "Learnings",
     url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmAoqtN5dPkjshZgUhF735R9x",
-    image: "/images/tech-tool/kw-tutorial.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
   {
     id: 32,
@@ -340,7 +340,7 @@ const tools = [
     icon: Play,
     category: "Learnings",
     url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmAr-TbCVIjwGGCItRE-mQ3Vg",
-    image: "/images/tech-tool/kw-tutorial.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
   {
     id: 33,
@@ -349,7 +349,7 @@ const tools = [
     icon: Play,
     category: "Learnings",
     url: "https://answers.kw.com/hc/en-us/categories/26283417706515-Command",
-    image: "/images/tech-tool/kw-tutorial.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
   {
     id: 34,
@@ -358,7 +358,7 @@ const tools = [
     icon: Play,
     category: "Learnings",
     url: "https://answers.kw.com/hc/en-us/categories/4402619174931-Command-App",
-    image: "/images/tech-tool/kw-tutorial.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
   {
     id: 35,
@@ -367,7 +367,7 @@ const tools = [
     icon: Play,
     category: "Learnings",
     url: "https://drive.google.com/file/d/1YkRJJebAJhWilzd2mvTMwMGbIvzvBzWY/view?usp=drive_link",
-    image: "/images/tech-tool/kw-tutorial.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
   {
     id: 36,
@@ -376,7 +376,7 @@ const tools = [
     icon: Play,
     category: "Learnings",
     url: "https://drive.google.com/file/d/1KnOVVO_2YtvDta0vS_t0nxCIlo1K0AK3/view?usp=drive_link",
-    image: "/images/tech-tool/kw-tutorial.webp"
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
 ]
 
