@@ -499,7 +499,8 @@ export default function TechToolPage() {
     if (category === "Compass Tools") {
       setActiveCategory(category)
     } else {
-      router.push('/tools')
+      const encodedCategory = encodeURIComponent(category)
+      router.push(`/tools?tab=${encodedCategory}`)
     }
   }
 
