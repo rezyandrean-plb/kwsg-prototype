@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Search, Building2, Calculator, TrendingUp, BarChart3, MapPin, DollarSign, Smartphone, Home, ChevronRight, Play } from "lucide-react"
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion"
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
 import { useUser } from '@clerk/nextjs'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import AuthDialog from "@/components/auth-dialog"
 
 // Tool data based on the image
@@ -380,6 +380,208 @@ const tools = [
   },
 ]
 
+const compassTools = [
+  {
+    id: 200,
+    title: "Property Analysis",
+    description: "Your All-In-One Property Deep Dive — Every Detail, Every Metric",
+    icon: BarChart3,
+    category: "Compass Tools",
+    subtitle: "Tech Tools",
+    url: "https://compass.kwsingapore.com/tech-tools/property-analysis/research",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/property-analysis.webp"
+  },
+  {
+    id: 203,
+    title: "MegaMap",
+    description: "A powerful map that lets you shortlist listings, study supply-demand, compare past deals, and run instant CMAs in one place.",
+    icon: MapPin,
+    category: "Compass Tools",
+    subtitle: "Tech Tools",
+    url: "https://compass.kwsingapore.com/tech-tools/megamap",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/mega-map.webp"
+  },
+  {
+    id: 2001,
+    title: "Compass10",
+    description: "Smart Property Scoring Framework condenses investment potential into one intuitive visual chart.",
+    icon: BarChart3,
+    category: "Compass Tools",
+    subtitle: "Tech Tools",
+    url: "https://compass.kwsingapore.com/tech-tools/compass-10",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/compass-10.webp"
+  },
+  {
+    id: 2002,
+    title: "Disparity Effect",
+    description: "Analyse property price gaps across different markets through charts to identify undervalued opportunities.",
+    icon: BarChart3,
+    category: "Compass Tools",
+    subtitle: "Tech Tools",
+    url: "https://proptech.kwsingapore.com/tech-tools/disparity-effect/charts?type=all",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/disparity-effect.webp"
+  },
+  {
+    id: 201,
+    title: "Supply & Demand Analysis",
+    description: "Aggregates market activity data to reveal real-time property demand and supply trends.",
+    icon: TrendingUp,
+    category: "Compass Tools",
+    subtitle: "Tech Tools",
+    url: "https://compass.kwsingapore.com/tech-tools/supply-demand-analysis",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/supply-demand-analysis.webp"
+  },
+  {
+    id: 28,
+    title: "Property Comparison",
+    description: "Compare multiple properties side-by-side using price, size, and yield metrics.",
+    icon: BarChart3,
+    category: "Compass Tools",
+    subtitle: "Concept Calculators",
+    url: "https://proptech.kwsingapore.com/calculator/property-comparison",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/buc-calculator.webp"
+  },
+  {
+    id: 14,
+    title: "Sales Proceed",
+    description: "Instantly calculate net cash proceeds after property sale and costs.",
+    icon: Calculator,
+    category: "Compass Tools",
+    subtitle: "Sales Proceed",
+    url: "https://proptech.kwsingapore.com/calculator/sales-proceed",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/sales-proceed.webp"
+  },
+  {
+    id: 15,
+    title: "Timeline Planning",
+    description: "Plan key property transaction milestones with clear, date-based scheduling tool.",
+    icon: TrendingUp,
+    category: "Compass Tools",
+    subtitle: "Sales Proceed",
+    url: "https://proptech.kwsingapore.com/calculator/timeline-planning",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/timeline-planning.webp"
+  },
+  {
+    id: 16,
+    title: "Decoupling",
+    description: "Assess cost and benefits of transferring ownership for future property purchase.",
+    icon: Building2,
+    category: "Compass Tools",
+    subtitle: "Sales Proceed",
+    url: "https://proptech.kwsingapore.com/calculator/decoupling",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/decoupling.webp"
+  },
+  {
+    id: 17,
+    title: "Equity Term Loan",
+    description: "Estimate how much equity you can unlock through refinancing options.",
+    icon: DollarSign,
+    category: "Compass Tools",
+    subtitle: "Sales Proceed",
+    url: "https://proptech.kwsingapore.com/calculator/equity-term-loan",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/equity-term-loan.webp"
+  },
+  {
+    id: 18,
+    title: "TDSR/MSR",
+    description: "Evaluate buyer affordability using government-mandated loan ratio and income guidelines.",
+    icon: Calculator,
+    category: "Compass Tools",
+    subtitle: "Buyer Affordability",
+    url: "https://proptech.kwsingapore.com/calculator/tdsr-msr",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/tdsr-msr.webp"
+  },
+  {
+    id: 19,
+    title: "New Project Purchase (BUC)",
+    description: "Project progressive payment schedule for building-under-construction properties before completion.",
+    icon: Home,
+    category: "Compass Tools",
+    subtitle: "Buyer Affordability",
+    url: "https://proptech.kwsingapore.com/calculator/buc",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/buc-calculator.webp"
+  },
+  {
+    id: 20,
+    title: "New EC Purchase (BUC)",
+    description: "Calculate EC affordability with income ceiling, grant eligibility, and staged payments.",
+    icon: Home,
+    category: "Compass Tools",
+    subtitle: "Buyer Affordability",
+    url: "https://proptech.kwsingapore.com/calculator/ec",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/buc-calculator.webp"
+  },
+  {
+    id: 21,
+    title: "Resale Purchase",
+    description: "Estimate upfront costs, loan structure, and timeline for resale property purchase.",
+    icon: Building2,
+    category: "Compass Tools",
+    subtitle: "Buyer Affordability",
+    url: "https://proptech.kwsingapore.com/calculator/timeline-payment"
+  },
+  {
+    id: 22,
+    title: "Mortgage Loan",
+    description: "Compute monthly repayments and interest impact based on loan tenure and rates.",
+    icon: Calculator,
+    category: "Compass Tools",
+    subtitle: "Buyer Affordability",
+    url: "https://proptech.kwsingapore.com/calculator/mortgage-loan",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/mortgage-loan.webp"
+  },
+  {
+    id: 23,
+    title: "Pledge/Unpledge",
+    description: "Assess affordability impact when pledging or unpledging funds for property loan.",
+    icon: DollarSign,
+    category: "Compass Tools",
+    subtitle: "Buyer Affordability",
+    url: "https://proptech.kwsingapore.com/calculator/pledge-unpledge",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/pledge-unpledge.webp"
+  },
+  {
+    id: 24,
+    title: "ABSD/BSD",
+    description: "Calculate Buyer's and Additional Buyer's Stamp Duties for property transactions.",
+    icon: Calculator,
+    category: "Compass Tools",
+    subtitle: "Stamp Duty",
+    url: "https://proptech.kwsingapore.com/calculator/absd-bsd",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/absd-bsd.webp"
+  },
+  {
+    id: 25,
+    title: "SSD",
+    description: "Determine payable Seller's Stamp Duty based on property holding duration and rules.",
+    icon: Calculator,
+    category: "Compass Tools",
+    subtitle: "Stamp Duty",
+    url: "https://proptech.kwsingapore.com/calculator/ssd",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/ssd.webp"
+  },
+  {
+    id: 26,
+    title: "Rental Stamp Duty",
+    description: "Instantly compute rental stamp duty payable on signed tenancy agreements.",
+    icon: Calculator,
+    category: "Compass Tools",
+    subtitle: "Stamp Duty",
+    url: "https://proptech.kwsingapore.com/calculator/rental-stamp-duty",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/rental-stamp-duty.webp"
+  },
+  {
+    id: 29,
+    title: "Research Chart Mega Vault",
+    description: "Compare BUC vs Resale financial outlays, analysing own-stay versus investment.",
+    icon: BarChart3,
+    category: "Compass Tools",
+    subtitle: "Research Charts",
+    url: "https://drive.google.com/drive/u/2/folders/16cpLVQWIGSmdsat2f9XONQkDbOESYV0m",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/research-charts.webp"
+  },
+]
+
 const categories = [
   "All",
   "Business Tool",
@@ -388,10 +590,22 @@ const categories = [
   "Learnings"
 ]
 
+type Tool = (typeof tools)[number] | (typeof compassTools)[number]
+
+const getToolKey = (tool: Tool) => `${tool.category ?? "Uncategorized"}-${tool.title}`
+
 export default function TechToolPage() {
   const { isSignedIn, user, isLoaded } = useUser()
   const router = useRouter()
-  const [activeCategory, setActiveCategory] = useState("All")
+  const searchParams = useSearchParams()
+  const tabParam = searchParams.get('tab')
+  const initialCategory = tabParam && categories.includes(tabParam) ? tabParam : "All"
+  const [activeCategory, setActiveCategory] = useState(initialCategory)
+
+  useEffect(() => {
+    const nextCategory = tabParam && categories.includes(tabParam) ? tabParam : "All"
+    setActiveCategory(nextCategory)
+  }, [tabParam])
   const [searchQuery, setSearchQuery] = useState("")
   const [authDialogOpen, setAuthDialogOpen] = useState(false)
   const [selectedTool, setSelectedTool] = useState<any>(null)
@@ -412,16 +626,43 @@ export default function TechToolPage() {
   const toolsInView = useInView(toolsRef, { once: true, margin: "-100px" })
   const roadmapInView = useInView(roadmapRef, { once: true, margin: "-100px" })
 
-  const filteredTools = tools.filter(tool => {
-    const matchesCategory = activeCategory === "All" 
-      ? tool.category !== "Compass Tools" 
-      : tool.category === activeCategory
-    const matchesSearch = tool.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         tool.description.toLowerCase().includes(searchQuery.toLowerCase())
+  const normalizedQuery = searchQuery.trim().toLowerCase()
+
+  const nonCompassTools = tools.filter(tool => tool.category !== "Compass Tools")
+
+  const includeCompassInMainList = activeCategory === "All"
+
+  const toolPool: Tool[] =
+    activeCategory === "All"
+      ? [...nonCompassTools, ...compassTools]
+      : activeCategory === "Compass Tools"
+        ? compassTools
+        : nonCompassTools
+
+  const filteredTools = toolPool.filter(tool => {
+    const matchesCategory =
+      activeCategory === "All"
+        ? true
+        : activeCategory === "Compass Tools"
+          ? tool.category === "Compass Tools"
+          : tool.category === activeCategory
+    const matchesSearch = normalizedQuery.length === 0 ||
+      tool.title.toLowerCase().includes(normalizedQuery) ||
+      tool.description.toLowerCase().includes(normalizedQuery)
     return matchesCategory && matchesSearch
   })
 
   const displayedTools = filteredTools
+
+  const compassSearchResults = normalizedQuery.length === 0 
+    ? [] 
+    : compassTools.filter(tool => 
+        tool.title.toLowerCase().includes(normalizedQuery) ||
+        tool.description.toLowerCase().includes(normalizedQuery)
+      )
+
+  const hasDisplayedTools = displayedTools.length > 0
+  const showCompassSearchResults = !includeCompassInMainList && compassSearchResults.length > 0
 
   const onSearchChange = (value: string) => {
     setSearchQuery(value)
@@ -454,9 +695,12 @@ export default function TechToolPage() {
   const handleCategoryClick = (category: string) => {
     if (category === "Compass Tools") {
       router.push('/compass')
-    } else {
-      setActiveCategory(category)
+      return
     }
+
+    setActiveCategory(category)
+    const query = category === "All" ? "" : `?tab=${encodeURIComponent(category)}`
+    router.push(`/tools${query}`)
   }
 
   return (
@@ -658,7 +902,7 @@ export default function TechToolPage() {
             </motion.div>
           </motion.div>
 
-          {filteredTools.length === 0 ? (
+          {!hasDisplayedTools && !showCompassSearchResults ? (
             <motion.div 
               className="text-center py-12"
               initial={{ opacity: 0, y: 20 }}
@@ -669,131 +913,235 @@ export default function TechToolPage() {
             </motion.div>
           ) : (
             <>
-              {activeCategory === "Compass Tools" ? (
-                // Special rendering for Compass Tools with subtitles
-                <div className="space-y-12">
-                  {(() => {
-                    const compassTools = filteredTools.filter(tool => tool.category === "Compass Tools")
-                    const subtitleGroups = compassTools.reduce((groups, tool) => {
-                      const subtitle = tool.subtitle || "Other"
-                      if (!groups[subtitle]) {
-                        groups[subtitle] = []
-                      }
-                      groups[subtitle].push(tool)
-                      return groups
-                    }, {} as Record<string, typeof compassTools>)
-
-                    return Object.entries(subtitleGroups).map(([subtitle, tools], groupIndex) => (
-                      <motion.div
-                        key={subtitle}
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={toolsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                        transition={{ duration: 0.6, delay: 0.5 + groupIndex * 0.2 }}
-                      >
-                        <motion.h3 
-                          className="text-2xl font-bold text-white mb-6 border-b border-gray-700 pb-2"
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={toolsInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                          transition={{ duration: 0.6, delay: 0.6 + groupIndex * 0.2 }}
-                        >
-                          {subtitle}
-                        </motion.h3>
-                        <motion.div 
-                          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
-                          initial={{ opacity: 0 }}
-                          animate={toolsInView ? { opacity: 1 } : { opacity: 0 }}
-                          transition={{ duration: 0.6, delay: 0.7 + groupIndex * 0.2 }}
-                        >
-                          {tools.map((tool, index) => {
-                            const IconComponent = tool.icon
-                            return (
-                              <motion.div
-                                key={tool.id}
-                                initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                                animate={toolsInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.95 }}
-                                transition={{ 
-                                  duration: 0.5, 
-                                  delay: 0.8 + groupIndex * 0.2 + index * 0.1,
-                                  ease: "easeOut"
-                                }}
-                                whileHover={{ 
-                                  y: -5, 
-                                  scale: 1.02,
-                                  transition: { duration: 0.2 }
-                                }}
-                                whileTap={{ scale: 0.98 }}
-                              >
-                                <Card
-                                  className={`bg-gray-800 border-gray-700 hover:shadow-lg hover:shadow-[#b40101]/20 transition-all duration-300 hover:border-[#b40101] h-full ${
-                                    tool.url ? 'cursor-pointer' : 'cursor-default'
-                                  }`}
-                                  onClick={() => handleCardClick(tool)}
-                                  onMouseEnter={() => tool.url && setHoveredTool(tool)}
-                                  onMouseLeave={() => setHoveredTool(null)}
-                                >
-                                  <CardContent className="p-6 px-3 py-3 h-full flex flex-col">
-                                    <div className="flex items-start space-x-4 h-full">
-                                      <div className="flex-shrink-0">
-                                        <motion.div 
-                                          className={`w-12 h-12 rounded-lg flex items-center justify-center overflow-hidden relative ${
-                                            tool.image && tool.image.startsWith('/') 
-                                              ? 'bg-[#b40101]/20' 
-                                              : 'bg-white'
-                                          }`}
-                                          whileHover={{ 
-                                            backgroundColor: tool.image && tool.image.startsWith('/') 
-                                              ? "rgba(180, 1, 1, 0.3)" 
-                                              : "rgba(255, 255, 255, 0.8)",
-                                            scale: 1.1,
-                                            transition: { duration: 0.2 }
-                                          }}
-                                        >
-                                          {tool.image && tool.image.startsWith('/') ? (
-                                            <Image
-                                              src={tool.image}
-                                              alt={tool.title}
-                                              fill
-                                              className="object-cover"
-                                            />
-                                          ) : (
-                                            <IconComponent className="w-6 h-6 text-[#b40101]" />
-                                          )}
-                                        </motion.div>
-                                      </div>
-                                      <div className="flex-1 min-w-0 flex flex-col">
-                                        <h3 className="text-lg font-semibold text-white mb-2">{tool.title}</h3>
-                                        <p className="text-sm text-gray-300 leading-relaxed flex-1">{tool.description}</p>
-                                      </div>
-                                    </div>
-                                  </CardContent>
-                                </Card>
-                              </motion.div>
-                            )
-                          })}
-                        </motion.div>
-                      </motion.div>
-                    ))
-                  })()}
-                </div>
-              ) : (
-                // Regular rendering for other categories
+              {hasDisplayedTools && (
                 <>
-                  <motion.div 
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
+                  {activeCategory === "Compass Tools" ? (
+                    // Special rendering for Compass Tools with subtitles
+                    <div className="space-y-12">
+                      {(() => {
+                        const compassToolsDisplayed = displayedTools.filter(tool => tool.category === "Compass Tools")
+                        const subtitleGroups = compassToolsDisplayed.reduce((groups, tool) => {
+                          const subtitle = tool.subtitle || "Other"
+                          if (!groups[subtitle]) {
+                            groups[subtitle] = []
+                          }
+                          groups[subtitle].push(tool)
+                          return groups
+                        }, {} as Record<string, typeof compassToolsDisplayed>)
+
+                        return Object.entries(subtitleGroups).map(([subtitle, tools], groupIndex) => (
+                          <motion.div
+                            key={subtitle}
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={toolsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                            transition={{ duration: 0.6, delay: 0.5 + groupIndex * 0.2 }}
+                          >
+                            <motion.h3 
+                              className="text-2xl font-bold text-white mb-6 border-b border-gray-700 pb-2"
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={toolsInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                              transition={{ duration: 0.6, delay: 0.6 + groupIndex * 0.2 }}
+                            >
+                              {subtitle}
+                            </motion.h3>
+                            <motion.div 
+                              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
+                              initial={{ opacity: 0 }}
+                              animate={toolsInView ? { opacity: 1 } : { opacity: 0 }}
+                              transition={{ duration: 0.6, delay: 0.7 + groupIndex * 0.2 }}
+                            >
+                          {tools.map((tool, index) => {
+                                const IconComponent = tool.icon
+                                const hasImage = Boolean(tool.image)
+                                return (
+                                  <motion.div
+                            key={`${subtitle}-${tool.id}-${tool.title}`}
+                                    initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                                    animate={toolsInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.95 }}
+                                    transition={{ 
+                                      duration: 0.5, 
+                                      delay: 0.8 + groupIndex * 0.2 + index * 0.1,
+                                      ease: "easeOut"
+                                    }}
+                                    whileHover={{ 
+                                      y: -5, 
+                                      scale: 1.02,
+                                      transition: { duration: 0.2 }
+                                    }}
+                                    whileTap={{ scale: 0.98 }}
+                                  >
+                                    <Card
+                                      className={`bg-gray-800 border-gray-700 hover:shadow-lg hover:shadow-[#b40101]/20 transition-all duration-300 hover:border-[#b40101] h-full ${
+                                        tool.url ? 'cursor-pointer' : 'cursor-default'
+                                      }`}
+                                      onClick={() => handleCardClick(tool)}
+                                      onMouseEnter={() => tool.url && setHoveredTool(tool)}
+                                      onMouseLeave={() => setHoveredTool(null)}
+                                    >
+                                      <CardContent className="p-6 px-3 py-3 h-full flex flex-col">
+                                        <div className="flex items-start space-x-4 h-full">
+                                          <div className="flex-shrink-0">
+                                            <motion.div 
+                                              className={`w-12 h-12 rounded-lg flex items-center justify-center overflow-hidden relative ${
+                                                hasImage ? 'bg-[#b40101]/20' : 'bg-white'
+                                              }`}
+                                              whileHover={{ 
+                                                backgroundColor: hasImage 
+                                                  ? "rgba(180, 1, 1, 0.3)" 
+                                                  : "rgba(255, 255, 255, 0.8)",
+                                                scale: 1.1,
+                                                transition: { duration: 0.2 }
+                                              }}
+                                            >
+                                              {hasImage ? (
+                                                <Image
+                                                  src={tool.image as string}
+                                                  alt={tool.title}
+                                                  fill
+                                                  className="object-cover"
+                                                  sizes="48px"
+                                                />
+                                              ) : (
+                                                <IconComponent className="w-6 h-6 text-[#b40101]" />
+                                              )}
+                                            </motion.div>
+                                          </div>
+                                          <div className="flex-1 min-w-0 flex flex-col">
+                                            <h3 className="text-lg font-semibold text-white mb-2">{tool.title}</h3>
+                                            <p className="text-sm text-gray-300 leading-relaxed flex-1">{tool.description}</p>
+                                          </div>
+                                        </div>
+                                      </CardContent>
+                                    </Card>
+                                  </motion.div>
+                                )
+                              })}
+                            </motion.div>
+                          </motion.div>
+                        ))
+                      })()}
+                    </div>
+                  ) : (
+                    // Regular rendering for other categories
+                    <>
+                      <motion.div 
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
+                        initial={{ opacity: 0 }}
+                        animate={toolsInView ? { opacity: 1 } : { opacity: 0 }}
+                        transition={{ duration: 0.6, delay: 0.5 }}
+                      >
+                        {displayedTools.map((tool, index) => {
+                          const IconComponent = tool.icon
+                          const hasImage = Boolean(tool.image)
+                          return (
+                            <motion.div
+                          key={`${tool.category}-${tool.id}-${tool.title}`}
+                              initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                              animate={toolsInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.95 }}
+                              transition={{ 
+                                duration: 0.5, 
+                                delay: 0.6 + index * 0.1,
+                                ease: "easeOut"
+                              }}
+                              whileHover={{ 
+                                y: -5, 
+                                scale: 1.02,
+                                transition: { duration: 0.2 }
+                              }}
+                              whileTap={{ scale: 0.98 }}
+                            >
+                              <Card
+                                className={`bg-gray-800 border-gray-700 hover:shadow-lg hover:shadow-[#b40101]/20 transition-all duration-300 hover:border-[#b40101] h-full ${
+                                  tool.url ? 'cursor-pointer' : 'cursor-default'
+                                }`}
+                                onClick={() => handleCardClick(tool)}
+                                onMouseEnter={() => tool.url && setHoveredTool(tool)}
+                                onMouseLeave={() => setHoveredTool(null)}
+                              >
+                                <CardContent className="p-6 px-3 py-3 h-full flex flex-col">
+                                  <div className="flex items-start space-x-4 h-full">
+                                    <div className="flex-shrink-0">
+                                      <motion.div 
+                                        className={`w-12 h-12 rounded-lg flex items-center justify-center overflow-hidden relative ${
+                                          hasImage ? 'bg-[#b40101]/20' : 'bg-white'
+                                        }`}
+                                        whileHover={{ 
+                                          backgroundColor: hasImage 
+                                            ? "rgba(180, 1, 1, 0.3)" 
+                                            : "rgba(255, 255, 255, 0.8)",
+                                          scale: 1.1,
+                                          transition: { duration: 0.2 }
+                                        }}
+                                      >
+                                        {hasImage ? (
+                                          <Image
+                                            src={tool.image as string}
+                                            alt={tool.title}
+                                            fill
+                                            className="object-cover"
+                                            sizes="48px"
+                                          />
+                                        ) : (
+                                          <IconComponent className="w-6 h-6 text-[#b40101]" />
+                                        )}
+                                      </motion.div>
+                                    </div>
+                                    <div className="flex-1 min-w-0 flex flex-col">
+                                      <h3 className="text-lg font-semibold text-white mb-2">{tool.title}</h3>
+                                      <p className="text-sm text-gray-300 leading-relaxed flex-1">{tool.description}</p>
+                                    </div>
+                                  </div>
+                                </CardContent>
+                              </Card>
+                            </motion.div>
+                          )
+                        })}
+                      </motion.div>
+                    </>
+                  )}
+                </>
+              )}
+
+              {showCompassSearchResults && (
+                <motion.div
+                  className="mt-12"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={toolsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                  transition={{ duration: 0.6, delay: 0.7 }}
+                >
+                  <motion.h3
+                    className="text-2xl font-bold text-white mb-4 border-b border-gray-700 pb-2 flex items-center gap-2"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={toolsInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                    transition={{ duration: 0.5, delay: 0.8 }}
+                  >
+                    Compass Tools ({compassSearchResults.length} match{compassSearchResults.length > 1 ? "es" : ""})
+                  </motion.h3>
+                  <motion.p
+                    className="text-sm text-gray-400 mb-6"
                     initial={{ opacity: 0 }}
                     animate={toolsInView ? { opacity: 1 } : { opacity: 0 }}
-                    transition={{ duration: 0.6, delay: 0.5 }}
+                    transition={{ duration: 0.5, delay: 0.9 }}
                   >
-                    {displayedTools.map((tool, index) => {
+                    These tools live inside Compass. Clicking them opens the relevant Compass experience in a new tab.
+                  </motion.p>
+                  <motion.div 
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                    initial={{ opacity: 0 }}
+                    animate={toolsInView ? { opacity: 1 } : { opacity: 0 }}
+                    transition={{ duration: 0.6, delay: 1.0 }}
+                  >
+                    {compassSearchResults.map((tool, index) => {
                       const IconComponent = tool.icon
+                      const hasImage = Boolean(tool.image)
                       return (
                         <motion.div
-                          key={tool.id}
+                      key={`compass-${tool.id}-${tool.title}`}
                           initial={{ opacity: 0, y: 30, scale: 0.95 }}
                           animate={toolsInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.95 }}
                           transition={{ 
                             duration: 0.5, 
-                            delay: 0.6 + index * 0.1,
+                            delay: 1.1 + index * 0.1,
                             ease: "easeOut"
                           }}
                           whileHover={{ 
@@ -804,36 +1152,35 @@ export default function TechToolPage() {
                           whileTap={{ scale: 0.98 }}
                         >
                           <Card
-                            className={`bg-gray-800 border-gray-700 hover:shadow-lg hover:shadow-[#b40101]/20 transition-all duration-300 hover:border-[#b40101] h-full ${
+                            className={`bg-gray-800 border border-[#b40101]/40 hover:border-[#b40101] hover:shadow-lg hover:shadow-[#b40101]/30 transition-all duration-300 h-full ${
                               tool.url ? 'cursor-pointer' : 'cursor-default'
                             }`}
                             onClick={() => handleCardClick(tool)}
                             onMouseEnter={() => tool.url && setHoveredTool(tool)}
                             onMouseLeave={() => setHoveredTool(null)}
                           >
-                            <CardContent className="p-6 px-3 py-3 h-full flex flex-col">
+                            <CardContent className="p-6 h-full flex flex-col">
                               <div className="flex items-start space-x-4 h-full">
                                 <div className="flex-shrink-0">
                                   <motion.div 
                                     className={`w-12 h-12 rounded-lg flex items-center justify-center overflow-hidden relative ${
-                                      tool.image && tool.image.startsWith('/') 
-                                        ? 'bg-[#b40101]/20' 
-                                        : 'bg-white'
+                                      hasImage ? 'bg-[#b40101]/20' : 'bg-white'
                                     }`}
                                     whileHover={{ 
-                                      backgroundColor: tool.image && tool.image.startsWith('/') 
+                                      backgroundColor: hasImage 
                                         ? "rgba(180, 1, 1, 0.3)" 
                                         : "rgba(255, 255, 255, 0.8)",
                                       scale: 1.1,
                                       transition: { duration: 0.2 }
                                     }}
                                   >
-                                    {tool.image && tool.image.startsWith('/') ? (
+                                    {hasImage ? (
                                       <Image
-                                        src={tool.image}
+                                        src={tool.image as string}
                                         alt={tool.title}
                                         fill
                                         className="object-cover"
+                                        sizes="48px"
                                       />
                                     ) : (
                                       <IconComponent className="w-6 h-6 text-[#b40101]" />
@@ -841,6 +1188,7 @@ export default function TechToolPage() {
                                   </motion.div>
                                 </div>
                                 <div className="flex-1 min-w-0 flex flex-col">
+                                  <p className="text-xs uppercase tracking-wide text-[#b40101] font-semibold mb-1">Compass Tool</p>
                                   <h3 className="text-lg font-semibold text-white mb-2">{tool.title}</h3>
                                   <p className="text-sm text-gray-300 leading-relaxed flex-1">{tool.description}</p>
                                 </div>
@@ -851,9 +1199,7 @@ export default function TechToolPage() {
                       )
                     })}
                   </motion.div>
-
-                  
-                </>
+                </motion.div>
               )}
             </>
           )}
