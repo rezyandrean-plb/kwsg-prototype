@@ -312,17 +312,27 @@ const tools = [
     url: "https://compass.kwsingapore.com/tech-tools/property-analysis/research",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/property-analysis.webp"
   },
-  // Compass Tools items - Research Charts
   {
-    id: 27,
+    id: 203,
+    title: "MegaMap",
+    description: "A powerful map that lets you shortlist listings, study supply-demand, compare past deals, and run instant CMAs in one place.",
+    icon: MapPin,
+    category: "Compass Tools",
+    subtitle: "Tech Tools",
+    url: "https://compass.kwsingapore.com/tech-tools/megamap",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/mega-map.webp"
+  },
+  {
+    id: 204,
     title: "Disparity Effect",
     description: "Analyse property price gaps across different markets through charts to identify undervalued opportunities.",
     icon: BarChart3,
     category: "Compass Tools",
-    subtitle: "Research Charts",
+    subtitle: "Tech Tools",
     url: "https://proptech.kwsingapore.com/tech-tools/disparity-effect/charts?type=all",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/disparity-effect.webp"
   },
+  // Compass Tools items - Research Charts
   // Compass Tools items - Concept Calculators
   {
     id: 28,
@@ -717,7 +727,42 @@ export default function TechToolPage() {
                       return groups
                     }, {} as Record<string, typeof compassTools>)
 
-                    return Object.entries(subtitleGroups).map(([subtitle, tools], groupIndex) => (
+                    const preferredOrder = [
+                      "Tech Tools",
+                      "Concept Calculators",
+                      "Sales Proceed",
+                      "Buyer Affordability",
+                      "Stamp Duty"
+                    ]
+
+                    const orderedSubtitles = [
+                      ...preferredOrder.filter(subtitle => subtitleGroups[subtitle]),
+                      ...Object.keys(subtitleGroups).filter(subtitle => !preferredOrder.includes(subtitle))
+                    ]
+
+                    return orderedSubtitles.map((subtitle, groupIndex) => {
+                      const tools = subtitleGroups[subtitle]
+                      if (!tools) return null
+
+                      let orderedTools = tools
+
+                      if (subtitle === "Tech Tools") {
+                        const techToolOrder = [
+                          "Property Analysis",
+                          "MegaMap",
+                          "Compass10",
+                          "Disparity Effect",
+                          "Supply & Demand Analysis"
+                        ]
+                        orderedTools = [
+                          ...techToolOrder
+                            .map(title => tools.find(tool => tool.title === title))
+                            .filter((tool): tool is (typeof tools)[number] => Boolean(tool)),
+                          ...tools.filter(tool => !techToolOrder.includes(tool.title))
+                        ]
+                      }
+
+                      return (
                       <motion.div
                         key={subtitle}
                         initial={{ opacity: 0, y: 30 }}
@@ -738,7 +783,7 @@ export default function TechToolPage() {
                           animate={toolsInView ? { opacity: 1 } : { opacity: 0 }}
                           transition={{ duration: 0.6, delay: 0.7 + groupIndex * 0.2 }}
                         >
-                          {tools.map((tool, index) => {
+                          {orderedTools.map((tool, index) => {
                             const IconComponent = tool.icon
                             return (
                               <motion.div
@@ -804,7 +849,8 @@ export default function TechToolPage() {
                           })}
                         </motion.div>
                       </motion.div>
-                    ))
+                      )
+                    })
                   })()}
                 </div>
               ) : (
