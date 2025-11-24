@@ -634,13 +634,15 @@ export default function JoinPage() {
         className="relative bg-gradient-to-br from-[#B40101]/10 to-transparent pt-8 pb-20 md:pt-10 md:pb-20 lg:pt-12 lg:pb-32"
         style={{
           opacity: incomeModelOpacity,
-          transform: `translateY(${incomeModelTranslateY}px)`,
-          transition: "opacity 0.7s ease-out, transform 0.7s ease-out",
+          transition: "opacity 0.7s ease-out",
         }}
       >
-        <div className="max-w-7xl mx-auto px-6">
+        <div
+          className="max-w-7xl mx-auto px-6 transition-[margin-top] duration-700 ease-out"
+          style={{ marginTop: incomeModelTranslateY }}
+        >
           <div className="grid lg:grid-cols-[3fr_7fr] gap-16 items-start">
-            <div className="lg:sticky lg:top-20 lg:self-start">
+            <div className="sticky top-20 self-start">
               <div className="relative">
                 <div className="flex items-center gap-4 md:gap-6">
                   <span className="text-[180px] md:text-[240px] font-bold leading-none block text-[#B40101]">3</span>
@@ -1037,13 +1039,19 @@ export default function JoinPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-24 mb-8">
-              {["Image 1", "Image 2", "Image 3", "Image 4"].map((label) => (
-                <div key={label} className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg overflow-hidden border border-white/10">
-                  <div className="w-full h-full flex items-center justify-center text-white/50 text-sm">{label}</div>
-                </div>
-              ))}
-            </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-24 mb-8">
+                {["Gtm6NGIxWOc", "Pj0onWnrcfM", "NrGzZm3vNSY", "JFUKmxBuy8s"].map((videoId) => (
+                  <div key={videoId} className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg overflow-hidden border border-white/10">
+                    <iframe
+                      src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0&loop=1&playlist=${videoId}`}
+                      title={`Training Highlight ${videoId}`}
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    />
+                  </div>
+                ))}
+              </div>
 
             <div
               ref={trainingCardsRef}
