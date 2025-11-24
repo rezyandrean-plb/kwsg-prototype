@@ -1,1002 +1,1004 @@
 "use client"
 
+import { useEffect, useMemo, useState } from "react"
+import { ArrowRight, Calendar, Handshake, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { motion, useScroll, useTransform, Variants } from "framer-motion"
-import Image from "next/image"
-import { useState, useRef, useEffect } from "react"
-import dynamic from "next/dynamic"
-import { ArrowRight, Brain, Share2, Video, BarChart3, Users, Building2, Award, Globe, TrendingUp, Calculator, Zap, Camera, Star, ChevronRight } from "lucide-react"
 
-// Dynamically import non-critical components
-const JoinFormDialog = dynamic(() => import("@/components/join-form-dialog").then(mod => mod.JoinFormDialog), {
-  loading: () => <div className="h-0" />,
-  ssr: false
-})
-
-// Enhanced Animation variants
-const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, ease: "easeOut" }
-}
-
-const staggerContainer = {
-  animate: {
-    transition: {
-      staggerChildren: 0.15
-    }
-  }
-}
-
-const sectionVariants = {
-  initial: { opacity: 0, y: 50 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-100px" },
-  transition: { duration: 0.8, ease: "easeOut" }
-}
-
-// Enhanced typing variants with better timing
-const typingVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 30
+const heroCards = [
+  {
+    title: "The 3-Income Model: Building Passive Wealth",
+    target: "income-model-section",
+    span: "lg:col-span-3",
   },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      staggerChildren: 0.08,
-      ease: "easeOut"
-    }
-  }
-};
-
-const typingTextVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 20
+  {
+    title: "PropTech Ecosystem: Your Integrated Command Center",
+    target: "proptech-section",
+    span: "lg:col-span-3",
   },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut"
-    }
-  }
-};
-
-// New professional entrance animations
-const heroTitleVariants: Variants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 1,
-      ease: "easeOut",
-      staggerChildren: 0.2
-    }
-  }
-}
-
-const heroLineVariants: Variants = {
-  hidden: { opacity: 0, y: 30, scale: 0.95 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut"
-    }
-  }
-}
-
-const fadeInScale = {
-  initial: { opacity: 0, scale: 0.9 },
-  whileInView: { opacity: 1, scale: 1 },
-  viewport: { once: true, margin: "-100px" },
-  transition: { duration: 0.7, ease: "easeOut" }
-}
-
-const slideInLeft = {
-  initial: { opacity: 0, x: -60 },
-  whileInView: { opacity: 1, x: 0 },
-  viewport: { once: true, margin: "-100px" },
-  transition: { duration: 0.8, ease: "easeOut" }
-}
-
-const slideInRight = {
-  initial: { opacity: 0, x: 60 },
-  whileInView: { opacity: 1, x: 0 },
-  viewport: { once: true, margin: "-100px" },
-  transition: { duration: 0.8, ease: "easeOut" }
-}
-
-const cardHoverVariants: Variants = {
-  initial: { opacity: 0, y: 30, scale: 0.95 },
-  whileInView: { 
-    opacity: 1, 
-    y: 0, 
-    scale: 1,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut"
-    }
+  {
+    title: "The KW Model: Blueprint for Predictable Success",
+    target: "blueprint-section",
+    span: "lg:col-span-2",
   },
-  hover: {
-    y: -10,
-    scale: 1.02,
-    transition: {
-      duration: 0.3,
-      ease: "easeOut"
-    }
-  }
-}
-
-const buttonVariants: Variants = {
-  initial: { opacity: 0, scale: 0.9 },
-  whileInView: { 
-    opacity: 1, 
-    scale: 1,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut",
-      delay: 0.3
-    }
+  {
+    title: "World-Class Training: Mastery That Converts",
+    target: "training-section",
+    span: "lg:col-span-2",
   },
-  hover: {
-    scale: 1.05,
-    transition: {
-      duration: 0.2,
-      ease: "easeOut"
-    }
-  }
-}
+  {
+    title: "Culture & Leadership: Winning Together",
+    target: "culture-section",
+    span: "md:col-span-2 lg:col-span-2",
+  },
+]
 
-const TypingText = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {
-  return (
-    <motion.div
-      variants={typingVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-100px" }}
-      className={className}
-    >
-      {typeof children === 'string' ? (
-        children.split(' ').map((word, i) => (
-          <motion.span
-            key={i}
-            variants={typingTextVariants}
-            className="inline-block mr-1.5"
-          >
-            {word}
-          </motion.span>
-        ))
-      ) : (
-        <motion.div variants={typingTextVariants}>
-          {children}
-        </motion.div>
-      )}
-    </motion.div>
-  );
-};
+const youtubeVideos = ["98q3DIEeRdk", "_H9v-sPdH3o", "pJcbNolha-M", "PHaW-ZscJuQ", "9xwazD5SyVg"]
+const imageCarouselSeeds = [1, 2, 3, 4, 5]
 
-export default function JoinKW() {
+const blueprintHighlights = [
+  {
+    title: "The MREA Model (Millionaire Real Estate Agent)",
+    copy:
+      "A step-by-step roadmap detailing the Economic, Lead Generation, Budget, and Organizational Models used by top producers globally.",
+  },
+  {
+    title: "The Rainmaker System",
+    copy:
+      "A framework that focuses your time and resources on the highest-impact activities (Lead Generation and Listings) by leveraging people and technology.",
+  },
+]
+
+const trainingHighlights = [
+  {
+    title: "KW University & Multiplier Series",
+    copy: "World-class, results-focused training from foundational skill-building to high-level mastery.",
+  },
+  {
+    title: "Realtor Branding Workshop",
+    copy:
+      "Specialized workshop to formulate your unique brand positioning and translate it into a powerful, consistent presence.",
+  },
+  {
+    title: "MREA Masterclass",
+    copy:
+      "Leverage the Millionaire Real Estate Agent curriculum—the step-by-step roadmap used by top producers globally.",
+  },
+]
+
+const cultureHighlights = [
+  {
+    title: "Mentorship & Leadership",
+    copy:
+      "Gain direct access to top-producing Managers and Leaders who act as business coaches and help you implement the KW Models.",
+  },
+  {
+    title: "Dominant Brand Support",
+    copy:
+      "Leverage our Media Studios and AI Avatar brand positioning creation to instantly elevate your online presence and stand out as the clear expert.",
+  },
+  {
+    title: "Collaborative Community",
+    copy:
+      "High-energy events and a supportive environment foster a win-win, abundance-minded culture where market knowledge is freely shared.",
+  },
+]
+
+const lastSectionActions = [
+  {
+    title: "ATTEND THE NEXT LIVE EVENT",
+    copy:
+      "Want to experience the energy in person? Ask Melvin and Grayce your questions live? We still hold these exclusive sessions for a small group. See the next available date and reserve your seat.",
+    button: "RESERVE MY LIVE SEAT",
+    icon: Calendar,
+  },
+  {
+    title: "READY TO ONBOARD?",
+    copy:
+      "You've seen the model, you understand the vision, and you're ready to make the move. Join the real estate revolution in Singapore and get immediate access to our training, tools, and tech.",
+    button: "START MY ONBOARDING",
+    icon: Handshake,
+  },
+  {
+    title: "BOOK A 1-1 BUSINESS CONSULT",
+    copy:
+      "Have questions? Want to discuss how the KW model can be tailored to your specific business goals? Book a confidential, no-obligation 1-on-1 strategy call with our Director of Growth, Grayce.",
+    button: "BOOK MY 1-1 CONSULT",
+    icon: Users,
+  },
+]
+
+const incomeCards = [
+  {
+    title: "Growth Share Passive Legacy",
+    intro: "True Inheritable Wealth.",
+    body: [
+      "By introducing productive realtors to KW Singapore, you earn a percentage of the company's profit.",
+      "This 7-tier income stream is global and transferable to your next-of-kin.",
+      "As long as you remain with KW and your sponsored agents produce, your Growth Share never stops.",
+    ],
+    badge: "01",
+    video: "https://www.youtube.com/embed/pJcbNolha-M",
+  },
+  {
+    title: "Maximum Commission in Producer Income",
+    intro: "The Fast Track to 94%.",
+    body: [
+      "Rookie Agents start at 80%.",
+      "Hit S$80K GCI and jump to a 90% split immediately.",
+      "Hit S$150K GCI and jump to a 94% split for the rest of your 12-month cycle.",
+      "The path is clear: The more you produce, the more you keep.",
+    ],
+    badge: "02",
+  },
+  {
+    title: "The Coach's Override",
+    intro: "Build Your Team, Build Your Future.",
+    body: [
+      "You take Manager Overriding commissions (2% & 1%) for coaching your downlines.",
+      "This is an immediate, stable income stream for your leadership.",
+    ],
+    badge: "03",
+  },
+]
+
+const avatarImages = [
+  "/avatar-2.png",
+  "/professional-indian-business-man-headshot.jpg",
+  "/professional-caucasian-business-man-smiling.jpg",
+  "/professional-asian-business-woman-smiling.jpg",
+  "/professional-business-woman-portrait.png",
+  "/professional-businessman-portrait.png",
+  "/confident-business-leader-man.jpg",
+  "/confident-business-leader-woman.jpg",
+  "/young-real-estate-agent-man.jpg",
+  "/senior-business-executive-woman.jpg",
+  "/diverse-business-team-meeting.jpg",
+  "/modern-office-collaboration.jpg",
+  "/creative-professional-woman.png",
+  "/creative-professional-man.png",
+]
+
+const avatarLayout = [
+  { start: "hidden lg:block", shift: "space-y-6", items: [0, 1] },
+  { start: "hidden md:block pt-12", shift: "space-y-6", items: [2, 3] },
+  { start: "pt-6 md:pt-24", shift: "space-y-6", items: [4, 5] },
+  { start: "pt-12 md:pt-32", shift: "space-y-6", items: [6, 7] },
+  { start: "pt-6 md:pt-24", shift: "space-y-6", items: [8, 9] },
+  { start: "hidden md:block pt-12", shift: "space-y-6", items: [10, 11] },
+  { start: "hidden lg:block", shift: "space-y-6", items: [12, 13] },
+]
+
+export default function JoinPage() {
+  const [activeIncome, setActiveIncome] = useState(0)
+  const [carouselIndex, setCarouselIndex] = useState(0)
+  const [isCarouselPaused, setIsCarouselPaused] = useState(false)
+  const [imageCarouselIndex, setImageCarouselIndex] = useState(0)
+  const [isImageCarouselPaused, setIsImageCarouselPaused] = useState(false)
+  const [count10M, setCount10M] = useState(0)
+  const [count60, setCount60] = useState(0)
+  const [count200K, setCount200K] = useState(0)
+
   useEffect(() => {
-    document.title = 'Join KW Singapore - KW Singapore'
-  }, [])
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const { scrollYProgress, scrollY } = useScroll()
-  const pathLength = useTransform(scrollYProgress, [0, 1], [0, 1])
+    const step = 1500
+    let raf: number
 
-  const handleSubmit = (data: any) => {
-    console.log("Form submitted:", data)
-    // The form submission is now handled within the JoinFormDialog component
-    // This callback can be used for additional actions if needed
+    const animateCount = (target: number, setter: (value: number) => void) => {
+      const start = performance.now()
+
+      const tick = (now: number) => {
+        const progress = Math.min((now - start) / step, 1)
+        setter(Math.floor(progress * target))
+        if (progress < 1) {
+          raf = requestAnimationFrame(tick)
+        }
+      }
+
+      raf = requestAnimationFrame(tick)
+    }
+
+    animateCount(10, setCount10M)
+    animateCount(60, setCount60)
+    animateCount(200, setCount200K)
+
+    return () => cancelAnimationFrame(raf)
+  }, [])
+
+  useEffect(() => {
+    if (isCarouselPaused || youtubeVideos.length <= 3) return
+
+    const interval = setInterval(() => {
+      setCarouselIndex((prev) => (prev + 1) % (youtubeVideos.length - 2))
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [isCarouselPaused])
+
+  useEffect(() => {
+    if (isImageCarouselPaused || imageCarouselSeeds.length <= 2) return
+
+    const interval = setInterval(() => {
+      setImageCarouselIndex((prev) => (prev + 1) % (imageCarouselSeeds.length - 1))
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [isImageCarouselPaused])
+
+  const handleCardClick = (event: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    event.preventDefault()
+    const target = document.getElementById(targetId)
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" })
+    }
   }
 
+  const youtubeDotCount = useMemo(() => Math.max(1, youtubeVideos.length - 2), [])
+  const imageDotCount = useMemo(() => Math.max(1, imageCarouselSeeds.length - 1), [])
+
   return (
-    <motion.main
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-      className="min-h-screen bg-black text-white"
-    >
+    <main className="bg-black text-white">
       {/* Hero Section */}
-      <section className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center pt-20 sm:pt-20 md:pt-12">
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"
-          style={{
-            transform: `translateY(${scrollY.get() * 0.5}px)`,
-          }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.5 }}
-        />
-        {/* Removed background image - now using black background */}
-        <div className="absolute inset-0 bg-black/70" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
-
-        <div className="relative z-10 text-center max-w-6xl mx-auto px-6 pt-8 sm:pt-12 md:pt-16 lg:pt-32">
-          <div className="mb-8"></div>
-
-          <motion.h1 
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight font-sans"
-            variants={heroTitleVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <motion.span variants={heroLineVariants} className="block">Your Journey to</motion.span>
-            <motion.span variants={heroLineVariants} className="block text-[#B40101] italic">Real Estate Success</motion.span>
-            <motion.span variants={heroLineVariants} className="block">Begins Here</motion.span>
-          </motion.h1>
-
-          <motion.p 
-            className="text-lg md:text-xl text-white/80 mb-12 max-w-4xl mx-auto leading-relaxed"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-          >
-            You're a high-performing strategist, confident in your vision, and ambitious in your goals. At KW Singapore,
-            we've built the definitive platform to empower your dominance.
-          </motion.p>
-
-          <motion.div 
-            className="flex justify-center items-center"
-            variants={buttonVariants}
-            initial="initial"
-            animate="whileInView"
-            whileHover="hover"
-          >
-            <Button
-              size="lg"
-              className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-8 py-4 text-lg font-semibold rounded-none border-none transition-all duration-300 group"
-              onClick={() => window.open("https://explore.kwsingapore.com/booking-page", "_blank")}
-            >
-              Join Us Now
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
-          </motion.div>
+      <section className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center mt-24 overflow-hidden bg-gradient-to-b from-black via-[#B40101]/50 to-black">
+        <div className="absolute inset-0 opacity-20">
+          <svg viewBox="0 0 1440 800" className="w-full h-full" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="waveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#B40101" stopOpacity="0.8" />
+                <stop offset="50%" stopColor="#B40101" stopOpacity="0.6" />
+                <stop offset="100%" stopColor="#B40101" stopOpacity="0.4" />
+              </linearGradient>
+            </defs>
+            <g stroke="url(#waveGradient)" strokeWidth="1" fill="none" opacity="0.6">
+              {[200, 210, 220].map((y) => (
+                <path key={`wave1-${y}`} d={`M0,${y} Q180,${y - 50} 360,${y} T720,${y} T1080,${y} T1440,${y}`} />
+              ))}
+              {[300, 310, 320].map((y) => (
+                <path key={`wave2-${y}`} d={`M0,${y} Q200,${y - 50} 400,${y} T800,${y} T1200,${y} T1440,${y}`} />
+              ))}
+              {[400, 410, 420].map((y) => (
+                <path key={`wave3-${y}`} d={`M0,${y} Q160,${y - 50} 320,${y} T640,${y} T960,${y} T1280,${y} T1440,${y}`} />
+              ))}
+              {[500, 510, 520].map((y) => (
+                <path key={`wave4-${y}`} d={`M0,${y} Q220,${y - 50} 440,${y} T880,${y} T1320,${y} T1440,${y}`} />
+              ))}
+              {[600, 610, 620].map((y) => (
+                <path key={`wave5-${y}`} d={`M0,${y} Q140,${y - 50} 280,${y} T560,${y} T840,${y} T1120,${y} T1440,${y}`} />
+              ))}
+            </g>
+          </svg>
         </div>
 
+        <div className="relative z-10 text-center max-w-6xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 md:pt-16">
+          <div className="mb-8" />
+          <div className="text-center max-w-4xl mx-auto space-y-6 transition-all duration-700 ease-out mb-12">
+            <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-8">
+              The KW Singapore Edge: <br />
+              <span className="text-[#D9381E]">A Proven Real Estate Model</span>
+            </h3>
+            <p className="text-lg md:text-xl text-white/80 leading-relaxed max-w-4xl mx-auto">
+              Leverage Singapore's most powerful real estate business model—built for unlimited scale, branding, and freedom.
+            </p>
+          </div>
+
+          <div className="w-full max-w-4xl mx-auto mb-12 transition-all duration-700 ease-out">
+            <div className="aspect-video rounded-lg overflow-hidden border border-white/10 shadow-lg">
+              <iframe
+                src="https://www.youtube.com/embed/98q3DIEeRdk"
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title="KW Singapore Edge Video"
+              />
+            </div>
+          </div>
+
+          <div className="w-full max-w-7xl mx-auto transition-opacity duration-700 ease-out">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 md:gap-6">
+              {heroCards.map((card, index) => (
+                <a
+                  key={card.target}
+                  href={`#${card.target}`}
+                  onClick={(event) => handleCardClick(event, card.target)}
+                  className={`backdrop-blur-md bg-white/5 border border-white/10 rounded-lg p-4 md:p-6 flex flex-col justify-between min-h-[120px] md:min-h-[140px] hover:bg-white/10 hover:border-white/20 transition-all duration-500 ease-out relative group shadow-lg cursor-pointer ${card.span}`}
+                >
+                  <div>
+                    <h4 className="text-xl md:text-2xl font-semibold text-white mb-2">{card.title}</h4>
+                  </div>
+                  <ArrowRight className="w-5 h-5 text-white/60 absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300" />
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
 
-      {/* Why KW Singapore */}
-      <section id="why-kw-section" className="relative py-12 sm:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/images/luxury-singapore-properties.png')] bg-cover bg-center opacity-10" />
-        <div className="absolute inset-0 bg-black/70" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black to-gray-900" />
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <motion.div 
-            className="text-center mb-20"
-            variants={sectionVariants}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <motion.h2 
-              className="font-bold mb-8 font-sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white"
-              variants={typingVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              <motion.span variants={typingTextVariants} className="block">Your Ambition. Our Platform.</motion.span>
-              <motion.span variants={typingTextVariants} className="block text-[#B40101] italic">Unlocked.</motion.span>
-            </motion.h2>
-            <motion.p 
-              className="text-lg text-white/80 max-w-4xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              We recognize the questions that challenge traditional real estate careers. KW Singapore provides the bold,
-              outcome-first solutions you need to scale sustainably.
-            </motion.p>
-          </motion.div>
+      {/* Predictable Wealth */}
+      <section className="relative pt-32 pb-20 md:pt-32 md:pb-20 lg:pt-32 lg:pb-32 overflow-hidden">
+        <div className="absolute inset-0 bg-black" />
+        <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: "url('/images/image.png')" }} />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80" />
 
-          <motion.div 
-            className="grid md:grid-cols-3 gap-12"
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            {[
-              {
-                icon: <Globe className="h-12 w-12" />,
-                title: "Global Network Strength",
-                description:
-                  "189,000+ consultants across 55+ regions. International referrals and cross-border investment opportunities.",
-                stat: "145K+",
-              },
-              {
-                icon: <TrendingUp className="h-12 w-12" />,
-                title: "New Launch Dominance",
-                description:
-                  "Positioned to capture 30-40% of Singapore's new launch volume by 2030 with direct developer partnerships.",
-                stat: "30-40%",
-              },
-              {
-                icon: <Users className="h-12 w-12" />,
-                title: "Consultant-First Visibility",
-                description:
-                  "100+ branded social accounts managed by HQ. We ensure our consultants attract leads, not chase them.",
-                stat: "100+",
-              },
-            ].map((item, index) => (
-              <motion.div 
-                key={index} 
-                className="group relative"
-                variants={cardHoverVariants}
-                whileHover="hover"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#B40101]/10 to-transparent rounded-lg transform group-hover:scale-105 transition-all duration-500" />
-                <div className="relative p-8 h-full">
-                  <motion.div 
-                    className="text-[#B40101] mb-6 group-hover:scale-110 transition-transform duration-300"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                  >
-                    {item.icon}
-                  </motion.div>
-                  <motion.div 
-                    className="text-4xl font-bold text-[#B40101] mb-4"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.6, delay: index * 0.1 + 0.2 }}
-                  >
-                    {item.stat}
-                  </motion.div>
-                  <motion.h3 
-                    className="text-2xl font-bold mb-4 text-white"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.6, delay: index * 0.1 + 0.3 }}
-                  >
-                    {item.title}
-                  </motion.h3>
-                  <motion.p 
-                    className="text-white/80 leading-relaxed"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.6, delay: index * 0.1 + 0.4 }}
-                  >
-                    {item.description}
-                  </motion.p>
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          <div className="space-y-12 transition-all duration-700 ease-out">
+            <div className="text-left">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                <span className="text-white">Turn Unpredictability into</span>
+                <br />
+                <span className="text-[#D9381E]">Predictable Wealth</span>
+              </h2>
+              <h3 className="text-2xl md:text-3xl font-semibold text-white/90">Stop Trading Time for Money. Start Building Equity.</h3>
+            </div>
+
+            <div className="flex justify-end mt-16">
+              <div className="w-full sm:w-full md:w-[85%] lg:w-[80%]">
+                <p className="text-lg md:text-2xl text-white font-medium leading-relaxed text-right mx-0 mt-2">
+                  You're stuck on the income rollercoaster—unpredictable closings and unstable pay. At KW, we solved this by creating a three-pillar income
+                  model designed for growth, stability, and legacy.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Income Model */}
+      <section id="income-model-section" className="relative bg-gradient-to-br from-[#B40101]/10 to-transparent pt-8 pb-20 md:pt-10 md:pb-20 lg:pt-12 lg:pb-32">
+        <div className="max-w-7xl mx-auto px-6 transition-all duration-700 ease-out">
+          <div className="grid lg:grid-cols-[3fr_7fr] gap-16 items-start">
+            <div className="lg:sticky lg:top-20 lg:self-start">
+              <div className="relative">
+                <div className="flex items-center gap-4 md:gap-6">
+                  <span className="text-[180px] md:text-[240px] font-bold leading-none block text-[#B40101]">3</span>
+                  <h2 className="text-5xl md:text-6xl font-bold text-white tracking-tight hidden md:block lg:hidden">INCOME MODEL</h2>
                 </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Technology Section */}
-      <section className="relative py-12 sm:py-32">
-        <div className="absolute inset-0 bg-[url('/images/modern-office-tech.png')] bg-cover bg-center opacity-15" />
-        <div className="absolute inset-0 bg-black/60" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black" />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Video - Mobile First */}
-            <motion.div 
-              className="relative order-1 lg:order-2"
-              variants={slideInRight}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              <div className="relative bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border-[#666666]/30 leading-3 border-0 border-none opacity-100 py-0 px-0">
-                <div className="aspect-video">
-                  <iframe
-                    src="https://www.youtube.com/embed/_H9v-sPdH3o"
-                    title="KW Command in Action"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                    className="w-full h-full rounded-lg"
-                  ></iframe>
+                <div className="absolute right-0 top-0 h-full hidden lg:flex items-center">
+                  <h2 className="text-5xl md:text-6xl font-bold text-white tracking-tight" style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}>
+                    INCOME MODEL
+                  </h2>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
-            {/* Content - Mobile Second */}
-            <motion.div 
-              className="text-center lg:text-left order-2 lg:order-1"
-              variants={slideInLeft}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              <motion.h2 
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 font-sans text-white"
-                variants={typingVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-              >
-                <motion.span variants={typingTextVariants} className="block">Unmatched Technology.</motion.span>
-                <motion.span variants={typingTextVariants} className="block text-[#B40101] italic">Actionable Insights.</motion.span>
-              </motion.h2>
-              <motion.p 
-                className="text-lg text-white/80 mb-12 leading-relaxed"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-              >
-                Our AI-powered tech ecosystem delivers unparalleled efficiency and a critical competitive edge. We equip
-                you with the precision and insight to lead the market.
-              </motion.p>
-
-              <motion.h3 
-                className="text-2xl font-bold mb-8 text-white"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-              >
-                Key Technology Pillars:
-              </motion.h3>
-
-              <motion.div 
-                className="space-y-6"
-                variants={staggerContainer}
-                initial="initial"
-                whileInView="animate"
-                viewport={{ once: true, margin: "-100px" }}
-              >
-                {[
-                  {
-                    icon: <Brain className="h-6 w-6" />,
-                    title: "KW Command Platform",
-                    desc: "Your integrated operating system for real estate. Control leads, manage transactions, and scale your business with smart tools built for growth.",
-                  },
-                  {
-                    icon: <Calculator className="h-6 w-6" />,
-                    title: "PropTech Calculator Suite",
-                    desc: "Specialized calculators for instant financial analysis and client insights.",
-                  },
-                  {
-                    icon: <TrendingUp className="h-6 w-6" />,
-                    title: "PropTech Research & Charts",
-                    desc: "Powerful, integrated platform for dynamic market charts, Disparity Effect, and MOAT analysis.",
-                  },
-                  {
-                    icon: <Zap className="h-6 w-6" />,
-                    title: "AI Integration",
-                    desc: "Beyond CRM, leverage AI for content ideation, performance analytics, and virtual staging.",
-                  },
-                ].map((tech, index) => (
-                  <motion.div 
-                    key={index} 
-                    className="flex flex-col sm:flex-row items-center sm:items-start space-y-3 sm:space-y-0 sm:space-x-4 group text-center sm:text-left"
-                    variants={fadeInUp}
-                  >
-                    <motion.div 
-                      className="text-[#B40101] sm:mt-1 group-hover:scale-110 transition-transform"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true, margin: "-100px" }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
+            <div className="space-y-0">
+              {incomeCards.map((card, index) => (
+                <div
+                  key={card.title}
+                  onMouseEnter={() => setActiveIncome(index)}
+                  className={`border rounded-2xl p-8 md:p-12 backdrop-blur-sm transition-all duration-500 sticky ${index === 0 ? "top-0" : index === 1 ? "top-32" : "top-40"} ${
+                    activeIncome === index ? "bg-[#B40101] border-[#B40101] shadow-2xl shadow-[#B40101]/30 z-30 opacity-100 scale-100" : "bg-gray-900/50 border-gray-800 opacity-70 scale-95 z-10"
+                  }`}
+                  style={{ marginBottom: index === incomeCards.length - 1 ? 0 : "-150px" }}
+                >
+                  <div className="flex items-start gap-6 mb-6">
+                    <div
+                      className={`flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center ${
+                        activeIncome === index ? "bg-white/20 border border-white/30" : "bg-[#B40101]/10 border border-[#B40101]/30"
+                      }`}
                     >
-                      {tech.icon}
-                    </motion.div>
-                    <div>
-                      <motion.h4 
-                        className="text-lg font-semibold mb-1"
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 0.5, delay: index * 0.1 + 0.1 }}
-                      >
-                        {tech.title}
-                      </motion.h4>
-                      <motion.p 
-                        className="text-white/80"
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 0.5, delay: index * 0.1 + 0.2 }}
-                      >
-                        {tech.desc}
-                      </motion.p>
+                      <span className={`text-2xl font-bold ${activeIncome === index ? "text-white" : "text-[#B40101]"}`}>{card.badge}</span>
                     </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+                    <div>
+                      <h3 className="text-3xl md:text-4xl font-bold mb-2 text-white">{card.title}</h3>
+                    </div>
+                  </div>
 
-      {/* Media & Branding */}
-      <section className="relative py-12 sm:py-32 bg-gradient-to-b from-gray-900 to-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div 
-            className="text-center mb-10 sm:mb-20"
-            variants={sectionVariants}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <motion.h2 
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 font-sans text-white"
-              variants={typingVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              <motion.span variants={typingTextVariants} className="block">Your Media.</motion.span>
-              <motion.span variants={typingTextVariants} className="block text-[#B40101] italic">Your Advantage.</motion.span>
-            </motion.h2>
-            <motion.p 
-              className="text-lg text-white/80 max-w-4xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              Your brand deserves better than DIY. Our media engine is a complete virality infrastructure, designed to
-              turn you into a content powerhouse.
-            </motion.p>
-          </motion.div>
-
-          <motion.div 
-            className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            {[
-              {
-                icon: <Camera className="h-8 w-8" />,
-                title: "Professional Media",
-                desc: "Video, drone, photography services",
-              },
-              {
-                icon: <Star className="h-8 w-8" />,
-                title: "Brand Control",
-                desc: "White-label personal branding content",
-              },
-              {
-                icon: <TrendingUp className="h-8 w-8" />,
-                title: "Content Creation",
-                desc: "AI-powered copy and visual generation",
-              },
-              {
-                icon: <Award className="h-8 w-8" />,
-                title: "Marketing Studio",
-                desc: "Podcasts, staging, and branded content",
-              },
-            ].map((service, index) => (
-              <motion.div 
-                key={index} 
-                className="text-center group"
-                variants={cardHoverVariants}
-                whileHover="hover"
-              >
-                <motion.div 
-                  className="inline-flex items-center justify-center w-16 h-16 bg-[#B40101]/10 rounded-full mb-6 group-hover:bg-[#B40101]/20 transition-colors"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <div className="text-[#B40101]">{service.icon}</div>
-                </motion.div>
-                <motion.h3 
-                  className="text-xl font-semibold mb-3 text-white"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.5, delay: index * 0.1 + 0.1 }}
-                >
-                  {service.title}
-                </motion.h3>
-                <motion.p 
-                  className="text-white/80"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.5, delay: index * 0.1 + 0.2 }}
-                >
-                  {service.desc}
-                </motion.p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Commission Structure */}
-      <section className="relative py-12 sm:py-32">
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-black" />
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div 
-              className="relative order-2 lg:order-1"
-              variants={slideInLeft}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              <motion.div 
-                className="bg-gradient-to-br from-[#B40101]/10 to-transparent p-12 rounded-lg border border-[#B40101]/20"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="text-center">
-                  <motion.div 
-                    className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#B40101] mb-4"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                  >
-                    90-94%
-                  </motion.div>
-                  <motion.h3 
-                    className="text-2xl font-semibold mb-4"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.6, delay: 0.3 }}
-                  >
-                    Commission Retention
-                  </motion.h3>
-                  <motion.p 
-                    className="text-[#999999] mb-8 text-sm sm:text-base leading-tight sm:leading-normal max-w-xs sm:max-w-none mx-auto"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
-                  >
-                    One of the highest in Singapore's real estate industry
-                  </motion.p>
-
-                  <motion.div 
-                    className="space-y-4"
-                    variants={staggerContainer}
-                    initial="initial"
-                    whileInView="animate"
-                    viewport={{ once: true, margin: "-100px" }}
-                  >
-                    {[
-                      { label: "Your Commission", value: "90-94%" },
-                      { label: "Growth Share Bonus", value: "2% GCI" },
-                      { label: "7-Tier Network", value: "Lifetime" }
-                    ].map((item, index) => (
-                      <motion.div 
-                        key={index}
-                        className="flex justify-between items-center py-2 border-b border-[#666666]/30"
-                        variants={fadeInUp}
-                      >
-                        <span className="text-white/80">{item.label}</span>
-                        <span className="text-[#B40101] font-semibold">{item.value}</span>
-                      </motion.div>
+                  <div className={`space-y-4 text-lg leading-relaxed ${activeIncome === index ? "text-white/90" : "text-gray-300"}`}>
+                    <p className={`font-semibold text-xl mb-4 ${activeIncome === index ? "text-white" : "text-white"}`}>{card.intro}</p>
+                    {card.body.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
                     ))}
-                  </motion.div>
-                </div>
-              </motion.div>
-            </motion.div>
+                  </div>
 
-            <motion.div 
-              className="text-center lg:text-left order-1 lg:order-2"
-              variants={slideInRight}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              <motion.h2 
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 font-sans text-white"
-                variants={typingVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-              >
-                <motion.span variants={typingTextVariants} className="block">Unlocking Your True</motion.span>
-                <motion.span variants={typingTextVariants} className="block text-[#B40101] italic">Earning Potential</motion.span>
-              </motion.h2>
-              <motion.p 
-                className="text-lg text-white/80 mb-8 leading-relaxed"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-              >
-                Clarity and maximum take-home are foundational to our model. We believe in building wealth beyond just
-                transactions.
-              </motion.p>
-
-              <motion.div 
-                className="space-y-6"
-                variants={staggerContainer}
-                initial="initial"
-                whileInView="animate"
-                viewport={{ once: true, margin: "-100px" }}
-              >
-                {[
-                  {
-                    title: "Highest Commission Retention",
-                    desc: "You retain 90-94% of your commissions, one of the highest in Singapore."
-                  },
-                  {
-                    title: "7-Tier Global Growth Share",
-                    desc: "Build lasting wealth with passive income. Earn 2% of the company's GCI from your growing global network, designed for lifetime and inheritable benefits."
-                  }
-                ].map((item, index) => (
-                  <motion.div 
-                    key={index} 
-                    className="flex items-start space-x-4"
-                    variants={fadeInUp}
-                  >
-                    <motion.div 
-                      className="w-2 h-2 bg-[#B40101] rounded-full mt-3"
-                      initial={{ opacity: 0, scale: 0 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true, margin: "-100px" }}
-                      transition={{ duration: 0.5, delay: index * 0.2 }}
-                    />
-                    <div>
-                      <motion.h4 
-                        className="text-lg font-semibold mb-2"
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 0.5, delay: index * 0.2 + 0.1 }}
-                      >
-                        {item.title}
-                      </motion.h4>
-                      <motion.p 
-                        className="text-white/80"
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 0.5, delay: index * 0.2 + 0.2 }}
-                      >
-                        {item.desc}
-                      </motion.p>
+                  {card.video && (
+                    <div className="mt-6">
+                      <div className="aspect-video rounded-lg overflow-hidden border border-white/20 shadow-lg">
+                        <iframe
+                          src={card.video}
+                          className="w-full h-full"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          title={`${card.title} Video`}
+                        />
+                      </div>
                     </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </motion.div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Financial Backing */}
-      <section className="relative py-12 sm:py-32 bg-gradient-to-b from-black to-gray-900">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <motion.h2 
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 font-sans text-white"
-            variants={typingVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <motion.span variants={typingTextVariants} className="block">A Financially Viable</motion.span>
-            <motion.span variants={typingTextVariants} className="block text-[#B40101] italic">Future</motion.span>
-          </motion.h2>
-          <motion.p 
-            className="text-lg text-white/80 mb-16 max-w-4xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            KW Singapore is built for longevity and fueled by a clear vision for the future. We are backed by a global
-            powerhouse and strategic revenue streams.
-          </motion.p>
+      {/* PropTech */}
+      <section id="proptech-section" className="relative pt-20 pb-20 md:pt-20 md:pb-20 lg:pt-32 lg:pb-32 overflow-hidden">
+        <div className="absolute inset-0 bg-black" />
+        <div className="absolute inset-0 bg-gradient-to-br from-black via-[#660000]/80 to-black" />
+        <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: "url('/images/ai-bg-join-kw.jpg')" }} />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80" />
 
-          <motion.div 
-            className="grid md:grid-cols-3 gap-12"
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            {[
-              { stat: "$10M", title: "Seed Valuation", desc: "Angel-funded seed round demonstrating investor confidence" },
-              { stat: "55+", title: "Regions", desc: "Global network presence with proven track record" },
-              { stat: "189K+", title: "Salespersons", desc: "Salespersons in our global network" }
-            ].map((item, index) => (
-              <motion.div 
-                key={index} 
-                className="text-center"
-                variants={cardHoverVariants}
-                whileHover="hover"
+        <div className="relative z-10 max-w-7xl mx-auto px-6 transition-all duration-700 ease-out">
+          <div className="space-y-12">
+            <div className="text-left">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                <span className="text-white">
+                  PropTech & AI: <br />
+                </span>
+                <span className="text-[#D9381E]">Your Integrated Command Center</span>
+              </h2>
+              <h3 className="text-2xl md:text-3xl font-semibold text-white/90 mb-6">Smarter Systems. Scalable Leverage.</h3>
+            </div>
+
+            <div className="mt-16 pb-16 flex justify-end w-full">
+              <div className="w-full md:w-[85%] lg:w-[80%] xl:w-[80%]" style={{ maxWidth: "85%" }}>
+                <p className="text-lg md:text-2xl text-white font-medium leading-relaxed text-right mx-0 mt-2">
+                  Powered by an advanced AI backend, we deliver your unfair advantage. This all-in-one ecosystem eliminates administrative burnout and
+                  establishes you as the definitive, data-driven market expert.
+                </p>
+              </div>
+            </div>
+
+            <div className="w-full mt-32 pb-12">
+              <div className="grid lg:grid-cols-[30%_70%] gap-8 items-center">
+                <div className="space-y-6 transition-all duration-700 ease-out">
+                  <div className="mb-4">
+                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#B40101] to-[#8B0000] flex items-center justify-center shadow-lg border border-[#B40101]/30">
+                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                      </svg>
+                    </div>
+                  </div>
+                  <h3 className="text-4xl md:text-3xl font-bold text-white">KW Compass</h3>
+                  <p className="text-lg text-white/90 leading-relaxed">
+                    This proprietary Singapore-focused consulting tool is your real-time analysis hub. Featuring Compass 10 for New Launch and Resale Property Scoring, it
+                    provides a BUC/EC Calculator, Property Comparison analysis, and New Launch Property Analysis.
+                  </p>
+                </div>
+
+                <div
+                  className="relative overflow-hidden rounded-lg"
+                  onMouseEnter={() => setIsCarouselPaused(true)}
+                  onMouseLeave={() => setIsCarouselPaused(false)}
+                >
+                  <div
+                    className="flex transition-transform duration-700 ease-in-out"
+                    style={{
+                      transform: `translateX(-${carouselIndex * (100 / 3)}%)`,
+                    }}
+                  >
+                    {youtubeVideos.map((videoId) => (
+                      <div key={videoId} className="flex-shrink-0 w-1/3 px-2">
+                        <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden border border-gray-700/50 relative group hover:border-gray-600 transition-colors">
+                          <iframe
+                            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0&loop=1&playlist=${videoId}&playsinline=1&enablejsapi=1`}
+                            className="w-full h-full"
+                            allow="autoplay; encrypted-media; accelerometer; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            title={`KW Compass Video ${videoId}`}
+                          />
+                          <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-black/5" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex justify-center gap-2 mt-4">
+                    {Array.from({ length: youtubeDotCount }).map((_, index) => (
+                      <button
+                        key={`carousel-${index}`}
+                        onClick={() => setCarouselIndex(index)}
+                        className={`h-2 rounded-full transition-all duration-300 ${carouselIndex === index ? "w-8 bg-[#B40101]" : "w-2 bg-white/30 hover:bg-white/50"}`}
+                        aria-label={`Go to video set ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="w-full mt-24">
+              <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="relative group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2">
+                  <div className="absolute inset-0 rounded-2xl overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-black via-[#660000]/50 to-black" />
+                    <div className="absolute bottom-0 right-0 w-full h-full opacity-40">
+                      <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-[#B40101] via-[#D9381E] to-transparent rounded-full blur-3xl transform translate-x-1/4 translate-y-1/4" />
+                    </div>
+                  </div>
+
+                  <div className="relative bg-gradient-to-br from-black/60 via-[#660000]/40 to-black/60 rounded-2xl p-8 h-full overflow-hidden backdrop-blur-sm">
+                    <div className="mb-6 flex items-center gap-4">
+                      <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#B40101] to-[#8B0000] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-[#B40101]/30">
+                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                      </div>
+                      <div className="h-px flex-1 bg-gradient-to-r from-[#B40101]/50 to-transparent" />
+                    </div>
+
+                    <h3 className="text-4xl md:text-3xl font-medium mb-6 text-white">KW Command</h3>
+                    <p className="text-lg text-white/90 leading-relaxed group-hover:text-white transition-colors duration-300">
+                      This intelligent CRM and business suite automates your lead pipeline and manages all transactions from a central dashboard, providing real-time
+                      mobile updates for command and control of your business on the go.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="relative group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2">
+                  <div className="absolute inset-0 rounded-2xl overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-black via-[#660000]/50 to-black" />
+                    <div className="absolute bottom-0 right-0 w-full h-full opacity-40">
+                      <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-[#B40101] via-[#D9381E] to-transparent rounded-full blur-3xl transform translate-x-1/4 translate-y-1/4" />
+                    </div>
+                  </div>
+
+                  <div className="relative bg-gradient-to-br from-black/60 via-[#660000]/40 to-black/60 rounded-2xl p-8 h-full overflow-hidden backdrop-blur-sm">
+                    <div className="mb-6 flex items-center gap-4">
+                      <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#B40101] to-[#8B0000] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-[#B40101]/30">
+                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                      </div>
+                      <div className="h-px flex-1 bg-gradient-to-r from-[#B40101]/50 to-transparent" />
+                    </div>
+
+                    <h3 className="text-4xl md:text-3xl font-medium mb-6 text-white">Professional Leverage</h3>
+                    <p className="text-lg text-white/90 leading-relaxed mb-4 group-hover:text-white transition-colors duration-300">
+                      You gain access to a KW x Canva Enterprise account for professional design, Google Gemini Pro for intelligent client engagement, and Unlimited
+                      Google Drive storage for seamless cloud management.
+                    </p>
+                    <p className="text-lg text-white/80 leading-relaxed italic group-hover:text-white/90 transition-colors duration-300">
+                      Stop juggling disparate tools. Start scaling predictably, gaining the automated leverage and precision required to dominate the property market.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Blueprint */}
+      <section id="blueprint-section" className="relative py-20 md:py-20 lg:py-32 overflow-hidden bg-gradient-to-b from-black via-[#B40101]/50 to-black">
+        <div className="absolute inset-0 opacity-20">
+          <svg viewBox="0 0 1440 800" className="w-full h-full" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="blueprintDots" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+                <circle cx="8" cy="8" r="1" fill="#ffffff" opacity="0.5" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#blueprintDots)" />
+          </svg>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10 transition-all duration-700 ease-out">
+          <div className="space-y-12">
+            <div className="text-left">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                <span className="text-white">
+                  The Blueprint: <br />
+                </span>
+                <span className="text-[#D9381E]">Scale Beyond Solo</span>
+              </h2>
+            </div>
+
+            <div className="w-full mt-16 mb-24 sm:w-full md:w-4/5 md:mx-auto md:ml-auto md:mr-0 text-right">
+              <p className="text-lg md:text-2xl text-white font-medium leading-relaxed mx-0 mt-2">
+                The trial-and-error approach ends here. <br /> Leverage the industry's most successful business philosophies for uncapped growth.
+              </p>
+            </div>
+
+            <div className="relative mt-12 pt-12">
+              <div
+                className="relative rounded-2xl p-10 md:p-16 backdrop-blur-xl bg-black/40 border border-[#B40101]/30 overflow-hidden"
+                style={{
+                  boxShadow: "0 0 40px rgba(180, 1, 1, 0.3), inset 0 0 20px rgba(180, 1, 1, 0.1)",
+                }}
               >
-                <motion.div 
-                  className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#B40101] mb-4"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                <div className="absolute inset-0 rounded-2xl pointer-events-none">
+                  <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#B40101]/50 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#B40101]/50 to-transparent" />
+                  <div className="absolute top-0 bottom-0 left-0 w-px bg-gradient-to-b from-transparent via-[#B40101]/50 to-transparent" />
+                  <div className="absolute top-0 bottom-0 right-0 w-px bg-gradient-to-b from-transparent via-[#B40101]/50 to-transparent" />
+                  <div className="absolute top-0 left-0 w-32 h-32 bg-[#B40101]/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#B40101]/20 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
+                  <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#B40101]/20 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
+                  <div className="absolute bottom-0 right-0 w-32 h-32 bg-[#B40101]/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+                  <div className="w-full space-y-6 order-1 lg:order-1">
+                    {blueprintHighlights.map((highlight) => (
+                      <div key={highlight.title} className="relative pb-6 mb-6 border-b border-white/10 last:border-b-0 last:mb-0 last:pb-0">
+                        <div className="flex items-start">
+                          <div className="flex-1">
+                            <h3 className="text-xl md:text-2xl font-medium text-white mb-2">{highlight.title}</h3>
+                            <p className="text-base text-white/80 leading-relaxed">{highlight.copy}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="w-full order-2 lg:order-2">
+                    <div className="relative bg-gradient-to-br from-gray-900 to-black rounded-lg overflow-hidden">
+                      <div className="aspect-video">
+                        <iframe
+                          src="https://www.youtube.com/embed/PHaW-ZscJuQ?start=420&autoplay=0&mute=0&controls=1&modestbranding=1&rel=0"
+                          title="The Blueprint: Scale Beyond Solo"
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowFullScreen
+                          className="w-full h-full rounded-lg"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Training */}
+      <section id="training-section" className="relative py-20 md:py-20 lg:py-32 overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-90"
+          style={{
+            background: "linear-gradient(to bottom, #000000 0%, #1a0000 20%, #330000 40%, #660000 50%, #330000 70%, #1a0000 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255, 255, 255, 0.1) 10px,rgba(255, 255, 255, 0.1) 20px)",
+          }}
+        />
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10 transition-all duration-700 ease-out">
+          <div className="space-y-12">
+            <div className="text-left">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                <span className="text-white">
+                  World-Class Training: <br />
+                </span>
+                <span className="text-[#D9381E]">Mastery That Converts</span>
+              </h2>
+            </div>
+
+            <div className="w-full md:w-4/5 mt-16 md:mx-auto md:ml-auto md:mr-0 text-right">
+              <p className="text-lg md:text-2xl text-white font-medium leading-relaxed mx-0 mt-2 mb-24">
+                Your ceiling is determined by your learning. Access the most comprehensive, model-driven education in the industry, designed to elevate your skills and
+                mindset.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-24 mb-8">
+              {["Image 1", "Image 2", "Image 3", "Image 4"].map((label) => (
+                <div key={label} className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg overflow-hidden border border-white/10">
+                  <div className="w-full h-full flex items-center justify-center text-white/50 text-sm">{label}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left mx-auto mt-16">
+              {trainingHighlights.map((highlight) => (
+                <div
+                  key={highlight.title}
+                  className="relative backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:border-white/20 hover:scale-105 hover:shadow-lg hover:shadow-[#B40101]/20 group"
                 >
-                  {item.stat}
-                </motion.div>
-                <motion.h3 
-                  className="text-xl font-semibold mb-3 text-white"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6, delay: index * 0.1 + 0.1 }}
-                >
-                  {item.title}
-                </motion.h3>
-                <motion.p 
-                  className="text-white/80"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6, delay: index * 0.1 + 0.2 }}
-                >
-                  {item.desc}
-                </motion.p>
-              </motion.div>
+                  <h3 className="text-xl md:text-2xl font-semibold text-white mb-3 text-center min-h-[4rem] flex items-center justify-center">{highlight.title}</h3>
+                  <p className="text-base text-white/70 leading-relaxed group-hover:text-white/90 transition-colors duration-300">{highlight.copy}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="w-full mt-16 py-8">
+              <h2 className="text-2xl md:text-3xl my-[15px] text-white text-center leading-relaxed w-4/5 mx-auto">
+                Transform from a sales agent to a business CEO. <br /> Acquire the exact knowledge and skills required to consistently dominate market share and accelerate
+                your growth.
+              </h2>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Culture */}
+      <section id="culture-section" className="relative py-20 md:py-20 lg:py-32 overflow-hidden bg-black">
+        <div
+          className="absolute inset-0 opacity-70"
+          style={{
+            background: "linear-gradient(to bottom, #1a0000 0%, #000000 33%, #330000 66%, #000000 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-40"
+          style={{
+            backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)",
+            backgroundSize: "20px 20px",
+            backgroundPosition: "0 0, 10px 10px",
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.2) 1.5px, transparent 0)",
+            backgroundSize: "30px 30px",
+            backgroundPosition: "15px 15px",
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-50"
+          style={{
+            backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.25) 2px, transparent 0)",
+            backgroundSize: "40px 40px",
+            backgroundPosition: "20px 20px",
+            maskImage: "linear-gradient(to bottom right, transparent 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%)",
+            WebkitMaskImage: "linear-gradient(to bottom right, transparent 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%)",
+          }}
+        />
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10 transition-all duration-700 ease-out">
+          <div className="text-center max-w-4xl mx-auto relative z-10">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
+              In Business For Yourself
+              <br />
+              <span className="text-[#B40101]">Never By Yourself</span>
+            </h2>
+            <p className="text-lg md:text-2xl text-white font-medium leading-relaxed text-center mx-auto mb-12">
+              You are never alone on your journey. Our culture is built on the belief that agents should be in business for themselves, but not by themselves.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-3 md:gap-6 relative z-0">
+            {avatarLayout.map((column, columnIndex) => (
+              <div key={`column-${columnIndex}`} className={`${column.shift} ${column.start}`}>
+                {column.items.map((avatarIndex) => (
+                  <div key={`avatar-${avatarIndex}`} className={`${avatarIndex % 2 === 0 ? "aspect-[3/4]" : "aspect-square"} rounded-2xl overflow-hidden bg-gray-800 mb-6 last:mb-0`}>
+                    <img
+                      src={avatarImages[avatarIndex]}
+                      alt="Professional"
+                      className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity duration-500"
+                    />
+                  </div>
+                ))}
+              </div>
             ))}
-          </motion.div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left max-w-6xl mx-auto mt-16">
+            {cultureHighlights.map((highlight, index) => (
+              <div
+                key={highlight.title}
+                className={`relative backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:border-white/20 hover:scale-105 hover:shadow-lg hover:shadow-[#B40101]/20 group ${index === 2 ? "md:col-span-2 lg:col-span-1" : ""}`}
+              >
+                <div className="text-[#B40101] text-5xl font-bold mb-2">{String(index + 1).padStart(2, "0")}</div>
+                <h3 className="text-xl md:text-2xl font-semibold text-white mb-3 group-hover:text-white transition-colors duration-300">{highlight.title}</h3>
+                <p className="text-base text-white/70 leading-relaxed group-hover:text-white/90 transition-colors duration-300">{highlight.copy}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Market Focus */}
+      <section className="relative py-12 md:py-16 lg:py-32 overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-90"
+          style={{
+            background: "linear-gradient(to bottom, #000000 0%, #1a0000 20%, #330000 40%, #660000 50%, #330000 70%,rgb(0, 0, 0) 100%)",
+          }}
+        />
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10 transition-all duration-700 ease-out">
+          <div className="space-y-8 md:space-y-12">
+            <div className="text-left">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 leading-tight">
+                <span className="text-white">
+                  Market Focus: <br />
+                </span>
+                <span className="text-[#D9381E]">Built for Singapore's New Launch Economy</span>
+              </h2>
+            </div>
+
+            <div className="w-full md:w-4/5 mt-8 md:mt-12 lg:mt-16 md:ml-auto md:mr-0 text-right">
+              <p className="text-lg md:text-xl lg:text-2xl text-white font-medium leading-relaxed mx-0 mt-2">
+                Our entire ecosystem, from the KW Compass technology to our training curriculum, is engineered to capitalize on the New Launch market. We provide the
+                analysis, resources, and focus required to dominate this high-growth sector.
+              </p>
+            </div>
+
+            <div className="w-full mt-8 md:mt-12 lg:mt-16">
+              <div
+                className="relative overflow-hidden rounded-lg"
+                onMouseEnter={() => setIsImageCarouselPaused(true)}
+                onMouseLeave={() => setIsImageCarouselPaused(false)}
+              >
+                <div
+                  className="flex transition-transform duration-700 ease-in-out"
+                  style={{
+                    transform: `translateX(-${imageCarouselIndex * 50}%)`,
+                  }}
+                >
+                  {imageCarouselSeeds.map((index) => (
+                    <div key={`market-focus-${index}`} className="flex-shrink-0 w-1/2 px-1 md:px-2">
+                      <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden border border-white/10 relative group hover:border-white/20 transition-colors">
+                        <img src={`https://picsum.photos/seed/market-focus-${index}/800/450`} alt={`Market Focus ${index}`} className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-black/10" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex justify-center gap-2 mt-4 md:mt-6">
+                  {Array.from({ length: imageDotCount }).map((_, index) => (
+                    <button
+                      key={`image-dot-${index}`}
+                      onClick={() => setImageCarouselIndex(index)}
+                      className={`h-2 rounded-full transition-all duration-300 ${imageCarouselIndex === index ? "w-8 bg-[#B40101]" : "w-2 bg-white/30 hover:bg-white/50"}`}
+                      aria-label={`Go to image set ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Global Powerhouse */}
+      <section className="relative py-20 md:py-20 lg:py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-black" />
+        <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: "url('/images/image.png')" }} />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80" />
+
+        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center transition-all duration-700 ease-out">
+          <div className="mb-8">
+            <h1 className="text-[8rem] md:text-[10rem] lg:text-[12rem] font-black text-[#D9381E] leading-none tracking-tighter opacity-90">#1</h1>
+          </div>
+
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+            Real Estate Franchise
+            <br />
+            in the U.S.
+          </h2>
+
+          <p className="text-white font-medium leading-relaxed mb-12 max-w-4xl mx-auto text-3xl">With over 200,000 salespersons and a proven track record across 60+ countries.</p>
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6 mt-48">
+          <div className="w-full max-w-full space-y-8">
+            <div className="text-left w-full">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+                <span className="text-[#D9381E]">
+                  LOCAL
+                  <br /> MOMENTUM
+                </span>
+              </h2>
+            </div>
+
+            <div className="flex w-full justify-end">
+              <div className="w-full sm:w-full md:w-4/5 lg:w-4/5 xl:w-4/5" style={{ maxWidth: "80%" }}>
+                <p className="text-lg md:text-2xl text-white font-medium leading-relaxed text-right">
+                  Fueled by a <span className="font-bold">$10M Seed Valuation</span> and media recognition, we are bringing this successful model to Singapore—poised to establish KW as a major force in the local market.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute top-0 left-1/4 w-px h-32 bg-gradient-to-b from-[#D9381E]/30 to-transparent transform -rotate-45" />
+        <div className="absolute bottom-0 right-1/3 w-px h-40 bg-gradient-to-t from-[#D9381E]/30 to-transparent transform rotate-45" />
+      </section>
+
+      {/* Financially Viable */}
+      <section className="relative pt-6 md:pt-8 lg:pt-12 pb-12 md:pb-16 lg:pb-32 bg-gradient-to-br from-black to-[#B40101]/20">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start mb-12 md:mb-16 lg:mb-20">
+            <div>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-sans leading-tight">
+                A Financially
+                <span className="block text-[#B40101] italic mt-2">Viable Future</span>
+              </h2>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 lg:gap-12">
+            <div className="text-left">
+              <h3 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-2 md:mb-6">${count10M}M</h3>
+              <p className="text-lg md:text-xl font-semibold mb-2">Seed Valuation</p>
+              <p className="text-base md:text-lg text-white/70 leading-relaxed">Angel-funded seed round demonstrating investor confidence</p>
+            </div>
+            <div className="text-left">
+              <h3 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-2 md:mb-6">{count60}+</h3>
+              <p className="text-lg md:text-xl font-semibold mb-2">Regions</p>
+              <p className="text-base md:text-lg text-white/70 leading-relaxed">Global network presence with proven track record</p>
+            </div>
+            <div className="text-left md:col-span-2 lg:col-span-1">
+              <h3 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-2 md:mb-6">{count200K}K+</h3>
+              <p className="text-lg md:text-xl font-semibold mb-2">Salespersons</p>
+              <p className="text-base md:text-lg text-white/70 leading-relaxed">Salespersons in our global network</p>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Final CTA */}
-      <section className="relative py-12 sm:py-32">
-        <div className="absolute inset-0 bg-[url('/images/singapore-skyline-night.png')] bg-cover bg-center opacity-20" />
-        <div className="absolute inset-0 bg-black/70" />
+      <section className="relative pt-20 pb-12 md:pt-20 md:pb-12 lg:pt-32 lg:pb-16">
         <div className="absolute inset-0 bg-gradient-to-br from-[#B40101]/20 via-black/80 to-black" />
-        <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
-          <motion.h2 
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8 font-sans text-white"
-            variants={heroTitleVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <motion.span variants={heroLineVariants} className="block">The Future of Real Estate is Here.</motion.span>
-            <motion.span variants={heroLineVariants} className="block text-[#B40101] italic">Will You Lead It?</motion.span>
-          </motion.h2>
-          <motion.p 
-            className="text-xl text-white/80 mb-12 max-w-4xl mx-auto leading-relaxed"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            Plug into the KW Singapore platform and take your career from closings to equity, visibility, and brand
-            ownership. We invite you to lead in the next era of real estate.
-          </motion.p>
+        <div className="relative z-10 max-w-6xl mx-auto px-6 text-center transition-all duration-700 ease-out">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 font-sans">
+            The Future of Real Estate.
+            <span className="block text-[#B40101] italic">Led by You.</span>
+          </h2>
+          <h2 className="text-3xl font-semibold my-[15px]">
+            Plug into the KW Singapore platform and take your career from closings to equity, visibility, and brand ownership.
+          </h2>
+          <p className="text-xl text-white/80 mb-12 max-w-4xl mx-auto leading-relaxed">
+            You have seen the blueprint, the technology, and the financial model. Your next level of scale and profitability is backed by systems, not guesswork.
+          </p>
 
-          <motion.div 
-            className="space-y-6"
-            variants={buttonVariants}
-            initial="initial"
-            whileInView="whileInView"
-            whileHover="hover"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <Button
-              size="lg"
-              className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-sm"
-              onClick={() => window.open("https://explore.kwsingapore.com/booking-page", "_blank")}
-            >
+          <div className="space-y-6">
+            <Button size="lg" className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-sm">
               Book Your Discovery Call
               <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <motion.p 
-              className="text-lg text-white/80 max-w-2xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              Your next deal is just the start. Join the platform built for consultants, backed by systems.
-              <span className="block mt-2 text-[#B40101] font-medium">
-                Where Media, Tech, and Talent Collide. One Platform. Unlimited Potential.
-              </span>
-            </motion.p>
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      <JoinFormDialog 
-        isOpen={isDialogOpen}
-        onClose={() => setIsDialogOpen(false)}
-        onSubmit={handleSubmit}
-      />
-    </motion.main>
-  )
-}
+      {/* Last Section */}
+      <section className="relative pt-10 pb-16 md:pt-12 md:pb-24 lg:pt-14 lg:pb-24 overflow-hidden bg-gradient-to-b from-black via-[#B40101]/35 to-black">
+        <div className="absolute inset-0 opacity-20">
+          <svg viewBox="0 0 1440 800" className="w-full h-full" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="worldDotsLast" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+                <circle cx="4" cy="4" r="1" fill="#ffffff" opacity="0.7" />
+              </pattern>
+            </defs>
+            <path
+              d="M200,250 Q250,200 350,220 L450,200 Q500,180 550,200 L650,190 Q700,180 750,200 L850,210 Q900,200 950,220 L1050,230 Q1100,220 1150,240 L1200,250 Q1250,240 1300,260 L1300,400 Q1250,420 1200,410 L1100,400 Q1050,390 1000,400 L900,410 Q850,400 800,410 L700,420 Q650,410 600,420 L500,430 Q450,420 400,430 L300,440 Q250,430 200,440 Z M100,350 Q150,330 200,350 L250,360 Q300,350 350,370 L400,380 Q450,370 500,380 L550,390 Q600,380 650,390 L700,400 Q750,390 800,400 L850,410 Q900,400 950,410 L1000,420 Q1050,410 1100,420 L1100,550 Q1050,570 1000,560 L950,550 Q900,540 850,550 L800,560 Q750,550 700,560 L650,570 Q600,560 550,570 L500,580 Q450,570 400,580 L350,590 Q300,580 250,590 L200,600 Q150,590 100,600 Z"
+              fill="url(#worldDotsLast)"
+            />
+          </svg>
+        </div>
 
-const ParallaxImage = ({ src, alt }: { src: string; alt: string }) => {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#B40101]/50 to-transparent" />
 
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
+        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center transition-all duration-700 ease-out">
+          <h3 className="text-xl md:text-2xl text-white mb-6 leading-tight font-medium">
+            Where Media, Tech, and Talent Collide. <br />
+            <span className="text-white/90">One Platform. Unlimited Potential.</span>
+          </h3>
 
-  return (
-    <div ref={ref} className="relative h-[400px] rounded-xl overflow-hidden">
-      <motion.div
-        style={{ 
-          y, 
-          scale,
-          transformOrigin: "center center"
-        }}
-        className="absolute inset-0"
-      >
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          className="object-cover"
-        />
-      </motion.div>
-    </div>
-  );
-};
+          <div className="mt-8">
+            <p className="text-[#B40101] font-bold tracking-wide uppercase text-5xl">
+              Ready to lead <br />
+              the next era of real estate?
+            </p>
+          </div>
+        </div>
 
-/*
-Original code preserved below for future use:
-
-"use client"
-
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Building2, Users, Award, ArrowRight, Brain, Share2, Video, BarChart3 } from "lucide-react"
-import Image from "next/image"
-import { motion } from "framer-motion"
-
-// Animation variants
-const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 }
-}
-
-const staggerContainer = {
-  animate: {
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-}
-
-export default function JoinKW() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
-  })
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission
-    console.log(formData)
-  }
-
-  return (
-    <main className="min-h-screen bg-black text-white">
-      // ... existing code ...
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-6">
+          {lastSectionActions.map((action) => (
+            <div
+              key={action.title}
+              className={`relative backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:border-white/20 hover:scale-105 hover:shadow-lg hover:shadow-[#B40101]/20 group ${
+                action.title.includes("BOOK") ? "md:col-span-2 lg:col-span-1" : ""
+              } flex flex-col h-full`}
+            >
+              <div className="mb-6 flex justify-center">{<action.icon className="w-12 h-12 text-white" />}</div>
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-4 text-center min-h-[4rem] flex items-center justify-center group-hover:text-white transition-colors duration-300">
+                {action.title}
+              </h3>
+              <p className="text-base text-white leading-relaxed mb-6 text-center group-hover:text-white transition-colors duration-300 flex-grow">{action.copy}</p>
+              <Button className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold rounded-lg border-none transition-all duration-300 mt-auto">{action.button}</Button>
+            </div>
+          ))}
+        </div>
+      </section>
     </main>
   )
 }
-*/ 
