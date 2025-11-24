@@ -1,7 +1,9 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
+import type { MouseEvent, MutableRefObject, RefObject } from "react"
 import { ArrowRight, Calendar, Handshake, Users } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
 
 const heroCards = [
@@ -32,7 +34,7 @@ const heroCards = [
   },
 ]
 
-const youtubeVideos = ["98q3DIEeRdk", "_H9v-sPdH3o", "pJcbNolha-M", "PHaW-ZscJuQ", "9xwazD5SyVg"]
+const youtubeVideos = ["yJ4RNPtESM4", "wbOn8um6oB4", "RxJe0-Omg70", "lgekMAy7DxU"]
 const imageCarouselSeeds = [1, 2, 3, 4, 5]
 
 const blueprintHighlights = [
@@ -94,7 +96,7 @@ const lastSectionActions = [
   {
     title: "READY TO ONBOARD?",
     copy:
-      "You've seen the model, you understand the vision, and you're ready to make the move. Join the real estate revolution in Singapore and get immediate access to our training, tools, and tech.",
+      "You've seen the model, you understand the vision, and you're ready to make the move. Join the real estate revolution in Singapore and get immediate access to our training, tools, and tech",
     button: "START MY ONBOARDING",
     icon: Handshake,
   },
@@ -174,62 +176,314 @@ export default function JoinPage() {
   const [isCarouselPaused, setIsCarouselPaused] = useState(false)
   const [imageCarouselIndex, setImageCarouselIndex] = useState(0)
   const [isImageCarouselPaused, setIsImageCarouselPaused] = useState(false)
+
+  const [kwEdgeOpacity, setKwEdgeOpacity] = useState(0)
+  const [kwEdgeTranslateY, setKwEdgeTranslateY] = useState(20)
+  const [cardsOpacity, setCardsOpacity] = useState(0)
+  const [cardAnimations, setCardAnimations] = useState(heroCards.map(() => 0))
+  const [cardTranslateX, setCardTranslateX] = useState(heroCards.map(() => -100))
+
+  const [predictableWealthOpacity, setPredictableWealthOpacity] = useState(0)
+  const [predictableWealthTranslateY, setPredictableWealthTranslateY] = useState(50)
+  const [incomeModelOpacity, setIncomeModelOpacity] = useState(0)
+  const [incomeModelTranslateY, setIncomeModelTranslateY] = useState(50)
+  const [proptechOpacity, setProptechOpacity] = useState(0)
+  const [proptechTranslateY, setProptechTranslateY] = useState(50)
+  const [blueprintOpacity, setBlueprintOpacity] = useState(0)
+  const [blueprintTranslateY, setBlueprintTranslateY] = useState(50)
+  const [trainingOpacity, setTrainingOpacity] = useState(0)
+  const [trainingTranslateY, setTrainingTranslateY] = useState(50)
+  const [cultureOpacity, setCultureOpacity] = useState(0)
+  const [cultureTranslateY, setCultureTranslateY] = useState(50)
+  const [marketFocusOpacity, setMarketFocusOpacity] = useState(0)
+  const [marketFocusTranslateY, setMarketFocusTranslateY] = useState(50)
+  const [globalPowerhouseOpacity, setGlobalPowerhouseOpacity] = useState(0)
+  const [globalPowerhouseTranslateY, setGlobalPowerhouseTranslateY] = useState(50)
+  const [finalCTAOpacity, setFinalCTAOpacity] = useState(0)
+  const [finalCTATranslateY, setFinalCTATranslateY] = useState(50)
+  const [lastSectionOpacity, setLastSectionOpacity] = useState(0)
+  const [lastSectionTranslateY, setLastSectionTranslateY] = useState(50)
+
+  const [kwCompassOpacity, setKwCompassOpacity] = useState(0)
+  const [kwCompassTranslateX, setKwCompassTranslateX] = useState(-100)
+  const [kwCommandOpacity, setKwCommandOpacity] = useState(0)
+  const [kwCommandTranslateX, setKwCommandTranslateX] = useState(-100)
+  const [professionalLeverageOpacity, setProfessionalLeverageOpacity] = useState(0)
+  const [professionalLeverageTranslateX, setProfessionalLeverageTranslateX] = useState(-100)
+
+  const [blueprintCardsOpacity, setBlueprintCardsOpacity] = useState([0, 0])
+  const [blueprintCardsTranslateX, setBlueprintCardsTranslateX] = useState([-100, -100])
+  const [trainingCardsOpacity, setTrainingCardsOpacity] = useState([0, 0, 0])
+  const [trainingCardsTranslateY, setTrainingCardsTranslateY] = useState([50, 50, 50])
+  const [cultureCardsOpacity, setCultureCardsOpacity] = useState([0, 0, 0])
+  const [cultureCardsTranslateX, setCultureCardsTranslateX] = useState([-100, -100, -100])
+  const [lastSectionCardsOpacity, setLastSectionCardsOpacity] = useState([0, 0, 0])
+  const [lastSectionCardsTranslateX, setLastSectionCardsTranslateX] = useState([-100, -100, -100])
+
   const [count10M, setCount10M] = useState(0)
   const [count60, setCount60] = useState(0)
   const [count200K, setCount200K] = useState(0)
+  const [hasCounted10M, setHasCounted10M] = useState(false)
+  const [hasCounted60, setHasCounted60] = useState(false)
+  const [hasCounted200K, setHasCounted200K] = useState(false)
+
+  const isAnimating10M = useRef(false)
+  const isAnimating60 = useRef(false)
+  const isAnimating200K = useRef(false)
+
+  const whyKWSectionRef = useRef<HTMLElement | null>(null)
+  const cardsContainerRef = useRef<HTMLDivElement | null>(null)
+  const predictableWealthSectionRef = useRef<HTMLElement | null>(null)
+  const incomeModelSectionRef = useRef<HTMLElement | null>(null)
+  const proptechSectionRef = useRef<HTMLElement | null>(null)
+  const blueprintSectionRef = useRef<HTMLElement | null>(null)
+  const trainingSectionRef = useRef<HTMLElement | null>(null)
+  const cultureSectionRef = useRef<HTMLElement | null>(null)
+  const marketFocusSectionRef = useRef<HTMLElement | null>(null)
+  const globalPowerhouseSectionRef = useRef<HTMLElement | null>(null)
+  const finalCTASectionRef = useRef<HTMLElement | null>(null)
+  const lastSectionRef = useRef<HTMLElement | null>(null)
+  const financiallyViableSectionRef = useRef<HTMLElement | null>(null)
+  const blueprintCardsRef = useRef<HTMLDivElement | null>(null)
+  const cultureCardsRef = useRef<HTMLDivElement | null>(null)
+  const lastSectionCardsRef = useRef<HTMLDivElement | null>(null)
+  const kwCompassRef = useRef<HTMLDivElement | null>(null)
+  const kwCommandRef = useRef<HTMLDivElement | null>(null)
+  const professionalLeverageRef = useRef<HTMLDivElement | null>(null)
+  const trainingCardsRef = useRef<HTMLDivElement | null>(null)
+
+  const handleCardClick = (event: MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    event.preventDefault()
+    const target = document.getElementById(targetId)
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" })
+    }
+  }
 
   useEffect(() => {
-    const step = 1500
-    let raf: number
+    const headerTimer = setTimeout(() => {
+      setKwEdgeOpacity(1)
+      setKwEdgeTranslateY(0)
+    }, 200)
 
-    const animateCount = (target: number, setter: (value: number) => void) => {
-      const start = performance.now()
+    const cardsTimer = setTimeout(() => {
+      setCardsOpacity(1)
+    }, 600)
 
-      const tick = (now: number) => {
-        const progress = Math.min((now - start) / step, 1)
-        setter(Math.floor(progress * target))
-        if (progress < 1) {
-          raf = requestAnimationFrame(tick)
-        }
-      }
+    const staggerDelay = 120
+    const cardTimers = heroCards.map((_, index) =>
+      setTimeout(() => {
+        setCardAnimations((prev) => {
+          const next = [...prev]
+          next[index] = 1
+          return next
+        })
+        setCardTranslateX((prev) => {
+          const next = [...prev]
+          next[index] = 0
+          return next
+        })
+      }, 800 + index * staggerDelay),
+    )
 
-      raf = requestAnimationFrame(tick)
+    return () => {
+      clearTimeout(headerTimer)
+      clearTimeout(cardsTimer)
+      cardTimers.forEach(clearTimeout)
     }
-
-    animateCount(10, setCount10M)
-    animateCount(60, setCount60)
-    animateCount(200, setCount200K)
-
-    return () => cancelAnimationFrame(raf)
   }, [])
 
   useEffect(() => {
-    if (isCarouselPaused || youtubeVideos.length <= 3) return
+    const handleScroll = () => {
+      const animateSection = (
+        sectionRef: RefObject<HTMLElement | null>,
+        setOpacity: (value: number) => void,
+        setTranslate: (value: number) => void,
+        startOffset = 0.8,
+      ) => {
+        const section = sectionRef.current
+        if (!section) return
 
+        const rect = section.getBoundingClientRect()
+        const viewportHeight = window.innerHeight
+        if (rect.top < viewportHeight * startOffset && rect.bottom > 0) {
+          const triggerPoint = viewportHeight * startOffset
+          const scrollDistance = triggerPoint - rect.top
+          const maxScrollDistance = viewportHeight * 0.4
+          const progress = Math.min(1, Math.max(0, scrollDistance / maxScrollDistance))
+          setOpacity(progress)
+          setTranslate(50 * (1 - progress))
+        } else if (rect.top > viewportHeight) {
+          setOpacity(0)
+          setTranslate(50)
+        }
+      }
+
+      const animateCards = (
+        cardsRef: RefObject<HTMLDivElement | null>,
+        setOpacity: (value: number[]) => void,
+        setTranslate: (value: number[]) => void,
+        cardCount: number,
+      ) => {
+        const container = cardsRef.current
+        if (!container) return
+
+        const rect = container.getBoundingClientRect()
+        const viewportHeight = window.innerHeight
+        if (rect.top < viewportHeight * 0.8 && rect.bottom > 0) {
+          const triggerPoint = viewportHeight * 0.8
+          const scrollDistance = triggerPoint - rect.top
+          const maxScrollDistance = viewportHeight * 0.4
+          const scrollProgress = Math.min(1, Math.max(0, scrollDistance / maxScrollDistance))
+
+          const newOpacity: number[] = []
+          const newTranslate: number[] = []
+          for (let i = 0; i < cardCount; i++) {
+            const delay = i * 0.15
+            const cardProgress = Math.min(1, Math.max(0, (scrollProgress - delay) / (1 - delay)))
+            newOpacity.push(cardProgress)
+            newTranslate.push(-100 * (1 - cardProgress))
+          }
+          setOpacity(newOpacity)
+          setTranslate(newTranslate)
+        } else if (rect.top > viewportHeight) {
+          setOpacity(new Array(cardCount).fill(0))
+          setTranslate(new Array(cardCount).fill(-100))
+        }
+      }
+
+      const animateSingleCard = (
+        cardRef: RefObject<HTMLDivElement | null>,
+        setOpacity: (value: number) => void,
+        setTranslate: (value: number) => void,
+      ) => {
+        const card = cardRef.current
+        if (!card) return
+
+        const rect = card.getBoundingClientRect()
+        const viewportHeight = window.innerHeight
+        if (rect.top < viewportHeight * 0.8 && rect.bottom > 0) {
+          const triggerPoint = viewportHeight * 0.8
+          const scrollDistance = triggerPoint - rect.top
+          const maxScrollDistance = viewportHeight * 0.4
+          const progress = Math.min(1, Math.max(0, scrollDistance / maxScrollDistance))
+          setOpacity(progress)
+          setTranslate(-100 * (1 - progress))
+        } else if (rect.top > viewportHeight) {
+          setOpacity(0)
+          setTranslate(-100)
+        }
+      }
+
+      animateSection(predictableWealthSectionRef, setPredictableWealthOpacity, setPredictableWealthTranslateY)
+      animateSection(incomeModelSectionRef, setIncomeModelOpacity, setIncomeModelTranslateY)
+      animateSection(proptechSectionRef, setProptechOpacity, setProptechTranslateY)
+      animateSection(blueprintSectionRef, setBlueprintOpacity, setBlueprintTranslateY)
+      animateSection(trainingSectionRef, setTrainingOpacity, setTrainingTranslateY)
+      animateSection(cultureSectionRef, setCultureOpacity, setCultureTranslateY)
+      animateSection(marketFocusSectionRef, setMarketFocusOpacity, setMarketFocusTranslateY)
+      animateSection(globalPowerhouseSectionRef, setGlobalPowerhouseOpacity, setGlobalPowerhouseTranslateY)
+      animateSection(finalCTASectionRef, setFinalCTAOpacity, setFinalCTATranslateY)
+      animateSection(lastSectionRef, setLastSectionOpacity, setLastSectionTranslateY)
+
+      animateCards(blueprintCardsRef, setBlueprintCardsOpacity, setBlueprintCardsTranslateX, blueprintHighlights.length)
+      animateCards(cultureCardsRef, setCultureCardsOpacity, setCultureCardsTranslateX, cultureHighlights.length)
+      animateCards(lastSectionCardsRef, setLastSectionCardsOpacity, setLastSectionCardsTranslateX, lastSectionActions.length)
+      animateCards(trainingCardsRef, setTrainingCardsOpacity, setTrainingCardsTranslateY, trainingHighlights.length)
+
+      animateSingleCard(kwCompassRef, setKwCompassOpacity, setKwCompassTranslateX)
+      animateSingleCard(kwCommandRef, setKwCommandOpacity, setKwCommandTranslateX)
+      animateSingleCard(professionalLeverageRef, setProfessionalLeverageOpacity, setProfessionalLeverageTranslateX)
+
+      const animateCounter = (
+        sectionRef: RefObject<HTMLElement | null>,
+        target: number,
+        setter: (value: number) => void,
+        hasAnimated: boolean,
+        setHasAnimated: (value: boolean) => void,
+        isAnimatingRef: MutableRefObject<boolean>,
+      ) => {
+        const section = sectionRef.current
+        if (!section || hasAnimated || isAnimatingRef.current) return
+
+        const rect = section.getBoundingClientRect()
+        if (rect.top < window.innerHeight * 0.8) {
+          setHasAnimated(true)
+          isAnimatingRef.current = true
+
+          const duration = 2000
+          const startTime = performance.now()
+
+          const tick = (now: number) => {
+            const progress = Math.min(1, (now - startTime) / duration)
+            const eased = 1 - Math.pow(1 - progress, 3)
+            setter(Math.floor(target * eased))
+            if (progress < 1) {
+              requestAnimationFrame(tick)
+            } else {
+              setter(target)
+            }
+          }
+
+          requestAnimationFrame(tick)
+        }
+      }
+
+      animateCounter(financiallyViableSectionRef, 10, setCount10M, hasCounted10M, setHasCounted10M, isAnimating10M)
+      animateCounter(financiallyViableSectionRef, 60, setCount60, hasCounted60, setHasCounted60, isAnimating60)
+      animateCounter(financiallyViableSectionRef, 200, setCount200K, hasCounted200K, setHasCounted200K, isAnimating200K)
+
+      const incomeSection = incomeModelSectionRef.current
+      if (incomeSection) {
+        const cards = incomeSection.querySelectorAll("[data-income-card]")
+        const sectionTop = incomeSection.offsetTop
+        const sectionBottom = sectionTop + incomeSection.offsetHeight
+        const scrollPosition = window.scrollY + window.innerHeight / 2
+
+        cards.forEach((card, index) => {
+          const cardTop = (card as HTMLElement).offsetTop + sectionTop
+          const cardBottom = cardTop + (card as HTMLElement).offsetHeight
+          if (scrollPosition >= cardTop && scrollPosition < cardBottom) {
+            setActiveIncome(index)
+          }
+        })
+
+        if (window.scrollY > sectionBottom) {
+          setActiveIncome(cards.length - 1)
+        }
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    handleScroll()
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [hasCounted10M, hasCounted60, hasCounted200K])
+
+  useEffect(() => {
+    if (isCarouselPaused) return
+    const visibleVideos = 3
+    const maxIndex = Math.max(0, youtubeVideos.length - visibleVideos)
     const interval = setInterval(() => {
-      setCarouselIndex((prev) => (prev + 1) % (youtubeVideos.length - 2))
-    }, 5000)
-
+      setCarouselIndex((prev) => {
+        if (maxIndex === 0) return 0
+        return prev >= maxIndex ? 0 : prev + 1
+      })
+    }, 4000)
     return () => clearInterval(interval)
   }, [isCarouselPaused])
 
   useEffect(() => {
-    if (isImageCarouselPaused || imageCarouselSeeds.length <= 2) return
-
+    if (isImageCarouselPaused) return
+    const visibleImages = 2
+    const maxIndex = Math.max(0, imageCarouselSeeds.length - visibleImages)
     const interval = setInterval(() => {
-      setImageCarouselIndex((prev) => (prev + 1) % (imageCarouselSeeds.length - 1))
-    }, 5000)
-
+      setImageCarouselIndex((prev) => {
+        if (maxIndex === 0) return 0
+        return prev >= maxIndex ? 0 : prev + 1
+      })
+    }, 4000)
     return () => clearInterval(interval)
   }, [isImageCarouselPaused])
-
-  const handleCardClick = (event: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
-    event.preventDefault()
-    const target = document.getElementById(targetId)
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth" })
-    }
-  }
 
   const youtubeDotCount = useMemo(() => Math.max(1, youtubeVideos.length - 2), [])
   const imageDotCount = useMemo(() => Math.max(1, imageCarouselSeeds.length - 1), [])
@@ -237,7 +491,10 @@ export default function JoinPage() {
   return (
     <main className="bg-black text-white">
       {/* Hero Section */}
-      <section className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center mt-24 overflow-hidden bg-gradient-to-b from-black via-[#B40101]/50 to-black">
+      <section
+        ref={whyKWSectionRef}
+        className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-black via-[#B40101]/50 to-black"
+      >
         <div className="absolute inset-0 opacity-20">
           <svg viewBox="0 0 1440 800" className="w-full h-full" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <defs>
@@ -269,7 +526,13 @@ export default function JoinPage() {
 
         <div className="relative z-10 text-center max-w-6xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 md:pt-16">
           <div className="mb-8" />
-          <div className="text-center max-w-4xl mx-auto space-y-6 transition-all duration-700 ease-out mb-12">
+          <div
+            className="text-center max-w-4xl mx-auto space-y-6 transition-all duration-700 ease-out mb-12"
+            style={{
+              opacity: kwEdgeOpacity,
+              transform: `translateY(${kwEdgeTranslateY}px)`,
+            }}
+          >
             <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-8">
               The KW Singapore Edge: <br />
               <span className="text-[#D9381E]">A Proven Real Estate Model</span>
@@ -279,7 +542,13 @@ export default function JoinPage() {
             </p>
           </div>
 
-          <div className="w-full max-w-4xl mx-auto mb-12 transition-all duration-700 ease-out">
+          <div
+            className="w-full max-w-4xl mx-auto mb-12 transition-all duration-700 ease-out"
+            style={{
+              opacity: kwEdgeOpacity,
+              transform: `translateY(${kwEdgeTranslateY}px)`,
+            }}
+          >
             <div className="aspect-video rounded-lg overflow-hidden border border-white/10 shadow-lg">
               <iframe
                 src="https://www.youtube.com/embed/98q3DIEeRdk"
@@ -291,7 +560,11 @@ export default function JoinPage() {
             </div>
           </div>
 
-          <div className="w-full max-w-7xl mx-auto transition-opacity duration-700 ease-out">
+          <div
+            ref={cardsContainerRef}
+            className="w-full max-w-7xl mx-auto transition-opacity duration-700 ease-out"
+            style={{ opacity: cardsOpacity }}
+          >
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 md:gap-6">
               {heroCards.map((card, index) => (
                 <a
@@ -299,6 +572,10 @@ export default function JoinPage() {
                   href={`#${card.target}`}
                   onClick={(event) => handleCardClick(event, card.target)}
                   className={`backdrop-blur-md bg-white/5 border border-white/10 rounded-lg p-4 md:p-6 flex flex-col justify-between min-h-[120px] md:min-h-[140px] hover:bg-white/10 hover:border-white/20 transition-all duration-500 ease-out relative group shadow-lg cursor-pointer ${card.span}`}
+                  style={{
+                    opacity: cardAnimations[index],
+                    transform: `translateX(${cardTranslateX[index]}px)`,
+                  }}
                 >
                   <div>
                     <h4 className="text-xl md:text-2xl font-semibold text-white mb-2">{card.title}</h4>
@@ -311,15 +588,24 @@ export default function JoinPage() {
         </div>
       </section>
 
-      {/* Predictable Wealth */}
-      <section className="relative pt-32 pb-20 md:pt-32 md:pb-20 lg:pt-32 lg:pb-32 overflow-hidden">
+      {/* Turn Unpredictability into Predictable Wealth Section */}
+      <section
+        ref={predictableWealthSectionRef}
+        className="relative pt-32 pb-20 md:pt-32 md:pb-20 lg:pt-32 lg:pb-32 overflow-hidden"
+      >
         <div className="absolute inset-0 bg-black" />
         <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: "url('/images/image.png')" }} />
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/80" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <div className="space-y-12 transition-all duration-700 ease-out">
+          <div
+            className="space-y-12 transition-all duration-700 ease-out"
+            style={{
+              opacity: predictableWealthOpacity,
+              transform: `translateY(${predictableWealthTranslateY}px)`,
+            }}
+          >
             <div className="text-left">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                 <span className="text-white">Turn Unpredictability into</span>
@@ -341,9 +627,18 @@ export default function JoinPage() {
         </div>
       </section>
 
-      {/* Income Model */}
-      <section id="income-model-section" className="relative bg-gradient-to-br from-[#B40101]/10 to-transparent pt-8 pb-20 md:pt-10 md:pb-20 lg:pt-12 lg:pb-32">
-        <div className="max-w-7xl mx-auto px-6 transition-all duration-700 ease-out">
+      {/* KW 3-Income Model Section */}
+      <section
+        ref={incomeModelSectionRef}
+        id="income-model-section"
+        className="relative bg-gradient-to-br from-[#B40101]/10 to-transparent pt-8 pb-20 md:pt-10 md:pb-20 lg:pt-12 lg:pb-32"
+        style={{
+          opacity: incomeModelOpacity,
+          transform: `translateY(${incomeModelTranslateY}px)`,
+          transition: "opacity 0.7s ease-out, transform 0.7s ease-out",
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-[3fr_7fr] gap-16 items-start">
             <div className="lg:sticky lg:top-20 lg:self-start">
               <div className="relative">
@@ -363,9 +658,14 @@ export default function JoinPage() {
               {incomeCards.map((card, index) => (
                 <div
                   key={card.title}
+                  data-income-card
                   onMouseEnter={() => setActiveIncome(index)}
-                  className={`border rounded-2xl p-8 md:p-12 backdrop-blur-sm transition-all duration-500 sticky ${index === 0 ? "top-0" : index === 1 ? "top-32" : "top-40"} ${
-                    activeIncome === index ? "bg-[#B40101] border-[#B40101] shadow-2xl shadow-[#B40101]/30 z-30 opacity-100 scale-100" : "bg-gray-900/50 border-gray-800 opacity-70 scale-95 z-10"
+                  className={`border rounded-2xl p-8 md:p-12 backdrop-blur-sm transition-all duration-500 sticky ${
+                    index === 0 ? "top-0" : index === 1 ? "top-32" : "top-40"
+                  } ${
+                    activeIncome === index
+                      ? "bg-[#B40101] border-[#B40101] shadow-2xl shadow-[#B40101]/30 z-30 opacity-100 scale-100"
+                      : "bg-gray-900/50 border-gray-800 opacity-70 scale-95 z-10"
                   }`}
                   style={{ marginBottom: index === incomeCards.length - 1 ? 0 : "-150px" }}
                 >
@@ -383,7 +683,7 @@ export default function JoinPage() {
                   </div>
 
                   <div className={`space-y-4 text-lg leading-relaxed ${activeIncome === index ? "text-white/90" : "text-gray-300"}`}>
-                    <p className={`font-semibold text-xl mb-4 ${activeIncome === index ? "text-white" : "text-white"}`}>{card.intro}</p>
+                    <p className={`font-semibold text-xl mb-4`}>{card.intro}</p>
                     {card.body.map((paragraph) => (
                       <p key={paragraph}>{paragraph}</p>
                     ))}
@@ -409,8 +709,17 @@ export default function JoinPage() {
         </div>
       </section>
 
-      {/* PropTech */}
-      <section id="proptech-section" className="relative pt-20 pb-20 md:pt-20 md:pb-20 lg:pt-32 lg:pb-32 overflow-hidden">
+      {/* PropTech & AI: Your Integrated Command Center Section */}
+      <section
+        ref={proptechSectionRef}
+        id="proptech-section"
+        className="relative pt-20 pb-20 md:pt-20 md:pb-20 lg:pt-32 lg:pb-32 overflow-hidden"
+        style={{
+          opacity: proptechOpacity,
+          transform: `translateY(${proptechTranslateY}px)`,
+          transition: "opacity 0.7s ease-out, transform 0.7s ease-out",
+        }}
+      >
         <div className="absolute inset-0 bg-black" />
         <div className="absolute inset-0 bg-gradient-to-br from-black via-[#660000]/80 to-black" />
         <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: "url('/images/ai-bg-join-kw.jpg')" }} />
@@ -440,7 +749,14 @@ export default function JoinPage() {
 
             <div className="w-full mt-32 pb-12">
               <div className="grid lg:grid-cols-[30%_70%] gap-8 items-center">
-                <div className="space-y-6 transition-all duration-700 ease-out">
+                <div
+                  ref={kwCompassRef}
+                  className="space-y-6 transition-all duration-700 ease-out"
+                  style={{
+                    opacity: kwCompassOpacity,
+                    transform: `translateX(${kwCompassTranslateX}px)`,
+                  }}
+                >
                   <div className="mb-4">
                     <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#B40101] to-[#8B0000] flex items-center justify-center shadow-lg border border-[#B40101]/30">
                       <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -451,7 +767,8 @@ export default function JoinPage() {
                   <h3 className="text-4xl md:text-3xl font-bold text-white">KW Compass</h3>
                   <p className="text-lg text-white/90 leading-relaxed">
                     This proprietary Singapore-focused consulting tool is your real-time analysis hub. Featuring Compass 10 for New Launch and Resale Property Scoring, it
-                    provides a BUC/EC Calculator, Property Comparison analysis, and New Launch Property Analysis.
+                    provides a BUC/EC Calculator, Property Comparison analysis, and New Launch Property Analysis. It enables precise, data-backed client consultation via
+                    quick calculation of Sales Proceeds, Decoupling, and Stamp Duties.
                   </p>
                 </div>
 
@@ -481,10 +798,11 @@ export default function JoinPage() {
                       </div>
                     ))}
                   </div>
+
                   <div className="flex justify-center gap-2 mt-4">
                     {Array.from({ length: youtubeDotCount }).map((_, index) => (
                       <button
-                        key={`carousel-${index}`}
+                        key={index}
                         onClick={() => setCarouselIndex(index)}
                         className={`h-2 rounded-full transition-all duration-300 ${carouselIndex === index ? "w-8 bg-[#B40101]" : "w-2 bg-white/30 hover:bg-white/50"}`}
                         aria-label={`Go to video set ${index + 1}`}
@@ -497,11 +815,20 @@ export default function JoinPage() {
 
             <div className="w-full mt-24">
               <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="relative group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2">
+                <div
+                  ref={kwCommandRef}
+                  className="relative group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2"
+                  style={{
+                    opacity: kwCommandOpacity,
+                    transform: `translateX(${kwCommandTranslateX}px)`,
+                  }}
+                >
                   <div className="absolute inset-0 rounded-2xl overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-black via-[#660000]/50 to-black" />
                     <div className="absolute bottom-0 right-0 w-full h-full opacity-40">
                       <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-[#B40101] via-[#D9381E] to-transparent rounded-full blur-3xl transform translate-x-1/4 translate-y-1/4" />
+                      <div className="absolute bottom-10 right-20 w-64 h-64 bg-gradient-to-tl from-[#B40101]/60 to-transparent rounded-full blur-2xl" />
+                      <div className="absolute top-1/2 right-0 w-48 h-48 bg-gradient-to-bl from-[#D9381E]/40 to-transparent rounded-full blur-xl" />
                     </div>
                   </div>
 
@@ -523,11 +850,20 @@ export default function JoinPage() {
                   </div>
                 </div>
 
-                <div className="relative group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2">
+                <div
+                  ref={professionalLeverageRef}
+                  className="relative group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2"
+                  style={{
+                    opacity: professionalLeverageOpacity,
+                    transform: `translateX(${professionalLeverageTranslateX}px)`,
+                  }}
+                >
                   <div className="absolute inset-0 rounded-2xl overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-black via-[#660000]/50 to-black" />
                     <div className="absolute bottom-0 right-0 w-full h-full opacity-40">
                       <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-[#B40101] via-[#D9381E] to-transparent rounded-full blur-3xl transform translate-x-1/4 translate-y-1/4" />
+                      <div className="absolute bottom-10 right-20 w-64 h-64 bg-gradient-to-tl from-[#B40101]/60 to-transparent rounded-full blur-2xl" />
+                      <div className="absolute top-1/2 right-0 w-48 h-48 bg-gradient-to-bl from-[#D9381E]/40 to-transparent rounded-full blur-xl" />
                     </div>
                   </div>
 
@@ -557,8 +893,17 @@ export default function JoinPage() {
         </div>
       </section>
 
-      {/* Blueprint */}
-      <section id="blueprint-section" className="relative py-20 md:py-20 lg:py-32 overflow-hidden bg-gradient-to-b from-black via-[#B40101]/50 to-black">
+      {/* The Blueprint: Scale Beyond Solo Section */}
+      <section
+        ref={blueprintSectionRef}
+        id="blueprint-section"
+        className="relative py-20 md:py-20 lg:py-32 overflow-hidden bg-gradient-to-b from-black via-[#B40101]/50 to-black"
+        style={{
+          opacity: blueprintOpacity,
+          transform: `translateY(${blueprintTranslateY}px)`,
+          transition: "opacity 0.7s ease-out, transform 0.7s ease-out",
+        }}
+      >
         <div className="absolute inset-0 opacity-20">
           <svg viewBox="0 0 1440 800" className="w-full h-full" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <defs>
@@ -606,9 +951,19 @@ export default function JoinPage() {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
-                  <div className="w-full space-y-6 order-1 lg:order-1">
-                    {blueprintHighlights.map((highlight) => (
-                      <div key={highlight.title} className="relative pb-6 mb-6 border-b border-white/10 last:border-b-0 last:mb-0 last:pb-0">
+                  <div
+                    ref={blueprintCardsRef}
+                    className="w-full space-y-0 order-1 lg:order-1"
+                  >
+                    {blueprintHighlights.map((highlight, index) => (
+                      <div
+                        key={highlight.title}
+                        className="relative pb-6 mb-6 border-b border-white/10 last:border-b-0 last:mb-0 last:pb-0 transition-all duration-700 ease-out"
+                        style={{
+                          opacity: blueprintCardsOpacity[index] ?? 0,
+                          transform: `translateX(${blueprintCardsTranslateX[index] ?? -100}px)`,
+                        }}
+                      >
                         <div className="flex items-start">
                           <div className="flex-1">
                             <h3 className="text-xl md:text-2xl font-medium text-white mb-2">{highlight.title}</h3>
@@ -640,8 +995,17 @@ export default function JoinPage() {
         </div>
       </section>
 
-      {/* Training */}
-      <section id="training-section" className="relative py-20 md:py-20 lg:py-32 overflow-hidden">
+      {/* World-Class Training: Mastery That Converts Section */}
+      <section
+        ref={trainingSectionRef}
+        id="training-section"
+        className="relative py-20 md:py-20 lg:py-32 overflow-hidden"
+        style={{
+          opacity: trainingOpacity,
+          transform: `translateY(${trainingTranslateY}px)`,
+          transition: "opacity 0.7s ease-out, transform 0.7s ease-out",
+        }}
+      >
         <div
           className="absolute inset-0 opacity-90"
           style={{
@@ -669,8 +1033,7 @@ export default function JoinPage() {
 
             <div className="w-full md:w-4/5 mt-16 md:mx-auto md:ml-auto md:mr-0 text-right">
               <p className="text-lg md:text-2xl text-white font-medium leading-relaxed mx-0 mt-2 mb-24">
-                Your ceiling is determined by your learning. Access the most comprehensive, model-driven education in the industry, designed to elevate your skills and
-                mindset.
+                Your ceiling is determined by your learning. Access the most comprehensive, model-driven education in the industry, designed to elevate your skills and mindset.
               </p>
             </div>
 
@@ -682,13 +1045,23 @@ export default function JoinPage() {
               ))}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left mx-auto mt-16">
-              {trainingHighlights.map((highlight) => (
+            <div
+              ref={trainingCardsRef}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left mx-auto mt-16"
+            >
+              {trainingHighlights.map((highlight, index) => (
                 <div
                   key={highlight.title}
-                  className="relative backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:border-white/20 hover:scale-105 hover:shadow-lg hover:shadow-[#B40101]/20 group"
+                className="relative backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:border-white/20 hover:scale-105 hover:shadow-lg hover:shadow-[#B40101]/20 group"
+                  style={{
+                    opacity: trainingCardsOpacity[index] ?? 0,
+                    transform: `translateY(${trainingCardsTranslateY[index] ?? 50}px)`,
+                    transition: "opacity 0.7s ease-out, transform 0.7s ease-out, all 0.3s",
+                  }}
                 >
-                  <h3 className="text-xl md:text-2xl font-semibold text-white mb-3 text-center min-h-[4rem] flex items-center justify-center">{highlight.title}</h3>
+                  <h3 className="text-xl md:text-2xl font-semibold text-white mb-3 text-center min-h-[4rem] flex items-center justify-center">
+                    {highlight.title}
+                  </h3>
                   <p className="text-base text-white/70 leading-relaxed group-hover:text-white/90 transition-colors duration-300">{highlight.copy}</p>
                 </div>
               ))}
@@ -696,16 +1069,24 @@ export default function JoinPage() {
 
             <div className="w-full mt-16 py-8">
               <h2 className="text-2xl md:text-3xl my-[15px] text-white text-center leading-relaxed w-4/5 mx-auto">
-                Transform from a sales agent to a business CEO. <br /> Acquire the exact knowledge and skills required to consistently dominate market share and accelerate
-                your growth.
+                Transform from a sales agent to a business CEO. <br /> Acquire the exact knowledge and skills required to consistently dominate market share and accelerate your growth.
               </h2>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Culture */}
-      <section id="culture-section" className="relative py-20 md:py-20 lg:py-32 overflow-hidden bg-black">
+      {/* Culture Section */}
+      <section
+        ref={cultureSectionRef}
+        id="culture-section"
+        className="relative py-20 md:py-20 lg:py-32 overflow-hidden bg-black"
+        style={{
+          opacity: cultureOpacity,
+          transform: `translateY(${cultureTranslateY}px)`,
+          transition: "opacity 0.7s ease-out, transform 0.7s ease-out",
+        }}
+      >
         <div
           className="absolute inset-0 opacity-70"
           style={{
@@ -767,11 +1148,20 @@ export default function JoinPage() {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left max-w-6xl mx-auto mt-16">
+          <div
+            ref={cultureCardsRef}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left max-w-6xl mx-auto mt-16"
+          >
             {cultureHighlights.map((highlight, index) => (
               <div
                 key={highlight.title}
-                className={`relative backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:border-white/20 hover:scale-105 hover:shadow-lg hover:shadow-[#B40101]/20 group ${index === 2 ? "md:col-span-2 lg:col-span-1" : ""}`}
+                className={`relative backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:border-white/20 hover:scale-105 hover:shadow-lg hover:shadow-[#B40101]/20 group ${
+                  index === 2 ? "md:col-span-2 lg:col-span-1" : ""
+                }`}
+                style={{
+                  opacity: cultureCardsOpacity[index] ?? 0,
+                  transform: `translateX(${cultureCardsTranslateX[index] ?? -100}px)`,
+                }}
               >
                 <div className="text-[#B40101] text-5xl font-bold mb-2">{String(index + 1).padStart(2, "0")}</div>
                 <h3 className="text-xl md:text-2xl font-semibold text-white mb-3 group-hover:text-white transition-colors duration-300">{highlight.title}</h3>
@@ -782,8 +1172,16 @@ export default function JoinPage() {
         </div>
       </section>
 
-      {/* Market Focus */}
-      <section className="relative py-12 md:py-16 lg:py-32 overflow-hidden">
+      {/* Market Focus: Built for Singapore's New Launch Economy Section */}
+      <section
+        ref={marketFocusSectionRef}
+        className="relative py-12 md:py-16 lg:py-32 overflow-hidden"
+        style={{
+          opacity: marketFocusOpacity,
+          transform: `translateY(${marketFocusTranslateY}px)`,
+          transition: "opacity 0.7s ease-out, transform 0.7s ease-out",
+        }}
+      >
         <div
           className="absolute inset-0 opacity-90"
           style={{
@@ -822,9 +1220,9 @@ export default function JoinPage() {
                   }}
                 >
                   {imageCarouselSeeds.map((index) => (
-                    <div key={`market-focus-${index}`} className="flex-shrink-0 w-1/2 px-1 md:px-2">
+                    <div key={index} className="flex-shrink-0 w-1/2 px-1 md:px-2">
                       <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden border border-white/10 relative group hover:border-white/20 transition-colors">
-                        <img src={`https://picsum.photos/seed/market-focus-${index}/800/450`} alt={`Market Focus ${index}`} className="w-full h-full object-cover" />
+                        <img src={`https://picsum.photos/seed/market-focus-${index}/800/450`} alt={`Market Focus Image ${index}`} className="w-full h-full object-cover" />
                         <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-black/10" />
                       </div>
                     </div>
@@ -834,7 +1232,7 @@ export default function JoinPage() {
                 <div className="flex justify-center gap-2 mt-4 md:mt-6">
                   {Array.from({ length: imageDotCount }).map((_, index) => (
                     <button
-                      key={`image-dot-${index}`}
+                      key={index}
                       onClick={() => setImageCarouselIndex(index)}
                       className={`h-2 rounded-full transition-all duration-300 ${imageCarouselIndex === index ? "w-8 bg-[#B40101]" : "w-2 bg-white/30 hover:bg-white/50"}`}
                       aria-label={`Go to image set ${index + 1}`}
@@ -847,8 +1245,16 @@ export default function JoinPage() {
         </div>
       </section>
 
-      {/* Global Powerhouse */}
-      <section className="relative py-20 md:py-20 lg:py-32 overflow-hidden">
+      {/* Global Powerhouse Section */}
+      <section
+        ref={globalPowerhouseSectionRef}
+        className="relative py-20 md:py-20 lg:py-32 overflow-hidden"
+        style={{
+          opacity: globalPowerhouseOpacity,
+          transform: `translateY(${globalPowerhouseTranslateY}px)`,
+          transition: "opacity 0.7s ease-out, transform 0.7s ease-out",
+        }}
+      >
         <div className="absolute inset-0 bg-black" />
         <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: "url('/images/image.png')" }} />
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/80" />
@@ -893,8 +1299,11 @@ export default function JoinPage() {
         <div className="absolute bottom-0 right-1/3 w-px h-40 bg-gradient-to-t from-[#D9381E]/30 to-transparent transform rotate-45" />
       </section>
 
-      {/* Financially Viable */}
-      <section className="relative pt-6 md:pt-8 lg:pt-12 pb-12 md:pb-16 lg:pb-32 bg-gradient-to-br from-black to-[#B40101]/20">
+      {/* A Financially Viable Future Section */}
+      <section
+        ref={financiallyViableSectionRef}
+        className="relative pt-6 md:pt-8 lg:pt-12 pb-12 md:pb-16 lg:pb-32 bg-gradient-to-br from-black to-[#B40101]/20"
+      >
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start mb-12 md:mb-16 lg:mb-20">
             <div>
@@ -926,7 +1335,15 @@ export default function JoinPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="relative pt-20 pb-12 md:pt-20 md:pb-12 lg:pt-32 lg:pb-16">
+      <section
+        ref={finalCTASectionRef}
+        className="relative pt-20 pb-12 md:pt-20 md:pb-12 lg:pt-32 lg:pb-16"
+        style={{
+          opacity: finalCTAOpacity,
+          transform: `translateY(${finalCTATranslateY}px)`,
+          transition: "opacity 0.7s ease-out, transform 0.7s ease-out",
+        }}
+      >
         <div className="absolute inset-0 bg-gradient-to-br from-[#B40101]/20 via-black/80 to-black" />
         <div className="relative z-10 max-w-6xl mx-auto px-6 text-center transition-all duration-700 ease-out">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 font-sans">
@@ -950,7 +1367,15 @@ export default function JoinPage() {
       </section>
 
       {/* Last Section */}
-      <section className="relative pt-10 pb-16 md:pt-12 md:pb-24 lg:pt-14 lg:pb-24 overflow-hidden bg-gradient-to-b from-black via-[#B40101]/35 to-black">
+      <section
+        ref={lastSectionRef}
+        className="relative pt-10 pb-16 md:pt-12 md:pb-24 lg:pt-14 lg:pb-24 overflow-hidden bg-gradient-to-b from-black via-[#B40101]/35 to-black"
+        style={{
+          opacity: lastSectionOpacity,
+          transform: `translateY(${lastSectionTranslateY}px)`,
+          transition: "opacity 0.7s ease-out, transform 0.7s ease-out",
+        }}
+      >
         <div className="absolute inset-0 opacity-20">
           <svg viewBox="0 0 1440 800" className="w-full h-full" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <defs>
@@ -981,20 +1406,31 @@ export default function JoinPage() {
           </div>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-6">
-          {lastSectionActions.map((action) => (
+        <div
+          ref={lastSectionCardsRef}
+          className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-6"
+        >
+          {lastSectionActions.map((action, index) => (
             <div
               key={action.title}
               className={`relative backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:border-white/20 hover:scale-105 hover:shadow-lg hover:shadow-[#B40101]/20 group ${
                 action.title.includes("BOOK") ? "md:col-span-2 lg:col-span-1" : ""
               } flex flex-col h-full`}
+              style={{
+                opacity: lastSectionCardsOpacity[index] ?? 0,
+                transform: `translateX(${lastSectionCardsTranslateX[index] ?? -100}px)`,
+              }}
             >
-              <div className="mb-6 flex justify-center">{<action.icon className="w-12 h-12 text-white" />}</div>
+              <div className="mb-6 flex justify-center">
+                <action.icon className="w-12 h-12 text-white" />
+              </div>
               <h3 className="text-xl md:text-2xl font-bold text-white mb-4 text-center min-h-[4rem] flex items-center justify-center group-hover:text-white transition-colors duration-300">
                 {action.title}
               </h3>
               <p className="text-base text-white leading-relaxed mb-6 text-center group-hover:text-white transition-colors duration-300 flex-grow">{action.copy}</p>
-              <Button className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold rounded-lg border-none transition-all duration-300 mt-auto">{action.button}</Button>
+              <Button className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold rounded-lg border-none transition-all duration-300 mt-auto">
+                {action.button}
+              </Button>
             </div>
           ))}
         </div>
