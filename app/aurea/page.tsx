@@ -1604,29 +1604,6 @@ export default function AureaLanding() {
             </p>
           </div>
 
-          {/* Video Section */}
-          <div className={`mb-12 transition-all duration-1000 delay-500 ${
-            animatedSections.has('project-info') ? 'animate-fade-in-up' : ''
-          }`} style={{
-            opacity: animatedSections.has('project-info') ? 1 : 0,
-            transform: animatedSections.has('project-info') ? 'translateY(0)' : 'translateY(50px)'
-          }}>
-            <div className="max-w-4xl mx-auto">
-              <div className="relative aspect-video rounded-xl overflow-hidden shadow-2xl bg-gray-900">
-                
-                <iframe
-                  className="w-full h-full"
-                  src="https://drive.google.com/file/d/1-0SE91jFU7Ya53pJc9znfeUrRHzURq7d/preview"
-                  title="Aurea Project Overview"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-                
-              </div>
-            </div>
-          </div>
-
           {/* Feature Cards */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {[
