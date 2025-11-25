@@ -8,27 +8,29 @@ import { Button } from "@/components/ui/button"
 
 const heroCards = [
   {
-    title: "The 3-Income Model: Building Passive Wealth",
+    title: "The 3-Income Model",
     target: "income-model-section",
     span: "lg:col-span-3",
+    compactOnDesktop: true,
   },
   {
-    title: "PropTech Ecosystem: Your Integrated Command Center",
+    title: "PropTech Ecosystem",
     target: "proptech-section",
     span: "lg:col-span-3",
+    compactOnDesktop: true,
   },
   {
-    title: "The KW Model: Blueprint for Predictable Success",
+    title: "The KW Model for Predictable Success",
     target: "blueprint-section",
     span: "lg:col-span-2",
   },
   {
-    title: "World-Class Training: Mastery That Converts",
+    title: "World-Class Training",
     target: "training-section",
     span: "lg:col-span-2",
   },
   {
-    title: "Culture & Leadership: Winning Together",
+    title: "Culture & Leadership of Winning Together",
     target: "culture-section",
     span: "md:col-span-2 lg:col-span-2",
   },
@@ -130,7 +132,7 @@ const incomeCards = [
     body: [
       "By introducing productive realtors to KW Singapore, you earn a percentage of the company's profit.",
       "This 7-tier income stream is global and transferable to your next-of-kin.",
-      "As long as you remain with KW and your sponsored agents produce, your Growth Share never stops.",
+      "As long as you remain with KW and your sponsored realtors produce, your Growth Share never stops.",
     ],
     badge: "01",
   },
@@ -138,7 +140,7 @@ const incomeCards = [
     title: "Maximum Commission in Producer Income",
     intro: "The Fast Track to 94%.",
     body: [
-      "Rookie Agents start at 80%.",
+      "Rookie Realtors start at 80%.",
       "Hit S$80K GCI and jump to a 90% split immediately.",
       "Hit S$150K GCI and jump to a 94% split for the rest of your 12-month cycle.",
       "The path is clear: The more you produce, the more you keep.",
@@ -593,7 +595,7 @@ export default function JoinPage() {
                   key={card.target}
                   href={`#${card.target}`}
                   onClick={(event) => handleCardClick(event, card.target)}
-                  className={`backdrop-blur-md bg-white/5 border border-white/10 rounded-lg p-4 md:p-6 flex flex-col justify-between min-h-[120px] md:min-h-[140px] hover:bg-white/10 hover:border-white/20 transition-all duration-500 ease-out relative group shadow-lg cursor-pointer ${card.span}`}
+                  className={`backdrop-blur-md bg-white/5 border border-white/10 rounded-lg p-4 md:p-6 flex flex-col items-center justify-center text-center gap-4 min-h-[120px] md:min-h-[140px] ${card.compactOnDesktop ? "lg:min-h-[110px] lg:p-5" : "lg:min-h-[140px]"} hover:bg-white/10 hover:border-white/20 transition-all duration-500 ease-out relative group shadow-lg cursor-pointer ${card.span}`}
                   style={{
                     opacity: cardAnimations[index],
                     transform: `translateX(${cardTranslateX[index]}px)`,
@@ -858,16 +860,7 @@ export default function JoinPage() {
                   </div>
 
                   <div className="relative bg-gradient-to-br from-black/60 via-[#660000]/40 to-black/60 rounded-2xl p-8 h-full overflow-hidden backdrop-blur-sm">
-                    <div className="mb-6 flex items-center gap-4">
-                      <div className="w-auto h-16 rounded-xl bg-gradient-to-br from-[#B40101] to-[#8B0000] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-[#B40101]/30 p-2">
-                        <img 
-                          src="/images/why-kw-singapore/KWSG COMPASS_ALL WHITE.png" 
-                          alt="KW Compass Logo" 
-                          className="h-full w-auto object-contain"
-                        />
-                      </div>
-                      <div className="h-px flex-1 bg-gradient-to-r from-[#B40101]/50 to-transparent" />
-                    </div>
+                    <div className="mb-6 h-px bg-gradient-to-r from-[#B40101]/50 to-transparent" />
 
                     <h3 className="text-xl md:text-2xl font-semibold text-white mb-3">
                       KW Compass
@@ -897,16 +890,7 @@ export default function JoinPage() {
                   </div>
 
                   <div className="relative bg-gradient-to-br from-black/60 via-[#660000]/40 to-black/60 rounded-2xl p-8 h-full overflow-hidden backdrop-blur-sm">
-                    <div className="mb-6 flex items-center gap-4">
-                      <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#B40101] to-[#8B0000] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-[#B40101]/30 p-2">
-                        <img 
-                          src="/images/why-kw-singapore/KW-Command (White).png" 
-                          alt="KW Command Logo" 
-                          className="w-full h-full object-contain"
-                        />
-                      </div>
-                      <div className="h-px flex-1 bg-gradient-to-r from-[#B40101]/50 to-transparent" />
-                    </div>
+                    <div className="mb-6 h-px bg-gradient-to-r from-[#B40101]/50 to-transparent" />
 
                     <h3 className="text-xl md:text-2xl font-semibold text-white mb-3">
                       KW Command
@@ -936,16 +920,7 @@ export default function JoinPage() {
                   </div>
 
                   <div className="relative bg-gradient-to-br from-black/60 via-[#660000]/40 to-black/60 rounded-2xl p-8 h-full overflow-hidden backdrop-blur-sm">
-                    <div className="mb-6 flex items-center gap-4">
-                      <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#B40101] to-[#8B0000] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-[#B40101]/30 p-2">
-                        <img 
-                          src="/images/why-kw-singapore/KW-Canva (White).png" 
-                          alt="KW Canva Logo" 
-                          className="w-full h-full object-contain"
-                        />
-                      </div>
-                      <div className="h-px flex-1 bg-gradient-to-r from-[#B40101]/50 to-transparent" />
-                    </div>
+                    <div className="mb-6 h-px bg-gradient-to-r from-[#B40101]/50 to-transparent" />
 
                     <h3 className="text-xl md:text-2xl font-semibold text-white mb-3">
                       Professional Leverage
