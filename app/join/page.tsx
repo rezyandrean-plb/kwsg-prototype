@@ -157,20 +157,20 @@ const incomeCards = [
 ]
 
 const avatarImages = [
-  "/avatar-2.png",
-  "/professional-indian-business-man-headshot.jpg",
-  "/professional-caucasian-business-man-smiling.jpg",
-  "/professional-asian-business-woman-smiling.jpg",
-  "/professional-business-woman-portrait.png",
-  "/professional-businessman-portrait.png",
-  "/confident-business-leader-man.jpg",
-  "/confident-business-leader-woman.jpg",
-  "/young-real-estate-agent-man.jpg",
-  "/senior-business-executive-woman.jpg",
-  "/diverse-business-team-meeting.jpg",
-  "/modern-office-collaboration.jpg",
-  "/creative-professional-woman.png",
-  "/creative-professional-man.png",
+  "/images/why-kw-singapore/business-section/Business-DSC04852.jpg",
+  "/images/why-kw-singapore/business-section/Business-DSC04902.jpg",
+  "/images/why-kw-singapore/business-section/Business-DSC05010.jpg",
+  "/images/why-kw-singapore/business-section/Business-DSC05252.jpg",
+  "/images/why-kw-singapore/business-section/Business-DSC05255.jpg",
+  "/images/why-kw-singapore/business-section/Business-DSC05261.jpg",
+  "/images/why-kw-singapore/business-section/Business-DSC05272.jpg",
+  "/images/why-kw-singapore/business-section/Business-DSC05289.jpg",
+  "/images/why-kw-singapore/business-section/Business-POD-01.jpg",
+  "/images/why-kw-singapore/business-section/Business-POD-02.jpg",
+  "/images/why-kw-singapore/business-section/Business-POD-03.jpeg",
+  "/images/why-kw-singapore/business-section/Business-POD-04.jpeg",
+  "/images/why-kw-singapore/business-section/Business-POD-05.jpeg",
+  "/images/why-kw-singapore/business-section/Business-DSC04852.jpg",
 ]
 
 const avatarLayout = [
@@ -515,7 +515,7 @@ export default function JoinPage() {
       {/* Hero Section */}
       <section
         ref={whyKWSectionRef}
-        className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-black via-[#B40101]/50 to-black"
+        className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-black via-[#B40101]/50 to-black pt-20 sm:pt-24 md:pt-28 lg:pt-20"
       >
         <div className="absolute inset-0 opacity-20">
           <svg viewBox="0 0 1440 800" className="w-full h-full" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
@@ -771,47 +771,7 @@ export default function JoinPage() {
               </div>
             </div>
 
-            <div className="w-full mt-16 pb-12">
-              <div
-                className="relative overflow-hidden rounded-lg"
-                onMouseEnter={() => setIsCarouselPaused(true)}
-                onMouseLeave={() => setIsCarouselPaused(false)}
-              >
-                <div
-                  className="flex transition-transform duration-700 ease-in-out"
-                  style={{
-                    transform: `translateX(-${carouselIndex * (100 / 4)}%)`,
-                  }}
-                >
-                  {youtubeVideos.map((videoId) => (
-                    <div key={videoId} className="flex-shrink-0 w-1/4 px-2">
-                      <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden border border-gray-700/50 relative group hover:border-gray-600 transition-colors">
-                        <iframe
-                          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0&loop=1&playlist=${videoId}&playsinline=1&enablejsapi=1`}
-                          className="w-full h-full"
-                          allow="autoplay; encrypted-media; accelerometer; gyroscope; picture-in-picture"
-                          allowFullScreen
-                          title={`KW Compass Video ${videoId}`}
-                        />
-                        <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-black/5" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex justify-center gap-2 mt-4">
-                  {Array.from({ length: youtubeDotCount }).map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCarouselIndex(index)}
-                      className={`h-2 rounded-full transition-all duration-300 ${carouselIndex === index ? "w-8 bg-[#B40101]" : "w-2 bg-white/30 hover:bg-white/50"}`}
-                      aria-label={`Go to video set ${index + 1}`}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-
+            
             {/* Shorts / Reels Section */}
             <div className="w-full mt-16 pb-12">
               {/* Mobile Carousel */}
@@ -899,11 +859,11 @@ export default function JoinPage() {
 
                   <div className="relative bg-gradient-to-br from-black/60 via-[#660000]/40 to-black/60 rounded-2xl p-8 h-full overflow-hidden backdrop-blur-sm">
                     <div className="mb-6 flex items-center gap-4">
-                      <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#B40101] to-[#8B0000] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-[#B40101]/30 p-2">
+                      <div className="w-auto h-16 rounded-xl bg-gradient-to-br from-[#B40101] to-[#8B0000] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-[#B40101]/30 p-2">
                         <img 
                           src="/images/why-kw-singapore/KWSG COMPASS_ALL WHITE.png" 
                           alt="KW Compass Logo" 
-                          className="w-full h-full object-contain"
+                          className="h-full w-auto object-contain"
                         />
                       </div>
                       <div className="h-px flex-1 bg-gradient-to-r from-[#B40101]/50 to-transparent" />
@@ -988,12 +948,15 @@ export default function JoinPage() {
                       You gain access to a KW x Canva Enterprise account for professional design, Google Gemini Pro for intelligent client engagement, and Unlimited
                       Google Drive storage for seamless cloud management.
                     </p>
-                    <p className="text-lg text-white/80 leading-relaxed italic group-hover:text-white/90 transition-colors duration-300">
-                      Stop juggling disparate tools. Start scaling predictably, gaining the automated leverage and precision required to dominate the property market.
-                    </p>
                   </div>
                 </div>
               </div>
+            </div>
+
+            <div className="w-full mt-16 py-8">
+              <h2 className="text-2xl md:text-3xl my-[15px] text-white text-center leading-relaxed w-4/5 mx-auto">
+                Stop juggling disparate tools. Start scaling predictably, gaining the automated leverage and precision required to dominate the property market.
+              </h2>
             </div>
           </div>
         </div>
@@ -1145,7 +1108,7 @@ export default function JoinPage() {
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-24 mb-8">
                 {["Gtm6NGIxWOc", "Pj0onWnrcfM", "NrGzZm3vNSY", "JFUKmxBuy8s"].map((videoId) => (
-                  <div key={videoId} className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg overflow-hidden border border-white/10">
+                  <div key={videoId} className="aspect-[9/16] bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg overflow-hidden border border-white/10">
                     <iframe
                       src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0&loop=1&playlist=${videoId}`}
                       title={`Training Highlight ${videoId}`}
@@ -1446,7 +1409,24 @@ export default function JoinPage() {
         </div>
       </section>
 
-
+      {/* Final CTA */}
+      <section
+        ref={finalCTASectionRef}
+        className="relative pt-20 pb-12 md:pt-20 md:pb-12 lg:pt-32 lg:pb-16"
+        style={{
+          opacity: finalCTAOpacity,
+          transform: `translateY(${finalCTATranslateY}px)`,
+          transition: "opacity 0.7s ease-out, transform 0.7s ease-out",
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-[#B40101]/20 via-black/80 to-black" />
+        <div className="relative z-10 max-w-6xl mx-auto px-6 text-center transition-all duration-700 ease-out">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 font-sans">
+            The Future of Real Estate.
+            <span className="block text-[#B40101] italic">Led by You.</span>
+          </h2>
+        </div>
+      </section>
 
       {/* Last Section */}
       <section
