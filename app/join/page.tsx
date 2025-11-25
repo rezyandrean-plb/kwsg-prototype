@@ -774,8 +774,8 @@ export default function JoinPage() {
             
             {/* Shorts / Reels Section */}
             <div className="w-full mt-16 pb-12">
-              {/* Mobile Carousel */}
-              <div className="sm:hidden relative">
+              {/* Mobile & Tablet Carousel */}
+              <div className="lg:hidden relative">
                 <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
                   <div className="aspect-[9/16] bg-gray-800 rounded-lg overflow-hidden">
                     <iframe
@@ -821,7 +821,7 @@ export default function JoinPage() {
               </div>
 
               {/* Desktop Grid */}
-              <div className="hidden sm:grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+              <div className="hidden lg:grid grid-cols-5 gap-6">
                 {youtubeShorts.map((short, index) => (
                   <div key={index} className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
                     <div className="aspect-[9/16] bg-gray-800 rounded-lg overflow-hidden">
@@ -869,8 +869,10 @@ export default function JoinPage() {
                       <div className="h-px flex-1 bg-gradient-to-r from-[#B40101]/50 to-transparent" />
                     </div>
 
-                    <h3 className="text-4xl md:text-3xl font-medium mb-6 text-white">KW Compass</h3>
-                    <p className="text-lg text-white/90 leading-relaxed group-hover:text-white transition-colors duration-300">
+                    <h3 className="text-xl md:text-2xl font-semibold text-white mb-3">
+                      KW Compass
+                    </h3>
+                    <p className="text-base text-white/70 leading-relaxed group-hover:text-white/90 transition-colors duration-300">
                       This proprietary Singapore-focused consulting tool is your real-time analysis hub. Featuring Compass 10 for New Launch and Resale Property Scoring, it
                       provides a BUC/EC Calculator, Property Comparison analysis, and New Launch Property Analysis. It enables precise, data-backed client consultation via
                       quick calculation of Sales Proceeds, Decoupling, and Stamp Duties.
@@ -906,8 +908,10 @@ export default function JoinPage() {
                       <div className="h-px flex-1 bg-gradient-to-r from-[#B40101]/50 to-transparent" />
                     </div>
 
-                    <h3 className="text-4xl md:text-3xl font-medium mb-6 text-white">KW Command</h3>
-                    <p className="text-lg text-white/90 leading-relaxed group-hover:text-white transition-colors duration-300">
+                    <h3 className="text-xl md:text-2xl font-semibold text-white mb-3">
+                      KW Command
+                    </h3>
+                    <p className="text-base text-white/70 leading-relaxed group-hover:text-white/90 transition-colors duration-300">
                       This intelligent CRM and business suite automates your lead pipeline and manages all transactions from a central dashboard, providing real-time
                       mobile updates for command and control of your business on the go.
                     </p>
@@ -943,8 +947,10 @@ export default function JoinPage() {
                       <div className="h-px flex-1 bg-gradient-to-r from-[#B40101]/50 to-transparent" />
                     </div>
 
-                    <h3 className="text-4xl md:text-3xl font-medium mb-6 text-white">Professional Leverage</h3>
-                    <p className="text-lg text-white/90 leading-relaxed mb-4 group-hover:text-white transition-colors duration-300">
+                    <h3 className="text-xl md:text-2xl font-semibold text-white mb-3">
+                      Professional Leverage
+                    </h3>
+                    <p className="text-base text-white/70 leading-relaxed group-hover:text-white/90 transition-colors duration-300">
                       You gain access to a KW x Canva Enterprise account for professional design, Google Gemini Pro for intelligent client engagement, and Unlimited
                       Google Drive storage for seamless cloud management.
                     </p>
@@ -1127,7 +1133,9 @@ export default function JoinPage() {
               {trainingHighlights.map((highlight, index) => (
                 <div
                   key={highlight.title}
-                className="relative backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:border-white/20 hover:scale-105 hover:shadow-lg hover:shadow-[#B40101]/20 group"
+                className={`relative backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:border-white/20 hover:scale-105 hover:shadow-lg hover:shadow-[#B40101]/20 group ${
+                    index === 2 ? "md:col-span-2 lg:col-span-1" : ""
+                  }`}
                   style={{
                     opacity: trainingCardsOpacity[index] ?? 0,
                     transform: `translateY(${trainingCardsTranslateY[index] ?? 50}px)`,
@@ -1215,7 +1223,7 @@ export default function JoinPage() {
                     <img
                       src={avatarImages[avatarIndex]}
                       alt="Professional"
-                      className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity duration-500"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 ))}
