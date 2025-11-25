@@ -157,20 +157,20 @@ const incomeCards = [
 ]
 
 const avatarImages = [
-  "/avatar-2.png",
-  "/professional-indian-business-man-headshot.jpg",
-  "/professional-caucasian-business-man-smiling.jpg",
-  "/professional-asian-business-woman-smiling.jpg",
-  "/professional-business-woman-portrait.png",
-  "/professional-businessman-portrait.png",
-  "/confident-business-leader-man.jpg",
-  "/confident-business-leader-woman.jpg",
-  "/young-real-estate-agent-man.jpg",
-  "/senior-business-executive-woman.jpg",
-  "/diverse-business-team-meeting.jpg",
-  "/modern-office-collaboration.jpg",
-  "/creative-professional-woman.png",
-  "/creative-professional-man.png",
+  "/images/why-kw-singapore/business-section/Business-DSC04852.jpg",
+  "/images/why-kw-singapore/business-section/Business-DSC04902.jpg",
+  "/images/why-kw-singapore/business-section/Business-DSC05010.jpg",
+  "/images/why-kw-singapore/business-section/Business-DSC05252.jpg",
+  "/images/why-kw-singapore/business-section/Business-DSC05255.jpg",
+  "/images/why-kw-singapore/business-section/Business-DSC05261.jpg",
+  "/images/why-kw-singapore/business-section/Business-DSC05272.jpg",
+  "/images/why-kw-singapore/business-section/Business-DSC05289.jpg",
+  "/images/why-kw-singapore/business-section/Business-POD-01.jpg",
+  "/images/why-kw-singapore/business-section/Business-POD-02.jpg",
+  "/images/why-kw-singapore/business-section/Business-POD-03.jpeg",
+  "/images/why-kw-singapore/business-section/Business-POD-04.jpeg",
+  "/images/why-kw-singapore/business-section/Business-POD-05.jpeg",
+  "/images/why-kw-singapore/business-section/Business-DSC04852.jpg",
 ]
 
 const avatarLayout = [
@@ -515,7 +515,7 @@ export default function JoinPage() {
       {/* Hero Section */}
       <section
         ref={whyKWSectionRef}
-        className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-black via-[#B40101]/50 to-black"
+        className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-black via-[#B40101]/50 to-black pt-20 sm:pt-24 md:pt-28 lg:pt-20"
       >
         <div className="absolute inset-0 opacity-20">
           <svg viewBox="0 0 1440 800" className="w-full h-full" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
