@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react"
 import type { MouseEvent, MutableRefObject, RefObject } from "react"
-import { ArrowRight, Calendar, Handshake, Users } from "lucide-react"
+import { ArrowRight, Calendar, Handshake, Users, ChevronLeft, ChevronRight } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
@@ -35,7 +35,18 @@ const heroCards = [
 ]
 
 const youtubeVideos = ["yJ4RNPtESM4", "wbOn8um6oB4", "RxJe0-Omg70", "lgekMAy7DxU"]
-const imageCarouselSeeds = [1, 2, 3, 4, 5]
+const youtubeShorts = [
+  { id: "yJ4RNPtESM4", label: "Tech Tools" },
+  { id: "wbOn8um6oB4", label: "Compass Tools" },
+  { id: "RxJe0-Omg70", label: "Compass10" },
+  { id: "lgekMAy7DxU", label: "Contacts Tools" },
+  { id: "70KX3UiIOeg", label: "Compass testimony" },
+]
+const imageCarouselImages = [
+  "/images/why-kw-singapore/NewLaunch_Collection.png",
+  "/images/why-kw-singapore/NewLaunch_ExportReport.png",
+  "/images/why-kw-singapore/NewLaunch_PropertyAnalysis.png",
+]
 
 const blueprintHighlights = [
   {
@@ -92,6 +103,7 @@ const lastSectionActions = [
       "Want to experience the energy in person? Ask Melvin and Grayce your questions live? We still hold these exclusive sessions for a small group. See the next available date and reserve your seat.",
     button: "RESERVE MY LIVE SEAT",
     icon: Calendar,
+    href: "https://explore.kwsingapore.com/#form-J-C4unvV0p",
   },
   {
     title: "READY TO ONBOARD?",
@@ -99,6 +111,7 @@ const lastSectionActions = [
       "You've seen the model, you understand the vision, and you're ready to make the move. Join the real estate revolution in Singapore and get immediate access to our training, tools, and tech",
     button: "START MY ONBOARDING",
     icon: Handshake,
+    href: "/",
   },
   {
     title: "BOOK A 1-1 BUSINESS CONSULT",
@@ -106,6 +119,7 @@ const lastSectionActions = [
       "Have questions? Want to discuss how the KW model can be tailored to your specific business goals? Book a confidential, no-obligation 1-on-1 strategy call with our Director of Growth, Grayce.",
     button: "BOOK MY 1-1 CONSULT",
     icon: Users,
+    href: "/",
   },
 ]
 
@@ -119,7 +133,6 @@ const incomeCards = [
       "As long as you remain with KW and your sponsored agents produce, your Growth Share never stops.",
     ],
     badge: "01",
-    video: "https://www.youtube.com/embed/pJcbNolha-M",
   },
   {
     title: "Maximum Commission in Producer Income",
@@ -176,6 +189,7 @@ export default function JoinPage() {
   const [isCarouselPaused, setIsCarouselPaused] = useState(false)
   const [imageCarouselIndex, setImageCarouselIndex] = useState(0)
   const [isImageCarouselPaused, setIsImageCarouselPaused] = useState(false)
+  const [currentShortsIndex, setCurrentShortsIndex] = useState(0)
 
   const [kwEdgeOpacity, setKwEdgeOpacity] = useState(0)
   const [kwEdgeTranslateY, setKwEdgeTranslateY] = useState(20)
@@ -258,6 +272,14 @@ export default function JoinPage() {
     if (target) {
       target.scrollIntoView({ behavior: "smooth", block: "start" })
     }
+  }
+
+  const nextShorts = () => {
+    setCurrentShortsIndex((prev) => (prev + 1) % youtubeShorts.length)
+  }
+
+  const prevShorts = () => {
+    setCurrentShortsIndex((prev) => (prev - 1 + youtubeShorts.length) % youtubeShorts.length)
   }
 
   useEffect(() => {
@@ -461,7 +483,7 @@ export default function JoinPage() {
 
   useEffect(() => {
     if (isCarouselPaused) return
-    const visibleVideos = 3
+    const visibleVideos = 4
     const maxIndex = Math.max(0, youtubeVideos.length - visibleVideos)
     const interval = setInterval(() => {
       setCarouselIndex((prev) => {
@@ -475,7 +497,7 @@ export default function JoinPage() {
   useEffect(() => {
     if (isImageCarouselPaused) return
     const visibleImages = 2
-    const maxIndex = Math.max(0, imageCarouselSeeds.length - visibleImages)
+    const maxIndex = Math.max(0, imageCarouselImages.length - visibleImages)
     const interval = setInterval(() => {
       setImageCarouselIndex((prev) => {
         if (maxIndex === 0) return 0
@@ -485,8 +507,8 @@ export default function JoinPage() {
     return () => clearInterval(interval)
   }, [isImageCarouselPaused])
 
-  const youtubeDotCount = useMemo(() => Math.max(1, youtubeVideos.length - 2), [])
-  const imageDotCount = useMemo(() => Math.max(1, imageCarouselSeeds.length - 1), [])
+  const youtubeDotCount = useMemo(() => Math.max(1, youtubeVideos.length - 3), [])
+  const imageDotCount = useMemo(() => Math.max(1, imageCarouselImages.length - 1), [])
 
   return (
     <main className="bg-black text-white">
@@ -535,7 +557,7 @@ export default function JoinPage() {
           >
             <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-8">
               The KW Singapore Edge: <br />
-              <span className="text-[#D9381E]">A Proven Real Estate Model</span>
+              <span className="text-[#b40101]">A Proven Real Estate Model</span>
             </h3>
             <p className="text-lg md:text-xl text-white/80 leading-relaxed max-w-4xl mx-auto">
               Leverage Singapore's most powerful real estate business model—built for unlimited scale, branding, and freedom.
@@ -594,7 +616,7 @@ export default function JoinPage() {
         className="relative pt-32 pb-20 md:pt-32 md:pb-20 lg:pt-32 lg:pb-32 overflow-hidden"
       >
         <div className="absolute inset-0 bg-black" />
-        <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: "url('/images/image.png')" }} />
+        <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: "url('/images/why-kw-singapore/bokeh-lights.png')" }} />
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/80" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80" />
 
@@ -621,6 +643,20 @@ export default function JoinPage() {
                   You're stuck on the income rollercoaster—unpredictable closings and unstable pay. At KW, we solved this by creating a three-pillar income
                   model designed for growth, stability, and legacy.
                 </p>
+              </div>
+            </div>
+
+            <div className="mt-16 flex justify-center">
+              <div className="w-full max-w-4xl">
+                <div className="aspect-video rounded-lg overflow-hidden border border-white/20 shadow-lg">
+                  <iframe
+                    src="https://www.youtube.com/embed/pJcbNolha-M"
+                    className="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    title="Growth Share Passive Legacy Video"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -690,20 +726,6 @@ export default function JoinPage() {
                       <p key={paragraph}>{paragraph}</p>
                     ))}
                   </div>
-
-                  {card.video && (
-                    <div className="mt-6">
-                      <div className="aspect-video rounded-lg overflow-hidden border border-white/20 shadow-lg">
-                        <iframe
-                          src={card.video}
-                          className="w-full h-full"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                          title={`${card.title} Video`}
-                        />
-                      </div>
-                    </div>
-                  )}
                 </div>
               ))}
             </div>
@@ -724,7 +746,7 @@ export default function JoinPage() {
       >
         <div className="absolute inset-0 bg-black" />
         <div className="absolute inset-0 bg-gradient-to-br from-black via-[#660000]/80 to-black" />
-        <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: "url('/images/ai-bg-join-kw.jpg')" }} />
+        <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: "url('/images/why-kw-singapore/ai-bg-join-kw.jpg')" }} />
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/80" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80" />
 
@@ -749,74 +771,152 @@ export default function JoinPage() {
               </div>
             </div>
 
-            <div className="w-full mt-32 pb-12">
-              <div className="grid lg:grid-cols-[30%_70%] gap-8 items-center">
+            <div className="w-full mt-16 pb-12">
+              <div
+                className="relative overflow-hidden rounded-lg"
+                onMouseEnter={() => setIsCarouselPaused(true)}
+                onMouseLeave={() => setIsCarouselPaused(false)}
+              >
+                <div
+                  className="flex transition-transform duration-700 ease-in-out"
+                  style={{
+                    transform: `translateX(-${carouselIndex * (100 / 4)}%)`,
+                  }}
+                >
+                  {youtubeVideos.map((videoId) => (
+                    <div key={videoId} className="flex-shrink-0 w-1/4 px-2">
+                      <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden border border-gray-700/50 relative group hover:border-gray-600 transition-colors">
+                        <iframe
+                          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0&loop=1&playlist=${videoId}&playsinline=1&enablejsapi=1`}
+                          className="w-full h-full"
+                          allow="autoplay; encrypted-media; accelerometer; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          title={`KW Compass Video ${videoId}`}
+                        />
+                        <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-black/5" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex justify-center gap-2 mt-4">
+                  {Array.from({ length: youtubeDotCount }).map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCarouselIndex(index)}
+                      className={`h-2 rounded-full transition-all duration-300 ${carouselIndex === index ? "w-8 bg-[#B40101]" : "w-2 bg-white/30 hover:bg-white/50"}`}
+                      aria-label={`Go to video set ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Shorts / Reels Section */}
+            <div className="w-full mt-16 pb-12">
+              {/* Mobile Carousel */}
+              <div className="sm:hidden relative">
+                <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
+                  <div className="aspect-[9/16] bg-gray-800 rounded-lg overflow-hidden">
+                    <iframe
+                      key={currentShortsIndex}
+                      src={`https://www.youtube.com/embed/${youtubeShorts[currentShortsIndex].id}?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0&loop=1&playlist=${youtubeShorts[currentShortsIndex].id}&playsinline=1`}
+                      className="w-full h-full"
+                      allow="autoplay; encrypted-media; accelerometer; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      title={youtubeShorts[currentShortsIndex].label}
+                    />
+                  </div>
+                </div>
+                
+                {/* Navigation buttons */}
+                <button
+                  onClick={prevShorts}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 z-10"
+                  aria-label="Previous reel"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button
+                  onClick={nextShorts}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 z-10"
+                  aria-label="Next reel"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+                
+                {/* Indicators */}
+                <div className="flex justify-center mt-4 space-x-2">
+                  {youtubeShorts.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentShortsIndex(index)}
+                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                        index === currentShortsIndex ? 'bg-[#B40101]' : 'bg-white/30'
+                      }`}
+                      aria-label={`Go to reel ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Desktop Grid */}
+              <div className="hidden sm:grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+                {youtubeShorts.map((short, index) => (
+                  <div key={index} className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
+                    <div className="aspect-[9/16] bg-gray-800 rounded-lg overflow-hidden">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${short.id}?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0&loop=1&playlist=${short.id}&playsinline=1`}
+                        className="w-full h-full"
+                        allow="autoplay; encrypted-media; accelerometer; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        title={short.label}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="w-full mt-24">
+              <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8">
                 <div
                   ref={kwCompassRef}
-                  className="space-y-6 transition-all duration-700 ease-out"
+                  className="relative group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2"
                   style={{
                     opacity: kwCompassOpacity,
                     transform: `translateX(${kwCompassTranslateX}px)`,
                   }}
                 >
-                  <div className="mb-4">
-                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#B40101] to-[#8B0000] flex items-center justify-center shadow-lg border border-[#B40101]/30">
-                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-                      </svg>
+                  <div className="absolute inset-0 rounded-2xl overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-black via-[#660000]/50 to-black" />
+                    <div className="absolute bottom-0 right-0 w-full h-full opacity-40">
+                      <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-[#B40101] via-[#D9381E] to-transparent rounded-full blur-3xl transform translate-x-1/4 translate-y-1/4" />
+                      <div className="absolute bottom-10 right-20 w-64 h-64 bg-gradient-to-tl from-[#B40101]/60 to-transparent rounded-full blur-2xl" />
+                      <div className="absolute top-1/2 right-0 w-48 h-48 bg-gradient-to-bl from-[#D9381E]/40 to-transparent rounded-full blur-xl" />
                     </div>
                   </div>
-                  <h3 className="text-4xl md:text-3xl font-bold text-white">KW Compass</h3>
-                  <p className="text-lg text-white/90 leading-relaxed">
-                    This proprietary Singapore-focused consulting tool is your real-time analysis hub. Featuring Compass 10 for New Launch and Resale Property Scoring, it
-                    provides a BUC/EC Calculator, Property Comparison analysis, and New Launch Property Analysis. It enables precise, data-backed client consultation via
-                    quick calculation of Sales Proceeds, Decoupling, and Stamp Duties.
-                  </p>
-                </div>
 
-                <div
-                  className="relative overflow-hidden rounded-lg"
-                  onMouseEnter={() => setIsCarouselPaused(true)}
-                  onMouseLeave={() => setIsCarouselPaused(false)}
-                >
-                  <div
-                    className="flex transition-transform duration-700 ease-in-out"
-                    style={{
-                      transform: `translateX(-${carouselIndex * (100 / 3)}%)`,
-                    }}
-                  >
-                    {youtubeVideos.map((videoId) => (
-                      <div key={videoId} className="flex-shrink-0 w-1/3 px-2">
-                        <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden border border-gray-700/50 relative group hover:border-gray-600 transition-colors">
-                          <iframe
-                            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0&loop=1&playlist=${videoId}&playsinline=1&enablejsapi=1`}
-                            className="w-full h-full"
-                            allow="autoplay; encrypted-media; accelerometer; gyroscope; picture-in-picture"
-                            allowFullScreen
-                            title={`KW Compass Video ${videoId}`}
-                          />
-                          <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-black/5" />
-                        </div>
+                  <div className="relative bg-gradient-to-br from-black/60 via-[#660000]/40 to-black/60 rounded-2xl p-8 h-full overflow-hidden backdrop-blur-sm">
+                    <div className="mb-6 flex items-center gap-4">
+                      <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#B40101] to-[#8B0000] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-[#B40101]/30 p-2">
+                        <img 
+                          src="/images/why-kw-singapore/KWSG COMPASS_ALL WHITE.png" 
+                          alt="KW Compass Logo" 
+                          className="w-full h-full object-contain"
+                        />
                       </div>
-                    ))}
-                  </div>
+                      <div className="h-px flex-1 bg-gradient-to-r from-[#B40101]/50 to-transparent" />
+                    </div>
 
-                  <div className="flex justify-center gap-2 mt-4">
-                    {Array.from({ length: youtubeDotCount }).map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setCarouselIndex(index)}
-                        className={`h-2 rounded-full transition-all duration-300 ${carouselIndex === index ? "w-8 bg-[#B40101]" : "w-2 bg-white/30 hover:bg-white/50"}`}
-                        aria-label={`Go to video set ${index + 1}`}
-                      />
-                    ))}
+                    <h3 className="text-4xl md:text-3xl font-medium mb-6 text-white">KW Compass</h3>
+                    <p className="text-lg text-white/90 leading-relaxed group-hover:text-white transition-colors duration-300">
+                      This proprietary Singapore-focused consulting tool is your real-time analysis hub. Featuring Compass 10 for New Launch and Resale Property Scoring, it
+                      provides a BUC/EC Calculator, Property Comparison analysis, and New Launch Property Analysis. It enables precise, data-backed client consultation via
+                      quick calculation of Sales Proceeds, Decoupling, and Stamp Duties.
+                    </p>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <div className="w-full mt-24">
-              <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
                 <div
                   ref={kwCommandRef}
                   className="relative group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2"
@@ -836,10 +936,12 @@ export default function JoinPage() {
 
                   <div className="relative bg-gradient-to-br from-black/60 via-[#660000]/40 to-black/60 rounded-2xl p-8 h-full overflow-hidden backdrop-blur-sm">
                     <div className="mb-6 flex items-center gap-4">
-                      <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#B40101] to-[#8B0000] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-[#B40101]/30">
-                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                        </svg>
+                      <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#B40101] to-[#8B0000] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-[#B40101]/30 p-2">
+                        <img 
+                          src="/images/why-kw-singapore/KW-Command (White).png" 
+                          alt="KW Command Logo" 
+                          className="w-full h-full object-contain"
+                        />
                       </div>
                       <div className="h-px flex-1 bg-gradient-to-r from-[#B40101]/50 to-transparent" />
                     </div>
@@ -871,10 +973,12 @@ export default function JoinPage() {
 
                   <div className="relative bg-gradient-to-br from-black/60 via-[#660000]/40 to-black/60 rounded-2xl p-8 h-full overflow-hidden backdrop-blur-sm">
                     <div className="mb-6 flex items-center gap-4">
-                      <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#B40101] to-[#8B0000] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-[#B40101]/30">
-                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
+                      <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#B40101] to-[#8B0000] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-[#B40101]/30 p-2">
+                        <img 
+                          src="/images/why-kw-singapore/KW-Canva (White).png" 
+                          alt="KW Canva Logo" 
+                          className="w-full h-full object-contain"
+                        />
                       </div>
                       <div className="h-px flex-1 bg-gradient-to-r from-[#B40101]/50 to-transparent" />
                     </div>
@@ -1227,10 +1331,10 @@ export default function JoinPage() {
                     transform: `translateX(-${imageCarouselIndex * 50}%)`,
                   }}
                 >
-                  {imageCarouselSeeds.map((index) => (
+                  {imageCarouselImages.map((imagePath, index) => (
                     <div key={index} className="flex-shrink-0 w-1/2 px-1 md:px-2">
                       <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden border border-white/10 relative group hover:border-white/20 transition-colors">
-                        <img src={`https://picsum.photos/seed/market-focus-${index}/800/450`} alt={`Market Focus Image ${index}`} className="w-full h-full object-cover" />
+                        <img src={imagePath} alt={`Market Focus Image ${index + 1}`} className="w-full h-full object-cover" />
                         <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-black/10" />
                       </div>
                     </div>
@@ -1264,7 +1368,7 @@ export default function JoinPage() {
         }}
       >
         <div className="absolute inset-0 bg-black" />
-        <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: "url('/images/image.png')" }} />
+        <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: "url('/images/why-kw-singapore/bokeh-lights.png')" }} />
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/80" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80" />
 
@@ -1342,37 +1446,7 @@ export default function JoinPage() {
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section
-        ref={finalCTASectionRef}
-        className="relative pt-20 pb-12 md:pt-20 md:pb-12 lg:pt-32 lg:pb-16"
-        style={{
-          opacity: finalCTAOpacity,
-          transform: `translateY(${finalCTATranslateY}px)`,
-          transition: "opacity 0.7s ease-out, transform 0.7s ease-out",
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-br from-[#B40101]/20 via-black/80 to-black" />
-        <div className="relative z-10 max-w-6xl mx-auto px-6 text-center transition-all duration-700 ease-out">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 font-sans">
-            The Future of Real Estate.
-            <span className="block text-[#B40101] italic">Led by You.</span>
-          </h2>
-          <h2 className="text-3xl font-semibold my-[15px]">
-            Plug into the KW Singapore platform and take your career from closings to equity, visibility, and brand ownership.
-          </h2>
-          <p className="text-xl text-white/80 mb-12 max-w-4xl mx-auto leading-relaxed">
-            You have seen the blueprint, the technology, and the financial model. Your next level of scale and profitability is backed by systems, not guesswork.
-          </p>
 
-          <div className="space-y-6">
-            <Button size="lg" className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-sm">
-              Book Your Discovery Call
-              <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
-            </Button>
-          </div>
-        </div>
-      </section>
 
       {/* Last Section */}
       <section
@@ -1436,9 +1510,11 @@ export default function JoinPage() {
                 {action.title}
               </h3>
               <p className="text-base text-white leading-relaxed mb-6 text-center group-hover:text-white transition-colors duration-300 flex-grow">{action.copy}</p>
-              <Button className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold rounded-lg border-none transition-all duration-300 mt-auto">
-                {action.button}
-              </Button>
+              <a href={action.href} target={action.href.startsWith("http") ? "_blank" : undefined} rel={action.href.startsWith("http") ? "noopener noreferrer" : undefined} className="w-full">
+                <Button className="w-full bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold rounded-lg border-none transition-all duration-300 mt-auto">
+                  {action.button}
+                </Button>
+              </a>
             </div>
           ))}
         </div>
