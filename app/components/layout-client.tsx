@@ -30,7 +30,7 @@ const navItems = [
   { href: "/contact", label: "Contact" }
 ]
 
-const joinNavItem = { href: "/join", label: "Join KW Singapore" }
+const joinNavItem = { href: "/join", label: "Why KW Singapore" }
 
 export function Header() {
   const pathname = usePathname()
@@ -155,7 +155,7 @@ const footerLinks = {
   column2: [
     { href: "/about-us", label: "About Us" },
     { href: "/contact", label: "Contact" },
-    { href: "/join", label: "Join KW Singapore" }
+    { href: "/join", label: "Why KW Singapore" }
   ]
 }
 

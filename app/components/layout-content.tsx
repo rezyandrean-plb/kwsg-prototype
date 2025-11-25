@@ -69,7 +69,7 @@ export default function LayoutContent({
 
       // Custom mappings by first path segment
       const customTitleBySegment: Record<string, string> = {
-        'join': 'Join KW Singapore',
+        'join': 'Why KW Singapore',
         'model': 'KW Income Model',
         'about-us': 'About Us',
         'compass': 'Tool & Resources',
