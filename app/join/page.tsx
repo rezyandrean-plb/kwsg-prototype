@@ -50,6 +50,20 @@ const imageCarouselImages = [
   "/images/why-kw-singapore/NewLaunch_PropertyAnalysis.png",
 ]
 
+function useIsLargeScreen() {
+  const [isLarge, setIsLarge] = useState(false)
+
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    const handleResize = () => setIsLarge(window.innerWidth >= 1024)
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
+
+  return isLarge
+}
+
 const blueprintHighlights = [
   {
     title: "The MREA Model (Millionaire Real Estate Agent)",
@@ -113,7 +127,7 @@ const lastSectionActions = [
       "You've seen the model, you understand the vision, and you're ready to make the move. Join the real estate revolution in Singapore and get immediate access to our training, tools, and tech",
     button: "START MY ONBOARDING",
     icon: Handshake,
-    href: "/",
+    href: "https://api.mediax.sg/widget/form/FIYDxKpn7GUUJ2YOvtEU",
   },
   {
     title: "BOOK A 1-1 BUSINESS CONSULT",
@@ -121,7 +135,7 @@ const lastSectionActions = [
       "Have questions? Want to discuss how the KW model can be tailored to your specific business goals? Book a confidential, no-obligation 1-on-1 strategy call with our Director of Growth, Grayce.",
     button: "BOOK MY 1-1 CONSULT",
     icon: Users,
-    href: "/",
+    href: "https://api.mediax.sg/widget/form/7OJwwi1ynbfo578kPUAv",
   },
 ]
 
@@ -242,6 +256,9 @@ export default function JoinPage() {
   const [hasCounted10M, setHasCounted10M] = useState(false)
   const [hasCounted60, setHasCounted60] = useState(false)
   const [hasCounted200K, setHasCounted200K] = useState(false)
+
+  const isLargeScreen = useIsLargeScreen()
+  const visibleImagesCount = isLargeScreen ? 2 : 1
 
   const isAnimating10M = useRef(false)
   const isAnimating60 = useRef(false)
@@ -498,8 +515,7 @@ export default function JoinPage() {
 
   useEffect(() => {
     if (isImageCarouselPaused) return
-    const visibleImages = 2
-    const maxIndex = Math.max(0, imageCarouselImages.length - visibleImages)
+    const maxIndex = Math.max(0, imageCarouselImages.length - visibleImagesCount)
     const interval = setInterval(() => {
       setImageCarouselIndex((prev) => {
         if (maxIndex === 0) return 0
@@ -507,17 +523,24 @@ export default function JoinPage() {
       })
     }, 4000)
     return () => clearInterval(interval)
-  }, [isImageCarouselPaused])
+  }, [isImageCarouselPaused, visibleImagesCount])
 
   const youtubeDotCount = useMemo(() => Math.max(1, youtubeVideos.length - 3), [])
-  const imageDotCount = useMemo(() => Math.max(1, imageCarouselImages.length - 1), [])
+  useEffect(() => {
+    setImageCarouselIndex((prev) => Math.min(prev, Math.max(0, imageCarouselImages.length - visibleImagesCount)))
+  }, [visibleImagesCount])
+
+  const imageDotCount = useMemo(
+    () => Math.max(1, imageCarouselImages.length - visibleImagesCount + 1),
+    [visibleImagesCount]
+  )
 
   return (
     <main className="bg-black text-white">
       {/* Hero Section */}
       <section
         ref={whyKWSectionRef}
-        className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-black via-[#B40101]/50 to-black pt-20 sm:pt-24 md:pt-28 lg:pt-20"
+        className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-black via-[#B40101]/50 to-black pt-16 sm:pt-20 md:pt-24 lg:pt-16"
       >
         <div className="absolute inset-0 opacity-20">
           <svg viewBox="0 0 1440 800" className="w-full h-full" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
@@ -589,7 +612,7 @@ export default function JoinPage() {
             className="w-full max-w-7xl mx-auto transition-opacity duration-700 ease-out"
             style={{ opacity: cardsOpacity }}
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 md:gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 md:gap-4 lg:gap-4">
               {heroCards.map((card, index) => (
                 <a
                   key={card.target}
@@ -615,7 +638,7 @@ export default function JoinPage() {
       {/* Turn Unpredictability into Predictable Wealth Section */}
       <section
         ref={predictableWealthSectionRef}
-        className="relative pt-32 pb-20 md:pt-32 md:pb-20 lg:pt-32 lg:pb-32 overflow-hidden"
+        className="relative pt-24 pb-16 md:pt-24 md:pb-16 lg:pt-24 lg:pb-24 overflow-hidden"
       >
         <div className="absolute inset-0 bg-black" />
         <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: "url('/images/why-kw-singapore/bokeh-lights.png')" }} />
@@ -639,16 +662,16 @@ export default function JoinPage() {
               <h3 className="text-2xl md:text-3xl font-semibold text-white/90">Stop Trading Time for Money. Start Building Equity.</h3>
             </div>
 
-            <div className="flex justify-end mt-16">
+            <div className="flex justify-end mt-12">
               <div className="w-full sm:w-full md:w-[85%] lg:w-[80%]">
-                <p className="text-lg md:text-2xl text-white font-medium leading-relaxed text-right mx-0 mt-2">
+                <p className="text-lg md:text-2xl text-white font-medium leading-snug md:leading-relaxed text-right mx-0 mt-2">
                   You're stuck on the income rollercoaster—unpredictable closings and unstable pay. At KW, we solved this by creating a three-pillar income
                   model designed for growth, stability, and legacy.
                 </p>
               </div>
             </div>
 
-            <div className="mt-16 flex justify-center">
+            <div className="mt-12 flex justify-center">
               <div className="w-full max-w-4xl">
                 <div className="aspect-video rounded-lg overflow-hidden border border-white/20 shadow-lg">
                   <iframe
@@ -669,7 +692,7 @@ export default function JoinPage() {
       <section
         ref={incomeModelSectionRef}
         id="income-model-section"
-        className="relative bg-gradient-to-br from-[#B40101]/10 to-transparent pt-8 pb-20 md:pt-10 md:pb-20 lg:pt-12 lg:pb-32"
+        className="relative bg-gradient-to-br from-[#B40101]/10 to-transparent pt-6 pb-16 md:pt-8 md:pb-18 lg:pt-10 lg:pb-24"
         style={{
           opacity: incomeModelOpacity,
           transition: "opacity 0.7s ease-out",
@@ -684,7 +707,7 @@ export default function JoinPage() {
               <div className="relative">
                 <div className="flex items-center gap-4 md:gap-6">
                   <span className="text-[180px] md:text-[240px] font-bold leading-none block text-[#B40101]">3</span>
-                  <h2 className="text-5xl md:text-6xl font-bold text-white tracking-tight hidden md:block lg:hidden">INCOME MODEL</h2>
+                  <h2 className="text-5xl md:text-6xl font-bold text-white tracking-tight block lg:hidden">INCOME MODEL</h2>
                 </div>
                 <div className="absolute right-0 top-0 h-full hidden lg:flex items-center">
                   <h2 className="text-5xl md:text-6xl font-bold text-white tracking-tight" style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}>
@@ -739,7 +762,7 @@ export default function JoinPage() {
       <section
         ref={proptechSectionRef}
         id="proptech-section"
-        className="relative pt-20 pb-20 md:pt-20 md:pb-20 lg:pt-32 lg:pb-32 overflow-hidden"
+        className="relative pt-16 pb-16 md:pt-16 md:pb-16 lg:pt-24 lg:pb-24 overflow-hidden"
         style={{
           opacity: proptechOpacity,
           transform: `translateY(${proptechTranslateY}px)`,
@@ -755,18 +778,18 @@ export default function JoinPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-6 transition-all duration-700 ease-out">
           <div className="space-y-12">
             <div className="text-left">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
                 <span className="text-white">
                   PropTech & AI: <br />
                 </span>
                 <span className="text-[#D9381E]">Your Integrated Command Center</span>
               </h2>
-              <h3 className="text-2xl md:text-3xl font-semibold text-white/90 mb-6">Smarter Systems. Scalable Leverage.</h3>
+              <h3 className="text-2xl md:text-3xl font-semibold text-white/90">Smarter Systems. Scalable Leverage.</h3>
             </div>
 
-            <div className="mt-16 pb-16 flex justify-end w-full">
-              <div className="w-full md:w-[85%] lg:w-[80%] xl:w-[80%]" style={{ maxWidth: "85%" }}>
-                <p className="text-lg md:text-2xl text-white font-medium leading-relaxed text-right mx-0 mt-2">
+            <div className="flex justify-end mt-12 pb-12">
+              <div className="w-full sm:w-full md:w-[85%] lg:w-[80%]">
+                <p className="text-lg md:text-2xl text-white font-medium leading-snug md:leading-relaxed text-right mx-0 mt-2">
                   Powered by an advanced AI backend, we deliver your unfair advantage. This all-in-one ecosystem eliminates administrative burnout and
                   establishes you as the definitive, data-driven market expert.
                 </p>
@@ -775,9 +798,9 @@ export default function JoinPage() {
 
             
             {/* Shorts / Reels Section */}
-            <div className="w-full mt-16 pb-12">
-              {/* Mobile & Tablet Carousel */}
-              <div className="lg:hidden relative">
+            <div className="w-full mt-12 pb-8">
+              {/* Mobile Carousel */}
+              <div className="md:hidden relative">
                 <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
                   <div className="aspect-[9/16] bg-gray-800 rounded-lg overflow-hidden">
                     <iframe
@@ -790,7 +813,6 @@ export default function JoinPage() {
                     />
                   </div>
                 </div>
-                
                 {/* Navigation buttons */}
                 <button
                   onClick={prevShorts}
@@ -822,6 +844,53 @@ export default function JoinPage() {
                 </div>
               </div>
 
+              {/* Tablet Carousel (2 reels) */}
+              <div className="hidden md:block lg:hidden relative">
+                <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
+                  <div className="grid grid-cols-2 gap-4">
+                    {[currentShortsIndex, (currentShortsIndex + 1) % youtubeShorts.length].map((index, col) => (
+                      <div key={`tablet-${index}-${col}`} className="aspect-[9/16] bg-gray-800 rounded-lg overflow-hidden">
+                        <iframe
+                          src={`https://www.youtube.com/embed/${youtubeShorts[index].id}?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0&loop=1&playlist=${youtubeShorts[index].id}&playsinline=1`}
+                          className="w-full h-full"
+                          allow="autoplay; encrypted-media; accelerometer; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          title={`${youtubeShorts[index].label} Tablet`}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {/* Navigation buttons */}
+                <button
+                  onClick={prevShorts}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 z-10"
+                  aria-label="Previous reel"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button
+                  onClick={nextShorts}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 z-10"
+                  aria-label="Next reel"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+                {/* Indicators */}
+                <div className="flex justify-center mt-4 space-x-2">
+                  {youtubeShorts.map((_, index) => (
+                    <button
+                      key={`tablet-indicator-${index}`}
+                      onClick={() => setCurrentShortsIndex(index)}
+                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                        index === currentShortsIndex ? "bg-[#B40101]" : "bg-white/30"
+                      }`}
+                      aria-label={`Go to reel ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+
               {/* Desktop Grid */}
               <div className="hidden lg:grid grid-cols-5 gap-6">
                 {youtubeShorts.map((short, index) => (
@@ -840,7 +909,7 @@ export default function JoinPage() {
               </div>
             </div>
 
-            <div className="w-full mt-24">
+            <div className="w-full mt-16">
               <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8">
                 <div
                   ref={kwCompassRef}
@@ -860,7 +929,6 @@ export default function JoinPage() {
                   </div>
 
                   <div className="relative bg-gradient-to-br from-black/60 via-[#660000]/40 to-black/60 rounded-2xl p-8 h-full overflow-hidden backdrop-blur-sm">
-                    <div className="mb-6 h-px bg-gradient-to-r from-[#B40101]/50 to-transparent" />
 
                     <h3 className="text-xl md:text-2xl font-semibold text-white mb-3">
                       KW Compass
@@ -890,7 +958,6 @@ export default function JoinPage() {
                   </div>
 
                   <div className="relative bg-gradient-to-br from-black/60 via-[#660000]/40 to-black/60 rounded-2xl p-8 h-full overflow-hidden backdrop-blur-sm">
-                    <div className="mb-6 h-px bg-gradient-to-r from-[#B40101]/50 to-transparent" />
 
                     <h3 className="text-xl md:text-2xl font-semibold text-white mb-3">
                       KW Command
@@ -920,7 +987,6 @@ export default function JoinPage() {
                   </div>
 
                   <div className="relative bg-gradient-to-br from-black/60 via-[#660000]/40 to-black/60 rounded-2xl p-8 h-full overflow-hidden backdrop-blur-sm">
-                    <div className="mb-6 h-px bg-gradient-to-r from-[#B40101]/50 to-transparent" />
 
                     <h3 className="text-xl md:text-2xl font-semibold text-white mb-3">
                       Professional Leverage
@@ -934,8 +1000,8 @@ export default function JoinPage() {
               </div>
             </div>
 
-            <div className="w-full mt-16 py-8">
-              <h2 className="text-2xl md:text-3xl my-[15px] text-white text-center leading-relaxed w-4/5 mx-auto">
+            <div className="w-full mt-12 py-6">
+              <h2 className="text-2xl md:text-3xl my-[15px] text-white text-center leading-snug md:leading-relaxed w-full md:w-4/5 mx-auto">
                 Stop juggling disparate tools. Start scaling predictably, gaining the automated leverage and precision required to dominate the property market.
               </h2>
             </div>
@@ -947,7 +1013,7 @@ export default function JoinPage() {
       <section
         ref={blueprintSectionRef}
         id="blueprint-section"
-        className="relative py-20 md:py-20 lg:py-32 overflow-hidden bg-gradient-to-b from-black via-[#B40101]/50 to-black"
+        className="relative py-16 md:py-16 lg:py-24 overflow-hidden bg-gradient-to-b from-black via-[#B40101]/50 to-black"
         style={{
           opacity: blueprintOpacity,
           transform: `translateY(${blueprintTranslateY}px)`,
@@ -968,7 +1034,7 @@ export default function JoinPage() {
         <div className="max-w-7xl mx-auto px-6 relative z-10 transition-all duration-700 ease-out">
           <div className="space-y-12">
             <div className="text-left">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
                 <span className="text-white">
                   The Blueprint: <br />
                 </span>
@@ -976,13 +1042,15 @@ export default function JoinPage() {
               </h2>
             </div>
 
-            <div className="w-full mt-16 mb-24 sm:w-full md:w-4/5 md:mx-auto md:ml-auto md:mr-0 text-right">
-              <p className="text-lg md:text-2xl text-white font-medium leading-relaxed mx-0 mt-2">
-                The trial-and-error approach ends here. <br /> Leverage the industry's most successful business philosophies for uncapped growth.
-              </p>
+            <div className="flex justify-end mt-12 mb-20">
+              <div className="w-full sm:w-full md:w-[85%] lg:w-[80%]">
+                <p className="text-lg md:text-2xl text-white font-medium leading-snug md:leading-relaxed text-right mx-0 mt-2">
+                  The trial-and-error approach ends here. <br /> Leverage the industry's most successful business philosophies for uncapped growth.
+                </p>
+              </div>
             </div>
 
-            <div className="relative mt-12 pt-12">
+            <div className="relative mt-10 pt-10">
               <div
                 className="relative rounded-2xl p-10 md:p-16 backdrop-blur-xl bg-black/40 border border-[#B40101]/30 overflow-hidden"
                 style={{
@@ -1049,7 +1117,7 @@ export default function JoinPage() {
       <section
         ref={trainingSectionRef}
         id="training-section"
-        className="relative py-20 md:py-20 lg:py-32 overflow-hidden"
+        className="relative py-16 md:py-16 lg:py-24 overflow-hidden"
         style={{
           opacity: trainingOpacity,
           transform: `translateY(${trainingTranslateY}px)`,
@@ -1073,21 +1141,24 @@ export default function JoinPage() {
         <div className="max-w-7xl mx-auto px-6 relative z-10 transition-all duration-700 ease-out">
           <div className="space-y-12">
             <div className="text-left">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
                 <span className="text-white">
                   World-Class Training: <br />
                 </span>
                 <span className="text-[#D9381E]">Mastery That Converts</span>
               </h2>
+              <h3 className="text-2xl md:text-3xl font-semibold text-white/90">Your ceiling is determined by your learning.</h3>
             </div>
 
-            <div className="w-full md:w-4/5 mt-16 md:mx-auto md:ml-auto md:mr-0 text-right">
-              <p className="text-lg md:text-2xl text-white font-medium leading-relaxed mx-0 mt-2 mb-24">
-                Your ceiling is determined by your learning. Access the most comprehensive, model-driven education in the industry, designed to elevate your skills and mindset.
-              </p>
+            <div className="flex justify-end mt-12">
+              <div className="w-full sm:w-full md:w-[85%] lg:w-[80%]">
+                <p className="text-lg md:text-2xl text-white font-medium leading-snug md:leading-relaxed text-right mx-0 mt-2">
+                  Access the most comprehensive, model-driven education in the industry, designed to elevate your skills and mindset.
+                </p>
+              </div>
             </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-24 mb-8">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 mb-6">
                 {["Gtm6NGIxWOc", "Pj0onWnrcfM", "NrGzZm3vNSY", "JFUKmxBuy8s"].map((videoId) => (
                   <div key={videoId} className="aspect-[9/16] bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg overflow-hidden border border-white/10">
                     <iframe
@@ -1103,7 +1174,7 @@ export default function JoinPage() {
 
             <div
               ref={trainingCardsRef}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left mx-auto mt-16"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left mx-auto mt-12"
             >
               {trainingHighlights.map((highlight, index) => (
                 <div
@@ -1125,9 +1196,10 @@ export default function JoinPage() {
               ))}
             </div>
 
-            <div className="w-full mt-16 py-8">
-              <h2 className="text-2xl md:text-3xl my-[15px] text-white text-center leading-relaxed w-4/5 mx-auto">
-                Transform from a sales agent to a business CEO. <br /> Acquire the exact knowledge and skills required to consistently dominate market share and accelerate your growth.
+            <div className="w-full mt-12 py-6">
+              <h2 className="text-2xl md:text-3xl my-[15px] text-white text-center leading-snug md:leading-relaxed w-full md:w-4/5 mx-auto">
+                Transform from a sales agent to a business CEO. <br /> Acquire the exact knowledge and skills required to consistently dominate market share and
+                accelerate your growth.
               </h2>
             </div>
           </div>
@@ -1138,7 +1210,7 @@ export default function JoinPage() {
       <section
         ref={cultureSectionRef}
         id="culture-section"
-        className="relative py-20 md:py-20 lg:py-32 overflow-hidden bg-black"
+        className="relative py-16 md:py-16 lg:py-24 overflow-hidden bg-black"
         style={{
           opacity: cultureOpacity,
           transform: `translateY(${cultureTranslateY}px)`,
@@ -1208,7 +1280,7 @@ export default function JoinPage() {
 
           <div
             ref={cultureCardsRef}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left max-w-6xl mx-auto mt-16"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left max-w-6xl mx-auto mt-12"
           >
             {cultureHighlights.map((highlight, index) => (
               <div
@@ -1233,7 +1305,7 @@ export default function JoinPage() {
       {/* Market Focus: Built for Singapore's New Launch Economy Section */}
       <section
         ref={marketFocusSectionRef}
-        className="relative py-12 md:py-16 lg:py-32 overflow-hidden"
+        className="relative py-10 md:py-14 lg:py-24 overflow-hidden"
         style={{
           opacity: marketFocusOpacity,
           transform: `translateY(${marketFocusTranslateY}px)`,
@@ -1258,46 +1330,46 @@ export default function JoinPage() {
               </h2>
             </div>
 
-            <div className="w-full md:w-4/5 mt-8 md:mt-12 lg:mt-16 md:ml-auto md:mr-0 text-right">
+            <div className="w-full md:w-4/5 mt-6 md:mt-10 lg:mt-12 md:ml-auto md:mr-0 text-right">
               <p className="text-lg md:text-xl lg:text-2xl text-white font-medium leading-relaxed mx-0 mt-2">
                 Our entire ecosystem, from the KW Compass technology to our training curriculum, is engineered to capitalize on the New Launch market. We provide the
                 analysis, resources, and focus required to dominate this high-growth sector.
               </p>
             </div>
 
-            <div className="w-full mt-8 md:mt-12 lg:mt-16">
-              <div
-                className="relative overflow-hidden rounded-lg"
-                onMouseEnter={() => setIsImageCarouselPaused(true)}
-                onMouseLeave={() => setIsImageCarouselPaused(false)}
-              >
+            <div className="w-full mt-6 md:mt-10 lg:mt-12">
                 <div
-                  className="flex transition-transform duration-700 ease-in-out"
-                  style={{
-                    transform: `translateX(-${imageCarouselIndex * 50}%)`,
-                  }}
+                  className="relative overflow-hidden rounded-lg"
+                  onMouseEnter={() => setIsImageCarouselPaused(true)}
+                  onMouseLeave={() => setIsImageCarouselPaused(false)}
                 >
-                  {imageCarouselImages.map((imagePath, index) => (
-                    <div key={index} className="flex-shrink-0 w-1/2 px-1 md:px-2">
-                      <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden border border-white/10 relative group hover:border-white/20 transition-colors">
-                        <img src={imagePath} alt={`Market Focus Image ${index + 1}`} className="w-full h-full object-cover" />
-                        <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-black/10" />
+                  <div
+                    className="flex transition-transform duration-700 ease-in-out"
+                    style={{
+                      transform: `translateX(-${imageCarouselIndex * (isLargeScreen ? 50 : 100)}%)`,
+                    }}
+                  >
+                    {imageCarouselImages.map((imagePath, index) => (
+                      <div key={index} className="flex-shrink-0 w-full lg:w-1/2 px-1 md:px-2">
+                        <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden border border-white/10 relative group hover:border-white/20 transition-colors">
+                          <img src={imagePath} alt={`Market Focus Image ${index + 1}`} className="w-full h-full object-cover" />
+                          <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-black/10" />
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
 
-                <div className="flex justify-center gap-2 mt-4 md:mt-6">
-                  {Array.from({ length: imageDotCount }).map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setImageCarouselIndex(index)}
-                      className={`h-2 rounded-full transition-all duration-300 ${imageCarouselIndex === index ? "w-8 bg-[#B40101]" : "w-2 bg-white/30 hover:bg-white/50"}`}
-                      aria-label={`Go to image set ${index + 1}`}
-                    />
-                  ))}
+                  <div className="flex justify-center gap-2 mt-4 md:mt-6">
+                    {Array.from({ length: imageDotCount }).map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setImageCarouselIndex(index)}
+                        className={`h-2 rounded-full transition-all duration-300 ${imageCarouselIndex === index ? "w-8 bg-[#B40101]" : "w-2 bg-white/30 hover:bg-white/50"}`}
+                        aria-label={`Go to image set ${index + 1}`}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
             </div>
           </div>
         </div>
@@ -1306,7 +1378,7 @@ export default function JoinPage() {
       {/* Global Powerhouse Section */}
       <section
         ref={globalPowerhouseSectionRef}
-        className="relative py-20 md:py-20 lg:py-32 overflow-hidden"
+        className="relative py-16 md:py-16 lg:py-24 overflow-hidden"
         style={{
           opacity: globalPowerhouseOpacity,
           transform: `translateY(${globalPowerhouseTranslateY}px)`,
@@ -1332,7 +1404,7 @@ export default function JoinPage() {
           <p className="text-white font-medium leading-relaxed mb-12 max-w-4xl mx-auto text-3xl">With over 200,000 salespersons and a proven track record across 60+ countries.</p>
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 mt-48">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 mt-36">
           <div className="w-full max-w-full space-y-8">
             <div className="text-left w-full">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
@@ -1345,7 +1417,7 @@ export default function JoinPage() {
 
             <div className="flex w-full justify-end">
               <div className="w-full sm:w-full md:w-4/5 lg:w-4/5 xl:w-4/5" style={{ maxWidth: "80%" }}>
-                <p className="text-lg md:text-2xl text-white font-medium leading-relaxed text-right">
+                <p className="text-lg md:text-2xl text-white font-medium leading-snug md:leading-relaxed text-right">
                   Fueled by a <span className="font-bold">$10M Seed Valuation</span> and media recognition, we are bringing this successful model to Singapore—poised to establish KW as a major force in the local market.
                 </p>
               </div>
@@ -1360,10 +1432,10 @@ export default function JoinPage() {
       {/* A Financially Viable Future Section */}
       <section
         ref={financiallyViableSectionRef}
-        className="relative pt-6 md:pt-8 lg:pt-12 pb-12 md:pb-16 lg:pb-32 bg-gradient-to-br from-black to-[#B40101]/20"
+        className="relative pt-4 md:pt-6 lg:pt-10 pb-10 md:pb-14 lg:pb-24 bg-gradient-to-br from-black to-[#B40101]/20"
       >
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start mb-12 md:mb-16 lg:mb-20">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start mb-10 md:mb-14 lg:mb-18">
             <div>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-sans leading-tight">
                 A Financially
@@ -1395,7 +1467,7 @@ export default function JoinPage() {
       {/* Final CTA */}
       <section
         ref={finalCTASectionRef}
-        className="relative pt-20 pb-12 md:pt-20 md:pb-12 lg:pt-32 lg:pb-16"
+        className="relative pt-16 pb-10 md:pt-16 md:pb-10 lg:pt-24 lg:pb-14"
         style={{
           opacity: finalCTAOpacity,
           transform: `translateY(${finalCTATranslateY}px)`,
@@ -1414,7 +1486,7 @@ export default function JoinPage() {
       {/* Last Section */}
       <section
         ref={lastSectionRef}
-        className="relative pt-10 pb-16 md:pt-12 md:pb-24 lg:pt-14 lg:pb-24 overflow-hidden bg-gradient-to-b from-black via-[#B40101]/35 to-black"
+        className="relative pt-8 pb-14 md:pt-10 md:pb-20 lg:pt-12 lg:pb-20 overflow-hidden bg-gradient-to-b from-black via-[#B40101]/35 to-black"
         style={{
           opacity: lastSectionOpacity,
           transform: `translateY(${lastSectionTranslateY}px)`,
@@ -1444,7 +1516,7 @@ export default function JoinPage() {
           </h3>
 
           <div className="mt-8">
-            <p className="text-[#B40101] font-bold tracking-wide uppercase text-5xl">
+            <p className="text-[#B40101] font-bold tracking-wide uppercase text-3xl md:text-4xl lg:text-5xl">
               Ready to lead <br />
               the next era of real estate?
             </p>
@@ -1453,7 +1525,7 @@ export default function JoinPage() {
 
         <div
           ref={lastSectionCardsRef}
-          className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-6"
+          className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-6"
         >
           {lastSectionActions.map((action, index) => (
             <div
