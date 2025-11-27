@@ -43,6 +43,8 @@ export function Header() {
   const isPenrithEventPage = pathname?.startsWith('/penrith-consumer-event')
   const isArtisan8Page = pathname === '/artisan-8' || pathname?.startsWith('/artisan-8')
   const isOrchardSophiaPage = pathname === '/orchard-sophia' || pathname?.startsWith('/orchard-sophia')
+  const isTurquoisePage = pathname === '/turquoise' || pathname?.startsWith('/turquoise')
+  const isTheDraycottPage = pathname === '/the-draycott' || pathname?.startsWith('/the-draycott')
   const [isScrolled, setIsScrolled] = useState(false)
   const { isSignedIn, user } = useUser()
 
@@ -55,7 +57,7 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  if (isAdminPage || isSpringleafPage || isSpringleafBackupPage || isAureaPage || isPenrithPage || isPenrithEventPage || isWResidencePage || isArinaEastPage || isArtisan8Page || isOrchardSophiaPage) return null
+  if (isAdminPage || isSpringleafPage || isSpringleafBackupPage || isAureaPage || isPenrithPage || isPenrithEventPage || isWResidencePage || isArinaEastPage || isArtisan8Page || isOrchardSophiaPage || isTurquoisePage || isTheDraycottPage) return null
 
   return (
     <header 
@@ -169,11 +171,13 @@ export function Footer() {
   const isArinaEastPage = pathname === '/arina-east' || pathname?.startsWith('/arina-east')
   const isArtisan8Page = pathname === '/artisan-8' || pathname?.startsWith('/artisan-8')
   const isOrchardSophiaPage = pathname === '/orchard-sophia' || pathname?.startsWith('/orchard-sophia')
+  const isTurquoisePage = pathname === '/turquoise' || pathname?.startsWith('/turquoise')
+  const isTheDraycottPage = pathname === '/the-draycott' || pathname?.startsWith('/the-draycott')
   if (isAdminPage) return null
 
   return (
     <>
-      {!isSpringleafPage && !isSpringleafBackupPage && !isAureaPage && !isPenrithPage && !isPenrithEventPage && !isWResidencePage && !isArinaEastPage && !isArtisan8Page && !isOrchardSophiaPage && <FloatingWhatsApp />}
+      {!isSpringleafPage && !isSpringleafBackupPage && !isAureaPage && !isPenrithPage && !isPenrithEventPage && !isWResidencePage && !isArinaEastPage && !isArtisan8Page && !isOrchardSophiaPage && !isTurquoisePage && !isTheDraycottPage && <FloatingWhatsApp />}
       <footer className="border-t py-8 md:py-12 bg-black text-white">
         <div className="container grid gap-8 md:grid-cols-3">
           <div className="space-y-4">
