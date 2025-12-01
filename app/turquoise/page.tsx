@@ -1482,51 +1482,6 @@ export default function WResidenceLanding() {
         }}
       >
         <div className="container mx-auto px-4">
-          {/* <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
-            animatedSections.has('project-info') ? 'animate-slide-in-top' : ''
-          }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Rare waterway frontage with unblocked waterway views right outside</h2>
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-1 bg-[#ce001f] rounded" />
-            </div>
-          </div> */}
-
-          {/* Feature Cards */}
-          <div className="flex flex-wrap gap-6 lg:gap-4 mb-12 justify-center">
-            {[
-              { icon: <Compass className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Rare waterway frontage with unblocked waterway views right outside" },
-              { icon: <Footprints className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Immediate access to ONE°15 Marina giving residents", desc: "Waterfront dining, yacht club facilities, and coastal convenience" },
-              { icon: <Home className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Ultra-spacious Large-format layouts built for", desc: "true livability, privacy, and everyday comfort" },
-              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Luxury Interior finishes featuring", desc: "Miele kitchens and Laufen ILBAGNO ALESSI bathrooms" },
-              { icon: <MountainSnow className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Full resort facilities including", desc: "a pool, gym, steam rooms, and landscaped relaxation decks" },
-              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "A Prestigious Sentosa Cove Address Offering", desc: "Gated exclusivity in Singapore's only marina residential district" },
-              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Fast connectivity to HarbourFront enabling", desc: "Quick and easy access to the mainland and the CBD" },
-              { icon: <ChartLine className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Long-term upside supported by the upcoming", desc: "Sentosa–Brani transformation plan." }
-            ].map((card, index) => (
-              <Card 
-                key={index} 
-                className={`basis-full md:basis-[calc(50%-12px)] lg:basis-[calc(25%-12px)] text-center hover:shadow-lg transition-all duration-700 border-gray-700 bg-[#18191b] hover:scale-105 hover-lift stagger-animation ${
-                  animatedSections.has('project-info') ? 'animate' : ''
-                }`} 
-                style={{ 
-                  transitionDelay: `${index * 150}ms`,
-                  opacity: animatedSections.has('project-info') ? 1 : 0,
-                  transform: animatedSections.has('project-info') ? 'translateY(0)' : 'translateY(40px)'
-                }}
-              >
-                <CardContent className="p-6">
-                  {card.icon}
-                  {card.title && (
-                    <h3 className="text-white font-semibold mb-2 text-lg" dangerouslySetInnerHTML={{ __html: card.title }}></h3>
-                  )}
-                  {card.desc && (
-                    <p className="text-gray-300" dangerouslySetInnerHTML={{ __html: card.desc }}></p>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
           {/* Detailed Information Grid */}
           <div className={`w-full mb-12 transition-all duration-1000 delay-500 ${
             animatedSections.has('project-info') ? 'animate-fade-in-up' : ''
@@ -1606,6 +1561,50 @@ export default function WResidenceLanding() {
                 </div>
               </div>
             </div>
+          </div>
+          {/* <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
+            animatedSections.has('project-info') ? 'animate-slide-in-top' : ''
+          }`}>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Rare waterway frontage with unblocked waterway views right outside</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-[#ce001f] rounded" />
+            </div>
+          </div> */}
+
+          {/* Feature Cards */}
+          <div className="flex flex-wrap gap-6 lg:gap-4 mb-12 justify-center">
+            {[
+              { icon: <Compass className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Rare waterway frontage with unblocked waterway views right outside" },
+              { icon: <Footprints className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Immediate access to ONE°15 Marina giving residents", desc: "Waterfront dining, yacht club facilities, and coastal convenience" },
+              { icon: <Home className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Ultra-spacious Large-format layouts built for", desc: "true livability, privacy, and everyday comfort" },
+              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Luxury Interior finishes featuring", desc: "Miele kitchens and Laufen ILBAGNO ALESSI bathrooms" },
+              { icon: <MountainSnow className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Full resort facilities including", desc: "a pool, gym, steam rooms, and landscaped relaxation decks" },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "A Prestigious Sentosa Cove Address Offering", desc: "Gated exclusivity in Singapore's only marina residential district" },
+              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Fast connectivity to HarbourFront enabling", desc: "Quick and easy access to the mainland and the CBD" },
+              { icon: <ChartLine className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Long-term upside supported by the upcoming", desc: "Sentosa–Brani transformation plan." }
+            ].map((card, index) => (
+              <Card 
+                key={index} 
+                className={`basis-full md:basis-[calc(50%-12px)] lg:basis-[calc(25%-12px)] text-center hover:shadow-lg transition-all duration-700 border-gray-700 bg-[#18191b] hover:scale-105 hover-lift stagger-animation ${
+                  animatedSections.has('project-info') ? 'animate' : ''
+                }`} 
+                style={{ 
+                  transitionDelay: `${index * 150}ms`,
+                  opacity: animatedSections.has('project-info') ? 1 : 0,
+                  transform: animatedSections.has('project-info') ? 'translateY(0)' : 'translateY(40px)'
+                }}
+              >
+                <CardContent className="p-6">
+                  {card.icon}
+                  {card.title && (
+                    <h3 className="text-white font-semibold mb-2 text-lg" dangerouslySetInnerHTML={{ __html: card.title }}></h3>
+                  )}
+                  {card.desc && (
+                    <p className="text-gray-300" dangerouslySetInnerHTML={{ __html: card.desc }}></p>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
           </div>
 
           {/* Facilities Section */}
