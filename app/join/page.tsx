@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react"
 import type { MouseEvent, MutableRefObject, RefObject } from "react"
-import { ArrowRight, Calendar, Handshake, Users, ChevronLeft, ChevronRight } from "lucide-react"
+import { Calendar, Handshake, Users, ChevronLeft, ChevronRight } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
@@ -266,6 +266,7 @@ export default function JoinPage() {
 
   const whyKWSectionRef = useRef<HTMLElement | null>(null)
   const cardsContainerRef = useRef<HTMLDivElement | null>(null)
+  const mobileCardsContainerRef = useRef<HTMLDivElement | null>(null)
   const predictableWealthSectionRef = useRef<HTMLElement | null>(null)
   const incomeModelSectionRef = useRef<HTMLElement | null>(null)
   const proptechSectionRef = useRef<HTMLElement | null>(null)
@@ -610,28 +611,94 @@ export default function JoinPage() {
           {/* Hero Cards */}
           <div
             ref={cardsContainerRef}
-            className="w-full mx-auto px-4 sm:px-6 lg:px-8 transition-opacity duration-700 ease-out"
-            style={{ opacity: cardsOpacity, maxWidth: '100%' }}
+            className="w-full max-w-7xl mx-auto transition-opacity duration-700 ease-out"
+            style={{
+              opacity: cardsOpacity,
+            }}
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-4 lg:gap-6">
-              {heroCards.map((card, index) => (
-                <a
-                  key={card.target}
-                  href={`#${card.target}`}
-                  onClick={(event) => handleCardClick(event, card.target)}
-                  title="View Detail"
-                  className={`backdrop-blur-md bg-white/5 border border-white/10 rounded-[2rem] md:rounded-[2rem] lg:rounded-lg px-4 py-0 md:px-4 md:py-0 lg:px-4 lg:py-0 flex flex-col items-center justify-center text-center min-h-[120px] md:min-h-[160px] ${card.compactOnDesktop ? "lg:min-h-[110px] lg:px-6 lg:py-0" : "lg:min-h-[140px]"} ${index === 4 ? "md:col-span-2 md:max-w-md md:mx-auto lg:col-span-1 lg:max-w-none lg:mx-0" : ""} hover:border-[#B40101] transition-all duration-500 ease-out relative group shadow-lg cursor-pointer`}
-                  style={{
-                    opacity: cardAnimations[index],
-                    transform: `translateX(${cardTranslateX[index]}px)`,
-                  }}
-                >
-                  <div className="w-full">
-                    <h4 className="text-sm md:text-lg lg:text-base font-semibold text-white">{card.title}</h4>
-                  </div>
-                  <span className="absolute bottom-2 right-4 text-white/80 text-sm font-medium hidden lg:block lg:opacity-0 lg:group-hover:opacity-100 transition-all duration-300">View More</span>
-                </a>
-              ))}
+            <div
+              ref={mobileCardsContainerRef}
+              className="flex flex-row flex-wrap gap-2 sm:space-x-6 sm:flex-wrap sm:overflow-visible sm:justify-center lg:flex-nowrap lg:gap-3 items-center justify-center sm:justify-center lg:justify-center px-4 sm:px-0 py-2 sm:py-0"
+            >
+              {/* Card 1: 3-Income Model */}
+              <a
+                href="#income-model-section"
+                onClick={(e) => handleCardClick(e, "income-model-section")}
+                className="h-auto backdrop-blur-none bg-transparent border border-white/20 rounded-full px-3 py-2.5 sm:px-4 sm:py-2 sm:mx-2 my-0 sm:my-[5px] shadow-none flex-row items-center justify-center lg:backdrop-blur-md lg:bg-white/5 lg:border lg:border-white/10 lg:rounded-lg lg:p-6 lg:flex lg:flex-col lg:items-center lg:justify-center lg:h-[160px] lg:w-[calc((100%-48px)/5)] lg:mx-0 lg:my-0 hover:bg-white/10 hover:border-[#B40101] lg:hover:bg-white/10 lg:hover:border-[#B40101] transition-all duration-500 ease-out relative group lg:shadow-lg custom-cursor-auto lg:hover:custom-cursor-view animate-glow-1 text-white transition-colors duration-300 whitespace-nowrap card-hover-glow"
+                style={{
+                  opacity: cardAnimations[0],
+                }}
+              >
+                <div className="text-center lg:text-center lg:h-full lg:flex lg:flex-col lg:justify-center lg:items-center">
+                  <h4 className="text-sm sm:text-base lg:text-xl lg:leading-tight font-normal lg:font-semibold text-white">
+                    The 3-Income Model
+                  </h4>
+                </div>
+              </a>
+
+              {/* Card 2: PropTech Ecosystem */}
+              <a
+                href="#proptech-section"
+                onClick={(e) => handleCardClick(e, "proptech-section")}
+                className="h-auto backdrop-blur-none bg-transparent border border-white/20 rounded-full px-3 py-2.5 sm:px-4 sm:py-2 sm:mx-2 my-0 sm:my-[5px] shadow-none flex-row items-center justify-center flex-shrink-0 lg:backdrop-blur-md lg:bg-white/5 lg:border lg:border-white/10 lg:rounded-lg lg:p-6 lg:flex lg:flex-col lg:items-center lg:justify-center lg:h-[160px] lg:w-[calc((100%-48px)/5)] lg:mx-0 lg:my-0 hover:bg-white/10 hover:border-[#B40101] lg:hover:bg-white/10 lg:hover:border-[#B40101] transition-all duration-500 ease-out relative group lg:shadow-lg custom-cursor-auto lg:hover:custom-cursor-view animate-glow-2 text-white transition-colors duration-300 whitespace-nowrap card-hover-glow"
+                style={{
+                  opacity: cardAnimations[1],
+                }}
+              >
+                <div className="text-center lg:text-center lg:h-full lg:flex lg:flex-col lg:justify-center lg:items-center">
+                  <h4 className="text-sm sm:text-base lg:text-xl lg:leading-tight font-normal lg:font-semibold text-white">
+                    PropTech Ecosystem
+                  </h4>
+                </div>
+              </a>
+
+              {/* Card 3: The KW Model */}
+              <a
+                href="#blueprint-section"
+                onClick={(e) => handleCardClick(e, "blueprint-section")}
+                className="h-auto backdrop-blur-none bg-transparent border border-white/20 rounded-full px-3 py-2.5 sm:px-4 sm:py-2 sm:mx-2 my-0 sm:my-[5px] shadow-none flex-row items-center justify-center flex-shrink-0 lg:backdrop-blur-md lg:bg-white/5 lg:border lg:border-white/10 lg:rounded-lg lg:p-6 lg:flex lg:flex-col lg:items-center lg:justify-center lg:h-[160px] lg:w-[calc((100%-48px)/5)] lg:mx-0 lg:my-0 hover:bg-white/10 hover:border-[#B40101] lg:hover:bg-white/10 lg:hover:border-[#B40101] transition-all duration-500 ease-out relative group lg:shadow-lg custom-cursor-auto lg:hover:custom-cursor-view animate-glow-3 text-white transition-colors duration-300 whitespace-nowrap lg:whitespace-normal card-hover-glow"
+                style={{
+                  opacity: cardAnimations[2],
+                }}
+              >
+                <div className="text-center lg:text-center lg:h-full lg:flex lg:flex-col lg:justify-center lg:items-center">
+                  <h4 className="text-sm sm:text-base lg:text-xl lg:leading-tight font-normal lg:font-semibold text-white">
+                    The KW Model for Predictable Success
+                  </h4>
+                </div>
+              </a>
+
+              {/* Card 4: World-Class Training */}
+              <a
+                href="#training-section"
+                onClick={(e) => handleCardClick(e, "training-section")}
+                className="h-auto backdrop-blur-none bg-transparent border border-white/20 rounded-full px-3 py-2.5 sm:px-4 sm:py-2 sm:mx-2 my-0 sm:my-[5px] shadow-none flex-row items-center justify-center flex-shrink-0 lg:backdrop-blur-md lg:bg-white/5 lg:border lg:border-white/10 lg:rounded-lg lg:p-6 lg:flex lg:flex-col lg:items-center lg:justify-center lg:h-[160px] lg:w-[calc((100%-48px)/5)] lg:mx-0 lg:my-0 hover:bg-white/10 hover:border-[#B40101] lg:hover:bg-white/10 lg:hover:border-[#B40101] transition-all duration-500 ease-out relative group lg:shadow-lg custom-cursor-auto lg:hover:custom-cursor-view animate-glow-4 text-white transition-colors duration-300 whitespace-nowrap card-hover-glow"
+                style={{
+                  opacity: cardAnimations[3],
+                }}
+              >
+                <div className="text-center lg:text-center lg:h-full lg:flex lg:flex-col lg:justify-center lg:items-center">
+                  <h4 className="text-sm sm:text-base lg:text-xl lg:leading-tight font-normal lg:font-semibold text-white">
+                    World-Class Training
+                  </h4>
+                </div>
+              </a>
+
+              {/* Card 5: Culture & Leadership */}
+              <a
+                href="#culture-section"
+                onClick={(e) => handleCardClick(e, "culture-section")}
+                className="h-auto backdrop-blur-none bg-transparent border border-white/20 rounded-full px-3 py-2.5 sm:px-4 sm:py-2 sm:mx-2 my-0 sm:my-[5px] shadow-none flex-row items-center justify-center flex-shrink-0 lg:backdrop-blur-md lg:bg-white/5 lg:border lg:border-white/10 lg:rounded-lg lg:p-6 lg:flex lg:flex-col lg:items-center lg:justify-center lg:h-[160px] lg:w-[calc((100%-48px)/5)] lg:mx-0 lg:my-0 hover:bg-white/10 hover:border-[#B40101] lg:hover:bg-white/10 lg:hover:border-[#B40101] transition-all duration-500 ease-out relative group lg:shadow-lg custom-cursor-auto lg:hover:custom-cursor-view animate-glow-5 text-white transition-colors duration-300 whitespace-nowrap lg:whitespace-normal card-hover-glow"
+                style={{
+                  opacity: cardAnimations[4],
+                }}
+              >
+                <div className="text-center lg:text-center lg:h-full lg:flex lg:flex-col lg:justify-center lg:items-center">
+                  <h4 className="text-sm sm:text-base lg:text-xl lg:leading-tight font-normal lg:font-semibold text-white">
+                    Culture & Leadership of Winning Together
+                  </h4>
+                </div>
+              </a>
             </div>
           </div>
         </div>
