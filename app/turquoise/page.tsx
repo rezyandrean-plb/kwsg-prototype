@@ -1400,7 +1400,7 @@ export default function WResidenceLanding() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Badge className="bg-[#ce001f] text-white px-4 py-2 text-sm font-medium rounded-full animate-pulse">
-                TBC
+                LAST UNIT!
               </Badge>
             </div>
 
@@ -1417,13 +1417,13 @@ export default function WResidenceLanding() {
                 isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
               }`}>
                 <div className="w-12 h-px bg-[#ce001f] mr-4"></div>
-                <p className="text-lg text-gray-200 font-light">D04 - Sentosa / Harbourfront</p>
+                <p className="text-lg text-gray-200 font-light">D4 - Cove Drive, Sentosa Cove</p>
               </div>
 
               <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
-                Luxury Living in the Heart of Sentosa
+                The Only Place in Singapore With Both Marina & Golf Course Views
               </p>
             </div>
 
@@ -1475,31 +1475,26 @@ export default function WResidenceLanding() {
         }}
       >
         <div className="container mx-auto px-4">
-          <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
+          {/* <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('project-info') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Luxury Living in Sentosa</h2>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Rare waterway frontage with unblocked waterway views right outside</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Turquoise is a premium development, offering a lifestyle unlike any other. 
-            Situated in the heart of Sentosa, this iconic development is just next to Waterfront LRT, with world-class dining, shopping, and entertainment options at your doorstep. 
-            With easy access to the city and Sentosa's pristine beaches, it's the ideal location for those who seek both convenience and luxury.
-            </p>
-          </div>
+          </div> */}
 
           {/* Feature Cards */}
           <div className="flex flex-wrap gap-6 lg:gap-4 mb-12 justify-center">
             {[
-              { icon: <Footprints className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Next to Waterfront LRT" },
-              { icon: <Footprints className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Walking distance to Sentosa attractions" },
-              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Easy access to Harbourfront MRT" },
-              { icon: <Car className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Convenient access to city and expressways" },
-              { icon: <Trees className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Surrounded by Sentosa's pristine beaches and nature" },
-              { icon: <BedDouble className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "1- to 5-Bedroom Units with Branded Living & Full Condo Facilities" },
-              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "99-Year Leasehold in Marina Bay, Singapore’s Global Financial Hub" },
-              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Jointly developed by IOI Properties Group (IOIPG), Boulevard Development Pte. Ltd. and Marriott International" }
+              { icon: <Compass className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Rare waterway frontage with unblocked waterway views right outside" },
+              { icon: <Footprints className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Immediate access to ONE°15 Marina giving residents", desc: "Waterfront dining, yacht club facilities, and coastal convenience" },
+              { icon: <Home className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Ultra-spacious Large-format layouts built for", desc: "true livability, privacy, and everyday comfort" },
+              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Luxury Interior finishes featuring", desc: "Miele kitchens and Laufen ILBAGNO ALESSI bathrooms" },
+              { icon: <MountainSnow className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Full resort facilities including", desc: "a pool, gym, steam rooms, and landscaped relaxation decks" },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "A Prestigious Sentosa Cove Address Offering", desc: "Gated exclusivity in Singapore's only marina residential district" },
+              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Fast connectivity to HarbourFront enabling", desc: "Quick and easy access to the mainland and the CBD" },
+              { icon: <ChartLine className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Long-term upside supported by the upcoming", desc: "Sentosa–Brani transformation plan." }
             ].map((card, index) => (
               <Card 
                 key={index} 
@@ -1514,7 +1509,12 @@ export default function WResidenceLanding() {
               >
                 <CardContent className="p-6">
                   {card.icon}
-                  <p className="text-gray-300" dangerouslySetInnerHTML={{ __html: card.desc }}></p>
+                  {card.title && (
+                    <h3 className="text-white font-semibold mb-2 text-lg" dangerouslySetInnerHTML={{ __html: card.title }}></h3>
+                  )}
+                  {card.desc && (
+                    <p className="text-gray-300" dangerouslySetInnerHTML={{ __html: card.desc }}></p>
+                  )}
                 </CardContent>
               </Card>
             ))}
@@ -1529,14 +1529,26 @@ export default function WResidenceLanding() {
           }}>
             {/* Title */}
             <div className="mb-6">
-              <h3 className="text-3xl font-bold text-white mb-2">Property Details</h3>
-              <div className="w-16 h-1 bg-[#ce001f] rounded"></div>
+              <div className="flex justify-between items-start mb-2">
+                <div>
+                  <h3 className="text-3xl font-bold text-white mb-2">Property Details</h3>
+                  <div className="w-16 h-1 bg-[#ce001f] rounded"></div>
+                </div>
+                <div className="text-right">
+                  <p className="text-[#ce001f] text-sm mb-1">Negotiable</p>
+                  <p className="text-white text-2xl font-medium">$ 4,697,000</p>
+                </div>
+              </div>
             </div>
 
             {/* Two Column Layout */}
             <div className="grid md:grid-cols-2 gap-8 border-gray-700 bg-[#18191b] rounded-lg p-6 md:p-8">
               {/* Left Column */}
               <div className="space-y-6">
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Project Name:</span>
+                  <span className="font-semibold text-white text-right">Turquoise</span>
+                </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Address:</span>
                   <span className="font-semibold text-white text-right">51 Cove Drive, Singapore 098393</span>
@@ -1547,18 +1559,8 @@ export default function WResidenceLanding() {
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Nearest MRT:</span>
-                  <span className="font-semibold text-white text-right">
-                    Waterfront LRT
-                  </span>
+                  <span className="font-semibold text-white text-right">Waterfront LRT</span>
                 </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Property Type:</span>
-                  <span className="font-semibold text-white text-right">3-Bedroom, 3 Bathroom</span>
-                </div>
-              </div>
-
-              {/* Right Column */}
-              <div className="space-y-6">
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Developer:</span>
                   <span className="font-semibold text-white text-right">Ho Bee Cove Pte Ltd</span>
@@ -1567,6 +1569,10 @@ export default function WResidenceLanding() {
                   <span className="font-medium text-gray-300">Tenure:</span>
                   <span className="font-semibold text-white text-right">99 Years</span>
                 </div>
+              </div>
+
+              {/* Right Column */}
+              <div className="space-y-6">
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Unit No.:</span>
                   <span className="font-semibold text-white text-right">#06-05</span>
@@ -1574,6 +1580,18 @@ export default function WResidenceLanding() {
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Site Area:</span>
                   <span className="font-semibold text-white text-right">3,111 sqft</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Property Type:</span>
+                  <span className="font-semibold text-white text-right">3-Bedroom</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Bedroom:</span>
+                  <span className="font-semibold text-white text-right">3</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Bathroom:</span>
+                  <span className="font-semibold text-white text-right">3</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">TOP:</span>
