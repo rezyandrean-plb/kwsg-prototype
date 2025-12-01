@@ -571,7 +571,7 @@ function LeadGenerationForm({
     <Card className={`bg-white/20 backdrop-blur-sm text-white p-6 md:p-12 shadow-2xl border-0 rounded-xl hover:shadow-3xl transition-all duration-700 hover:scale-105`}>
       <h2 className="text-4xl font-bold mb-4 text-white text-center">Book Your Showflat Visit Today</h2>
       <p className="text-md mb-8 opacity-90 text-white text-center">
-        Be the first to own a home that combines convenience, luxury, and nature. Register now for an exclusive preview of Turquoise.
+        Be the first to own a home that combines convenience, luxury, and nature. <br /> Register now for an exclusive preview of Turquoise.
       </p>
       {submitError && (
         <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
@@ -890,12 +890,48 @@ export default function WResidenceLanding() {
     { icon: <Train className="w-6 h-6" />, name: "Imbiah LRT", category: "Transport" },
     { icon: <Train className="w-6 h-6" />, name: "Beach LRT", category: "Transport" },
     { icon: <Train className="w-6 h-6" />, name: "Sentosa LRT", category: "Transport" },
-    { icon: <Train className="w-6 h-6" />, name: "Harbourfront MRT (North‑East Line + Circle Line)", category: "Transport" },
-    { icon: <Car className="w-6 h-6" />, name: "AYE (Ayer Rajah Expressway)", category: "Transport" },
-    { icon: <Car className="w-6 h-6" />, name: "CTE (Central Expressway) to CBD", category: "Transport" },
+    {
+      icon: <Train className="w-6 h-6" />,
+      name: (
+        <>
+          Harbourfront MRT <br />
+          (North‑East Line + Circle Line)
+        </>
+      ),
+      category: "Transport",
+    },
+    {
+      icon: <Car className="w-6 h-6" />,
+      name: (
+        <>
+          AYE <br />
+          (Ayer Rajah Expressway)
+        </>
+      ),
+      category: "Transport",
+    },
+    {
+      icon: <Car className="w-6 h-6" />,
+      name: (
+        <>
+          CTE <br />
+          (Central Expressway)
+        </>
+      ),
+      category: "Transport",
+    },
 
     // RETAIL & F&B
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Cold Storage (Sentosa Cove)", category: "Retail & F&B" },
+    {
+      icon: <ShoppingBag className="w-6 h-6" />,
+      name: (
+        <>
+          Cold Storage <br />
+          (Sentosa Cove)
+        </>
+      ),
+      category: "Retail & F&B",
+    },
     { icon: <ShoppingBag className="w-6 h-6" />, name: "Harbourfront Centre", category: "Retail & F&B" },
     { icon: <ShoppingBag className="w-6 h-6" />, name: "VivoCity", category: "Retail & F&B" },
     { icon: <ShoppingBag className="w-6 h-6" />, name: "Orchard Road Shopping Belt", category: "Retail & F&B" },
@@ -914,8 +950,26 @@ export default function WResidenceLanding() {
     { icon: <GraduationCap className="w-6 h-6" />, name: "CHIJ Saint Theresa's Convent", category: "Education" },
     { icon: <GraduationCap className="w-6 h-6" />, name: "Anglo-Chinese Junior College", category: "Education" },
     { icon: <GraduationCap className="w-6 h-6" />, name: "Marketing Institute of Singapore", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Etonhouse International Pre-School (Sentosa)", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "EIS International Pre-School (Sentosa)", category: "Education" },
+    {
+      icon: <GraduationCap className="w-6 h-6" />,
+      name: (
+        <>
+          Etonhouse International Pre-School <br />
+          (Sentosa)
+        </>
+      ),
+      category: "Education",
+    },
+    {
+      icon: <GraduationCap className="w-6 h-6" />,
+      name: (
+        <>
+          EIS International Pre-School <br />
+          (Sentosa)
+        </>
+      ),
+      category: "Education",
+    },
 
     // HEALTHCARE
     { icon: <Hospital className="w-6 h-6" />, name: "Fullerton Health@Psa Floatel", category: "Healthcare" },
@@ -1430,7 +1484,7 @@ export default function WResidenceLanding() {
               <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
-                The Only Place in Singapore With Both Marina & Golf Course Views
+                The Only Place in Singapore With Both Marina & <br /> Golf Course Views
               </p>
             </div>
 
@@ -1497,7 +1551,6 @@ export default function WResidenceLanding() {
                   <div className="w-16 h-1 bg-[#ce001f] rounded"></div>
                 </div>
                 <div className="text-right">
-                  <p className="text-[#ce001f] text-sm mb-1">Negotiable</p>
                   <p className="text-white text-2xl font-medium">$ 4,697,000</p>
                 </div>
               </div>
@@ -1566,7 +1619,7 @@ export default function WResidenceLanding() {
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('project-info') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Rare waterway frontage with unblocked waterway views right outside</h2>
+            <h2 className="text-3xl font-bold mb-3 text-white text-center tracking-wide">Rare waterway frontage with unblocked waterway views right outside</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
@@ -1587,7 +1640,7 @@ export default function WResidenceLanding() {
               { icon: <MountainSnow className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Full resort facilities including", desc: "a pool, gym, steam rooms, and landscaped relaxation decks" },
               { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "A Prestigious Sentosa Cove Address Offering", desc: "Gated exclusivity in Singapore's only marina residential district" },
               { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Fast connectivity to HarbourFront enabling", desc: "Quick and easy access to the mainland and the CBD" },
-              { icon: <ChartLine className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Long-term upside supported by the upcoming", desc: "Sentosa–Brani transformation plan." }
+              { icon: <ChartLine className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Long-term upside supported by the upcoming", desc: "Sentosa–Brani transformation plan" }
             ].map((card, index) => (
               <Card 
                 key={index} 
@@ -1953,7 +2006,7 @@ export default function WResidenceLanding() {
                 {/* Location Map */}
                 <div className="w-full rounded-lg overflow-hidden shadow-lg">
                   <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31910.625806072003!2d103.81532744346248!3d1.276463480093781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da1fccfbd8c139%3A0xe9c1bcb9eec33d50!2s51%20Cove%20Dr%2C%20Singapore%20098393!5e0!3m2!1sen!2sid!4v1764223731947!5m2!1sen!2sid" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31910.625806072003!2d103.81532744346248!3d1.276463480093781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f11!3m3!1m2!1s0x31da1fccfbd8c139%3A0xe9c1bcb9eec33d50!2s51%20Cove%20Dr%2C%20Singapore%20098393!5e0!3m2!1sen!2sid!4v1764223731947!5m2!1sen!2sid" 
                     width="600" 
                     height="450" 
                     style={{border:0, width: '100%'}} 
@@ -2026,9 +2079,9 @@ export default function WResidenceLanding() {
                       }}
                     >
                       <CardContent className="p-4 md:p-6 min-h-[100px] md:min-h-[120px] w-full">
-                        <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:items-center md:justify-start md:space-y-0 md:space-x-4 w-full">
+                        <div className="flex flex-col items-center justify-center space-y-2 w-full">
                           <div className="flex-shrink-0" style={{ color: '#ce001f' }}>{amenity.icon}</div>
-                          <div className="text-center md:text-center flex-1 min-w-0">
+                          <div className="text-center flex-1 min-w-0">
                             <h3 className="font-semibold text-xs md:text-lg text-white break-words">{amenity.name}</h3>
                           </div>
                         </div>
