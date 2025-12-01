@@ -52,6 +52,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
+import {
+  Dialog,
+  DialogContent,
+  DialogOverlay,
+  DialogTitle,
+} from "@/components/ui/dialog"
 
 // Add custom CSS animations
 const customStyles = `
@@ -766,6 +772,7 @@ export default function WResidenceLanding() {
   const [showSiteMapPopup, setShowSiteMapPopup] = useState(false)
   const [unitsActiveTab, setUnitsActiveTab] = useState(0)
   const [floorPlanIndex, setFloorPlanIndex] = useState(0)
+  const [selectedFloorPlanImage, setSelectedFloorPlanImage] = useState<string | null>(null)
 
   useEffect(() => {
     // Set page title
@@ -1805,11 +1812,11 @@ export default function WResidenceLanding() {
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('floor-plans') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Floor Plans & Pricing</h2>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Floor Plans</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
-            <p className="text-xl text-gray-300">Discover your perfect home from our collection of meticulously designed residences</p>
+            <p className="text-xl text-gray-300">Choose from our thoughtfully designed unit layouts</p>
           </div>
 
           <div className={`max-w-7xl mx-auto transition-all duration-1000 delay-500 ${
@@ -1818,47 +1825,9 @@ export default function WResidenceLanding() {
             opacity: animatedSections.has('floor-plans') ? 1 : 0,
             transform: animatedSections.has('floor-plans') ? 'translateY(0)' : 'translateY(50px)'
           }}>
-            {/* Tabs for unit types */}
-            <div className="w-full px-2 sm:px-6 pt-4 sm:pt-6 pb-2 border-b border-gray-700 mb-6 sm:mb-8">
-              <div className="flex flex-nowrap gap-1 sm:gap-2 justify-start sm:justify-center overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent" style={{ WebkitOverflowScrolling: 'touch' }}>
-                {(() => {
-                  const dynamicUnitData = processUnitAvailabilityData(project?.unitPricing || [])
-                  
-                  // If no API data, show message
-                  if (dynamicUnitData.length === 0) {
-                    return (
-                      <div className="col-span-full text-center py-8">
-                        <p className="text-gray-400">No unit information available at the moment.</p>
-                        <p className="text-sm text-gray-500 mt-2">Please check back later or contact our agents for more details.</p>
-                      </div>
-                    )
-                  }
-                  
-                  return dynamicUnitData.map((unit, idx) => {
-                    // Calculate total available units for this type
-                    const totalAvailable = unit.subtypes.reduce((sum: number, subtype: any) => sum + (typeof subtype.available === 'number' ? subtype.available : 0), 0)
-                    const totalUnits = unit.subtypes.reduce((sum: number, subtype: any) => sum + (typeof subtype.total === 'number' ? subtype.total : 0), 0)
-                    
-                    return (
-                      <button
-                        key={unit.unitType}
-                        onClick={() => setUnitsActiveTab(idx)}
-                        className={`px-2 sm:px-4 py-2 rounded-full font-light flex items-center gap-1 sm:gap-2 text-xs sm:text-sm transition-colors border focus:outline-none whitespace-nowrap ${unitsActiveTab === idx ? 'bg-gray-800 border-[#ce001f] text-white' : 'bg-[#18191b] border-gray-700 text-gray-300 hover:bg-[#ce001f]/10 hover:text-[#ce001f]'}`}
-                      >
-                        <span>{unit.unitType.replace(' Units', '')}</span>
-                        {totalAvailable > 0 && (
-                          <span className="bg-green-500 text-white text-xs px-1 sm:px-2 py-1 rounded-full">
-                            {totalAvailable}
-                          </span>
-                        )}
-                      </button>
-                    )
-                  })
-                })()}
-              </div>
-            </div>
+            
 
-            {/* Card layout for selected unit type */}
+            {/* Floor Plan Images - Centered */}
             {(() => {
               const dynamicUnitData = processUnitAvailabilityData(project?.unitPricing || [])
               const currentUnit = dynamicUnitData[unitsActiveTab] || dynamicUnitData[0]
@@ -1866,126 +1835,73 @@ export default function WResidenceLanding() {
               // If no data available, show fallback
               if (!currentUnit) {
                 return (
-                  <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 justify-center items-stretch bg-[#111] rounded-xl p-4 lg:p-8 max-w-5xl mx-auto shadow-lg pricing-container">
-                    <div className="w-full text-center text-gray-400 py-8">
-                      <p>No unit information available at the moment.</p>
-                      <p className="text-sm mt-2">Please check back later or contact our agents for more details.</p>
-                    </div>
+                  <div className="w-full text-center text-gray-400 py-8">
+                    <p>No unit information available at the moment.</p>
+                    <p className="text-sm mt-2">Please check back later or contact our agents for more details.</p>
                   </div>
                 )
               }
               
-              // Calculate total availability for this unit type
-              const totalAvailable = currentUnit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.available, 0)
-              const totalUnits = currentUnit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.total, 0)
-              
               return (
-                <div className="space-y-4 sm:space-y-6">
-                  {/* Cards */}
-                  <div className="w-full">
-                    {currentUnit.subtypes.slice(0, 1).map((subtype: any, subtypeIndex: number) => (
-                      <div key={subtypeIndex} className="bg-[#111] rounded-xl p-4 sm:p-6 shadow-lg border border-gray-800 w-full">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 w-full items-center">
-                          {/* Floor Plan Image - Left Side */}
-                          <div>
-                            {(() => {
-                              const images = Array.isArray(subtype.floor_plan_images) && subtype.floor_plan_images.length > 0
-                                ? subtype.floor_plan_images
-                                : generateTurquoiseFloorPlanCandidates(subtype, currentUnit.unitType)
-                              const hasImages = images && images.length > 0
+                <div className="flex justify-center">
+                  {currentUnit.subtypes.slice(0, 1).map((subtype: any, subtypeIndex: number) => {
+                    const images = Array.isArray(subtype.floor_plan_images) && subtype.floor_plan_images.length > 0
+                      ? subtype.floor_plan_images
+                      : generateTurquoiseFloorPlanCandidates(subtype, currentUnit.unitType)
+                    const hasImages = images && images.length > 0
 
-                              const prev = () => setFloorPlanIndex((i) => (i - 1 + images.length) % images.length)
-                              const next = () => setFloorPlanIndex((i) => (i + 1) % images.length)
+                    const prev = () => setFloorPlanIndex((i) => (i - 1 + images.length) % images.length)
+                    const next = () => setFloorPlanIndex((i) => (i + 1) % images.length)
 
-                              return (
-                                <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden border border-gray-700">
-                                  {hasImages ? (
-                                  <Image
-                                      key={images[floorPlanIndex % images.length]}
-                                      src={images[floorPlanIndex % images.length]}
-                                    alt={`${currentUnit.unitType.replace(' Units', '')} Floor Plan`}
-                                    fill
-                                      className="object-contain bg-black"
-                                    />
-                                  ) : (
-                                    <div className="absolute inset-0 flex items-center justify-center bg-black text-white text-xs">No floor plan images</div>
-                                  )}
-                                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
-                                  {hasImages && images.length > 1 && (
-                                    <>
-                                      <button
-                                        aria-label="Previous floor plan"
-                                        className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow"
-                                        onClick={prev}
-                                      >
-                                        <ChevronLeft className="w-4 h-4" />
-                                      </button>
-                                      <button
-                                        aria-label="Next floor plan"
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow"
-                                        onClick={next}
-                                      >
-                                        <ChevronRight className="w-4 h-4" />
-                                      </button>
-                                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
-                                        {images.slice(0, 8).map((_img: string, idx: number) => (
-                                          <span
-                                            key={idx}
-                                            className={`w-2 h-2 rounded-full ${idx === (floorPlanIndex % images.length) ? 'bg-white' : 'bg-white/40'}`}
-                                          />
-                                        ))}
-                                      </div>
-                                    </>
-                                  )}
-                                  <div className="absolute bottom-1 left-1 text-white text-xs font-medium">
-                                    Floor Plan
-                                  </div>
-                                </div>
-                              )
-                            })()}
-                          </div>
-
-                          {/* Information - Right Side */}
-                          <div className="flex flex-col justify-center">
-                            <div>
-                              {/* Unit Type Header */}
-                              <div className="mb-4">
-                                <h4 className="text-xl font-bold text-white mb-2">{subtype.subtype}</h4>
-                                <p className="text-gray-300 text-sm">{subtype.size}</p>
-                              </div>
-                              
-                              {/* Price */}
-                              <div className="mb-6">
-                                <p className="text-green-400 font-semibold text-lg">{subtype.price}</p>
-                                {subtype.price_per_sqft && (
-                                  <p className="text-gray-400 text-sm">
-                                    {subtype.price_per_sqft} per sqft
-                                  </p>
-                                )}
-                              </div>
-                              
+                    return (
+                      <div key={subtypeIndex} className="relative w-full max-w-5xl">
+                        <div 
+                          className="relative w-full aspect-[4/3] rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
+                          onClick={() => hasImages && setSelectedFloorPlanImage(images[floorPlanIndex % images.length])}
+                        >
+                          {hasImages ? (
+                            <Image
+                              key={images[floorPlanIndex % images.length]}
+                              src={images[floorPlanIndex % images.length]}
+                              alt={`${currentUnit.unitType.replace(' Units', '')} Floor Plan`}
+                              fill
+                              className="object-contain"
+                            />
+                          ) : (
+                            <div className="absolute inset-0 flex items-center justify-center text-white text-xs">
+                              No floor plan images
                             </div>
-                            
-                            {/* CTA Buttons */}
-                            <div className="space-y-3">
-                              <button 
-                                onClick={() => scrollToSection('lead-form')}
-                                className="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-4 rounded-lg text-sm transition-colors"
+                          )}
+                          {hasImages && images.length > 1 && (
+                            <>
+                              <button
+                                aria-label="Previous floor plan"
+                                className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow z-10"
+                                onClick={prev}
                               >
-                                Book Showflat Visit
+                                <ChevronLeft className="w-4 h-4" />
                               </button>
-                              <button 
-                                onClick={() => setShowSiteMapPopup(true)}
-                                className="w-full bg-white text-red-500 hover:bg-white-600 text-red-500 font-medium py-3 px-4 rounded-lg text-sm transition-colors"
+                              <button
+                                aria-label="Next floor plan"
+                                className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow z-10"
+                                onClick={next}
                               >
-                                Site Map & Floor Plan
+                                <ChevronRight className="w-4 h-4" />
                               </button>
-                            </div>
-                          </div>
+                              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10">
+                                {images.slice(0, 8).map((_img: string, idx: number) => (
+                                  <span
+                                    key={idx}
+                                    className={`w-2 h-2 rounded-full ${idx === (floorPlanIndex % images.length) ? 'bg-white' : 'bg-white/40'}`}
+                                  />
+                                ))}
+                              </div>
+                            </>
+                          )}
                         </div>
                       </div>
-                    ))}
-                  </div>
+                    )
+                  })}
                 </div>
               )
             })()}
@@ -2256,6 +2172,33 @@ export default function WResidenceLanding() {
         </GoogleReCaptchaProvider>
       )}
 
+      {/* Floor Plan Image Dialog */}
+      <Dialog open={selectedFloorPlanImage !== null} onOpenChange={(open) => !open && setSelectedFloorPlanImage(null)}>
+        <DialogContent className="max-w-[95vw] w-full max-h-[95vh] p-0 bg-black/80 border-0 overflow-auto">
+          <DialogTitle className="sr-only">Floor Plan</DialogTitle>
+          {selectedFloorPlanImage && (
+            <div className="relative w-full min-h-full flex items-center justify-center p-4 md:p-8">
+              <div className="relative inline-block">
+                <Image
+                  src={selectedFloorPlanImage}
+                  alt="Floor Plan"
+                  width={2400}
+                  height={1800}
+                  className="w-auto h-auto max-w-full object-contain"
+                  unoptimized
+                />
+                <button
+                  onClick={() => setSelectedFloorPlanImage(null)}
+                  className="fixed top-4 right-4 bg-white/90 hover:bg-white text-black rounded-full w-10 h-10 flex items-center justify-center shadow-lg z-50 transition-all hover:scale-110"
+                  aria-label="Close"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
 
       </div>
     </GoogleReCaptchaProvider>
