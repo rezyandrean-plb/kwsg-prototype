@@ -1562,19 +1562,25 @@ export default function WResidenceLanding() {
               </div>
             </div>
           </div>
-          {/* <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
+
+          <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('project-info') ? 'animate-slide-in-top' : ''
           }`}>
             <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Rare waterway frontage with unblocked waterway views right outside</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
-          </div> */}
+            <p className="text-lg text-gray-300 max-w-4xl mx-auto">
+              Turquoise is a rare waterway-front residence offering calm, space, and privacy within Singapore’s premier marina enclave. 
+              The environment is defined by gentle waters, curated landscaping, and an overall sense of stillness. <br /> <br></br>
+              With waterway frontage on one side and the Sentosa Golf Club behind, the surroundings are peaceful and scenic. Private lift lobbies, Miele kitchenware, and quality bathroom fittings complete the sense of refined living. <br /> <br></br>
+              ONE°15 Marina, Quayside Isle, and the island’s beachfront attractions are just minutes away—a combination that makes Turquoise both practical and premium.
+            </p>
+          </div>
 
           {/* Feature Cards */}
           <div className="flex flex-wrap gap-6 lg:gap-4 mb-12 justify-center">
             {[
-              { icon: <Compass className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Rare waterway frontage with unblocked waterway views right outside" },
               { icon: <Footprints className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Immediate access to ONE°15 Marina giving residents", desc: "Waterfront dining, yacht club facilities, and coastal convenience" },
               { icon: <Home className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Ultra-spacious Large-format layouts built for", desc: "true livability, privacy, and everyday comfort" },
               { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Luxury Interior finishes featuring", desc: "Miele kitchens and Laufen ILBAGNO ALESSI bathrooms" },
