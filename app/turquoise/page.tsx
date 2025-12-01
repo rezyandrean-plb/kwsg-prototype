@@ -1680,7 +1680,7 @@ export default function WResidenceLanding() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
             }`}>
               <div className="text-center mb-12">
-                <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Facilities</h2>
+                <h2 className="text-3xl font-bold mb-3 text-white text-center tracking-wide">Facilities</h2>
                 <div className="flex justify-center mb-4">
                   <div className="w-16 h-1 bg-[#ce001f] rounded" />
                 </div>
@@ -1744,7 +1744,7 @@ export default function WResidenceLanding() {
             }`}
           >
             <div className="text-center mb-8">
-              <h3 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Project Gallery</h3>
+              <h3 className="text-3xl font-bold mb-3 text-white text-center tracking-wide">Project Gallery</h3>
               <div className="flex justify-center mb-4">
                 <div className="w-16 h-1 bg-[#ce001f] rounded" />
               </div>
@@ -1870,7 +1870,7 @@ export default function WResidenceLanding() {
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('floor-plans') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Floor Plans</h2>
+            <h2 className="text-3xl font-bold mb-3 text-white text-center tracking-wide">Floor Plans</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
@@ -1981,7 +1981,7 @@ export default function WResidenceLanding() {
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('nearby-amenities') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Location</h2>
+            <h2 className="text-3xl font-bold mb-3 text-white text-center tracking-wide">Location</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
@@ -2005,13 +2005,13 @@ export default function WResidenceLanding() {
               <CardContent className="space-y-6">
                 {/* Location Map */}
                 <div className="w-full rounded-lg overflow-hidden shadow-lg">
-                  <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31910.625806072003!2d103.81532744346248!3d1.276463480093781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f11!3m3!1m2!1s0x31da1fccfbd8c139%3A0xe9c1bcb9eec33d50!2s51%20Cove%20Dr%2C%20Singapore%20098393!5e0!3m2!1sen!2sid!4v1764223731947!5m2!1sen!2sid" 
-                    width="600" 
-                    height="450" 
-                    style={{border:0, width: '100%'}} 
-                    allowFullScreen 
-                    loading="lazy" 
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7575.548231577715!2d103.83160209122002!3d1.2424847850859797!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da1fccfbd8c139%3A0xe9c1bcb9eec33d50!2s51%20Cove%20Dr%2C%20Singapore%20098393!5e0!3m2!1sen!2sid!4v1764582903817!5m2!1sen!2sid"
+                    width="600"
+                    height="450"
+                    style={{ border: 0, width: '100%' }}
+                    allowFullScreen
+                    loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                     className="w-full"
                   ></iframe>
@@ -2101,7 +2101,7 @@ export default function WResidenceLanding() {
         <div className={`text-center mb-8 md:mb-16 transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
-            <h2 className="text-2xl md:text-3xl font-light mb-3 text-white text-center tracking-wide">Explore Turquoise</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-3 text-white text-center tracking-wide">Explore Turquoise</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>

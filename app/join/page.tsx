@@ -629,10 +629,13 @@ export default function JoinPage() {
                   opacity: cardAnimations[0],
                 }}
               >
-                <div className="text-center lg:text-center lg:h-full lg:flex lg:flex-col lg:justify-center lg:items-center">
+                <div className="text-center lg:text-center lg:h-full lg:flex lg:flex-col lg:justify-center lg:items-center space-y-1">
                   <h4 className="text-sm sm:text-base lg:text-xl lg:leading-tight font-normal lg:font-semibold text-white">
                     The 3-Income Model
                   </h4>
+                  <span className="mt-1 text-[11px] tracking-[0.2em] uppercase text-white/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    View more
+                  </span>
                 </div>
               </a>
 
@@ -645,10 +648,13 @@ export default function JoinPage() {
                   opacity: cardAnimations[1],
                 }}
               >
-                <div className="text-center lg:text-center lg:h-full lg:flex lg:flex-col lg:justify-center lg:items-center">
+                <div className="text-center lg:text-center lg:h-full lg:flex lg:flex-col lg:justify-center lg:items-center space-y-1">
                   <h4 className="text-sm sm:text-base lg:text-xl lg:leading-tight font-normal lg:font-semibold text-white">
                     PropTech Ecosystem
                   </h4>
+                  <span className="mt-1 text-[11px] tracking-[0.2em] uppercase text-white/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    View more
+                  </span>
                 </div>
               </a>
 
@@ -661,10 +667,13 @@ export default function JoinPage() {
                   opacity: cardAnimations[2],
                 }}
               >
-                <div className="text-center lg:text-center lg:h-full lg:flex lg:flex-col lg:justify-center lg:items-center">
+                <div className="text-center lg:text-center lg:h-full lg:flex lg:flex-col lg:justify-center lg:items-center space-y-1">
                   <h4 className="text-sm sm:text-base lg:text-xl lg:leading-tight font-normal lg:font-semibold text-white">
                     The KW Model for Predictable Success
                   </h4>
+                  <span className="mt-1 text-[11px] tracking-[0.2em] uppercase text-white/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    View more
+                  </span>
                 </div>
               </a>
 
@@ -677,10 +686,13 @@ export default function JoinPage() {
                   opacity: cardAnimations[3],
                 }}
               >
-                <div className="text-center lg:text-center lg:h-full lg:flex lg:flex-col lg:justify-center lg:items-center">
+                <div className="text-center lg:text-center lg:h-full lg:flex lg:flex-col lg:justify-center lg:items-center space-y-1">
                   <h4 className="text-sm sm:text-base lg:text-xl lg:leading-tight font-normal lg:font-semibold text-white">
                     World-Class Training
                   </h4>
+                  <span className="mt-1 text-[11px] tracking-[0.2em] uppercase text-white/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    View more
+                  </span>
                 </div>
               </a>
 
@@ -693,10 +705,13 @@ export default function JoinPage() {
                   opacity: cardAnimations[4],
                 }}
               >
-                <div className="text-center lg:text-center lg:h-full lg:flex lg:flex-col lg:justify-center lg:items-center">
+                <div className="text-center lg:text-center lg:h-full lg:flex lg:flex-col lg:justify-center lg:items-center space-y-1">
                   <h4 className="text-sm sm:text-base lg:text-xl lg:leading-tight font-normal lg:font-semibold text-white">
                     Culture & Leadership of Winning Together
                   </h4>
+                  <span className="mt-1 text-[11px] tracking-[0.2em] uppercase text-white/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    View more
+                  </span>
                 </div>
               </a>
             </div>
