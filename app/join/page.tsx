@@ -607,27 +607,29 @@ export default function JoinPage() {
             </div>
           </div>
 
+          {/* Hero Cards */}
           <div
             ref={cardsContainerRef}
-            className="w-full max-w-7xl mx-auto transition-opacity duration-700 ease-out"
-            style={{ opacity: cardsOpacity }}
+            className="w-full mx-auto px-4 sm:px-6 lg:px-8 transition-opacity duration-700 ease-out"
+            style={{ opacity: cardsOpacity, maxWidth: '100%' }}
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 md:gap-4 lg:gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-4 lg:gap-6">
               {heroCards.map((card, index) => (
                 <a
                   key={card.target}
                   href={`#${card.target}`}
                   onClick={(event) => handleCardClick(event, card.target)}
-                  className={`backdrop-blur-md bg-white/5 border border-white/10 rounded-lg p-4 md:p-6 flex flex-col items-center justify-center text-center gap-4 min-h-[120px] md:min-h-[140px] ${card.compactOnDesktop ? "lg:min-h-[110px] lg:p-5" : "lg:min-h-[140px]"} hover:bg-white/10 hover:border-white/20 transition-all duration-500 ease-out relative group shadow-lg cursor-pointer ${card.span}`}
+                  title="View Detail"
+                  className={`backdrop-blur-md bg-white/5 border border-white/10 rounded-[2rem] md:rounded-[2rem] lg:rounded-lg px-4 py-0 md:px-4 md:py-0 lg:px-4 lg:py-0 flex flex-col items-center justify-center text-center min-h-[120px] md:min-h-[160px] ${card.compactOnDesktop ? "lg:min-h-[110px] lg:px-6 lg:py-0" : "lg:min-h-[140px]"} ${index === 4 ? "md:col-span-2 md:max-w-md md:mx-auto lg:col-span-1 lg:max-w-none lg:mx-0" : ""} hover:border-[#B40101] transition-all duration-500 ease-out relative group shadow-lg cursor-pointer`}
                   style={{
                     opacity: cardAnimations[index],
                     transform: `translateX(${cardTranslateX[index]}px)`,
                   }}
                 >
-                  <div>
-                    <h4 className="text-xl md:text-2xl font-semibold text-white mb-2">{card.title}</h4>
+                  <div className="w-full">
+                    <h4 className="text-sm md:text-lg lg:text-base font-semibold text-white">{card.title}</h4>
                   </div>
-                  <ArrowRight className="w-5 h-5 text-white/60 absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300" />
+                  <span className="absolute bottom-2 right-4 text-white/80 text-sm font-medium hidden lg:block lg:opacity-0 lg:group-hover:opacity-100 transition-all duration-300">View More</span>
                 </a>
               ))}
             </div>
