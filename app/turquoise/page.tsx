@@ -1399,7 +1399,7 @@ export default function WResidenceLanding() {
                 </button>
                 <button 
                   onClick={() => scrollToSection('facilities')}
-                  className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
+                  className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer md:hidden lg:inline-block"
                 >
                   Facilities
                 </button>
@@ -1484,7 +1484,7 @@ export default function WResidenceLanding() {
               <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
-                The Only Place in Singapore With Both Marina & <br /> Golf Course Views
+                The Only Place in Singapore With Both Marina & <span className="hidden md:inline"><br /></span> Golf Course Views
               </p>
             </div>
 
@@ -1557,7 +1557,7 @@ export default function WResidenceLanding() {
             </div>
 
             {/* Two Column Layout */}
-            <div className="grid md:grid-cols-2 gap-8 border-gray-700 bg-[#18191b] rounded-lg p-6 md:p-8">
+            <div className="grid md:grid-cols-2 gap-8 border-gray-700 bg-[#18191b] rounded-lg p-6 md:p-4 lg:p-8">
               {/* Left Column */}
               <div className="space-y-6">
                 <div className="flex justify-between border-b border-gray-500 pb-3">
