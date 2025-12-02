@@ -538,6 +538,22 @@ export default function JoinPage() {
 
   return (
     <main className="bg-black text-white">
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes subtleGlow {
+          0%, 100% {
+            box-shadow: 0 0 5px rgba(180, 1, 1, 0.3), 0 0 10px rgba(180, 1, 1, 0.2);
+          }
+          50% {
+            box-shadow: 0 0 10px rgba(180, 1, 1, 0.5), 0 0 20px rgba(180, 1, 1, 0.3);
+          }
+        }
+        .hero-card-glow {
+          animation: subtleGlow 3s ease-in-out infinite;
+        }
+        .hero-card-glow:hover {
+          animation: none;
+        }
+      `}} />
       {/* Hero Section */}
       <section
         ref={whyKWSectionRef}
@@ -624,7 +640,7 @@ export default function JoinPage() {
               <a
                 href="#income-model-section"
                 onClick={(e) => handleCardClick(e, "income-model-section")}
-                className="h-auto backdrop-blur-none bg-transparent border border-white/20 rounded-full px-3 py-2.5 sm:px-4 sm:py-2 sm:mx-2 my-0 sm:my-[5px] shadow-none flex-row items-center justify-center lg:backdrop-blur-md lg:bg-white/5 lg:border lg:border-white/10 lg:rounded-lg lg:p-6 lg:flex lg:flex-col lg:items-center lg:justify-center lg:h-[160px] lg:w-[calc((100%-48px)/5)] lg:mx-0 lg:my-0 hover:bg-white/10 hover:border-[#B40101] lg:hover:bg-white/10 lg:hover:border-[#B40101] transition-all duration-500 ease-out relative group lg:shadow-lg custom-cursor-auto lg:hover:custom-cursor-view animate-glow-1 text-white transition-colors duration-300 whitespace-nowrap card-hover-glow"
+                className="h-auto backdrop-blur-none bg-transparent border border-white/20 rounded-full px-3 py-2.5 sm:px-4 sm:py-2 my-0 sm:my-[5px] shadow-none flex-row items-center justify-center flex-shrink-0 w-[calc(50%-4px)] md:w-[calc(50%-12px)] lg:w-auto lg:backdrop-blur-md lg:bg-white/5 lg:border lg:border-white/10 lg:rounded-lg lg:p-6 lg:flex lg:flex-col lg:items-center lg:justify-center lg:h-[160px] lg:w-[calc((100%-48px)/5)] lg:mx-0 lg:my-0 hover:bg-white/10 hover:border-[#B40101] lg:hover:bg-white/10 lg:hover:border-[#B40101] transition-all duration-500 ease-out relative group lg:shadow-lg custom-cursor-auto lg:hover:custom-cursor-view animate-glow-1 text-white transition-colors duration-300 whitespace-nowrap card-hover-glow hero-card-glow"
                 style={{
                   opacity: cardAnimations[0],
                 }}
@@ -643,7 +659,7 @@ export default function JoinPage() {
               <a
                 href="#proptech-section"
                 onClick={(e) => handleCardClick(e, "proptech-section")}
-                className="h-auto backdrop-blur-none bg-transparent border border-white/20 rounded-full px-3 py-2.5 sm:px-4 sm:py-2 sm:mx-2 my-0 sm:my-[5px] shadow-none flex-row items-center justify-center flex-shrink-0 lg:backdrop-blur-md lg:bg-white/5 lg:border lg:border-white/10 lg:rounded-lg lg:p-6 lg:flex lg:flex-col lg:items-center lg:justify-center lg:h-[160px] lg:w-[calc((100%-48px)/5)] lg:mx-0 lg:my-0 hover:bg-white/10 hover:border-[#B40101] lg:hover:bg-white/10 lg:hover:border-[#B40101] transition-all duration-500 ease-out relative group lg:shadow-lg custom-cursor-auto lg:hover:custom-cursor-view animate-glow-2 text-white transition-colors duration-300 whitespace-nowrap card-hover-glow"
+                className="h-auto backdrop-blur-none bg-transparent border border-white/20 rounded-full px-3 py-2.5 sm:px-4 sm:py-2 my-0 sm:my-[5px] shadow-none flex-row items-center justify-center flex-shrink-0 w-[calc(50%-4px)] md:w-[calc(50%-12px)] lg:w-auto lg:backdrop-blur-md lg:bg-white/5 lg:border lg:border-white/10 lg:rounded-lg lg:p-6 lg:flex lg:flex-col lg:items-center lg:justify-center lg:h-[160px] lg:w-[calc((100%-48px)/5)] lg:mx-0 lg:my-0 hover:bg-white/10 hover:border-[#B40101] lg:hover:bg-white/10 lg:hover:border-[#B40101] transition-all duration-500 ease-out relative group lg:shadow-lg custom-cursor-auto lg:hover:custom-cursor-view animate-glow-2 text-white transition-colors duration-300 whitespace-nowrap card-hover-glow hero-card-glow"
                 style={{
                   opacity: cardAnimations[1],
                 }}
@@ -662,7 +678,7 @@ export default function JoinPage() {
               <a
                 href="#blueprint-section"
                 onClick={(e) => handleCardClick(e, "blueprint-section")}
-                className="h-auto backdrop-blur-none bg-transparent border border-white/20 rounded-full px-3 py-2.5 sm:px-4 sm:py-2 sm:mx-2 my-0 sm:my-[5px] shadow-none flex-row items-center justify-center flex-shrink-0 lg:backdrop-blur-md lg:bg-white/5 lg:border lg:border-white/10 lg:rounded-lg lg:p-6 lg:flex lg:flex-col lg:items-center lg:justify-center lg:h-[160px] lg:w-[calc((100%-48px)/5)] lg:mx-0 lg:my-0 hover:bg-white/10 hover:border-[#B40101] lg:hover:bg-white/10 lg:hover:border-[#B40101] transition-all duration-500 ease-out relative group lg:shadow-lg custom-cursor-auto lg:hover:custom-cursor-view animate-glow-3 text-white transition-colors duration-300 whitespace-nowrap lg:whitespace-normal card-hover-glow"
+                className="h-auto backdrop-blur-none bg-transparent border border-white/20 rounded-full px-3 py-2.5 sm:px-4 sm:py-2 sm:mx-2 my-0 sm:my-[5px] shadow-none flex-row items-center justify-center flex-shrink-0 lg:backdrop-blur-md lg:bg-white/5 lg:border lg:border-white/10 lg:rounded-lg lg:p-6 lg:flex lg:flex-col lg:items-center lg:justify-center lg:h-[160px] lg:w-[calc((100%-48px)/5)] lg:mx-0 lg:my-0 hover:bg-white/10 hover:border-[#B40101] lg:hover:bg-white/10 lg:hover:border-[#B40101] transition-all duration-500 ease-out relative group lg:shadow-lg custom-cursor-auto lg:hover:custom-cursor-view animate-glow-3 text-white transition-colors duration-300 whitespace-nowrap lg:whitespace-normal card-hover-glow hero-card-glow"
                 style={{
                   opacity: cardAnimations[2],
                 }}
@@ -681,7 +697,7 @@ export default function JoinPage() {
               <a
                 href="#training-section"
                 onClick={(e) => handleCardClick(e, "training-section")}
-                className="h-auto backdrop-blur-none bg-transparent border border-white/20 rounded-full px-3 py-2.5 sm:px-4 sm:py-2 sm:mx-2 my-0 sm:my-[5px] shadow-none flex-row items-center justify-center flex-shrink-0 lg:backdrop-blur-md lg:bg-white/5 lg:border lg:border-white/10 lg:rounded-lg lg:p-6 lg:flex lg:flex-col lg:items-center lg:justify-center lg:h-[160px] lg:w-[calc((100%-48px)/5)] lg:mx-0 lg:my-0 hover:bg-white/10 hover:border-[#B40101] lg:hover:bg-white/10 lg:hover:border-[#B40101] transition-all duration-500 ease-out relative group lg:shadow-lg custom-cursor-auto lg:hover:custom-cursor-view animate-glow-4 text-white transition-colors duration-300 whitespace-nowrap card-hover-glow"
+                className="h-auto backdrop-blur-none bg-transparent border border-white/20 rounded-full px-3 py-2.5 sm:px-4 sm:py-2 sm:mx-2 my-0 sm:my-[5px] shadow-none flex-row items-center justify-center flex-shrink-0 lg:backdrop-blur-md lg:bg-white/5 lg:border lg:border-white/10 lg:rounded-lg lg:p-6 lg:flex lg:flex-col lg:items-center lg:justify-center lg:h-[160px] lg:w-[calc((100%-48px)/5)] lg:mx-0 lg:my-0 hover:bg-white/10 hover:border-[#B40101] lg:hover:bg-white/10 lg:hover:border-[#B40101] transition-all duration-500 ease-out relative group lg:shadow-lg custom-cursor-auto lg:hover:custom-cursor-view animate-glow-4 text-white transition-colors duration-300 whitespace-nowrap card-hover-glow hero-card-glow"
                 style={{
                   opacity: cardAnimations[3],
                 }}
@@ -700,7 +716,7 @@ export default function JoinPage() {
               <a
                 href="#culture-section"
                 onClick={(e) => handleCardClick(e, "culture-section")}
-                className="h-auto backdrop-blur-none bg-transparent border border-white/20 rounded-full px-3 py-2.5 sm:px-4 sm:py-2 sm:mx-2 my-0 sm:my-[5px] shadow-none flex-row items-center justify-center flex-shrink-0 lg:backdrop-blur-md lg:bg-white/5 lg:border lg:border-white/10 lg:rounded-lg lg:p-6 lg:flex lg:flex-col lg:items-center lg:justify-center lg:h-[160px] lg:w-[calc((100%-48px)/5)] lg:mx-0 lg:my-0 hover:bg-white/10 hover:border-[#B40101] lg:hover:bg-white/10 lg:hover:border-[#B40101] transition-all duration-500 ease-out relative group lg:shadow-lg custom-cursor-auto lg:hover:custom-cursor-view animate-glow-5 text-white transition-colors duration-300 whitespace-nowrap lg:whitespace-normal card-hover-glow"
+                className="h-auto backdrop-blur-none bg-transparent border border-white/20 rounded-full px-3 py-2.5 sm:px-4 sm:py-2 sm:mx-2 my-0 sm:my-[5px] shadow-none flex-row items-center justify-center flex-shrink-0 lg:backdrop-blur-md lg:bg-white/5 lg:border lg:border-white/10 lg:rounded-lg lg:p-6 lg:flex lg:flex-col lg:items-center lg:justify-center lg:h-[160px] lg:w-[calc((100%-48px)/5)] lg:mx-0 lg:my-0 hover:bg-white/10 hover:border-[#B40101] lg:hover:bg-white/10 lg:hover:border-[#B40101] transition-all duration-500 ease-out relative group lg:shadow-lg custom-cursor-auto lg:hover:custom-cursor-view animate-glow-5 text-white transition-colors duration-300 whitespace-nowrap lg:whitespace-normal card-hover-glow hero-card-glow"
                 style={{
                   opacity: cardAnimations[4],
                 }}
