@@ -1634,12 +1634,12 @@ export default function WResidenceLanding() {
           {/* Feature Cards */}
           <div className="flex flex-wrap gap-6 lg:gap-4 mb-12 justify-center">
             {[
-              { icon: <Footprints className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Immediate access to <strong>ONE°15 Marina</strong> giving residents", desc: "Waterfront dining, yacht club facilities, and coastal convenience" },
+              { icon: <Footprints className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Immediate access to <strong>ONE°15 Marina</strong> giving residents", desc: "waterfront dining, yacht club facilities, and coastal convenience" },
               { icon: <Home className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Ultra-spacious Large-format layouts built for", desc: "true livability, privacy, and everyday comfort" },
               { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Luxury Interior finishes featuring", desc: "<strong>Miele kitchenware</strong> and <strong>Laufen ILBAGNO ALESSI</strong> bathroom fittings" },
               { icon: <MountainSnow className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "<strong>Full resort facilities</strong> including", desc: "a pool, gym, steam rooms, and landscaped relaxation decks" },
-              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "A Prestigious <strong>Sentosa Cove Address</strong> Offering", desc: "Gated exclusivity in Singapore's only marina residential district" },
-              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Fast <strong>connectivity to HarbourFront</strong> enabling", desc: "Quick and easy access to the mainland and the CBD" },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "A Prestigious <strong>Sentosa Cove Address</strong> Offering", desc: "gated exclusivity in Singapore's only marina residential district" },
+              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Fast <strong>connectivity to HarbourFront</strong> enabling", desc: "quick and easy access to the mainland and the CBD" },
               { icon: <ChartLine className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Long-term upside supported by the upcoming", desc: "<strong>Sentosa–Brani</strong> transformation plan" }
             ].map((card, index) => (
               <Card 
