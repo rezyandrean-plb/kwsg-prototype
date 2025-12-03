@@ -18,7 +18,7 @@ const tools = [
     title: "KW PropSage",
     description: "Handle the entire transaction process smoothly from start to finish, paperwork-free.",
     icon: Building2,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "app.propsage.com",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-propsage.webp"
   },
@@ -27,7 +27,7 @@ const tools = [
     title: "KW Command",
     description: "Manage your real estate business easily from anywhere with one central hub.",
     icon: Calculator,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "agent.kw.com",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-command.webp"
   },
@@ -36,7 +36,7 @@ const tools = [
     title: "KW Contacts",
     description: "Organize leads and contacts intelligently, never forget important follow-ups again.",
     icon: Building2,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "https://console.command.kw.com/command/contacts",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-contacts.webp"
   },
@@ -45,7 +45,7 @@ const tools = [
     title: "KW Tasks",
     description: "Track every client’s to-do list carefully, ensuring no task gets missed.",
     icon: Calculator,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "https://console.command.kw.com/command/task-manager",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tasks.webp"
   },
@@ -54,7 +54,7 @@ const tools = [
     title: "KW Campaigns",
     description: "Generate steady social media leads without needing complex ad platform expertise.",
     icon: TrendingUp,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "https://campaigns.kw.com/",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-campaigns.webp"
   },
@@ -63,7 +63,7 @@ const tools = [
     title: "KW Opportunities",
     description: "Track deals from new leads to closings, ensuring payments never missed.",
     icon: BarChart3,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "https://console.command.kw.com/command/opportunities",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-opportunities.webp"
   },
@@ -72,7 +72,7 @@ const tools = [
     title: "KW SmartPlans",
     description: "Automate client follow-ups and marketing campaigns, saving time while staying connected.",
     icon: Smartphone,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "https://console.command.kw.com/command/smart-plans",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-smartplans.webp"
   },
@@ -81,7 +81,7 @@ const tools = [
     title: "KW Listings",
     description: "Showcase properties beautifully with professional listing pages that attract serious buyers.",
     icon: Home,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "https://console.command.kw.com/command/listings",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-listings.webp"
   },
@@ -90,7 +90,7 @@ const tools = [
     title: "KW Website",
     description: "Create branded, user-friendly websites in minutes to capture online inquiries.",
     icon: MapPin,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "https://console.command.kw.com/command/websites",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-website.webp"
   },
@@ -127,7 +127,7 @@ const tools = [
     title: "KW Canva",
     description: "Design stunning brochures, posts, and materials easily, no design experience required.",
     icon: Building2,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "canva.kw.com",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-canva.webp"
   },
@@ -332,6 +332,16 @@ const tools = [
     url: "https://proptech.kwsingapore.com/tech-tools/disparity-effect/charts?type=all",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/disparity-effect.webp"
   },
+  {
+    id: 205,
+    title: "Handover Hero",
+    description: "The AI-powered tool that auto-scans unit photos, detects inventory, and generates full handover reports in seconds.",
+    icon: Home,
+    category: "Compass Tools",
+    subtitle: "Tech Tools",
+    url: "https://compass.kwsingapore.com/tech-tools/furniture-inventory",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/handover.webp"
+  },
   // Compass Tools items - Research Charts
   // Compass Tools items - Concept Calculators
   {
@@ -434,12 +444,12 @@ const tools = [
 const categories = [
   "All",
   "Getting Started",
+  "Compass Tools",
+  "Business Tools",
+  "Deal Submission",
+  "External Tools",
   "Branding & Marketing",
   "Learnings",
-  "Business Tool",
-  "Compass Tools",
-  "External Tools",
-  "Deal Submission"
 ]
 
 export default function TechToolPage() {
