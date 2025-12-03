@@ -149,6 +149,157 @@ const tools = [
     url: "https://drive.google.com/file/d/1GcNpqifBzKSurSmz7qkpIMjrjaVOD1Pm/view",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/spidergate.webp"
   },
+  // Deal Submission items
+  {
+    id: 52,
+    title: "(PDF Guide) Step-by-Step Deal Submission on PropSage",
+    description: "Detailed guide for submitting deals through PropSage for compliance and processing.",
+    icon: Play,
+    category: "Deal Submission",
+    url: "https://drive.google.com/file/d/16cchZAfFgjikLjhC8xciqEw9IHdhI_qu/view?usp=drive_link",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/deal-submission.webp"
+  },
+  {
+    id: 53,
+    title: "Video: Step-by-Step Deal Submission on PropSage",
+    description: "Mandatory video reference for accurate and compliant property transaction submissions.",
+    icon: Play,
+    category: "Deal Submission",
+    url: "https://www.youtube.com/watch?v=lyJefj0-dx0",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/deal-submission.webp"
+  },
+  {
+    id: 54,
+    title: "Deal Submission Checklist",
+    description: "A complete list to ensure full compliance and prompt commission approval for every deal.",
+    icon: Play,
+    category: "Deal Submission",
+    url: "https://drive.google.com/file/d/1oXBR76AOK029S6O0KBZm4SL6qzjT64HR/view?pli=1",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/deal-submission.webp"
+  },
+  {
+    id: 55,
+    title: "How to generate AML Report",
+    description: "Instructional video on the process for generating the Anti-Money Laundering report.",
+    icon: Play,
+    category: "Deal Submission",
+    url: "https://youtube.com/watch?si=shT8BQkgRwG-gM6U&v=c_kiw6IgAIA&feature=youtu.be",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/report.webp"
+  },
+  {
+    id: 56,
+    title: "Transaction Forms",
+    description: "Access the necessary official forms required for all property transactions.",
+    icon: Play,
+    category: "Deal Submission",
+    url: "https://drive.google.com/drive/folders/1aECiyfAUfuF2eTYmLNb7w1MscAGX2kJs",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/transaction-form.webp"
+  },
+  {
+    id: 57,
+    title: "Access PropSage here",
+    description: "",
+    icon: Building2,
+    category: "Deal Submission",
+    url: "https://app.propsage.com",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-propsage.webp"
+  },
+
+  // Branding & Marketing items
+  {
+    id: 58,
+    title: "KW Singapore Official Logo",
+    description: "Access the official, high-quality KW Singapore logo for branding and marketing.",
+    icon: Building2,
+    category: "Branding & Marketing",
+    url: "https://drive.google.com/drive/folders/1n4BXrZiVPYE0ha9mkglITLGvNYaE6IvM?usp=sharing",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw.webp"
+  },
+  {
+    id: 59,
+    title: "KW x Canva",
+    description: "",
+    icon: TrendingUp,
+    category: "Branding & Marketing",
+    url: "http://canva.kw.com/",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-canva.webp"
+  },
+
+  // Getting Started items
+  {
+    id: 60,
+    title: "KW Singapore Policies & Standard Operating Procedure",
+    description: "The official guide governing every administrative, operational, and compliance function within KW Singapore.",
+    icon: Building2,
+    category: "Getting Started",
+    subtitle: "Operations",
+    url: "https://drive.google.com/drive/folders/1MY4obJ1dZy1b27OqUc9Tt-IeqgPRQg5B",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/quick-start-guide.webp"
+  },
+  {
+    id: 61,
+    title: "KW Command & KW Email Onboarding Guide",
+    description: "Step-by-step instructions for your first successful login to KW Command and KW Email.",
+    icon: Play,
+    category: "Getting Started",
+    url: "https://drive.google.com/file/d/1-ExsOVDNSZkB-HDR9849piT6ba_qKHg1/view?usp=sharing",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/quick-start-guide.webp"
+  },
+  {
+    id: 62,
+    title: "KW Email Tips",
+    description: "Consolidate multiple inboxes instantly to eliminate email overload and save time.",
+    icon: Play,
+    category: "Getting Started",
+    url: "https://support.google.com/mail/answer/10957?hl=en",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-email.webp"
+  },
+  {
+    id: 63,
+    title: "DocuSign Quick Start Guide",
+    description: "Simple, step-by-step instructions for 1st-time users to master DocuSign e-signatures.",
+    icon: Play,
+    category: "Getting Started",
+    url: "https://drive.google.com/file/d/1FyCrr539PFp0O5-0JZS13PQFjOWCUG8Z/view?usp=drive_link",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/quick-start-guide.webp"
+  },
+  {
+    id: 64,
+    title: "PropSage Quick Start Guide",
+    description: "Instantly set up your account and learn the essential steps to submit a deal or download your required AML report.",
+    icon: Play,
+    category: "Getting Started",
+    url: "https://drive.google.com/file/d/1NmYKDXMNT93SjxvqyKSME-kIYiqPVaYg/view?usp=drive_link",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/quick-start-guide.webp"
+  },
+  {
+    id: 65,
+    title: "KW x Canva Q&A",
+    description: "Answers to frequently asked questions about integrating KW and Canva for marketing.",
+    icon: Play,
+    category: "Getting Started",
+    url: "https://answers.kw.com/hc/en-us/articles/43692313552787-KW-Canva-FAQs",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-canva.webp"
+  },
+  {
+    id: 66,
+    title: "Access KW x Canva",
+    description: "A direct guide to getting and setting up your KW-branded Canva account.",
+    icon: Play,
+    category: "Getting Started",
+    url: "https://answers.kw.com/hc/en-us/articles/44040408220819-Get-Started-with-Your-KW-Canva-Account",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-canva.webp"
+  },
+  {
+    id: 67,
+    title: "KW x Canva Team Sharing Guide",
+    description: "Instructions for team leaders on how to efficiently share Canva access with team members.",
+    icon: Play,
+    category: "Getting Started",
+    url: "https://answers.kw.com/hc/en-us/articles/44040758619027-Collaborate-and-Share-Canva-Folders-Designs",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-canva.webp"
+  },
+  
   // Compass Tools items - Sales Proceed
   {
     id: 14,
@@ -305,13 +456,23 @@ const tools = [
   },
   // Research Tools items
   {
-    id: 29,
-    title: "Research Chart Mega Vault",
-    description: "Compare BUC vs Resale financial outlays, analysing own-stay versus investment.",
+    id: 30,
+    title: "Research Chart Vault",
+    description: "A repository of essential data and charts for property research and analysis.",
     icon: BarChart3,
     category: "Compass Tools",
     subtitle: "Research Charts",
-    url: "https://drive.google.com/drive/u/2/folders/16cpLVQWIGSmdsat2f9XONQkDbOESYV0m",
+    url: "https://docs.google.com/document/d/1uk3jAELNmL9cHZp1oEboYPTQfDdmd8lZAm--zB9e9xs/edit?usp=sharing",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/research-charts.webp"
+  },
+  {
+    id: 29,
+    title: "Research Chart Mega Vault",
+    description: "An extensive collection of data and charts for comprehensive property research and analysis.",
+    icon: BarChart3,
+    category: "Compass Tools",
+    subtitle: "Research Charts",
+    url: "https://drive.google.com/drive/folders/19EfpKRyyVuak1V_P8Vq0EU_zNy1-CJ3h?usp=sharing",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/research-charts.webp"
   },
   // Training Resource items
@@ -321,6 +482,7 @@ const tools = [
     description: "Learn PropTech calculators, EdgeProp Inspector, and Real Insights through recorded training.",
     icon: Play,
     category: "Learnings",
+    subtitle: "Tech",
     url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmAqEH3-QDXlGc4Opm9i3lGa0",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
@@ -330,6 +492,7 @@ const tools = [
     description: "Watch step-by-step process for submitting and managing deals using PropSage.",
     icon: Play,
     category: "Learnings",
+    subtitle: "Tech",
     url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmAoqtN5dPkjshZgUhF735R9x",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
@@ -339,6 +502,7 @@ const tools = [
     description: "Get a visual walkthrough of KW Command's main tools and features.",
     icon: Play,
     category: "Learnings",
+    subtitle: "Tech",
     url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmAr-TbCVIjwGGCItRE-mQ3Vg",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
@@ -348,6 +512,7 @@ const tools = [
     description: "Follow detailed written steps to navigate KW Command confidently and effectively.",
     icon: Play,
     category: "Learnings",
+    subtitle: "Tech",
     url: "https://answers.kw.com/hc/en-us/categories/26283417706515-Command",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
@@ -357,6 +522,7 @@ const tools = [
     description: "Master KW Command mobile app functions with clear, easy instructions provided.",
     icon: Play,
     category: "Learnings",
+    subtitle: "Tech",
     url: "https://answers.kw.com/hc/en-us/categories/4402619174931-Command-App",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
@@ -366,6 +532,7 @@ const tools = [
     description: "Leverage Real Insights step-by-step for effective property research and analysis.",
     icon: Play,
     category: "Learnings",
+    subtitle: "Tech",
     url: "https://drive.google.com/file/d/1YkRJJebAJhWilzd2mvTMwMGbIvzvBzWY/view?usp=drive_link",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
@@ -375,7 +542,143 @@ const tools = [
     description: "Generate and interpret valuation reports from Real Insights with simple steps.",
     icon: Play,
     category: "Learnings",
+    subtitle: "Tech",
     url: "https://drive.google.com/file/d/1KnOVVO_2YtvDta0vS_t0nxCIlo1K0AK3/view?usp=drive_link",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
+  },
+  {
+    id: 37,
+    title: "Video: Founder's Market Insights",
+    description: "Essential learning video series featuring market perspectives directly from the Founder.",
+    icon: Play,
+    category: "Learnings",
+    url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmArXLm197-kQEuhzgDEadVSi",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
+  },
+  {
+    id: 38,
+    title: "Deck: Founder's Market Insights",
+    description: "Companion slides to the Founder's Market Insights for review and study.",
+    icon: Play,
+    category: "Learnings",
+    url: "https://drive.google.com/file/d/1Em3X8taxvI6b_MpYwCSPYNsgGCbAyzYL/view?usp=drive_link",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
+  },
+  {
+    id: 39,
+    title: "Video: KW Multiplier Weekly Training Series",
+    description: "Weekly video training designed to amplify your business and skill set.",
+    icon: Play,
+    category: "Learnings",
+    url: "https://drive.google.com/drive/folders/1s6_nOdJDnyXGq2aWyN0AyXnP3hK8Nlgk",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
+  },
+  {
+    id: 40,
+    title: "Deck: KW Multiplier Weekly Training Series",
+    description: "Presentation slides for the weekly KW Multiplier training sessions.",
+    icon: Play,
+    category: "Learnings",
+    url: "https://drive.google.com/drive/folders/1r44l7nX3_gMMm1X0c_i78plor7bNnSFQ?usp=drive_link",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
+  },
+  {
+    id: 41,
+    title: "New Launch Training Series",
+    description: "A comprehensive training series focused on executing successful new property launches.",
+    icon: Play,
+    category: "Learnings",
+    url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmApeARL8goKWDxm6dmycq8SN",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
+  },
+  {
+    id: 42,
+    title: "Landed Properties Training Series",
+    description: "Specialized training content for understanding and transacting landed properties in Singapore.",
+    icon: Play,
+    category: "Learnings",
+    url: "https://www.youtube.com/watch?v=W1VksHrLlC4",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
+  },
+  {
+    id: 43,
+    title: "Penrith CES Seminar",
+    description: "",
+    icon: Play,
+    category: "Learnings",
+    url: "https://youtu.be/IU91vbl5PLo",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
+  },
+  {
+    id: 44,
+    title: "KW Consultant Scripts",
+    description: "Your playbook for confident conversations and mastering consultation dialogues.",
+    icon: Play,
+    category: "Learnings",
+    url: "https://drive.google.com/drive/folders/1MNb6kilD_fJ1BNjfmq71fxPp1fLHpudd",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
+  },
+  {
+    id: 45,
+    title: "How to use the KW Price Disparity and Stack Analysis",
+    description: "Utilise KW tools for price comparison and project analysis.",
+    icon: Play,
+    category: "Learnings",
+    url: "https://youtu.be/2OAgkT3V0H8",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
+  },
+  {
+    id: 46,
+    title: "Consultant Pitch Mastery by Melvin Lim - 15 Jul 2025",
+    description: "Expert-led session focused on elevating consultant presentation and sales skills.",
+    icon: Play,
+    category: "Learnings",
+    url: "https://www.youtube.com/watch?v=WIxOx8cK-qQ",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
+  },
+  {
+    id: 47,
+    title: "New Launch Condo vs Resale Condo: Which is the Right Choice for You?",
+    description: "A webinar comparing the pros and cons of new launch and resale condominium purchases.",
+    icon: Play,
+    category: "Learnings",
+    url: "https://www.youtube.com/watch?v=sCx7w3cwu6g",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
+  },
+  {
+    id: 48,
+    title: "Framework based webinars",
+    description: "Training sessions that utilize structured frameworks to convey complex concepts.",
+    icon: Play,
+    category: "Learnings",
+    url: "https://youtu.be/ORwYDVhfoG4?si=eD7JPssCfGBfC7X_",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
+  },
+  {
+    id: 49,
+    title: "Landed vs Two Condos? How to Optimise CPF and Apply 99-1 Ownership for Better Growth",
+    description: "Guidance on leveraging the 99-1 ownership strategy to optimize property growth.",
+    icon: Play,
+    category: "Learnings",
+    url: "https://youtu.be/Pr_P72fJ71I?si=jid5AFALJiTzy68d",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
+  },
+  {
+    id: 50,
+    title: "14 Reasons Why Some Investors Invest in New Projects with Analysis and Market Psychology",
+    description: "An analysis of investor motivation, market data, and psychological factors driving new project investment.",
+    icon: Play,
+    category: "Learnings",
+    url: "https://youtu.be/jJU4uVRfcnk?si=X2IwjzLXiW8xOtdX",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
+  },
+  {
+    id: 51,
+    title: "KW Singapore x PLB Springleaf Residence Training",
+    description: "A detailed guide or training session specific to the Springleaf Residence in Singapore.",
+    icon: Play,
+    category: "Learnings",
+    url: "https://youtube.com/playlist?list=PLtRO1DKUwiFjcpQOyMIA-vd9ftIcTNgqU&si=yOhijL-H4xUdP-hm",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
 ]
@@ -571,13 +874,23 @@ const compassTools = [
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/rental-stamp-duty.webp"
   },
   {
-    id: 29,
-    title: "Research Chart Mega Vault",
-    description: "Compare BUC vs Resale financial outlays, analysing own-stay versus investment.",
+    id: 30,
+    title: "Research Chart Vault",
+    description: "A repository of essential data and charts for property research and analysis.",
     icon: BarChart3,
     category: "Compass Tools",
     subtitle: "Research Charts",
-    url: "https://drive.google.com/drive/u/2/folders/16cpLVQWIGSmdsat2f9XONQkDbOESYV0m",
+    url: "https://docs.google.com/document/d/1uk3jAELNmL9cHZp1oEboYPTQfDdmd8lZAm--zB9e9xs/edit?usp=sharing",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/research-charts.webp"
+  },
+  {
+    id: 29,
+    title: "Research Chart Mega Vault",
+    description: "An extensive collection of data and charts for comprehensive property research and analysis.",
+    icon: BarChart3,
+    category: "Compass Tools",
+    subtitle: "Research Charts",
+    url: "https://drive.google.com/drive/folders/19EfpKRyyVuak1V_P8Vq0EU_zNy1-CJ3h?usp=sharing",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/research-charts.webp"
   },
 ]
@@ -587,7 +900,10 @@ const categories = [
   "Business Tool",
   "External Tools",
   "Compass Tools",
-  "Learnings"
+  "Learnings",
+  "Deal Submission",
+  "Branding & Marketing",
+  "Getting Started"
 ]
 
 type Tool = (typeof tools)[number] | (typeof compassTools)[number]
@@ -915,21 +1231,33 @@ export default function TechToolPage() {
             <>
               {hasDisplayedTools && (
                 <>
-                  {activeCategory === "Compass Tools" ? (
-                    // Special rendering for Compass Tools with subtitles
+                  {activeCategory === "Compass Tools" || activeCategory === "Getting Started" || activeCategory === "Learnings" ? (
+                    // Special rendering for Compass Tools and Getting Started with subtitles
                     <div className="space-y-12">
                       {(() => {
-                        const compassToolsDisplayed = displayedTools.filter(tool => tool.category === "Compass Tools")
-                        const subtitleGroups = compassToolsDisplayed.reduce((groups, tool) => {
+                        const categoryToolsDisplayed = displayedTools.filter(tool => tool.category === activeCategory)
+                        const subtitleGroups = categoryToolsDisplayed.reduce((groups, tool) => {
                           const subtitle = tool.subtitle || "Other"
                           if (!groups[subtitle]) {
                             groups[subtitle] = []
                           }
                           groups[subtitle].push(tool)
                           return groups
-                        }, {} as Record<string, typeof compassToolsDisplayed>)
+                        }, {} as Record<string, typeof categoryToolsDisplayed>)
 
-                        return Object.entries(subtitleGroups).map(([subtitle, tools], groupIndex) => (
+                        // Sort subtitle groups: Tech/Operations first, then Other, then alphabetically
+                        const sortedSubtitleEntries = Object.entries(subtitleGroups).sort(([a], [b]) => {
+                          // Priority subtitles come first
+                          if (a === "Tech" || a === "Operations") return -1
+                          if (b === "Tech" || b === "Operations") return 1
+                          // Other comes last
+                          if (a === "Other") return 1
+                          if (b === "Other") return -1
+                          // Everything else alphabetically
+                          return a.localeCompare(b)
+                        })
+
+                        return sortedSubtitleEntries.map(([subtitle, tools], groupIndex) => (
                           <motion.div
                             key={subtitle}
                             initial={{ opacity: 0, y: 30 }}

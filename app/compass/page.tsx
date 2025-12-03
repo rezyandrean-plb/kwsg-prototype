@@ -346,13 +346,23 @@ const tools = [
   },
   // Research Tools items
   {
-    id: 29,
-    title: "Research Chart Mega Vault",
-    description: "Compare BUC vs Resale financial outlays, analysing own-stay versus investment.",
+    id: 30,
+    title: "Research Chart Vault",
+    description: "A repository of essential data and charts for property research and analysis.",
     icon: BarChart3,
     category: "Compass Tools",
     subtitle: "Research Charts",
-    url: "https://drive.google.com/drive/u/2/folders/16cpLVQWIGSmdsat2f9XONQkDbOESYV0m",
+    url: "https://docs.google.com/document/d/1uk3jAELNmL9cHZp1oEboYPTQfDdmd8lZAm--zB9e9xs/edit?usp=sharing",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/research-charts.webp"
+  },
+  {
+    id: 29,
+    title: "Research Chart Mega Vault",
+    description: "An extensive collection of data and charts for comprehensive property research and analysis.",
+    icon: BarChart3,
+    category: "Compass Tools",
+    subtitle: "Research Charts",
+    url: "https://drive.google.com/drive/folders/19EfpKRyyVuak1V_P8Vq0EU_zNy1-CJ3h?usp=sharing",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/research-charts.webp"
   },
   // Training Resource items
@@ -426,7 +436,10 @@ const categories = [
   "Business Tool",
   "External Tools",
   "Compass Tools",
-  "Learnings"
+  "Learnings",
+  "Deal Submission",
+  "Branding & Marketing",
+  "Getting Started"
 ]
 
 export default function TechToolPage() {
@@ -714,56 +727,163 @@ export default function TechToolPage() {
             </motion.div>
           ) : (
             <>
-              {activeCategory === "Compass Tools" ? (
-                // Special rendering for Compass Tools with subtitles
+              {activeCategory === "Compass Tools" || activeCategory === "Getting Started" || activeCategory === "Learnings" ? (
+                // Special rendering for Compass Tools, Getting Started, and Learnings with subtitles
                 <div className="space-y-12">
                   {(() => {
-                    const compassTools = filteredTools.filter(tool => tool.category === "Compass Tools")
-                    const subtitleGroups = compassTools.reduce((groups, tool) => {
+                    const categoryToolsDisplayed = filteredTools.filter(tool => tool.category === activeCategory)
+                    const subtitleGroups = categoryToolsDisplayed.reduce((groups, tool) => {
                       const subtitle = tool.subtitle || "Other"
                       if (!groups[subtitle]) {
                         groups[subtitle] = []
                       }
                       groups[subtitle].push(tool)
                       return groups
-                    }, {} as Record<string, typeof compassTools>)
+                    }, {} as Record<string, typeof categoryToolsDisplayed>)
 
-                    const preferredOrder = [
-                      "Tech Tools",
-                      "Concept Calculators",
-                      "Sales Proceed",
-                      "Buyer Affordability",
-                      "Stamp Duty"
-                    ]
+                    // Sort subtitle groups: Tech/Operations first, then Other, then alphabetically
+                    const sortedSubtitleEntries = Object.entries(subtitleGroups).sort(([a], [b]) => {
+                      // Priority subtitles come first
+                      if (a === "Tech" || a === "Operations") return -1
+                      if (b === "Tech" || b === "Operations") return 1
+                      // Other comes last
+                      if (a === "Other") return 1
+                      if (b === "Other") return -1
+                      // Everything else alphabetically
+                      return a.localeCompare(b)
+                    })
 
-                    const orderedSubtitles = [
-                      ...preferredOrder.filter(subtitle => subtitleGroups[subtitle]),
-                      ...Object.keys(subtitleGroups).filter(subtitle => !preferredOrder.includes(subtitle))
-                    ]
+                    // For Compass Tools, use preferred order
+                    if (activeCategory === "Compass Tools") {
+                      const compassTools = categoryToolsDisplayed
+                      const preferredOrder = [
+                        "Tech Tools",
+                        "Concept Calculators",
+                        "Sales Proceed",
+                        "Buyer Affordability",
+                        "Stamp Duty"
+                      ]
 
-                    return orderedSubtitles.map((subtitle, groupIndex) => {
-                      const tools = subtitleGroups[subtitle]
-                      if (!tools) return null
+                      const orderedSubtitles = [
+                        ...preferredOrder.filter(subtitle => subtitleGroups[subtitle]),
+                        ...Object.keys(subtitleGroups).filter(subtitle => !preferredOrder.includes(subtitle))
+                      ]
 
-                      let orderedTools = tools
+                      return orderedSubtitles.map((subtitle, groupIndex) => {
+                        const tools = subtitleGroups[subtitle]
+                        if (!tools) return null
 
-                      if (subtitle === "Tech Tools") {
-                        const techToolOrder = [
-                          "Property Analysis",
-                          "MegaMap",
-                          "Compass10",
-                          "Disparity Effect",
-                          "Supply & Demand Analysis"
-                        ]
-                        orderedTools = [
-                          ...techToolOrder
-                            .map(title => tools.find(tool => tool.title === title))
-                            .filter((tool): tool is (typeof tools)[number] => Boolean(tool)),
-                          ...tools.filter(tool => !techToolOrder.includes(tool.title))
-                        ]
-                      }
+                        let orderedTools = tools
 
-                      return (
+                        if (subtitle === "Tech Tools") {
+                          const techToolOrder = [
+                            "Property Analysis",
+                            "MegaMap",
+                            "Compass10",
+                            "Disparity Effect",
+                            "Supply & Demand Analysis"
+                          ]
+                          orderedTools = [
+                            ...techToolOrder
+                              .map(title => tools.find(tool => tool.title === title))
+                              .filter((tool): tool is (typeof tools)[number] => Boolean(tool)),
+                            ...tools.filter(tool => !techToolOrder.includes(tool.title))
+                          ]
+                        }
+
+                        return (
+                        <motion.div
+                          key={subtitle}
+                          initial={{ opacity: 0, y: 30 }}
+                          animate={toolsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                          transition={{ duration: 0.6, delay: 0.5 + groupIndex * 0.2 }}
+                        >
+                          <motion.h3 
+                            className="text-2xl font-bold text-white mb-6 border-b border-gray-700 pb-2"
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={toolsInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                            transition={{ duration: 0.6, delay: 0.6 + groupIndex * 0.2 }}
+                          >
+                            {subtitle}
+                          </motion.h3>
+                          <motion.div 
+                            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
+                            initial={{ opacity: 0 }}
+                            animate={toolsInView ? { opacity: 1 } : { opacity: 0 }}
+                            transition={{ duration: 0.6, delay: 0.7 + groupIndex * 0.2 }}
+                          >
+                          {orderedTools.map((tool, index) => {
+                            const IconComponent = tool.icon
+                            return (
+                              <motion.div
+                                key={tool.id}
+                                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                                animate={toolsInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.95 }}
+                                transition={{ 
+                                  duration: 0.5, 
+                                  delay: 0.8 + groupIndex * 0.2 + index * 0.1,
+                                  ease: "easeOut"
+                                }}
+                                whileHover={{ 
+                                  y: -5, 
+                                  scale: 1.02,
+                                  transition: { duration: 0.2 }
+                                }}
+                                whileTap={{ scale: 0.98 }}
+                              >
+                                <Card
+                                  className={`bg-gray-800 border-gray-700 hover:shadow-lg hover:shadow-[#b40101]/20 transition-all duration-300 hover:border-[#b40101] h-full ${
+                                    tool.url ? 'cursor-pointer' : 'cursor-default'
+                                  }`}
+                                  onClick={() => handleCardClick(tool)}
+                                  onMouseEnter={() => tool.url && setHoveredTool(tool)}
+                                  onMouseLeave={() => setHoveredTool(null)}
+                                >
+                                  <CardContent className="p-6 px-3 py-3 h-full flex flex-col">
+                                    <div className="flex items-start space-x-4 h-full">
+                                      <div className="flex-shrink-0">
+                                        <motion.div 
+                                          className={`w-12 h-12 rounded-lg flex items-center justify-center overflow-hidden relative ${
+                                            tool.image ? 'bg-[#b40101]/20' : 'bg-white'
+                                          }`}
+                                          whileHover={{ 
+                                            backgroundColor: tool.image 
+                                              ? "rgba(180, 1, 1, 0.3)" 
+                                              : "rgba(255, 255, 255, 0.8)",
+                                            scale: 1.1,
+                                            transition: { duration: 0.2 }
+                                          }}
+                                        >
+                                          {tool.image ? (
+                                            <Image
+                                              src={tool.image}
+                                              alt={tool.title}
+                                              fill
+                                              className="object-cover"
+                                            />
+                                          ) : (
+                                            <IconComponent className="w-6 h-6 text-[#b40101]" />
+                                          )}
+                                        </motion.div>
+                                      </div>
+                                      <div className="flex-1 min-w-0 flex flex-col">
+                                        <h3 className="text-lg font-semibold text-white mb-2">{tool.title}</h3>
+                                        <p className="text-sm text-gray-300 leading-relaxed flex-1">{tool.description}</p>
+                                      </div>
+                                    </div>
+                                  </CardContent>
+                                </Card>
+                              </motion.div>
+                            )
+                          })}
+                          </motion.div>
+                        </motion.div>
+                        )
+                      })
+                    }
+
+                    // For Learnings and Getting Started, use sorted entries
+                    return sortedSubtitleEntries.map(([subtitle, tools], groupIndex) => (
                       <motion.div
                         key={subtitle}
                         initial={{ opacity: 0, y: 30 }}
@@ -784,7 +904,7 @@ export default function TechToolPage() {
                           animate={toolsInView ? { opacity: 1 } : { opacity: 0 }}
                           transition={{ duration: 0.6, delay: 0.7 + groupIndex * 0.2 }}
                         >
-                          {orderedTools.map((tool, index) => {
+                          {tools.map((tool, index) => {
                             const IconComponent = tool.icon
                             return (
                               <motion.div
@@ -850,9 +970,8 @@ export default function TechToolPage() {
                           })}
                         </motion.div>
                       </motion.div>
-                      )
-                    })
-                  })()}
+                    ))
+                    })()}
                 </div>
               ) : (
                 // Regular rendering for other categories
