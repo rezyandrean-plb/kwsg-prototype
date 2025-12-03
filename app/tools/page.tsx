@@ -198,7 +198,7 @@ const tools = [
   {
     id: 57,
     title: "Access PropSage here",
-    description: "",
+    description: "Handle the entire transaction process smoothly from start to finish, paperwork-free.",
     icon: Building2,
     category: "Deal Submission",
     url: "https://app.propsage.com",
@@ -218,7 +218,7 @@ const tools = [
   {
     id: 59,
     title: "KW x Canva",
-    description: "",
+    description: "Design stunning brochures, posts, and materials easily, no design experience required.",
     icon: TrendingUp,
     category: "Branding & Marketing",
     url: "http://canva.kw.com/",
@@ -897,13 +897,13 @@ const compassTools = [
 
 const categories = [
   "All",
-  "Business Tool",
-  "External Tools",
-  "Compass Tools",
-  "Learnings",
-  "Deal Submission",
+  "Getting Started",
   "Branding & Marketing",
-  "Getting Started"
+  "Learnings",
+  "Business Tool",
+  "Compass Tools",
+  "External Tools",
+  "Deal Submission"
 ]
 
 type Tool = (typeof tools)[number] | (typeof compassTools)[number]

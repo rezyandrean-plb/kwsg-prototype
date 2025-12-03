@@ -433,13 +433,13 @@ const tools = [
 
 const categories = [
   "All",
-  "Business Tool",
-  "External Tools",
-  "Compass Tools",
-  "Learnings",
-  "Deal Submission",
+  "Getting Started",
   "Branding & Marketing",
-  "Getting Started"
+  "Learnings",
+  "Business Tool",
+  "Compass Tools",
+  "External Tools",
+  "Deal Submission"
 ]
 
 export default function TechToolPage() {
