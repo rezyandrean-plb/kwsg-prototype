@@ -52,6 +52,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
+import {
+  Dialog,
+  DialogContent,
+  DialogOverlay,
+  DialogTitle,
+} from "@/components/ui/dialog"
 
 // Add custom CSS animations
 const customStyles = `
@@ -565,7 +571,7 @@ function LeadGenerationForm({
     <Card className={`bg-white/20 backdrop-blur-sm text-white p-6 md:p-12 shadow-2xl border-0 rounded-xl hover:shadow-3xl transition-all duration-700 hover:scale-105`}>
       <h2 className="text-4xl font-bold mb-4 text-white text-center">Book Your Showflat Visit Today</h2>
       <p className="text-md mb-8 opacity-90 text-white text-center">
-        Be the first to own a home that combines convenience, luxury, and nature. Register now for an exclusive preview of The Draycott.
+        Be the first to own a home that combines convenience, luxury, and nature. <br /> Register now for an exclusive preview of The Draycott.
       </p>
       {submitError && (
         <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
@@ -766,6 +772,7 @@ export default function WResidenceLanding() {
   const [showSiteMapPopup, setShowSiteMapPopup] = useState(false)
   const [unitsActiveTab, setUnitsActiveTab] = useState(0)
   const [floorPlanIndex, setFloorPlanIndex] = useState(0)
+  const [selectedFloorPlanImage, setSelectedFloorPlanImage] = useState<string | null>(null)
 
   useEffect(() => {
     // Set page title
@@ -879,39 +886,95 @@ export default function WResidenceLanding() {
 
   const amenities = [
     // TRANSPORT
-    { icon: <Train className="w-6 h-6" />, name: "Newton MRT (NSL/DTL)", category: "Transport" },
-    { icon: <Train className="w-6 h-6" />, name: "Orchard MRT (NSL/TSL)", category: "Transport" },
-    { icon: <Train className="w-6 h-6" />, name: "Stevens MRT (DTL/TSL)", category: "Transport" },
-    { icon: <Train className="w-6 h-6" />, name: "Somerset MRT", category: "Transport" },
-    { icon: <Car className="w-6 h-6" />, name: "Central Expressway (CTE)", category: "Transport" },
-    { icon: <Car className="w-6 h-6" />, name: "Pan-Island Expressway (PIE)", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Waterfront LRT", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Imbiah LRT", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Beach LRT", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Sentosa LRT", category: "Transport" },
+    {
+      icon: <Train className="w-6 h-6" />,
+      name: (
+        <>
+          Harbourfront MRT <br />
+          (North‑East Line + Circle Line)
+        </>
+      ),
+      category: "Transport",
+    },
+    {
+      icon: <Car className="w-6 h-6" />,
+      name: (
+        <>
+          AYE <br />
+          (Ayer Rajah Expressway)
+        </>
+      ),
+      category: "Transport",
+    },
+    {
+      icon: <Car className="w-6 h-6" />,
+      name: (
+        <>
+          CTE <br />
+          (Central Expressway)
+        </>
+      ),
+      category: "Transport",
+    },
 
     // RETAIL & F&B
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "ION Orchard", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Tanglin Mall", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Scotts Square", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Paragon", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Newton Food Centre", category: "Retail & F&B" },
+    {
+      icon: <ShoppingBag className="w-6 h-6" />,
+      name: (
+        <>
+          Cold Storage <br />
+          (Sentosa Cove)
+        </>
+      ),
+      category: "Retail & F&B",
+    },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Harbourfront Centre", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "VivoCity", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Orchard Road Shopping Belt", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Seah Im Food Centre", category: "Retail & F&B" },
 
     // NATURE & LEISURE
-    { icon: <Trees className="w-6 h-6" />, name: "Singapore Botanic Gardens", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "The American Club", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "The Tanglin Club", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Sentosa Golf Club", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Spa Botanica", category: "Nature & Leisure" },
 
     // EDUCATION
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Anglo-Chinese School (Junior)", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Anglo-Chinese School (Primary)", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Raffles Girls' School (Secondary)", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Singapore Chinese Girls' School", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "ISS International School (Paterson)", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Chatsworth International School (Orchard Campus)", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "EtonHouse International Pre-School (Claymore)", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "St. Joseph's Institution Junior", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Quayside Isle Preparatory School", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Islander Pre-School", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Cantonment Primary School", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "CHIJ (Kellock) Primary School", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Radin Mas Primary School", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "CHIJ Saint Theresa's Convent", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Anglo-Chinese Junior College", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Marketing Institute of Singapore", category: "Education" },
+    {
+      icon: <GraduationCap className="w-6 h-6" />,
+      name: (
+        <>
+          Etonhouse International Pre-School <br />
+          (Sentosa)
+        </>
+      ),
+      category: "Education",
+    },
+    {
+      icon: <GraduationCap className="w-6 h-6" />,
+      name: (
+        <>
+          EIS International Pre-School <br />
+          (Sentosa)
+        </>
+      ),
+      category: "Education",
+    },
 
     // HEALTHCARE
-    { icon: <Hospital className="w-6 h-6" />, name: "Mount Elizabeth Hospital (Orchard)", category: "Healthcare" },
-    { icon: <Hospital className="w-6 h-6" />, name: "Gleneagles Hospital", category: "Healthcare" },
-    { icon: <Hospital className="w-6 h-6" />, name: "Camden Medical Centre", category: "Healthcare" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Fullerton Health@Psa Floatel", category: "Healthcare" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Village Hotel Sentosa/The Outpost Hotel", category: "Healthcare" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Village Hotel Sentosa Sif", category: "Healthcare" },
   ]
 
   const nextImage = () => {
@@ -1009,7 +1072,7 @@ export default function WResidenceLanding() {
   const [siteMapSubmitError, setSiteMapSubmitError] = useState<string | null>(null)
 
   // Build likely floor-plan filenames from unit type/subtype to match files placed in public/images/the-draycott/floor-plan
-  const generateDraycottFloorPlanCandidates = (subtype: any, unitType: string) => {
+  const generateTheDraycottFloorPlanCandidates = (subtype: any, unitType: string) => {
     const base = '/images/w-residences/floor-plan/'
     const candidates: string[] = []
 
@@ -1075,8 +1138,8 @@ export default function WResidenceLanding() {
           subtype: "4-Bedroom",
           bedrooms: 4,
           bathrooms: 4,
-          size: "2,637 sqft",
-          price: "From TBC",
+          size: "3,111 sqft",
+          price: "From $4,697,000",
           currency: "SGD",
           total: 1,
           available: 1,
@@ -1336,7 +1399,7 @@ export default function WResidenceLanding() {
                 </button>
                 <button 
                   onClick={() => scrollToSection('facilities')}
-                  className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
+                  className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer md:hidden lg:inline-block"
                 >
                   Facilities
                 </button>
@@ -1398,7 +1461,7 @@ export default function WResidenceLanding() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Badge className="bg-[#ce001f] text-white px-4 py-2 text-sm font-medium rounded-full animate-pulse">
-                TBC
+                LAST UNIT!
               </Badge>
             </div>
 
@@ -1415,13 +1478,13 @@ export default function WResidenceLanding() {
                 isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
               }`}>
                 <div className="w-12 h-px bg-[#ce001f] mr-4"></div>
-                <p className="text-lg text-gray-200 font-light">District 10 · Orchard Road</p>
+                <p className="text-lg text-gray-200 font-light">D10 - Tanglin, Holland</p>
               </div>
 
               <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
-                Elevated freehold living steps from Singapore's premier shopping belt
+                TBC
               </p>
             </div>
 
@@ -1473,31 +1536,111 @@ export default function WResidenceLanding() {
         }}
       >
         <div className="container mx-auto px-4">
+          {/* Detailed Information Grid */}
+          <div className={`w-full mb-12 transition-all duration-1000 delay-500 ${
+            animatedSections.has('project-info') ? 'animate-fade-in-up' : ''
+          }`} style={{
+            opacity: animatedSections.has('project-info') ? 1 : 0,
+            transform: animatedSections.has('project-info') ? 'translateY(0)' : 'translateY(50px)'
+          }}>
+            {/* Title */}
+            <div className="mb-6">
+              <div className="flex justify-between items-start mb-2">
+                <div>
+                  <h3 className="text-3xl font-bold text-white mb-2">Property Details</h3>
+                  <div className="w-16 h-1 bg-[#ce001f] rounded"></div>
+                </div>
+                <div className="text-right">
+                  <p className="text-white text-2xl font-medium">$ 4,697,000</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Two Column Layout */}
+            <div className="grid md:grid-cols-2 gap-8 border-gray-700 bg-[#18191b] rounded-lg p-6 md:p-4 lg:p-8">
+              {/* Left Column */}
+              <div className="space-y-6">
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Project Name:</span>
+                  <span className="font-semibold text-white text-right">The Draycott</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Address:</span>
+                  <span className="font-semibold text-white text-right">50 Draycott Park, Singapore 259396</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">District:</span>
+                  <span className="font-semibold text-white text-right">10</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Nearest MRT:</span>
+                  <span className="font-semibold text-white text-right">Newton MRT</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Developer:</span>
+                  <span className="font-semibold text-white text-right">Tan Chwee Boon Pte Ltd</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Tenure:</span>
+                  <span className="font-semibold text-white text-right">Freehold</span>
+                </div>
+              </div>
+
+              {/* Right Column */}
+              <div className="space-y-6">
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Unit No.:</span>
+                  <span className="font-semibold text-white text-right">#05-03</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Site Area:</span>
+                  <span className="font-semibold text-white text-right">2637 sqft</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Property Type:</span>
+                  <span className="font-semibold text-white text-right">4-Bedroom</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Bedrooms:</span>
+                  <span className="font-semibold text-white text-right">4</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Bathroom:</span>
+                  <span className="font-semibold text-white text-right">4</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">TOP:</span>
+                  <span className="font-semibold text-white text-right">1980</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('project-info') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Timeless Luxury at The Draycott</h2>
+            <h2 className="text-3xl font-bold mb-3 text-white text-center tracking-wide">Rare waterway frontage with unblocked waterway views right outside</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              The Draycott offers a rare combination of privacy, prestige, and generous living in one of District 10's most desirable enclaves.
-              Situated at 50 Draycott Park, the residence is just minutes from the Orchard Road shopping belt and a short stroll to Newton MRT,
-              placing everyday conveniences, dining, and top schools within effortless reach.
+            <p className="text-lg text-gray-300 max-w-4xl mx-auto">
+              The Draycott is a rare waterway-front residence offering calm, space, and privacy within Singapore's premier marina enclave. 
+              The environment is defined by gentle waters, curated landscaping, and an overall sense of stillness. <br /> <br></br>
+              With waterway frontage on one side and the Sentosa Golf Club behind, the surroundings are peaceful and scenic. Private lift lobbies, Miele kitchenware, and quality bathroom fittings complete the sense of refined living. <br /> <br></br>
+              ONE°15 Marina, Quayside Isle, and the island's beachfront attractions are just minutes away—a combination that makes The Draycott both practical and premium.
             </p>
           </div>
 
           {/* Feature Cards */}
           <div className="flex flex-wrap gap-6 lg:gap-4 mb-12 justify-center">
             {[
-              { icon: <Footprints className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Prestigious address off Orchard Road's lifestyle belt" },
-              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Minutes to Newton MRT (North-South & Downtown Lines)" },
-              { icon: <Car className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Quick access to the CBD via Scotts & Bukit Timah Road" },
-              { icon: <Trees className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Moments from Botanic Gardens & exclusive clubs" },
-              { icon: <BedDouble className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Spacious 4-bedroom layout with private lift lobby" },
-              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Freehold collection in coveted District 10" },
-              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Developed by Tan Chwee Boon Pte Ltd" },
-              { icon: <Compass className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Panoramic city views from elevated #05-03 residence" }
+              { icon: <Footprints className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Immediate access to <strong>ONE°15 Marina</strong> giving residents", desc: "waterfront dining, yacht club facilities, and coastal convenience" },
+              { icon: <Home className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Ultra-spacious Large-format layouts built for", desc: "true livability, privacy, and everyday comfort" },
+              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Luxury Interior finishes featuring", desc: "<strong>Miele kitchenware</strong> and <strong>Laufen ILBAGNO ALESSI</strong> bathroom fittings" },
+              { icon: <MountainSnow className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "<strong>Full resort facilities</strong> including", desc: "a pool, gym, steam rooms, and landscaped relaxation decks" },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "A Prestigious <strong>Sentosa Cove Address</strong> Offering", desc: "gated exclusivity in Singapore's only marina residential district" },
+              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Fast <strong>connectivity to HarbourFront</strong> enabling", desc: "quick and easy access to the mainland and the CBD" },
+              { icon: <ChartLine className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Long-term upside supported by the upcoming", desc: "<strong>Sentosa–Brani</strong> transformation plan" }
             ].map((card, index) => (
               <Card 
                 key={index} 
@@ -1512,77 +1655,15 @@ export default function WResidenceLanding() {
               >
                 <CardContent className="p-6">
                   {card.icon}
-                  <p className="text-gray-300" dangerouslySetInnerHTML={{ __html: card.desc }}></p>
+                  {card.title && (
+                    <h3 className="text-white font-normal mb-2 text-lg" dangerouslySetInnerHTML={{ __html: card.title }}></h3>
+                  )}
+                  {card.desc && (
+                    <p className="text-gray-300" dangerouslySetInnerHTML={{ __html: card.desc }}></p>
+                  )}
                 </CardContent>
               </Card>
             ))}
-          </div>
-
-          {/* Detailed Information Grid */}
-          <div className={`w-full mb-12 transition-all duration-1000 delay-500 ${
-            animatedSections.has('project-info') ? 'animate-fade-in-up' : ''
-          }`} style={{
-            opacity: animatedSections.has('project-info') ? 1 : 0,
-            transform: animatedSections.has('project-info') ? 'translateY(0)' : 'translateY(50px)'
-          }}>
-            {/* Title */}
-            <div className="mb-6">
-              <h3 className="text-3xl font-light text-white mb-2">Property Details</h3>
-              <div className="w-16 h-1 bg-[#ce001f] rounded"></div>
-            </div>
-
-            {/* Two Column Layout */}
-            <div className="grid md:grid-cols-2 gap-8 border-gray-700 bg-[#18191b] rounded-lg p-6 md:p-8">
-              {/* Left Column */}
-              <div className="space-y-6">
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Project Name:</span>
-                  <span className="font-semibold text-white text-right">The Draycott</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Address:</span>
-                  <span className="font-semibold text-white text-right">50 Draycott Park, Singapore 259396</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">District:</span>
-                  <span className="font-semibold text-white text-right">District 10</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Nearest MRT:</span>
-                  <span className="font-semibold text-white text-right">
-                    Newton MRT
-                  </span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Property Type:</span>
-                  <span className="font-semibold text-white text-right">4-Bedroom, 4 Bathroom</span>
-                </div>
-              </div>
-
-              {/* Right Column */}
-              <div className="space-y-6">
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Developer:</span>
-                  <span className="font-semibold text-white text-right">Tan Chwee Boon Pte Ltd</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Tenure:</span>
-                  <span className="font-semibold text-white text-right">Freehold</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Unit No.:</span>
-                  <span className="font-semibold text-white text-right">#05-03</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Site Area:</span>
-                  <span className="font-semibold text-white text-right">2,637 sqft</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">TOP:</span>
-                  <span className="font-semibold text-white text-right">1980</span>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Facilities Section */}
@@ -1599,30 +1680,34 @@ export default function WResidenceLanding() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
             }`}>
               <div className="text-center mb-12">
-                <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Facilities</h2>
+                <h2 className="text-3xl font-bold mb-3 text-white text-center tracking-wide">Facilities</h2>
                 <div className="flex justify-center mb-4">
                   <div className="w-16 h-1 bg-[#ce001f] rounded" />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
-                {[
-                  "BBQ",
-                  "Gym",
-                  "Parking",
-                  "Playground",
-                  "Security",
-                  "Swimming Pool",
-                  "Wading Pool",
-                ].map((facility, index) => (
-                  <div
-                    key={facility}
-                    className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300"
-                    style={{ transitionDelay: `${index * 50}ms` }}
-                  >
-                    <p className="text-gray-300 text-center">{facility}</p>
-                  </div>
-                ))}
+                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
+                  <p className="text-gray-300 text-center">BBQ</p>
+                </div>
+                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
+                  <p className="text-gray-300 text-center">Gym</p>
+                </div>
+                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
+                  <p className="text-gray-300 text-center">Parking</p>
+                </div>
+                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
+                  <p className="text-gray-300 text-center">Playground</p>
+                </div>
+                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
+                  <p className="text-gray-300 text-center">Security</p>
+                </div>
+                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
+                  <p className="text-gray-300 text-center">Swimming Pool</p>
+                </div>
+                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
+                  <p className="text-gray-300 text-center">Wading Pool</p>
+                </div>
               </div>
             </div>
           </div>
@@ -1635,7 +1720,7 @@ export default function WResidenceLanding() {
             }`}
           >
             <div className="text-center mb-8">
-              <h3 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Project Gallery</h3>
+              <h3 className="text-3xl font-bold mb-3 text-white text-center tracking-wide">Project Gallery</h3>
               <div className="flex justify-center mb-4">
                 <div className="w-16 h-1 bg-[#ce001f] rounded" />
               </div>
@@ -1649,9 +1734,9 @@ export default function WResidenceLanding() {
             {/* Main Image Display */}
             <div className="relative max-w-6xl mx-auto mb-8">
               <div className="relative h-[500px] rounded-xl overflow-hidden shadow-2xl">
-                  <Image
-                    src={projectImages[currentImageIndex] || "/placeholder.svg"}
-                    alt={`The Draycott - Image ${currentImageIndex + 1}`}
+                <Image
+                  src={projectImages[currentImageIndex] || "/placeholder.svg"}
+                  alt={`The Draycott - Image ${currentImageIndex + 1}`}
                   fill
                   className="object-cover transition-all duration-500"
                 />
@@ -1761,11 +1846,11 @@ export default function WResidenceLanding() {
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('floor-plans') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Floor Plans & Pricing</h2>
+            <h2 className="text-3xl font-bold mb-3 text-white text-center tracking-wide">Floor Plans</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
-            <p className="text-xl text-gray-300">Discover your perfect home from our collection of meticulously designed residences</p>
+            <p className="text-xl text-gray-300">Choose from our thoughtfully designed unit layouts</p>
           </div>
 
           <div className={`max-w-7xl mx-auto transition-all duration-1000 delay-500 ${
@@ -1774,47 +1859,9 @@ export default function WResidenceLanding() {
             opacity: animatedSections.has('floor-plans') ? 1 : 0,
             transform: animatedSections.has('floor-plans') ? 'translateY(0)' : 'translateY(50px)'
           }}>
-            {/* Tabs for unit types */}
-            <div className="w-full px-2 sm:px-6 pt-4 sm:pt-6 pb-2 border-b border-gray-700 mb-6 sm:mb-8">
-              <div className="flex flex-nowrap gap-1 sm:gap-2 justify-start sm:justify-center overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent" style={{ WebkitOverflowScrolling: 'touch' }}>
-                {(() => {
-                  const dynamicUnitData = processUnitAvailabilityData(project?.unitPricing || [])
-                  
-                  // If no API data, show message
-                  if (dynamicUnitData.length === 0) {
-                    return (
-                      <div className="col-span-full text-center py-8">
-                        <p className="text-gray-400">No unit information available at the moment.</p>
-                        <p className="text-sm text-gray-500 mt-2">Please check back later or contact our agents for more details.</p>
-                      </div>
-                    )
-                  }
-                  
-                  return dynamicUnitData.map((unit, idx) => {
-                    // Calculate total available units for this type
-                    const totalAvailable = unit.subtypes.reduce((sum: number, subtype: any) => sum + (typeof subtype.available === 'number' ? subtype.available : 0), 0)
-                    const totalUnits = unit.subtypes.reduce((sum: number, subtype: any) => sum + (typeof subtype.total === 'number' ? subtype.total : 0), 0)
-                    
-                    return (
-                      <button
-                        key={unit.unitType}
-                        onClick={() => setUnitsActiveTab(idx)}
-                        className={`px-2 sm:px-4 py-2 rounded-full font-light flex items-center gap-1 sm:gap-2 text-xs sm:text-sm transition-colors border focus:outline-none whitespace-nowrap ${unitsActiveTab === idx ? 'bg-gray-800 border-[#ce001f] text-white' : 'bg-[#18191b] border-gray-700 text-gray-300 hover:bg-[#ce001f]/10 hover:text-[#ce001f]'}`}
-                      >
-                        <span>{unit.unitType.replace(' Units', '')}</span>
-                        {totalAvailable > 0 && (
-                          <span className="bg-green-500 text-white text-xs px-1 sm:px-2 py-1 rounded-full">
-                            {totalAvailable}
-                          </span>
-                        )}
-                      </button>
-                    )
-                  })
-                })()}
-              </div>
-            </div>
+            
 
-            {/* Card layout for selected unit type */}
+            {/* Floor Plan Images - Centered */}
             {(() => {
               const dynamicUnitData = processUnitAvailabilityData(project?.unitPricing || [])
               const currentUnit = dynamicUnitData[unitsActiveTab] || dynamicUnitData[0]
@@ -1822,126 +1869,73 @@ export default function WResidenceLanding() {
               // If no data available, show fallback
               if (!currentUnit) {
                 return (
-                  <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 justify-center items-stretch bg-[#111] rounded-xl p-4 lg:p-8 max-w-5xl mx-auto shadow-lg pricing-container">
-                    <div className="w-full text-center text-gray-400 py-8">
-                      <p>No unit information available at the moment.</p>
-                      <p className="text-sm mt-2">Please check back later or contact our agents for more details.</p>
-                    </div>
+                  <div className="w-full text-center text-gray-400 py-8">
+                    <p>No unit information available at the moment.</p>
+                    <p className="text-sm mt-2">Please check back later or contact our agents for more details.</p>
                   </div>
                 )
               }
               
-              // Calculate total availability for this unit type
-              const totalAvailable = currentUnit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.available, 0)
-              const totalUnits = currentUnit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.total, 0)
-              
               return (
-                <div className="space-y-4 sm:space-y-6">
-                  {/* Cards */}
-                  <div className="w-full">
-                    {currentUnit.subtypes.slice(0, 1).map((subtype: any, subtypeIndex: number) => (
-                      <div key={subtypeIndex} className="bg-[#111] rounded-xl p-4 sm:p-6 shadow-lg border border-gray-800 w-full">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 w-full items-center">
-                          {/* Floor Plan Image - Left Side */}
-                          <div>
-                            {(() => {
-                              const images = Array.isArray(subtype.floor_plan_images) && subtype.floor_plan_images.length > 0
-                                ? subtype.floor_plan_images
-                                : generateDraycottFloorPlanCandidates(subtype, currentUnit.unitType)
-                              const hasImages = images && images.length > 0
+                <div className="flex justify-center">
+                  {currentUnit.subtypes.slice(0, 1).map((subtype: any, subtypeIndex: number) => {
+                    const images = Array.isArray(subtype.floor_plan_images) && subtype.floor_plan_images.length > 0
+                      ? subtype.floor_plan_images
+                      : generateTheDraycottFloorPlanCandidates(subtype, currentUnit.unitType)
+                    const hasImages = images && images.length > 0
 
-                              const prev = () => setFloorPlanIndex((i) => (i - 1 + images.length) % images.length)
-                              const next = () => setFloorPlanIndex((i) => (i + 1) % images.length)
+                    const prev = () => setFloorPlanIndex((i) => (i - 1 + images.length) % images.length)
+                    const next = () => setFloorPlanIndex((i) => (i + 1) % images.length)
 
-                              return (
-                                <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden border border-gray-700">
-                                  {hasImages ? (
-                                  <Image
-                                      key={images[floorPlanIndex % images.length]}
-                                      src={images[floorPlanIndex % images.length]}
-                                    alt={`${currentUnit.unitType.replace(' Units', '')} Floor Plan`}
-                                    fill
-                                      className="object-contain bg-black"
-                                    />
-                                  ) : (
-                                    <div className="absolute inset-0 flex items-center justify-center bg-black text-white text-xs">No floor plan images</div>
-                                  )}
-                                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
-                                  {hasImages && images.length > 1 && (
-                                    <>
-                                      <button
-                                        aria-label="Previous floor plan"
-                                        className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow"
-                                        onClick={prev}
-                                      >
-                                        <ChevronLeft className="w-4 h-4" />
-                                      </button>
-                                      <button
-                                        aria-label="Next floor plan"
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow"
-                                        onClick={next}
-                                      >
-                                        <ChevronRight className="w-4 h-4" />
-                                      </button>
-                                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
-                                        {images.slice(0, 8).map((_img: string, idx: number) => (
-                                          <span
-                                            key={idx}
-                                            className={`w-2 h-2 rounded-full ${idx === (floorPlanIndex % images.length) ? 'bg-white' : 'bg-white/40'}`}
-                                          />
-                                        ))}
-                                      </div>
-                                    </>
-                                  )}
-                                  <div className="absolute bottom-1 left-1 text-white text-xs font-medium">
-                                    Floor Plan
-                                  </div>
-                                </div>
-                              )
-                            })()}
-                          </div>
-
-                          {/* Information - Right Side */}
-                          <div className="flex flex-col justify-center">
-                            <div>
-                              {/* Unit Type Header */}
-                              <div className="mb-4">
-                                <h4 className="text-xl font-bold text-white mb-2">{subtype.subtype}</h4>
-                                <p className="text-gray-300 text-sm">{subtype.size}</p>
-                              </div>
-                              
-                              {/* Price */}
-                              <div className="mb-6">
-                                <p className="text-green-400 font-semibold text-lg">{subtype.price}</p>
-                                {subtype.price_per_sqft && (
-                                  <p className="text-gray-400 text-sm">
-                                    {subtype.price_per_sqft} per sqft
-                                  </p>
-                                )}
-                              </div>
-                              
+                    return (
+                      <div key={subtypeIndex} className="relative w-full max-w-5xl">
+                        <div 
+                          className="relative w-full aspect-[4/3] rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
+                          onClick={() => hasImages && setSelectedFloorPlanImage(images[floorPlanIndex % images.length])}
+                        >
+                          {hasImages ? (
+                            <Image
+                              key={images[floorPlanIndex % images.length]}
+                              src={images[floorPlanIndex % images.length]}
+                              alt={`${currentUnit.unitType.replace(' Units', '')} Floor Plan`}
+                              fill
+                              className="object-contain"
+                            />
+                          ) : (
+                            <div className="absolute inset-0 flex items-center justify-center text-white text-xs">
+                              No floor plan images
                             </div>
-                            
-                            {/* CTA Buttons */}
-                            <div className="space-y-3">
-                              <button 
-                                onClick={() => scrollToSection('lead-form')}
-                                className="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-4 rounded-lg text-sm transition-colors"
+                          )}
+                          {hasImages && images.length > 1 && (
+                            <>
+                              <button
+                                aria-label="Previous floor plan"
+                                className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow z-10"
+                                onClick={prev}
                               >
-                                Book Showflat Visit
+                                <ChevronLeft className="w-4 h-4" />
                               </button>
-                              <button 
-                                onClick={() => setShowSiteMapPopup(true)}
-                                className="w-full bg-white text-red-500 hover:bg-white-600 text-red-500 font-medium py-3 px-4 rounded-lg text-sm transition-colors"
+                              <button
+                                aria-label="Next floor plan"
+                                className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow z-10"
+                                onClick={next}
                               >
-                                Site Map & Floor Plan
+                                <ChevronRight className="w-4 h-4" />
                               </button>
-                            </div>
-                          </div>
+                              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10">
+                                {images.slice(0, 8).map((_img: string, idx: number) => (
+                                  <span
+                                    key={idx}
+                                    className={`w-2 h-2 rounded-full ${idx === (floorPlanIndex % images.length) ? 'bg-white' : 'bg-white/40'}`}
+                                  />
+                                ))}
+                              </div>
+                            </>
+                          )}
                         </div>
                       </div>
-                    ))}
-                  </div>
+                    )
+                  })}
                 </div>
               )
             })()}
@@ -1963,7 +1957,7 @@ export default function WResidenceLanding() {
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('nearby-amenities') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Location</h2>
+            <h2 className="text-3xl font-bold mb-3 text-white text-center tracking-wide">Location</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
@@ -1987,13 +1981,13 @@ export default function WResidenceLanding() {
               <CardContent className="space-y-6">
                 {/* Location Map */}
                 <div className="w-full rounded-lg overflow-hidden shadow-lg">
-                  <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5994.890948936796!2d103.82804683326395!3d1.3121577769768886!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19f23bc526bd%3A0x5115fa36ae15e587!2sThe%20Draycott!5e0!3m2!1sen!2sid!4v1764231615644!5m2!1sen!2sid" 
-                    width="600" 
-                    height="450" 
-                    style={{border:0, width: '100%'}} 
-                    allowFullScreen 
-                    loading="lazy" 
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10349.701782525497!2d103.8269230795184!3d1.3125000439256431!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19f23bc526bd%3A0x5115fa36ae15e587!2sThe%20Draycott!5e0!3m2!1sen!2sid!4v1764742765772!5m2!1sen!2sid"
+                    width="600"
+                    height="450"
+                    style={{ border: 0, width: '100%' }}
+                    allowFullScreen
+                    loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                     className="w-full"
                   ></iframe>
@@ -2003,21 +1997,21 @@ export default function WResidenceLanding() {
                     <MapPin className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
                     <p className="font-semibold text-white">Address</p>
-                      <p className="text-sm text-gray-300 font-light">50 Draycott Park, Singapore 259396</p>
+                      <p className="text-sm text-gray-300 font-light">51 Cove Drive, Singapore 098393</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Train className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
                       <p className="font-semibold text-white">MRT</p>
-                      <p className="text-sm text-gray-300 font-light">Newton MRT · Orchard MRT</p>
+                      <p className="text-sm text-gray-300 font-light">Waterfront LRT</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Car className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
                       <p className="font-semibold text-white">Access</p>
-                      <p className="text-sm text-gray-300 font-light">Minutes to CTE & PIE</p>
+                      <p className="text-sm text-gray-300 font-light">Easy access to Harbourfront MRT</p>
                     </div>
                   </div>
                 </div>
@@ -2061,9 +2055,9 @@ export default function WResidenceLanding() {
                       }}
                     >
                       <CardContent className="p-4 md:p-6 min-h-[100px] md:min-h-[120px] w-full">
-                        <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:items-center md:justify-start md:space-y-0 md:space-x-4 w-full">
+                        <div className="flex flex-col items-center justify-center space-y-2 w-full">
                           <div className="flex-shrink-0" style={{ color: '#ce001f' }}>{amenity.icon}</div>
-                          <div className="text-center md:text-center flex-1 min-w-0">
+                          <div className="text-center flex-1 min-w-0">
                             <h3 className="font-semibold text-xs md:text-lg text-white break-words">{amenity.name}</h3>
                           </div>
                         </div>
@@ -2083,7 +2077,7 @@ export default function WResidenceLanding() {
         <div className={`text-center mb-8 md:mb-16 transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
-            <h2 className="text-2xl md:text-3xl font-light mb-3 text-white text-center tracking-wide">Explore The Draycott</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-3 text-white text-center tracking-wide">Explore The Draycott</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
@@ -2102,12 +2096,12 @@ export default function WResidenceLanding() {
               <div className="space-y-6 order-2 lg:order-1">
                 <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
                 <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
-                  Discover Freehold Living Off Orchard Road
+                  Discover Luxury Living in Sentosa
                 </h3>
                 <p className="text-gray-300 leading-relaxed text-base md:text-lg">
-                  Experience timeless elegance at The Draycott, where generous interiors, lush landscaping, and a coveted District 10 address converge. 
-                  This exclusive residence offers direct access to Orchard Road's finest shopping and dining, with top schools and elite clubs nearby. 
-                  Discover the investment potential and lifestyle advantages of this rare freehold offering.
+                  Experience the epitome of luxury living at The Draycott, where modern elegance meets Sentosa's pristine natural beauty. 
+                  This exclusive development offers a rare opportunity to own a piece of paradise in one of Singapore's most prestigious locations. 
+                  Learn more about the unique features and investment potential of this exceptional property.
                 </p>
                   <Button 
                     className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
@@ -2212,6 +2206,33 @@ export default function WResidenceLanding() {
         </GoogleReCaptchaProvider>
       )}
 
+      {/* Floor Plan Image Dialog */}
+      <Dialog open={selectedFloorPlanImage !== null} onOpenChange={(open) => !open && setSelectedFloorPlanImage(null)}>
+        <DialogContent className="max-w-[95vw] w-full max-h-[95vh] p-0 bg-black/80 border-0 overflow-auto">
+          <DialogTitle className="sr-only">Floor Plan</DialogTitle>
+          {selectedFloorPlanImage && (
+            <div className="relative w-full min-h-full flex items-center justify-center p-4 md:p-8">
+              <div className="relative inline-block">
+                <Image
+                  src={selectedFloorPlanImage}
+                  alt="Floor Plan"
+                  width={2400}
+                  height={1800}
+                  className="w-auto h-auto max-w-full object-contain"
+                  unoptimized
+                />
+                <button
+                  onClick={() => setSelectedFloorPlanImage(null)}
+                  className="fixed top-4 right-4 bg-white/90 hover:bg-white text-black rounded-full w-10 h-10 flex items-center justify-center shadow-lg z-50 transition-all hover:scale-110"
+                  aria-label="Close"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
 
       </div>
     </GoogleReCaptchaProvider>

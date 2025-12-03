@@ -18,7 +18,7 @@ const tools = [
     title: "KW PropSage",
     description: "Handle the entire transaction process smoothly from start to finish, paperwork-free.",
     icon: Building2,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "app.propsage.com",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-propsage.webp"
   },
@@ -27,7 +27,7 @@ const tools = [
     title: "KW Command",
     description: "Manage your real estate business easily from anywhere with one central hub.",
     icon: Calculator,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "agent.kw.com",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-command.webp"
   },
@@ -36,7 +36,7 @@ const tools = [
     title: "KW Contacts",
     description: "Organize leads and contacts intelligently, never forget important follow-ups again.",
     icon: Building2,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "https://console.command.kw.com/command/contacts",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-contacts.webp"
   },
@@ -45,7 +45,7 @@ const tools = [
     title: "KW Tasks",
     description: "Track every client’s to-do list carefully, ensuring no task gets missed.",
     icon: Calculator,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "https://console.command.kw.com/command/task-manager",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tasks.webp"
   },
@@ -54,7 +54,7 @@ const tools = [
     title: "KW Campaigns",
     description: "Generate steady social media leads without needing complex ad platform expertise.",
     icon: TrendingUp,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "https://campaigns.kw.com/",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-campaigns.webp"
   },
@@ -63,7 +63,7 @@ const tools = [
     title: "KW Opportunities",
     description: "Track deals from new leads to closings, ensuring payments never missed.",
     icon: BarChart3,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "https://console.command.kw.com/command/opportunities",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-opportunities.webp"
   },
@@ -72,7 +72,7 @@ const tools = [
     title: "KW SmartPlans",
     description: "Automate client follow-ups and marketing campaigns, saving time while staying connected.",
     icon: Smartphone,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "https://console.command.kw.com/command/smart-plans",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-smartplans.webp"
   },
@@ -81,7 +81,7 @@ const tools = [
     title: "KW Listings",
     description: "Showcase properties beautifully with professional listing pages that attract serious buyers.",
     icon: Home,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "https://console.command.kw.com/command/listings",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-listings.webp"
   },
@@ -90,7 +90,7 @@ const tools = [
     title: "KW Website",
     description: "Create branded, user-friendly websites in minutes to capture online inquiries.",
     icon: MapPin,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "https://console.command.kw.com/command/websites",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-website.webp"
   },
@@ -100,6 +100,7 @@ const tools = [
     description: "Access world-class real estate training and mentorship to sharpen skills continuously.",
     icon: TrendingUp,
     category: "Learnings",
+    subtitle: "Business Mastery & Growth",
     url: "https://agent.kw.com/connect/learning/categories",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-university.webp"
   },
@@ -127,7 +128,7 @@ const tools = [
     title: "KW Canva",
     description: "Design stunning brochures, posts, and materials easily, no design experience required.",
     icon: Building2,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "canva.kw.com",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-canva.webp"
   },
@@ -552,6 +553,7 @@ const tools = [
     description: "Essential learning video series featuring market perspectives directly from the Founder.",
     icon: Play,
     category: "Learnings",
+    subtitle: "Business Mastery & Growth",
     url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmArXLm197-kQEuhzgDEadVSi",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
@@ -561,6 +563,7 @@ const tools = [
     description: "Companion slides to the Founder's Market Insights for review and study.",
     icon: Play,
     category: "Learnings",
+    subtitle: "Business Mastery & Growth",
     url: "https://drive.google.com/file/d/1Em3X8taxvI6b_MpYwCSPYNsgGCbAyzYL/view?usp=drive_link",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
@@ -570,6 +573,7 @@ const tools = [
     description: "Weekly video training designed to amplify your business and skill set.",
     icon: Play,
     category: "Learnings",
+    subtitle: "Business Mastery & Growth",
     url: "https://drive.google.com/drive/folders/1s6_nOdJDnyXGq2aWyN0AyXnP3hK8Nlgk",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
@@ -579,6 +583,7 @@ const tools = [
     description: "Presentation slides for the weekly KW Multiplier training sessions.",
     icon: Play,
     category: "Learnings",
+    subtitle: "Business Mastery & Growth",
     url: "https://drive.google.com/drive/folders/1r44l7nX3_gMMm1X0c_i78plor7bNnSFQ?usp=drive_link",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
@@ -588,6 +593,7 @@ const tools = [
     description: "A comprehensive training series focused on executing successful new property launches.",
     icon: Play,
     category: "Learnings",
+    subtitle: "New Launch & Market Experties",
     url: "https://www.youtube.com/playlist?list=PLLAXUUZdAmApeARL8goKWDxm6dmycq8SN",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
@@ -597,15 +603,17 @@ const tools = [
     description: "Specialized training content for understanding and transacting landed properties in Singapore.",
     icon: Play,
     category: "Learnings",
+    subtitle: "Business Mastery & Growth",
     url: "https://www.youtube.com/watch?v=W1VksHrLlC4",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
   {
     id: 43,
     title: "Penrith CES Seminar",
-    description: "",
+    description: "Data-backed comparative analysis to validate investment decisions and master the new launch market.",
     icon: Play,
     category: "Learnings",
+    subtitle: "New Launch & Market Experties",
     url: "https://youtu.be/IU91vbl5PLo",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
@@ -615,6 +623,7 @@ const tools = [
     description: "Your playbook for confident conversations and mastering consultation dialogues.",
     icon: Play,
     category: "Learnings",
+    subtitle: "Business Mastery & Growth",
     url: "https://drive.google.com/drive/folders/1MNb6kilD_fJ1BNjfmq71fxPp1fLHpudd",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
@@ -624,6 +633,7 @@ const tools = [
     description: "Utilise KW tools for price comparison and project analysis.",
     icon: Play,
     category: "Learnings",
+    subtitle: "Business Mastery & Growth",
     url: "https://youtu.be/2OAgkT3V0H8",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
@@ -633,6 +643,7 @@ const tools = [
     description: "Expert-led session focused on elevating consultant presentation and sales skills.",
     icon: Play,
     category: "Learnings",
+    subtitle: "Business Mastery & Growth",
     url: "https://www.youtube.com/watch?v=WIxOx8cK-qQ",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
@@ -642,6 +653,7 @@ const tools = [
     description: "A webinar comparing the pros and cons of new launch and resale condominium purchases.",
     icon: Play,
     category: "Learnings",
+    subtitle: "New Launch & Market Experties",
     url: "https://www.youtube.com/watch?v=sCx7w3cwu6g",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
@@ -651,6 +663,7 @@ const tools = [
     description: "Training sessions that utilize structured frameworks to convey complex concepts.",
     icon: Play,
     category: "Learnings",
+    subtitle: "New Launch & Market Experties",
     url: "https://youtu.be/ORwYDVhfoG4?si=eD7JPssCfGBfC7X_",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
@@ -660,6 +673,7 @@ const tools = [
     description: "Guidance on leveraging the 99-1 ownership strategy to optimize property growth.",
     icon: Play,
     category: "Learnings",
+    subtitle: "Business Mastery & Growth",
     url: "https://youtu.be/Pr_P72fJ71I?si=jid5AFALJiTzy68d",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
@@ -669,6 +683,7 @@ const tools = [
     description: "An analysis of investor motivation, market data, and psychological factors driving new project investment.",
     icon: Play,
     category: "Learnings",
+    subtitle: "New Launch & Market Experties",
     url: "https://youtu.be/jJU4uVRfcnk?si=X2IwjzLXiW8xOtdX",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
@@ -678,6 +693,7 @@ const tools = [
     description: "A detailed guide or training session specific to the Springleaf Residence in Singapore.",
     icon: Play,
     category: "Learnings",
+    subtitle: "New Launch & Market Experties",
     url: "https://youtube.com/playlist?list=PLtRO1DKUwiFjcpQOyMIA-vd9ftIcTNgqU&si=yOhijL-H4xUdP-hm",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tutorial.webp"
   },
@@ -733,6 +749,16 @@ const compassTools = [
     subtitle: "Tech Tools",
     url: "https://compass.kwsingapore.com/tech-tools/supply-demand-analysis",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/supply-demand-analysis.webp"
+  },
+  {
+    id: 205,
+    title: "Handover Hero",
+    description: "The AI-powered tool that auto-scans unit photos, detects inventory, and generates full handover reports in seconds.",
+    icon: Home,
+    category: "Compass Tools",
+    subtitle: "Tech Tools",
+    url: "https://compass.kwsingapore.com/tech-tools/furniture-inventory",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/handover.webp"
   },
   {
     id: 28,
@@ -898,12 +924,12 @@ const compassTools = [
 const categories = [
   "All",
   "Getting Started",
+  "Compass Tools",
+  "Business Tools",
+  "Deal Submission",
+  "External Tools",
   "Branding & Marketing",
   "Learnings",
-  "Business Tool",
-  "Compass Tools",
-  "External Tools",
-  "Deal Submission"
 ]
 
 type Tool = (typeof tools)[number] | (typeof compassTools)[number]
@@ -1245,8 +1271,24 @@ export default function TechToolPage() {
                           return groups
                         }, {} as Record<string, typeof categoryToolsDisplayed>)
 
-                        // Sort subtitle groups: Tech/Operations first, then Other, then alphabetically
+                        // Sort subtitle groups.
+                        // - For most categories: Tech/Operations first, Other last, others alphabetical.
+                        // - For Getting Started: show Operations AFTER other groups.
                         const sortedSubtitleEntries = Object.entries(subtitleGroups).sort(([a], [b]) => {
+                          const isGettingStartedCategory = activeCategory === "Getting Started"
+
+                          if (isGettingStartedCategory) {
+                            // Getting Started:
+                            // - Operations should appear after other groups
+                            // - Other (no subtitle) should come first
+                            if (a === "Operations") return 1
+                            if (b === "Operations") return -1
+                            if (a === "Other") return -1
+                            if (b === "Other") return 1
+                            return a.localeCompare(b)
+                          }
+
+                          // Default behaviour (Compass Tools, Learnings, etc.)
                           // Priority subtitles come first
                           if (a === "Tech" || a === "Operations") return -1
                           if (b === "Tech" || b === "Operations") return 1
@@ -1264,14 +1306,16 @@ export default function TechToolPage() {
                             animate={toolsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                             transition={{ duration: 0.6, delay: 0.5 + groupIndex * 0.2 }}
                           >
-                            <motion.h3 
-                              className="text-2xl font-bold text-white mb-6 border-b border-gray-700 pb-2"
-                              initial={{ opacity: 0, x: -20 }}
-                              animate={toolsInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                              transition={{ duration: 0.6, delay: 0.6 + groupIndex * 0.2 }}
-                            >
-                              {subtitle}
-                            </motion.h3>
+                            {subtitle !== "Other" && (
+                              <motion.h3 
+                                className="text-2xl font-bold text-white mb-6 border-b border-gray-700 pb-2"
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={toolsInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                                transition={{ duration: 0.6, delay: 0.6 + groupIndex * 0.2 }}
+                              >
+                                {subtitle}
+                              </motion.h3>
+                            )}
                             <motion.div 
                               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
                               initial={{ opacity: 0 }}
