@@ -11,6 +11,8 @@ import { useUser } from '@clerk/nextjs'
 import { useRouter, useSearchParams } from 'next/navigation'
 import AuthDialog from "@/components/auth-dialog"
 
+const PENDING_TOOL_URL_KEY = "kw-pending-tool-url"
+
 // Tool data based on the image
 const tools = [
   {
@@ -1018,6 +1020,14 @@ export default function TechToolPage() {
         window.open(url, '_blank')
       } else {
         // User is not authenticated, show auth dialog
+        const url = tool.url.startsWith('http') ? tool.url : `https://${tool.url}`
+        if (typeof window !== "undefined") {
+          try {
+            window.localStorage.setItem(PENDING_TOOL_URL_KEY, url)
+          } catch {
+            // ignore storage errors
+          }
+        }
         setSelectedTool(tool)
         setAuthDialogOpen(true)
       }
@@ -1044,6 +1054,29 @@ export default function TechToolPage() {
     const query = category === "All" ? "" : `?tab=${encodeURIComponent(category)}`
     router.push(`/tools${query}`)
   }
+
+  // After successful authentication via AuthDialog on this page,
+  // Clerk redirects back to `/tools?postLogin=1`. If we detect that
+  // and there is a stored pending tool URL, immediately redirect
+  // the user into that selected tool instead of keeping them here.
+  useEffect(() => {
+    if (!isLoaded || !isSignedIn) return
+
+    const postLogin = searchParams.get("postLogin")
+    if (postLogin !== "1") return
+
+    if (typeof window === "undefined") return
+
+    try {
+      const pendingUrl = window.localStorage.getItem(PENDING_TOOL_URL_KEY)
+      if (pendingUrl) {
+        window.localStorage.removeItem(PENDING_TOOL_URL_KEY)
+        window.location.href = pendingUrl
+      }
+    } catch {
+      // ignore storage errors
+    }
+  }, [isLoaded, isSignedIn, searchParams])
 
   return (
     <motion.main
@@ -1817,7 +1850,7 @@ export default function TechToolPage() {
         open={authDialogOpen} 
         onOpenChange={setAuthDialogOpen}
         toolTitle={selectedTool?.title}
-        redirectUrl="/tools"
+        redirectUrl="/tools?postLogin=1"
       />
     </motion.main>
   )
