@@ -1385,12 +1385,12 @@ export default function WResidenceLanding() {
                 >
                   Location
                 </button>
-                <button 
+                {/* <button 
                   onClick={scrollToMedia}
                   className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
                 >
                   Explore
-                </button>
+                </button> */}
                 <Button 
                   className="bg-[#ce001f] hover:bg-[#b3001a] transition-colors duration-300"
                   onClick={scrollToLeadForm}
@@ -1480,13 +1480,13 @@ export default function WResidenceLanding() {
         </div>
 
         {/* Disclaimer Text */}
-        <div className={`absolute bottom-2 right-2 sm:bottom-4 sm:right-4 transition-all duration-1000 delay-2000 ${
+        {/* <div className={`absolute bottom-2 right-2 sm:bottom-4 sm:right-4 transition-all duration-1000 delay-2000 ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
         }`}>
           <p className="text-[9px] sm:text-xs text-white/70 bg-black/30 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-2 rounded-lg whitespace-nowrap">
             Images are for illustrative purposes only and may <br className="sm:hidden"/> not reflect the final design of Turquoise.
           </p>
-        </div>
+        </div> */}
       </section>
 
       {/* Enhanced Project Information Section */}
@@ -2059,7 +2059,8 @@ export default function WResidenceLanding() {
         </div>
       </section>
 
-      {/* Enhanced Media Section */}
+      {/* Enhanced Media Section (hidden) */}
+      {false && (
       <section id="media" className="pt-4 pb-4 bg-[#1c1c1d] flex items-center justify-center">
         <div className="container mx-auto px-4 text-left">
         <div className={`text-center mb-8 md:mb-16 transition-all duration-1000 ${
@@ -2130,10 +2131,11 @@ export default function WResidenceLanding() {
                   Book Showflat Visit
                 </Button>
               </div>
+              </div>
             </div>
           </div>
-        </div>
       </section>
+      )}
 
       {/* Lead Generation Form */}
       <section
