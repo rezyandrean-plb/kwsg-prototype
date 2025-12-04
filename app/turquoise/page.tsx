@@ -2103,7 +2103,7 @@ export default function WResidenceLanding() {
               <div className="relative hover:scale-105 transition-transform duration-500 p-0 md:p-0 order-1 lg:order-2">
                 <div className="relative h-64 md:h-80 rounded-xl overflow-hidden shadow-2xl">
                   <Image
-                    src="/images/penrith/explore-1.webp?height=320&width=500&text=Lentor+Mansion+Showflat+Tour"
+                    src="/images/penrith/explore-1.webp"
                     alt="Explore Turquoise"
                     fill
                     className="object-contain md:object-cover"
