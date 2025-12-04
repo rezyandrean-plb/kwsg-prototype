@@ -821,8 +821,6 @@ export default function WResidenceLanding() {
     setFloorPlanIndex(0)
   }, [unitsActiveTab])
 
-  const [projectImages, setProjectImages] = useState<string[]>([])
-  
   // Site Plan images for carousel (replace with Turquoise assets when ready)
   const sitePlanImages: string[] = [
     "/images/w-residences/site-plan/wmv-site-plan-01.webp",
@@ -831,57 +829,23 @@ export default function WResidenceLanding() {
     "/images/w-residences/site-plan/wmv-site-plan-04.webp"
   ]
 
-  useEffect(() => {
-    const loadGallery = async () => {
-      try {
-        const res = await fetch('/api/w-residences/gallery')
-        if (!res.ok) throw new Error('Failed to load gallery')
-        const data = await res.json()
-        if (Array.isArray(data?.images) && data.images.length > 0) {
-          setProjectImages(data.images)
-        } else {
-          setProjectImages([
-            "/images/w-residences/gallery/WMV- Day Aerial View.jpg",
-            "/images/w-residences/gallery/WMV- Magic hour aerial view.jpg",
-            "/images/w-residences/gallery/WMV- Frontal Elevation - Facade.jpg",
-            "/images/w-residences/gallery/WMV- Residential Drop off on Level 4.jpg",
-            "/images/w-residences/gallery/WMV- Lvl 51 25m infinity edge heated pool.jpg",
-            "/images/w-residences/gallery/WMV- Onsen on Level 51.jpg",
-            "/images/w-residences/gallery/WMV- Clubhouse- Private Dining on Lvl 34.jpg",
-            "/images/w-residences/gallery/WMV- VIP Lounge for 4 & 5 Bedroom (Level 4).jpg",
-            "/images/w-residences/gallery/WMV- Cellar at 34 (1).jpg",
-            "/images/w-residences/gallery/WMV- Cellar at 34 (2).jpg",
-            "/images/w-residences/gallery/WMV- Lvl 34 BBQ Pavillion.jpg",
-            "/images/w-residences/gallery/WMV- Pulse Studio on Level 15 (Gym).jpg",
-            "/images/w-residences/gallery/WMV- Meditation Room.jpg",
-            "/images/w-residences/gallery/WMV- Spa Retreat Concierge on Level 51.jpg",
-            "/images/w-residences/gallery/WMV- Treatment room on level 51.jpg",
-            "/images/w-residences/gallery/WMV- Club 51.jpg",
-          ])
-        }
-      } catch (e) {
-        setProjectImages([
-          "/images/w-residences/gallery/WMV- Day Aerial View.jpg",
-          "/images/w-residences/gallery/WMV- Magic hour aerial view.jpg",
-          "/images/w-residences/gallery/WMV- Frontal Elevation - Facade.jpg",
-          "/images/w-residences/gallery/WMV- Residential Drop off on Level 4.jpg",
-          "/images/w-residences/gallery/WMV- Lvl 51 25m infinity edge heated pool.jpg",
-          "/images/w-residences/gallery/WMV- Onsen on Level 51.jpg",
-          "/images/w-residences/gallery/WMV- Clubhouse- Private Dining on Lvl 34.jpg",
-          "/images/w-residences/gallery/WMV- VIP Lounge for 4 & 5 Bedroom (Level 4).jpg",
-          "/images/w-residences/gallery/WMV- Cellar at 34 (1).jpg",
-          "/images/w-residences/gallery/WMV- Cellar at 34 (2).jpg",
-          "/images/w-residences/gallery/WMV- Lvl 34 BBQ Pavillion.jpg",
-          "/images/w-residences/gallery/WMV- Pulse Studio on Level 15 (Gym).jpg",
-          "/images/w-residences/gallery/WMV- Meditation Room.jpg",
-          "/images/w-residences/gallery/WMV- Spa Retreat Concierge on Level 51.jpg",
-          "/images/w-residences/gallery/WMV- Treatment room on level 51.jpg",
-          "/images/w-residences/gallery/WMV- Club 51.jpg",
-        ])
-      }
-    }
-    loadGallery()
-  }, [])
+  const [projectImages, setProjectImages] = useState<string[]>([
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/IMG_3773.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/View-from-Master-Balcony.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Bathroom-B.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Common-Bedroom-A01.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Dry-Kitchen01.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Dry-Kitchen03.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Elevator.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Living-Room03.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Master-Balcony-03.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Master-Balcony-04.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Master-Bath-03.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Master-Bath01.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Rear-Balcony-01.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Wet-Kitchen02.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Window.jpg",
+  ])
 
 
   const amenities = [
@@ -1443,7 +1407,7 @@ export default function WResidenceLanding() {
         {/* Background elements */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/w-residences/wmv-hero-background.webp"
+            src="https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/turquoise-hero-background.webp"
             alt="Turquoise Hero"
             fill
             className="object-cover"
@@ -1757,10 +1721,10 @@ export default function WResidenceLanding() {
 
             {/* Main Image Display */}
             <div className="relative max-w-6xl mx-auto mb-8">
-              <div className="relative h-[500px] rounded-xl overflow-hidden shadow-2xl">
+              <div className="relative w-full h-[220px] sm:h-[320px] md:h-[500px] rounded-xl overflow-hidden shadow-2xl">
                 <Image
                   src={projectImages[currentImageIndex] || "/placeholder.svg"}
-                  alt={`Turquoise - Image ${currentImageIndex + 1}`}
+                  alt={`Arina East - Image ${currentImageIndex + 1}`}
                   fill
                   className="object-cover transition-all duration-500"
                 />
@@ -2177,7 +2141,7 @@ export default function WResidenceLanding() {
         className={`py-8 md:py-16 relative bg-cover bg-center section-entrance`}
         data-section-id="lead-form"
         style={{ 
-          backgroundImage: "url('/images/w-residences/wmv-hero-background.webp')",
+          backgroundImage: "url('https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/turquoise-hero-background.webp')",
           opacity: animatedSections.has('lead-form') ? 1 : 0,
           transform: animatedSections.has('lead-form') ? 'translateY(0)' : 'translateY(60px)'
         }}
