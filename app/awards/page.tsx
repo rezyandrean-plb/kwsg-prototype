@@ -429,9 +429,6 @@ export default function ModelPage() {
           <div className="text-center mb-4">
             <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
               <h3 className="text-2xl font-bold mb-4">Relive the highlights from our Q3 2025 Awards Night</h3>
-              <p className="text-lg mb-6 opacity-90">
-                Watch the full recap video and experience every celebration, story, and moment of excellence.
-              </p>
               <div className="flex justify-center">
                 <Button 
                   asChild
