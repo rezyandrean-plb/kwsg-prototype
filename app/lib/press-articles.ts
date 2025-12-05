@@ -165,5 +165,49 @@ export const allArticles: Article[] = [
         <p>KW Singapore is targeting to have 500 agents on its roster by the end of 2025.</p>
       </div>
     `
+  },
+  {
+    title: "Keller Williams Expands to Singapore",
+    description:
+      "Keller Williams Realty International announces its expansion into Singapore, marking a continued push into key Asian markets.",
+    imageUrl: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/news.jpg",
+    link: "https://kwri.kw.com/press/keller-williams-expands-to-singapore",
+    date: "2025-07-16",
+    year: "2025",
+    source: "KWRI",
+    slug: "keller-williams-expands-to-singapore-kwri"
+  },
+  {
+    title: "Keller Williams Expands to Singapore",
+    description:
+      "KW Outfront covers Keller Williams' expansion into Singapore and the opportunities it creates for real estate entrepreneurs.",
+    imageUrl: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/news.jpg",
+    link: "https://outfront.kw.com/performance/keller-williams-expands-to-singapore/",
+    date: "2025-07-16",
+    year: "2025",
+    source: "KW Outfront",
+    slug: "keller-williams-expands-to-singapore-outfront"
+  },
+  {
+    title: "Keller Williams Worldwide is proud to announce our continued Asian expansion with the launch of KW® Singapore!",
+    description:
+      "Keller Williams Worldwide celebrates the launch of KW Singapore in an official video announcement.",
+    imageUrl: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/news.jpg",
+    link: "https://www.facebook.com/watch/?v=758135760028308",
+    date: "2026-07-17",
+    year: "2026",
+    source: "Keller Williams Realty",
+    slug: "keller-williams-worldwide-announces-launch-of-kw-singapore"
+  },
+  {
+    title: "Keller Williams® Singapore Welcomes Rayne Chua",
+    description:
+      "KW Outfront highlights Rayne Chua joining Keller Williams Singapore, strengthening the leadership and agent community.",
+    imageUrl: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/news.jpg",
+    link: "https://outfront.kw.com/performance/keller-williams-singapore-welcomes-rayne-chua/",
+    date: "2025-11-05",
+    year: "2025",
+    source: "KW Outfront",
+    slug: "keller-williams-singapore-welcomes-rayne-chua"
   }
 ]; 
