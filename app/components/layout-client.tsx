@@ -161,6 +161,7 @@ const footerLinks = {
 
 export function Footer() {
   const pathname = usePathname()
+  const [currentYear, setCurrentYear] = useState<number | null>(null)
   const isAdminPage = pathname?.startsWith('/admin')
   const isSpringleafPage = pathname?.startsWith('/springleaf-residence')
   const isSpringleafBackupPage = pathname?.startsWith('/springleaf-backup')
@@ -173,6 +174,12 @@ export function Footer() {
   const isOrchardSophiaPage = pathname === '/orchard-sophia' || pathname?.startsWith('/orchard-sophia')
   const isTurquoisePage = pathname === '/turquoise' || pathname?.startsWith('/turquoise')
   const isTheDraycottPage = pathname === '/the-draycott' || pathname?.startsWith('/the-draycott')
+  
+  // Set year on client side only to avoid hydration mismatch
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear())
+  }, [])
+  
   if (isAdminPage) return null
 
   return (
@@ -234,7 +241,7 @@ export function Footer() {
           </div>
         </div>
         <div className="container mt-8 border-t border-gray-800 pt-8 text-center text-sm text-gray-300">
-          <p>&copy; {new Date().getFullYear()} KW Singapore Real Estate Pte. Ltd. | All rights reserved.</p>
+          <p>&copy; {currentYear ?? new Date().getFullYear()} KW Singapore Real Estate Pte. Ltd. | All rights reserved.</p>
           <p className="mt-1">CEA License Number: L3011034Z</p>
         </div>
       </footer>

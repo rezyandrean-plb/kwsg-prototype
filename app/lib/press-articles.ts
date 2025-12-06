@@ -170,44 +170,153 @@ export const allArticles: Article[] = [
     title: "Keller Williams Expands to Singapore",
     description:
       "Keller Williams Realty International announces its expansion into Singapore, marking a continued push into key Asian markets.",
-    imageUrl: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/news.jpg",
+    imageUrl: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/press/kwri.jpg",
     link: "https://kwri.kw.com/press/keller-williams-expands-to-singapore",
     date: "2025-07-16",
     year: "2025",
     source: "KWRI",
-    slug: "keller-williams-expands-to-singapore-kwri"
+    slug: "keller-williams-expands-to-singapore-kwri",
+    articleContent: `
+      <div class="article-content">
+        <h2 id="heading-0">Keller Williams Expands to Singapore</h2>
+        <p>Keller Williams Realty, LLC (KW), the world's largest real estate franchise by agent count, is expanding across Asia. As momentum continues, KW has awarded a new master franchise in Singapore. As of June 30, KW has 22 market centers and 1,196 affiliated agents across Asia.</p>
+        <blockquote style="margin: 16px 0; padding: 12px 20px; background: #222; border-left: 4px solid #B40101; color: #fff; font-style: italic;">
+          "We are thrilled to welcome KW Singapore to our KW family," said William E. Soteroff, president of Keller Williams Worldwide (KWW), the international division of KW. "As our growth across Asia continues to gain momentum, Singapore represents a dynamic market where our models and culture will thrive."
+        </blockquote>
+        <p>Led by Regional Operating Principal Melvin Lim, the KW franchise in Singapore is currently initiating operations. In Q3 2025, KW® Singapore is expected to open its first market center.</p>
+        <p>Lim brings to KW® Singapore 16 years of real estate experience spanning residential sales and brokerage operations. Currently, he serves as the co-founder and CEO of PropertyLimBrothers, a full-service real estate brokerage operating in Singapore.</p>
+        <blockquote style="margin: 16px 0; padding: 12px 20px; background: #222; border-left: 4px solid #B40101; color: #fff; font-style: italic;">
+          "Melvin and his PropertyLimBrothers team bring a proven track record of innovation, leadership, and success in the Singaporean real estate market," said Soteroff. "We're confident they will set another powerful benchmark for KW's expansion across Asia."
+        </blockquote>
+        <p>Lim is also widely recognized for pioneering the use of video home tours in Singapore as a powerful marketing strategy.</p>
+        <blockquote style="margin: 16px 0; padding: 12px 20px; background: #222; border-left: 4px solid #B40101; color: #fff; font-style: italic;">
+          "I aspire to watch KW systems and models shape the Singaporean housing market by empowering real estate agents to think like entrepreneurs," said Lim. "It is exciting to see how the KW brand has attracted 50 recruits even before the official launch of KW Singapore."
+        </blockquote>
+        <p>Singapore marks the eighth KW master franchise in Asia. The brand's other seven regions include Vietnam, the Philippines, Malaysia, Japan, Thailand, Mongolia, and India.</p>
+        <p>As of June 30, KWW has more than 270 market centers (outside the U.S. and Canada) across more than 60 regions. KWW has more than 17,500 affiliated agents collectively operating outside the U.S. and Canada.</p>
+        <p>KWW is currently exploring further expansion opportunities across Africa, Central and South America, Central and Eastern Europe, and throughout Asia.</p>
+        <p>Core criteria for new licensees start with having a qualified leadership team grounded in the Keller Williams® culture; KWW also strives for stability in the government, banking, and judicial systems, and a higher maturity level in the real estate market.</p>
+        <p>Outside of the U.S. and Canada, KWW's regions include Albania; Argentina; Aruba; Bahamas; Belize; Bermuda; Bolivia; Bonaire; Cayman Islands; Colombia; Costa Rica; Curaçao; Cyprus; Czech Republic; Delhi NCR, India; Dominican Republic; Dubai, UAE; El Salvador; France; Germany; Greece; Guatemala; Guyana; Honduras; Ireland; Israel; Italy; Jamaica; Japan; Luxembourg; Malaysia; Mexico; Monaco; Mongolia; Nicaragua; North Macedonia; Panama; Paraguay; Peru; Philippines; Poland; Portugal; Puerto Rico; Romania; São Paulo, Brazil; Saudi Arabia; Scotland; Serbia; Singapore; Sint Maarten; Slovenia; Southern Africa; Spain; Suriname; Thailand; Turkiye; Turks and Caicos; United Kingdom; Uruguay; and Vietnam.</p>
+        <h3 id="heading-1">About Keller Williams</h3>
+        <p>Austin, Texas-based Keller Williams Realty, LLC is the world's largest real estate franchise by agent count. It has more than 1,000 market center offices and 162,000 affiliated agents. The franchise is No. 1 in units and sales volume in the U.S.</p>
+        <p>Since 1983, the company has cultivated an agent-centric, technology-driven, and education-based culture that rewards affiliated agents. For more information, visit kwri.kw.com.</p>
+      </div>
+    `
   },
   {
     title: "Keller Williams Expands to Singapore",
     description:
       "KW Outfront covers Keller Williams' expansion into Singapore and the opportunities it creates for real estate entrepreneurs.",
-    imageUrl: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/news.jpg",
+    imageUrl: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/press/kwri.jpg",
     link: "https://outfront.kw.com/performance/keller-williams-expands-to-singapore/",
     date: "2025-07-16",
     year: "2025",
     source: "KW Outfront",
-    slug: "keller-williams-expands-to-singapore-outfront"
+    slug: "keller-williams-expands-to-singapore-outfront",
+    articleContent: `
+      <div class="article-content">
+        <h2 id="heading-0">Keller Williams Expands to Singapore</h2>
+        <p>Keller Williams Realty, LLC (KW), the world's largest real estate franchise by agent count, is expanding across Asia. As momentum continues, KW has awarded a new master franchise in Singapore. As of June 30, KW has 22 market centers and 1,196 affiliated agents across Asia.</p>
+        <blockquote style="margin: 16px 0; padding: 12px 20px; background: #222; border-left: 4px solid #B40101; color: #fff; font-style: italic;">
+          "We are thrilled to welcome KW Singapore to our KW family," said William E. Soteroff, president of Keller Williams Worldwide (KWW), the international division of KW. "As our growth across Asia continues to gain momentum, Singapore represents a dynamic market where our models and culture will thrive."
+        </blockquote>
+        <div style="display:flex;gap:24px;align-items:flex-start;margin:24px 0;">
+          <div style="flex-shrink:0;">
+            <img src="https://outfront.kw.com/wp-content/uploads/2025/07/537-1025x1536.jpg" alt="Regional Operating Principal Melvin Lim" style="width:100%;max-width:300px;display:block;" />
+            <em style="display:block;text-align:center;color:#aaa;font-size:0.95em;margin-top:8px;">Regional Operating Principal Melvin Lim</em>
+          </div>
+          <div style="flex:1;">
+            <p>Led by Regional Operating Principal Melvin Lim, the KW franchise in Singapore is currently initiating operations. In Q3 2025, KW® Singapore is expected to open its first market center.</p>
+            <p>Lim brings to KW® Singapore 16 years of real estate experience spanning residential sales and brokerage operations. Currently, he serves as the co-founder and CEO of PropertyLimBrothers, a full-service real estate brokerage operating in Singapore.</p>
+            <blockquote style="margin: 16px 0; padding: 12px 20px; background: #222; border-left: 4px solid #B40101; color: #fff; font-style: italic;">
+              "Melvin and his PropertyLimBrothers team bring a proven track record of innovation, leadership, and success in the Singaporean real estate market," said Soteroff. "We're confident they will set another powerful benchmark for KW's expansion across Asia."
+            </blockquote>
+            <p>Lim is also widely recognized for pioneering the use of video home tours in Singapore as a powerful marketing strategy.</p>
+          </div>
+        </div>
+        <blockquote style="margin: 16px 0; padding: 12px 20px; background: #222; border-left: 4px solid #B40101; color: #fff; font-style: italic;">
+          "I aspire to watch KW systems and models shape the Singaporean housing market by empowering real estate agents to think like entrepreneurs," said Lim. "It is exciting to see how the KW brand has attracted 50 recruits even before the official launch of KW Singapore."
+        </blockquote>
+        <p>Singapore marks the eighth KW master franchise in Asia. The brand's other seven regions include Vietnam, the Philippines, Malaysia, Japan, Thailand, Mongolia, and India.</p>
+        <p>As of June 30, KWW has more than 270 market centers (outside the U.S. and Canada) across more than 60 regions. KWW has more than 17,500 affiliated agents collectively operating outside the U.S. and Canada.</p>
+      </div>
+    `
   },
   {
     title: "Keller Williams Worldwide is proud to announce our continued Asian expansion with the launch of KW® Singapore!",
     description:
       "Keller Williams Worldwide celebrates the launch of KW Singapore in an official video announcement.",
-    imageUrl: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/news.jpg",
+    imageUrl: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/press/kw-facebook.webp",
     link: "https://www.facebook.com/watch/?v=758135760028308",
     date: "2026-07-17",
     year: "2026",
     source: "Keller Williams Realty",
-    slug: "keller-williams-worldwide-announces-launch-of-kw-singapore"
+    slug: "keller-williams-worldwide-announces-launch-of-kw-singapore",
+    articleContent: `
+      <div class="article-content">
+        <h2 id="heading-0">Keller Williams Worldwide is proud to announce our continued Asian expansion with the launch of KW® Singapore! 🇸🇬</h2>
+        <p>Led by Regional Operating Principal Melvin Lim, KW® Singapore has opened its first market center. 🔗 <a href="https://bit.ly/44UZXMp" target="_blank" rel="noopener noreferrer" style="color: #B40101; text-decoration: underline;">Read more here</a></p>
+        <h3 id="heading-1">Here are a few fun facts about Singapore:</h3>
+        <ul style="list-style: none; padding-left: 0;">
+          <li style="margin-bottom: 16px;">
+            <strong>🌇 Known as the "Lion City,"</strong> Singapore is a global hub for finance, innovation, and culture.
+          </li>
+          <li style="margin-bottom: 16px;">
+            <strong>🌿 Nearly half of Singapore's land is covered in greenery,</strong> earning it the nickname "City in a Garden."
+          </li>
+          <li style="margin-bottom: 16px;">
+            <strong>🍜 Food is a national obsession.</strong> Hawker Centres serve up world-famous dishes like chili crab, laksa, and Hainanese chicken rice.
+          </li>
+        </ul>
+      </div>
+    `
   },
   {
     title: "Keller Williams® Singapore Welcomes Rayne Chua",
     description:
       "KW Outfront highlights Rayne Chua joining Keller Williams Singapore, strengthening the leadership and agent community.",
-    imageUrl: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/news.jpg",
+    imageUrl: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/press/kw-outfront-rayne.webp",
     link: "https://outfront.kw.com/performance/keller-williams-singapore-welcomes-rayne-chua/",
     date: "2025-11-05",
     year: "2025",
     source: "KW Outfront",
-    slug: "keller-williams-singapore-welcomes-rayne-chua"
+    slug: "keller-williams-singapore-welcomes-rayne-chua",
+    articleContent: `
+      <div class="article-content">
+        <h2 id="heading-0">Keller Williams® Singapore Welcomes Rayne Chua</h2>
+        <p>KW® Singapore announced Rayne Chua as New Launch Director and brand ambassador for KW® Singapore in Q2 '25.</p>
+        <p>As the world's largest real estate franchise by agent count, with a presence in over 60 regions and more than 160,000 affiliated agents worldwide, Keller Williams has entered Singapore with a proprietary model: one that emphasizes AI technology, media, brand positioning, growth, revenue sharing, and a global network of affiliated agents for cross-collaboration.</p>
+        <h3 id="heading-1">Rayne Chua, New Launch Director</h3>
+        <p>As the New Launch Director at KW® Singapore, Rayne Chua brings extensive experience in real estate, project marketing, training and leading high-performing teams. In 2024, Chua led her previous agency to $1.5 billion in closed volume.</p>
+        <p>Before real estate, Chua spent 16 years in education, rising from a teacher to a senior specialist with the Ministry of Education. Her leadership style today reflects that background: it is focused on mentorship, structured training, and empowering others to achieve breakthrough results.</p>
+        <blockquote style="margin: 16px 0; padding: 12px 20px; background: #222; border-left: 4px solid #B40101; color: #fff; font-style: italic;">
+          "Developing consultants to value-add to clients' journeys is at the heart of what I do," she says.
+        </blockquote>
+        <blockquote style="margin: 16px 0; padding: 12px 20px; background: #222; border-left: 4px solid #B40101; color: #fff; font-style: italic;">
+          "It's the same approach I had in my previous agency, but now with KW® Singapore, I have the global tools, media support and ecosystem to scale it further."
+        </blockquote>
+        <img src="https://outfront.kw.com/wp-content/uploads/2025/11/image-1.jpeg" alt="Rayne Chua" style="width:100%;max-width:600px;margin:24px auto;display:block;" />
+        <p>With more than a decade of success in project marketing, Chua is perfectly positioned to lead Keller Williams' new launch strategy. In her first three months, she has already:</p>
+        <ul style="list-style: disc; padding-left: 24px; margin-bottom: 16px;">
+          <li style="margin-bottom: 8px;">Brought in KW® Singapore's first developer partnership (GuocoLand's project at Springleaf Residence, achieving 55% sales conversions during launch)</li>
+          <li style="margin-bottom: 8px;">Trained all agents across her company on new launch sales strategies</li>
+          <li style="margin-bottom: 8px;">Doubled her group to over 80 agents, out of which 40 followed her from her previous agency</li>
+        </ul>
+        <p>Her track record speaks volumes: 70% of her team's transactions come from new launches, and she continues to manage portfolios ranging from high-net-worth investors to aspiring HDB upgraders. In 2024, she achieved more than $1 million in commission, with a high percentage coming from project marketing.</p>
+        <p>Yet Chua is quick to acknowledge that the journey is not without its challenges. The pace is fast, the learning curve steep, but the potential for exponential growth is significant. Despite teething issues starting and abandoning an almost guaranteed millionaire run, the promise of a holistic, sustainable model convinced her.</p>
+        <blockquote style="margin: 16px 0; padding: 12px 20px; background: #222; border-left: 4px solid #B40101; color: #fff; font-style: italic;">
+          "Agents not only earn from sales but also from coaching and introducing others into the community. The Keller Williams model is a self-retention model that reduces attrition and fosters exponential growth."
+        </blockquote>
+        <blockquote style="margin: 16px 0; padding: 12px 20px; background: #222; border-left: 4px solid #B40101; color: #fff; font-style: italic;">
+          Chua adds, "It's not just active income from sales anymore. You can coach and build others, but even if you're not actively doing so, the referral model ensures your family continues to benefit."
+        </blockquote>
+        <img src="https://outfront.kw.com/wp-content/uploads/2025/11/image.jpeg" alt="Rayne Chua" style="width:100%;max-width:600px;margin:24px auto;display:block;" />
+        <p>The momentum has been strong. In just over three months, her team has expanded rapidly, secured developer partnerships and positioned itself as the go-to new launch division at KW® Singapore</p>
+        <p>For Chua, the next stage is team growth and leadership development. She is looking for agents with a 100% willingness to learn and a strong entrepreneurial mindset: Individuals eager to leverage AI tools, brand-building strategies and the global KW platform.</p>
+        <blockquote style="margin: 16px 0; padding: 12px 20px; background: #222; border-left: 4px solid #B40101; color: #fff; font-style: italic;">
+          Her message is simple: "If you're looking to scale your business, break through income ceilings, and build a lasting legacy, this is the place."
+        </blockquote>
+      </div>
+    `
   }
 ]; 
