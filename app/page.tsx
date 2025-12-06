@@ -667,7 +667,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Events Section */}
+      {/* Training Academy Section */}
       <section className="relative py-8 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-b from-black to-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12 sm:mb-16">
@@ -734,6 +734,41 @@ export default function Home() {
               <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>
+        </div>
+      </section>
+
+      {/* Meet the Consultants Section */}
+      <section className="relative py-8 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-b from-gray-900 to-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 font-sans text-white">
+              Meet the<span className="block text-[#B40101] italic">Consultants</span>
+            </h2>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="max-w-4xl mx-auto"
+          >
+            <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-[#666666]/20 bg-black/40">
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src="https://www.youtube.com/embed/C-SeyqyP4rU?start=4"
+                title="Meet the Consultants"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+          </motion.div>
         </div>
       </section>
 
