@@ -5,7 +5,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle, Building2, Users, Award, Brain, Share2, Video, BarChart3, Target, Heart, Lightbulb, Users2, Briefcase, ChevronRight, ChevronLeft, ArrowLeft } from "lucide-react"
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { JoinFormDialog } from "@/components/join-form-dialog"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel"
@@ -50,6 +50,8 @@ export default function AboutUsPage() {
   const [canScrollNext, setCanScrollNext] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isMobileView, setIsMobileView] = useState(false)
+  const [galleryCategory, setGalleryCategory] = useState<string>("all")
+  const [currentGalleryImage, setCurrentGalleryImage] = useState(0)
 
   useEffect(() => {
     const updateIsMobile = () => {
@@ -134,6 +136,71 @@ export default function AboutUsPage() {
     // This callback can be used for additional actions if needed
   }
 
+  // Gallery images by category
+  const galleryImages = {
+    "Branding workshop": [
+      { src: "/images/about-us/excellence-celebrated/Excellence-01.jpg", alt: "Branding Workshop 1" },
+      { src: "/images/about-us/excellence-celebrated/Excellence-02.jpg", alt: "Branding Workshop 2" },
+      { src: "/images/about-us/excellence-celebrated/Excellence-03.jpg", alt: "Branding Workshop 3" },
+    ],
+    "Trainings": [
+      { src: "/images/about-us/excellence-celebrated/Excellence-04.jpg", alt: "Training Session 1" },
+      { src: "/images/about-us/excellence-celebrated/Excellence-05.jpg", alt: "Training Session 2" },
+      { src: "/images/about-us/excellence-celebrated/Excellence-06.jpg", alt: "Training Session 3" },
+    ],
+    "MREA": [
+      { src: "/images/about-us/excellence-celebrated/Excellence-07.jpg", alt: "MREA Event 1" },
+      { src: "/images/about-us/excellence-celebrated/Excellence-08.jpg", alt: "MREA Event 2" },
+      { src: "/images/about-us/excellence-celebrated/Excellence-09.jpg", alt: "MREA Event 3" },
+    ],
+    "MRS": [
+      { src: "/images/about-us/excellence-celebrated/Excellence-10.jpg", alt: "MRS Event 1" },
+      { src: "/images/about-us/excellence-celebrated/Excellence-01.jpg", alt: "MRS Event 2" },
+      { src: "/images/about-us/excellence-celebrated/Excellence-02.jpg", alt: "MRS Event 3" },
+    ],
+    "Podcast": [
+      { src: "/images/about-us/excellence-celebrated/Excellence-03.jpg", alt: "Podcast Recording 1" },
+      { src: "/images/about-us/excellence-celebrated/Excellence-04.jpg", alt: "Podcast Recording 2" },
+      { src: "/images/about-us/excellence-celebrated/Excellence-05.jpg", alt: "Podcast Recording 3" },
+    ],
+  }
+
+  const categories = ["Branding workshop", "Trainings", "MREA", "MRS", "Podcast"]
+
+  // Get filtered images based on selected category
+  const filteredImages = useMemo(() => {
+    if (galleryCategory === "all") {
+      return Object.values(galleryImages).flat()
+    }
+    return galleryImages[galleryCategory as keyof typeof galleryImages] || []
+  }, [galleryCategory])
+
+  // Random image rotation
+  useEffect(() => {
+    if (filteredImages.length === 0) return
+
+    const interval = setInterval(() => {
+      setCurrentGalleryImage((prev) => {
+        const nextIndex = Math.floor(Math.random() * filteredImages.length)
+        return nextIndex !== prev ? nextIndex : (nextIndex + 1) % filteredImages.length
+      })
+    }, 4000) // Change image every 4 seconds
+
+    return () => clearInterval(interval)
+  }, [filteredImages])
+
+  // Reset to first image when category changes
+  useEffect(() => {
+    setCurrentGalleryImage(0)
+  }, [galleryCategory])
+
+  // Ensure currentGalleryImage is within bounds
+  useEffect(() => {
+    if (currentGalleryImage >= filteredImages.length && filteredImages.length > 0) {
+      setCurrentGalleryImage(0)
+    }
+  }, [filteredImages.length, currentGalleryImage])
+
   
 
   const teamMembers = [
@@ -195,14 +262,43 @@ export default function AboutUsPage() {
       className="min-h-screen flex flex-col"
     >
       {/* Hero Banner */}
-      <section className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center pt-20 sm:pt-20 md:pt-12">
-        <motion.div
-          className="absolute inset-0 bg-black"
+      <section className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-black to-gray-900 pt-20 sm:pt-20 md:pt-12">
+        {/* Overlay gradient */}
+        <div
+          className="absolute inset-0"
           style={{
-            y: scrollYValue,
+            background: "linear-gradient(to bottom, #000000 0%, rgba(66, 2, 2, 0.3) 40%, #111827 100%)",
+            opacity: 0.9,
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30" />
+        <div className="absolute inset-0 opacity-18">
+          <svg viewBox="0 0 1440 800" className="w-full h-full" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="waveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.25" />
+                <stop offset="50%" stopColor="#ffffff" stopOpacity="0.18" />
+                <stop offset="100%" stopColor="#ffffff" stopOpacity="0.10" />
+              </linearGradient>
+            </defs>
+            <g stroke="url(#waveGradient)" strokeWidth="1" fill="none" opacity="0.2">
+              {[200, 210, 220].map((y) => (
+                <path key={`wave1-${y}`} d={`M0,${y} Q180,${y - 50} 360,${y} T720,${y} T1080,${y} T1440,${y}`} />
+              ))}
+              {[300, 310, 320].map((y) => (
+                <path key={`wave2-${y}`} d={`M0,${y} Q200,${y - 50} 400,${y} T800,${y} T1200,${y} T1440,${y}`} />
+              ))}
+              {[400, 410, 420].map((y) => (
+                <path key={`wave3-${y}`} d={`M0,${y} Q160,${y - 50} 320,${y} T640,${y} T960,${y} T1280,${y} T1440,${y}`} />
+              ))}
+              {[500, 510, 520].map((y) => (
+                <path key={`wave4-${y}`} d={`M0,${y} Q220,${y - 50} 440,${y} T880,${y} T1320,${y} T1440,${y}`} />
+              ))}
+              {[600, 610, 620].map((y) => (
+                <path key={`wave5-${y}`} d={`M0,${y} Q140,${y - 50} 280,${y} T560,${y} T840,${y} T1120,${y} T1440,${y}`} />
+              ))}
+            </g>
+          </svg>
+        </div>
 
         <div className="relative z-10 text-center max-w-6xl mx-auto px-6 pt-8 sm:pt-12 md:pt-16 lg:pt-32">
           <motion.h1 
@@ -229,7 +325,7 @@ export default function AboutUsPage() {
       </section>
 
       {/* Inside KW Section */}
-      <section id="our-story" className="relative py-12 sm:py-32 bg-gradient-to-b from-gray-900 to-black">
+      <section id="our-story" className="relative py-6 sm:py-12 bg-gradient-to-b from-gray-900 to-black">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left Side - Text Content */}
@@ -454,6 +550,168 @@ export default function AboutUsPage() {
               </button>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* The Growth */}
+      <section className="relative py-12 sm:py-32 overflow-hidden bg-black">
+        <div
+          className="absolute inset-0 opacity-70"
+          style={{
+            background: "linear-gradient(to bottom, #1a0000 0%, #000000 33%, #330000 66%, #000000 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-40"
+          style={{
+            backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)",
+            backgroundSize: "20px 20px",
+            backgroundPosition: "0 0, 10px 10px",
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.2) 1.5px, transparent 0)",
+            backgroundSize: "30px 30px",
+            backgroundPosition: "15px 15px",
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-50"
+          style={{
+            backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.25) 2px, transparent 0)",
+            backgroundSize: "40px 40px",
+            backgroundPosition: "20px 20px",
+            maskImage: "linear-gradient(to bottom right, transparent 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%)",
+            WebkitMaskImage: "linear-gradient(to bottom right, transparent 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%)",
+          }}
+        />
+        <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
+          <motion.h2 
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 font-sans text-white"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            The Growth
+          </motion.h2>
+          <motion.p 
+            className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-8 text-[#B40101]"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            World-Class Training. Real-World Results.
+          </motion.p>
+          <motion.p 
+            className="text-lg md:text-xl text-white/90 leading-relaxed max-w-4xl mx-auto mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            We are the strategic launchpad for real estate entrepreneurs. We are built to empower Singapore's top realtors through elite systems, technology, and training. Unlock your potential with comprehensive training, unmatched support systems, and a community of ambitious consultants committed to excellence.
+          </motion.p>
+
+          {/* Category Filter Buttons */}
+          <motion.div 
+            className="flex flex-wrap justify-center gap-3 mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            <button
+              onClick={() => setGalleryCategory("all")}
+              className={`px-4 py-2 text-sm rounded-full font-semibold transition-all duration-300 ${
+                galleryCategory === "all"
+                  ? "bg-[#B40101] text-white shadow-lg shadow-[#B40101]/30"
+                  : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
+              }`}
+            >
+              All
+            </button>
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setGalleryCategory(category)}
+                className={`px-4 py-2 text-sm rounded-full font-semibold transition-all duration-300 ${
+                  galleryCategory === category
+                    ? "bg-[#B40101] text-white shadow-lg shadow-[#B40101]/30"
+                    : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </motion.div>
+
+          {/* Image Gallery Display */}
+          <motion.div 
+            className="relative max-w-5xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          >
+            <div className="aspect-video rounded-2xl overflow-hidden bg-gray-800 relative">
+              <AnimatePresence mode="wait">
+                {filteredImages.length > 0 && (
+                  <motion.div
+                    key={`${galleryCategory}-${currentGalleryImage}`}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1.05 }}
+                    transition={{ duration: 0.6, ease: "easeInOut" }}
+                    className="absolute inset-0"
+                  >
+                    <img
+                      src={filteredImages[currentGalleryImage]?.src || "/placeholder.svg"}
+                      alt={filteredImages[currentGalleryImage]?.alt || "Gallery Image"}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Image Counter */}
+              {filteredImages.length > 0 && (
+                <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-full text-white text-sm font-medium">
+                  {currentGalleryImage + 1} / {filteredImages.length}
+                </div>
+              )}
+            </div>
+
+            {/* Thumbnail Grid */}
+            {filteredImages.length > 1 && (
+              <div className="grid grid-cols-4 md:grid-cols-6 gap-2 mt-6">
+                {filteredImages.slice(0, 8).map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentGalleryImage(index)}
+                    className={`aspect-square rounded-lg overflow-hidden relative transition-all duration-300 ${
+                      currentGalleryImage === index
+                        ? "ring-2 ring-[#B40101] scale-105"
+                        : "opacity-60 hover:opacity-100 hover:scale-105"
+                    }`}
+                  >
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className="w-full h-full object-cover"
+                    />
+                    {currentGalleryImage === index && (
+                      <div className="absolute inset-0 bg-[#B40101]/20" />
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
+          </motion.div>
         </div>
       </section>
 
