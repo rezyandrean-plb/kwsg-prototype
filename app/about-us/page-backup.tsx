@@ -3,9 +3,9 @@
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, CheckCircle, Building2, Users, Award, Brain, Share2, Video, BarChart3, Target, Heart, Lightbulb, Users2, Briefcase, ChevronRight, ChevronLeft, ArrowLeft, Rocket, Download } from "lucide-react"
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
-import { useState, useEffect, useMemo, useRef } from "react"
+import { ArrowRight, CheckCircle, Building2, Users, Award, Brain, Share2, Video, BarChart3, Target, Heart, Lightbulb, Users2, Briefcase, ChevronRight, ChevronLeft, ArrowLeft } from "lucide-react"
+import { motion, useScroll, useTransform } from "framer-motion"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { JoinFormDialog } from "@/components/join-form-dialog"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel"
@@ -50,8 +50,6 @@ export default function AboutUsPage() {
   const [canScrollNext, setCanScrollNext] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isMobileView, setIsMobileView] = useState(false)
-  const [galleryCategory, setGalleryCategory] = useState<string>("all")
-  const prevVisibleImagesRef = useRef<Set<string>>(new Set())
 
   useEffect(() => {
     const updateIsMobile = () => {
@@ -136,50 +134,6 @@ export default function AboutUsPage() {
     // This callback can be used for additional actions if needed
   }
 
-  // Gallery images by category
-  const galleryImages = {
-    "Branding workshop": [
-      { src: "/images/about-us/excellence-celebrated/Excellence-01.jpg", alt: "Branding Workshop 1" },
-      { src: "/images/about-us/excellence-celebrated/Excellence-02.jpg", alt: "Branding Workshop 2" },
-      { src: "/images/about-us/excellence-celebrated/Excellence-03.jpg", alt: "Branding Workshop 3" },
-    ],
-    "Trainings": [
-      { src: "/images/about-us/excellence-celebrated/Excellence-04.jpg", alt: "Training Session 1" },
-      { src: "/images/about-us/excellence-celebrated/Excellence-05.jpg", alt: "Training Session 2" },
-      { src: "/images/about-us/excellence-celebrated/Excellence-06.jpg", alt: "Training Session 3" },
-    ],
-    "MREA": [
-      { src: "/images/about-us/excellence-celebrated/Excellence-07.jpg", alt: "MREA Event 1" },
-      { src: "/images/about-us/excellence-celebrated/Excellence-08.jpg", alt: "MREA Event 2" },
-      { src: "/images/about-us/excellence-celebrated/Excellence-09.jpg", alt: "MREA Event 3" },
-    ],
-    "MRS": [
-      { src: "/images/about-us/excellence-celebrated/Excellence-10.jpg", alt: "MRS Event 1" },
-      { src: "/images/about-us/excellence-celebrated/Excellence-01.jpg", alt: "MRS Event 2" },
-      { src: "/images/about-us/excellence-celebrated/Excellence-02.jpg", alt: "MRS Event 3" },
-    ],
-    "Podcast": [
-      { src: "/images/about-us/excellence-celebrated/Excellence-03.jpg", alt: "Podcast Recording 1" },
-      { src: "/images/about-us/excellence-celebrated/Excellence-04.jpg", alt: "Podcast Recording 2" },
-      { src: "/images/about-us/excellence-celebrated/Excellence-05.jpg", alt: "Podcast Recording 3" },
-    ],
-  }
-
-  const categories = ["Branding workshop", "Trainings", "MREA", "MRS", "Podcast"]
-
-  // Get filtered images based on selected category
-  const filteredImages = useMemo(() => {
-    if (galleryCategory === "all") {
-      return Object.values(galleryImages).flat()
-    }
-    return galleryImages[galleryCategory as keyof typeof galleryImages] || []
-  }, [galleryCategory])
-
-  // Track visible images to avoid re-animating those that remain
-  useEffect(() => {
-    prevVisibleImagesRef.current = new Set(filteredImages.map((img) => img.src))
-  }, [filteredImages])
-
   
 
   const teamMembers = [
@@ -209,27 +163,27 @@ export default function AboutUsPage() {
     },
     {
       name: "Isabelle",
-      title: "Branding & Social Media Executive",
-      bio: "Isabelle is a Branding & Social Media Executive who helps real estate consultants turn their expertise into influence, authority, and a consistent digital presence. \n\nIsabelle has a strong foundation in consumer behaviour, visual storytelling, and digital branding. Working behind the scenes with multiple realtors gave her firsthand insight into what resonates with property audiences, how realtors should position themselves, and how content can shape perception, trust, and client flow.\n\n Today, at KW Singapore, Isabelle leads content development across social platforms, consultant branding projects, and media-driven recruitment initiatives. From shaping brand identities to story-led campaigns, she strategises communication on media platforms that elevate the KW brand and empower consultants to grow their businesses with clarity and confidence.\n\n Beyond KW, Isabelle also supports Chief Media, helping to refine creative workflows, oversee vendor content quality, and build the structure that allows realtors to access professional-level media production. Her experience across both sides — agency-style content creation and in-house branding — gives her a unique perspective on what realtors actually need to stand out in a competitive digital landscape.\n\n Her work combines creativity, strategic thinking, and a deep understanding of digital behaviour — ensuring every piece of content drives clarity, trust, and meaningful engagement.",
-      image: "/images/about-us/core-team/isabelle-lee.jpg",
+      title: "TBC",
+      bio: "TBC",
+      image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80",
     },
     {
       name: "Vanessa",
-      title: "Realtor Recruitment and Growth",
-      bio: "Vanessa is a pivotal force in KW Singapore's expansion, specialising in Realtor Recruitment and Growth. Her role is dedicated to identifying high-potential professionals and providing them with the platform, systems, and mentorship required to scale their business exponentially. \n\n Armed with a Bachelor of Science degree in Marketing and a minor in Communications from the Singapore University of Social Sciences (SUSS), Vanessa leverages her deep understanding of market positioning and targeted messaging to connect ambitious realtors with the unique wealth-building opportunities available at KW Singapore.\n\n She is instrumental in executing the company's aggressive growth goals, ensuring every new consultant onboarded aligns with the high-performance culture. Vanessa’s ability to bridge strategic marketing theory with hands-on recruitment execution makes her an invaluable asset in reinforcing KW Singapore's position as the leading choice for growth-minded realtors.\n\n In her personal time, Vanessa maintains a balance of precision and exploration. She enjoys the focused ritual of crafting matcha and coffee, the discipline of going to the gym, and expanding her perspective through travel.",
-      image: "/images/about-us/core-team/Vanessa Chee.jpg",
+      title: "TBC",
+      bio: "TBC",
+      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1200&q=80",
     },
     {
       name: "Sheerra",
-      title: "Operations and Admin Executive",
-      bio: "Sheerra supports the growth and operations of Keller Williams Singapore through her role in realtor onboarding, tech support, and training coordination. With a strong background in business relations and administration, she ensures smooth processes and provides consistent support to help consultants perform at their best.\n\n Having honed her skills in realtor management, training coordination, and system support since 2021, Sheerra brings both precision and empathy to her work. Her deep familiarity with industry platforms such as KW Command, Datalabs, Powerkit, and CTOS enables her to guide consultants in adopting technology to enhance efficiency and productivity.",
-      image: "/images/about-us/core-team/Sheera Bakivelu.jpg",
+      title: "TBC",
+      bio: "TBC",
+      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1200&q=80",
     },
     {
       name: "Suvarna",
-      title: "Operations and Finance Executive",
-      bio: "Suvarna supports the finance functions of Keller Williams Singapore through transaction handling and system coordination. She ensures smooth processes and accuracy in financial matters while assisting the team in maintaining efficient operations. With a background in Bachelor of Finance, she brings a strong understanding of financial principles and business processes, contributing to the team’s overall efficiency and reliability",
-      image: "/images/about-us/core-team/Survana Bakivelu.jpeg",
+      title: "TBC",
+      bio: "TBC",
+      image: "https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?auto=format&fit=crop&w=1200&q=80",
     },
   ]
 
@@ -241,7 +195,14 @@ export default function AboutUsPage() {
       className="min-h-screen flex flex-col"
     >
       {/* Hero Banner */}
-      <section className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-black to-gray-900 pt-20 sm:pt-20 md:pt-12">
+      <section className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center pt-20 sm:pt-20 md:pt-12">
+        <motion.div
+          className="absolute inset-0 bg-black"
+          style={{
+            y: scrollYValue,
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30" />
 
         <div className="relative z-10 text-center max-w-6xl mx-auto px-6 pt-8 sm:pt-12 md:pt-16 lg:pt-32">
           <motion.h1 
@@ -268,7 +229,7 @@ export default function AboutUsPage() {
       </section>
 
       {/* Inside KW Section */}
-      <section id="our-story" className="relative py-6 sm:py-12 bg-gradient-to-b from-gray-900 to-black">
+      <section id="our-story" className="relative py-12 sm:py-32 bg-gradient-to-b from-black to-gray-900">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left Side - Text Content */}
@@ -496,201 +457,10 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-      {/* The Growth */}
-      <section className="relative py-12 sm:py-32 overflow-hidden bg-black">
-        <div
-          className="absolute inset-0 opacity-70"
-          style={{
-            background: "linear-gradient(to bottom, #1a0000 0%, #000000 33%, #330000 66%, #000000 100%)",
-          }}
-        />
-        <div
-          className="absolute inset-0 opacity-40"
-          style={{
-            backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)",
-            backgroundSize: "20px 20px",
-            backgroundPosition: "0 0, 10px 10px",
-          }}
-        />
-        <div
-          className="absolute inset-0 opacity-30"
-          style={{
-            backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.2) 1.5px, transparent 0)",
-            backgroundSize: "30px 30px",
-            backgroundPosition: "15px 15px",
-          }}
-        />
-        <div
-          className="absolute inset-0 opacity-50"
-          style={{
-            backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.25) 2px, transparent 0)",
-            backgroundSize: "40px 40px",
-            backgroundPosition: "20px 20px",
-            maskImage: "linear-gradient(to bottom right, transparent 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%)",
-            WebkitMaskImage: "linear-gradient(to bottom right, transparent 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%)",
-          }}
-        />
-        <div className="relative z-10 w-full px-6 text-center">
-          <div className="max-w-5xl mx-auto">
-            <motion.h2 
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              The Growth
-            </motion.h2>
-            <motion.p 
-              className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-8 text-[#B40101]"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              World-Class Training. Real-World Results.
-            </motion.p>
-            <motion.p 
-              className="text-lg md:text-xl text-white/90 leading-relaxed max-w-4xl mx-auto mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              We are the strategic launchpad for real estate entrepreneurs. We are built to empower Singapore's top realtors through elite systems, technology, and training. Unlock your potential with comprehensive training, unmatched support systems, and a community of ambitious consultants committed to excellence.
-            </motion.p>
-          </div>
-
-          {/* Category Filter Buttons */}
-          <motion.div 
-            className="flex flex-wrap justify-center gap-3 mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <button
-              onClick={() => setGalleryCategory("all")}
-              className={`px-4 py-2 text-sm rounded-full font-semibold transition-all duration-300 ${
-                galleryCategory === "all"
-                  ? "bg-[#B40101] text-white shadow-lg shadow-[#B40101]/30"
-                  : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
-              }`}
-            >
-              All
-            </button>
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setGalleryCategory(category)}
-                className={`px-4 py-2 text-sm rounded-full font-semibold transition-all duration-300 ${
-                  galleryCategory === category
-                    ? "bg-[#B40101] text-white shadow-lg shadow-[#B40101]/30"
-                    : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </motion.div>
-
-          {/* Image Gallery Display - randomized mosaic */}
-          <motion.div
-            className="w-full max-w-none px-0"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-          >
-            <div className="max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8 flex justify-center">
-              <div
-                className="columns-4 sm:columns-5 md:columns-6 lg:columns-7 xl:columns-8 gap-3 md:gap-3 [column-fill:_balance] inline-block"
-                style={{ columnWidth: "120px", columnGap: "14px" }}
-              >
-                {filteredImages.map((image, index) => {
-                  const isNew = !prevVisibleImagesRef.current.has(image.src)
-                  return (
-                  <motion.div
-                    key={`${galleryCategory}-${index}-${image.src}`}
-                    initial={isNew ? { opacity: 0, y: 12, scale: 0.98 } : false}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={isNew ? { duration: 0.45, ease: "easeOut" } : { duration: 0.2 }}
-                    whileHover={{ scale: 1.025 }}
-                    className="mb-1.5 md:mb-2 break-inside-avoid relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10"
-                  >
-                    <img
-                      src={image.src}
-                      alt={image.alt}
-                      className="w-full h-auto object-cover transition-transform duration-400 ease-out hover:scale-102"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-                  </motion.div>
-                  )
-                })}
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* The Weekly Edge */}
-      <section className="relative py-24 bg-black">
-        <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-[1.2fr_1fr] gap-12 items-start">
-          <div>
-            <motion.h2
-              className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight mb-4"
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              The Weekly Edge
-            </motion.h2>
-            <motion.h3
-              className="text-2xl sm:text-3xl font-semibold italic text-[#B40101] mb-6"
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-            >
-              Constant Momentum. Life at KW.
-            </motion.h3>
-            <motion.p
-              className="text-lg md:text-xl text-white/90 leading-relaxed max-w-3xl"
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-            >
-              Beyond the events and celebrations, our culture of performance and innovation is constant. Every week, we
-              package exclusive mastery sessions, tech deep dives, and founder insights to ensure our consultants stay ahead.
-            </motion.p>
-          </div>
-
-          <div className="space-y-1">
-            <motion.div
-              initial={{ opacity: 0, x: 16 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="flex items-center gap-4 px-2 py-3 border-b border-white/10 cursor-pointer rounded-md transition-colors duration-200 hover:bg-white/5"
-            >
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#B40101]/10 border border-[#B40101]/20 transition-transform duration-200 hover:scale-105 hover:bg-[#B40101]/20">
-                <Download className="h-5 w-5 text-[#B40101] transition-colors duration-200 hover:text-white" />
-              </div>
-              <p className="text-white text-lg font-semibold transition-colors duration-200 group-hover:text-white">
-                Newsletter list download
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* Our Story */}
       <section className="relative py-32 bg-gradient-to-b from-black to-gray-900 pb-5">
         <div className="max-w-4xl mx-auto text-center px-6">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8">Our Story</h2>
+          <h2 className="text-5xl font-bold text-white mb-8">Our Story</h2>
           <p className="text-white leading-relaxed max-w-3xl mx-auto text-lg mb-8">
             As the local embodiment of the world's largest real estate brand, we are built to empower Singapore's top
             realtors through elite systems, technology, and training.
@@ -701,13 +471,13 @@ export default function AboutUsPage() {
 
       
 
-      {/* Meet the Core Team */}
+      {/* Meet the Core Team - Redesigned */}
       <section className="relative py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
         <div className="absolute inset-0" />
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           {/* Section Header */}
           <div className="mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-white text-center leading-tight">
+            <h2 className="text-5xl font-bold mb-8 text-white text-center leading-tight">
               Meet the Core Team
             </h2>
             <p className="text-lg text-white leading-relaxed max-w-4xl mx-auto text-left">
@@ -719,48 +489,32 @@ export default function AboutUsPage() {
             {/* Mobile: Image First, Desktop: Description First */}
             <div className="order-2 md:order-1">
               {/* Featured Member Details */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={selectedMember}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.4, ease: "easeInOut" }}
-                  className="space-y-4"
-                >
-                  <div>
-                    <h3 className="text-3xl font-bold text-white">{teamMembers[selectedMember].name}</h3>
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-3xl font-bold text-white">{teamMembers[selectedMember].name}</h3>
+                </div>
+                <div>
+                  <h4 className="text-2xl font-semibold text-white/90">{teamMembers[selectedMember].title}</h4>
+                </div>
+                <div className="pt-4">
+                  <div className="h-60 overflow-y-auto pr-2 scrollbar-auto">
+                    <p className="text-white/80 leading-relaxed text-base whitespace-pre-line">
+                      {teamMembers[selectedMember].bio}
+                    </p>
                   </div>
-                  <div>
-                    <h4 className="text-2xl font-semibold text-white/90">{teamMembers[selectedMember].title}</h4>
-                  </div>
-                  <div className="pt-4">
-                    <div className="h-60 overflow-y-auto pr-2 scrollbar-mini">
-                      <p className="text-white/80 leading-relaxed text-base whitespace-pre-line">
-                        {teamMembers[selectedMember].bio}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
+                </div>
+              </div>
             </div>
 
             {/* Mobile: Image First, Desktop: Image Second */}
             <div className="relative w-[70%] mx-auto order-1 md:order-2">
               <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-gradient-to-br from-[#B40101]/10 to-transparent">
-                <AnimatePresence mode="wait">
-                  <motion.img
-                    key={selectedMember}
-                    src={teamMembers[selectedMember].image || "/placeholder.svg"}
-                    alt={teamMembers[selectedMember].name}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.4, ease: "easeInOut" }}
-                    className="w-full h-full object-cover object-top"
-                  />
-                </AnimatePresence>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+                <img
+                  src={teamMembers[selectedMember].image || "/placeholder.svg"}
+                  alt={teamMembers[selectedMember].name}
+                  className="w-full h-full object-cover transition-all duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
               </div>
             </div>
           </div>
@@ -774,14 +528,12 @@ export default function AboutUsPage() {
                   onClick={() => setSelectedMember(index)}
                   className="flex-shrink-0 relative group transition-all duration-300"
                 >
-                  <div className={`w-24 h-24 rounded-xl overflow-hidden bg-gray-800 transition-all duration-300 ${
-                    selectedMember === index ? 'ring-2 ring-[#B40101] ring-offset-2 ring-offset-gray-900' : ''
-                  }`}>
+                  <div className="w-24 h-24 rounded-xl overflow-hidden bg-gray-800">
                     <img
                       src={member.image || "/placeholder.svg"}
                       alt={member.name}
-                      className={`w-full h-full object-cover object-top transition-all duration-300 group-hover:scale-110 ${
-                        selectedMember === index ? 'scale-105' : ''
+                      className={`w-full h-full object-cover transition-all duration-300 group-hover:scale-110 ${
+                        index < 3 ? 'scale-110' : ''
                       }`}
                     />
                   </div>

@@ -177,7 +177,7 @@ const tools = [
     description: "A complete list to ensure full compliance and prompt commission approval for every deal.",
     icon: Play,
     category: "Deal Submission",
-    url: "https://drive.google.com/file/d/1oXBR76AOK029S6O0KBZm4SL6qzjT64HR/view?pli=1",
+    url: "https://drive.google.com/file/d/1mFfwrhGkLXLyJIpXT1KTHlFntcc4NEI_/view?usp=sharing",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/deal-submission.webp"
   },
   {
