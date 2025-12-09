@@ -416,6 +416,32 @@ export default function ModelPage() {
               className="absolute top-0 left-0 h-full w-full bg-gradient-to-r from-transparent via-[#B40101] to-transparent"
             />
           </motion.div>
+          
+          {/* Awards Recap CTA */}
+          <motion.div 
+            className="mt-12"
+            variants={itemVariants}
+          >
+            <div className="text-center mb-4">
+              <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
+                <h3 className="text-2xl font-bold mb-4">Relive the highlights from our Q3 2025 Awards Night</h3>
+                <div className="flex justify-center">
+                  <Button 
+                    asChild
+                    className="bg-white text-[#ce001f] hover:bg-gray-100 px-8 py-3 text-lg hover:scale-105 transition-all duration-300"
+                  >
+                    <a
+                      href="https://drive.google.com/file/d/1Bk0z7ZU6KKwRDOg9Lb_qVp-yKeB1AO0Q/view?usp=drive_link"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View Full Recap
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
           </motion.div>
         </div>
       </motion.section>

@@ -50,6 +50,7 @@ export default function LayoutContent({
   children: React.ReactNode
 }) {
   const pathname = usePathname()
+  
   // Memoize the theme provider props to prevent unnecessary re-renders
   const themeProviderProps = useCallback(() => ({
     attribute: "class" as const,
@@ -69,8 +70,7 @@ export default function LayoutContent({
 
       // Custom mappings by first path segment
       const customTitleBySegment: Record<string, string> = {
-        'join': 'Join KW Singapore',
-        'model': 'KW Income Model',
+        'join': 'Why KW Singapore',
         'about-us': 'About Us',
         'compass': 'Tool & Resources',
         'new-launch-collection': 'New Launch Collection',
@@ -106,7 +106,7 @@ export default function LayoutContent({
   return (
     <Suspense fallback={<LoadingFallback />}>
       <ThemeProvider {...themeProviderProps()}>
-        <div className="flex min-h-screen flex-col">
+        <div className="flex min-h-screen flex-col" suppressHydrationWarning={true}>
           <Header />
           <MainContent>{children}</MainContent>
           <Footer />

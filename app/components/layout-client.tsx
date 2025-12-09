@@ -21,7 +21,6 @@ const FloatingWhatsApp = dynamic(() => import("@/components/floating-whatsapp"),
 // Memoize the navigation items to prevent unnecessary re-renders
 const navItems = [
   { href: "/new-launch-collection", label: "New Launch Collection" },
-  { href: "/model", label: "KW Income Model" },
   { href: "/events", label: "Events" },
   { href: "/press", label: "Press" },
   { href: "/awards", label: "Awards" },
@@ -30,7 +29,7 @@ const navItems = [
   { href: "/contact", label: "Contact" }
 ]
 
-const joinNavItem = { href: "/join", label: "Join KW Singapore" }
+const joinNavItem = { href: "/join", label: "Why KW Singapore" }
 
 export function Header() {
   const pathname = usePathname()
@@ -44,6 +43,8 @@ export function Header() {
   const isPenrithEventPage = pathname?.startsWith('/penrith-consumer-event')
   const isArtisan8Page = pathname === '/artisan-8' || pathname?.startsWith('/artisan-8')
   const isOrchardSophiaPage = pathname === '/orchard-sophia' || pathname?.startsWith('/orchard-sophia')
+  const isTurquoisePage = pathname === '/turquoise' || pathname?.startsWith('/turquoise')
+  const isTheDraycottPage = pathname === '/the-draycott' || pathname?.startsWith('/the-draycott')
   const [isScrolled, setIsScrolled] = useState(false)
   const { isSignedIn, user } = useUser()
 
@@ -56,7 +57,7 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  if (isAdminPage || isSpringleafPage || isSpringleafBackupPage || isAureaPage || isPenrithPage || isPenrithEventPage || isWResidencePage || isArinaEastPage || isArtisan8Page || isOrchardSophiaPage) return null
+  if (isAdminPage || isSpringleafPage || isSpringleafBackupPage || isAureaPage || isPenrithPage || isPenrithEventPage || isWResidencePage || isArinaEastPage || isArtisan8Page || isOrchardSophiaPage || isTurquoisePage || isTheDraycottPage) return null
 
   return (
     <header 
@@ -148,19 +149,19 @@ export function Header() {
 const footerLinks = {
   column1: [
     { href: "/", label: "Home" },
-    { href: "/model", label: "KW Income Model" },
     { href: "/events", label: "Events" },
     { href: "/press", label: "Press" },
   ],
   column2: [
     { href: "/about-us", label: "About Us" },
     { href: "/contact", label: "Contact" },
-    { href: "/join", label: "Join KW Singapore" }
+    { href: "/join", label: "Why KW Singapore" }
   ]
 }
 
 export function Footer() {
   const pathname = usePathname()
+  const [currentYear, setCurrentYear] = useState<number | null>(null)
   const isAdminPage = pathname?.startsWith('/admin')
   const isSpringleafPage = pathname?.startsWith('/springleaf-residence')
   const isSpringleafBackupPage = pathname?.startsWith('/springleaf-backup')
@@ -171,11 +172,19 @@ export function Footer() {
   const isArinaEastPage = pathname === '/arina-east' || pathname?.startsWith('/arina-east')
   const isArtisan8Page = pathname === '/artisan-8' || pathname?.startsWith('/artisan-8')
   const isOrchardSophiaPage = pathname === '/orchard-sophia' || pathname?.startsWith('/orchard-sophia')
+  const isTurquoisePage = pathname === '/turquoise' || pathname?.startsWith('/turquoise')
+  const isTheDraycottPage = pathname === '/the-draycott' || pathname?.startsWith('/the-draycott')
+  
+  // Set year on client side only to avoid hydration mismatch
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear())
+  }, [])
+  
   if (isAdminPage) return null
 
   return (
     <>
-      {!isSpringleafPage && !isSpringleafBackupPage && !isAureaPage && !isPenrithPage && !isPenrithEventPage && !isWResidencePage && !isArinaEastPage && !isArtisan8Page && !isOrchardSophiaPage && <FloatingWhatsApp />}
+      {!isSpringleafPage && !isSpringleafBackupPage && !isAureaPage && !isPenrithPage && !isPenrithEventPage && !isWResidencePage && !isArinaEastPage && !isArtisan8Page && !isOrchardSophiaPage && !isTurquoisePage && !isTheDraycottPage && <FloatingWhatsApp />}
       <footer className="border-t py-8 md:py-12 bg-black text-white">
         <div className="container grid gap-8 md:grid-cols-3">
           <div className="space-y-4">
@@ -232,7 +241,7 @@ export function Footer() {
           </div>
         </div>
         <div className="container mt-8 border-t border-gray-800 pt-8 text-center text-sm text-gray-300">
-          <p>&copy; {new Date().getFullYear()} KW Singapore Real Estate Pte. Ltd. | All rights reserved.</p>
+          <p>&copy; {currentYear ?? new Date().getFullYear()} KW Singapore Real Estate Pte. Ltd. | All rights reserved.</p>
           <p className="mt-1">CEA License Number: L3011034Z</p>
         </div>
       </footer>

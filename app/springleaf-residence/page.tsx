@@ -1919,7 +1919,7 @@ export default function SpringleafResidenceLanding() {
               <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-2">
                 <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
                   <Image
-                    src="/images/springleaf-residence/new-launch-analysis.webp?height=320&width=500&text=Lentor+Mansion+Showflat+Tour"
+                    src="/images/springleaf-residence/new-launch-analysis.webp"
                     alt="Lentor Mansion Showflat Tour"
                     fill
                     className="object-contain md:object-cover"
@@ -1932,7 +1932,7 @@ export default function SpringleafResidenceLanding() {
               <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-1">
                 <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
                   <Image
-                    src="/images/springleaf-residence/new-launch-analysis-2.webp?height=320&width=500&text=Lentor+Rejuvenation+Analysis"
+                    src="/images/springleaf-residence/new-launch-analysis-2.webp"
                     alt="Lentor's Rejuvenation Analysis"
                     fill
                     className="object-contain md:object-cover"
@@ -1982,7 +1982,7 @@ export default function SpringleafResidenceLanding() {
               <div className="relative hover:scale-105 transition-transform duration-500 md:p-0 p-2 order-1 lg:order-2">
                 <div className="relative h-80 rounded-xl overflow-hidden shadow-2xl">
                   <Image
-                    src="/images/springleaf-residence/new-launch-analysis-lentor.webp?height=320&width=500&text=Lentor+Mansion+Showflat+Tour"
+                    src="/images/springleaf-residence/new-launch-analysis-lentor.webp"
                     alt="Lentor Mansion Showflat Tour"
                     fill
                     className="object-contain md:object-cover"

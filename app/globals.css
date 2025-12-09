@@ -278,3 +278,14 @@ img {
 :where(.cl-badge__icon, .cl-internal-badge__icon) {
   color: #e5e7eb !important;
 }
+
+@layer utilities {
+  /* Custom cursor utilities for hero cards */
+  .custom-cursor-auto {
+    cursor: default;
+  }
+
+  .custom-cursor-view {
+    cursor: none;
+  }
+}

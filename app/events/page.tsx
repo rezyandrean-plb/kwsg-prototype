@@ -51,7 +51,7 @@ export default function EventsPage() {
       ],
     },
     {
-      title: "Past Explore Night Event",
+      title: "Explore Night",
       date: "August 2025",
       description:
         "A 2-day intensive masterclass diving into the millionaire models, strategies, and systems for exponential growth.",
@@ -74,7 +74,7 @@ export default function EventsPage() {
       video: [],
     },
     {
-      title: "Past Founders Insights",
+      title: "Founder’s Market Insights",
       date: "July 2025",
       description:
         "An interactive online session for agents to discover multiple income streams and scalable models.",
@@ -90,7 +90,7 @@ export default function EventsPage() {
       video: [],
     },
     {
-      title: "Past Welcome Dinner",
+      title: "Welcome Dinner",
       date: "June 2025",
       description:
         "Hands-on bootcamp to craft compelling listing presentations and win mandates consistently.",
@@ -105,7 +105,7 @@ export default function EventsPage() {
       video: [],
     },
     {
-      title: "Past Business Network",
+      title: "Business Connect",
       date: "May 2025",
       description:
         "Frameworks and flows to convert leads into loyal clients across six distinct buyer profiles.",
@@ -947,7 +947,7 @@ export default function EventsPage() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            More Past Events
+            More Events
           </motion.h3>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Tabs (left) */}

@@ -8,8 +8,10 @@ import { motion, useScroll, useTransform, useInView, AnimatePresence } from "fra
 import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
 import { useUser } from '@clerk/nextjs'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import AuthDialog from "@/components/auth-dialog"
+
+const PENDING_TOOL_URL_KEY = "kw-pending-tool-url"
 
 // Tool data based on the image
 const tools = [
@@ -18,7 +20,7 @@ const tools = [
     title: "KW PropSage",
     description: "Handle the entire transaction process smoothly from start to finish, paperwork-free.",
     icon: Building2,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "app.propsage.com",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-propsage.webp"
   },
@@ -27,7 +29,7 @@ const tools = [
     title: "KW Command",
     description: "Manage your real estate business easily from anywhere with one central hub.",
     icon: Calculator,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "agent.kw.com",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-command.webp"
   },
@@ -36,7 +38,7 @@ const tools = [
     title: "KW Contacts",
     description: "Organize leads and contacts intelligently, never forget important follow-ups again.",
     icon: Building2,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "https://console.command.kw.com/command/contacts",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-contacts.webp"
   },
@@ -45,7 +47,7 @@ const tools = [
     title: "KW Tasks",
     description: "Track every client’s to-do list carefully, ensuring no task gets missed.",
     icon: Calculator,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "https://console.command.kw.com/command/task-manager",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-tasks.webp"
   },
@@ -54,7 +56,7 @@ const tools = [
     title: "KW Campaigns",
     description: "Generate steady social media leads without needing complex ad platform expertise.",
     icon: TrendingUp,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "https://campaigns.kw.com/",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-campaigns.webp"
   },
@@ -63,7 +65,7 @@ const tools = [
     title: "KW Opportunities",
     description: "Track deals from new leads to closings, ensuring payments never missed.",
     icon: BarChart3,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "https://console.command.kw.com/command/opportunities",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-opportunities.webp"
   },
@@ -72,7 +74,7 @@ const tools = [
     title: "KW SmartPlans",
     description: "Automate client follow-ups and marketing campaigns, saving time while staying connected.",
     icon: Smartphone,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "https://console.command.kw.com/command/smart-plans",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-smartplans.webp"
   },
@@ -81,7 +83,7 @@ const tools = [
     title: "KW Listings",
     description: "Showcase properties beautifully with professional listing pages that attract serious buyers.",
     icon: Home,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "https://console.command.kw.com/command/listings",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-listings.webp"
   },
@@ -90,7 +92,7 @@ const tools = [
     title: "KW Website",
     description: "Create branded, user-friendly websites in minutes to capture online inquiries.",
     icon: MapPin,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "https://console.command.kw.com/command/websites",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-website.webp"
   },
@@ -127,7 +129,7 @@ const tools = [
     title: "KW Canva",
     description: "Design stunning brochures, posts, and materials easily, no design experience required.",
     icon: Building2,
-    category: "Business Tool",
+    category: "Business Tools",
     url: "canva.kw.com",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-canva.webp"
   },
@@ -332,6 +334,16 @@ const tools = [
     url: "https://proptech.kwsingapore.com/tech-tools/disparity-effect/charts?type=all",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/disparity-effect.webp"
   },
+  {
+    id: 205,
+    title: "Handover Hero",
+    description: "The AI-powered tool that auto-scans unit photos, detects inventory, and generates full handover reports in seconds.",
+    icon: Home,
+    category: "Compass Tools",
+    subtitle: "Tech Tools",
+    url: "https://compass.kwsingapore.com/tech-tools/furniture-inventory",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/handover.webp"
+  },
   // Compass Tools items - Research Charts
   // Compass Tools items - Concept Calculators
   {
@@ -346,13 +358,23 @@ const tools = [
   },
   // Research Tools items
   {
-    id: 29,
-    title: "Research Chart Mega Vault",
-    description: "Compare BUC vs Resale financial outlays, analysing own-stay versus investment.",
+    id: 30,
+    title: "Research Chart Vault",
+    description: "A repository of essential data and charts for property research and analysis.",
     icon: BarChart3,
     category: "Compass Tools",
     subtitle: "Research Charts",
-    url: "https://drive.google.com/drive/u/2/folders/16cpLVQWIGSmdsat2f9XONQkDbOESYV0m",
+    url: "https://docs.google.com/document/d/1uk3jAELNmL9cHZp1oEboYPTQfDdmd8lZAm--zB9e9xs/edit?usp=sharing",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/research-charts.webp"
+  },
+  {
+    id: 29,
+    title: "Research Chart Mega Vault",
+    description: "An extensive collection of data and charts for comprehensive property research and analysis.",
+    icon: BarChart3,
+    category: "Compass Tools",
+    subtitle: "Research Charts",
+    url: "https://drive.google.com/drive/folders/19EfpKRyyVuak1V_P8Vq0EU_zNy1-CJ3h?usp=sharing",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/research-charts.webp"
   },
   // Training Resource items
@@ -423,10 +445,13 @@ const tools = [
 
 const categories = [
   "All",
-  "Business Tool",
-  "External Tools",
+  "Getting Started",
   "Compass Tools",
-  "Learnings"
+  "Business Tools",
+  "Deal Submission",
+  "External Tools",
+  "Branding & Marketing",
+  "Learnings",
 ]
 
 export default function TechToolPage() {
@@ -435,6 +460,7 @@ export default function TechToolPage() {
   }, [])
   const { isSignedIn, user, isLoaded } = useUser()
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [activeCategory, setActiveCategory] = useState("Compass Tools")
   const [searchQuery, setSearchQuery] = useState("")
   const [authDialogOpen, setAuthDialogOpen] = useState(false)
@@ -479,6 +505,14 @@ export default function TechToolPage() {
         window.open(url, '_blank')
       } else {
         // User is not authenticated, show auth dialog
+        const url = tool.url.startsWith('http') ? tool.url : `https://${tool.url}`
+        if (typeof window !== "undefined") {
+          try {
+            window.localStorage.setItem(PENDING_TOOL_URL_KEY, url)
+          } catch {
+            // ignore storage errors
+          }
+        }
         setSelectedTool(tool)
         setAuthDialogOpen(true)
       }
@@ -503,6 +537,29 @@ export default function TechToolPage() {
       router.push(`/tools?tab=${encodedCategory}`)
     }
   }
+
+  // After successful authentication via AuthDialog on this page,
+  // Clerk redirects back to `/compass?postLogin=1`. If we detect that
+  // and there is a stored pending tool URL, immediately redirect
+  // the user into that selected tool instead of keeping them here.
+  useEffect(() => {
+    if (!isLoaded || !isSignedIn) return
+
+    const postLogin = searchParams.get("postLogin")
+    if (postLogin !== "1") return
+
+    if (typeof window === "undefined") return
+
+    try {
+      const pendingUrl = window.localStorage.getItem(PENDING_TOOL_URL_KEY)
+      if (pendingUrl) {
+        window.localStorage.removeItem(PENDING_TOOL_URL_KEY)
+        window.location.href = pendingUrl
+      }
+    } catch {
+      // ignore storage errors
+    }
+  }, [isLoaded, isSignedIn, searchParams])
 
   return (
     <motion.main
@@ -714,56 +771,163 @@ export default function TechToolPage() {
             </motion.div>
           ) : (
             <>
-              {activeCategory === "Compass Tools" ? (
-                // Special rendering for Compass Tools with subtitles
+              {activeCategory === "Compass Tools" || activeCategory === "Getting Started" || activeCategory === "Learnings" ? (
+                // Special rendering for Compass Tools, Getting Started, and Learnings with subtitles
                 <div className="space-y-12">
                   {(() => {
-                    const compassTools = filteredTools.filter(tool => tool.category === "Compass Tools")
-                    const subtitleGroups = compassTools.reduce((groups, tool) => {
+                    const categoryToolsDisplayed = filteredTools.filter(tool => tool.category === activeCategory)
+                    const subtitleGroups = categoryToolsDisplayed.reduce((groups, tool) => {
                       const subtitle = tool.subtitle || "Other"
                       if (!groups[subtitle]) {
                         groups[subtitle] = []
                       }
                       groups[subtitle].push(tool)
                       return groups
-                    }, {} as Record<string, typeof compassTools>)
+                    }, {} as Record<string, typeof categoryToolsDisplayed>)
 
-                    const preferredOrder = [
-                      "Tech Tools",
-                      "Concept Calculators",
-                      "Sales Proceed",
-                      "Buyer Affordability",
-                      "Stamp Duty"
-                    ]
+                    // Sort subtitle groups: Tech/Operations first, then Other, then alphabetically
+                    const sortedSubtitleEntries = Object.entries(subtitleGroups).sort(([a], [b]) => {
+                      // Priority subtitles come first
+                      if (a === "Tech" || a === "Operations") return -1
+                      if (b === "Tech" || b === "Operations") return 1
+                      // Other comes last
+                      if (a === "Other") return 1
+                      if (b === "Other") return -1
+                      // Everything else alphabetically
+                      return a.localeCompare(b)
+                    })
 
-                    const orderedSubtitles = [
-                      ...preferredOrder.filter(subtitle => subtitleGroups[subtitle]),
-                      ...Object.keys(subtitleGroups).filter(subtitle => !preferredOrder.includes(subtitle))
-                    ]
+                    // For Compass Tools, use preferred order
+                    if (activeCategory === "Compass Tools") {
+                      const compassTools = categoryToolsDisplayed
+                      const preferredOrder = [
+                        "Tech Tools",
+                        "Concept Calculators",
+                        "Sales Proceed",
+                        "Buyer Affordability",
+                        "Stamp Duty"
+                      ]
 
-                    return orderedSubtitles.map((subtitle, groupIndex) => {
-                      const tools = subtitleGroups[subtitle]
-                      if (!tools) return null
+                      const orderedSubtitles = [
+                        ...preferredOrder.filter(subtitle => subtitleGroups[subtitle]),
+                        ...Object.keys(subtitleGroups).filter(subtitle => !preferredOrder.includes(subtitle))
+                      ]
 
-                      let orderedTools = tools
+                      return orderedSubtitles.map((subtitle, groupIndex) => {
+                        const tools = subtitleGroups[subtitle]
+                        if (!tools) return null
 
-                      if (subtitle === "Tech Tools") {
-                        const techToolOrder = [
-                          "Property Analysis",
-                          "MegaMap",
-                          "Compass10",
-                          "Disparity Effect",
-                          "Supply & Demand Analysis"
-                        ]
-                        orderedTools = [
-                          ...techToolOrder
-                            .map(title => tools.find(tool => tool.title === title))
-                            .filter((tool): tool is (typeof tools)[number] => Boolean(tool)),
-                          ...tools.filter(tool => !techToolOrder.includes(tool.title))
-                        ]
-                      }
+                        let orderedTools = tools
 
-                      return (
+                        if (subtitle === "Tech Tools") {
+                          const techToolOrder = [
+                            "Property Analysis",
+                            "MegaMap",
+                            "Compass10",
+                            "Disparity Effect",
+                            "Supply & Demand Analysis"
+                          ]
+                          orderedTools = [
+                            ...techToolOrder
+                              .map(title => tools.find(tool => tool.title === title))
+                              .filter((tool): tool is (typeof tools)[number] => Boolean(tool)),
+                            ...tools.filter(tool => !techToolOrder.includes(tool.title))
+                          ]
+                        }
+
+                        return (
+                        <motion.div
+                          key={subtitle}
+                          initial={{ opacity: 0, y: 30 }}
+                          animate={toolsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                          transition={{ duration: 0.6, delay: 0.5 + groupIndex * 0.2 }}
+                        >
+                          <motion.h3 
+                            className="text-2xl font-bold text-white mb-6 border-b border-gray-700 pb-2"
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={toolsInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                            transition={{ duration: 0.6, delay: 0.6 + groupIndex * 0.2 }}
+                          >
+                            {subtitle}
+                          </motion.h3>
+                          <motion.div 
+                            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
+                            initial={{ opacity: 0 }}
+                            animate={toolsInView ? { opacity: 1 } : { opacity: 0 }}
+                            transition={{ duration: 0.6, delay: 0.7 + groupIndex * 0.2 }}
+                          >
+                          {orderedTools.map((tool, index) => {
+                            const IconComponent = tool.icon
+                            return (
+                              <motion.div
+                                key={tool.id}
+                                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                                animate={toolsInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.95 }}
+                                transition={{ 
+                                  duration: 0.5, 
+                                  delay: 0.8 + groupIndex * 0.2 + index * 0.1,
+                                  ease: "easeOut"
+                                }}
+                                whileHover={{ 
+                                  y: -5, 
+                                  scale: 1.02,
+                                  transition: { duration: 0.2 }
+                                }}
+                                whileTap={{ scale: 0.98 }}
+                              >
+                                <Card
+                                  className={`bg-gray-800 border-gray-700 hover:shadow-lg hover:shadow-[#b40101]/20 transition-all duration-300 hover:border-[#b40101] h-full ${
+                                    tool.url ? 'cursor-pointer' : 'cursor-default'
+                                  }`}
+                                  onClick={() => handleCardClick(tool)}
+                                  onMouseEnter={() => tool.url && setHoveredTool(tool)}
+                                  onMouseLeave={() => setHoveredTool(null)}
+                                >
+                                  <CardContent className="p-6 px-3 py-3 h-full flex flex-col">
+                                    <div className="flex items-start space-x-4 h-full">
+                                      <div className="flex-shrink-0">
+                                        <motion.div 
+                                          className={`w-12 h-12 rounded-lg flex items-center justify-center overflow-hidden relative ${
+                                            tool.image ? 'bg-[#b40101]/20' : 'bg-white'
+                                          }`}
+                                          whileHover={{ 
+                                            backgroundColor: tool.image 
+                                              ? "rgba(180, 1, 1, 0.3)" 
+                                              : "rgba(255, 255, 255, 0.8)",
+                                            scale: 1.1,
+                                            transition: { duration: 0.2 }
+                                          }}
+                                        >
+                                          {tool.image ? (
+                                            <Image
+                                              src={tool.image}
+                                              alt={tool.title}
+                                              fill
+                                              className="object-cover"
+                                            />
+                                          ) : (
+                                            <IconComponent className="w-6 h-6 text-[#b40101]" />
+                                          )}
+                                        </motion.div>
+                                      </div>
+                                      <div className="flex-1 min-w-0 flex flex-col">
+                                        <h3 className="text-lg font-semibold text-white mb-2">{tool.title}</h3>
+                                        <p className="text-sm text-gray-300 leading-relaxed flex-1">{tool.description}</p>
+                                      </div>
+                                    </div>
+                                  </CardContent>
+                                </Card>
+                              </motion.div>
+                            )
+                          })}
+                          </motion.div>
+                        </motion.div>
+                        )
+                      })
+                    }
+
+                    // For Learnings and Getting Started, use sorted entries
+                    return sortedSubtitleEntries.map(([subtitle, tools], groupIndex) => (
                       <motion.div
                         key={subtitle}
                         initial={{ opacity: 0, y: 30 }}
@@ -784,7 +948,7 @@ export default function TechToolPage() {
                           animate={toolsInView ? { opacity: 1 } : { opacity: 0 }}
                           transition={{ duration: 0.6, delay: 0.7 + groupIndex * 0.2 }}
                         >
-                          {orderedTools.map((tool, index) => {
+                          {tools.map((tool, index) => {
                             const IconComponent = tool.icon
                             return (
                               <motion.div
@@ -850,9 +1014,8 @@ export default function TechToolPage() {
                           })}
                         </motion.div>
                       </motion.div>
-                      )
-                    })
-                  })()}
+                    ))
+                    })()}
                 </div>
               ) : (
                 // Regular rendering for other categories
@@ -1176,7 +1339,7 @@ export default function TechToolPage() {
         open={authDialogOpen} 
         onOpenChange={setAuthDialogOpen}
         toolTitle={selectedTool?.title}
-        redirectUrl="/compass"
+        redirectUrl="/compass?postLogin=1"
       />
     </motion.main>
   )
