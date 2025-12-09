@@ -3,9 +3,9 @@
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, CheckCircle, Building2, Users, Award, Brain, Share2, Video, BarChart3, Target, Heart, Lightbulb, Users2, Briefcase, ChevronRight, ChevronLeft, ArrowLeft } from "lucide-react"
+import { ArrowRight, CheckCircle, Building2, Users, Award, Brain, Share2, Video, BarChart3, Target, Heart, Lightbulb, Users2, Briefcase, ChevronRight, ChevronLeft, ArrowLeft, Rocket, Download } from "lucide-react"
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect, useMemo, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { JoinFormDialog } from "@/components/join-form-dialog"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel"
@@ -51,7 +51,7 @@ export default function AboutUsPage() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isMobileView, setIsMobileView] = useState(false)
   const [galleryCategory, setGalleryCategory] = useState<string>("all")
-  const [currentGalleryImage, setCurrentGalleryImage] = useState(0)
+  const prevVisibleImagesRef = useRef<Set<string>>(new Set())
 
   useEffect(() => {
     const updateIsMobile = () => {
@@ -175,31 +175,10 @@ export default function AboutUsPage() {
     return galleryImages[galleryCategory as keyof typeof galleryImages] || []
   }, [galleryCategory])
 
-  // Random image rotation
+  // Track visible images to avoid re-animating those that remain
   useEffect(() => {
-    if (filteredImages.length === 0) return
-
-    const interval = setInterval(() => {
-      setCurrentGalleryImage((prev) => {
-        const nextIndex = Math.floor(Math.random() * filteredImages.length)
-        return nextIndex !== prev ? nextIndex : (nextIndex + 1) % filteredImages.length
-      })
-    }, 4000) // Change image every 4 seconds
-
-    return () => clearInterval(interval)
+    prevVisibleImagesRef.current = new Set(filteredImages.map((img) => img.src))
   }, [filteredImages])
-
-  // Reset to first image when category changes
-  useEffect(() => {
-    setCurrentGalleryImage(0)
-  }, [galleryCategory])
-
-  // Ensure currentGalleryImage is within bounds
-  useEffect(() => {
-    if (currentGalleryImage >= filteredImages.length && filteredImages.length > 0) {
-      setCurrentGalleryImage(0)
-    }
-  }, [filteredImages.length, currentGalleryImage])
 
   
 
@@ -263,42 +242,6 @@ export default function AboutUsPage() {
     >
       {/* Hero Banner */}
       <section className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-black to-gray-900 pt-20 sm:pt-20 md:pt-12">
-        {/* Overlay gradient */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: "linear-gradient(to bottom, #000000 0%, rgba(66, 2, 2, 0.3) 40%, #111827 100%)",
-            opacity: 0.9,
-          }}
-        />
-        <div className="absolute inset-0 opacity-18">
-          <svg viewBox="0 0 1440 800" className="w-full h-full" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-            <defs>
-              <linearGradient id="waveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.25" />
-                <stop offset="50%" stopColor="#ffffff" stopOpacity="0.18" />
-                <stop offset="100%" stopColor="#ffffff" stopOpacity="0.10" />
-              </linearGradient>
-            </defs>
-            <g stroke="url(#waveGradient)" strokeWidth="1" fill="none" opacity="0.2">
-              {[200, 210, 220].map((y) => (
-                <path key={`wave1-${y}`} d={`M0,${y} Q180,${y - 50} 360,${y} T720,${y} T1080,${y} T1440,${y}`} />
-              ))}
-              {[300, 310, 320].map((y) => (
-                <path key={`wave2-${y}`} d={`M0,${y} Q200,${y - 50} 400,${y} T800,${y} T1200,${y} T1440,${y}`} />
-              ))}
-              {[400, 410, 420].map((y) => (
-                <path key={`wave3-${y}`} d={`M0,${y} Q160,${y - 50} 320,${y} T640,${y} T960,${y} T1280,${y} T1440,${y}`} />
-              ))}
-              {[500, 510, 520].map((y) => (
-                <path key={`wave4-${y}`} d={`M0,${y} Q220,${y - 50} 440,${y} T880,${y} T1320,${y} T1440,${y}`} />
-              ))}
-              {[600, 610, 620].map((y) => (
-                <path key={`wave5-${y}`} d={`M0,${y} Q140,${y - 50} 280,${y} T560,${y} T840,${y} T1120,${y} T1440,${y}`} />
-              ))}
-            </g>
-          </svg>
-        </div>
 
         <div className="relative z-10 text-center max-w-6xl mx-auto px-6 pt-8 sm:pt-12 md:pt-16 lg:pt-32">
           <motion.h1 
@@ -587,34 +530,36 @@ export default function AboutUsPage() {
             WebkitMaskImage: "linear-gradient(to bottom right, transparent 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%)",
           }}
         />
-        <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
-          <motion.h2 
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 font-sans text-white"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            The Growth
-          </motion.h2>
-          <motion.p 
-            className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-8 text-[#B40101]"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            World-Class Training. Real-World Results.
-          </motion.p>
-          <motion.p 
-            className="text-lg md:text-xl text-white/90 leading-relaxed max-w-4xl mx-auto mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            We are the strategic launchpad for real estate entrepreneurs. We are built to empower Singapore's top realtors through elite systems, technology, and training. Unlock your potential with comprehensive training, unmatched support systems, and a community of ambitious consultants committed to excellence.
-          </motion.p>
+        <div className="relative z-10 w-full px-6 text-center">
+          <div className="max-w-5xl mx-auto">
+            <motion.h2 
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              The Growth
+            </motion.h2>
+            <motion.p 
+              className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-8 text-[#B40101]"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              World-Class Training. Real-World Results.
+            </motion.p>
+            <motion.p 
+              className="text-lg md:text-xl text-white/90 leading-relaxed max-w-4xl mx-auto mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              We are the strategic launchpad for real estate entrepreneurs. We are built to empower Singapore's top realtors through elite systems, technology, and training. Unlock your potential with comprehensive training, unmatched support systems, and a community of ambitious consultants committed to excellence.
+            </motion.p>
+          </div>
 
           {/* Category Filter Buttons */}
           <motion.div 
@@ -649,76 +594,103 @@ export default function AboutUsPage() {
             ))}
           </motion.div>
 
-          {/* Image Gallery Display */}
-          <motion.div 
-            className="relative max-w-5xl mx-auto"
+          {/* Image Gallery Display - randomized mosaic */}
+          <motion.div
+            className="w-full max-w-none px-0"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <div className="aspect-video rounded-2xl overflow-hidden bg-gray-800 relative">
-              <AnimatePresence mode="wait">
-                {filteredImages.length > 0 && (
+            <div className="max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8 flex justify-center">
+              <div
+                className="columns-4 sm:columns-5 md:columns-6 lg:columns-7 xl:columns-8 gap-3 md:gap-3 [column-fill:_balance] inline-block"
+                style={{ columnWidth: "120px", columnGap: "14px" }}
+              >
+                {filteredImages.map((image, index) => {
+                  const isNew = !prevVisibleImagesRef.current.has(image.src)
+                  return (
                   <motion.div
-                    key={`${galleryCategory}-${currentGalleryImage}`}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 1.05 }}
-                    transition={{ duration: 0.6, ease: "easeInOut" }}
-                    className="absolute inset-0"
-                  >
-                    <img
-                      src={filteredImages[currentGalleryImage]?.src || "/placeholder.svg"}
-                      alt={filteredImages[currentGalleryImage]?.alt || "Gallery Image"}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              {/* Image Counter */}
-              {filteredImages.length > 0 && (
-                <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-full text-white text-sm font-medium">
-                  {currentGalleryImage + 1} / {filteredImages.length}
-                </div>
-              )}
-            </div>
-
-            {/* Thumbnail Grid */}
-            {filteredImages.length > 1 && (
-              <div className="grid grid-cols-4 md:grid-cols-6 gap-2 mt-6">
-                {filteredImages.slice(0, 8).map((image, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentGalleryImage(index)}
-                    className={`aspect-square rounded-lg overflow-hidden relative transition-all duration-300 ${
-                      currentGalleryImage === index
-                        ? "ring-2 ring-[#B40101] scale-105"
-                        : "opacity-60 hover:opacity-100 hover:scale-105"
-                    }`}
+                    key={`${galleryCategory}-${index}-${image.src}`}
+                    initial={isNew ? { opacity: 0, y: 12, scale: 0.98 } : false}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={isNew ? { duration: 0.45, ease: "easeOut" } : { duration: 0.2 }}
+                    whileHover={{ scale: 1.025 }}
+                    className="mb-1.5 md:mb-2 break-inside-avoid relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10"
                   >
                     <img
                       src={image.src}
                       alt={image.alt}
-                      className="w-full h-full object-cover"
+                      className="w-full h-auto object-cover transition-transform duration-400 ease-out hover:scale-102"
+                      loading="lazy"
                     />
-                    {currentGalleryImage === index && (
-                      <div className="absolute inset-0 bg-[#B40101]/20" />
-                    )}
-                  </button>
-                ))}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                  </motion.div>
+                  )
+                })}
               </div>
-            )}
+            </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* The Weekly Edge */}
+      <section className="relative py-24 bg-black">
+        <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-[1.2fr_1fr] gap-12 items-start">
+          <div>
+            <motion.h2
+              className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight mb-4"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              The Weekly Edge
+            </motion.h2>
+            <motion.h3
+              className="text-2xl sm:text-3xl font-semibold italic text-[#B40101] mb-6"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+            >
+              Constant Momentum. Life at KW.
+            </motion.h3>
+            <motion.p
+              className="text-lg md:text-xl text-white/90 leading-relaxed max-w-3xl"
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+            >
+              Beyond the events and celebrations, our culture of performance and innovation is constant. Every week, we
+              package exclusive mastery sessions, tech deep dives, and founder insights to ensure our consultants stay ahead.
+            </motion.p>
+          </div>
+
+          <div className="space-y-1">
+            <motion.div
+              initial={{ opacity: 0, x: 16 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="flex items-center gap-4 px-2 py-3 border-b border-white/10 cursor-pointer rounded-md transition-colors duration-200 hover:bg-white/5"
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#B40101]/10 border border-[#B40101]/20 transition-transform duration-200 hover:scale-105 hover:bg-[#B40101]/20">
+                <Download className="h-5 w-5 text-[#B40101] transition-colors duration-200 hover:text-white" />
+              </div>
+              <p className="text-white text-lg font-semibold transition-colors duration-200 group-hover:text-white">
+                Newsletter list download
+              </p>
+            </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Our Story */}
       <section className="relative py-32 bg-gradient-to-b from-black to-gray-900 pb-5">
         <div className="max-w-4xl mx-auto text-center px-6">
-          <h2 className="text-5xl font-bold text-white mb-8">Our Story</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8">Our Story</h2>
           <p className="text-white leading-relaxed max-w-3xl mx-auto text-lg mb-8">
             As the local embodiment of the world's largest real estate brand, we are built to empower Singapore's top
             realtors through elite systems, technology, and training.
@@ -735,7 +707,7 @@ export default function AboutUsPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           {/* Section Header */}
           <div className="mb-16">
-            <h2 className="text-5xl font-bold mb-8 text-white text-center leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-white text-center leading-tight">
               Meet the Core Team
             </h2>
             <p className="text-lg text-white leading-relaxed max-w-4xl mx-auto text-left">
