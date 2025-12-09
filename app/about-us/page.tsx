@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle, Building2, Users, Award, Brain, Share2, Video, BarChart3, Target, Heart, Lightbulb, Users2, Briefcase, ChevronRight, ChevronLeft, ArrowLeft } from "lucide-react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { JoinFormDialog } from "@/components/join-form-dialog"
@@ -163,27 +163,27 @@ export default function AboutUsPage() {
     },
     {
       name: "Isabelle",
-      title: "TBC",
-      bio: "TBC",
-      image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80",
+      title: "Branding & Social Media Executive",
+      bio: "Isabelle is a Branding & Social Media Executive who helps real estate consultants turn their expertise into influence, authority, and a consistent digital presence. \n\nIsabelle has a strong foundation in consumer behaviour, visual storytelling, and digital branding. Working behind the scenes with multiple realtors gave her firsthand insight into what resonates with property audiences, how realtors should position themselves, and how content can shape perception, trust, and client flow.\n\n Today, at KW Singapore, Isabelle leads content development across social platforms, consultant branding projects, and media-driven recruitment initiatives. From shaping brand identities to story-led campaigns, she strategises communication on media platforms that elevate the KW brand and empower consultants to grow their businesses with clarity and confidence.\n\n Beyond KW, Isabelle also supports Chief Media, helping to refine creative workflows, oversee vendor content quality, and build the structure that allows realtors to access professional-level media production. Her experience across both sides — agency-style content creation and in-house branding — gives her a unique perspective on what realtors actually need to stand out in a competitive digital landscape.\n\n Her work combines creativity, strategic thinking, and a deep understanding of digital behaviour — ensuring every piece of content drives clarity, trust, and meaningful engagement.",
+      image: "/images/about-us/core-team/isabelle-lee.jpg",
     },
     {
       name: "Vanessa",
-      title: "TBC",
-      bio: "TBC",
-      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1200&q=80",
+      title: "Realtor Recruitment and Growth",
+      bio: "Vanessa is a pivotal force in KW Singapore's expansion, specialising in Realtor Recruitment and Growth. Her role is dedicated to identifying high-potential professionals and providing them with the platform, systems, and mentorship required to scale their business exponentially. \n\n Armed with a Bachelor of Science degree in Marketing and a minor in Communications from the Singapore University of Social Sciences (SUSS), Vanessa leverages her deep understanding of market positioning and targeted messaging to connect ambitious realtors with the unique wealth-building opportunities available at KW Singapore.\n\n She is instrumental in executing the company's aggressive growth goals, ensuring every new consultant onboarded aligns with the high-performance culture. Vanessa’s ability to bridge strategic marketing theory with hands-on recruitment execution makes her an invaluable asset in reinforcing KW Singapore's position as the leading choice for growth-minded realtors.\n\n In her personal time, Vanessa maintains a balance of precision and exploration. She enjoys the focused ritual of crafting matcha and coffee, the discipline of going to the gym, and expanding her perspective through travel.",
+      image: "/images/about-us/core-team/Vanessa Chee.jpg",
     },
     {
       name: "Sheerra",
-      title: "TBC",
-      bio: "TBC",
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1200&q=80",
+      title: "Operations and Admin Executive",
+      bio: "Sheerra supports the growth and operations of Keller Williams Singapore through her role in realtor onboarding, tech support, and training coordination. With a strong background in business relations and administration, she ensures smooth processes and provides consistent support to help consultants perform at their best.\n\n Having honed her skills in realtor management, training coordination, and system support since 2021, Sheerra brings both precision and empathy to her work. Her deep familiarity with industry platforms such as KW Command, Datalabs, Powerkit, and CTOS enables her to guide consultants in adopting technology to enhance efficiency and productivity.",
+      image: "/images/about-us/core-team/Sheera Bakivelu.jpg",
     },
     {
       name: "Suvarna",
-      title: "TBC",
-      bio: "TBC",
-      image: "https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?auto=format&fit=crop&w=1200&q=80",
+      title: "Operations and Finance Executive",
+      bio: "Suvarna supports the finance functions of Keller Williams Singapore through transaction handling and system coordination. She ensures smooth processes and accuracy in financial matters while assisting the team in maintaining efficient operations. With a background in Bachelor of Finance, she brings a strong understanding of financial principles and business processes, contributing to the team’s overall efficiency and reliability",
+      image: "/images/about-us/core-team/Survana Bakivelu.jpeg",
     },
   ]
 
@@ -229,7 +229,7 @@ export default function AboutUsPage() {
       </section>
 
       {/* Inside KW Section */}
-      <section id="our-story" className="relative py-12 sm:py-32 bg-gradient-to-b from-black to-gray-900">
+      <section id="our-story" className="relative py-12 sm:py-32 bg-gradient-to-b from-gray-900 to-black">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left Side - Text Content */}
@@ -471,7 +471,7 @@ export default function AboutUsPage() {
 
       
 
-      {/* Meet the Core Team - Redesigned */}
+      {/* Meet the Core Team */}
       <section className="relative py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
         <div className="absolute inset-0" />
         <div className="relative z-10 max-w-7xl mx-auto px-6">
@@ -489,32 +489,48 @@ export default function AboutUsPage() {
             {/* Mobile: Image First, Desktop: Description First */}
             <div className="order-2 md:order-1">
               {/* Featured Member Details */}
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-3xl font-bold text-white">{teamMembers[selectedMember].name}</h3>
-                </div>
-                <div>
-                  <h4 className="text-2xl font-semibold text-white/90">{teamMembers[selectedMember].title}</h4>
-                </div>
-                <div className="pt-4">
-                  <div className="h-60 overflow-y-auto pr-2 scrollbar-auto">
-                    <p className="text-white/80 leading-relaxed text-base whitespace-pre-line">
-                      {teamMembers[selectedMember].bio}
-                    </p>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={selectedMember}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                  className="space-y-4"
+                >
+                  <div>
+                    <h3 className="text-3xl font-bold text-white">{teamMembers[selectedMember].name}</h3>
                   </div>
-                </div>
-              </div>
+                  <div>
+                    <h4 className="text-2xl font-semibold text-white/90">{teamMembers[selectedMember].title}</h4>
+                  </div>
+                  <div className="pt-4">
+                    <div className="h-60 overflow-y-auto pr-2 scrollbar-mini">
+                      <p className="text-white/80 leading-relaxed text-base whitespace-pre-line">
+                        {teamMembers[selectedMember].bio}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
 
             {/* Mobile: Image First, Desktop: Image Second */}
             <div className="relative w-[70%] mx-auto order-1 md:order-2">
               <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-gradient-to-br from-[#B40101]/10 to-transparent">
-                <img
-                  src={teamMembers[selectedMember].image || "/placeholder.svg"}
-                  alt={teamMembers[selectedMember].name}
-                  className="w-full h-full object-cover transition-all duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={selectedMember}
+                    src={teamMembers[selectedMember].image || "/placeholder.svg"}
+                    alt={teamMembers[selectedMember].name}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                    className="w-full h-full object-cover object-top"
+                  />
+                </AnimatePresence>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
               </div>
             </div>
           </div>
@@ -528,12 +544,14 @@ export default function AboutUsPage() {
                   onClick={() => setSelectedMember(index)}
                   className="flex-shrink-0 relative group transition-all duration-300"
                 >
-                  <div className="w-24 h-24 rounded-xl overflow-hidden bg-gray-800">
+                  <div className={`w-24 h-24 rounded-xl overflow-hidden bg-gray-800 transition-all duration-300 ${
+                    selectedMember === index ? 'ring-2 ring-[#B40101] ring-offset-2 ring-offset-gray-900' : ''
+                  }`}>
                     <img
                       src={member.image || "/placeholder.svg"}
                       alt={member.name}
-                      className={`w-full h-full object-cover transition-all duration-300 group-hover:scale-110 ${
-                        index < 3 ? 'scale-110' : ''
+                      className={`w-full h-full object-cover object-top transition-all duration-300 group-hover:scale-110 ${
+                        selectedMember === index ? 'scale-105' : ''
                       }`}
                     />
                   </div>
