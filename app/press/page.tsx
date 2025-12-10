@@ -102,11 +102,11 @@ export default function PressPage() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-gray-900 border-[#666666]/30">
-                      <SelectItem value="all" className="text-white hover:bg-white/10">
+                      <SelectItem value="all" className="text-white !bg-transparent hover:!bg-transparent hover:text-[#B40101] focus:!bg-transparent focus:text-[#B40101] data-[highlighted]:!bg-transparent data-[highlighted]:text-[#B40101] data-[state=checked]:text-[#B40101] cursor-pointer">
                         All Years
                       </SelectItem>
                       {availableYears.map((year) => (
-                        <SelectItem key={year} value={year} className="text-white hover:bg-white/10">
+                        <SelectItem key={year} value={year} className="text-white !bg-transparent hover:!bg-transparent hover:text-[#B40101] focus:!bg-transparent focus:text-[#B40101] data-[highlighted]:!bg-transparent data-[highlighted]:text-[#B40101] data-[state=checked]:text-[#B40101] cursor-pointer">
                           {year}
                         </SelectItem>
                       ))}
@@ -123,42 +123,44 @@ export default function PressPage() {
           </div>
 
           {/* Desktop Layout */}
-          <div className="hidden sm:flex flex-row items-center gap-4">
-            {/* Search Bar */}
-            <div className="relative flex-1 max-w-2xl">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 w-4 h-4" />
-              <Input
-                type="text"
-                placeholder="Search articles..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-white/10 border-[#666666]/30 text-white placeholder:text-white/60 focus:border-[#B40101] focus:ring-[#B40101] w-full"
-              />
+          <div className="hidden sm:block">
+            <div className="flex flex-row items-center gap-4 mb-4">
+              {/* Search Bar */}
+              <div className="relative flex-1 max-w-4xl">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 w-4 h-4" />
+                <Input
+                  type="text"
+                  placeholder="Search articles..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 bg-white/10 border-[#666666]/30 text-white placeholder:text-white/60 focus:border-[#B40101] focus:ring-[#B40101] w-full"
+                />
+              </div>
+
+              {/* Year Filter */}
+              <div className="flex items-center gap-2 ml-auto">
+                <span className="text-white font-medium text-sm whitespace-nowrap">Filter by year:</span>
+                <Select value={selectedYear} onValueChange={setSelectedYear}>
+                  <SelectTrigger className="w-32 bg-white/10 border-[#666666]/30 text-white focus:border-[#B40101] focus:ring-[#B40101]">
+                    <SelectValue />
+                  </SelectTrigger>
+                    <SelectContent className="bg-gray-900 border-[#666666]/30">
+                      <SelectItem value="all" className="text-white !bg-transparent hover:!bg-transparent hover:text-[#B40101] focus:!bg-transparent focus:text-[#B40101] data-[highlighted]:!bg-transparent data-[highlighted]:text-[#B40101] data-[state=checked]:text-[#B40101] cursor-pointer">
+                        All Years
+                      </SelectItem>
+                      {availableYears.map((year) => (
+                        <SelectItem key={year} value={year} className="text-white !bg-transparent hover:!bg-transparent hover:text-[#B40101] focus:!bg-transparent focus:text-[#B40101] data-[highlighted]:!bg-transparent data-[highlighted]:text-[#B40101] data-[state=checked]:text-[#B40101] cursor-pointer">
+                          {year}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                </Select>
+              </div>
             </div>
 
             {/* Results Count */}
             <div className="text-white/60 text-sm whitespace-nowrap">
               {filteredArticles.length} article{filteredArticles.length !== 1 ? "s" : ""} found
-            </div>
-
-            {/* Year Filter */}
-            <div className="flex items-center gap-2 ml-auto">
-              <span className="text-white font-medium text-sm whitespace-nowrap">Filter by year:</span>
-              <Select value={selectedYear} onValueChange={setSelectedYear}>
-                <SelectTrigger className="w-32 bg-white/10 border-[#666666]/30 text-white focus:border-[#B40101] focus:ring-[#B40101]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-gray-900 border-[#666666]/30">
-                  <SelectItem value="all" className="text-white hover:bg-white/10">
-                    All Years
-                  </SelectItem>
-                  {availableYears.map((year) => (
-                    <SelectItem key={year} value={year} className="text-white hover:bg-white/10">
-                      {year}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
             </div>
           </div>
         </div>

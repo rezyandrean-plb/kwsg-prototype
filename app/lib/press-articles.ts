@@ -248,8 +248,8 @@ export const allArticles: Article[] = [
       "Keller Williams Worldwide celebrates the launch of KW Singapore in an official video announcement.",
     imageUrl: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/press/kw-facebook.webp",
     link: "https://www.facebook.com/watch/?v=758135760028308",
-    date: "2026-07-17",
-    year: "2026",
+    date: "2025-07-17",
+    year: "2025",
     source: "Keller Williams Realty",
     slug: "keller-williams-worldwide-announces-launch-of-kw-singapore",
     articleContent: `
