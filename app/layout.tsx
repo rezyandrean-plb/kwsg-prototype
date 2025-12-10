@@ -83,7 +83,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body suppressHydrationWarning>
+      <body suppressHydrationWarning={true}>
         <ClerkProvider>
           {/* Google Tag Manager (noscript) */}
           <noscript>

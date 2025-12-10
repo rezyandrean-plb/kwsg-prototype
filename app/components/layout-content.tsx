@@ -107,7 +107,7 @@ export default function LayoutContent({
     <Suspense fallback={<LoadingFallback />}>
       <ThemeProvider {...themeProviderProps()}>
         {/* suppressHydrationWarning prevents errors from browser extensions injecting content */}
-        <div className="flex min-h-screen flex-col" suppressHydrationWarning>
+        <div className="flex min-h-screen flex-col" suppressHydrationWarning={true}>
           <Header />
           <MainContent>{children}</MainContent>
           <Footer />

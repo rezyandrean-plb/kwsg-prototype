@@ -1631,14 +1631,6 @@ export default function TechToolPage() {
                 >
                   High-level tech roadmap for KW 
                 </motion.h2>
-                <motion.p 
-                  className="text-sm sm:text-base lg:text-lg text-gray-300 px-4 max-w-4xl mx-auto italic"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={roadmapInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                >
-                  (as of 10 Dec 2025)
-                </motion.p>
               </div>
             </motion.div>
 
@@ -1728,7 +1720,7 @@ export default function TechToolPage() {
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 0.9 }}
                   >
-                    Handover Hero <span className="italic">(with visual AI)</span>
+                    Handover Hero <span className="italic text-xs">(with visual AI)</span>
                   </motion.div>
                   <motion.div 
                     className="text-green-400 text-sm sm:text-base font-medium"
@@ -1736,7 +1728,7 @@ export default function TechToolPage() {
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.0 }}
                   >
-                    Megamap <span className="italic">(CMA enhancement)</span>
+                    Megamap <span className="italic text-xs">(CMA enhancement)</span>
                   </motion.div>
                   <motion.div 
                     className="text-green-400 text-sm sm:text-base font-medium"
@@ -1778,7 +1770,7 @@ export default function TechToolPage() {
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.0 }}
                   >
-                    Property Analysis <span className="italic">(Interactive Towerview + Nearby Projects Analysis enhancement)</span>
+                    Property Analysis <span className="italic text-xs">(Interactive Towerview + Nearby Projects Analysis enhancement)</span>
                   </motion.div>
                   <motion.div 
                     className="text-white text-sm sm:text-base"
@@ -1794,7 +1786,7 @@ export default function TechToolPage() {
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.2 }}
                   >
-                    Save to Client Collection feature <span className="italic">(with saved calculations)</span>
+                    Save to Client Collection feature <span className="italic text-xs">(with saved calculations)</span>
                   </motion.div>
                 </div>
               </motion.div>
@@ -1836,7 +1828,7 @@ export default function TechToolPage() {
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.5 }}
                   >
-                    Last Hit <span className="italic">(Prospector Tool)</span>
+                    Last Hit <span className="italic text-xs">(Prospector Tool)</span>
                   </motion.div>
                   <motion.div 
                     className="text-white text-sm sm:text-base"
@@ -1844,7 +1836,7 @@ export default function TechToolPage() {
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.6 }}
                   >
-                    Public Property Analysis <span className="italic">(Limited viewing for public)</span>
+                    Public Property Analysis <span className="italic text-xs">(Limited viewing for public)</span>
                   </motion.div>
                   <motion.div 
                     className="text-white text-sm sm:text-base"
@@ -1852,7 +1844,7 @@ export default function TechToolPage() {
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.7 }}
                   >
-                    Megamap <span className="italic">(Reverse proximity search enhancement)</span>
+                    Megamap <span className="italic text-xs">(Reverse proximity search enhancement)</span>
                   </motion.div>
                   <motion.div 
                     className="text-white text-sm sm:text-base"
@@ -1860,7 +1852,7 @@ export default function TechToolPage() {
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.8 }}
                   >
-                    Timeline Planning calculator <span className="italic">(Flexi date enhancement)</span>
+                    Timeline Planning calculator <span className="italic text-xs">(Flexi date enhancement)</span>
                   </motion.div>
                 </div>
               </motion.div>
