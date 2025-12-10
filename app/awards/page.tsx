@@ -423,22 +423,18 @@ export default function ModelPage() {
             variants={itemVariants}
           >
             <div className="text-center mb-4">
-              <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
-                <div className="flex justify-center">
-                  <Button 
-                    asChild
-                    className="bg-white text-[#ce001f] hover:bg-gray-100 px-8 py-3 text-lg hover:scale-105 transition-all duration-300"
-                  >
-                    <a
-                      href="/files/excellence-night-newsletter.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      View Full Recap
-                    </a>
-                  </Button>
-                </div>
-              </div>
+              <Button 
+                asChild
+                className="bg-white text-[#ce001f] hover:bg-gray-100 px-8 py-3 text-lg hover:scale-105 transition-all duration-300"
+              >
+                <a
+                  href="/files/excellence-night-newsletter.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View Full Recap
+                </a>
+              </Button>
             </div>
           </motion.div>
           </motion.div>
