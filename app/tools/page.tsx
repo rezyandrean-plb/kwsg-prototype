@@ -1728,7 +1728,7 @@ export default function TechToolPage() {
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 0.9 }}
                   >
-                    Handover Hero (with visual AI)
+                    Handover Hero <span className="italic">(with visual AI)</span>
                   </motion.div>
                   <motion.div 
                     className="text-green-400 text-sm sm:text-base font-medium"
@@ -1736,7 +1736,7 @@ export default function TechToolPage() {
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.0 }}
                   >
-                    Megamap (CMA enhancement)
+                    Megamap <span className="italic">(CMA enhancement)</span>
                   </motion.div>
                   <motion.div 
                     className="text-green-400 text-sm sm:text-base font-medium"
