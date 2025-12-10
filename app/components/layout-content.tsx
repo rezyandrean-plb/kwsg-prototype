@@ -1,6 +1,6 @@
 "use client"
 
-import { Suspense, lazy, useCallback, memo, useEffect } from 'react'
+import { Suspense, lazy, useCallback, memo, useEffect, useRef } from 'react'
 import dynamic from 'next/dynamic'
 import { cn } from '@/lib/utils'
 import { Toaster } from '@/components/ui/toaster'
@@ -50,6 +50,7 @@ export default function LayoutContent({
   children: React.ReactNode
 }) {
   const pathname = usePathname()
+  const layoutRef = useRef<HTMLDivElement>(null)
   
   // Memoize the theme provider props to prevent unnecessary re-renders
   const themeProviderProps = useCallback(() => ({
@@ -58,6 +59,18 @@ export default function LayoutContent({
     enableSystem: true,
     disableTransitionOnChange: true
   }), [])
+
+  // Handle browser extension-injected content to prevent hydration warnings
+  useEffect(() => {
+    if (typeof document === 'undefined' || !layoutRef.current) return
+    
+    // Mark extension-injected iframes to help React ignore them during hydration
+    const extensionIframes = layoutRef.current.querySelectorAll('iframe[id^="jam-coms-"]')
+    extensionIframes.forEach(iframe => {
+      iframe.setAttribute('data-extension-injected', 'true')
+      iframe.setAttribute('suppressHydrationWarning', 'true')
+    })
+  }, [])
 
   // Global document title handler: "<Page Title> - KW Singapore"
   useEffect(() => {
@@ -108,6 +121,7 @@ export default function LayoutContent({
       <ThemeProvider {...themeProviderProps()}>
         {/* suppressHydrationWarning prevents errors from browser extensions injecting content */}
         <div 
+          ref={layoutRef}
           className="flex min-h-screen flex-col" 
           suppressHydrationWarning={true}
           suppressContentEditableWarning={true}
