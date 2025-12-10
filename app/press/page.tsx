@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
+import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { motion } from "framer-motion";
 import { getSafeImageUrl } from "@/lib/image-utils";
@@ -12,8 +11,6 @@ import { allArticles, Article } from "../lib/press-articles";
 export default function PressPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedYear, setSelectedYear] = useState("all");
-  const [currentPage, setCurrentPage] = useState(1);
-  const articlesPerPage = 6;
 
   // Get available years from articles
   const availableYears = [...new Set(allArticles.map((article: Article) => 
@@ -34,21 +31,6 @@ export default function PressPage() {
       // Sort by date, newest first
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     });
-
-  // Calculate pagination
-  const totalPages = Math.ceil(filteredArticles.length / articlesPerPage);
-  const startIndex = (currentPage - 1) * articlesPerPage;
-  const currentArticles = filteredArticles.slice(startIndex, startIndex + articlesPerPage);
-
-  // Handle page change
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
-  // Reset to first page when filters change
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm, selectedYear]);
 
   return (
     <div className="min-h-screen bg-gray-900">
@@ -190,10 +172,10 @@ export default function PressPage() {
         transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          {currentArticles.length > 0 ? (
+          {filteredArticles.length > 0 ? (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-                {currentArticles.map((article: Article, index: number) => (
+                {filteredArticles.map((article: Article, index: number) => (
                   <motion.div
                     key={`${article.title}-${index}`}
                     className="group relative overflow-hidden rounded-lg border border-[#666666]/20 transition-all duration-300 hover:scale-105 hover:border-[#B40101]/40 cursor-pointer"
@@ -246,47 +228,6 @@ export default function PressPage() {
                   </motion.div>
                 ))}
               </div>
-
-              {/* Pagination */}
-              {totalPages > 1 && (
-                <div className="flex items-center justify-center mt-8 sm:mt-12 gap-1 sm:gap-2 flex-wrap">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="border-[#666666]/30 text-white hover:bg-white/10 disabled:opacity-50 px-2 sm:px-3"
-                  >
-                    <ChevronLeft className="w-3 h-3 sm:w-4 sm:h-4" />
-                  </Button>
-
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                    <Button
-                      key={page}
-                      variant={currentPage === page ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => handlePageChange(page)}
-                      className={
-                        currentPage === page
-                          ? "bg-[#B40101] hover:bg-[#B40101]/90 text-white px-2 sm:px-3"
-                          : "border-[#666666]/30 text-white hover:bg-white/10 px-2 sm:px-3"
-                      }
-                    >
-                      {page}
-                    </Button>
-                  ))}
-
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className="border-[#666666]/30 text-white hover:bg-white/10 disabled:opacity-50 px-2 sm:px-3"
-                  >
-                    <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4" />
-                  </Button>
-                </div>
-              )}
             </>
           ) : (
             <div className="text-center py-8 sm:py-16 px-4">
