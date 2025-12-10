@@ -1629,8 +1629,16 @@ export default function TechToolPage() {
                   animate={roadmapInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ duration: 0.6, delay: 0.3 }}
                 >
-                  High-level tech roadmap for KW 
+                 Next 90 Days – What's Coming
                 </motion.h2>
+                <motion.p 
+                  className="text-sm sm:text-base lg:text-lg text-gray-300 px-4 max-w-4xl mx-auto"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={roadmapInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                >
+                  What's ahead is even more exciting. Here's our line-up for the next quarter:
+                </motion.p>
               </div>
             </motion.div>
 
