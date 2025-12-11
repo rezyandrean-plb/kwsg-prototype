@@ -288,4 +288,23 @@ img {
   .custom-cursor-view {
     cursor: none;
   }
+  
+  /* Custom Scrollbar Utilities */
+  .scrollbar-mini::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  
+  .scrollbar-mini::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .scrollbar-mini::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+  }
+  
+  .scrollbar-mini::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
 }

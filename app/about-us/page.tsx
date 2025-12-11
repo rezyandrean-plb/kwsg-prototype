@@ -67,7 +67,7 @@ export default function AboutUsPage() {
       window.removeEventListener("resize", updateIsMobile)
     }
   }, [])
-  
+
   // Celebration images array
   const celebrationImages = [
     { src: "/images/about-us/excellence-celebrated/Excellence-01.jpg", alt: "KW Singapore Excellence Celebration - Award Winners" },
@@ -81,16 +81,16 @@ export default function AboutUsPage() {
     { src: "/images/about-us/excellence-celebrated/Excellence-09.jpg", alt: "KW Singapore Excellence Celebration - Social Event" },
     { src: "/images/about-us/excellence-celebrated/Excellence-10.jpg", alt: "KW Singapore Excellence Celebration - Recognition" },
   ]
-  
+
   // Navigation functions for celebration carousel
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % celebrationImages.length)
   }
-  
+
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + celebrationImages.length) % celebrationImages.length)
   }
-  
+
   // Auto-slide animation for celebration carousel (slow)
   useEffect(() => {
     const interval = setInterval(() => {
@@ -99,7 +99,7 @@ export default function AboutUsPage() {
 
     return () => clearInterval(interval)
   }, [celebrationImages.length])
-  
+
   const { scrollYProgress, scrollY } = useScroll()
   const pathLength = useTransform(scrollYProgress, [0, 1], [0, 1])
   const scrollYValue = useTransform(scrollY, (value) => value * 0.5)
@@ -180,8 +180,6 @@ export default function AboutUsPage() {
     prevVisibleImagesRef.current = new Set(filteredImages.map((img) => img.src))
   }, [filteredImages])
 
-  
-
   const teamMembers = [
     {
       name: "Melvin Lim",
@@ -199,19 +197,19 @@ export default function AboutUsPage() {
       name: "Joanne Ong",
       title: "Regional Operations & Success Manager",
       bio: "Joanne Ong joins KW Singapore as our new Operations Manager, bringing extensive experience in building high-performing, systems-driven real estate teams. As the co-founder of Jdot Property (Mega Team), she was instrumental in developing collaborative and results-oriented strategies, contributing to over RM110 million in closed gross development value.\n\nA former litigation lawyer and entrepreneur, Joanne pivoted to real estate in 2020. Inspired by the KW Mega Agent team model, she leveraged her strengths in systems, operations, and team development to build Jdot Property, earning recognition as a KW Worldwide Top 100 agent in 2024. Her expertise in operational excellence and commitment to teamwork perfectly align with KW Singapore's mission.",
-      image: "/images/about-us/core-team/joanne-ong-professional.webp",
+      image: "/images/about-us/core-team/Joanne Ong.jpg",
     },
     {
       name: "Siew Min Choong",
       title: "Regional Tech Trainer & Administrator",
       bio: "Siew Min champions the technological empowerment of KW consultants in Singapore. Leveraging her deep expertise in digital marketing and project management, she transforms KW's cutting-edge tools into decisive business advantages.\n\nA pivotal figure since joining the KW ecosystem in 2019, Siew Min has significantly influenced the evolution of KW's proprietary technology. Her critical involvement in Command Labs, a global initiative, ensured KW Command was developed and optimized to meet the real-world needs of consultants.\n\nIn her role at KW Singapore, Siew Min drives tech enablement and adoption. She empowers consultants and their teams to fully leverage KW Command, streamlining operations and scaling their businesses with unparalleled precision. With over a decade of experience, Siew Min consistently bridges the gap between innovation and execution, ensuring KW remains at the forefront by empowering its consultants with the best in real estate technology.",
-      image: "/images/about-us/core-team/siew-min-professional.webp",
+      image: "/images/about-us/core-team/Siew Min.jpg",
     },
     {
       name: "Isabelle",
       title: "Branding & Social Media Executive",
       bio: "Isabelle is a Branding & Social Media Executive who helps real estate consultants turn their expertise into influence, authority, and a consistent digital presence. \n\nIsabelle has a strong foundation in consumer behaviour, visual storytelling, and digital branding. Working behind the scenes with multiple realtors gave her firsthand insight into what resonates with property audiences, how realtors should position themselves, and how content can shape perception, trust, and client flow.\n\n Today, at KW Singapore, Isabelle leads content development across social platforms, consultant branding projects, and media-driven recruitment initiatives. From shaping brand identities to story-led campaigns, she strategises communication on media platforms that elevate the KW brand and empower consultants to grow their businesses with clarity and confidence.\n\n Beyond KW, Isabelle also supports Chief Media, helping to refine creative workflows, oversee vendor content quality, and build the structure that allows realtors to access professional-level media production. Her experience across both sides — agency-style content creation and in-house branding — gives her a unique perspective on what realtors actually need to stand out in a competitive digital landscape.\n\n Her work combines creativity, strategic thinking, and a deep understanding of digital behaviour — ensuring every piece of content drives clarity, trust, and meaningful engagement.",
-      image: "/images/about-us/core-team/isabelle-lee.jpg",
+      image: "/images/about-us/core-team/Isabelle Lee.jpg",
     },
     {
       name: "Vanessa",
@@ -230,6 +228,12 @@ export default function AboutUsPage() {
       title: "Operations and Finance Executive",
       bio: "Suvarna supports the finance functions of Keller Williams Singapore through transaction handling and system coordination. She ensures smooth processes and accuracy in financial matters while assisting the team in maintaining efficient operations. With a background in Bachelor of Finance, she brings a strong understanding of financial principles and business processes, contributing to the team’s overall efficiency and reliability",
       image: "/images/about-us/core-team/Survana Bakivelu.jpeg",
+    },
+    {
+      name: "Wayne Tang",
+      title: "Key Executive Officer (KEO) and Agency Coach",
+      bio: "Wayne Tang is the Key Executive Officer (KEO) and Agency Coach of KW Singapore, where he plays a pivotal role in safeguarding professional standards while shaping the next chapter of the company’s growth. As KEO — one of the most critical appointments in Singapore’s real estate agency framework — Wayne sits at the intersection of governance, culture, and performance. He is responsible for upholding regulatory compliance, strengthening operational discipline, and ensuring that KW Singapore’s realtors serve clients with integrity, transparency, and professionalism.\n\nWith more than a decade of experience across consumer electronics and real estate marketing, Wayne brings a rare blend of commercial sharpness and operational rigour. His background spans brand-building, go-to-market strategy, and sales enablement, giving him a deep appreciation for both the front-line realities realtors face and the systems required to support them. Having led teams in fast-paced, highly competitive environments, he is no stranger to corporate governance, risk management, and the frameworks needed to scale a modern real estate organisation responsibly.\n\nAt KW Singapore, Wayne’s dual role as KEO and Agency Coach allows him to go beyond oversight and into active partnership with realtors. He designs and drives coaching programmes that equip consultants with the mindset, skills, and systems to thrive — from ethical decision-making and client advisory frameworks, to prospecting structure, pipeline management, and team collaboration. To Wayne, coaching is not just about hitting numbers; it is about building trusted professionals who can communicate clearly, think critically, and create long-term value for their clients and teams.\n\nWorking closely with Founder and Operating Principal Melvin Lim and the leadership team, Wayne plays a key role in aligning KW Singapore’s governance standards with its growth ambitions. He is deeply committed to building an agency where high performance is matched by high integrity, and where realtors are empowered not only to succeed in their careers, but to do so with clarity, confidence, and purpose.",
+      image: "/images/about-us/core-team/Wayne_Photo.jpg",
     },
   ]
 
@@ -280,26 +284,28 @@ export default function AboutUsPage() {
               transition={{ duration: 0.8 }}
             >
           <motion.h2 
-                className="text-3xl font-bold text-white mb-6 md:text-4xl lg:text-5xl leading-relaxed"
+                className="text-3xl font-bold text-white mb-6 md:text-4xl lg:text-5xl leading-tight"
             initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+              >
                 Inside KW: <br/><span className="text-[#B40101]">The Real Story</span>
-          </motion.h2>
+              </motion.h2>
           <motion.p 
-                className="text-white/90 leading-relaxed text-lg"
+                className="text-white/90 leading-relaxed text-base md:text-lg"
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            Beyond the transactions is a movement. Dive into our community, explore our core values, and see the <strong>Life at KW</strong> that agents are building—in their business, and their lives. 
-          </motion.p>
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                Beyond the transactions is a movement. Dive into our community, explore our core values, and see the <strong>Life at KW</strong> that agents are building—in their business, and their lives. 
+                <br/><br/>
+                See the journey and the celebration and hear it straight from the source.
+              </motion.p>
             </motion.div>
 
-            {/* Right Side - YouTube Video + Special Sentence */}
+            {/* Right Side - YouTube Video */}
             <motion.div
               className="w-full"
               initial={{ opacity: 0, x: 30 }}
@@ -316,22 +322,13 @@ export default function AboutUsPage() {
                   className="absolute inset-0 w-full h-full"
                 />
               </div>
-              <motion.p 
-                className="text-white leading-relaxed text-sm text-center italic font-medium"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-              >
-                See the journey and the celebration and hear it straight from the source.
-              </motion.p>
-          </motion.div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Excellence. Celebrated. - Image Carousel */}
-      <section className="relative py-32 overflow-hidden bg-gradient-to-b from-black via-[#210101] to-black">
+      <section className="relative pt-12 pb-6 overflow-hidden bg-gradient-to-b from-black via-[#210101] to-black">
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           {/* Section Header */}
           <div className="text-center mb-16">
@@ -342,28 +339,8 @@ export default function AboutUsPage() {
             </p>
           </div>
 
-          {/* Video Section */}
-          <motion.div 
-            className="relative w-full max-w-4xl mx-auto mb-16"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-gray-800 shadow-2xl">
-              <iframe
-                src="https://www.youtube.com/embed/EFkqgHdxTb0?modestbranding=1&rel=0&showinfo=0&controls=1&fs=1&autoplay=1&mute=1&playsinline=1&loop=1&playlist=EFkqgHdxTb0"
-                title="Excellence Celebrated"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="absolute inset-0 w-full h-full"
-                style={{ border: 'none' }}
-              />
-            </div>
-          </motion.div>
-
           {/* Carousel Container */}
-          <div className="relative max-w-6xl mx-auto">
+          <div className="relative max-w-6xl mx-auto pb-6">
             {/* Cards Display */}
             <div className="relative h-[400px] md:h-[500px] flex items-center justify-center perspective-1000">
               {celebrationImages.map((image, index) => {
@@ -468,7 +445,7 @@ export default function AboutUsPage() {
                 className="bg-white/10 hover:bg-[#B40101] text-white p-2 md:p-3 rounded-full transition-all duration-300 backdrop-blur-sm hover:scale-110"
                 aria-label="Previous slide"
               >
-                <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
+                <ChevronLeft className="h-4 w-4 md:h-5 md:w-5" />
               </button>
               
               {/* Indicator Dots */}
@@ -489,15 +466,36 @@ export default function AboutUsPage() {
                 className="bg-white/10 hover:bg-[#B40101] text-white p-2 md:p-3 rounded-full transition-all duration-300 backdrop-blur-sm hover:scale-110"
                 aria-label="Next slide"
               >
-                <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
+                <ChevronRight className="h-4 w-4 md:h-5 md:w-5" />
               </button>
             </div>
           </div>
+
+          {/* Video Section */}
+          <motion.div 
+            className="relative w-full max-w-4xl mx-auto mb-16"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-gray-800 shadow-2xl">
+              <iframe
+                src="https://www.youtube.com/embed/EFkqgHdxTb0?modestbranding=1&rel=0&showinfo=0&controls=1&fs=1&autoplay=1&mute=1&playsinline=1&loop=1&playlist=EFkqgHdxTb0"
+                title="Excellence Celebrated"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full"
+                style={{ border: 'none' }}
+              />
+            </div>
+          </motion.div>
+          
         </div>
       </section>
 
       {/* The Growth */}
-      <section className="relative py-12 sm:py-32 overflow-hidden bg-black">
+      <section className="relative py-12 sm:py-12 overflow-hidden bg-black">
         <div
           className="absolute inset-0 opacity-70"
           style={{
@@ -548,7 +546,7 @@ export default function AboutUsPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              World-Class Training. Real-World Results.
+              World-Class Training. <br className="block md:hidden" />Real-World Results.
             </motion.p>
             <motion.p 
               className="text-lg md:text-xl text-white/90 leading-relaxed max-w-4xl mx-auto mb-12"
@@ -635,60 +633,70 @@ export default function AboutUsPage() {
       </section>
 
       {/* The Weekly Edge */}
-      <section className="relative py-24 bg-black">
-        <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-[1.2fr_1fr] gap-12 items-start">
-          <div>
-            <motion.h2
-              className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight mb-4"
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              The Weekly Edge
-            </motion.h2>
-            <motion.h3
-              className="text-2xl sm:text-3xl font-semibold italic text-[#B40101] mb-6"
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-            >
-              Constant Momentum. Life at KW.
-            </motion.h3>
-            <motion.p
-              className="text-lg md:text-xl text-white/90 leading-relaxed max-w-3xl"
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-            >
-              Beyond the events and celebrations, our culture of performance and innovation is constant. Every week, we
-              package exclusive mastery sessions, tech deep dives, and founder insights to ensure our consultants stay ahead.
-            </motion.p>
-          </div>
+      <section className="relative py-24 bg-gradient-to-b from-black via-gray-900 to-black overflow-hidden">
+        {/* Background Accents */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#B40101]/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#B40101]/5 rounded-full blur-[80px] pointer-events-none" />
 
-          <div className="space-y-1">
-            <motion.div
-              initial={{ opacity: 0, x: 16 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="flex items-center gap-4 px-2 py-3 border-b border-white/10 cursor-pointer rounded-md transition-colors duration-200 hover:bg-white/5"
-            >
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#B40101]/10 border border-[#B40101]/20 transition-transform duration-200 hover:scale-105 hover:bg-[#B40101]/20">
-                <Download className="h-5 w-5 text-[#B40101] transition-colors duration-200 hover:text-white" />
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
+          <div className="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12 backdrop-blur-sm shadow-2xl">
+            <div className="grid lg:grid-cols-[1.5fr_1fr] gap-8 lg:gap-12 items-center">
+              <div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight mb-4">
+                    The Weekly <span className="text-[#B40101]">Edge</span>
+                  </h2>
+                  <h3 className="text-xl sm:text-2xl font-medium text-white/80 mb-6">
+                    Constant Momentum. <br className="block sm:hidden" />Life at KW.
+                  </h3>
+                  <p className="text-base md:text-lg text-white/70 leading-relaxed max-w-2xl">
+                    Beyond the events and celebrations, our culture of performance and innovation is constant. Every week, we
+                    package exclusive mastery sessions, tech deep dives, and founder insights to ensure our consultants stay ahead.
+                    <br/><br/>
+                    This weekly rhythm provides proof of life and ensures the strategic intersection of performance, consulting, and innovation continues outside the training room.
+                  </p>
+                </motion.div>
               </div>
-              <p className="text-white text-lg font-semibold transition-colors duration-200 group-hover:text-white">
-                Newsletter list download
-              </p>
-            </motion.div>
+
+              <div className="flex justify-start lg:justify-end">
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="w-full max-w-sm"
+                >
+                  <a href="#" className="block group">
+                    <div className="bg-gradient-to-br from-[#B40101] to-red-700 p-0.5 rounded-xl transition-transform duration-300 group-hover:scale-[1.02] shadow-lg shadow-red-900/20 max-w-xs lg:ml-auto">
+                      <div className="bg-black/90 rounded-[10px] p-3 h-full flex items-center gap-3 group-hover:bg-black/80 transition-colors duration-300">
+                        <div className="h-10 w-10 bg-[#B40101]/20 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-[#B40101]/30 transition-colors">
+                          <Download className="h-4 w-4 text-[#B40101] group-hover:text-white transition-colors duration-300" />
+                        </div>
+                        <div>
+                          <p className="text-white text-base font-bold mb-0 group-hover:text-[#B40101] transition-colors">
+                            See the Movement
+                          </p>
+                        </div>
+                        <div className="ml-auto">
+                          <ArrowRight className="h-4 w-4 text-white/40 group-hover:text-white group-hover:translate-x-1 transition-all duration-300" />
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </motion.div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Our Story */}
-      <section className="relative py-32 bg-gradient-to-b from-black to-gray-900 pb-5">
+      <section className="relative py-16 md:py-12 bg-gradient-to-b from-black to-gray-900 pb-5">
         <div className="max-w-4xl mx-auto text-center px-6">
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8">Our Story</h2>
           <p className="text-white leading-relaxed max-w-3xl mx-auto text-lg mb-8">
@@ -702,92 +710,92 @@ export default function AboutUsPage() {
       
 
       {/* Meet the Core Team */}
-      <section className="relative py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
-        <div className="absolute inset-0" />
+      <section className="relative pt-16 pb-32 md:py-12 overflow-hidden bg-gradient-to-b from-gray-900 via-black to-gray-900">
+        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#B40101]/20 via-transparent to-transparent" />
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           {/* Section Header */}
-          <div className="mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-white text-center leading-tight">
-              Meet the Core Team
+          <div className="mb-20 text-center">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight">
+              Meet the <span className="text-[#B40101]">Core Team</span>
             </h2>
-            <p className="text-lg text-white leading-relaxed max-w-4xl mx-auto text-left">
+            <p className="text-lg text-white/80 leading-relaxed max-w-3xl mx-auto">
               Our leadership isn't just operational — it's transformational. Each core leader at KW Singapore is handpicked for domain expertise, business acumen, and a commitment to building a scalable, consultant-first ecosystem.
             </p>
           </div>
+          
           {/* Main Featured Area */}
-          <div className="grid md:grid-cols-2 gap-16 items-center mb-20">
+          <div className="grid md:grid-cols-12 gap-8 md:gap-10 items-start mb-24">
             {/* Mobile: Image First, Desktop: Description First */}
-            <div className="order-2 md:order-1">
+            <div className="order-2 md:order-1 md:col-span-7 flex flex-col justify-center h-full">
               {/* Featured Member Details */}
               <AnimatePresence mode="wait">
                 <motion.div
                   key={selectedMember}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.4, ease: "easeInOut" }}
-                  className="space-y-4"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="space-y-6"
                 >
                   <div>
-                    <h3 className="text-3xl font-bold text-white">{teamMembers[selectedMember].name}</h3>
+                    <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">{teamMembers[selectedMember].name}</h3>
+                    <div className="h-1 w-20 bg-[#B40101] rounded-full" />
                   </div>
                   <div>
-                    <h4 className="text-2xl font-semibold text-white/90">{teamMembers[selectedMember].title}</h4>
+                    <h4 className="text-lg md:text-xl lg:text-2xl font-medium text-[#B40101]">{teamMembers[selectedMember].title}</h4>
                   </div>
-                  <div className="pt-4">
-                    <div className="h-60 overflow-y-auto pr-2 scrollbar-mini">
-                      <p className="text-white/80 leading-relaxed text-base whitespace-pre-line">
+                  <div className="relative">
+                    <div className="max-h-[400px] overflow-y-auto pr-4 scrollbar-mini">
+                      <p className="text-white/80 leading-relaxed text-sm md:text-base lg:text-lg whitespace-pre-line">
                         {teamMembers[selectedMember].bio}
                       </p>
                     </div>
+                    {/* Fade at bottom of scroll area if needed, though max-h handles it */}
                   </div>
                 </motion.div>
               </AnimatePresence>
             </div>
 
             {/* Mobile: Image First, Desktop: Image Second */}
-            <div className="relative w-[70%] mx-auto order-1 md:order-2">
-              <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-gradient-to-br from-[#B40101]/10 to-transparent">
+            <div className="order-1 md:order-2 md:col-span-5 relative">
+              <div className="relative aspect-[3/4] w-[80%] md:w-full max-w-[280px] md:max-w-md mx-auto rounded-2xl overflow-hidden shadow-2xl shadow-[#B40101]/10 border border-white/5 bg-gradient-to-br from-[#B40101]/20 to-gray-900">
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={selectedMember}
                     src={teamMembers[selectedMember].image || "/placeholder.svg"}
                     alt={teamMembers[selectedMember].name}
-                    initial={{ opacity: 0, scale: 0.95 }}
+                    initial={{ opacity: 0, scale: 1.05 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                    exit={{ opacity: 0, scale: 1.05 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
                     className="w-full h-full object-cover object-top"
                   />
                 </AnimatePresence>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
               </div>
             </div>
           </div>
 
           {/* Team Member Thumbnails */}
           <div className="relative">
-            <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+            <div className="flex justify-start md:justify-center gap-3 overflow-x-auto pb-6 px-4 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent md:scrollbar-hide">
               {teamMembers.map((member, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedMember(index)}
-                  className="flex-shrink-0 relative group transition-all duration-300"
+                  className="flex-shrink-0 relative group transition-all duration-300 focus:outline-none"
                 >
-                  <div className={`w-24 h-24 rounded-xl overflow-hidden bg-gray-800 transition-all duration-300 ${
-                    selectedMember === index ? 'ring-2 ring-[#B40101] ring-offset-2 ring-offset-gray-900' : ''
+                  <div className={`w-16 h-16 md:w-20 md:h-20 rounded-xl overflow-hidden border-2 transition-all duration-300 ${
+                    selectedMember === index 
+                      ? 'border-[#B40101] scale-105 shadow-lg shadow-[#B40101]/30' 
+                      : 'border-white/20 opacity-60 hover:opacity-100 hover:border-white/50'
                   }`}>
                     <img
                       src={member.image || "/placeholder.svg"}
                       alt={member.name}
-                      className={`w-full h-full object-cover object-top transition-all duration-300 group-hover:scale-110 ${
-                        selectedMember === index ? 'scale-105' : ''
-                      }`}
+                      className="w-full h-full object-cover object-top"
                     />
                   </div>
-                  {selectedMember !== index && (
-                    <div className="absolute inset-0 bg-black/40 rounded-xl transition-opacity duration-300 group-hover:bg-black/20" />
-                  )}
                 </button>
               ))}
             </div>
