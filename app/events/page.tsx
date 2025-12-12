@@ -1,7 +1,7 @@
 
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import {
   ChevronRight,
@@ -36,7 +36,23 @@ export default function EventsPage() {
   const [activePastTab, setActivePastTab] = useState(0)
   const [pastCarouselIndex, setPastCarouselIndex] = useState(0)
   const [isCarouselPaused, setIsCarouselPaused] = useState(false)
+  const [eventCategory, setEventCategory] = useState<string>("")
+  const prevVisibleImagesRef = useRef<Set<string>>(new Set())
+  const [exploreIndex, setExploreIndex] = useState(0)
+  const [fourUpIndex, setFourUpIndex] = useState(0)
+  const [fourUpPerRow, setFourUpPerRow] = useState(4)
+  const [realtorSubTag, setRealtorSubTag] = useState<"All" | "September" | "October" | "November">("All")
 
+
+  // Helper function to extract YouTube video ID and convert to embed URL
+  const getYouTubeEmbedUrl = (url: string) => {
+    const videoIdMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/)
+    if (videoIdMatch) {
+      const videoId = videoIdMatch[1].split('?')[0]
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=1`
+    }
+    return url
+  }
 
   const pastEvents = [
     {
@@ -55,23 +71,15 @@ export default function EventsPage() {
       date: "August 2025",
       description:
         "A 2-day intensive masterclass diving into the millionaire models, strategies, and systems for exponential growth.",
-      images: [
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-1.jpeg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-2.jpeg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-3.jpeg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-4.jpeg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-5.jpeg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-6.jpeg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-7.jpeg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-8.jpeg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-9.jpeg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-10.jpeg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-11.jpeg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-12.jpeg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-13.jpeg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/explore-night-14.jpeg",
+      images: [],
+      video: [
+        "https://youtu.be/Sh8aD6uI0-E?si=rVtunRhP4MHe4V9X",
+        "https://youtu.be/4bjVvRaItHA?si=_oM6PtjNWfMBospn",
+        "https://youtu.be/PW8A6XC0UhE?si=B5v-zjIhS9PbnEm3",
+        "https://youtu.be/eo84p1nHWBE?si=hlN_j1XZM5VnuqzN",
+        "https://youtu.be/jc6GFFnQQB4?si=_1sfQfS4RkSkOMDN",
+        "https://youtu.be/PW8A6XC0UhE?si=wDm6H9XFzWDG0WJc",
       ],
-      video: [],
     },
     {
       title: "Founder’s Market Insights",
@@ -87,7 +95,9 @@ export default function EventsPage() {
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/founder-insight-6.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/founder-insight-7.jpg",
       ],
-      video: [],
+      video: [
+        "https://www.youtube.com/shorts/8ZRBWMkM-n0",
+      ],
     },
     {
       title: "Welcome Dinner",
@@ -127,6 +137,137 @@ export default function EventsPage() {
       video: [],
     },
   ]
+
+  // Organize images and videos by event category for gallery
+  const eventImages = useMemo(() => {
+    const media: Record<string, Array<{ src: string; alt: string; type: 'image' | 'video'; tag?: string }>> = {}
+    pastEvents.forEach((event) => {
+      const mediaItems: Array<{ src: string; alt: string; type: 'image' | 'video'; tag?: string }> = []
+      
+      // Add images
+      if (Array.isArray(event.images) && event.images.length > 0) {
+        event.images.forEach((src) => {
+          mediaItems.push({
+            src,
+            alt: `${event.title} - Event Image`,
+            type: 'image'
+          })
+        })
+      }
+      
+      // Add videos
+      if (Array.isArray(event.video) && event.video.length > 0) {
+        const realtorTags = ["September", "September", "October", "October", "November", "November"]
+        event.video.forEach((src, idx) => {
+          mediaItems.push({
+            src,
+            alt: `${event.title} - Event Video`,
+            type: 'video',
+            tag: event.title === "Realtor Branding Workshop" ? (realtorTags[idx] || "September") : undefined
+          })
+        })
+      }
+      
+      if (mediaItems.length > 0) {
+        media[event.title] = mediaItems
+      }
+    })
+    return media
+  }, [pastEvents])
+
+  // Get events that have images or videos for filter buttons
+  const eventsWithImages = useMemo(() => {
+    return pastEvents.filter(event => {
+      const hasImages = Array.isArray(event.images) && event.images.length > 0
+      const hasVideos = Array.isArray(event.video) && event.video.length > 0
+      return hasImages || hasVideos
+    })
+  }, [pastEvents])
+
+  // Get filtered images/videos based on selected category
+  const filteredEventImages = useMemo(() => {
+    const base = eventImages[eventCategory] || []
+    if (eventCategory === "Realtor Branding Workshop" && realtorSubTag !== "All") {
+      return base.filter((item: any) => item.tag === realtorSubTag)
+    }
+    return base
+  }, [eventCategory, eventImages, realtorSubTag])
+
+  // Get all Explore Night media (we'll show/hide with CSS to prevent refresh)
+  const allExploreMedia = useMemo(() => {
+    if (eventCategory !== "Explore Night") return []
+    return filteredEventImages
+  }, [eventCategory, filteredEventImages])
+
+  const exploreLength = allExploreMedia.length
+
+  // Set initial event category to first event with images or videos
+  useEffect(() => {
+    if (!eventCategory && pastEvents.length > 0) {
+      const firstEventWithMedia = pastEvents.find(event => {
+        const hasImages = Array.isArray(event.images) && event.images.length > 0
+        const hasVideos = Array.isArray(event.video) && event.video.length > 0
+        return hasImages || hasVideos
+      })
+      if (firstEventWithMedia) {
+        setEventCategory(firstEventWithMedia.title)
+      } else if (pastEvents[0]) {
+        setEventCategory(pastEvents[0].title)
+      }
+    }
+  }, [eventCategory, pastEvents])
+
+  // Track visible images to avoid re-animating those that remain
+  useEffect(() => {
+    prevVisibleImagesRef.current = new Set(filteredEventImages.map((img) => img.src))
+  }, [filteredEventImages])
+
+  // Reset explore index when switching categories
+  useEffect(() => {
+    setExploreIndex(0)
+    setFourUpIndex(0)
+    setRealtorSubTag("All")
+  }, [eventCategory])
+
+  // Track how many items per row for four-up carousels based on viewport
+  useEffect(() => {
+    const updatePerRow = () => {
+      if (typeof window === "undefined") return
+      const w = window.innerWidth
+      if (w < 640) setFourUpPerRow(1)       // mobile
+      else if (w < 768) setFourUpPerRow(2)  // small tablets
+      else if (w < 1024) setFourUpPerRow(3) // tablets
+      else setFourUpPerRow(4)               // desktop
+    }
+    updatePerRow()
+    window.addEventListener("resize", updatePerRow)
+    return () => window.removeEventListener("resize", updatePerRow)
+  }, [])
+
+  // Auto-scroll Explore Night videos every 3 seconds (1 video at a time)
+  useEffect(() => {
+    if (eventCategory !== "Explore Night" || filteredEventImages.length <= 2) return
+    const interval = setInterval(() => {
+      setExploreIndex((prev) => {
+        const next = prev + 1
+        return next >= filteredEventImages.length ? 0 : next
+      })
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [eventCategory, filteredEventImages.length])
+
+  // Auto-scroll Welcome Dinner images every 3 seconds (1 image at a time)
+  useEffect(() => {
+    const fourUpCategories = ["Welcome Dinner", "Founder’s Market Insights", "Business Connect"]
+    if (!fourUpCategories.includes(eventCategory) || filteredEventImages.length <= 4) return
+    const interval = setInterval(() => {
+      setFourUpIndex((prev) => {
+        const next = prev + 1
+        return next >= filteredEventImages.length ? 0 : next
+      })
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [eventCategory, filteredEventImages.length])
 
   // Compute active past event media (images first, then videos)
   const activeEvent = pastEvents[activePastTab] || {}
@@ -838,8 +979,39 @@ export default function EventsPage() {
       </section>
 
       {/* Past Events */}
-      <section className="relative py-12 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
-        <div className="absolute inset-0 bg-black/40" />
+      <section className="relative py-12 sm:py-32 overflow-hidden bg-black">
+        <div
+          className="absolute inset-0 opacity-70"
+          style={{
+            background: "linear-gradient(to bottom, #1a0000 0%, #000000 33%, #330000 66%, #000000 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-40"
+          style={{
+            backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)",
+            backgroundSize: "20px 20px",
+            backgroundPosition: "0 0, 10px 10px",
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.2) 1.5px, transparent 0)",
+            backgroundSize: "30px 30px",
+            backgroundPosition: "15px 15px",
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-50"
+          style={{
+            backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.25) 2px, transparent 0)",
+            backgroundSize: "40px 40px",
+            backgroundPosition: "20px 20px",
+            maskImage: "linear-gradient(to bottom right, transparent 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%)",
+            WebkitMaskImage: "linear-gradient(to bottom right, transparent 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%)",
+          }}
+        />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           {/* Section Header */}
@@ -938,126 +1110,292 @@ export default function EventsPage() {
           </div>
         </div>
 
-        {/* Past Events Tabs */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 mt-16 sm:mt-20">
-          <motion.h3 
-            className="text-2xl text-center sm:text-3xl md:text-4xl font-bold mb-8 font-sans"
+        {/* More Events - Gallery Layout */}
+        <div className="relative z-10 w-full px-6 text-center mt-16 sm:mt-20">
+          <div className="max-w-5xl mx-auto">
+            <motion.h2 
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight mb-6"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              More Events
+            </motion.h2>
+          </div>
+
+          {/* Category Filter Buttons */}
+          <motion.div 
+            className="flex flex-nowrap gap-3 mb-6 pb-2 overflow-x-auto lg:overflow-visible lg:flex-wrap lg:justify-center"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.6 }}
           >
-            More Events
-          </motion.h3>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Tabs (left) */}
-            <div className="lg:col-span-1">
-              <div className="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-visible pb-2">
-                {pastEvents.map((event, index) => (
+            {eventsWithImages.map((event) => (
                   <button
                     key={event.title}
-                    onClick={() => { setActivePastTab(index); setPastCarouselIndex(0) }}
-                    className={`px-4 py-3 rounded-md text-left transition-all duration-300 whitespace-nowrap lg:whitespace-normal border ${
-                      activePastTab === index
-                        ? "bg-[#B40101] border-[#B40101] text-white shadow-lg shadow-[#B40101]/30"
-                        : "bg-gray-900/40 border-gray-700 text-gray-200 hover:bg-gray-800 hover:border-gray-600"
-                    }`}
-                  >
-                    <div className="text-base sm:text-lg font-semibold">{event.title}</div>
+                onClick={() => setEventCategory(event.title)}
+                className={`px-4 py-2 text-sm rounded-full font-semibold transition-all duration-300 whitespace-nowrap flex-shrink-0 ${
+                  eventCategory === event.title
+                    ? "bg-[#B40101] text-white shadow-lg shadow-[#B40101]/30"
+                    : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
+                }`}
+              >
+                {event.title}
                   </button>
                 ))}
-              </div>
-            </div>
+          </motion.div>
 
-            {/* Content (right) */}
-            <div className="lg:col-span-2">
+          {/* Sub-tag for Realtor Branding Workshop */}
+          {eventCategory === "Realtor Branding Workshop" && (
               <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, margin: "-100px" }}
+              className="flex flex-nowrap gap-3 mt-3 mb-6 pb-2 overflow-x-auto lg:overflow-visible lg:flex-wrap lg:justify-center"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+            >
+              {["All", "September", "October", "November"].map((tag) => (
+                <button
+                  key={tag}
+                  onClick={() => setRealtorSubTag(tag as "All" | "September" | "October" | "November")}
+                  className={`px-3 py-1.5 text-xs sm:text-sm rounded-full font-semibold transition-all duration-300 whitespace-nowrap flex-shrink-0 ${
+                    realtorSubTag === tag
+                      ? "bg-white text-black shadow-lg shadow-white/20"
+                      : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
+                  }`}
+                >
+                  {tag}
+                </button>
+              ))}
+            </motion.div>
+          )}
+
+          {/* Image/Video Gallery */}
+              <motion.div 
+            key={eventCategory}
+            className="w-full max-w-none px-0"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                key={activePastTab}
-                className="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-lg p-4 sm:p-6"
-              > 
-                {/* Title and meta below images */}
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <h3 className="text-2xl font-bold mb-1">{pastEvents[activePastTab].title}</h3>
+          >
+            {eventCategory === "Explore Night" ? (
+              <div className="max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8 overflow-hidden">
+                <div className="relative w-full">
+                  <motion.div
+                    className="flex gap-6 md:gap-8"
+                    animate={{
+                      x: `-${exploreIndex * 100}%`
+                    }}
+                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                  >
+                    {allExploreMedia.map((media, index) => {
+                      const isNew = !prevVisibleImagesRef.current.has(media.src)
+                      const hoverProps = media.type === "image" ? { whileHover: { scale: 1.02 } } : {}
+                      return (
+                        <motion.div
+                          key={media.src}
+                          initial={isNew ? { opacity: 0, scale: 0.98 } : undefined}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.45, ease: "easeOut" }}
+                          {...hoverProps}
+                          className="relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 aspect-video flex-shrink-0 w-full md:w-1/2"
+                        >
+                          {media.type === "image" ? (
+                            <img
+                              src={media.src}
+                              alt={media.alt}
+                              className="w-full h-full object-cover"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <iframe
+                              src={getYouTubeEmbedUrl(media.src)}
+                              className="w-full h-full"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                              title={media.alt}
+                            />
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+                        </motion.div>
+                      )
+                    })}
+                  </motion.div>
                   </div>
+
+                {exploreLength > 0 && (
+                  <div className="flex items-center justify-center gap-3 mt-6 md:mt-8">
+                    <button
+                      onClick={() => setExploreIndex((prev) => (prev - 1 + exploreLength) % exploreLength)}
+                      className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
+                      aria-label="Previous video"
+                    >
+                      <ChevronRight className="h-4 w-4 rotate-180" />
+                    </button>
+
+                    <div className="flex items-center gap-1.5">
+                      {Array.from({ length: exploreLength }).map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setExploreIndex(idx)}
+                          aria-label={`Go to video ${idx + 1}`}
+                          className={`h-2 rounded-full transition-all ${
+                            exploreIndex === idx ? "w-6 bg-[#B40101]" : "w-2 bg-white/40"
+                          }`}
+                        />
+                      ))}
                 </div>
 
-                  {/* Image/Video carousel (moved to top) */}
-                  {activeMedia.length > 0 && (
-                    <div 
-                      className="relative w-full max-w-sm sm:max-w-md md:max-w-lg mx-auto mt-6"
-                      onMouseEnter={() => setIsCarouselPaused(true)}
-                      onMouseLeave={() => setIsCarouselPaused(false)}
+                    <button
+                      onClick={() => setExploreIndex((prev) => (prev + 1) % exploreLength)}
+                      className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
+                      aria-label="Next video"
                     >
-                      <div className="overflow-hidden rounded-md border border-gray-800">
-                      <div className="relative w-full aspect-[3/4]">
-                        {activeMedia[pastCarouselIndex]?.type === "image" ? (
-                          <img
-                            src={activeMedia[pastCarouselIndex]?.src}
-                            alt={activeEvent.title}
-                            className="w-full h-full object-cover"
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : ["Welcome Dinner", "Founder’s Market Insights", "Business Connect"].includes(eventCategory) ? (
+              <div className="max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8 overflow-hidden">
+                <div className="relative w-full">
+                  <motion.div
+                    className="flex gap-4 md:gap-6"
+                    animate={{
+                      x: `-${fourUpIndex * (100 / fourUpPerRow)}%`
+                    }}
+                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                  >
+                    {filteredEventImages.map((media, index) => {
+                      const isNew = !prevVisibleImagesRef.current.has(media.src)
+                      const hoverProps = media.type === "image" ? { whileHover: { scale: 1.08, zIndex: 20 } } : {}
+                      return (
+                        <motion.div
+                          key={media.src}
+                          initial={isNew ? { opacity: 0, scale: 0.98 } : undefined}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.45, ease: "easeOut" }}
+                          {...hoverProps}
+                          className="group relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
+                        >
+                          {media.type === 'image' ? (
+                            <img
+                              src={media.src}
+                              alt={media.alt}
+                              className="w-full h-auto object-cover"
+                              loading="lazy"
                           />
                         ) : (
                           <video
-                            src={activeMedia[pastCarouselIndex]?.src}
+                              src={media.src}
                             controls
-                            className="w-full h-full object-cover"
-                          />
-                        )}
+                              className="w-full h-auto object-cover"
+                              preload="metadata"
+                            />
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+                          {media.type === 'image' && (
+                            <div className="pointer-events-none absolute left-1/2 bottom-full mb-3 z-30 hidden -translate-x-1/2 group-hover:block">
+                              <div className="rounded-lg overflow-hidden shadow-2xl shadow-black/60 border border-white/10 bg-black/80">
+                                <img
+                                  src={media.src}
+                                  alt={media.alt}
+                                  className="w-72 h-auto object-cover"
+                                  loading="lazy"
+                                />
                       </div>
+                            </div>
+                          )}
+                        </motion.div>
+                      )
+                    })}
+                  </motion.div>
                     </div>
 
-                    {/* Carousel controls */}
-                    <div className="flex items-center justify-between mt-3">
-                      <div className="flex items-center gap-2">
-                        {activeMedia.map((_, idx) => (
+                {filteredEventImages.length > 0 && (
+                  <div className="flex items-center justify-center gap-3 mt-6 md:mt-8">
+                    <button
+                      onClick={() => setFourUpIndex((prev) => (prev - 1 + filteredEventImages.length) % filteredEventImages.length)}
+                      className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
+                      aria-label="Previous image"
+                    >
+                      <ChevronRight className="h-4 w-4 rotate-180" />
+                    </button>
+
+                    <div className="flex items-center gap-1.5">
+                      {Array.from({ length: filteredEventImages.length }).map((_, idx) => (
                           <button
                             key={idx}
-                            aria-label={`Go to slide ${idx + 1}`}
-                            onClick={() => {
-                              setPastCarouselIndex(idx)
-                              setIsCarouselPaused(true)
-                              // Resume auto-scroll after 5 seconds of inactivity
-                              setTimeout(() => setIsCarouselPaused(false), 5000)
-                            }}
-                            className={`w-2.5 h-2.5 rounded-full transition-all ${
-                              idx === pastCarouselIndex ? "bg-[#B40101]" : "bg-white/30 hover:bg-white/50"
+                          onClick={() => setFourUpIndex(idx)}
+                          aria-label={`Go to image ${idx + 1}`}
+                          className={`h-2 rounded-full transition-all ${
+                            fourUpIndex === idx ? "w-6 bg-[#B40101]" : "w-2 bg-white/40"
                             }`}
                           />
                         ))}
                       </div>
-                      <div className="flex items-center gap-2">
+
                         <button
-                          onClick={() => {
-                            setPastCarouselIndex((prev) => (prev - 1 + activeMedia.length) % activeMedia.length)
-                            setIsCarouselPaused(true)
-                            setTimeout(() => setIsCarouselPaused(false), 5000)
-                          }}
-                          className="px-3 py-2 rounded-md bg-black/50 border border-gray-800 hover:bg-[#B40101]/80 transition"
-                        >
-                          <ChevronRight className="w-5 h-5 rotate-180" />
-                        </button>
-                        <button
-                          onClick={() => {
-                            setPastCarouselIndex((prev) => (prev + 1) % activeMedia.length)
-                            setIsCarouselPaused(true)
-                            setTimeout(() => setIsCarouselPaused(false), 5000)
-                          }}
-                          className="px-3 py-2 rounded-md bg-black/50 border border-gray-800 hover:bg-[#B40101]/80 transition"
-                        >
-                          <ChevronRight className="w-5 h-5" />
+                      onClick={() => setFourUpIndex((prev) => (prev + 1) % filteredEventImages.length)}
+                      className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
+                      aria-label="Next image"
+                    >
+                      <ChevronRight className="h-4 w-4" />
                         </button>
                       </div>
-                    </div>
-                  </div>
                 )}
-              </motion.div>
-            </div>
-          </div>
+                    </div>
+            ) : (
+              <div className="max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+                  {filteredEventImages.map((media) => {
+                    const isNew = !prevVisibleImagesRef.current.has(media.src)
+                    const hoverProps = media.type === "image" ? { whileHover: { scale: 1.035, zIndex: 10 } } : {}
+                    return (
+                      <motion.div
+                        key={media.src}
+                        initial={isNew ? { opacity: 0, y: 12, scale: 0.98 } : undefined}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={isNew ? { duration: 0.45, ease: "easeOut" } : { duration: 0.2 }}
+                        {...hoverProps}
+                        className="group relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10"
+                      >
+                        {media.type === "image" ? (
+                          <>
+                            <img
+                              src={media.src}
+                              alt={media.alt}
+                              className="w-full h-auto object-cover transition-transform duration-400 ease-out hover:scale-102"
+                              loading="lazy"
+                            />
+                            <div className="pointer-events-none absolute left-1/2 bottom-full mb-2 z-30 hidden -translate-x-1/2 group-hover:block">
+                              <div className="rounded-lg overflow-hidden shadow-2xl shadow-black/60 border border-white/10 bg-black/80">
+                                <img
+                                  src={media.src}
+                                  alt={media.alt}
+                                  className="w-64 h-auto object-cover"
+                                  loading="lazy"
+                                />
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          <video
+                            src={media.src}
+                            controls
+                            className="w-full h-auto object-cover"
+                            preload="metadata"
+                          />
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                      </motion.div>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
+          </motion.div>
         </div>
       </section>
 
