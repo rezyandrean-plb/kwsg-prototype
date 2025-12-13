@@ -1166,7 +1166,7 @@ export default function WResidenceLanding() {
       // Ensure only the date (no time) is submitted for preferredDate
       const preferredDateOnly = preferredDate ? format(preferredDate, 'yyyy-MM-dd') : undefined
 
-      const response = await fetch('/api/w-residences-form', {
+      const response = await fetch('/api/turquoise-lead-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1259,7 +1259,7 @@ export default function WResidenceLanding() {
 
     try {
       // Submit the form with the reCAPTCHA token
-      const response = await fetch('/api/w-residences-site-map-request', {
+      const response = await fetch('/api/turquoise-site-map-request', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

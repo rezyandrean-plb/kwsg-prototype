@@ -38,6 +38,7 @@ export default function Home() {
   const [scrollY, setScrollY] = useState(0)
   const [currentReelIndex, setCurrentReelIndex] = useState(0)
   const [currentReelIndex2, setCurrentReelIndex2] = useState(0)
+  const [currentReelIndex2Desktop, setCurrentReelIndex2Desktop] = useState(0)
   
   // Ref for the KW Advantage section
   const advantageSectionRef = useRef<HTMLElement>(null)
@@ -86,11 +87,31 @@ export default function Home() {
   }, [])
 
   const nextReel2 = useCallback(() => {
-    setCurrentReelIndex2((prev) => (prev + 1) % 4)
+    setCurrentReelIndex2((prev) => (prev + 1) % 8)
   }, [])
 
   const prevReel2 = useCallback(() => {
-    setCurrentReelIndex2((prev) => (prev - 1 + 4) % 4)
+    setCurrentReelIndex2((prev) => (prev - 1 + 8) % 8)
+  }, [])
+
+  const nextReel2Desktop = useCallback(() => {
+    setCurrentReelIndex2Desktop((prev) => {
+      // reels2 is defined below, but we know it has 8 items
+      const totalReels = 8
+      const itemsPerPage = 4
+      const maxIndex = Math.max(0, totalReels - itemsPerPage)
+      return prev >= maxIndex ? 0 : prev + 1
+    })
+  }, [])
+
+  const prevReel2Desktop = useCallback(() => {
+    setCurrentReelIndex2Desktop((prev) => {
+      // reels2 is defined below, but we know it has 8 items
+      const totalReels = 8
+      const itemsPerPage = 4
+      const maxIndex = Math.max(0, totalReels - itemsPerPage)
+      return prev <= 0 ? maxIndex : prev - 1
+    })
   }, [])
 
   // Optimize animation controls
@@ -147,10 +168,14 @@ export default function Home() {
   ]
 
   const reels2 = [
-    { src: "/video/Shorts 5 - Rayne Realtors.mp4", label: "KW Singapore Reel 5" },
-    { src: "/video/Shorts 6 - Elizabeth Realtors.mp4", label: "KW Singapore Reel 6" },
-    { src: "/video/Shorts 7 - William Realtors.mp4", label: "KW Singapore Reel 7" },
-    { src: "/video/Shorts 8 - Joel Realtors.mp4", label: "KW Singapore Reel 8" }
+    { src: "https://www.youtube.com/embed/iAkGW4Y51dQ?autoplay=1&mute=1&loop=1&playlist=iAkGW4Y51dQ", label: "KW Singapore Reel 1" },
+    { src: "https://www.youtube.com/embed/RAqxdrwk1HQ?autoplay=1&mute=1&loop=1&playlist=RAqxdrwk1HQ", label: "KW Singapore Reel 2" },
+    { src: "https://www.youtube.com/embed/XBZWFBoJi08?autoplay=1&mute=1&loop=1&playlist=XBZWFBoJi08", label: "KW Singapore Reel 3" },
+    { src: "https://www.youtube.com/embed/s3n1qH3M5cI?autoplay=1&mute=1&loop=1&playlist=s3n1qH3M5cI", label: "KW Singapore Reel 4" },
+    { src: "https://www.youtube.com/embed/Oq0pQG3_0wA?autoplay=1&mute=1&loop=1&playlist=Oq0pQG3_0wA", label: "KW Singapore Reel 5" },
+    { src: "https://www.youtube.com/embed/fditK842Zbw?autoplay=1&mute=1&loop=1&playlist=fditK842Zbw", label: "KW Singapore Reel 6" },
+    { src: "https://www.youtube.com/embed/__zDeHtZLn4?autoplay=1&mute=1&loop=1&playlist=__zDeHtZLn4", label: "KW Singapore Reel 7" },
+    { src: "https://www.youtube.com/embed/6dMnifQl5JU?autoplay=1&mute=1&loop=1&playlist=6dMnifQl5JU", label: "KW Singapore Reel 8" }
   ]
 
   useEffect(() => {
@@ -784,18 +809,14 @@ export default function Home() {
           {/* Mobile Carousel */}
           <div className="sm:hidden relative">
             <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
-              <video
+              <iframe
                 key={currentReelIndex2}
-                className="w-full h-[600px] object-cover"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                aria-label={reels2[currentReelIndex2].label}
-              >
-                <source src={reels2[currentReelIndex2].src} type="video/mp4" />
-              </video>
+                className="w-full h-[600px]"
+                src={reels2[currentReelIndex2].src}
+                title={reels2[currentReelIndex2].label}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
             </div>
             
             {/* Navigation buttons */}
@@ -829,23 +850,57 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Desktop Grid */}
-          <div className="hidden sm:grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            {reels2.map((reel, index) => (
-              <div key={index} className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
-                <video
-                  className="w-full h-[500px] object-cover"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  aria-label={reel.label}
+          {/* Desktop Grid Carousel */}
+          <div className="hidden sm:block relative">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+              {reels2.slice(currentReelIndex2Desktop, currentReelIndex2Desktop + 4).map((reel, index) => (
+                <div key={currentReelIndex2Desktop + index} className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
+                  <iframe
+                    className="w-full h-[500px]"
+                    src={reel.src}
+                    title={reel.label}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              ))}
+            </div>
+            
+            {/* Navigation buttons */}
+            {reels2.length > 4 && (
+              <>
+                <button
+                  onClick={prevReel2Desktop}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 z-10"
+                  aria-label="Previous reel"
                 >
-                  <source src={reel.src} type="video/mp4" />
-                </video>
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button
+                  onClick={nextReel2Desktop}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 z-10"
+                  aria-label="Next reel"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              </>
+            )}
+            
+            {/* Indicators */}
+            {reels2.length > 4 && (
+              <div className="flex justify-center mt-4 space-x-2">
+                {Array.from({ length: Math.ceil(reels2.length / 4) }).map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentReelIndex2Desktop(index * 4)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      Math.floor(currentReelIndex2Desktop / 4) === index ? 'bg-[#B40101]' : 'bg-white/30'
+                    }`}
+                    aria-label={`Go to page ${index + 1}`}
+                  />
+                ))}
               </div>
-            ))}
+            )}
           </div>
         </div>
       </section>

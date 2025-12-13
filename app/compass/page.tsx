@@ -1118,7 +1118,7 @@ export default function TechToolPage() {
                   animate={roadmapInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ duration: 0.6, delay: 0.3 }}
                 >
-                  Next 90 Days – What's Coming
+                 Next 90 Days – What's Coming
                 </motion.h2>
                 <motion.p 
                   className="text-sm sm:text-base lg:text-lg text-gray-300 px-4 max-w-4xl mx-auto"
@@ -1131,9 +1131,9 @@ export default function TechToolPage() {
               </div>
             </motion.div>
 
-            {/* Three Column Layout */}
+            {/* Four Column Layout */}
             <motion.div 
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-6 sm:mt-8 lg:mt-10"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-6 sm:mt-8 lg:mt-10"
               initial={{ opacity: 0 }}
               animate={roadmapInView ? { opacity: 1 } : { opacity: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
@@ -1175,7 +1175,7 @@ export default function TechToolPage() {
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.0 }}
                   >
-                    MegaMap
+                    Megamap
                   </motion.div>
                   <motion.div 
                     className="text-green-400 text-sm sm:text-base font-medium"
@@ -1185,10 +1185,18 @@ export default function TechToolPage() {
                   >
                     KW Compass10
                   </motion.div>
+                  <motion.div 
+                    className="text-green-400 text-sm sm:text-base font-medium"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                    transition={{ duration: 0.4, delay: 1.2 }}
+                  >
+                    Supply & Demand tool
+                  </motion.div>
                 </div>
               </motion.div>
 
-              {/* December */}
+              {/* November */}
               <motion.div 
                 className="bg-gray-900/30 rounded-lg p-4 sm:p-6 border border-gray-800"
                 initial={{ opacity: 0, y: 30, scale: 0.95 }}
@@ -1204,43 +1212,43 @@ export default function TechToolPage() {
                 <h3 className="text-lg sm:text-xl font-bold text-white border-b border-gray-700 pb-2 mb-3 sm:mb-4">November</h3>
                 <div className="space-y-2 sm:space-y-3">
                   <motion.div 
-                    className="text-white text-sm sm:text-base"
+                    className="text-green-400 text-sm sm:text-base font-medium"
                     initial={{ opacity: 0, x: -20 }}
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 0.9 }}
                   >
-                    Landed MOAT
+                    Handover Hero <span className="italic text-xs">(with visual AI)</span>
                   </motion.div>
                   <motion.div 
-                    className="text-white text-sm sm:text-base"
+                    className="text-green-400 text-sm sm:text-base font-medium"
                     initial={{ opacity: 0, x: -20 }}
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.0 }}
                   >
-                    Valuation Tool
+                    Megamap <span className="italic text-xs">(CMA enhancement)</span>
                   </motion.div>
                   <motion.div 
-                    className="text-white text-sm sm:text-base"
+                    className="text-green-400 text-sm sm:text-base font-medium"
                     initial={{ opacity: 0, x: -20 }}
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.1 }}
                   >
-                    School-based Property Finder
+                    Enhanced PG data API
                   </motion.div>
                   <motion.div 
-                    className="text-white text-sm sm:text-base"
+                    className="text-green-400 text-sm sm:text-base font-medium"
                     initial={{ opacity: 0, x: -20 }}
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.2 }}
                   >
-                    KW Resource Hub
+                    Patch Note dashboard
                   </motion.div>
                 </div>
               </motion.div>
 
-              {/* November */}
+              {/* December */}
               <motion.div 
-                className="bg-gray-900/30 rounded-lg p-4 sm:p-6 border border-gray-800 sm:col-span-2 lg:col-span-1"
+                className="bg-gray-900/30 rounded-lg p-4 sm:p-6 border border-gray-800"
                 initial={{ opacity: 0, y: 30, scale: 0.95 }}
                 animate={roadmapInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.95 }}
                 transition={{ duration: 0.5, delay: 0.8 }}
@@ -1259,7 +1267,7 @@ export default function TechToolPage() {
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.0 }}
                   >
-                    Time Machine (Concept Tool)
+                    Property Analysis <span className="italic text-xs">(Interactive Towerview + Nearby Projects Analysis enhancement)</span>
                   </motion.div>
                   <motion.div 
                     className="text-white text-sm sm:text-base"
@@ -1267,7 +1275,7 @@ export default function TechToolPage() {
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.1 }}
                   >
-                    ProCharts
+                    Agent Branding feature
                   </motion.div>
                   <motion.div 
                     className="text-white text-sm sm:text-base"
@@ -1275,15 +1283,33 @@ export default function TechToolPage() {
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.2 }}
                   >
-                    AI Chatbot 2.0
+                    Save to Client Collection feature <span className="italic text-xs">(with saved calculations)</span>
                   </motion.div>
+                </div>
+              </motion.div>
+
+              {/* January */}
+              <motion.div 
+                className="bg-gray-900/30 rounded-lg p-4 sm:p-6 border border-gray-800"
+                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                animate={roadmapInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.95 }}
+                transition={{ duration: 0.5, delay: 0.9 }}
+                whileHover={{ 
+                  y: -5, 
+                  scale: 1.02,
+                  borderColor: "#b40101",
+                  transition: { duration: 0.2 }
+                }}
+              >
+                <h3 className="text-lg sm:text-xl font-bold text-white border-b border-gray-700 pb-2 mb-3 sm:mb-4">January</h3>
+                <div className="space-y-2 sm:space-y-3">
                   <motion.div 
                     className="text-white text-sm sm:text-base"
                     initial={{ opacity: 0, x: -20 }}
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.3 }}
                   >
-                    MyInfo Integration (Singpass)
+                    Landed MOAT Analysis
                   </motion.div>
                   <motion.div 
                     className="text-white text-sm sm:text-base"
@@ -1291,7 +1317,7 @@ export default function TechToolPage() {
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.4 }}
                   >
-                    DisparityEffect 2.0
+                    Valuation Tool
                   </motion.div>
                   <motion.div 
                     className="text-white text-sm sm:text-base"
@@ -1299,15 +1325,31 @@ export default function TechToolPage() {
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.5 }}
                   >
-                    Condo Ranker 2.0
+                    Last Hit <span className="italic text-xs">(Prospector Tool)</span>
                   </motion.div>
                   <motion.div 
-                    className="text-gray-400 text-sm sm:text-base italic"
+                    className="text-white text-sm sm:text-base"
                     initial={{ opacity: 0, x: -20 }}
                     animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 1.6 }}
                   >
-                    … and more
+                    Public Property Analysis <span className="italic text-xs">(Limited viewing for public)</span>
+                  </motion.div>
+                  <motion.div 
+                    className="text-white text-sm sm:text-base"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                    transition={{ duration: 0.4, delay: 1.7 }}
+                  >
+                    Megamap <span className="italic text-xs">(Reverse proximity search enhancement)</span>
+                  </motion.div>
+                  <motion.div 
+                    className="text-white text-sm sm:text-base"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={roadmapInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                    transition={{ duration: 0.4, delay: 1.8 }}
+                  >
+                    Timeline Planning calculator <span className="italic text-xs">(Flexi date enhancement)</span>
                   </motion.div>
                 </div>
               </motion.div>
