@@ -605,11 +605,11 @@ export default function AboutUsPage() {
                 className="columns-4 sm:columns-5 md:columns-6 lg:columns-7 xl:columns-8 gap-3 md:gap-3 [column-fill:_balance] inline-block"
                 style={{ columnWidth: "120px", columnGap: "14px" }}
               >
-                {filteredImages.map((image) => {
+                {filteredImages.map((image, index) => {
                   const isNew = !prevVisibleImagesRef.current.has(image.src)
                   return (
                   <motion.div
-                    key={image.src}
+                    key={`${galleryCategory}-${index}-${image.src}`}
                     initial={isNew ? { opacity: 0, y: 12, scale: 0.98 } : undefined}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={isNew ? { duration: 0.45, ease: "easeOut" } : { duration: 0.2 }}
