@@ -139,30 +139,36 @@ export default function AboutUsPage() {
   // Gallery images by category
   const galleryImages = {
     "Branding workshop": [
-      { src: "/images/about-us/excellence-celebrated/Excellence-01.jpg", alt: "Branding Workshop 1" },
-      { src: "/images/about-us/excellence-celebrated/Excellence-02.jpg", alt: "Branding Workshop 2" },
-      { src: "/images/about-us/excellence-celebrated/Excellence-03.jpg", alt: "Branding Workshop 3" },
+      { src: "/images/about-us/realtor-branding/rb09-DSC04813.jpg", alt: "Branding Workshop 1" },
+      { src: "/images/about-us/realtor-branding/rb09-DSC04825.jpg", alt: "Branding Workshop 2" },
+      { src: "/images/about-us/realtor-branding/rb09-DSC04919.jpg", alt: "Branding Workshop 3" },
+      { src: "/images/about-us/realtor-branding/rb09-DSC05077.jpg", alt: "Branding Workshop 4" },
+      { src: "/images/about-us/realtor-branding/rb09-DSC05166.jpg", alt: "Branding Workshop 5" },
+      { src: "/images/about-us/realtor-branding/rb09-DSC05177.jpg", alt: "Branding Workshop 6" },
+      { src: "/images/about-us/realtor-branding/rb09-DSC05180.jpg", alt: "Branding Workshop 7" },
+      { src: "/images/about-us/realtor-branding/rb09-DSC05236.jpg", alt: "Branding Workshop 8" },
+      { src: "/images/about-us/realtor-branding/rb09-DSC05319.jpg", alt: "Branding Workshop 9" },
     ],
     "Trainings": [
-      { src: "/images/about-us/excellence-celebrated/Excellence-04.jpg", alt: "Training Session 1" },
-      { src: "/images/about-us/excellence-celebrated/Excellence-05.jpg", alt: "Training Session 2" },
-      { src: "/images/about-us/excellence-celebrated/Excellence-06.jpg", alt: "Training Session 3" },
+      { src: "/images/about-us/training-gallery/MT_01.jpg", alt: "Training Session 1" },
+      { src: "/images/about-us/training-gallery/MT_02.jpg", alt: "Training Session 2" },
+      { src: "/images/about-us/training-gallery/MT_03.jpg", alt: "Training Session 3" },
+      { src: "/images/about-us/training-gallery/MT_04.jpg", alt: "Training Session 4" },
+      { src: "/images/about-us/training-gallery/MT_05.jpg", alt: "Training Session 5" },
     ],
     "MREA": [
-      { src: "/images/about-us/excellence-celebrated/Excellence-07.jpg", alt: "MREA Event 1" },
-      { src: "/images/about-us/excellence-celebrated/Excellence-08.jpg", alt: "MREA Event 2" },
-      { src: "/images/about-us/excellence-celebrated/Excellence-09.jpg", alt: "MREA Event 3" },
+      { src: "/images/about-us/MREA/MREA_DSC05815.jpg", alt: "MREA Event 1" },
+      { src: "/images/about-us/MREA/MREA_DSC05873.jpg", alt: "MREA Event 2" },
+      { src: "/images/about-us/MREA/MREA_DSC05914.jpg", alt: "MREA Event 3" },
+      { src: "/images/about-us/MREA/MREA_DSC06539.jpg", alt: "MREA Event 4" },
+      { src: "/images/about-us/MREA/MREA_DSC07162.jpg", alt: "MREA Event 5" },
+      { src: "/images/about-us/MREA/MREA_DSC07169.jpg", alt: "MREA Event 6" },
+      { src: "/images/about-us/MREA/MREA_DSC07172.jpg", alt: "MREA Event 7" },
+      { src: "/images/about-us/MREA/MREA_DSC07223.jpg", alt: "MREA Event 8" },
+      { src: "/images/about-us/MREA/MREA_DSC07258.jpg", alt: "MREA Event 9" },
     ],
-    "MRS": [
-      { src: "/images/about-us/excellence-celebrated/Excellence-10.jpg", alt: "MRS Event 1" },
-      { src: "/images/about-us/excellence-celebrated/Excellence-01.jpg", alt: "MRS Event 2" },
-      { src: "/images/about-us/excellence-celebrated/Excellence-02.jpg", alt: "MRS Event 3" },
-    ],
-    "Podcast": [
-      { src: "/images/about-us/excellence-celebrated/Excellence-03.jpg", alt: "Podcast Recording 1" },
-      { src: "/images/about-us/excellence-celebrated/Excellence-04.jpg", alt: "Podcast Recording 2" },
-      { src: "/images/about-us/excellence-celebrated/Excellence-05.jpg", alt: "Podcast Recording 3" },
-    ],
+    "MRS": [],
+    "Podcast": [],
   }
 
   const categories = ["Branding workshop", "Trainings", "MREA", "MRS", "Podcast"]
