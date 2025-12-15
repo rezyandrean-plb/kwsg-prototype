@@ -84,6 +84,43 @@ export default function RootLayout({
         />
       </head>
       <body suppressHydrationWarning={true}>
+        {/* Strip known extension-injected iframes before hydration to avoid mismatches */}
+        <Script
+          id="strip-extension-iframes"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const removeJamIframes = () => {
+                  document
+                    .querySelectorAll('iframe[id^="jam-coms-"]')
+                    .forEach(node => node.remove());
+                };
+                removeJamIframes();
+                // Watch for late injections during initial load
+                const observer = new MutationObserver(mutations => {
+                  let removed = false;
+                  mutations.forEach(mutation => {
+                    mutation.addedNodes.forEach(node => {
+                      if (
+                        node.nodeType === 1 &&
+                        node instanceof HTMLIFrameElement &&
+                        node.id.startsWith('jam-coms-')
+                      ) {
+                        node.remove();
+                        removed = true;
+                      }
+                    });
+                  });
+                  if (removed) removeJamIframes();
+                });
+                observer.observe(document.documentElement, { childList: true, subtree: true });
+              } catch (err) {
+                console.warn('Failed to strip extension iframes', err);
+              }
+            `,
+          }}
+        />
         <ClerkProvider>
           {/* Google Tag Manager (noscript) */}
           <noscript>
