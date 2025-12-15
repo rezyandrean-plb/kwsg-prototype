@@ -787,7 +787,7 @@ export default function Home() {
             <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-[#666666]/20 bg-black/40">
               <iframe
                 className="absolute inset-0 w-full h-full"
-                src="https://www.youtube.com/embed/C-SeyqyP4rU?start=4"
+                src="https://www.youtube.com/embed/C-SeyqyP4rU?start=4&autoplay=1&mute=1"
                 title="Meet the Consultants"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
