@@ -2,12 +2,12 @@ import TerserPlugin from 'terser-webpack-plugin';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   typescript: {
     ignoreBuildErrors: true,
   },
+  // Add empty turbopack config to silence the warning
+  // The webpack config will be used when running with --webpack flag
+  turbopack: {},
   images: {
     domains: [
       'images.unsplash.com', 

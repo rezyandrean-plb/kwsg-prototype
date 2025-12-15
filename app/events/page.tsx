@@ -139,6 +139,8 @@ export default function EventsPage() {
     return url
   }
 
+  const isYouTubeUrl = (url: string) => /youtube\.com|youtu\.be/.test(url)
+
   // Organize images and videos by event category for gallery
   const eventImages = useMemo(() => {
     const media: Record<string, Array<{ src: string; alt: string; type: 'image' | 'video'; tag?: string }>> = {}
@@ -194,7 +196,7 @@ export default function EventsPage() {
     return base
   }, [eventCategory, eventImages, realtorSubTag])
 
-  // Get all Explore Night media (we'll show/hide with CSS to prevent refresh)
+  // Get all Explore Night media (single-item carousel)
   const allExploreMedia = useMemo(() => {
     if (eventCategory !== "Explore Night") return []
     return filteredEventImages
@@ -245,21 +247,22 @@ export default function EventsPage() {
     return () => window.removeEventListener("resize", updatePerRow)
   }, [])
 
-  // Auto-scroll Explore Night videos every 3 seconds (1 video at a time)
+  // Auto-scroll Explore Night every 3 seconds (1 item at a time)
   useEffect(() => {
-    if (eventCategory !== "Explore Night" || filteredEventImages.length <= 2) return
+    const isSingleItemCarousel = eventCategory === "Explore Night"
+    if (!isSingleItemCarousel || allExploreMedia.length <= 1) return
     const interval = setInterval(() => {
       setExploreIndex((prev) => {
         const next = prev + 1
-        return next >= filteredEventImages.length ? 0 : next
+        return next >= allExploreMedia.length ? 0 : next
       })
     }, 3000)
     return () => clearInterval(interval)
-  }, [eventCategory, filteredEventImages.length])
+  }, [eventCategory, allExploreMedia.length])
 
-  // Auto-scroll Welcome Dinner images every 3 seconds (1 image at a time)
+  // Auto-scroll Welcome Dinner / Founder's Market Insights images every 3 seconds (1 image at a time)
   useEffect(() => {
-    const fourUpCategories = ["Welcome Dinner", "Founder’s Market Insights", "Business Connect"]
+    const fourUpCategories = ["Welcome Dinner", "Founder's Market Insights", "Business Connect"]
     if (!fourUpCategories.includes(eventCategory) || filteredEventImages.length <= 4) return
     const interval = setInterval(() => {
       setFourUpIndex((prev) => {
@@ -1173,12 +1176,12 @@ export default function EventsPage() {
           )}
 
           {/* Image/Video Gallery */}
-              <motion.div 
+          <motion.div 
             key={eventCategory}
             className="w-full max-w-none px-0"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
           >
             {eventCategory === "Explore Night" ? (
               <div className="max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8 overflow-hidden">
@@ -1258,7 +1261,7 @@ export default function EventsPage() {
                   </div>
                 )}
               </div>
-            ) : ["Welcome Dinner", "Founder’s Market Insights", "Business Connect"].includes(eventCategory) ? (
+            ) : ["Welcome Dinner", "Founder's Market Insights", "Business Connect"].includes(eventCategory) ? (
               <div className="max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8 overflow-hidden">
                 <div className="relative w-full">
                   <motion.div
@@ -1268,7 +1271,7 @@ export default function EventsPage() {
                     }}
                     transition={{ duration: 0.8, ease: "easeInOut" }}
                   >
-                    {filteredEventImages.map((media, index) => {
+                      {filteredEventImages.map((media, index) => {
                       const isNew = !prevVisibleImagesRef.current.has(media.src)
                       const hoverProps = media.type === "image" ? { whileHover: { scale: 1.08, zIndex: 20 } } : {}
                       return (
@@ -1281,20 +1284,31 @@ export default function EventsPage() {
                           className="group relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
                         >
                           {media.type === 'image' ? (
-                          <img
+                            <img
                               src={media.src}
                               alt={media.alt}
                               className="w-full h-auto object-cover"
                               loading="lazy"
-                          />
-                        ) : (
-                          <video
+                            />
+                          ) : isYouTubeUrl(media.src) ? (
+                            <iframe
+                              src={getYouTubeEmbedUrl(media.src)}
+                              className="w-full h-full"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                              title={media.alt}
+                            />
+                          ) : (
+                            <video
                               src={media.src}
-                            controls
+                              controls
                               className="w-full h-auto object-cover"
                               preload="metadata"
-                          />
-                        )}
+                              autoPlay
+                              muted
+                              loop
+                            />
+                          )}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
                           {media.type === 'image' && (
                             <div className="pointer-events-none absolute left-1/2 bottom-full mb-3 z-30 hidden -translate-x-1/2 group-hover:block">

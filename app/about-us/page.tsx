@@ -853,12 +853,12 @@ export default function AboutUsPage() {
                 </motion.div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 justify-start lg:justify-end">
+              <div className="flex flex-col gap-3 justify-start lg:justify-end">
                 {[
-                  { date: "10", month: "December", year: "2025" },
-                  { date: "3", month: "December", year: "2025" },
-                  { date: "26", month: "Novembe", year: "2025" },
-                  { date: "24", month: "November", year: "2025" },
+                  { date: "10", month: "December", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/10/Newsletter+Dec+10.pdf" },
+                  { date: "3", month: "December", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/3/Newsletter+Dec+3.pdf" },
+                  { date: "26", month: "November", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/november-2025/26/Newsletter+Nov+26.pdf" },
+                  { date: "24", month: "November", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/november-2025/24/Updated+Newsletter+Nov+24.pdf" },
                 ].map((newsletter, index) => (
                   <motion.div
                     key={index}
@@ -868,7 +868,7 @@ export default function AboutUsPage() {
                     transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
                     className="w-full max-w-sm"
                   >
-                    <a href="#" target="_blank" rel="noopener noreferrer" className="block group">
+                    <a href={newsletter.url} target="_blank" rel="noopener noreferrer" className="block group">
                       <div className="bg-gradient-to-br from-[#B40101] to-red-700 p-0.5 rounded-xl transition-transform duration-300 group-hover:scale-[1.02] shadow-lg shadow-red-900/20 max-w-xs lg:ml-auto">
                         <div className="bg-black/90 rounded-[10px] p-3 h-full flex items-center gap-3 group-hover:bg-black/80 transition-colors duration-300">
                           <div className="h-10 w-10 bg-[#B40101]/20 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-[#B40101]/30 transition-colors">
