@@ -39,6 +39,7 @@ export default function Home() {
   const [currentReelIndex, setCurrentReelIndex] = useState(0)
   const [currentReelIndex2, setCurrentReelIndex2] = useState(0)
   const [currentReelIndex2Desktop, setCurrentReelIndex2Desktop] = useState(0)
+  const [currentReelIndex2Tablet, setCurrentReelIndex2Tablet] = useState(0)
   
   // Ref for the KW Advantage section
   const advantageSectionRef = useRef<HTMLElement>(null)
@@ -111,6 +112,26 @@ export default function Home() {
       const itemsPerPage = 4
       const maxIndex = Math.max(0, totalReels - itemsPerPage)
       return prev <= 0 ? maxIndex : prev - 1
+    })
+  }, [])
+
+  const nextReel2Tablet = useCallback(() => {
+    setCurrentReelIndex2Tablet((prev) => {
+      // reels2 is defined below, but we know it has 8 items
+      const totalReels = 8
+      const itemsPerPage = 2
+      const maxIndex = Math.max(0, totalReels - itemsPerPage)
+      return prev >= maxIndex ? 0 : prev + itemsPerPage
+    })
+  }, [])
+
+  const prevReel2Tablet = useCallback(() => {
+    setCurrentReelIndex2Tablet((prev) => {
+      // reels2 is defined below, but we know it has 8 items
+      const totalReels = 8
+      const itemsPerPage = 2
+      const maxIndex = Math.max(0, totalReels - itemsPerPage)
+      return prev <= 0 ? maxIndex : prev - itemsPerPage
     })
   }, [])
 
@@ -850,9 +871,62 @@ export default function Home() {
             </div>
           </div>
 
+          {/* Tablet Grid Carousel */}
+          <div className="hidden sm:block lg:hidden relative">
+            <div className="grid grid-cols-2 gap-4 sm:gap-6">
+              {reels2.slice(currentReelIndex2Tablet, currentReelIndex2Tablet + 2).map((reel, index) => (
+                <div key={currentReelIndex2Tablet + index} className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
+                  <iframe
+                    className="w-full h-[500px]"
+                    src={reel.src}
+                    title={reel.label}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              ))}
+            </div>
+            
+            {/* Navigation buttons */}
+            {reels2.length > 2 && (
+              <>
+                <button
+                  onClick={prevReel2Tablet}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 z-10"
+                  aria-label="Previous reel"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button
+                  onClick={nextReel2Tablet}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 z-10"
+                  aria-label="Next reel"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              </>
+            )}
+            
+            {/* Indicators */}
+            {reels2.length > 2 && (
+              <div className="flex justify-center mt-4 space-x-2">
+                {Array.from({ length: Math.ceil(reels2.length / 2) }).map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentReelIndex2Tablet(index * 2)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      Math.floor(currentReelIndex2Tablet / 2) === index ? 'bg-[#B40101]' : 'bg-white/30'
+                    }`}
+                    aria-label={`Go to page ${index + 1}`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
           {/* Desktop Grid Carousel */}
-          <div className="hidden sm:block relative">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          <div className="hidden lg:block relative">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {reels2.slice(currentReelIndex2Desktop, currentReelIndex2Desktop + 4).map((reel, index) => (
                 <div key={currentReelIndex2Desktop + index} className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
                   <iframe
