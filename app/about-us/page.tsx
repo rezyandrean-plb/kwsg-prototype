@@ -167,8 +167,22 @@ export default function AboutUsPage() {
       { src: "/images/about-us/MREA/MREA_DSC07223.jpg", alt: "MREA Event 8" },
       { src: "/images/about-us/MREA/MREA_DSC07258.jpg", alt: "MREA Event 9" },
     ],
-    "MRS": [],
-    "Podcast": [],
+    "MRS": [
+      { src: "/images/about-us/MRS/KW Mega Summit 011.jpg", alt: "KW Mega Summit 1" },
+      { src: "/images/about-us/MRS/KW Mega Summit 019.jpg", alt: "KW Mega Summit 2" },
+      { src: "/images/about-us/MRS/KW Mega Summit 032.jpg", alt: "KW Mega Summit 3" },
+      { src: "/images/about-us/MRS/KW Mega Summit 046.jpg", alt: "KW Mega Summit 4" },
+      { src: "/images/about-us/MRS/KW Mega Summit 062.jpg", alt: "KW Mega Summit 5" },
+      { src: "/images/about-us/MRS/KW Mega Summit 070.jpg", alt: "KW Mega Summit 6" },
+      { src: "/images/about-us/MRS/KW Mega Summit 083.jpg", alt: "KW Mega Summit 7" },
+      { src: "/images/about-us/MRS/KW Mega Summit 103.jpg", alt: "KW Mega Summit 8" },
+      { src: "/images/about-us/MRS/KW Mega Summit 126.jpg", alt: "KW Mega Summit 9" },
+    ],
+    "Podcast": [
+      { src: "/images/about-us/Podcast/Podcast_IMG_1038.jpg", alt: "Podcast 1" },
+      { src: "/images/about-us/Podcast/Podcast_IMG_1057.jpg", alt: "Podcast 2" },
+      { src: "/images/about-us/Podcast/Podcast_IMG_1085.jpg", alt: "Podcast 3" },
+    ],
   }
 
   const categories = ["Branding workshop", "Trainings", "MREA", "MRS", "Podcast"]
@@ -176,7 +190,87 @@ export default function AboutUsPage() {
   // Get filtered images based on selected category
   const filteredImages = useMemo(() => {
     if (galleryCategory === "all") {
-      return Object.values(galleryImages).flat()
+      // Select balanced images from each category, filling to 12 images
+      const selectedImages: Array<{ src: string; alt: string }> = []
+      
+      // Branding workshop: 9 images → select 3 (evenly spaced: 1st, 4th, 7th)
+      const brandingImages = galleryImages["Branding workshop"]
+      if (brandingImages.length >= 7) {
+        selectedImages.push(brandingImages[0], brandingImages[3], brandingImages[6])
+      } else if (brandingImages.length > 0) {
+        selectedImages.push(...brandingImages.slice(0, Math.min(3, brandingImages.length)))
+      }
+      
+      // Trainings: 5 images → select 2 (1st, 4th)
+      const trainingImages = galleryImages["Trainings"]
+      if (trainingImages.length >= 4) {
+        selectedImages.push(trainingImages[0], trainingImages[3])
+      } else if (trainingImages.length > 0) {
+        selectedImages.push(...trainingImages.slice(0, Math.min(2, trainingImages.length)))
+      }
+      
+      // MREA: 9 images → select 3 (1st, 4th, 7th)
+      const mreaImages = galleryImages["MREA"]
+      if (mreaImages.length >= 7) {
+        selectedImages.push(mreaImages[0], mreaImages[3], mreaImages[6])
+      } else if (mreaImages.length > 0) {
+        selectedImages.push(...mreaImages.slice(0, Math.min(3, mreaImages.length)))
+      }
+      
+      // MRS: 9 images → select 3 (1st, 4th, 7th)
+      const mrsImages = galleryImages["MRS"]
+      if (mrsImages.length >= 7) {
+        selectedImages.push(mrsImages[0], mrsImages[3], mrsImages[6])
+      } else if (mrsImages.length > 0) {
+        selectedImages.push(...mrsImages.slice(0, Math.min(3, mrsImages.length)))
+      }
+      
+      // Podcast: 3 images → select 1 (1st)
+      const podcastImages = galleryImages["Podcast"]
+      if (podcastImages.length > 0) {
+        selectedImages.push(podcastImages[0])
+      }
+      
+      // Fill remaining slots (if less than 12) by adding more from larger categories
+      if (selectedImages.length < 12) {
+        const remaining = 12 - selectedImages.length
+        
+        // Add more from Branding workshop if available
+        if (brandingImages.length > 3 && remaining > 0) {
+          const additional = brandingImages.filter(img => !selectedImages.includes(img)).slice(0, Math.min(remaining, 2))
+          selectedImages.push(...additional)
+        }
+        
+        // Add more from MREA if still need more
+        if (selectedImages.length < 12 && mreaImages.length > 3) {
+          const remaining2 = 12 - selectedImages.length
+          const additional = mreaImages.filter(img => !selectedImages.includes(img)).slice(0, Math.min(remaining2, 2))
+          selectedImages.push(...additional)
+        }
+        
+        // Add more from MRS if still need more
+        if (selectedImages.length < 12 && mrsImages.length > 3) {
+          const remaining3 = 12 - selectedImages.length
+          const additional = mrsImages.filter(img => !selectedImages.includes(img)).slice(0, Math.min(remaining3, 2))
+          selectedImages.push(...additional)
+        }
+        
+        // Add more from Trainings if still need more
+        if (selectedImages.length < 12 && trainingImages.length > 2) {
+          const remaining4 = 12 - selectedImages.length
+          const additional = trainingImages.filter(img => !selectedImages.includes(img)).slice(0, Math.min(remaining4, 1))
+          selectedImages.push(...additional)
+        }
+        
+        // Add more from Podcast if still need more
+        if (selectedImages.length < 12 && podcastImages.length > 1) {
+          const remaining5 = 12 - selectedImages.length
+          const additional = podcastImages.filter(img => !selectedImages.includes(img)).slice(0, Math.min(remaining5, 1))
+          selectedImages.push(...additional)
+        }
+      }
+      
+      return selectedImages.slice(0, 12) // Ensure max 12 images
     }
     return galleryImages[galleryCategory as keyof typeof galleryImages] || []
   }, [galleryCategory])
@@ -251,9 +345,9 @@ export default function AboutUsPage() {
       className="min-h-screen flex flex-col"
     >
       {/* Hero Banner */}
-      <section className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-black to-gray-900 pt-20 sm:pt-20 md:pt-12">
+      <section className="relative min-h-[50vh] sm:min-h-[40vh] md:min-h-[40vh] lg:min-h-[60vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-black to-gray-900 pt-12 sm:pt-12 md:pt-16 pb-4 sm:pb-8 md:pb-6 lg:pt-8 lg:pb-12">
 
-        <div className="relative z-10 text-center max-w-6xl mx-auto px-6 pt-8 sm:pt-12 md:pt-16 lg:pt-32">
+        <div className="relative z-10 text-center max-w-6xl mx-auto px-6 pt-4 sm:pt-6 md:pt-12 lg:pt-12">
           <motion.h1 
             className="text-4xl font-bold mb-8 leading-tight md:text-6xl lg:text-7xl text-white"
             initial={{ opacity: 0, y: 30 }}
@@ -265,7 +359,7 @@ export default function AboutUsPage() {
           </motion.h1>
 
           <motion.p 
-            className="text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed text-base md:text-lg lg:text-xl"
+            className="text-white/90 max-w-4xl mx-auto leading-relaxed text-base md:text-lg lg:text-xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -567,7 +661,7 @@ export default function AboutUsPage() {
 
           {/* Category Filter Buttons */}
           <motion.div 
-            className="flex flex-wrap justify-center gap-3 mb-8"
+            className="flex flex-nowrap gap-3 mb-8 pb-2 overflow-x-auto md:overflow-visible md:flex-wrap md:justify-center lg:overflow-visible lg:flex-wrap lg:justify-center scrollbar-mini"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -575,7 +669,7 @@ export default function AboutUsPage() {
           >
             <button
               onClick={() => setGalleryCategory("all")}
-              className={`px-4 py-2 text-sm rounded-full font-semibold transition-all duration-300 ${
+              className={`px-4 py-2 text-sm rounded-full font-semibold transition-all duration-300 whitespace-nowrap flex-shrink-0 ${
                 galleryCategory === "all"
                   ? "bg-[#B40101] text-white shadow-lg shadow-[#B40101]/30"
                   : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
@@ -587,7 +681,7 @@ export default function AboutUsPage() {
               <button
                 key={category}
                 onClick={() => setGalleryCategory(category)}
-                className={`px-4 py-2 text-sm rounded-full font-semibold transition-all duration-300 ${
+                className={`px-4 py-2 text-sm rounded-full font-semibold transition-all duration-300 whitespace-nowrap flex-shrink-0 ${
                   galleryCategory === category
                     ? "bg-[#B40101] text-white shadow-lg shadow-[#B40101]/30"
                     : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
@@ -606,34 +700,124 @@ export default function AboutUsPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <div className="max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8 flex justify-center">
-              <div
-                className="columns-4 sm:columns-5 md:columns-6 lg:columns-7 xl:columns-8 gap-3 md:gap-3 [column-fill:_balance] inline-block"
-                style={{ columnWidth: "120px", columnGap: "14px" }}
-              >
-                {filteredImages.map((image, index) => {
-                  const isNew = !prevVisibleImagesRef.current.has(image.src)
-                  return (
-                  <motion.div
-                    key={`${galleryCategory}-${index}-${image.src}`}
-                    initial={isNew ? { opacity: 0, y: 12, scale: 0.98 } : undefined}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={isNew ? { duration: 0.45, ease: "easeOut" } : { duration: 0.2 }}
-                    whileHover={{ scale: 1.025 }}
-                    className="mb-1.5 md:mb-2 break-inside-avoid relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10"
-                  >
-                    <img
-                      src={image.src}
-                      alt={image.alt}
-                      className="w-full h-auto object-cover transition-transform duration-400 ease-out hover:scale-102"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-                  </motion.div>
-                  )
-                })}
+            {galleryCategory === "Podcast" ? (
+              <div className="max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8 flex justify-center">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl">
+                  {filteredImages.map((image, index) => {
+                    const isNew = !prevVisibleImagesRef.current.has(image.src)
+                    return (
+                      <motion.div
+                        key={`${galleryCategory}-${index}-${image.src}`}
+                        initial={isNew ? { opacity: 0, y: 12, scale: 0.98 } : undefined}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={isNew ? { duration: 0.45, ease: "easeOut" } : { duration: 0.2 }}
+                        whileHover={{ scale: 1.025 }}
+                        className="relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10"
+                      >
+                        <img
+                          src={image.src}
+                          alt={image.alt}
+                          className="w-full h-auto object-cover transition-transform duration-400 ease-out hover:scale-102"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                      </motion.div>
+                    )
+                  })}
+                </div>
               </div>
-            </div>
+            ) : galleryCategory === "Trainings" ? (
+              <div className="max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8 flex justify-center">
+                <div className="flex justify-center">
+                  <div
+                    className="columns-4 sm:columns-5 md:columns-6 lg:columns-6 xl:columns-5 gap-3 md:gap-3 [column-fill:_balance]"
+                    style={{ columnWidth: "120px", columnGap: "14px" }}
+                  >
+                    {filteredImages.map((image, index) => {
+                      const isNew = !prevVisibleImagesRef.current.has(image.src)
+                      return (
+                      <motion.div
+                        key={`${galleryCategory}-${index}-${image.src}`}
+                        initial={isNew ? { opacity: 0, y: 12, scale: 0.98 } : undefined}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={isNew ? { duration: 0.45, ease: "easeOut" } : { duration: 0.2 }}
+                        whileHover={{ scale: 1.025 }}
+                        className="mb-1.5 md:mb-2 break-inside-avoid relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10"
+                      >
+                        <img
+                          src={image.src}
+                          alt={image.alt}
+                          className="w-full h-auto object-cover transition-transform duration-400 ease-out hover:scale-102"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                      </motion.div>
+                      )
+                    })}
+                  </div>
+                </div>
+              </div>
+            ) : galleryCategory === "Branding workshop" ? (
+              <div className="max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8 flex justify-center">
+                <div className="flex justify-center">
+                  <div
+                    className="columns-4 sm:columns-5 md:columns-6 lg:columns-6 xl:columns-5 gap-3 md:gap-3 [column-fill:_balance]"
+                    style={{ columnWidth: "120px", columnGap: "14px" }}
+                  >
+                    {filteredImages.map((image, index) => {
+                      const isNew = !prevVisibleImagesRef.current.has(image.src)
+                      return (
+                      <motion.div
+                        key={`${galleryCategory}-${index}-${image.src}`}
+                        initial={isNew ? { opacity: 0, y: 12, scale: 0.98 } : undefined}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={isNew ? { duration: 0.45, ease: "easeOut" } : { duration: 0.2 }}
+                        whileHover={{ scale: 1.025 }}
+                        className="mb-1.5 md:mb-2 break-inside-avoid relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10"
+                      >
+                        <img
+                          src={image.src}
+                          alt={image.alt}
+                          className="w-full h-auto object-cover transition-transform duration-400 ease-out hover:scale-102"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                      </motion.div>
+                      )
+                    })}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8 flex justify-center">
+                <div
+                  className="columns-4 sm:columns-5 md:columns-6 lg:columns-6 xl:columns-6 gap-3 md:gap-3 [column-fill:_balance] inline-block"
+                  style={{ columnWidth: "120px", columnGap: "14px" }}
+                >
+                  {filteredImages.map((image, index) => {
+                    const isNew = !prevVisibleImagesRef.current.has(image.src)
+                    return (
+                    <motion.div
+                      key={`${galleryCategory}-${index}-${image.src}`}
+                      initial={isNew ? { opacity: 0, y: 12, scale: 0.98 } : undefined}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={isNew ? { duration: 0.45, ease: "easeOut" } : { duration: 0.2 }}
+                      whileHover={{ scale: 1.025 }}
+                      className="mb-1.5 md:mb-2 break-inside-avoid relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10"
+                    >
+                      <img
+                        src={image.src}
+                        alt={image.alt}
+                        className="w-full h-auto object-cover transition-transform duration-400 ease-out hover:scale-102"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                    </motion.div>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
           </motion.div>
         </div>
       </section>
@@ -669,32 +853,40 @@ export default function AboutUsPage() {
                 </motion.div>
               </div>
 
-              <div className="flex justify-start lg:justify-end">
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  className="w-full max-w-sm"
-                >
-                  <a href="#" className="block group">
-                    <div className="bg-gradient-to-br from-[#B40101] to-red-700 p-0.5 rounded-xl transition-transform duration-300 group-hover:scale-[1.02] shadow-lg shadow-red-900/20 max-w-xs lg:ml-auto">
-                      <div className="bg-black/90 rounded-[10px] p-3 h-full flex items-center gap-3 group-hover:bg-black/80 transition-colors duration-300">
-                        <div className="h-10 w-10 bg-[#B40101]/20 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-[#B40101]/30 transition-colors">
-                          <Download className="h-4 w-4 text-[#B40101] group-hover:text-white transition-colors duration-300" />
-                        </div>
-                        <div>
-                          <p className="text-white text-base font-bold mb-0 group-hover:text-[#B40101] transition-colors">
-                            See the Movement
-                          </p>
-                        </div>
-                        <div className="ml-auto">
-                          <ArrowRight className="h-4 w-4 text-white/40 group-hover:text-white group-hover:translate-x-1 transition-all duration-300" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 justify-start lg:justify-end">
+                {[
+                  { date: "10", month: "December", year: "2025" },
+                  { date: "3", month: "December", year: "2025" },
+                  { date: "26", month: "Novembe", year: "2025" },
+                  { date: "24", month: "November", year: "2025" },
+                ].map((newsletter, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
+                    className="w-full max-w-sm"
+                  >
+                    <a href="#" target="_blank" rel="noopener noreferrer" className="block group">
+                      <div className="bg-gradient-to-br from-[#B40101] to-red-700 p-0.5 rounded-xl transition-transform duration-300 group-hover:scale-[1.02] shadow-lg shadow-red-900/20 max-w-xs lg:ml-auto">
+                        <div className="bg-black/90 rounded-[10px] p-3 h-full flex items-center gap-3 group-hover:bg-black/80 transition-colors duration-300">
+                          <div className="h-10 w-10 bg-[#B40101]/20 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-[#B40101]/30 transition-colors">
+                            <Download className="h-4 w-4 text-[#B40101] group-hover:text-white transition-colors duration-300" />
+                          </div>
+                          <div>
+                            <p className="text-white text-base font-bold mb-0 group-hover:text-[#B40101] transition-colors">
+                              {newsletter.date}, {newsletter.month} {newsletter.year} Newsletter
+                            </p>
+                          </div>
+                          <div className="ml-auto">
+                            <ArrowRight className="h-4 w-4 text-white/40 group-hover:text-white group-hover:translate-x-1 transition-all duration-300" />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </a>
-                </motion.div>
+                    </a>
+                  </motion.div>
+                ))}
               </div>
             </div>
           </div>

@@ -26,34 +26,7 @@ const JoinFormDialog = dynamic(() => import("@/components/join-form-dialog").the
   ssr: false
 })
 
-export default function EventsPage() {
-  const [scrollY, setScrollY] = useState(0)
-  const [isBootcampCarouselDialogOpen, setIsBootcampCarouselDialogOpen] = useState(false)
-  const [isJoinDialogOpen, setIsJoinDialogOpen] = useState(false)
-  const [isSummitDialogOpen, setIsSummitDialogOpen] = useState(false)
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const totalSlides = 3
-  const [activePastTab, setActivePastTab] = useState(0)
-  const [pastCarouselIndex, setPastCarouselIndex] = useState(0)
-  const [isCarouselPaused, setIsCarouselPaused] = useState(false)
-  const [eventCategory, setEventCategory] = useState<string>("")
-  const prevVisibleImagesRef = useRef<Set<string>>(new Set())
-  const [exploreIndex, setExploreIndex] = useState(0)
-  const [fourUpIndex, setFourUpIndex] = useState(0)
-  const [fourUpPerRow, setFourUpPerRow] = useState(4)
-  const [realtorSubTag, setRealtorSubTag] = useState<"All" | "September" | "October" | "November">("All")
-
-
-  // Helper function to extract YouTube video ID and convert to embed URL
-  const getYouTubeEmbedUrl = (url: string) => {
-    const videoIdMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/)
-    if (videoIdMatch) {
-      const videoId = videoIdMatch[1].split('?')[0]
-      return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=1`
-    }
-    return url
-  }
-
+// Static past events data - moved outside component to maintain referential equality
   const pastEvents = [
     {
       title: "Realtor Branding Workshop",
@@ -71,18 +44,18 @@ export default function EventsPage() {
       date: "August 2025",
       description:
         "A 2-day intensive masterclass diving into the millionaire models, strategies, and systems for exponential growth.",
-      images: [],
-      video: [
-        "https://youtu.be/Sh8aD6uI0-E?si=rVtunRhP4MHe4V9X",
-        "https://youtu.be/4bjVvRaItHA?si=_oM6PtjNWfMBospn",
-        "https://youtu.be/PW8A6XC0UhE?si=B5v-zjIhS9PbnEm3",
-        "https://youtu.be/eo84p1nHWBE?si=hlN_j1XZM5VnuqzN",
-        "https://youtu.be/jc6GFFnQQB4?si=_1sfQfS4RkSkOMDN",
-        "https://youtu.be/PW8A6XC0UhE?si=wDm6H9XFzWDG0WJc",
+    images: [],
+    video: [
+      "https://youtu.be/Sh8aD6uI0-E?si=rVtunRhP4MHe4V9X",
+      "https://youtu.be/4bjVvRaItHA?si=_oM6PtjNWfMBospn",
+      "https://youtu.be/PW8A6XC0UhE?si=B5v-zjIhS9PbnEm3",
+      "https://youtu.be/eo84p1nHWBE?si=hlN_j1XZM5VnuqzN",
+      "https://youtu.be/jc6GFFnQQB4?si=_1sfQfS4RkSkOMDN",
+      "https://youtu.be/PW8A6XC0UhE?si=wDm6H9XFzWDG0WJc",
       ],
     },
     {
-      title: "Founder’s Market Insights",
+    title: "Founder's Market Insights",
       date: "July 2025",
       description:
         "An interactive online session for agents to discover multiple income streams and scalable models.",
@@ -95,9 +68,9 @@ export default function EventsPage() {
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/founder-insight-6.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/founder-insight-7.jpg",
       ],
-      video: [
-        "https://www.youtube.com/shorts/8ZRBWMkM-n0",
-      ],
+    video: [
+      "https://www.youtube.com/shorts/8ZRBWMkM-n0",
+    ],
     },
     {
       title: "Welcome Dinner",
@@ -137,6 +110,34 @@ export default function EventsPage() {
       video: [],
     },
   ]
+
+export default function EventsPage() {
+  const [scrollY, setScrollY] = useState(0)
+  const [isBootcampCarouselDialogOpen, setIsBootcampCarouselDialogOpen] = useState(false)
+  const [isJoinDialogOpen, setIsJoinDialogOpen] = useState(false)
+  const [isSummitDialogOpen, setIsSummitDialogOpen] = useState(false)
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const totalSlides = 3
+  const [activePastTab, setActivePastTab] = useState(0)
+  const [pastCarouselIndex, setPastCarouselIndex] = useState(0)
+  const [isCarouselPaused, setIsCarouselPaused] = useState(false)
+  const [eventCategory, setEventCategory] = useState<string>("")
+  const prevVisibleImagesRef = useRef<Set<string>>(new Set())
+  const [exploreIndex, setExploreIndex] = useState(0)
+  const [fourUpIndex, setFourUpIndex] = useState(0)
+  const [fourUpPerRow, setFourUpPerRow] = useState(4)
+  const [realtorSubTag, setRealtorSubTag] = useState<"All" | "September" | "October" | "November">("All")
+
+
+  // Helper function to extract YouTube video ID and convert to embed URL
+  const getYouTubeEmbedUrl = (url: string) => {
+    const videoIdMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/)
+    if (videoIdMatch) {
+      const videoId = videoIdMatch[1].split('?')[0]
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=1`
+    }
+    return url
+  }
 
   // Organize images and videos by event category for gallery
   const eventImages = useMemo(() => {
@@ -1116,11 +1117,11 @@ export default function EventsPage() {
             <motion.h2 
               className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight mb-6"
               initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-            >
-              More Events
+          >
+            More Events
             </motion.h2>
           </div>
 
@@ -1140,8 +1141,8 @@ export default function EventsPage() {
                   eventCategory === event.title
                     ? "bg-[#B40101] text-white shadow-lg shadow-[#B40101]/30"
                     : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
-                }`}
-              >
+                    }`}
+                  >
                 {event.title}
                   </button>
                 ))}
@@ -1200,7 +1201,7 @@ export default function EventsPage() {
                           transition={{ duration: 0.45, ease: "easeOut" }}
                           {...hoverProps}
                           className="relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 aspect-video flex-shrink-0 w-full md:w-1/2"
-                        >
+              > 
                           {media.type === "image" ? (
                             <img
                               src={media.src}
@@ -1280,7 +1281,7 @@ export default function EventsPage() {
                           className="group relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
                         >
                           {media.type === 'image' ? (
-                            <img
+                          <img
                               src={media.src}
                               alt={media.alt}
                               className="w-full h-auto object-cover"
@@ -1292,8 +1293,8 @@ export default function EventsPage() {
                             controls
                               className="w-full h-auto object-cover"
                               preload="metadata"
-                            />
-                          )}
+                          />
+                        )}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
                           {media.type === 'image' && (
                             <div className="pointer-events-none absolute left-1/2 bottom-full mb-3 z-30 hidden -translate-x-1/2 group-hover:block">
@@ -1340,7 +1341,7 @@ export default function EventsPage() {
                       onClick={() => setFourUpIndex((prev) => (prev + 1) % filteredEventImages.length)}
                       className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
                       aria-label="Next image"
-                    >
+                        >
                       <ChevronRight className="h-4 w-4" />
                         </button>
                       </div>
@@ -1377,7 +1378,7 @@ export default function EventsPage() {
                                   className="w-64 h-auto object-cover"
                                   loading="lazy"
                                 />
-                              </div>
+                  </div>
                             </div>
                           </>
                         ) : (
@@ -1389,11 +1390,11 @@ export default function EventsPage() {
                           />
                         )}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-                      </motion.div>
+              </motion.div>
                     )
                   })}
-                </div>
-              </div>
+            </div>
+          </div>
             )}
           </motion.div>
         </div>
