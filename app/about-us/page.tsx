@@ -70,16 +70,16 @@ export default function AboutUsPage() {
 
   // Celebration images array
   const celebrationImages = [
-    { src: "/images/about-us/excellence-celebrated/Excellence-01.jpg", alt: "KW Singapore Excellence Celebration - Award Winners" },
-    { src: "/images/about-us/excellence-celebrated/Excellence-02.jpg", alt: "KW Singapore Excellence Celebration - Social Gathering" },
-    { src: "/images/about-us/excellence-celebrated/Excellence-03.jpg", alt: "KW Singapore Excellence Celebration - Recognition Event" },
-    { src: "/images/about-us/excellence-celebrated/Excellence-04.jpg", alt: "KW Singapore Excellence Celebration - Celebration Moment" },
-    { src: "/images/about-us/excellence-celebrated/Excellence-05.jpg", alt: "KW Singapore Excellence Celebration - Group Photo" },
-    { src: "/images/about-us/excellence-celebrated/Excellence-06.jpg", alt: "KW Singapore Excellence Celebration - Event Gathering" },
-    { src: "/images/about-us/excellence-celebrated/Excellence-07.jpg", alt: "KW Singapore Excellence Celebration - Award Presentation" },
-    { src: "/images/about-us/excellence-celebrated/Excellence-08.jpg", alt: "KW Singapore Excellence Celebration - Celebration" },
-    { src: "/images/about-us/excellence-celebrated/Excellence-09.jpg", alt: "KW Singapore Excellence Celebration - Social Event" },
-    { src: "/images/about-us/excellence-celebrated/Excellence-10.jpg", alt: "KW Singapore Excellence Celebration - Recognition" },
+    { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/excellence-celebrated/Excellence-01.jpg", alt: "KW Singapore Excellence Celebration - Award Winners" },
+    { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/excellence-celebrated/Excellence-02.jpg", alt: "KW Singapore Excellence Celebration - Social Gathering" },
+    { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/excellence-celebrated/Excellence-03.jpg", alt: "KW Singapore Excellence Celebration - Recognition Event" },
+    { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/excellence-celebrated/Excellence-04.jpg", alt: "KW Singapore Excellence Celebration - Celebration Moment" },
+    { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/excellence-celebrated/Excellence-05.jpg", alt: "KW Singapore Excellence Celebration - Group Photo" },
+    { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/excellence-celebrated/Excellence-06.jpg", alt: "KW Singapore Excellence Celebration - Event Gathering" },
+    { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/excellence-celebrated/Excellence-07.jpg", alt: "KW Singapore Excellence Celebration - Award Presentation" },
+    { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/excellence-celebrated/Excellence-08.jpg", alt: "KW Singapore Excellence Celebration - Celebration" },
+    { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/excellence-celebrated/Excellence-09.jpg", alt: "KW Singapore Excellence Celebration - Social Event" },
+    { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/excellence-celebrated/Excellence-10.jpg", alt: "KW Singapore Excellence Celebration - Recognition" },
   ]
 
   // Navigation functions for celebration carousel
@@ -139,49 +139,49 @@ export default function AboutUsPage() {
   // Gallery images by category
   const galleryImages = {
     "Realtor Branding Workshop": [
-      { src: "/images/about-us/realtor-branding/rb09-DSC04813.jpg", alt: "Branding Workshop 1" },
-      { src: "/images/about-us/realtor-branding/rb09-DSC04825.jpg", alt: "Branding Workshop 2" },
-      { src: "/images/about-us/realtor-branding/rb09-DSC04919.jpg", alt: "Branding Workshop 3" },
-      { src: "/images/about-us/realtor-branding/rb09-DSC05077.jpg", alt: "Branding Workshop 4" },
-      { src: "/images/about-us/realtor-branding/rb09-DSC05166.jpg", alt: "Branding Workshop 5" },
-      { src: "/images/about-us/realtor-branding/rb09-DSC05177.jpg", alt: "Branding Workshop 6" },
-      { src: "/images/about-us/realtor-branding/rb09-DSC05180.jpg", alt: "Branding Workshop 7" },
-      { src: "/images/about-us/realtor-branding/rb09-DSC05236.jpg", alt: "Branding Workshop 8" },
-      { src: "/images/about-us/realtor-branding/rb09-DSC05319.jpg", alt: "Branding Workshop 9" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/realtor-branding/rb09-DSC04813.jpg", alt: "Branding Workshop 1" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/realtor-branding/rb09-DSC04825.jpg", alt: "Branding Workshop 2" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/realtor-branding/rb09-DSC04919.jpg", alt: "Branding Workshop 3" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/realtor-branding/rb09-DSC05077.jpg", alt: "Branding Workshop 4" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/realtor-branding/rb09-DSC05166.jpg", alt: "Branding Workshop 5" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/realtor-branding/rb09-DSC05177.jpg", alt: "Branding Workshop 6" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/realtor-branding/rb09-DSC05180.jpg", alt: "Branding Workshop 7" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/realtor-branding/rb09-DSC05236.jpg", alt: "Branding Workshop 8" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/realtor-branding/rb09-DSC05319.jpg", alt: "Branding Workshop 9" },
     ],
     "Multiplier Training": [
-      { src: "/images/about-us/training-gallery/MT_01.jpg", alt: "Training Session 1" },
-      { src: "/images/about-us/training-gallery/MT_02.jpg", alt: "Training Session 2" },
-      { src: "/images/about-us/training-gallery/MT_03.jpg", alt: "Training Session 3" },
-      { src: "/images/about-us/training-gallery/MT_04.jpg", alt: "Training Session 4" },
-      { src: "/images/about-us/training-gallery/MT_05.jpg", alt: "Training Session 5" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/training-gallery/MT_01.jpg", alt: "Training Session 1" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/training-gallery/MT_02.jpg", alt: "Training Session 2" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/training-gallery/MT_03.jpg", alt: "Training Session 3" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/training-gallery/MT_04.jpg", alt: "Training Session 4" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/training-gallery/MT_05.jpg", alt: "Training Session 5" },
     ],
     "MREA Masterclass": [
-      { src: "/images/about-us/MREA/MREA_DSC05815.jpg", alt: "MREA Event 1" },
-      { src: "/images/about-us/MREA/MREA_DSC05873.jpg", alt: "MREA Event 2" },
-      { src: "/images/about-us/MREA/MREA_DSC05914.jpg", alt: "MREA Event 3" },
-      { src: "/images/about-us/MREA/MREA_DSC06539.jpg", alt: "MREA Event 4" },
-      { src: "/images/about-us/MREA/MREA_DSC07162.jpg", alt: "MREA Event 5" },
-      { src: "/images/about-us/MREA/MREA_DSC07169.jpg", alt: "MREA Event 6" },
-      { src: "/images/about-us/MREA/MREA_DSC07172.jpg", alt: "MREA Event 7" },
-      { src: "/images/about-us/MREA/MREA_DSC07223.jpg", alt: "MREA Event 8" },
-      { src: "/images/about-us/MREA/MREA_DSC07258.jpg", alt: "MREA Event 9" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/MREA/MREA_DSC05815.jpg", alt: "MREA Event 1" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/MREA/MREA_DSC05873.jpg", alt: "MREA Event 2" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/MREA/MREA_DSC05914.jpg", alt: "MREA Event 3" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/MREA/MREA_DSC06539.jpg", alt: "MREA Event 4" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/MREA/MREA_DSC07162.jpg", alt: "MREA Event 5" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/MREA/MREA_DSC07169.jpg", alt: "MREA Event 6" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/MREA/MREA_DSC07172.jpg", alt: "MREA Event 7" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/MREA/MREA_DSC07223.jpg", alt: "MREA Event 8" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/MREA/MREA_DSC07258.jpg", alt: "MREA Event 9" },
     ],
     "MEGA Realtor Summit": [
-      { src: "/images/about-us/MRS/KW Mega Summit 011.jpg", alt: "KW Mega Summit 1" },
-      { src: "/images/about-us/MRS/KW Mega Summit 019.jpg", alt: "KW Mega Summit 2" },
-      { src: "/images/about-us/MRS/KW Mega Summit 032.jpg", alt: "KW Mega Summit 3" },
-      { src: "/images/about-us/MRS/KW Mega Summit 046.jpg", alt: "KW Mega Summit 4" },
-      { src: "/images/about-us/MRS/KW Mega Summit 062.jpg", alt: "KW Mega Summit 5" },
-      { src: "/images/about-us/MRS/KW Mega Summit 070.jpg", alt: "KW Mega Summit 6" },
-      { src: "/images/about-us/MRS/KW Mega Summit 083.jpg", alt: "KW Mega Summit 7" },
-      { src: "/images/about-us/MRS/KW Mega Summit 103.jpg", alt: "KW Mega Summit 8" },
-      { src: "/images/about-us/MRS/KW Mega Summit 126.jpg", alt: "KW Mega Summit 9" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/MRS/KW Mega Summit 011.jpg", alt: "KW Mega Summit 1" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/MRS/KW Mega Summit 019.jpg", alt: "KW Mega Summit 2" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/MRS/KW Mega Summit 032.jpg", alt: "KW Mega Summit 3" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/MRS/KW Mega Summit 046.jpg", alt: "KW Mega Summit 4" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/MRS/KW Mega Summit 062.jpg", alt: "KW Mega Summit 5" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/MRS/KW Mega Summit 070.jpg", alt: "KW Mega Summit 6" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/MRS/KW Mega Summit 083.jpg", alt: "KW Mega Summit 7" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/MRS/KW Mega Summit 103.jpg", alt: "KW Mega Summit 8" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/MRS/KW Mega Summit 126.jpg", alt: "KW Mega Summit 9" },
     ],
     "KW Pod": [
-      { src: "/images/about-us/Podcast/Podcast_IMG_1038.jpg", alt: "KW Pod 1" },
-      { src: "/images/about-us/Podcast/Podcast_IMG_1057.jpg", alt: "KW Pod 2" },
-      { src: "/images/about-us/Podcast/Podcast_IMG_1085.jpg", alt: "KW Pod 3" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/Podcast/Podcast_IMG_1038.jpg", alt: "KW Pod 1" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/Podcast/Podcast_IMG_1057.jpg", alt: "KW Pod 2" },
+      { src: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/Podcast/Podcast_IMG_1085.jpg", alt: "KW Pod 3" },
     ],
   }
 
@@ -291,55 +291,55 @@ export default function AboutUsPage() {
       name: "Melvin Lim",
       title: "Founder & Operating Principal",
       bio: "Melvin Lim is the Founder and Operating Principal of KW Singapore, where he stands at the forefront of a transformative movement in Singapore's real estate landscape. As the driving force behind this venture, Melvin brings a unique combination of visionary leadership, deep industry insight, and an extensive professional network, positioning KW Singapore as a new benchmark for excellence, collaboration, and innovation in real estate.\n\nWidely regarded as one of Singapore's most influential real estate leaders, Melvin is also the Co-Founder of PLB Realty and PLB Media—trailblazing companies that revolutionised the way properties are marketed and experienced. With a background in banking and finance, Melvin blends strategic financial acumen with a deep understanding of digital storytelling, data-driven marketing, and consumer psychology. Under his leadership, PropertyLimBrothers has grown into one of the most recognised and respected property content brands in the country.\n\nAt KW Singapore, Melvin leverages over a decade of entrepreneurial success to cultivate a new generation of high-performing real estate professionals, anchored by the KW values of integrity, innovation, and collaboration. His mission is to empower agents with the tools, training, and culture they need to thrive in a rapidly evolving industry.\n\nOutside of his professional achievements, Melvin is a devoted family man who enjoys quality time with his wife, their four children, and their beloved dog, Oreo.",
-      image: "/images/about-us/core-team/melvin-lim-professional.webp",
+      image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/core-team/melvin-lim-professional.webp",
     },
     {
       name: "Grayce Tan",
       title: "Director of Growth",
       bio: "As Director of Growth at KW Singapore, Grayce works closely with Melvin Lim and the core team in building the company from the ground up — shaping the strategic vision, assembling the founding team, and laying the operational groundwork to scale a next-generation real estate organisation. Her focus is not just on growth, but on building a company culture defined by empowered agents, shared leadership, and a deep commitment to long-term business success.\n\nGrayce's leadership experience is shaped by her years at PropertyLimBrothers, where she serves as Vice President of Strategy. There, she established and led the Strategic Business Growth unit, while building the Business Development, Marketing, and Editorial departments. She played a pivotal role in driving cross-functional initiatives that scaled content production, strengthened salesforce enablement, and deepened media and developer partnerships — all while fostering a collaborative, performance-driven team environment.\n\nWith a deep-rooted passion for coaching, learning, and self-development, Grayce brings a multidisciplinary lens to her work. Her academic background spans Sociology, Educational Pedagogy, and Real Estate Investment — reflecting her lifelong curiosity about how people think, grow, and connect. A voracious reader and critical thinker, Grayce thrives on exploring ideas across disciplines and translating them into meaningful strategies for business and team development. This commitment to learning and service continues to define her approach as she helps lead the transformative movement in Singapore's real estate landscape through KW Singapore.",
-      image: "/images/about-us/core-team/grayce-tan-professional.webp",
+      image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/core-team/grayce-tan-professional.webp",
     },
     {
       name: "Wayne Tang",
       title: "Key Executive Officer (KEO) and Agency Coach",
       bio: "Wayne Tang is the Key Executive Officer (KEO) and Agency Coach of KW Singapore, where he plays a pivotal role in safeguarding professional standards while shaping the next chapter of the company’s growth. As KEO — one of the most critical appointments in Singapore’s real estate agency framework — Wayne sits at the intersection of governance, culture, and performance. He is responsible for upholding regulatory compliance, strengthening operational discipline, and ensuring that KW Singapore’s realtors serve clients with integrity, transparency, and professionalism.\n\nWith more than a decade of experience across consumer electronics and real estate marketing, Wayne brings a rare blend of commercial sharpness and operational rigour. His background spans brand-building, go-to-market strategy, and sales enablement, giving him a deep appreciation for both the front-line realities realtors face and the systems required to support them. Having led teams in fast-paced, highly competitive environments, he is no stranger to corporate governance, risk management, and the frameworks needed to scale a modern real estate organisation responsibly.\n\nAt KW Singapore, Wayne’s dual role as KEO and Agency Coach allows him to go beyond oversight and into active partnership with realtors. He designs and drives coaching programmes that equip consultants with the mindset, skills, and systems to thrive — from ethical decision-making and client advisory frameworks, to prospecting structure, pipeline management, and team collaboration. To Wayne, coaching is not just about hitting numbers; it is about building trusted professionals who can communicate clearly, think critically, and create long-term value for their clients and teams.\n\nWorking closely with Founder and Operating Principal Melvin Lim and the leadership team, Wayne plays a key role in aligning KW Singapore’s governance standards with its growth ambitions. He is deeply committed to building an agency where high performance is matched by high integrity, and where realtors are empowered not only to succeed in their careers, but to do so with clarity, confidence, and purpose.",
-      image: "/images/about-us/core-team/Wayne_Photo.jpg",
+      image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/core-team/Wayne_Photo.jpg",
     },
     {
       name: "Joanne Ong",
       title: "Regional Operations & Success Manager",
       bio: "Joanne Ong joins KW Singapore as our new Operations Manager, bringing extensive experience in building high-performing, systems-driven real estate teams. As the co-founder of Jdot Property (Mega Team), she was instrumental in developing collaborative and results-oriented strategies, contributing to over RM110 million in closed gross development value.\n\nA former litigation lawyer and entrepreneur, Joanne pivoted to real estate in 2020. Inspired by the KW Mega Agent team model, she leveraged her strengths in systems, operations, and team development to build Jdot Property, earning recognition as a KW Worldwide Top 100 agent in 2024. Her expertise in operational excellence and commitment to teamwork perfectly align with KW Singapore's mission.",
-      image: "/images/about-us/core-team/Joanne Ong.jpg",
+      image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/core-team/Joanne Ong.jpg",
     },
     {
       name: "Siew Min Choong",
       title: "Regional Tech Trainer",
       bio: "Siew Min champions the technological empowerment of KW consultants in Singapore. Leveraging her deep expertise in digital marketing and project management, she transforms KW's cutting-edge tools into decisive business advantages.\n\nA pivotal figure since joining the KW ecosystem in 2019, Siew Min has significantly influenced the evolution of KW's proprietary technology. Her critical involvement in Command Labs, a global initiative, ensured KW Command was developed and optimized to meet the real-world needs of consultants.\n\nIn her role at KW Singapore, Siew Min drives tech enablement and adoption. She empowers consultants and their teams to fully leverage KW Command, streamlining operations and scaling their businesses with unparalleled precision. With over a decade of experience, Siew Min consistently bridges the gap between innovation and execution, ensuring KW remains at the forefront by empowering its consultants with the best in real estate technology.",
-      image: "/images/about-us/core-team/Siew Min.jpg",
+      image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/core-team/Siew Min.jpg",
     },
     {
       name: "Isabelle",
       title: "Branding & Social Media Executive",
       bio: "Isabelle is a Branding & Social Media Executive who helps real estate consultants turn their expertise into influence, authority, and a consistent digital presence. \n\nIsabelle has a strong foundation in consumer behaviour, visual storytelling, and digital branding. Working behind the scenes with multiple realtors gave her firsthand insight into what resonates with property audiences, how realtors should position themselves, and how content can shape perception, trust, and client flow.\n\n Today, at KW Singapore, Isabelle leads content development across social platforms, consultant branding projects, and media-driven recruitment initiatives. From shaping brand identities to story-led campaigns, she strategises communication on media platforms that elevate the KW brand and empower consultants to grow their businesses with clarity and confidence.\n\n Beyond KW, Isabelle also supports Chief Media, helping to refine creative workflows, oversee vendor content quality, and build the structure that allows realtors to access professional-level media production. Her experience across both sides — agency-style content creation and in-house branding — gives her a unique perspective on what realtors actually need to stand out in a competitive digital landscape.\n\n Her work combines creativity, strategic thinking, and a deep understanding of digital behaviour — ensuring every piece of content drives clarity, trust, and meaningful engagement.",
-      image: "/images/about-us/core-team/Isabelle Lee.jpg",
+      image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/core-team/Isabelle Lee.jpg",
     },
     {
       name: "Vanessa",
       title: "Realtor Recruitment and Growth",
       bio: "Vanessa is a pivotal force in KW Singapore's expansion, specialising in Realtor Recruitment and Growth. Her role is dedicated to identifying high-potential professionals and providing them with the platform, systems, and mentorship required to scale their business exponentially. \n\n Armed with a Bachelor of Science degree in Marketing and a minor in Communications from the Singapore University of Social Sciences (SUSS), Vanessa leverages her deep understanding of market positioning and targeted messaging to connect ambitious realtors with the unique wealth-building opportunities available at KW Singapore.\n\n She is instrumental in executing the company's aggressive growth goals, ensuring every new consultant onboarded aligns with the high-performance culture. Vanessa’s ability to bridge strategic marketing theory with hands-on recruitment execution makes her an invaluable asset in reinforcing KW Singapore's position as the leading choice for growth-minded realtors.\n\n In her personal time, Vanessa maintains a balance of precision and exploration. She enjoys the focused ritual of crafting matcha and coffee, the discipline of going to the gym, and expanding her perspective through travel.",
-      image: "/images/about-us/core-team/Vanessa Chee.jpg",
+      image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/core-team/Vanessa Chee.jpg",
     },
     {
       name: "Sheerra",
       title: "Operations and Admin Executive",
       bio: "Sheerra supports the growth and operations of Keller Williams Singapore through her role in realtor onboarding, tech support, and training coordination. With a strong background in business relations and administration, she ensures smooth processes and provides consistent support to help consultants perform at their best.\n\n Having honed her skills in realtor management, training coordination, and system support since 2021, Sheerra brings both precision and empathy to her work. Her deep familiarity with industry platforms such as KW Command, Datalabs, Powerkit, and CTOS enables her to guide consultants in adopting technology to enhance efficiency and productivity.",
-      image: "/images/about-us/core-team/Sheera Bakivelu.jpg",
+      image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/core-team/Sheera Bakivelu.jpg",
     },
     {
       name: "Suvarna",
       title: "Operations and Finance Executive",
       bio: "Suvarna supports the finance functions of Keller Williams Singapore through transaction handling and system coordination. She ensures smooth processes and accuracy in financial matters while assisting the team in maintaining efficient operations. With a background in Bachelor of Finance, she brings a strong understanding of financial principles and business processes, contributing to the team’s overall efficiency and reliability",
-      image: "/images/about-us/core-team/Survana Bakivelu.jpeg",
+      image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/core-team/Survana Bakivelu.jpeg",
     },
   ]
 
@@ -862,8 +862,8 @@ export default function AboutUsPage() {
               <div className="flex flex-col gap-3 justify-start lg:justify-end">
                 {[
                   { date: "15 - 19", month: "Dec", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/10/Newsletter+Dec+10.pdf" },
-                  { date: "24 - 28", month: "Nov", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/november-2025/26/Newsletter+Nov+26.pdf" },
                   { date: "1 - 7", month: "Dec", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/3/Newsletter+Dec+3.pdf" },
+                  { date: "24 - 28", month: "Nov", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/november-2025/26/Newsletter+Nov+26.pdf" },
                   { date: "17 - 21", month: "Nov", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/november-2025/24/Updated+Newsletter+Nov+24.pdf" },
                 ].map((newsletter, index) => (
                   <motion.div
@@ -1006,7 +1006,7 @@ export default function AboutUsPage() {
 
       {/* Be Part of the Winning Team */}
       <section className="relative py-12 sm:py-32">
-        <div className="absolute inset-0 bg-[url('/images/about-us/about-us-section-3.webp')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-[url('https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/about-us/about-us-section-3.webp')] bg-cover bg-center" />
         <div className="absolute inset-0 bg-black/50" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30" />
 
