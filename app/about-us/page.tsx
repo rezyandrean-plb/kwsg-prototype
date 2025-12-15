@@ -138,7 +138,7 @@ export default function AboutUsPage() {
 
   // Gallery images by category
   const galleryImages = {
-    "Branding workshop": [
+    "Realtor Branding Workshop": [
       { src: "/images/about-us/realtor-branding/rb09-DSC04813.jpg", alt: "Branding Workshop 1" },
       { src: "/images/about-us/realtor-branding/rb09-DSC04825.jpg", alt: "Branding Workshop 2" },
       { src: "/images/about-us/realtor-branding/rb09-DSC04919.jpg", alt: "Branding Workshop 3" },
@@ -149,14 +149,14 @@ export default function AboutUsPage() {
       { src: "/images/about-us/realtor-branding/rb09-DSC05236.jpg", alt: "Branding Workshop 8" },
       { src: "/images/about-us/realtor-branding/rb09-DSC05319.jpg", alt: "Branding Workshop 9" },
     ],
-    "Trainings": [
+    "Multiplier Training": [
       { src: "/images/about-us/training-gallery/MT_01.jpg", alt: "Training Session 1" },
       { src: "/images/about-us/training-gallery/MT_02.jpg", alt: "Training Session 2" },
       { src: "/images/about-us/training-gallery/MT_03.jpg", alt: "Training Session 3" },
       { src: "/images/about-us/training-gallery/MT_04.jpg", alt: "Training Session 4" },
       { src: "/images/about-us/training-gallery/MT_05.jpg", alt: "Training Session 5" },
     ],
-    "MREA": [
+    "MREA Masterclass": [
       { src: "/images/about-us/MREA/MREA_DSC05815.jpg", alt: "MREA Event 1" },
       { src: "/images/about-us/MREA/MREA_DSC05873.jpg", alt: "MREA Event 2" },
       { src: "/images/about-us/MREA/MREA_DSC05914.jpg", alt: "MREA Event 3" },
@@ -167,7 +167,7 @@ export default function AboutUsPage() {
       { src: "/images/about-us/MREA/MREA_DSC07223.jpg", alt: "MREA Event 8" },
       { src: "/images/about-us/MREA/MREA_DSC07258.jpg", alt: "MREA Event 9" },
     ],
-    "MRS": [
+    "MEGA Realtor Summit": [
       { src: "/images/about-us/MRS/KW Mega Summit 011.jpg", alt: "KW Mega Summit 1" },
       { src: "/images/about-us/MRS/KW Mega Summit 019.jpg", alt: "KW Mega Summit 2" },
       { src: "/images/about-us/MRS/KW Mega Summit 032.jpg", alt: "KW Mega Summit 3" },
@@ -178,14 +178,20 @@ export default function AboutUsPage() {
       { src: "/images/about-us/MRS/KW Mega Summit 103.jpg", alt: "KW Mega Summit 8" },
       { src: "/images/about-us/MRS/KW Mega Summit 126.jpg", alt: "KW Mega Summit 9" },
     ],
-    "Podcast": [
-      { src: "/images/about-us/Podcast/Podcast_IMG_1038.jpg", alt: "Podcast 1" },
-      { src: "/images/about-us/Podcast/Podcast_IMG_1057.jpg", alt: "Podcast 2" },
-      { src: "/images/about-us/Podcast/Podcast_IMG_1085.jpg", alt: "Podcast 3" },
+    "KW Pod": [
+      { src: "/images/about-us/Podcast/Podcast_IMG_1038.jpg", alt: "KW Pod 1" },
+      { src: "/images/about-us/Podcast/Podcast_IMG_1057.jpg", alt: "KW Pod 2" },
+      { src: "/images/about-us/Podcast/Podcast_IMG_1085.jpg", alt: "KW Pod 3" },
     ],
   }
 
-  const categories = ["Branding workshop", "Trainings", "MREA", "MRS", "Podcast"]
+  const categories = [
+    "Realtor Branding Workshop",
+    "Multiplier Training",
+    "MREA Masterclass",
+    "MEGA Realtor Summit",
+    "KW Pod"
+  ]
 
   // Get filtered images based on selected category
   const filteredImages = useMemo(() => {
@@ -193,40 +199,40 @@ export default function AboutUsPage() {
       // Select balanced images from each category, filling to 12 images
       const selectedImages: Array<{ src: string; alt: string }> = []
       
-      // Branding workshop: 9 images → select 3 (evenly spaced: 1st, 4th, 7th)
-      const brandingImages = galleryImages["Branding workshop"]
+      // Realtor Branding Workshop: 9 images → select 3 (evenly spaced: 1st, 4th, 7th)
+      const brandingImages = galleryImages["Realtor Branding Workshop"]
       if (brandingImages.length >= 7) {
         selectedImages.push(brandingImages[0], brandingImages[3], brandingImages[6])
       } else if (brandingImages.length > 0) {
         selectedImages.push(...brandingImages.slice(0, Math.min(3, brandingImages.length)))
       }
       
-      // Trainings: 5 images → select 2 (1st, 4th)
-      const trainingImages = galleryImages["Trainings"]
+      // Multiplier Training: 5 images → select 2 (1st, 4th)
+      const trainingImages = galleryImages["Multiplier Training"]
       if (trainingImages.length >= 4) {
         selectedImages.push(trainingImages[0], trainingImages[3])
       } else if (trainingImages.length > 0) {
         selectedImages.push(...trainingImages.slice(0, Math.min(2, trainingImages.length)))
       }
       
-      // MREA: 9 images → select 3 (1st, 4th, 7th)
-      const mreaImages = galleryImages["MREA"]
+      // MREA Masterclass: 9 images → select 3 (1st, 4th, 7th)
+      const mreaImages = galleryImages["MREA Masterclass"]
       if (mreaImages.length >= 7) {
         selectedImages.push(mreaImages[0], mreaImages[3], mreaImages[6])
       } else if (mreaImages.length > 0) {
         selectedImages.push(...mreaImages.slice(0, Math.min(3, mreaImages.length)))
       }
       
-      // MRS: 9 images → select 3 (1st, 4th, 7th)
-      const mrsImages = galleryImages["MRS"]
+      // MEGA Realtor Summit: 9 images → select 3 (1st, 4th, 7th)
+      const mrsImages = galleryImages["MEGA Realtor Summit"]
       if (mrsImages.length >= 7) {
         selectedImages.push(mrsImages[0], mrsImages[3], mrsImages[6])
       } else if (mrsImages.length > 0) {
         selectedImages.push(...mrsImages.slice(0, Math.min(3, mrsImages.length)))
       }
       
-      // Podcast: 3 images → select 1 (1st)
-      const podcastImages = galleryImages["Podcast"]
+      // KW Pod: 3 images → select 1 (1st)
+      const podcastImages = galleryImages["KW Pod"]
       if (podcastImages.length > 0) {
         selectedImages.push(podcastImages[0])
       }
@@ -235,7 +241,7 @@ export default function AboutUsPage() {
       if (selectedImages.length < 12) {
         const remaining = 12 - selectedImages.length
         
-        // Add more from Branding workshop if available
+        // Add more from Realtor Branding Workshop if available
         if (brandingImages.length > 3 && remaining > 0) {
           const additional = brandingImages.filter(img => !selectedImages.includes(img)).slice(0, Math.min(remaining, 2))
           selectedImages.push(...additional)
@@ -255,14 +261,14 @@ export default function AboutUsPage() {
           selectedImages.push(...additional)
         }
         
-        // Add more from Trainings if still need more
+        // Add more from Multiplier Training if still need more
         if (selectedImages.length < 12 && trainingImages.length > 2) {
           const remaining4 = 12 - selectedImages.length
           const additional = trainingImages.filter(img => !selectedImages.includes(img)).slice(0, Math.min(remaining4, 1))
           selectedImages.push(...additional)
         }
         
-        // Add more from Podcast if still need more
+        // Add more from KW Pod if still need more
         if (selectedImages.length < 12 && podcastImages.length > 1) {
           const remaining5 = 12 - selectedImages.length
           const additional = podcastImages.filter(img => !selectedImages.includes(img)).slice(0, Math.min(remaining5, 1))
@@ -294,6 +300,12 @@ export default function AboutUsPage() {
       image: "/images/about-us/core-team/grayce-tan-professional.webp",
     },
     {
+      name: "Wayne Tang",
+      title: "Key Executive Officer (KEO) and Agency Coach",
+      bio: "Wayne Tang is the Key Executive Officer (KEO) and Agency Coach of KW Singapore, where he plays a pivotal role in safeguarding professional standards while shaping the next chapter of the company’s growth. As KEO — one of the most critical appointments in Singapore’s real estate agency framework — Wayne sits at the intersection of governance, culture, and performance. He is responsible for upholding regulatory compliance, strengthening operational discipline, and ensuring that KW Singapore’s realtors serve clients with integrity, transparency, and professionalism.\n\nWith more than a decade of experience across consumer electronics and real estate marketing, Wayne brings a rare blend of commercial sharpness and operational rigour. His background spans brand-building, go-to-market strategy, and sales enablement, giving him a deep appreciation for both the front-line realities realtors face and the systems required to support them. Having led teams in fast-paced, highly competitive environments, he is no stranger to corporate governance, risk management, and the frameworks needed to scale a modern real estate organisation responsibly.\n\nAt KW Singapore, Wayne’s dual role as KEO and Agency Coach allows him to go beyond oversight and into active partnership with realtors. He designs and drives coaching programmes that equip consultants with the mindset, skills, and systems to thrive — from ethical decision-making and client advisory frameworks, to prospecting structure, pipeline management, and team collaboration. To Wayne, coaching is not just about hitting numbers; it is about building trusted professionals who can communicate clearly, think critically, and create long-term value for their clients and teams.\n\nWorking closely with Founder and Operating Principal Melvin Lim and the leadership team, Wayne plays a key role in aligning KW Singapore’s governance standards with its growth ambitions. He is deeply committed to building an agency where high performance is matched by high integrity, and where realtors are empowered not only to succeed in their careers, but to do so with clarity, confidence, and purpose.",
+      image: "/images/about-us/core-team/Wayne_Photo.jpg",
+    },
+    {
       name: "Joanne Ong",
       title: "Regional Operations & Success Manager",
       bio: "Joanne Ong joins KW Singapore as our new Operations Manager, bringing extensive experience in building high-performing, systems-driven real estate teams. As the co-founder of Jdot Property (Mega Team), she was instrumental in developing collaborative and results-oriented strategies, contributing to over RM110 million in closed gross development value.\n\nA former litigation lawyer and entrepreneur, Joanne pivoted to real estate in 2020. Inspired by the KW Mega Agent team model, she leveraged her strengths in systems, operations, and team development to build Jdot Property, earning recognition as a KW Worldwide Top 100 agent in 2024. Her expertise in operational excellence and commitment to teamwork perfectly align with KW Singapore's mission.",
@@ -301,7 +313,7 @@ export default function AboutUsPage() {
     },
     {
       name: "Siew Min Choong",
-      title: "Regional Tech Trainer & Administrator",
+      title: "Regional Tech Trainer",
       bio: "Siew Min champions the technological empowerment of KW consultants in Singapore. Leveraging her deep expertise in digital marketing and project management, she transforms KW's cutting-edge tools into decisive business advantages.\n\nA pivotal figure since joining the KW ecosystem in 2019, Siew Min has significantly influenced the evolution of KW's proprietary technology. Her critical involvement in Command Labs, a global initiative, ensured KW Command was developed and optimized to meet the real-world needs of consultants.\n\nIn her role at KW Singapore, Siew Min drives tech enablement and adoption. She empowers consultants and their teams to fully leverage KW Command, streamlining operations and scaling their businesses with unparalleled precision. With over a decade of experience, Siew Min consistently bridges the gap between innovation and execution, ensuring KW remains at the forefront by empowering its consultants with the best in real estate technology.",
       image: "/images/about-us/core-team/Siew Min.jpg",
     },
@@ -328,12 +340,6 @@ export default function AboutUsPage() {
       title: "Operations and Finance Executive",
       bio: "Suvarna supports the finance functions of Keller Williams Singapore through transaction handling and system coordination. She ensures smooth processes and accuracy in financial matters while assisting the team in maintaining efficient operations. With a background in Bachelor of Finance, she brings a strong understanding of financial principles and business processes, contributing to the team’s overall efficiency and reliability",
       image: "/images/about-us/core-team/Survana Bakivelu.jpeg",
-    },
-    {
-      name: "Wayne Tang",
-      title: "Key Executive Officer (KEO) and Agency Coach",
-      bio: "Wayne Tang is the Key Executive Officer (KEO) and Agency Coach of KW Singapore, where he plays a pivotal role in safeguarding professional standards while shaping the next chapter of the company’s growth. As KEO — one of the most critical appointments in Singapore’s real estate agency framework — Wayne sits at the intersection of governance, culture, and performance. He is responsible for upholding regulatory compliance, strengthening operational discipline, and ensuring that KW Singapore’s realtors serve clients with integrity, transparency, and professionalism.\n\nWith more than a decade of experience across consumer electronics and real estate marketing, Wayne brings a rare blend of commercial sharpness and operational rigour. His background spans brand-building, go-to-market strategy, and sales enablement, giving him a deep appreciation for both the front-line realities realtors face and the systems required to support them. Having led teams in fast-paced, highly competitive environments, he is no stranger to corporate governance, risk management, and the frameworks needed to scale a modern real estate organisation responsibly.\n\nAt KW Singapore, Wayne’s dual role as KEO and Agency Coach allows him to go beyond oversight and into active partnership with realtors. He designs and drives coaching programmes that equip consultants with the mindset, skills, and systems to thrive — from ethical decision-making and client advisory frameworks, to prospecting structure, pipeline management, and team collaboration. To Wayne, coaching is not just about hitting numbers; it is about building trusted professionals who can communicate clearly, think critically, and create long-term value for their clients and teams.\n\nWorking closely with Founder and Operating Principal Melvin Lim and the leadership team, Wayne plays a key role in aligning KW Singapore’s governance standards with its growth ambitions. He is deeply committed to building an agency where high performance is matched by high integrity, and where realtors are empowered not only to succeed in their careers, but to do so with clarity, confidence, and purpose.",
-      image: "/images/about-us/core-team/Wayne_Photo.jpg",
     },
   ]
 
@@ -700,7 +706,7 @@ export default function AboutUsPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            {galleryCategory === "Podcast" ? (
+            {galleryCategory === "KW Pod" ? (
               <div className="max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8 flex justify-center">
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl">
                   {filteredImages.map((image, index) => {
@@ -726,7 +732,7 @@ export default function AboutUsPage() {
                   })}
                 </div>
               </div>
-            ) : galleryCategory === "Trainings" ? (
+            ) : galleryCategory === "Multiplier Training" ? (
               <div className="max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8 flex justify-center">
                 <div className="flex justify-center">
                   <div
@@ -757,7 +763,7 @@ export default function AboutUsPage() {
                   </div>
                 </div>
               </div>
-            ) : galleryCategory === "Branding workshop" ? (
+            ) : galleryCategory === "Realtor Branding Workshop" ? (
               <div className="max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8 flex justify-center">
                 <div className="flex justify-center">
                   <div
@@ -855,10 +861,10 @@ export default function AboutUsPage() {
 
               <div className="flex flex-col gap-3 justify-start lg:justify-end">
                 {[
-                  { date: "10", month: "December", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/10/Newsletter+Dec+10.pdf" },
-                  { date: "3", month: "December", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/3/Newsletter+Dec+3.pdf" },
-                  { date: "26", month: "November", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/november-2025/26/Newsletter+Nov+26.pdf" },
-                  { date: "24", month: "November", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/november-2025/24/Updated+Newsletter+Nov+24.pdf" },
+                  { date: "15 - 19", month: "Dec", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/10/Newsletter+Dec+10.pdf" },
+                  { date: "24 - 28", month: "Nov", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/november-2025/26/Newsletter+Nov+26.pdf" },
+                  { date: "1 - 7", month: "Dec", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/3/Newsletter+Dec+3.pdf" },
+                  { date: "17 - 21", month: "Nov", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/november-2025/24/Updated+Newsletter+Nov+24.pdf" },
                 ].map((newsletter, index) => (
                   <motion.div
                     key={index}
@@ -871,12 +877,9 @@ export default function AboutUsPage() {
                     <a href={newsletter.url} target="_blank" rel="noopener noreferrer" className="block group">
                       <div className="bg-gradient-to-br from-[#B40101] to-red-700 p-0.5 rounded-xl transition-transform duration-300 group-hover:scale-[1.02] shadow-lg shadow-red-900/20 max-w-xs lg:ml-auto">
                         <div className="bg-black/90 rounded-[10px] p-3 h-full flex items-center gap-3 group-hover:bg-black/80 transition-colors duration-300">
-                          <div className="h-10 w-10 bg-[#B40101]/20 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-[#B40101]/30 transition-colors">
-                            <Download className="h-4 w-4 text-[#B40101] group-hover:text-white transition-colors duration-300" />
-                          </div>
                           <div>
                             <p className="text-white text-base font-bold mb-0 group-hover:text-[#B40101] transition-colors">
-                              {newsletter.date}, {newsletter.month} {newsletter.year} Newsletter
+                              {newsletter.date} {newsletter.month} {newsletter.year} Newsletter
                             </p>
                           </div>
                           <div className="ml-auto">
