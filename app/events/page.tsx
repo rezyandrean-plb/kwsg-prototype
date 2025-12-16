@@ -887,13 +887,13 @@ export default function EventsPage() {
       </section>
 
       {/* KW Ignite */}
-      <section className="relative py-12 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+      <section className="relative py-8 sm:py-12 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
         <div className="absolute inset-0 bg-black/40" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           {/* Section Header */}
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-8"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -917,7 +917,7 @@ export default function EventsPage() {
               transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
               viewport={{ once: true, margin: "-100px" }}
             >
-              Master specialized skills with our intensive, hands-on masterclass. 
+              Master specialized skills with our intensive, hands-on masterclass. <br />
               This consolidated, two-day training is designed to deliver immediate, actionable results that transform your real estate practice and accelerate your success.
             </motion.p>
             <Button
