@@ -19,6 +19,7 @@ import { SummitRegistrationDialog } from "@/components/summit-registration-dialo
 import { Toaster } from "@/components/ui/toaster"
 import dynamic from "next/dynamic"
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
+import { IgniteInterestDialog } from "@/components/ignite-interest-dialog"
 
 // Dynamically import the JoinFormDialog component
 const JoinFormDialog = dynamic(() => import("@/components/join-form-dialog").then(mod => mod.JoinFormDialog), {
@@ -151,6 +152,7 @@ export default function EventsPage() {
   const [isBootcampCarouselDialogOpen, setIsBootcampCarouselDialogOpen] = useState(false)
   const [isJoinDialogOpen, setIsJoinDialogOpen] = useState(false)
   const [isSummitDialogOpen, setIsSummitDialogOpen] = useState(false)
+  const [isIgniteDialogOpen, setIsIgniteDialogOpen] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
   const totalSlides = 3
   const [activePastTab, setActivePastTab] = useState(0)
@@ -884,7 +886,7 @@ export default function EventsPage() {
         </motion.div>
       </section>
 
-      {/* Bootcamp Series - Redesigned */}
+      {/* KW Ignite */}
       <section className="relative py-12 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
         <div className="absolute inset-0 bg-black/40" />
 
@@ -898,15 +900,16 @@ export default function EventsPage() {
             viewport={{ once: true, margin: "-100px" }}
           >
             <motion.h2 
-              className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 font-sans"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 font-sans"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
               viewport={{ once: true, margin: "-100px" }}
             >
-              KW Bootcamp
-              <span className="block text-[#B40101] italic">Series</span>
+              KW Ignite Masterclass:
+              <span className="block text-[#B40101] italic">2026 Elevate Your Real Estate Practice</span>
             </motion.h2>
+            <span className="block text-white text-lg font-semibold mt-4 mb-6">24-25th March | 10am-5pm</span>
             <motion.p 
               className="max-w-4xl mx-auto leading-relaxed leading-7 text-base md:text-lg"
               initial={{ opacity: 0, y: 20 }}
@@ -914,187 +917,18 @@ export default function EventsPage() {
               transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
               viewport={{ once: true, margin: "-100px" }}
             >
-              Master specialized skills with our intensive, hands-on training bootcamps. Each session is designed to
-              deliver immediate, actionable results that transform your real estate practice and accelerate your
-              success.
+              Master specialized skills with our intensive, hands-on masterclass. 
+              This consolidated, two-day training is designed to deliver immediate, actionable results that transform your real estate practice and accelerate your success.
             </motion.p>
+            <Button
+              size="lg"
+              className="bg-[#B40101] mt-8 hover:bg-[#B40101]/90 text-white px-12 py-4 text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
+              onClick={() => setIsIgniteDialogOpen(true)}
+            >
+              Register My Interest
+              <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+            </Button>
           </motion.div>
-
-          {/* Bootcamp Carousel */}
-          <div className="relative">
-            <div className="overflow-hidden">
-              <div
-                className="flex transition-transform duration-500 ease-in-out"
-                id="bootcamp-carousel"
-                style={{ transform: "translateX(0%)" }}
-              >
-                {/* Card 1: Seller Presentation Mastery */}
-                <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
-                  <div className="bg-gradient-to-br from-gray-900 to-black p-4 sm:p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col">
-                    <h3 className="text-2xl font-bold mb-4">
-                      Training Bootcamp:
-                      <span className="block text-[#B40101]">Seller Presentation Mastery</span>
-                    </h3>
-
-                    <div className="flex-grow">
-                      <p className="mb-6 leading-relaxed sm:h-32">
-                        Command every listing pitch and consistently win mandates. Discover how to craft an undeniable
-                        Unique Selling Proposition (USP) as expert listers, perfect a seamless seller presentation flow,
-                        and deploy tailored strategies for six distinct seller profiles.
-                      </p>
-
-                      <div className="space-y-3 mb-8 text-slate-100">
-                        <div className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
-                          <span className="text-sm text-slate-100">Single Session Event</span>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
-                          <span className="text-sm text-slate-100">In-Depth Training Session</span>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
-                          <span className="text-sm text-slate-100">Limited Seats</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-center sm:justify-start mt-auto">
-                      <Button 
-                        className="w-full sm:w-auto bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 rounded-md"
-                        onClick={() => window.open("https://explore.kwsingapore.com/seller-presentation-formula", "_blank")}
-                      >
-                        Tell Me More
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Card 2: High-Conversion Buyer Consultations */}
-                <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
-                  <div className="bg-gradient-to-br from-gray-900 to-black p-4 sm:p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col">
-                    <h3 className="text-2xl font-bold mb-4">
-                      Training Bootcamp:
-                      <span className="block text-[#B40101]">High-Conversion Buyer Consultations</span>
-                    </h3>
-
-                    <div className="flex-grow">
-                      <p className="mb-6 leading-relaxed sm:h-32">
-                        Convert leads into loyal, long-term clients with supreme confidence. Dive deep into
-                        understanding the six distinct buyer types, implement a proven, ultimate buyer consultation
-                        flow, and master crafting a compelling buyer's journey.
-                      </p>
-
-                      <div className="space-y-3 mb-8">
-                        <div className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
-                          <span className="text-sm text-slate-100">Single Session Event</span>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
-                          <span className="text-sm text-slate-100">In-Depth Training Session</span>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
-                          <span className="text-sm text-slate-100">Limited Seats</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-center sm:justify-start mt-auto">
-                      <Button 
-                        className="w-full sm:w-auto bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 rounded-md"
-                        onClick={() => window.open("https://explore.kwsingapore.com/buyers/investors-consultation-playbook", "_blank")}
-                      >
-                        Tell Me More
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Card 3: New Launch Analysis */}
-                <div className="w-full lg:w-1/2 flex-shrink-0 px-4">
-                  <div className="bg-gradient-to-br from-gray-900 to-black p-4 sm:p-8 rounded-lg border border-[#666666]/30 h-full group hover:shadow-2xl hover:shadow-[#B40101]/20 hover:border-[#B40101] transition-all duration-300 flex flex-col">
-                    <h3 className="text-2xl font-bold mb-4">
-                      Training Bootcamp:
-                      <span className="block text-[#B40101]">New Launch Analysis</span>
-                    </h3>
-
-                    <div className="flex-grow">
-                      <p className="mb-6 leading-relaxed sm:h-32">
-                        Dominate Singapore's New Launch market with unparalleled expertise. This bootcamp equips you
-                        with the strategic skills to master site and floor plan analysis, deploy powerful pricing and
-                        comparison techniques, and execute data-driven closing strategies.
-                      </p>
-
-                      <div className="space-y-3 mb-8">
-                        <div className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
-                          <span className="text-sm text-slate-100">Single Session Event</span>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
-                          <span className="text-sm text-slate-100">In-Depth Training Session</span>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-[#B40101] rounded-full" />
-                          <span className="text-sm text-slate-100">Limited Seats</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-center sm:justify-start mt-auto">
-                      <Button 
-                        className="w-full sm:w-auto bg-[#B40101] hover:bg-[#B40101]/90 text-white font-semibold transition-all duration-300 hover:scale-105 rounded-md"
-                        onClick={() => window.open("https://explore.kwsingapore.com/new-launch-analysis", "_blank")}
-                      >
-                        Tell Me More
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Removed Card 4: Positioning as a Consultant */}
-              </div>
-            </div>
-
-            {/* Carousel Navigation */}
-            <div className="flex justify-center mt-12 space-x-2">
-              {Array.from({ length: totalSlides }, (_, i) => (
-                <button
-                  key={i}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    i === currentSlide 
-                      ? "bg-[#B40101]" 
-                      : "bg-white/30 hover:bg-white/50"
-                  }`}
-                  onClick={() => goToSlide(i)}
-                  id={`dot-${i}`}
-                ></button>
-              ))}
-            </div>
-
-            {/* Navigation Arrows */}
-            <button
-              className="hidden lg:block absolute -left-16 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-[#B40101]/80 text-white p-3 rounded-full transition-all duration-300"
-              onClick={prevSlide}
-              id="prev-btn"
-            >
-              <ChevronRight className="h-6 w-6 rotate-180" />
-            </button>
-            <button
-              className="hidden lg:block absolute -right-16 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-[#B40101]/80 text-white p-3 rounded-full transition-all duration-300"
-              onClick={nextSlide}
-              id="next-btn"
-            >
-              <ChevronRight className="h-6 w-6" />
-            </button>
-          </div>
-
-          
         </div>
       </section>
 
@@ -1779,6 +1613,12 @@ export default function EventsPage() {
         isOpen={isSummitDialogOpen}
         onClose={() => setIsSummitDialogOpen(false)}
         onSubmit={handleSummitSubmit}
+      />
+
+      {/* Ignite Interest Dialog */}
+      <IgniteInterestDialog
+        isOpen={isIgniteDialogOpen}
+        onClose={() => setIsIgniteDialogOpen(false)}
       />
 
       {/* Toaster for notifications */}
