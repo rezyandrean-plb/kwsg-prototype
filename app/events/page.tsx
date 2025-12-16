@@ -33,11 +33,44 @@ const JoinFormDialog = dynamic(() => import("@/components/join-form-dialog").the
       date: "August 2025",
       description:
         "A 2-day intensive masterclass diving into the millionaire models, strategies, and systems for exponential growth.",
-      images: [],
-      video: [
-        "/video/realtor-branding-highlight.mp4",
-        "/video/takeaway-video.mp4",
+      images: [
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/September/1.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/September/2.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/September/3.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/September/4.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/September/5.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/September/6.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/September/7.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/September/8.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/September/9.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/1.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/2.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/3.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/4.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/5.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/6.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/7.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/8.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/9.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/10.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/11.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/1.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/2.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/3.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/4.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/5.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/6.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/7.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/8.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/9.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/10.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/11.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/12.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/13.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/14.jpg",
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/15.jpg",
       ],
+      video: [],
     },
     {
       title: "Explore Night",
@@ -68,9 +101,9 @@ const JoinFormDialog = dynamic(() => import("@/components/join-form-dialog").the
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/founder-insight-6.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/founder-insight-7.jpg",
       ],
-    video: [
-      "https://www.youtube.com/shorts/8ZRBWMkM-n0",
-    ],
+      video: [
+        "https://www.youtube.com/shorts/8ZRBWMkM-n0",
+      ],
     },
     {
       title: "Welcome Dinner",
@@ -107,7 +140,9 @@ const JoinFormDialog = dynamic(() => import("@/components/join-form-dialog").the
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-12.jpg",  
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-13.jpg",
       ],
-      video: [],
+      video: [
+        "https://www.youtube.com/shorts/8ZRBWMkM-n0",
+      ],
     },
   ]
 
@@ -127,11 +162,22 @@ export default function EventsPage() {
   const [fourUpIndex, setFourUpIndex] = useState(0)
   const [fourUpPerRow, setFourUpPerRow] = useState(4)
   const [realtorSubTag, setRealtorSubTag] = useState<"All" | "September" | "October" | "November">("All")
+  const exploreCarouselRef = useRef<HTMLDivElement>(null)
+  const fourUpCarouselRef = useRef<HTMLDivElement>(null)
+  const exploreIsTransitioning = useRef(false)
+  const fourUpIsTransitioning = useRef(false)
+  const [exploreIsResetting, setExploreIsResetting] = useState(false)
+  const [fourUpIsResetting, setFourUpIsResetting] = useState(false)
 
 
   // Helper function to extract YouTube video ID and convert to embed URL
   const getYouTubeEmbedUrl = (url: string) => {
-    const videoIdMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/)
+    // Match regular YouTube URLs (watch?v= or youtu.be/)
+    let videoIdMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/)
+    // Match YouTube Shorts URLs
+    if (!videoIdMatch) {
+      videoIdMatch = url.match(/youtube\.com\/shorts\/([^&\s?]+)/)
+    }
     if (videoIdMatch) {
       const videoId = videoIdMatch[1].split('?')[0]
       return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=1`
@@ -139,7 +185,7 @@ export default function EventsPage() {
     return url
   }
 
-  const isYouTubeUrl = (url: string) => /youtube\.com|youtu\.be/.test(url)
+  const isYouTubeUrl = (url: string) => /youtube\.com|youtu\.be/.test(url) || /youtube\.com\/shorts/.test(url)
 
   // Organize images and videos by event category for gallery
   const eventImages = useMemo(() => {
@@ -150,23 +196,57 @@ export default function EventsPage() {
       // Add images
       if (Array.isArray(event.images) && event.images.length > 0) {
         event.images.forEach((src) => {
+          // Extract month from URL path for Realtor Branding Workshop
+          let monthTag: string | undefined = undefined
+          if (event.title === "Realtor Branding Workshop") {
+            // Check if URL contains month folder (e.g., /September/, /October/, /November/)
+            const monthMatch = src.match(/\/(September|October|November)\//i)
+            if (monthMatch) {
+              // Ensure proper capitalization: first letter uppercase, rest lowercase
+              const month = monthMatch[1]
+              monthTag = month.charAt(0).toUpperCase() + month.slice(1).toLowerCase()
+            } else {
+              // Fallback: use array index pattern if URL doesn't contain month
+              const realtorImageTags = ["September", "September", "October", "October", "November", "November"]
+              const idx = event.images.indexOf(src)
+              monthTag = realtorImageTags[idx % realtorImageTags.length]
+            }
+          }
+          
           mediaItems.push({
             src,
             alt: `${event.title} - Event Image`,
-            type: 'image'
+            type: 'image',
+            tag: monthTag
           })
         })
       }
       
       // Add videos
       if (Array.isArray(event.video) && event.video.length > 0) {
-        const realtorTags = ["September", "September", "October", "October", "November", "November"]
-        event.video.forEach((src, idx) => {
+        event.video.forEach((src) => {
+          // Extract month from URL path for Realtor Branding Workshop
+          let monthTag: string | undefined = undefined
+          if (event.title === "Realtor Branding Workshop") {
+            // Check if URL contains month folder (e.g., /September/, /October/, /November/)
+            const monthMatch = src.match(/\/(September|October|November)\//i)
+            if (monthMatch) {
+              // Ensure proper capitalization: first letter uppercase, rest lowercase
+              const month = monthMatch[1]
+              monthTag = month.charAt(0).toUpperCase() + month.slice(1).toLowerCase()
+            } else {
+              // Fallback: use array index pattern if URL doesn't contain month
+              const realtorTags = ["September", "September", "October", "October", "November", "November"]
+              const idx = event.video.indexOf(src)
+              monthTag = realtorTags[idx % realtorTags.length]
+            }
+          }
+          
           mediaItems.push({
             src,
             alt: `${event.title} - Event Video`,
             type: 'video',
-            tag: event.title === "Realtor Branding Workshop" ? (realtorTags[idx] || "September") : undefined
+            tag: monthTag
           })
         })
       }
@@ -230,6 +310,10 @@ export default function EventsPage() {
     setExploreIndex(0)
     setFourUpIndex(0)
     setRealtorSubTag("All")
+    setExploreIsResetting(false)
+    setFourUpIsResetting(false)
+    exploreIsTransitioning.current = false
+    fourUpIsTransitioning.current = false
   }, [eventCategory])
 
   // Track how many items per row for four-up carousels based on viewport
@@ -247,31 +331,63 @@ export default function EventsPage() {
     return () => window.removeEventListener("resize", updatePerRow)
   }, [])
 
-  // Auto-scroll Explore Night every 3 seconds (1 item at a time)
+  // Auto-scroll Explore Night every 3 seconds (infinite right to left)
   useEffect(() => {
     const isSingleItemCarousel = eventCategory === "Explore Night"
     if (!isSingleItemCarousel || allExploreMedia.length <= 1) return
+    
     const interval = setInterval(() => {
+      if (exploreIsTransitioning.current) return
+      
       setExploreIndex((prev) => {
         const next = prev + 1
-        return next >= allExploreMedia.length ? 0 : next
+        const totalItems = allExploreMedia.length
+        
+        // If we've reached the end (duplicate), seamlessly jump to start
+        if (next > totalItems) {
+          exploreIsTransitioning.current = true
+          setExploreIsResetting(true)
+          setTimeout(() => {
+            setExploreIndex(0)
+            exploreIsTransitioning.current = false
+          }, 50)
+          return totalItems // Show duplicate first, then reset
+        }
+        
+        return next
       })
     }, 3000)
     return () => clearInterval(interval)
   }, [eventCategory, allExploreMedia.length])
 
-  // Auto-scroll Welcome Dinner / Founder's Market Insights images every 3 seconds (1 image at a time)
+  // Auto-scroll Welcome Dinner / Founder's Market Insights images every 3 seconds (infinite right to left)
   useEffect(() => {
     const fourUpCategories = ["Welcome Dinner", "Founder's Market Insights", "Business Connect"]
-    if (!fourUpCategories.includes(eventCategory) || filteredEventImages.length <= 4) return
+    if (!fourUpCategories.includes(eventCategory) || filteredEventImages.length <= fourUpPerRow) return
+    
     const interval = setInterval(() => {
+      if (fourUpIsTransitioning.current) return
+      
       setFourUpIndex((prev) => {
         const next = prev + 1
-        return next >= filteredEventImages.length ? 0 : next
+        const totalItems = filteredEventImages.length
+        
+        // If we've reached the end (duplicate), seamlessly jump to start
+        if (next > totalItems) {
+          fourUpIsTransitioning.current = true
+          setFourUpIsResetting(true)
+          setTimeout(() => {
+            setFourUpIndex(0)
+            fourUpIsTransitioning.current = false
+          }, 50)
+          return totalItems // Show duplicate first, then reset
+        }
+        
+        return next
       })
     }, 3000)
     return () => clearInterval(interval)
-  }, [eventCategory, filteredEventImages.length])
+  }, [eventCategory, filteredEventImages.length, fourUpPerRow])
 
   // Compute active past event media (images first, then videos)
   const activeEvent = pastEvents[activePastTab] || {}
@@ -1187,24 +1303,60 @@ export default function EventsPage() {
               <div className="max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8 overflow-hidden">
                 <div className="relative w-full">
                   <motion.div
-                    className="flex gap-6 md:gap-8"
+                    ref={exploreCarouselRef}
+                    className={`flex gap-6 md:gap-8 ${exploreLength < 3 ? "justify-center" : ""}`}
                     animate={{
                       x: `-${exploreIndex * 100}%`
                     }}
-                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                    transition={{ duration: exploreIsResetting ? 0 : 0.8, ease: "easeInOut" }}
+                    onAnimationComplete={() => {
+                      if (exploreIsResetting) {
+                        setExploreIsResetting(false)
+                      }
+                    }}
                   >
+                    {/* Original items */}
                     {allExploreMedia.map((media, index) => {
                       const isNew = !prevVisibleImagesRef.current.has(media.src)
                       const hoverProps = media.type === "image" ? { whileHover: { scale: 1.02 } } : {}
                       return (
                         <motion.div
-                          key={media.src}
+                          key={`original-${media.src}-${index}`}
                           initial={isNew ? { opacity: 0, scale: 0.98 } : undefined}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ duration: 0.45, ease: "easeOut" }}
                           {...hoverProps}
                           className="relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 aspect-video flex-shrink-0 w-full md:w-1/2"
-              > 
+                        > 
+                          {media.type === "image" ? (
+                            <img
+                              src={media.src}
+                              alt={media.alt}
+                              className="w-full h-full object-cover"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <iframe
+                              src={getYouTubeEmbedUrl(media.src)}
+                              className="w-full h-full"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                              title={media.alt}
+                            />
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+                        </motion.div>
+                      )
+                    })}
+                    {/* Duplicate first item at the end for infinite loop */}
+                    {allExploreMedia.length > 0 && allExploreMedia.map((media, index) => {
+                      const hoverProps = media.type === "image" ? { whileHover: { scale: 1.02 } } : {}
+                      return (
+                        <motion.div
+                          key={`duplicate-${media.src}-${index}`}
+                          {...hoverProps}
+                          className="relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 aspect-video flex-shrink-0 w-full md:w-1/2"
+                        > 
                           {media.type === "image" ? (
                             <img
                               src={media.src}
@@ -1231,7 +1383,24 @@ export default function EventsPage() {
                 {exploreLength > 0 && (
                   <div className="flex items-center justify-center gap-3 mt-6 md:mt-8">
                     <button
-                      onClick={() => setExploreIndex((prev) => (prev - 1 + exploreLength) % exploreLength)}
+                      onClick={() => {
+                        if (exploreIsTransitioning.current) return
+                        setExploreIndex((prev) => {
+                          const newIndex = prev - 1
+                          if (newIndex < 0) {
+                            // Jump to the last duplicate item (which is the same as the last original)
+                            exploreIsTransitioning.current = true
+                            setExploreIsResetting(true)
+                            setTimeout(() => {
+                              setExploreIndex(exploreLength - 1)
+                              exploreIsTransitioning.current = false
+                            }, 50)
+                            // Show the duplicate of the last item (at index exploreLength + exploreLength - 1)
+                            return exploreLength + exploreLength - 1
+                          }
+                          return newIndex
+                        })
+                      }}
                       className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
                       aria-label="Previous video"
                     >
@@ -1242,17 +1411,36 @@ export default function EventsPage() {
                       {Array.from({ length: exploreLength }).map((_, idx) => (
                         <button
                           key={idx}
-                          onClick={() => setExploreIndex(idx)}
+                          onClick={() => {
+                            if (exploreIsTransitioning.current) return
+                            setExploreIndex(idx)
+                          }}
                           aria-label={`Go to video ${idx + 1}`}
                           className={`h-2 rounded-full transition-all ${
-                            exploreIndex === idx ? "w-6 bg-[#B40101]" : "w-2 bg-white/40"
+                            (exploreIndex % exploreLength) === idx ? "w-6 bg-[#B40101]" : "w-2 bg-white/40"
                           }`}
                         />
                       ))}
                 </div>
 
                     <button
-                      onClick={() => setExploreIndex((prev) => (prev + 1) % exploreLength)}
+                      onClick={() => {
+                        if (exploreIsTransitioning.current) return
+                        setExploreIndex((prev) => {
+                          const next = prev + 1
+                          if (next > exploreLength) {
+                            // Seamlessly jump to start
+                            exploreIsTransitioning.current = true
+                            setExploreIsResetting(true)
+                            setTimeout(() => {
+                              setExploreIndex(0)
+                              exploreIsTransitioning.current = false
+                            }, 50)
+                            return exploreLength
+                          }
+                          return next
+                        })
+                      }}
                       className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
                       aria-label="Next video"
                     >
@@ -1265,21 +1453,79 @@ export default function EventsPage() {
               <div className="max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8 overflow-hidden">
                 <div className="relative w-full">
                   <motion.div
-                    className="flex gap-4 md:gap-6"
+                    ref={fourUpCarouselRef}
+                    className={`flex gap-4 md:gap-6 ${filteredEventImages.length < 3 ? "justify-center" : ""}`}
                     animate={{
                       x: `-${fourUpIndex * (100 / fourUpPerRow)}%`
                     }}
-                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                    transition={{ duration: fourUpIsResetting ? 0 : 0.8, ease: "easeInOut" }}
+                    onAnimationComplete={() => {
+                      if (fourUpIsResetting) {
+                        setFourUpIsResetting(false)
+                      }
+                    }}
                   >
+                      {/* Original items */}
                       {filteredEventImages.map((media, index) => {
                       const isNew = !prevVisibleImagesRef.current.has(media.src)
                       const hoverProps = media.type === "image" ? { whileHover: { scale: 1.08, zIndex: 20 } } : {}
                       return (
                         <motion.div
-                          key={media.src}
+                          key={`original-${media.src}-${index}`}
                           initial={isNew ? { opacity: 0, scale: 0.98 } : undefined}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ duration: 0.45, ease: "easeOut" }}
+                          {...hoverProps}
+                          className="group relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
+                        >
+                          {media.type === 'image' ? (
+                            <img
+                              src={media.src}
+                              alt={media.alt}
+                              className="w-full h-auto object-cover"
+                              loading="lazy"
+                            />
+                          ) : isYouTubeUrl(media.src) ? (
+                            <iframe
+                              src={getYouTubeEmbedUrl(media.src)}
+                              className="w-full h-full"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                              title={media.alt}
+                            />
+                          ) : (
+                            <video
+                              src={media.src}
+                              controls
+                              className="w-full h-auto object-cover"
+                              preload="metadata"
+                              autoPlay
+                              muted
+                              loop
+                            />
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+                          {media.type === 'image' && (
+                            <div className="pointer-events-none absolute left-1/2 bottom-full mb-3 z-30 hidden -translate-x-1/2 group-hover:block">
+                              <div className="rounded-lg overflow-hidden shadow-2xl shadow-black/60 border border-white/10 bg-black/80">
+                                <img
+                                  src={media.src}
+                                  alt={media.alt}
+                                  className="w-72 h-auto object-cover"
+                                  loading="lazy"
+                                />
+                      </div>
+                            </div>
+                          )}
+                        </motion.div>
+                      )
+                    })}
+                    {/* Duplicate items at the end for infinite loop */}
+                    {filteredEventImages.length > 0 && filteredEventImages.map((media, index) => {
+                      const hoverProps = media.type === "image" ? { whileHover: { scale: 1.08, zIndex: 20 } } : {}
+                      return (
+                        <motion.div
+                          key={`duplicate-${media.src}-${index}`}
                           {...hoverProps}
                           className="group relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
                         >
@@ -1331,7 +1577,25 @@ export default function EventsPage() {
                 {filteredEventImages.length > 0 && (
                   <div className="flex items-center justify-center gap-3 mt-6 md:mt-8">
                     <button
-                      onClick={() => setFourUpIndex((prev) => (prev - 1 + filteredEventImages.length) % filteredEventImages.length)}
+                      onClick={() => {
+                        if (fourUpIsTransitioning.current) return
+                        setFourUpIndex((prev) => {
+                          const newIndex = prev - 1
+                          const totalItems = filteredEventImages.length
+                          if (newIndex < 0) {
+                            // Jump to the last duplicate item (which is the same as the last original)
+                            fourUpIsTransitioning.current = true
+                            setFourUpIsResetting(true)
+                            setTimeout(() => {
+                              setFourUpIndex(totalItems - 1)
+                              fourUpIsTransitioning.current = false
+                            }, 50)
+                            // Show the duplicate of the last item
+                            return totalItems + totalItems - 1
+                          }
+                          return newIndex
+                        })
+                      }}
                       className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
                       aria-label="Previous image"
                     >
@@ -1342,17 +1606,37 @@ export default function EventsPage() {
                       {Array.from({ length: filteredEventImages.length }).map((_, idx) => (
                           <button
                             key={idx}
-                          onClick={() => setFourUpIndex(idx)}
+                          onClick={() => {
+                            if (fourUpIsTransitioning.current) return
+                            setFourUpIndex(idx)
+                          }}
                           aria-label={`Go to image ${idx + 1}`}
                           className={`h-2 rounded-full transition-all ${
-                            fourUpIndex === idx ? "w-6 bg-[#B40101]" : "w-2 bg-white/40"
+                            (fourUpIndex % filteredEventImages.length) === idx ? "w-6 bg-[#B40101]" : "w-2 bg-white/40"
                             }`}
                           />
                         ))}
                       </div>
 
                         <button
-                      onClick={() => setFourUpIndex((prev) => (prev + 1) % filteredEventImages.length)}
+                      onClick={() => {
+                        if (fourUpIsTransitioning.current) return
+                        setFourUpIndex((prev) => {
+                          const next = prev + 1
+                          const totalItems = filteredEventImages.length
+                          if (next > totalItems) {
+                            // Seamlessly jump to start
+                            fourUpIsTransitioning.current = true
+                            setFourUpIsResetting(true)
+                            setTimeout(() => {
+                              setFourUpIndex(0)
+                              fourUpIsTransitioning.current = false
+                            }, 50)
+                            return totalItems
+                          }
+                          return next
+                        })
+                      }}
                       className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
                       aria-label="Next image"
                         >
@@ -1363,7 +1647,7 @@ export default function EventsPage() {
                     </div>
             ) : (
               <div className="max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8">
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+                <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 ${filteredEventImages.length < 3 ? "justify-center" : ""}`}>
                   {filteredEventImages.map((media) => {
                     const isNew = !prevVisibleImagesRef.current.has(media.src)
                     const hoverProps = media.type === "image" ? { whileHover: { scale: 1.035, zIndex: 10 } } : {}
@@ -1392,7 +1676,7 @@ export default function EventsPage() {
                                   className="w-64 h-auto object-cover"
                                   loading="lazy"
                                 />
-                  </div>
+                              </div>
                             </div>
                           </>
                         ) : (
@@ -1404,7 +1688,7 @@ export default function EventsPage() {
                           />
                         )}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-              </motion.div>
+                      </motion.div>
                     )
                   })}
             </div>
