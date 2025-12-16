@@ -43,7 +43,7 @@ export function IgniteInterestDialog({ isOpen, onClose }: IgniteInterestDialogPr
       if (response.ok && result.success) {
         toast({
           title: "Interest Registered",
-          description: "Thank you! We've received your details and will be in touch shortly.",
+          description: result.message || "Thank you! We've received your details and sent you a confirmation email.",
         })
         setName("")
         setEmail("")
