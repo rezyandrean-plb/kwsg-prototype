@@ -163,6 +163,7 @@ export default function EventsPage() {
   const [exploreIndex, setExploreIndex] = useState(0)
   const [fourUpIndex, setFourUpIndex] = useState(0)
   const [fourUpPerRow, setFourUpPerRow] = useState(4)
+  const [realtorMobileIndex, setRealtorMobileIndex] = useState(0)
   const [realtorSubTag, setRealtorSubTag] = useState<"All" | "September" | "October" | "November">("All")
   const exploreCarouselRef = useRef<HTMLDivElement>(null)
   const fourUpCarouselRef = useRef<HTMLDivElement>(null)
@@ -312,6 +313,7 @@ export default function EventsPage() {
     setExploreIndex(0)
     setFourUpIndex(0)
     setRealtorSubTag("All")
+    setRealtorMobileIndex(0)
     setExploreIsResetting(false)
     setFourUpIsResetting(false)
     exploreIsTransitioning.current = false
@@ -1134,41 +1136,41 @@ export default function EventsPage() {
             transition={{ duration: 0.5, ease: "easeOut" }}
           >
             {eventCategory === "Explore Night" ? (
-              <div className="max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8 overflow-hidden">
-                <div className="relative w-full">
-                  <motion.div
-                    ref={exploreCarouselRef}
-                    className={`flex gap-6 md:gap-8 ${exploreLength < 3 ? "justify-center" : ""}`}
-                    animate={{
-                      x: `-${exploreIndex * 100}%`
-                    }}
-                    transition={{ duration: exploreIsResetting ? 0 : 0.8, ease: "easeInOut" }}
-                    onAnimationComplete={() => {
-                      if (exploreIsResetting) {
-                        setExploreIsResetting(false)
-                      }
-                    }}
-                  >
-                    {/* Original items */}
-                    {allExploreMedia.map((media, index) => {
+              <>
+                {/* Desktop/Tablet: grid gallery similar to Realtor Branding Workshop */}
+                <div className="hidden md:block max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8">
+                  <div className={`grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 ${allExploreMedia.length < 3 ? "justify-center" : ""}`}>
+                    {allExploreMedia.map((media) => {
                       const isNew = !prevVisibleImagesRef.current.has(media.src)
-                      const hoverProps = media.type === "image" ? { whileHover: { scale: 1.02 } } : {}
+                      const hoverProps = media.type === "image" ? { whileHover: { scale: 1.035, zIndex: 10 } } : {}
                       return (
                         <motion.div
-                          key={`original-${media.src}-${index}`}
-                          initial={isNew ? { opacity: 0, scale: 0.98 } : undefined}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ duration: 0.45, ease: "easeOut" }}
+                          key={media.src}
+                          initial={isNew ? { opacity: 0, y: 12, scale: 0.98 } : undefined}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          transition={isNew ? { duration: 0.45, ease: "easeOut" } : { duration: 0.2 }}
                           {...hoverProps}
-                          className="relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 aspect-video flex-shrink-0 w-full md:w-1/2"
-                        > 
+                          className="group relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 aspect-video"
+                        >
                           {media.type === "image" ? (
-                            <img
-                              src={media.src}
-                              alt={media.alt}
-                              className="w-full h-full object-cover"
-                              loading="lazy"
-                            />
+                            <>
+                              <img
+                                src={media.src}
+                                alt={media.alt}
+                                className="w-full h-auto object-cover transition-transform duration-400 ease-out hover:scale-102"
+                                loading="lazy"
+                              />
+                              <div className="pointer-events-none absolute left-1/2 bottom-full mb-2 z-30 hidden -translate-x-1/2 group-hover:block">
+                                <div className="rounded-lg overflow-hidden shadow-2xl shadow-black/60 border border-white/10 bg-black/80">
+                                  <img
+                                    src={media.src}
+                                    alt={media.alt}
+                                    className="w-64 h-auto object-cover"
+                                    loading="lazy"
+                                  />
+                                </div>
+                              </div>
+                            </>
                           ) : (
                             <iframe
                               src={getYouTubeEmbedUrl(media.src)}
@@ -1178,114 +1180,222 @@ export default function EventsPage() {
                               title={media.alt}
                             />
                           )}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
                         </motion.div>
                       )
                     })}
-                    {/* Duplicate first item at the end for infinite loop */}
-                    {allExploreMedia.length > 0 && allExploreMedia.map((media, index) => {
-                      const hoverProps = media.type === "image" ? { whileHover: { scale: 1.02 } } : {}
-                      return (
-                        <motion.div
-                          key={`duplicate-${media.src}-${index}`}
-                          {...hoverProps}
-                          className="relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 aspect-video flex-shrink-0 w-full md:w-1/2"
-                        > 
-                          {media.type === "image" ? (
-                            <img
-                              src={media.src}
-                              alt={media.alt}
-                              className="w-full h-full object-cover"
-                              loading="lazy"
-                            />
-                          ) : (
-                            <iframe
-                              src={getYouTubeEmbedUrl(media.src)}
-                              className="w-full h-full"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                              title={media.alt}
-                            />
-                          )}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
-                        </motion.div>
-                      )
-                    })}
-                  </motion.div>
                   </div>
-
-                {exploreLength > 0 && (
-                  <div className="flex items-center justify-center gap-3 mt-6 md:mt-8">
-                    <button
-                      onClick={() => {
-                        if (exploreIsTransitioning.current) return
-                        setExploreIndex((prev) => {
-                          const newIndex = prev - 1
-                          if (newIndex < 0) {
-                            // Jump to the last duplicate item (which is the same as the last original)
-                            exploreIsTransitioning.current = true
-                            setExploreIsResetting(true)
-                            setTimeout(() => {
-                              setExploreIndex(exploreLength - 1)
-                              exploreIsTransitioning.current = false
-                            }, 50)
-                            // Show the duplicate of the last item (at index exploreLength + exploreLength - 1)
-                            return exploreLength + exploreLength - 1
-                          }
-                          return newIndex
-                        })
-                      }}
-                      className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
-                      aria-label="Previous video"
-                    >
-                      <ChevronRight className="h-4 w-4 rotate-180" />
-                    </button>
-
-                    <div className="flex items-center gap-1.5">
-                      {Array.from({ length: exploreLength }).map((_, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => {
-                            if (exploreIsTransitioning.current) return
-                            setExploreIndex(idx)
-                          }}
-                          aria-label={`Go to video ${idx + 1}`}
-                          className={`h-2 rounded-full transition-all ${
-                            (exploreIndex % exploreLength) === idx ? "w-6 bg-[#B40101]" : "w-2 bg-white/40"
-                          }`}
-                        />
-                      ))}
                 </div>
 
-                    <button
-                      onClick={() => {
-                        if (exploreIsTransitioning.current) return
-                        setExploreIndex((prev) => {
-                          const next = prev + 1
-                          if (next > exploreLength) {
-                            // Seamlessly jump to start
-                            exploreIsTransitioning.current = true
-                            setExploreIsResetting(true)
-                            setTimeout(() => {
-                              setExploreIndex(0)
-                              exploreIsTransitioning.current = false
-                            }, 50)
-                            return exploreLength
-                          }
-                          return next
-                        })
+                {/* Mobile: keep current carousel */}
+                <div className="max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8 overflow-hidden md:hidden">
+                  <div className="relative w-full">
+                    <motion.div
+                      ref={exploreCarouselRef}
+                      className={`flex gap-6 md:gap-8 ${exploreLength < 3 ? "justify-center" : ""}`}
+                      animate={{
+                        x: `-${exploreIndex * 100}%`
                       }}
-                      className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
-                      aria-label="Next video"
+                      transition={{ duration: exploreIsResetting ? 0 : 0.8, ease: "easeInOut" }}
+                      onAnimationComplete={() => {
+                        if (exploreIsResetting) {
+                          setExploreIsResetting(false)
+                        }
+                      }}
                     >
-                      <ChevronRight className="h-4 w-4" />
-                    </button>
+                      {/* Original items */}
+                      {allExploreMedia.map((media, index) => {
+                        const isNew = !prevVisibleImagesRef.current.has(media.src)
+                        const hoverProps = media.type === "image" ? { whileHover: { scale: 1.02 } } : {}
+                        return (
+                          <motion.div
+                            key={`original-${media.src}-${index}`}
+                            initial={isNew ? { opacity: 0, scale: 0.98 } : undefined}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.45, ease: "easeOut" }}
+                            {...hoverProps}
+                            className="relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 aspect-video flex-shrink-0 w-full md:w-1/2"
+                          > 
+                            {media.type === "image" ? (
+                              <img
+                                src={media.src}
+                                alt={media.alt}
+                                className="w-full h-full object-cover"
+                                loading="lazy"
+                              />
+                            ) : (
+                              <iframe
+                                src={getYouTubeEmbedUrl(media.src)}
+                                className="w-full h-full"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                title={media.alt}
+                              />
+                            )}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+                          </motion.div>
+                        )
+                      })}
+                      {/* Duplicate first item at the end for infinite loop */}
+                      {allExploreMedia.length > 0 && allExploreMedia.map((media, index) => {
+                        const hoverProps = media.type === "image" ? { whileHover: { scale: 1.02 } } : {}
+                        return (
+                          <motion.div
+                            key={`duplicate-${media.src}-${index}`}
+                            {...hoverProps}
+                            className="relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 aspect-video flex-shrink-0 w-full md:w-1/2"
+                          > 
+                            {media.type === "image" ? (
+                              <img
+                                src={media.src}
+                                alt={media.alt}
+                                className="w-full h-full object-cover"
+                                loading="lazy"
+                              />
+                            ) : (
+                              <iframe
+                                src={getYouTubeEmbedUrl(media.src)}
+                                className="w-full h-full"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                title={media.alt}
+                              />
+                            )}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+                          </motion.div>
+                        )
+                      })}
+                    </motion.div>
+                    {exploreLength > 0 && (
+                      <div className="flex items-center justify-center gap-3 mt-6 md:mt-8">
+                        <button
+                          onClick={() => {
+                            if (exploreIsTransitioning.current) return
+                            setExploreIndex((prev) => {
+                              const newIndex = prev - 1
+                              if (newIndex < 0) {
+                                exploreIsTransitioning.current = true
+                                setExploreIsResetting(true)
+                                setTimeout(() => {
+                                  setExploreIndex(exploreLength - 1)
+                                  exploreIsTransitioning.current = false
+                                }, 50)
+                                return exploreLength + exploreLength - 1
+                              }
+                              return newIndex
+                            })
+                          }}
+                          className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
+                          aria-label="Previous video"
+                        >
+                          <ChevronRight className="h-4 w-4 rotate-180" />
+                        </button>
+
+                        <div className="flex items-center gap-1.5">
+                          {Array.from({ length: exploreLength }).map((_, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() => {
+                                if (exploreIsTransitioning.current) return
+                                setExploreIndex(idx)
+                              }}
+                              aria-label={`Go to video ${idx + 1}`}
+                              className={`h-2 rounded-full transition-all ${
+                                (exploreIndex % exploreLength) === idx ? "w-6 bg-[#B40101]" : "w-2 bg-white/40"
+                              }`}
+                            />
+                          ))}
+                        </div>
+
+                        <button
+                          onClick={() => {
+                            if (exploreIsTransitioning.current) return
+                            setExploreIndex((prev) => {
+                              const next = prev + 1
+                              if (next > exploreLength) {
+                                exploreIsTransitioning.current = true
+                                setExploreIsResetting(true)
+                                setTimeout(() => {
+                                  setExploreIndex(0)
+                                  exploreIsTransitioning.current = false
+                                }, 50)
+                                return exploreLength
+                              }
+                              return next
+                            })
+                          }}
+                          className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
+                          aria-label="Next video"
+                        >
+                          <ChevronRight className="h-4 w-4" />
+                        </button>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
+                </div>
+              </>
             ) : ["Welcome Dinner", "Founder's Market Insights", "Business Connect"].includes(eventCategory) ? (
-              <div className="max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8 overflow-hidden">
-                <div className="relative w-full">
+              <>
+                {/* Desktop/Tablet: grid gallery similar to Realtor Branding Workshop */}
+                <div className="hidden md:block max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8">
+                  <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 ${filteredEventImages.length < 3 ? "justify-center" : ""}`}>
+                    {filteredEventImages.map((media) => {
+                      const isNew = !prevVisibleImagesRef.current.has(media.src)
+                      const hoverProps = media.type === "image" ? { whileHover: { scale: 1.035, zIndex: 10 } } : {}
+                      return (
+                        <motion.div
+                          key={media.src}
+                          initial={isNew ? { opacity: 0, y: 12, scale: 0.98 } : undefined}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          transition={isNew ? { duration: 0.45, ease: "easeOut" } : { duration: 0.2 }}
+                          {...hoverProps}
+                          className="group relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10"
+                        >
+                          {media.type === "image" ? (
+                            <>
+                              <img
+                                src={media.src}
+                                alt={media.alt}
+                                className="w-full h-auto object-cover transition-transform duration-400 ease-out hover:scale-102"
+                                loading="lazy"
+                              />
+                              <div className="pointer-events-none absolute left-1/2 bottom-full mb-2 z-30 hidden -translate-x-1/2 group-hover:block">
+                                <div className="rounded-lg overflow-hidden shadow-2xl shadow-black/60 border border-white/10 bg-black/80">
+                                  <img
+                                    src={media.src}
+                                    alt={media.alt}
+                                    className="w-64 h-auto object-cover"
+                                    loading="lazy"
+                                  />
+                                </div>
+                              </div>
+                            </>
+                          ) : isYouTubeUrl(media.src) ? (
+                            <iframe
+                              src={getYouTubeEmbedUrl(media.src)}
+                              className="w-full h-full"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                              title={media.alt}
+                            />
+                          ) : (
+                            <video
+                              src={media.src}
+                              controls
+                              className="w-full h-auto object-cover"
+                              preload="metadata"
+                            />
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                        </motion.div>
+                      )
+                    })}
+                  </div>
+                </div>
+
+                {/* Mobile: keep current four-up carousel */}
+                <div className="max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8 overflow-hidden md:hidden">
+                  <div className="relative w-full">
                   <motion.div
                     ref={fourUpCarouselRef}
                     className={`flex gap-4 md:gap-6 ${filteredEventImages.length < 3 ? "justify-center" : ""}`}
@@ -1405,128 +1515,261 @@ export default function EventsPage() {
                         </motion.div>
                       )
                     })}
-                  </motion.div>
-                    </div>
+                    </motion.div>
+                  </div>
 
-                {filteredEventImages.length > 0 && (
-                  <div className="flex items-center justify-center gap-3 mt-6 md:mt-8">
-                    <button
-                      onClick={() => {
-                        if (fourUpIsTransitioning.current) return
-                        setFourUpIndex((prev) => {
-                          const newIndex = prev - 1
-                          const totalItems = filteredEventImages.length
-                          if (newIndex < 0) {
-                            // Jump to the last duplicate item (which is the same as the last original)
-                            fourUpIsTransitioning.current = true
-                            setFourUpIsResetting(true)
-                            setTimeout(() => {
-                              setFourUpIndex(totalItems - 1)
-                              fourUpIsTransitioning.current = false
-                            }, 50)
-                            // Show the duplicate of the last item
-                            return totalItems + totalItems - 1
-                          }
-                          return newIndex
-                        })
-                      }}
-                      className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
-                      aria-label="Previous image"
-                    >
-                      <ChevronRight className="h-4 w-4 rotate-180" />
-                    </button>
+                  {filteredEventImages.length > 0 && (
+                    <div className="flex items-center justify-center gap-3 mt-6 md:mt-8">
+                      <button
+                        onClick={() => {
+                          if (fourUpIsTransitioning.current) return
+                          setFourUpIndex((prev) => {
+                            const newIndex = prev - 1
+                            const totalItems = filteredEventImages.length
+                            if (newIndex < 0) {
+                              fourUpIsTransitioning.current = true
+                              setFourUpIsResetting(true)
+                              setTimeout(() => {
+                                setFourUpIndex(totalItems - 1)
+                                fourUpIsTransitioning.current = false
+                              }, 50)
+                              return totalItems + totalItems - 1
+                            }
+                            return newIndex
+                          })
+                        }}
+                        className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
+                        aria-label="Previous image"
+                      >
+                        <ChevronRight className="h-4 w-4 rotate-180" />
+                      </button>
 
-                    <div className="flex items-center gap-1.5">
-                      {Array.from({ length: filteredEventImages.length }).map((_, idx) => (
+                      <div className="flex items-center gap-1.5">
+                        {Array.from({ length: filteredEventImages.length }).map((_, idx) => (
                           <button
                             key={idx}
-                          onClick={() => {
-                            if (fourUpIsTransitioning.current) return
-                            setFourUpIndex(idx)
-                          }}
-                          aria-label={`Go to image ${idx + 1}`}
-                          className={`h-2 rounded-full transition-all ${
-                            (fourUpIndex % filteredEventImages.length) === idx ? "w-6 bg-[#B40101]" : "w-2 bg-white/40"
+                            onClick={() => {
+                              if (fourUpIsTransitioning.current) return
+                              setFourUpIndex(idx)
+                            }}
+                            aria-label={`Go to image ${idx + 1}`}
+                            className={`h-2 rounded-full transition-all ${
+                              (fourUpIndex % filteredEventImages.length) === idx ? "w-6 bg-[#B40101]" : "w-2 bg-white/40"
                             }`}
                           />
                         ))}
                       </div>
 
-                        <button
-                      onClick={() => {
-                        if (fourUpIsTransitioning.current) return
-                        setFourUpIndex((prev) => {
-                          const next = prev + 1
-                          const totalItems = filteredEventImages.length
-                          if (next > totalItems) {
-                            // Seamlessly jump to start
-                            fourUpIsTransitioning.current = true
-                            setFourUpIsResetting(true)
-                            setTimeout(() => {
-                              setFourUpIndex(0)
-                              fourUpIsTransitioning.current = false
-                            }, 50)
-                            return totalItems
-                          }
-                          return next
-                        })
-                      }}
-                      className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
-                      aria-label="Next image"
-                        >
-                      <ChevronRight className="h-4 w-4" />
-                        </button>
-                      </div>
-                )}
-                    </div>
-            ) : (
-              <div className="max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8">
-                <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 ${filteredEventImages.length < 3 ? "justify-center" : ""}`}>
-                  {filteredEventImages.map((media) => {
-                    const isNew = !prevVisibleImagesRef.current.has(media.src)
-                    const hoverProps = media.type === "image" ? { whileHover: { scale: 1.035, zIndex: 10 } } : {}
-                    return (
-                      <motion.div
-                        key={media.src}
-                        initial={isNew ? { opacity: 0, y: 12, scale: 0.98 } : undefined}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={isNew ? { duration: 0.45, ease: "easeOut" } : { duration: 0.2 }}
-                        {...hoverProps}
-                        className="group relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10"
+                      <button
+                        onClick={() => {
+                          if (fourUpIsTransitioning.current) return
+                          setFourUpIndex((prev) => {
+                            const next = prev + 1
+                            const totalItems = filteredEventImages.length
+                            if (next > totalItems) {
+                              fourUpIsTransitioning.current = true
+                              setFourUpIsResetting(true)
+                              setTimeout(() => {
+                                setFourUpIndex(0)
+                                fourUpIsTransitioning.current = false
+                              }, 50)
+                              return totalItems
+                            }
+                            return next
+                          })
+                        }}
+                        className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
+                        aria-label="Next image"
                       >
-                        {media.type === "image" ? (
-                          <>
-                            <img
-                              src={media.src}
-                              alt={media.alt}
-                              className="w-full h-auto object-cover transition-transform duration-400 ease-out hover:scale-102"
-                              loading="lazy"
-                            />
-                            <div className="pointer-events-none absolute left-1/2 bottom-full mb-2 z-30 hidden -translate-x-1/2 group-hover:block">
-                              <div className="rounded-lg overflow-hidden shadow-2xl shadow-black/60 border border-white/10 bg-black/80">
+                        <ChevronRight className="h-4 w-4" />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </>
+            ) : (
+              <>
+                {/* Realtor Branding Workshop: grid on desktop/tablet, carousel on mobile */}
+                {eventCategory === "Realtor Branding Workshop" ? (
+                  <>
+                    {/* Desktop/Tablet grid */}
+                    <div className="hidden md:block max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8">
+                      <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 ${filteredEventImages.length < 3 ? "justify-center" : ""}`}>
+                        {filteredEventImages.map((media) => {
+                          const isNew = !prevVisibleImagesRef.current.has(media.src)
+                          const hoverProps = media.type === "image" ? { whileHover: { scale: 1.035, zIndex: 10 } } : {}
+                          return (
+                            <motion.div
+                              key={media.src}
+                              initial={isNew ? { opacity: 0, y: 12, scale: 0.98 } : undefined}
+                              animate={{ opacity: 1, y: 0, scale: 1 }}
+                              transition={isNew ? { duration: 0.45, ease: "easeOut" } : { duration: 0.2 }}
+                              {...hoverProps}
+                              className="group relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10"
+                            >
+                              {media.type === "image" ? (
+                                <>
+                                  <img
+                                    src={media.src}
+                                    alt={media.alt}
+                                    className="w-full h-auto object-cover transition-transform duration-400 ease-out hover:scale-102"
+                                    loading="lazy"
+                                  />
+                                  <div className="pointer-events-none absolute left-1/2 bottom-full mb-2 z-30 hidden -translate-x-1/2 group-hover:block">
+                                    <div className="rounded-lg overflow-hidden shadow-2xl shadow-black/60 border border-white/10 bg-black/80">
+                                      <img
+                                        src={media.src}
+                                        alt={media.alt}
+                                        className="w-64 h-auto object-cover"
+                                        loading="lazy"
+                                      />
+                                    </div>
+                                  </div>
+                                </>
+                              ) : (
+                                <video
+                                  src={media.src}
+                                  controls
+                                  className="w-full h-auto object-cover"
+                                  preload="metadata"
+                                />
+                              )}
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                            </motion.div>
+                          )
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Mobile carousel */}
+                    <div className="max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8 overflow-hidden md:hidden">
+                      <div className="relative w-full">
+                        <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${realtorMobileIndex * 100}%)` }}>
+                          {filteredEventImages.map((media) => (
+                            <div
+                              key={media.src}
+                              className="w-full flex-shrink-0"
+                            >
+                              <div className="relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 aspect-video">
+                                {media.type === "image" ? (
+                                  <img
+                                    src={media.src}
+                                    alt={media.alt}
+                                    className="w-full h-full object-cover"
+                                    loading="lazy"
+                                  />
+                                ) : (
+                                  <video
+                                    src={media.src}
+                                    controls
+                                    className="w-full h-full object-cover"
+                                    preload="metadata"
+                                  />
+                                )}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+
+                        {filteredEventImages.length > 1 && (
+                          <div className="flex items-center justify-center gap-3 mt-6">
+                            <button
+                              onClick={() => {
+                                setRealtorMobileIndex((prev) =>
+                                  prev === 0 ? filteredEventImages.length - 1 : prev - 1
+                                )
+                              }}
+                              className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
+                              aria-label="Previous image"
+                            >
+                              <ChevronRight className="h-4 w-4 rotate-180" />
+                            </button>
+
+                            <div className="flex items-center gap-1.5">
+                              {Array.from({ length: Math.min(5, filteredEventImages.length) }).map((_, idx) => {
+                                const dotCount = Math.min(5, filteredEventImages.length)
+                                const groupSize = Math.ceil(filteredEventImages.length / dotCount) || 1
+                                const activeDot = Math.floor(realtorMobileIndex / groupSize)
+                                return (
+                                  <button
+                                    key={idx}
+                                    onClick={() => setRealtorMobileIndex(idx * groupSize)}
+                                    aria-label={`Go to image group ${idx + 1}`}
+                                    className={`h-2 rounded-full transition-all ${
+                                      activeDot === idx ? "w-6 bg-[#B40101]" : "w-2 bg-white/40"
+                                    }`}
+                                  />
+                                )
+                              })}
+                            </div>
+
+                            <button
+                              onClick={() => {
+                                setRealtorMobileIndex((prev) =>
+                                  prev === filteredEventImages.length - 1 ? 0 : prev + 1
+                                )
+                              }}
+                              className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
+                              aria-label="Next image"
+                            >
+                              <ChevronRight className="h-4 w-4" />
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8">
+                    <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 ${filteredEventImages.length < 3 ? "justify-center" : ""}`}>
+                      {filteredEventImages.map((media) => {
+                        const isNew = !prevVisibleImagesRef.current.has(media.src)
+                        const hoverProps = media.type === "image" ? { whileHover: { scale: 1.035, zIndex: 10 } } : {}
+                        return (
+                          <motion.div
+                            key={media.src}
+                            initial={isNew ? { opacity: 0, y: 12, scale: 0.98 } : undefined}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            transition={isNew ? { duration: 0.45, ease: "easeOut" } : { duration: 0.2 }}
+                            {...hoverProps}
+                            className="group relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10"
+                          >
+                            {media.type === "image" ? (
+                              <>
                                 <img
                                   src={media.src}
                                   alt={media.alt}
-                                  className="w-64 h-auto object-cover"
+                                  className="w-full h-auto object-cover transition-transform duration-400 ease-out hover:scale-102"
                                   loading="lazy"
                                 />
-                              </div>
-                            </div>
-                          </>
-                        ) : (
-                          <video
-                            src={media.src}
-                            controls
-                            className="w-full h-auto object-cover"
-                            preload="metadata"
-                          />
-                        )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-                      </motion.div>
-                    )
-                  })}
-            </div>
-          </div>
+                                <div className="pointer-events-none absolute left-1/2 bottom-full mb-2 z-30 hidden -translate-x-1/2 group-hover:block">
+                                  <div className="rounded-lg overflow-hidden shadow-2xl shadow-black/60 border border-white/10 bg-black/80">
+                                    <img
+                                      src={media.src}
+                                      alt={media.alt}
+                                      className="w-64 h-auto object-cover"
+                                      loading="lazy"
+                                    />
+                                  </div>
+                                </div>
+                              </>
+                            ) : (
+                              <video
+                                src={media.src}
+                                controls
+                                className="w-full h-auto object-cover"
+                                preload="metadata"
+                              />
+                            )}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                          </motion.div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )}
+              </>
             )}
           </motion.div>
         </div>
