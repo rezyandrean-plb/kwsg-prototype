@@ -689,7 +689,7 @@ export default function EventsPage() {
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
                 <img
-                  src="/images/event/mrea-pricing-new.webp"
+                  src="https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/mrea-pricing-new.jpg"
                   alt="MREA Pricing Information"
                   className="w-full h-auto rounded-lg shadow-2xl"
                 />
