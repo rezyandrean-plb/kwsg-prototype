@@ -620,6 +620,7 @@ export default function EventsPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
+              className="order-2 lg:order-1"
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
@@ -689,7 +690,7 @@ export default function EventsPage() {
             </motion.div>
 
             <motion.div 
-              className="relative"
+              className="relative order-1 lg:order-2"
               initial={{ opacity: 0, x: 50, scale: 0.9 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
@@ -1054,14 +1055,14 @@ export default function EventsPage() {
               viewport={{ once: true, margin: "-100px" }}
             >
               <motion.div 
-                className="relative rounded-lg overflow-hidden w-full h-full"
+                className="relative rounded-lg overflow-hidden w-full h-[250px] sm:h-[300px] md:h-[400px] lg:h-full"
                 whileHover={{ scale: 1.02, y: -5 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
                 <iframe 
                   width="560" 
                   height="100%" 
-                  src="https://www.youtube.com/embed/TSjkdfG6GMQ?si=TU8bF_QkIFTPq-mB" 
+                  src="https://www.youtube.com/embed/TSjkdfG6GMQ?autoplay=1&mute=1&si=TU8bF_QkIFTPq-mB" 
                   title="YouTube video player" 
                   frameBorder="0" 
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
