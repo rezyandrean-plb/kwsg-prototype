@@ -831,6 +831,78 @@ export default function WResidenceLanding() {
     "/images/w-residences/site-plan/wmv-site-plan-04.webp"
   ]
 
+  // Helper function to check if a URL is a YouTube URL (including Shorts)
+  const isYouTubeUrl = (url: string): boolean => {
+    if (!url || typeof url !== 'string') return false
+    const lowerUrl = url.toLowerCase().trim()
+    // Check for YouTube Shorts first
+    if (/youtube\.com\/shorts\//.test(lowerUrl)) return true
+    // Check for regular YouTube URLs
+    if (/youtube\.com\/(watch|embed)/.test(lowerUrl)) return true
+    // Check for youtu.be short links
+    if (/youtu\.be\//.test(lowerUrl)) return true
+    // Check for any youtube.com URL
+    if (/youtube\.com/.test(lowerUrl)) return true
+    return false
+  }
+
+  // Helper function to extract YouTube video ID
+  const getYouTubeVideoId = (url: string): string | null => {
+    // Match regular YouTube URLs (watch?v= or youtu.be/)
+    let videoIdMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/)
+    // Match YouTube Shorts URLs
+    if (!videoIdMatch) {
+      videoIdMatch = url.match(/youtube\.com\/shorts\/([^&\s?]+)/)
+    }
+    if (videoIdMatch) {
+      return videoIdMatch[1].split('?')[0]
+    }
+    return null
+  }
+
+  // Helper function to convert YouTube URL to embed URL
+  const getYouTubeEmbedUrl = (url: string) => {
+    const videoId = getYouTubeVideoId(url)
+    if (videoId) {
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=1`
+    }
+    return url
+  }
+
+  // Helper function to get YouTube thumbnail URL
+  const getYouTubeThumbnailUrl = (url: string): string => {
+    const videoId = getYouTubeVideoId(url)
+    if (videoId) {
+      return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+    }
+    return url
+  }
+
+  // Helper function to check if a file is a video
+  const isVideo = (url: string): boolean => {
+    const videoExtensions = ['.mp4', '.webm', '.mov', '.avi', '.mkv', '.m4v']
+    const lowerUrl = url.toLowerCase()
+    return videoExtensions.some(ext => lowerUrl.endsWith(ext))
+  }
+
+  // Helper function to sort media: YouTube URLs first, then everything else (images)
+  const sortMediaWithVideosFirst = (media: string[]): string[] => {
+    if (!Array.isArray(media) || media.length === 0) return media
+    
+    const youtubeVideos: string[] = []
+    const otherItems: string[] = []
+    
+    media.forEach(item => {
+      if (isYouTubeUrl(item)) {
+        youtubeVideos.push(item)
+      } else {
+        otherItems.push(item)
+      }
+    })
+    
+    return [...youtubeVideos, ...otherItems]
+  }
+
   useEffect(() => {
     const loadGallery = async () => {
       try {
@@ -838,9 +910,9 @@ export default function WResidenceLanding() {
         if (!res.ok) throw new Error('Failed to load gallery')
         const data = await res.json()
         if (Array.isArray(data?.images) && data.images.length > 0) {
-          setProjectImages(data.images)
+          setProjectImages(sortMediaWithVideosFirst(data.images))
         } else {
-          setProjectImages([
+          const defaultImages = [
             "/images/w-residences/gallery/WMV- Day Aerial View.jpg",
             "/images/w-residences/gallery/WMV- Magic hour aerial view.jpg",
             "/images/w-residences/gallery/WMV- Frontal Elevation - Facade.jpg",
@@ -857,10 +929,11 @@ export default function WResidenceLanding() {
             "/images/w-residences/gallery/WMV- Spa Retreat Concierge on Level 51.jpg",
             "/images/w-residences/gallery/WMV- Treatment room on level 51.jpg",
             "/images/w-residences/gallery/WMV- Club 51.jpg",
-          ])
+          ]
+          setProjectImages(sortMediaWithVideosFirst(defaultImages))
         }
       } catch (e) {
-        setProjectImages([
+        const defaultImages = [
           "/images/w-residences/gallery/WMV- Day Aerial View.jpg",
           "/images/w-residences/gallery/WMV- Magic hour aerial view.jpg",
           "/images/w-residences/gallery/WMV- Frontal Elevation - Facade.jpg",
@@ -877,7 +950,8 @@ export default function WResidenceLanding() {
           "/images/w-residences/gallery/WMV- Spa Retreat Concierge on Level 51.jpg",
           "/images/w-residences/gallery/WMV- Treatment room on level 51.jpg",
           "/images/w-residences/gallery/WMV- Club 51.jpg",
-        ])
+        ]
+        setProjectImages(sortMediaWithVideosFirst(defaultImages))
       }
     }
     loadGallery()
@@ -1731,21 +1805,39 @@ export default function WResidenceLanding() {
               </div>
             </div>
 
-            {/* Main Image Display */}
+            {/* Main Image/Video Display */}
             <div className="relative max-w-6xl mx-auto mb-8">
               <div className="relative h-[500px] rounded-xl overflow-hidden shadow-2xl">
-                <Image
-                  src={projectImages[currentImageIndex] || "/placeholder.svg"}
-                  alt={`The Draycott - Image ${currentImageIndex + 1}`}
-                  fill
-                  className="object-cover transition-all duration-500"
-                />
+                {projectImages[currentImageIndex] && isYouTubeUrl(projectImages[currentImageIndex]) ? (
+                  <iframe
+                    src={getYouTubeEmbedUrl(projectImages[currentImageIndex])}
+                    title={`The Draycott - Video ${currentImageIndex + 1}`}
+                    className="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                ) : projectImages[currentImageIndex] && isVideo(projectImages[currentImageIndex]) ? (
+                  <video
+                    src={projectImages[currentImageIndex]}
+                    controls
+                    className="w-full h-full object-cover"
+                    loop
+                    muted
+                  />
+                ) : (
+                  <Image
+                    src={projectImages[currentImageIndex] || "/placeholder.svg"}
+                    alt={`The Draycott - Image ${currentImageIndex + 1}`}
+                    fill
+                    className="object-cover transition-all duration-500"
+                  />
+                )}
 
                 
                 <Button
                   variant="outline"
                   size="icon"
-                  className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                  className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300 z-10"
                   onClick={prevImage}
                 >
                   <ChevronLeft className="w-5 h-5 text-[#ce001f]" />
@@ -1753,7 +1845,7 @@ export default function WResidenceLanding() {
                 <Button
                   variant="outline"
                   size="icon"
-                  className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                  className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300 z-10"
                   onClick={nextImage}
                 >
                   <ChevronRight className="w-5 h-5 text-[#ce001f]" />
@@ -1772,7 +1864,7 @@ export default function WResidenceLanding() {
                 >
                   <ChevronLeft className="w-4 h-4 text-[#ce001f]" />
                 </Button>
-                {projectImages.map((image, index) => (
+                {projectImages.map((media, index) => (
                   <button
                     key={index}
                     className={`relative w-20 h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-110 flex-shrink-0 ${
@@ -1782,12 +1874,37 @@ export default function WResidenceLanding() {
                     }`}
                     onClick={() => setCurrentImageIndex(index)}
                   >
-                    <Image
-                      src={image || "/placeholder.svg"}
-                      alt={`Thumbnail ${index + 1}`}
-                      fill
-                      className="object-cover"
-                    />
+                    {isYouTubeUrl(media) ? (
+                      <>
+                        <Image
+                          src={getYouTubeThumbnailUrl(media)}
+                          alt={`YouTube thumbnail ${index + 1}`}
+                          fill
+                          className="object-cover"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                          <Play className="w-6 h-6 text-white" />
+                        </div>
+                      </>
+                    ) : isVideo(media) ? (
+                      <>
+                        <video
+                          src={media}
+                          className="w-full h-full object-cover"
+                          muted
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                          <Play className="w-6 h-6 text-white" />
+                        </div>
+                      </>
+                    ) : (
+                      <Image
+                        src={media || "/placeholder.svg"}
+                        alt={`Thumbnail ${index + 1}`}
+                        fill
+                        className="object-cover"
+                      />
+                    )}
                   </button>
                 ))}
                 <Button
