@@ -831,6 +831,78 @@ export default function WResidenceLanding() {
     "/images/w-residences/site-plan/wmv-site-plan-04.webp"
   ]
 
+  // Helper function to check if a URL is a YouTube URL (including Shorts)
+  const isYouTubeUrl = (url: string): boolean => {
+    if (!url || typeof url !== 'string') return false
+    const lowerUrl = url.toLowerCase().trim()
+    // Check for YouTube Shorts first
+    if (/youtube\.com\/shorts\//.test(lowerUrl)) return true
+    // Check for regular YouTube URLs
+    if (/youtube\.com\/(watch|embed)/.test(lowerUrl)) return true
+    // Check for youtu.be short links
+    if (/youtu\.be\//.test(lowerUrl)) return true
+    // Check for any youtube.com URL
+    if (/youtube\.com/.test(lowerUrl)) return true
+    return false
+  }
+
+  // Helper function to extract YouTube video ID
+  const getYouTubeVideoId = (url: string): string | null => {
+    // Match regular YouTube URLs (watch?v= or youtu.be/)
+    let videoIdMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/)
+    // Match YouTube Shorts URLs
+    if (!videoIdMatch) {
+      videoIdMatch = url.match(/youtube\.com\/shorts\/([^&\s?]+)/)
+    }
+    if (videoIdMatch) {
+      return videoIdMatch[1].split('?')[0]
+    }
+    return null
+  }
+
+  // Helper function to convert YouTube URL to embed URL
+  const getYouTubeEmbedUrl = (url: string) => {
+    const videoId = getYouTubeVideoId(url)
+    if (videoId) {
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=1`
+    }
+    return url
+  }
+
+  // Helper function to get YouTube thumbnail URL
+  const getYouTubeThumbnailUrl = (url: string): string => {
+    const videoId = getYouTubeVideoId(url)
+    if (videoId) {
+      return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+    }
+    return url
+  }
+
+  // Helper function to check if a file is a video
+  const isVideo = (url: string): boolean => {
+    const videoExtensions = ['.mp4', '.webm', '.mov', '.avi', '.mkv', '.m4v']
+    const lowerUrl = url.toLowerCase()
+    return videoExtensions.some(ext => lowerUrl.endsWith(ext))
+  }
+
+  // Helper function to sort media: YouTube URLs first, then everything else (images)
+  const sortMediaWithVideosFirst = (media: string[]): string[] => {
+    if (!Array.isArray(media) || media.length === 0) return media
+    
+    const youtubeVideos: string[] = []
+    const otherItems: string[] = []
+    
+    media.forEach(item => {
+      if (isYouTubeUrl(item)) {
+        youtubeVideos.push(item)
+      } else {
+        otherItems.push(item)
+      }
+    })
+    
+    return [...youtubeVideos, ...otherItems]
+  }
+
   useEffect(() => {
     const loadGallery = async () => {
       try {
@@ -838,9 +910,9 @@ export default function WResidenceLanding() {
         if (!res.ok) throw new Error('Failed to load gallery')
         const data = await res.json()
         if (Array.isArray(data?.images) && data.images.length > 0) {
-          setProjectImages(data.images)
+          setProjectImages(sortMediaWithVideosFirst(data.images))
         } else {
-          setProjectImages([
+          const defaultImages = [
             "/images/w-residences/gallery/WMV- Day Aerial View.jpg",
             "/images/w-residences/gallery/WMV- Magic hour aerial view.jpg",
             "/images/w-residences/gallery/WMV- Frontal Elevation - Facade.jpg",
@@ -857,10 +929,11 @@ export default function WResidenceLanding() {
             "/images/w-residences/gallery/WMV- Spa Retreat Concierge on Level 51.jpg",
             "/images/w-residences/gallery/WMV- Treatment room on level 51.jpg",
             "/images/w-residences/gallery/WMV- Club 51.jpg",
-          ])
+          ]
+          setProjectImages(sortMediaWithVideosFirst(defaultImages))
         }
       } catch (e) {
-        setProjectImages([
+        const defaultImages = [
           "/images/w-residences/gallery/WMV- Day Aerial View.jpg",
           "/images/w-residences/gallery/WMV- Magic hour aerial view.jpg",
           "/images/w-residences/gallery/WMV- Frontal Elevation - Facade.jpg",
@@ -877,7 +950,8 @@ export default function WResidenceLanding() {
           "/images/w-residences/gallery/WMV- Spa Retreat Concierge on Level 51.jpg",
           "/images/w-residences/gallery/WMV- Treatment room on level 51.jpg",
           "/images/w-residences/gallery/WMV- Club 51.jpg",
-        ])
+        ]
+        setProjectImages(sortMediaWithVideosFirst(defaultImages))
       }
     }
     loadGallery()
@@ -1461,7 +1535,7 @@ export default function WResidenceLanding() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Badge className="bg-[#ce001f] text-white px-4 py-2 text-sm font-medium rounded-full animate-pulse">
-                LAST UNIT!
+                Featured Prime Listing
               </Badge>
             </div>
 
@@ -1478,13 +1552,13 @@ export default function WResidenceLanding() {
                 isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
               }`}>
                 <div className="w-12 h-px bg-[#ce001f] mr-4"></div>
-                <p className="text-lg text-gray-200 font-light">D10 - Tanglin, Holland</p>
+                <p className="text-lg text-gray-200 font-light">D10, Draycott Park</p>
               </div>
 
               <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
-                TBC
+                Large-format freehold residences with rare single-unit-per-floor privacy hardly seen today
               </p>
             </div>
 
@@ -1497,7 +1571,7 @@ export default function WResidenceLanding() {
                 onClick={scrollToLeadForm}
               >
                 <Calendar className="w-5 h-5 mr-2" />
-                Book Showflat Visit
+                Learn More
               </Button>
             </div>
 
@@ -1551,7 +1625,7 @@ export default function WResidenceLanding() {
                   <div className="w-16 h-1 bg-[#ce001f] rounded"></div>
                 </div>
                 <div className="text-right">
-                  <p className="text-white text-2xl font-medium">$ 4,697,000</p>
+                  <p className="text-white text-2xl font-medium">$ 6,065,000</p>
                 </div>
               </div>
             </div>
@@ -1570,7 +1644,7 @@ export default function WResidenceLanding() {
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">District:</span>
-                  <span className="font-semibold text-white text-right">10</span>
+                  <span className="font-semibold text-white text-right">10 - Tanglin / Holland / Bukit Timah</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Nearest MRT:</span>
@@ -1619,28 +1693,28 @@ export default function WResidenceLanding() {
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('project-info') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-bold mb-3 text-white text-center tracking-wide">Rare waterway frontage with unblocked waterway views right outside</h2>
+            <h2 className="text-3xl font-bold mb-3 text-white text-center tracking-wide">TBC</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
             <p className="text-lg text-gray-300 max-w-4xl mx-auto">
-              The Draycott is a rare waterway-front residence offering calm, space, and privacy within Singapore's premier marina enclave. 
-              The environment is defined by gentle waters, curated landscaping, and an overall sense of stillness. <br /> <br></br>
-              With waterway frontage on one side and the Sentosa Golf Club behind, the surroundings are peaceful and scenic. Private lift lobbies, Miele kitchenware, and quality bathroom fittings complete the sense of refined living. <br /> <br></br>
-              ONE°15 Marina, Quayside Isle, and the island's beachfront attractions are just minutes away—a combination that makes The Draycott both practical and premium.
+              Set within the Ardmore–Draycott enclave, The Draycott is a low-density freehold residence defined by space, privacy, and long-term livability, just minutes from Orchard Road. <br /> <br></br>
+              Located along Draycott Park, it offers rare large-format homes in one of District 10’s most tightly held residential pockets, where discretion and address quality take priority. <br /> <br></br>
+              With expansive layouts, single-unit-per-floor tower homes, and a predominantly owner-occupied community, The Draycott continues to attract buyers who value scale, land ownership, and enduring location fundamentals.
             </p>
           </div>
 
           {/* Feature Cards */}
           <div className="flex flex-wrap gap-6 lg:gap-4 mb-12 justify-center">
             {[
-              { icon: <Footprints className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Immediate access to <strong>ONE°15 Marina</strong> giving residents", desc: "waterfront dining, yacht club facilities, and coastal convenience" },
-              { icon: <Home className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Ultra-spacious Large-format layouts built for", desc: "true livability, privacy, and everyday comfort" },
-              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Luxury Interior finishes featuring", desc: "<strong>Miele kitchenware</strong> and <strong>Laufen ILBAGNO ALESSI</strong> bathroom fittings" },
-              { icon: <MountainSnow className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "<strong>Full resort facilities</strong> including", desc: "a pool, gym, steam rooms, and landscaped relaxation decks" },
-              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "A Prestigious <strong>Sentosa Cove Address</strong> Offering", desc: "gated exclusivity in Singapore's only marina residential district" },
-              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Fast <strong>connectivity to HarbourFront</strong> enabling", desc: "quick and easy access to the mainland and the CBD" },
-              { icon: <ChartLine className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Long-term upside supported by the upcoming", desc: "<strong>Sentosa–Brani</strong> transformation plan" }
+              { icon: <MapPin className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Freehold residence located within the Ardmore–Draycott enclave in prime District 10" },
+              { icon: <Trees className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Quiet residential setting just off Orchard Road with limited through traffic" },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Homes of this scale and configuration are rarely replicated in newer developments today" },
+              { icon: <Ruler className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Units are predominantly 2,600 sq ft and above with a focus on spacious living" },
+              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Single-unit-per-floor tower residences offering enhanced privacy" },
+              { icon: <Boxes className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Low-density development with only 132 units across an expansive site" },
+              { icon: <Users className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Predominantly owner-occupied community with limited resale availability" },
+              { icon: <ShoppingBag className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Close proximity to Orchard shopping belt, Tanglin Club, and established amenities" }
             ].map((card, index) => (
               <Card 
                 key={index} 
@@ -1659,7 +1733,7 @@ export default function WResidenceLanding() {
                     <h3 className="text-white font-normal mb-2 text-lg" dangerouslySetInnerHTML={{ __html: card.title }}></h3>
                   )}
                   {card.desc && (
-                    <p className="text-gray-300" dangerouslySetInnerHTML={{ __html: card.desc }}></p>
+                    <div className="text-gray-300" dangerouslySetInnerHTML={{ __html: card.desc }}></div>
                   )}
                 </CardContent>
               </Card>
@@ -1731,21 +1805,39 @@ export default function WResidenceLanding() {
               </div>
             </div>
 
-            {/* Main Image Display */}
+            {/* Main Image/Video Display */}
             <div className="relative max-w-6xl mx-auto mb-8">
               <div className="relative h-[500px] rounded-xl overflow-hidden shadow-2xl">
-                <Image
-                  src={projectImages[currentImageIndex] || "/placeholder.svg"}
-                  alt={`The Draycott - Image ${currentImageIndex + 1}`}
-                  fill
-                  className="object-cover transition-all duration-500"
-                />
+                {projectImages[currentImageIndex] && isYouTubeUrl(projectImages[currentImageIndex]) ? (
+                  <iframe
+                    src={getYouTubeEmbedUrl(projectImages[currentImageIndex])}
+                    title={`The Draycott - Video ${currentImageIndex + 1}`}
+                    className="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                ) : projectImages[currentImageIndex] && isVideo(projectImages[currentImageIndex]) ? (
+                  <video
+                    src={projectImages[currentImageIndex]}
+                    controls
+                    className="w-full h-full object-cover"
+                    loop
+                    muted
+                  />
+                ) : (
+                  <Image
+                    src={projectImages[currentImageIndex] || "/placeholder.svg"}
+                    alt={`The Draycott - Image ${currentImageIndex + 1}`}
+                    fill
+                    className="object-cover transition-all duration-500"
+                  />
+                )}
 
                 
                 <Button
                   variant="outline"
                   size="icon"
-                  className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                  className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300 z-10"
                   onClick={prevImage}
                 >
                   <ChevronLeft className="w-5 h-5 text-[#ce001f]" />
@@ -1753,7 +1845,7 @@ export default function WResidenceLanding() {
                 <Button
                   variant="outline"
                   size="icon"
-                  className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                  className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300 z-10"
                   onClick={nextImage}
                 >
                   <ChevronRight className="w-5 h-5 text-[#ce001f]" />
@@ -1772,7 +1864,7 @@ export default function WResidenceLanding() {
                 >
                   <ChevronLeft className="w-4 h-4 text-[#ce001f]" />
                 </Button>
-                {projectImages.map((image, index) => (
+                {projectImages.map((media, index) => (
                   <button
                     key={index}
                     className={`relative w-20 h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-110 flex-shrink-0 ${
@@ -1782,12 +1874,37 @@ export default function WResidenceLanding() {
                     }`}
                     onClick={() => setCurrentImageIndex(index)}
                   >
-                    <Image
-                      src={image || "/placeholder.svg"}
-                      alt={`Thumbnail ${index + 1}`}
-                      fill
-                      className="object-cover"
-                    />
+                    {isYouTubeUrl(media) ? (
+                      <>
+                        <Image
+                          src={getYouTubeThumbnailUrl(media)}
+                          alt={`YouTube thumbnail ${index + 1}`}
+                          fill
+                          className="object-cover"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                          <Play className="w-6 h-6 text-white" />
+                        </div>
+                      </>
+                    ) : isVideo(media) ? (
+                      <>
+                        <video
+                          src={media}
+                          className="w-full h-full object-cover"
+                          muted
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                          <Play className="w-6 h-6 text-white" />
+                        </div>
+                      </>
+                    ) : (
+                      <Image
+                        src={media || "/placeholder.svg"}
+                        alt={`Thumbnail ${index + 1}`}
+                        fill
+                        className="object-cover"
+                      />
+                    )}
                   </button>
                 ))}
                 <Button

@@ -273,10 +273,18 @@ export default function EventsPage() {
   // Get filtered images/videos based on selected category
   const filteredEventImages = useMemo(() => {
     const base = eventImages[eventCategory] || []
+    let filtered = base
     if (eventCategory === "Realtor Branding Workshop" && realtorSubTag !== "All") {
-      return base.filter((item: any) => item.tag === realtorSubTag)
+      filtered = base.filter((item: any) => item.tag === realtorSubTag)
     }
-    return base
+    // Sort: videos first (YouTube and regular videos), then images
+    return filtered.sort((a, b) => {
+      const aIsVideo = a.type === 'video' || isYouTubeUrl(a.src)
+      const bIsVideo = b.type === 'video' || isYouTubeUrl(b.src)
+      if (aIsVideo && !bIsVideo) return -1
+      if (!aIsVideo && bIsVideo) return 1
+      return 0
+    })
   }, [eventCategory, eventImages, realtorSubTag])
 
   // Get all Explore Night media (single-item carousel)
@@ -909,7 +917,7 @@ export default function EventsPage() {
               viewport={{ once: true, margin: "-100px" }}
             >
               KW Ignite Masterclass:
-              <span className="block text-[#B40101] italic">2026 Elevate Your Real Estate Practice</span>
+              <span className="block text-[#B40101] italic">Elevate Your Real Estate Practice</span>
             </motion.h2>
             <span className="block text-white text-lg font-semibold mt-4 mb-6">24-25th March | 10am-5pm</span>
             <motion.p 
