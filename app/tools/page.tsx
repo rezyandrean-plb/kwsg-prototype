@@ -3,7 +3,7 @@
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Search, Building2, Calculator, TrendingUp, BarChart3, MapPin, DollarSign, Smartphone, Home, ChevronRight, Play } from "lucide-react"
+import { Search, Building2, Calculator, TrendingUp, BarChart3, MapPin, DollarSign, Smartphone, Home, ChevronRight, Play, BookOpen } from "lucide-react"
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion"
 import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
@@ -206,6 +206,15 @@ const tools = [
     category: "Deal Submission",
     url: "https://app.propsage.com",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/kw-propsage.webp"
+  },
+  {
+    id: 68,
+    title: "(PDF Guide) Project Booking & Submission on PropSage",
+    description: "Detailed guide for confirming project bookings and submitting transaction details for compliance and processing.",
+    icon: BookOpen,
+    category: "Deal Submission",
+    url: "https://drive.google.com/file/d/1xjhLvIfifycH-f96TG8WXVJ3XEetbF--/view?usp=drive_link",
+    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/deal-submission.webp"
   },
 
   // Branding & Marketing items
@@ -463,8 +472,7 @@ const tools = [
     title: "Research Chart Vault",
     description: "A repository of essential data and charts for property research and analysis.",
     icon: BarChart3,
-    category: "Compass Tools",
-    subtitle: "Research Charts",
+    category: "Research Charts",
     url: "https://docs.google.com/document/d/1uk3jAELNmL9cHZp1oEboYPTQfDdmd8lZAm--zB9e9xs/edit?usp=sharing",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/research-charts.webp"
   },
@@ -473,8 +481,7 @@ const tools = [
     title: "Research Chart Mega Vault",
     description: "An extensive collection of data and charts for comprehensive property research and analysis.",
     icon: BarChart3,
-    category: "Compass Tools",
-    subtitle: "Research Charts",
+    category: "Research Charts",
     url: "https://drive.google.com/drive/folders/19EfpKRyyVuak1V_P8Vq0EU_zNy1-CJ3h?usp=sharing",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/research-charts.webp"
   },
@@ -901,32 +908,13 @@ const compassTools = [
     url: "https://proptech.kwsingapore.com/calculator/rental-stamp-duty",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/rental-stamp-duty.webp"
   },
-  {
-    id: 30,
-    title: "Research Chart Vault",
-    description: "A repository of essential data and charts for property research and analysis.",
-    icon: BarChart3,
-    category: "Compass Tools",
-    subtitle: "Research Charts",
-    url: "https://docs.google.com/document/d/1uk3jAELNmL9cHZp1oEboYPTQfDdmd8lZAm--zB9e9xs/edit?usp=sharing",
-    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/research-charts.webp"
-  },
-  {
-    id: 29,
-    title: "Research Chart Mega Vault",
-    description: "An extensive collection of data and charts for comprehensive property research and analysis.",
-    icon: BarChart3,
-    category: "Compass Tools",
-    subtitle: "Research Charts",
-    url: "https://drive.google.com/drive/folders/19EfpKRyyVuak1V_P8Vq0EU_zNy1-CJ3h?usp=sharing",
-    image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/research-charts.webp"
-  },
 ]
 
 const categories = [
   "All",
   "Getting Started",
   "Compass Tools",
+  "Research Charts",
   "Business Tools",
   "Deal Submission",
   "External Tools",
@@ -1184,7 +1172,7 @@ export default function TechToolPage() {
       <section ref={navigationRef} className="relative py-8 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
-            className="flex gap-3 flex-nowrap overflow-x-auto pb-2 md:flex-nowrap md:overflow-x-auto lg:flex-wrap lg:overflow-visible"
+            className="flex gap-2 flex-nowrap overflow-x-auto pb-2 md:flex-nowrap md:overflow-x-auto lg:flex-wrap lg:overflow-visible"
             initial={{ opacity: 0, y: 30 }}
             animate={navigationInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -1193,7 +1181,7 @@ export default function TechToolPage() {
               <motion.button 
                 key={category}
                 onClick={() => handleCategoryClick(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap flex-shrink-0 ${
+                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 whitespace-nowrap flex-shrink-0 ${
                   activeCategory === category
                     ? "bg-[#B40101] text-white shadow-lg shadow-[#B40101]/30"
                     : "bg-gray-800 text-gray-300 hover:bg-gray-700 hover:shadow-md"
@@ -1290,8 +1278,8 @@ export default function TechToolPage() {
             <>
               {hasDisplayedTools && (
                 <>
-                  {activeCategory === "Compass Tools" || activeCategory === "Getting Started" || activeCategory === "Learnings" ? (
-                    // Special rendering for Compass Tools and Getting Started with subtitles
+                  {activeCategory === "Compass Tools" || activeCategory === "Getting Started" || activeCategory === "Learnings" || activeCategory === "Research Charts" ? (
+                    // Special rendering for Compass Tools, Getting Started, Learnings, and Research Charts with subtitles
                     <div className="space-y-12">
                       {(() => {
                         const categoryToolsDisplayed = displayedTools.filter(tool => tool.category === activeCategory)
