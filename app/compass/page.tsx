@@ -362,8 +362,7 @@ const tools = [
     title: "Research Chart Vault",
     description: "A repository of essential data and charts for property research and analysis.",
     icon: BarChart3,
-    category: "Compass Tools",
-    subtitle: "Research Charts",
+    category: "Research Charts",
     url: "https://docs.google.com/document/d/1uk3jAELNmL9cHZp1oEboYPTQfDdmd8lZAm--zB9e9xs/edit?usp=sharing",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/research-charts.webp"
   },
@@ -372,8 +371,7 @@ const tools = [
     title: "Research Chart Mega Vault",
     description: "An extensive collection of data and charts for comprehensive property research and analysis.",
     icon: BarChart3,
-    category: "Compass Tools",
-    subtitle: "Research Charts",
+    category: "Research Charts",
     url: "https://drive.google.com/drive/folders/19EfpKRyyVuak1V_P8Vq0EU_zNy1-CJ3h?usp=sharing",
     image: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/tech-tools/research-charts.webp"
   },
@@ -447,6 +445,7 @@ const categories = [
   "All",
   "Getting Started",
   "Compass Tools",
+  "Research Charts",
   "Business Tools",
   "Deal Submission",
   "External Tools",
@@ -771,8 +770,8 @@ export default function TechToolPage() {
             </motion.div>
           ) : (
             <>
-              {activeCategory === "Compass Tools" || activeCategory === "Getting Started" || activeCategory === "Learnings" ? (
-                // Special rendering for Compass Tools, Getting Started, and Learnings with subtitles
+              {activeCategory === "Compass Tools" || activeCategory === "Getting Started" || activeCategory === "Learnings" || activeCategory === "Research Charts" ? (
+                // Special rendering for Compass Tools, Getting Started, Learnings, and Research Charts with subtitles
                 <div className="space-y-12">
                   {(() => {
                     const categoryToolsDisplayed = filteredTools.filter(tool => tool.category === activeCategory)
