@@ -571,7 +571,7 @@ function LeadGenerationForm({
     <Card className={`bg-white/20 backdrop-blur-sm text-white p-6 md:p-12 shadow-2xl border-0 rounded-xl hover:shadow-3xl transition-all duration-700 hover:scale-105`}>
       <h2 className="text-4xl font-bold mb-4 text-white text-center">Book Your Showflat Visit Today</h2>
       <p className="text-md mb-8 opacity-90 text-white text-center">
-        Be the first to own a home that combines convenience, luxury, and nature. <br /> Register now for an exclusive preview of The Draycott.
+        Be the first to own a home that combines convenience, luxury, and nature. <br /> Register now for an exclusive preview of Turquoise.
       </p>
       {submitError && (
         <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
@@ -776,7 +776,7 @@ export default function WResidenceLanding() {
 
   useEffect(() => {
     // Set page title
-    document.title = 'The Draycott - KW Singapore'
+    document.title = 'Turquoise - KW Singapore'
     
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0)
@@ -821,9 +821,7 @@ export default function WResidenceLanding() {
     setFloorPlanIndex(0)
   }, [unitsActiveTab])
 
-  const [projectImages, setProjectImages] = useState<string[]>([])
-  
-  // Site Plan images for carousel (replace with The Draycott assets when ready)
+  // Site Plan images for carousel (replace with Turquoise assets when ready)
   const sitePlanImages: string[] = [
     "/images/w-residences/site-plan/wmv-site-plan-01.webp",
     "/images/w-residences/site-plan/wmv-site-plan-02.webp",
@@ -831,152 +829,116 @@ export default function WResidenceLanding() {
     "/images/w-residences/site-plan/wmv-site-plan-04.webp"
   ]
 
-  // Helper function to check if a URL is a YouTube URL (including Shorts)
-  const isYouTubeUrl = (url: string): boolean => {
-    if (!url || typeof url !== 'string') return false
-    const lowerUrl = url.toLowerCase().trim()
-    // Check for YouTube Shorts first
-    if (/youtube\.com\/shorts\//.test(lowerUrl)) return true
-    // Check for regular YouTube URLs
-    if (/youtube\.com\/(watch|embed)/.test(lowerUrl)) return true
-    // Check for youtu.be short links
-    if (/youtu\.be\//.test(lowerUrl)) return true
-    // Check for any youtube.com URL
-    if (/youtube\.com/.test(lowerUrl)) return true
-    return false
-  }
-
-  // Helper function to extract YouTube video ID
-  const getYouTubeVideoId = (url: string): string | null => {
-    // Match regular YouTube URLs (watch?v= or youtu.be/)
-    let videoIdMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/)
-    // Match YouTube Shorts URLs
-    if (!videoIdMatch) {
-      videoIdMatch = url.match(/youtube\.com\/shorts\/([^&\s?]+)/)
-    }
-    if (videoIdMatch) {
-      return videoIdMatch[1].split('?')[0]
-    }
-    return null
-  }
-
-  // Helper function to convert YouTube URL to embed URL
-  const getYouTubeEmbedUrl = (url: string) => {
-    const videoId = getYouTubeVideoId(url)
-    if (videoId) {
-      return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=1`
-    }
-    return url
-  }
-
-  // Helper function to get YouTube thumbnail URL
-  const getYouTubeThumbnailUrl = (url: string): string => {
-    const videoId = getYouTubeVideoId(url)
-    if (videoId) {
-      return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
-    }
-    return url
-  }
-
-  // Helper function to check if a file is a video
-  const isVideo = (url: string): boolean => {
-    const videoExtensions = ['.mp4', '.webm', '.mov', '.avi', '.mkv', '.m4v']
-    const lowerUrl = url.toLowerCase()
-    return videoExtensions.some(ext => lowerUrl.endsWith(ext))
-  }
-
-  // Helper function to sort media: YouTube URLs first, then everything else (images)
-  const sortMediaWithVideosFirst = (media: string[]): string[] => {
-    if (!Array.isArray(media) || media.length === 0) return media
-    
-    const youtubeVideos: string[] = []
-    const otherItems: string[] = []
-    
-    media.forEach(item => {
-      if (isYouTubeUrl(item)) {
-        youtubeVideos.push(item)
-      } else {
-        otherItems.push(item)
-      }
-    })
-    
-    return [...youtubeVideos, ...otherItems]
-  }
-
-  useEffect(() => {
-    const loadGallery = async () => {
-      try {
-        const res = await fetch('/api/w-residences/gallery')
-        if (!res.ok) throw new Error('Failed to load gallery')
-        const data = await res.json()
-        if (Array.isArray(data?.images) && data.images.length > 0) {
-          setProjectImages(sortMediaWithVideosFirst(data.images))
-        } else {
-          const defaultImages = [
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott001.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott002.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott004.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott005.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott007.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott008.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott009.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott011.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott012.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott013.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott015.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott016.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott022.webp",
-          ]
-          setProjectImages(sortMediaWithVideosFirst(defaultImages))
-        }
-      } catch (e) {
-        const defaultImages = [
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott001.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott002.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott004.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott005.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott007.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott008.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott009.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott011.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott012.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott013.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott015.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott016.webp",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/gallery/Draycott022.webp",
-        ]
-        setProjectImages(sortMediaWithVideosFirst(defaultImages))
-      }
-    }
-    loadGallery()
-  }, [])
+  const [projectImages, setProjectImages] = useState<string[]>([
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/IMG_3773.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/View-from-Master-Balcony.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Bathroom-B.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Common-Bedroom-A01.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Dry-Kitchen01.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Dry-Kitchen03.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Elevator.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Living-Room03.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Master-Balcony-03.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Master-Balcony-04.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Master-Bath-03.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Master-Bath01.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Rear-Balcony-01.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Wet-Kitchen02.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Window.jpg",
+  ])
 
 
   const amenities = [
     // TRANSPORT
-    { icon: <Train className="w-6 h-6" />, name: "Newton MRT", category: "Transport" },
-    { icon: <Train className="w-6 h-6" />, name: "Orchard MRT", category: "Transport" },
-    { icon: <Train className="w-6 h-6" />, name: "Stevens MRT", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Waterfront LRT", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Imbiah LRT", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Beach LRT", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Sentosa LRT", category: "Transport" },
+    {
+      icon: <Train className="w-6 h-6" />,
+      name: (
+        <>
+          Harbourfront MRT <br />
+          (North‑East Line + Circle Line)
+        </>
+      ),
+      category: "Transport",
+    },
+    {
+      icon: <Car className="w-6 h-6" />,
+      name: (
+        <>
+          AYE <br />
+          (Ayer Rajah Expressway)
+        </>
+      ),
+      category: "Transport",
+    },
+    {
+      icon: <Car className="w-6 h-6" />,
+      name: (
+        <>
+          CTE <br />
+          (Central Expressway)
+        </>
+      ),
+      category: "Transport",
+    },
 
     // RETAIL & F&B
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Cold Storage", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "FairPrice Finest Scotts Square", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Isetan Scotts", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Tangs Market", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "ION Orchard", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Lucky Plaza", category: "Retail & F&B" },
+    {
+      icon: <ShoppingBag className="w-6 h-6" />,
+      name: (
+        <>
+          Cold Storage <br />
+          (Sentosa Cove)
+        </>
+      ),
+      category: "Retail & F&B",
+    },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Harbourfront Centre", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "VivoCity", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Orchard Road Shopping Belt", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Seah Im Food Centre", category: "Retail & F&B" },
 
     // NATURE & LEISURE
-    { icon: <Trees className="w-6 h-6" />, name: "Orchid Pavillion", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "Weister", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "NJC Greenlink's Trees", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Sentosa Golf Club", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Spa Botanica", category: "Nature & Leisure" },
 
     // EDUCATION
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Anglo-Chinese School (Primary)", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Anglo-Chinese School (Junior)", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Singapore Chinese Girls' Primary School", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "River Valley Pri Sch", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "St. Margaret's Sch (Primary)", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Quayside Isle Preparatory School", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Islander Pre-School", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Cantonment Primary School", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "CHIJ (Kellock) Primary School", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Radin Mas Primary School", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "CHIJ Saint Theresa's Convent", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Anglo-Chinese Junior College", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Marketing Institute of Singapore", category: "Education" },
+    {
+      icon: <GraduationCap className="w-6 h-6" />,
+      name: (
+        <>
+          Etonhouse International Pre-School <br />
+          (Sentosa)
+        </>
+      ),
+      category: "Education",
+    },
+    {
+      icon: <GraduationCap className="w-6 h-6" />,
+      name: (
+        <>
+          EIS International Pre-School <br />
+          (Sentosa)
+        </>
+      ),
+      category: "Education",
+    },
+
+    // HEALTHCARE
+    { icon: <Hospital className="w-6 h-6" />, name: "Fullerton Health@Psa Floatel", category: "Healthcare" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Village Hotel Sentosa/The Outpost Hotel", category: "Healthcare" },
+    { icon: <Hospital className="w-6 h-6" />, name: "Village Hotel Sentosa Sif", category: "Healthcare" },
   ]
 
   const nextImage = () => {
@@ -1073,8 +1035,8 @@ export default function WResidenceLanding() {
   const [siteMapSubmitSuccess, setSiteMapSubmitSuccess] = useState(false)
   const [siteMapSubmitError, setSiteMapSubmitError] = useState<string | null>(null)
 
-  // Build likely floor-plan filenames from unit type/subtype to match files placed in public/images/the-draycott/floor-plan
-  const generateTheDraycottFloorPlanCandidates = (subtype: any, unitType: string) => {
+  // Build likely floor-plan filenames from unit type/subtype to match files placed in public/images/turquoise/floor-plan
+  const generateTurquoiseFloorPlanCandidates = (subtype: any, unitType: string) => {
     const base = '/images/w-residences/floor-plan/'
     const candidates: string[] = []
 
@@ -1134,12 +1096,12 @@ export default function WResidenceLanding() {
   // Mock data and helpers for unit availability (align with Aurea implementation)
   const mockUnitPricing = [
     {
-      unitType: "4-Bedroom",
+      unitType: "1-Bedroom",
       subtypes: [
         {
-          subtype: "4-Bedroom",
-          bedrooms: 4,
-          bathrooms: 4,
+          subtype: "3-Bedroom",
+          bedrooms: 3,
+          bathrooms: 3,
           size: "3,111 sqft",
           price: "From $4,697,000",
           currency: "SGD",
@@ -1147,7 +1109,7 @@ export default function WResidenceLanding() {
           available: 1,
           status: 1,
           floor_plan_images: [
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/The-Draycott-Tower-Unit-%2305-03-(Type-G)-w.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/Turquoise_06-05_FloorPlan.jpeg",
           ],
         }
       ]
@@ -1204,7 +1166,7 @@ export default function WResidenceLanding() {
       // Ensure only the date (no time) is submitted for preferredDate
       const preferredDateOnly = preferredDate ? format(preferredDate, 'yyyy-MM-dd') : undefined
 
-      const response = await fetch('/api/w-residences-form', {
+      const response = await fetch('/api/turquoise-lead-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1235,7 +1197,7 @@ export default function WResidenceLanding() {
         // Show success toast
         toast({
           title: "Request Submitted Successfully!",
-          description: "Thank you for your interest in The Draycott! We have sent you a confirmation email and our team will contact you soon to arrange your showflat visit.",
+          description: "Thank you for your interest in Turquoise! We have sent you a confirmation email and our team will contact you soon to arrange your showflat visit.",
           variant: "default",
         })
         
@@ -1297,7 +1259,7 @@ export default function WResidenceLanding() {
 
     try {
       // Submit the form with the reCAPTCHA token
-      const response = await fetch('/api/w-residences-site-map-request', {
+      const response = await fetch('/api/turquoise-site-map-request', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1423,12 +1385,12 @@ export default function WResidenceLanding() {
                 >
                   Location
                 </button>
-                <button 
+                {/* <button 
                   onClick={scrollToMedia}
                   className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
                 >
                   Explore
-                </button>
+                </button> */}
                 <Button 
                   className="bg-[#ce001f] hover:bg-[#b3001a] transition-colors duration-300"
                   onClick={scrollToLeadForm}
@@ -1445,8 +1407,8 @@ export default function WResidenceLanding() {
         {/* Background elements */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/the-draycott-hero.webp"
-            alt="The Draycott Hero"
+            src="https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/turquoise-hero-background.webp"
+            alt="Turquoise Hero"
             fill
             className="object-cover"
             priority
@@ -1463,7 +1425,7 @@ export default function WResidenceLanding() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Badge className="bg-[#ce001f] text-white px-4 py-2 text-sm font-medium rounded-full animate-pulse">
-                Featured Prime Listing
+                LAST UNIT!
               </Badge>
             </div>
 
@@ -1472,7 +1434,7 @@ export default function WResidenceLanding() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-2 sm:mb-2 md:mb-2 lg:mb-4 leading-tight">
-                <span className={`transition-all duration-1000 delay-900 ${isVisible ? 'animate-fade-in-left' : ''}`}>THE DRAYCOTT
+                <span className={`transition-all duration-1000 delay-900 ${isVisible ? 'animate-fade-in-left' : ''}`}>TURQUOISE
                 </span>
               </h1>
 
@@ -1480,13 +1442,13 @@ export default function WResidenceLanding() {
                 isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
               }`}>
                 <div className="w-12 h-px bg-[#ce001f] mr-4"></div>
-                <p className="text-lg text-gray-200 font-light">D10, Draycott Park</p>
+                <p className="text-lg text-gray-200 font-light">D4 - Cove Drive, Sentosa Cove</p>
               </div>
 
               <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
-                Large-format freehold residences with rare single-unit-per-floor privacy hardly seen today
+                The Only Place in Singapore With Both Marina & <span className="hidden md:inline"><br /></span> Golf Course Views
               </p>
             </div>
 
@@ -1499,7 +1461,7 @@ export default function WResidenceLanding() {
                 onClick={scrollToLeadForm}
               >
                 <Calendar className="w-5 h-5 mr-2" />
-                Learn More
+                Book Showflat Visit
               </Button>
             </div>
 
@@ -1518,13 +1480,13 @@ export default function WResidenceLanding() {
         </div>
 
         {/* Disclaimer Text */}
-        <div className={`absolute bottom-2 right-2 sm:bottom-4 sm:right-4 transition-all duration-1000 delay-2000 ${
+        {/* <div className={`absolute bottom-2 right-2 sm:bottom-4 sm:right-4 transition-all duration-1000 delay-2000 ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
         }`}>
           <p className="text-[9px] sm:text-xs text-white/70 bg-black/30 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-2 rounded-lg whitespace-nowrap">
-            Images are for illustrative purposes only and may <br className="sm:hidden"/> not reflect the final design of The Draycott.
+            Images are for illustrative purposes only and may <br className="sm:hidden"/> not reflect the final design of Turquoise.
           </p>
-        </div>
+        </div> */}
       </section>
 
       {/* Enhanced Project Information Section */}
@@ -1553,7 +1515,7 @@ export default function WResidenceLanding() {
                   <div className="w-16 h-1 bg-[#ce001f] rounded"></div>
                 </div>
                 <div className="text-right">
-                  <p className="text-white text-2xl font-medium">$ 6,065,000</p>
+                  <p className="text-white text-2xl font-medium">$ 4,697,000</p>
                 </div>
               </div>
             </div>
@@ -1564,27 +1526,27 @@ export default function WResidenceLanding() {
               <div className="space-y-6">
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Project Name:</span>
-                  <span className="font-semibold text-white text-right">The Draycott</span>
+                  <span className="font-semibold text-white text-right">Turquoise</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Address:</span>
-                  <span className="font-semibold text-white text-right">50 Draycott Park, Singapore 259396</span>
+                  <span className="font-semibold text-white text-right">51 Cove Drive, Singapore 098393</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">District:</span>
-                  <span className="font-semibold text-white text-right">10 - Tanglin / Holland / Bukit Timah</span>
+                  <span className="font-semibold text-white text-right">D04 - Sentosa / Harbourfront</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Nearest MRT:</span>
-                  <span className="font-semibold text-white text-right">Newton MRT</span>
+                  <span className="font-semibold text-white text-right">Waterfront LRT</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Developer:</span>
-                  <span className="font-semibold text-white text-right">Tan Chwee Boon Pte Ltd</span>
+                  <span className="font-semibold text-white text-right">Ho Bee Cove Pte Ltd</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Tenure:</span>
-                  <span className="font-semibold text-white text-right">Freehold</span>
+                  <span className="font-semibold text-white text-right">99 Years</span>
                 </div>
               </div>
 
@@ -1592,27 +1554,27 @@ export default function WResidenceLanding() {
               <div className="space-y-6">
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Unit No.:</span>
-                  <span className="font-semibold text-white text-right">#05-03</span>
+                  <span className="font-semibold text-white text-right">#06-05</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Site Area:</span>
-                  <span className="font-semibold text-white text-right">2637 sqft</span>
+                  <span className="font-semibold text-white text-right">3,111 sqft</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Property Type:</span>
-                  <span className="font-semibold text-white text-right">4-Bedroom</span>
+                  <span className="font-semibold text-white text-right">3-Bedroom</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Bedrooms:</span>
-                  <span className="font-semibold text-white text-right">4</span>
+                  <span className="font-medium text-gray-300">Bedroom:</span>
+                  <span className="font-semibold text-white text-right">3</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Bathroom:</span>
-                  <span className="font-semibold text-white text-right">4</span>
+                  <span className="font-semibold text-white text-right">3</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">TOP:</span>
-                  <span className="font-semibold text-white text-right">1980</span>
+                  <span className="font-semibold text-white text-right">2010</span>
                 </div>
               </div>
             </div>
@@ -1621,28 +1583,28 @@ export default function WResidenceLanding() {
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('project-info') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-bold mb-3 text-white text-center tracking-wide">TBC</h2>
+            <h2 className="text-3xl font-bold mb-3 text-white text-center tracking-wide">Rare waterway frontage with unblocked waterway views right outside</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
             <p className="text-lg text-gray-300 max-w-4xl mx-auto">
-              Set within the Ardmore–Draycott enclave, The Draycott is a low-density freehold residence defined by space, privacy, and long-term livability, just minutes from Orchard Road. <br /> <br></br>
-              Located along Draycott Park, it offers rare large-format homes in one of District 10’s most tightly held residential pockets, where discretion and address quality take priority. <br /> <br></br>
-              With expansive layouts, single-unit-per-floor tower homes, and a predominantly owner-occupied community, The Draycott continues to attract buyers who value scale, land ownership, and enduring location fundamentals.
+              Turquoise is a rare waterway-front residence offering calm, space, and privacy within Singapore’s premier marina enclave. 
+              The environment is defined by gentle waters, curated landscaping, and an overall sense of stillness. <br /> <br></br>
+              With waterway frontage on one side and the Sentosa Golf Club behind, the surroundings are peaceful and scenic. Private lift lobbies, Miele kitchenware, and quality bathroom fittings complete the sense of refined living. <br /> <br></br>
+              ONE°15 Marina, Quayside Isle, and the island’s beachfront attractions are just minutes away—a combination that makes Turquoise both practical and premium.
             </p>
           </div>
 
           {/* Feature Cards */}
           <div className="flex flex-wrap gap-6 lg:gap-4 mb-12 justify-center">
             {[
-              { icon: <MapPin className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Freehold residence located within the Ardmore–Draycott enclave in prime District 10" },
-              { icon: <Trees className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Quiet residential setting just off Orchard Road with limited through traffic" },
-              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Homes of this scale and configuration are rarely replicated in newer developments today" },
-              { icon: <Ruler className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Units are predominantly 2,600 sq ft and above with a focus on spacious living" },
-              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Single-unit-per-floor tower residences offering enhanced privacy" },
-              { icon: <Boxes className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Low-density development with only 132 units across an expansive site" },
-              { icon: <Users className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Predominantly owner-occupied community with limited resale availability" },
-              { icon: <ShoppingBag className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Close proximity to Orchard shopping belt, Tanglin Club, and established amenities" }
+              { icon: <Footprints className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Immediate access to <strong>ONE°15 Marina</strong> giving residents", desc: "waterfront dining, yacht club facilities, and coastal convenience" },
+              { icon: <Home className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Ultra-spacious Large-format layouts built for", desc: "true livability, privacy, and everyday comfort" },
+              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Luxury Interior finishes featuring", desc: "<strong>Miele kitchenware</strong> and <strong>Laufen ILBAGNO ALESSI</strong> bathroom fittings" },
+              { icon: <MountainSnow className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "<strong>Full resort facilities</strong> including", desc: "a pool, gym, steam rooms, and landscaped relaxation decks" },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "A Prestigious <strong>Sentosa Cove Address</strong> Offering", desc: "gated exclusivity in Singapore's only marina residential district" },
+              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Fast <strong>connectivity to HarbourFront</strong> enabling", desc: "quick and easy access to the mainland and the CBD" },
+              { icon: <ChartLine className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Long-term upside supported by the upcoming", desc: "<strong>Sentosa–Brani</strong> transformation plan" }
             ].map((card, index) => (
               <Card 
                 key={index} 
@@ -1661,7 +1623,7 @@ export default function WResidenceLanding() {
                     <h3 className="text-white font-normal mb-2 text-lg" dangerouslySetInnerHTML={{ __html: card.title }}></h3>
                   )}
                   {card.desc && (
-                    <div className="text-gray-300" dangerouslySetInnerHTML={{ __html: card.desc }}></div>
+                    <p className="text-gray-300" dangerouslySetInnerHTML={{ __html: card.desc }}></p>
                   )}
                 </CardContent>
               </Card>
@@ -1690,25 +1652,49 @@ export default function WResidenceLanding() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
                 <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                  <p className="text-gray-300 text-center">BBQ</p>
+                  <p className="text-gray-300 text-center">Guard House</p>
                 </div>
                 <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                  <p className="text-gray-300 text-center">Gym</p>
+                  <p className="text-gray-300 text-center">Garden Walk</p>
                 </div>
                 <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                  <p className="text-gray-300 text-center">Parking</p>
+                  <p className="text-gray-300 text-center">Entrance Water Feature</p>
                 </div>
                 <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                  <p className="text-gray-300 text-center">Playground</p>
+                  <p className="text-gray-300 text-center">Sanctuary Pavilion</p>
                 </div>
                 <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                  <p className="text-gray-300 text-center">Security</p>
+                  <p className="text-gray-300 text-center">Cabana & BBQ Deck</p>
                 </div>
                 <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                  <p className="text-gray-300 text-center">Swimming Pool</p>
+                  <p className="text-gray-300 text-center">Waterfront Promenade</p>
+                </div>
+                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
+                  <p className="text-gray-300 text-center">Entrance Driveway</p>
+                </div>
+                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
+                  <p className="text-gray-300 text-center">Clubhouse & Gymnasium</p>
+                </div>
+                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
+                  <p className="text-gray-300 text-center">Entertainment Deck</p>
+                </div>
+                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
+                  <p className="text-gray-300 text-center">Main Pool Deck</p>
+                </div>
+                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
+                  <p className="text-gray-300 text-center">Water Feature</p>
                 </div>
                 <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
                   <p className="text-gray-300 text-center">Wading Pool</p>
+                </div>
+                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
+                  <p className="text-gray-300 text-center">Pool Deck</p>
+                </div>
+                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
+                  <p className="text-gray-300 text-center">Reflective Pool</p>
+                </div>
+                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
+                  <p className="text-gray-300 text-center">Spa Seats</p>
                 </div>
               </div>
             </div>
@@ -1733,39 +1719,21 @@ export default function WResidenceLanding() {
               </div>
             </div>
 
-            {/* Main Image/Video Display */}
+            {/* Main Image Display */}
             <div className="relative max-w-6xl mx-auto mb-8">
-              <div className="relative h-[500px] rounded-xl overflow-hidden shadow-2xl">
-                {projectImages[currentImageIndex] && isYouTubeUrl(projectImages[currentImageIndex]) ? (
-                  <iframe
-                    src={getYouTubeEmbedUrl(projectImages[currentImageIndex])}
-                    title={`The Draycott - Video ${currentImageIndex + 1}`}
-                    className="w-full h-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                  />
-                ) : projectImages[currentImageIndex] && isVideo(projectImages[currentImageIndex]) ? (
-                  <video
-                    src={projectImages[currentImageIndex]}
-                    controls
-                    className="w-full h-full object-cover"
-                    loop
-                    muted
-                  />
-                ) : (
-                  <Image
-                    src={projectImages[currentImageIndex] || "/placeholder.svg"}
-                    alt={`The Draycott - Image ${currentImageIndex + 1}`}
-                    fill
-                    className="object-cover transition-all duration-500"
-                  />
-                )}
+              <div className="relative w-full h-[220px] sm:h-[320px] md:h-[500px] rounded-xl overflow-hidden shadow-2xl">
+                <Image
+                  src={projectImages[currentImageIndex] || "/placeholder.svg"}
+                  alt={`Arina East - Image ${currentImageIndex + 1}`}
+                  fill
+                  className="object-cover transition-all duration-500"
+                />
 
                 
                 <Button
                   variant="outline"
                   size="icon"
-                  className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300 z-10"
+                  className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
                   onClick={prevImage}
                 >
                   <ChevronLeft className="w-5 h-5 text-[#ce001f]" />
@@ -1773,7 +1741,7 @@ export default function WResidenceLanding() {
                 <Button
                   variant="outline"
                   size="icon"
-                  className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300 z-10"
+                  className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
                   onClick={nextImage}
                 >
                   <ChevronRight className="w-5 h-5 text-[#ce001f]" />
@@ -1792,7 +1760,7 @@ export default function WResidenceLanding() {
                 >
                   <ChevronLeft className="w-4 h-4 text-[#ce001f]" />
                 </Button>
-                {projectImages.map((media, index) => (
+                {projectImages.map((image, index) => (
                   <button
                     key={index}
                     className={`relative w-20 h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-110 flex-shrink-0 ${
@@ -1802,37 +1770,12 @@ export default function WResidenceLanding() {
                     }`}
                     onClick={() => setCurrentImageIndex(index)}
                   >
-                    {isYouTubeUrl(media) ? (
-                      <>
-                        <Image
-                          src={getYouTubeThumbnailUrl(media)}
-                          alt={`YouTube thumbnail ${index + 1}`}
-                          fill
-                          className="object-cover"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                          <Play className="w-6 h-6 text-white" />
-                        </div>
-                      </>
-                    ) : isVideo(media) ? (
-                      <>
-                        <video
-                          src={media}
-                          className="w-full h-full object-cover"
-                          muted
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                          <Play className="w-6 h-6 text-white" />
-                        </div>
-                      </>
-                    ) : (
-                      <Image
-                        src={media || "/placeholder.svg"}
-                        alt={`Thumbnail ${index + 1}`}
-                        fill
-                        className="object-cover"
-                      />
-                    )}
+                    <Image
+                      src={image || "/placeholder.svg"}
+                      alt={`Thumbnail ${index + 1}`}
+                      fill
+                      className="object-cover"
+                    />
                   </button>
                 ))}
                 <Button
@@ -1854,7 +1797,7 @@ export default function WResidenceLanding() {
             <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
               <h3 className="text-2xl font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
               <p className="text-lg mb-6 opacity-90">
-                Register now for an exclusive preview of The Draycott
+                Register now for an exclusive preview of Turquoise
               </p>
               <div className="cta-buttons-container justify-center">
                 <Button 
@@ -1895,7 +1838,7 @@ export default function WResidenceLanding() {
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
-            <p className="text-xl text-gray-300">A closer look at The Draycott’s unique circular layout</p>
+            <p className="text-xl text-gray-300">Choose from our thoughtfully designed unit layouts</p>
           </div>
 
           <div className={`max-w-7xl mx-auto transition-all duration-1000 delay-500 ${
@@ -1926,7 +1869,7 @@ export default function WResidenceLanding() {
                   {currentUnit.subtypes.slice(0, 1).map((subtype: any, subtypeIndex: number) => {
                     const images = Array.isArray(subtype.floor_plan_images) && subtype.floor_plan_images.length > 0
                       ? subtype.floor_plan_images
-                      : generateTheDraycottFloorPlanCandidates(subtype, currentUnit.unitType)
+                      : generateTurquoiseFloorPlanCandidates(subtype, currentUnit.unitType)
                     const hasImages = images && images.length > 0
 
                     const prev = () => setFloorPlanIndex((i) => (i - 1 + images.length) % images.length)
@@ -2027,7 +1970,7 @@ export default function WResidenceLanding() {
                 {/* Location Map */}
                 <div className="w-full rounded-lg overflow-hidden shadow-lg">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10349.701782525497!2d103.8269230795184!3d1.3125000439256431!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19f23bc526bd%3A0x5115fa36ae15e587!2sThe%20Draycott!5e0!3m2!1sen!2sid!4v1764742765772!5m2!1sen!2sid"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7575.548231577715!2d103.83160209122002!3d1.2424847850859797!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da1fccfbd8c139%3A0xe9c1bcb9eec33d50!2s51%20Cove%20Dr%2C%20Singapore%20098393!5e0!3m2!1sen!2sid!4v1764582903817!5m2!1sen!2sid"
                     width="600"
                     height="450"
                     style={{ border: 0, width: '100%' }}
@@ -2042,21 +1985,21 @@ export default function WResidenceLanding() {
                     <MapPin className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
                     <p className="font-semibold text-white">Address</p>
-                      <p className="text-sm text-gray-300 font-light">50 Draycott Park, Singapore 259396</p>
+                      <p className="text-sm text-gray-300 font-light">51 Cove Drive, Singapore 098393</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Train className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
                       <p className="font-semibold text-white">MRT</p>
-                      <p className="text-sm text-gray-300 font-light">Newton MRT</p>
+                      <p className="text-sm text-gray-300 font-light">Waterfront LRT</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Car className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
                       <p className="font-semibold text-white">Access</p>
-                      <p className="text-sm text-gray-300 font-light">Easy access to Newton MRT</p>
+                      <p className="text-sm text-gray-300 font-light">Easy access to Harbourfront MRT</p>
                     </div>
                   </div>
                 </div>
@@ -2067,7 +2010,7 @@ export default function WResidenceLanding() {
           {/* Amenities Filter */}
           <Tabs defaultValue="All" className="w-full">
             <TabsList className="flex justify-start gap-2 bg-transparent p-0 mb-6 overflow-x-auto whitespace-nowrap snap-x snap-mandatory">
-              {['All','Transport','Retail & F&B','Nature & Leisure','Education'].map((cat) => (
+              {['All','Transport','Retail & F&B','Nature & Leisure','Education','Healthcare'].map((cat) => (
                 <TabsTrigger 
                   key={cat} 
                   value={cat} 
@@ -2078,12 +2021,13 @@ export default function WResidenceLanding() {
                   {cat === 'Retail & F&B' && <ShoppingBag className="w-4 h-4" />}
                   {cat === 'Nature & Leisure' && <Trees className="w-4 h-4" />}
                   {cat === 'Education' && <GraduationCap className="w-4 h-4" />}
+                  {cat === 'Healthcare' && <Hospital className="w-4 h-4" />}
                   {cat}
                 </TabsTrigger>
               ))}
             </TabsList>
 
-            {['All','Transport','Retail & F&B','Nature & Leisure','Education'].map((cat) => (
+            {['All','Transport','Retail & F&B','Nature & Leisure','Education','Healthcare'].map((cat) => (
               <TabsContent key={cat} value={cat}>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                   {amenities.filter(a => cat === 'All' ? true : a.category === cat).map((amenity, index) => (
@@ -2115,13 +2059,14 @@ export default function WResidenceLanding() {
         </div>
       </section>
 
-      {/* Enhanced Media Section */}
+      {/* Enhanced Media Section (hidden) */}
+      {false && (
       <section id="media" className="pt-4 pb-4 bg-[#1c1c1d] flex items-center justify-center">
         <div className="container mx-auto px-4 text-left">
         <div className={`text-center mb-8 md:mb-16 transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
-            <h2 className="text-2xl md:text-3xl font-bold mb-3 text-white text-center tracking-wide">Explore The Draycott</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-3 text-white text-center tracking-wide">Explore Turquoise</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
@@ -2143,7 +2088,7 @@ export default function WResidenceLanding() {
                   Discover Luxury Living in Sentosa
                 </h3>
                 <p className="text-gray-300 leading-relaxed text-base md:text-lg">
-                  Experience the epitome of luxury living at The Draycott, where modern elegance meets Sentosa's pristine natural beauty. 
+                  Experience the epitome of luxury living at Turquoise, where modern elegance meets Sentosa's pristine natural beauty. 
                   This exclusive development offers a rare opportunity to own a piece of paradise in one of Singapore's most prestigious locations. 
                   Learn more about the unique features and investment potential of this exceptional property.
                 </p>
@@ -2159,7 +2104,7 @@ export default function WResidenceLanding() {
                 <div className="relative h-64 md:h-80 rounded-xl overflow-hidden shadow-2xl">
                   <Image
                     src="/images/penrith/explore-1.webp"
-                    alt="Explore The Draycott"
+                    alt="Explore Turquoise"
                     fill
                     className="object-contain md:object-cover"
                   />
@@ -2175,7 +2120,7 @@ export default function WResidenceLanding() {
             <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
               <h3 className="text-xl md:text-2xl font-normal md:font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
               <p className="text-base md:text-lg mb-6 opacity-90">
-                Register now for an exclusive preview of The Draycott
+                Register now for an exclusive preview of Turquoise
               </p>
               <div className="cta-buttons-container justify-center">
                 <Button 
@@ -2186,10 +2131,11 @@ export default function WResidenceLanding() {
                   Book Showflat Visit
                 </Button>
               </div>
+              </div>
             </div>
           </div>
-        </div>
       </section>
+      )}
 
       {/* Lead Generation Form */}
       <section
@@ -2197,7 +2143,7 @@ export default function WResidenceLanding() {
         className={`py-8 md:py-16 relative bg-cover bg-center section-entrance`}
         data-section-id="lead-form"
         style={{ 
-          backgroundImage: "url('https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-draycott/the-draycott-hero.webp')",
+          backgroundImage: "url('https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/turquoise-hero-background.webp')",
           opacity: animatedSections.has('lead-form') ? 1 : 0,
           transform: animatedSections.has('lead-form') ? 'translateY(0)' : 'translateY(60px)'
         }}
