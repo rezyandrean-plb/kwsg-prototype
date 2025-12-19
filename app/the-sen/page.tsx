@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -42,6 +43,9 @@ import {
   Info,
   X,
   Footprints,
+  Infinity,
+  Maximize2,
+  Landmark,
 } from "lucide-react"
 import { Calendar as CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
@@ -52,12 +56,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
-import {
-  Dialog,
-  DialogContent,
-  DialogOverlay,
-  DialogTitle,
-} from "@/components/ui/dialog"
 
 // Add custom CSS animations
 const customStyles = `
@@ -571,7 +569,7 @@ function LeadGenerationForm({
     <Card className={`bg-white/20 backdrop-blur-sm text-white p-6 md:p-12 shadow-2xl border-0 rounded-xl hover:shadow-3xl transition-all duration-700 hover:scale-105`}>
       <h2 className="text-4xl font-bold mb-4 text-white text-center">Book Your Showflat Visit Today</h2>
       <p className="text-md mb-8 opacity-90 text-white text-center">
-        Be the first to own a home that combines convenience, luxury, and nature. <br /> Register now for an exclusive preview of Turquoise.
+        Be the first to own a home that combines convenience, luxury, and nature. <br /> Register now for an exclusive preview of The Sen.
       </p>
       {submitError && (
         <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
@@ -761,7 +759,7 @@ function LeadGenerationForm({
   )
 }
 
-export default function WResidenceLanding() {
+export default function Artisan8Landing() {
   const { toast } = useToast()
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [selectedFloorPlan, setSelectedFloorPlan] = useState("1br")
@@ -771,12 +769,36 @@ export default function WResidenceLanding() {
   const [animatedSections, setAnimatedSections] = useState<Set<string>>(new Set())
   const [showSiteMapPopup, setShowSiteMapPopup] = useState(false)
   const [unitsActiveTab, setUnitsActiveTab] = useState(0)
+  const unitTabsScrollRef = useRef<HTMLDivElement | null>(null)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(false)
+  
+  // Floor plan fullscreen dialog state
+  const [isFloorPlanDialogOpen, setIsFloorPlanDialogOpen] = useState(false)
+  const [currentFloorPlanImage, setCurrentFloorPlanImage] = useState<string | null>(null)
+
+  useEffect(() => {
+    const el = unitTabsScrollRef.current
+    if (!el) return
+    const updateScrollState = () => {
+      const left = el.scrollLeft
+      const maxLeft = el.scrollWidth - el.clientWidth
+      setCanScrollLeft(left > 0)
+      setCanScrollRight(left < maxLeft - 1)
+    }
+    updateScrollState()
+    el.addEventListener('scroll', updateScrollState, { passive: true } as any)
+    window.addEventListener('resize', updateScrollState)
+    return () => {
+      el.removeEventListener('scroll', updateScrollState as any)
+      window.removeEventListener('resize', updateScrollState)
+    }
+  }, [])
   const [floorPlanIndex, setFloorPlanIndex] = useState(0)
-  const [selectedFloorPlanImage, setSelectedFloorPlanImage] = useState<string | null>(null)
 
   useEffect(() => {
     // Set page title
-    document.title = 'Turquoise - KW Singapore'
+    document.title = 'The Sen - KW Singapore'
     
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0)
@@ -821,125 +843,69 @@ export default function WResidenceLanding() {
     setFloorPlanIndex(0)
   }, [unitsActiveTab])
 
-  // Site Plan images for carousel (replace with Turquoise assets when ready)
-  const sitePlanImages: string[] = [
-    "/images/w-residences/site-plan/wmv-site-plan-01.webp",
-    "/images/w-residences/site-plan/wmv-site-plan-02.webp",
-    "/images/w-residences/site-plan/wmv-site-plan-03.webp",
-    "/images/w-residences/site-plan/wmv-site-plan-04.webp"
+  
+  // Site Plan images for carousel
+  const sitePlanImages = [
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/site-plan/OrchardSophia-Site-Plan-01.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/site-plan/OrchardSophia-Site-Plan-02.jpg"
   ]
-
+  
   const [projectImages, setProjectImages] = useState<string[]>([
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/IMG_3773.jpg",
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/View-from-Master-Balcony.jpg",
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Bathroom-B.jpg",
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Common-Bedroom-A01.jpg",
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Dry-Kitchen01.jpg",
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Dry-Kitchen03.jpg",
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Elevator.jpg",
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Living-Room03.jpg",
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Master-Balcony-03.jpg",
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Master-Balcony-04.jpg",
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Master-Bath-03.jpg",
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Master-Bath01.jpg",
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Rear-Balcony-01.jpg",
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Wet-Kitchen02.jpg",
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/gallery/Window.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/gallery/Front+Hero.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/gallery/Lobby.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/gallery/Rooftop.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/gallery/Fine+Dining.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/gallery/Spa+Pool.jpg",
   ])
 
 
   const amenities = [
     // TRANSPORT
-    { icon: <Train className="w-6 h-6" />, name: "Waterfront LRT", category: "Transport" },
-    { icon: <Train className="w-6 h-6" />, name: "Imbiah LRT", category: "Transport" },
-    { icon: <Train className="w-6 h-6" />, name: "Beach LRT", category: "Transport" },
-    { icon: <Train className="w-6 h-6" />, name: "Sentosa LRT", category: "Transport" },
-    {
-      icon: <Train className="w-6 h-6" />,
-      name: (
-        <>
-          Harbourfront MRT <br />
-          (North‑East Line + Circle Line)
-        </>
-      ),
-      category: "Transport",
-    },
-    {
-      icon: <Car className="w-6 h-6" />,
-      name: (
-        <>
-          AYE <br />
-          (Ayer Rajah Expressway)
-        </>
-      ),
-      category: "Transport",
-    },
-    {
-      icon: <Car className="w-6 h-6" />,
-      name: (
-        <>
-          CTE <br />
-          (Central Expressway)
-        </>
-      ),
-      category: "Transport",
-    },
+    { icon: <Train className="w-6 h-6" />, name: "Dhoby Ghaut MRT", distance: "8-Min Walk", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "City Hall MRT", distance: "1-Stop MRT", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Raffles Place MRT", distance: "2-Stops MRT", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Orchard MRT", distance: "2-Stops MRT", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Bayfront MRT", distance: "4-Stops MRT", category: "Transport" },
+    { icon: <Car className="w-6 h-6" />, name: "CTE (Central Expressway)", distance: "3-Min Drive", category: "Transport" },
+    { icon: <Car className="w-6 h-6" />, name: "Nicoll Highway", distance: "4-Min Drive", category: "Transport" },
 
     // RETAIL & F&B
-    {
-      icon: <ShoppingBag className="w-6 h-6" />,
-      name: (
-        <>
-          Cold Storage <br />
-          (Sentosa Cove)
-        </>
-      ),
-      category: "Retail & F&B",
-    },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Harbourfront Centre", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "VivoCity", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Orchard Road Shopping Belt", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Seah Im Food Centre", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Wilkie Edge", distance: "4-Min Walk", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "The Cathay", distance: "5-Min Walk", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "GR.iD", distance: "5-Min Walk", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Plaza Singapura", distance: "5-Min Walk", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "313@Somerset", distance: "1-Stop MRT", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "ION Orchard", distance: "2-Stops MRT", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Marina Bay Sands", distance: "4-Stops MRT", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Bugis+", distance: "2-Min Drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Bugis Junction", distance: "2-Min Drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Ngee Ann City", distance: "6-Min Drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "The Paragon", distance: "7-Min Drive", category: "Retail & F&B" },
 
     // NATURE & LEISURE
-    { icon: <Trees className="w-6 h-6" />, name: "Sentosa Golf Club", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "Spa Botanica", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Mount Emily Park", distance: "3-Min Walk", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Gardens By The Bay", distance: "3-Stops MRT", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Singapore Botanic Gardens", distance: "4-Stops MRT", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Fort Canning Park", distance: "6-Min Drive", category: "Nature & Leisure" },
+
+    // CITY HUBS (Cultural & Arts Institutions)
+    { icon: <Landmark className="w-6 h-6" />, name: "National Library", distance: "2-Min Drive", category: "Cultural & Arts Institutions" },
+    { icon: <Landmark className="w-6 h-6" />, name: "National Museum of Singapore", distance: "4-Min Drive", category: "Cultural & Arts Institutions" },
+    { icon: <Landmark className="w-6 h-6" />, name: "Singapore Art Museum", distance: "4-Min Drive", category: "Cultural & Arts Institutions" },
 
     // EDUCATION
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Quayside Isle Preparatory School", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Islander Pre-School", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Cantonment Primary School", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "CHIJ (Kellock) Primary School", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Radin Mas Primary School", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "CHIJ Saint Theresa's Convent", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Anglo-Chinese Junior College", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Marketing Institute of Singapore", category: "Education" },
-    {
-      icon: <GraduationCap className="w-6 h-6" />,
-      name: (
-        <>
-          Etonhouse International Pre-School <br />
-          (Sentosa)
-        </>
-      ),
-      category: "Education",
-    },
-    {
-      icon: <GraduationCap className="w-6 h-6" />,
-      name: (
-        <>
-          EIS International Pre-School <br />
-          (Sentosa)
-        </>
-      ),
-      category: "Education",
-    },
-
-    // HEALTHCARE
-    { icon: <Hospital className="w-6 h-6" />, name: "Fullerton Health@Psa Floatel", category: "Healthcare" },
-    { icon: <Hospital className="w-6 h-6" />, name: "Village Hotel Sentosa/The Outpost Hotel", category: "Healthcare" },
-    { icon: <Hospital className="w-6 h-6" />, name: "Village Hotel Sentosa Sif", category: "Healthcare" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "St Margaret's Pri Sch", distance: "1-Min Walk", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Nanyang Academy of Fine Arts", distance: "5-Min Walk", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "School of the Arts (SOTA)", distance: "6-Min Walk", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "LASALLE College of the Arts", distance: "7-Min Walk", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Singapore Management University (SMU)", distance: "8-Min Walk", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Anglo-Chinese School Junior (within 1km)", distance: "3-Min Drive", category: "Education" },
   ]
+
+  // Compute available amenity categories dynamically in a preferred order
+  const amenityCategoryOrder = ['Transport', 'Retail & F&B', 'Cultural & Arts Institutions', 'Nature & Leisure', 'Education', 'Healthcare']
+  const availableAmenityCategories = amenityCategoryOrder.filter((category) => amenities.some((a) => a.category === category))
+  const tabsCategories = ['All', ...availableAmenityCategories]
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % projectImages.length)
@@ -949,7 +915,7 @@ export default function WResidenceLanding() {
     setCurrentImageIndex((prev) => (prev - 1 + projectImages.length) % projectImages.length)
   }
 
-  const scrollToLeadForm: () => void = () => {
+  const scrollToLeadForm = () => {
     const leadFormSection = document.getElementById('lead-form')
     if (leadFormSection) {
       leadFormSection.scrollIntoView({ 
@@ -1035,8 +1001,8 @@ export default function WResidenceLanding() {
   const [siteMapSubmitSuccess, setSiteMapSubmitSuccess] = useState(false)
   const [siteMapSubmitError, setSiteMapSubmitError] = useState<string | null>(null)
 
-  // Build likely floor-plan filenames from unit type/subtype to match files placed in public/images/turquoise/floor-plan
-  const generateTurquoiseFloorPlanCandidates = (subtype: any, unitType: string) => {
+  // Build likely floor-plan filenames from unit type/subtype to match files placed in public/images/penrith/floor-plan
+  const generatePenrithFloorPlanCandidates = (subtype: any, unitType: string) => {
     const base = '/images/w-residences/floor-plan/'
     const candidates: string[] = []
 
@@ -1099,22 +1065,100 @@ export default function WResidenceLanding() {
       unitType: "1-Bedroom",
       subtypes: [
         {
+          subtype: "1-Bedroom",
+          bedrooms: 1,
+          bathrooms: 1,
+          size: "441 - 484 sqft",
+          price: "From $1,315,000",
+          currency: "SGD",
+          total: 15,
+          available: 0,
+          status: 0,
+          floor_plan_images: [
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/1BD-A1.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/1BD-A2a.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/1BD-A2b.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/1BD-A3.png",
+          ],
+        },
+      ],
+    },
+    {
+      unitType: "2-Bedroom",
+      subtypes: [
+        {
+          subtype: "2-Bedroom",
+          bedrooms: 2,
+          bathrooms: 2,
+          size: "570 - 710 sqft",
+          price: "From $1,593,000",
+          currency: "SGD",
+          total: 55,
+          available: 7,
+          status: 0,
+          floor_plan_images: [
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-B1a.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-B1b.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-B2.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C1a.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C1b.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C2a.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C2b.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C3a.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C3b.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C4.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C5a.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C5b.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C6a.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C6b.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C7a.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C7b.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C8.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C9a.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C9b.png",
+          ],
+        },
+      ],
+    },
+    {
+      unitType: "3-Bedroom",
+      subtypes: [
+        {
           subtype: "3-Bedroom",
           bedrooms: 3,
-          bathrooms: 3,
-          size: "3,111 sqft",
-          price: "From $4,697,000",
+          bathrooms: 2,
+          size: "710 - 764 sqft",
+          price: "From $2,100,000",
           currency: "SGD",
-          total: 1,
-          available: 1,
-          status: 1,
+          total: 3,
+          available: 0,
+          status: 0,
           floor_plan_images: [
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/Turquoise_06-05_FloorPlan.jpeg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/3BD-D1.png",
           ],
-        }
-      ]
-    }
-    
+        },
+      ],
+    },
+    {
+      unitType: "3-Bedroom (Dual Key)",
+      subtypes: [
+        {
+          subtype: "3-Bedroom (Dual Key)",
+          bedrooms: 3,
+          bathrooms: 2,
+          size: "829 - 840 sqft",
+          price: "From $2,252,028",
+          currency: "SGD",
+          total: 5,
+          available: 0,
+          status: 0,
+          floor_plan_images: [
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/3BD-Dual+Key+-2a.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/3BD-Dual+Key+-2b.png",
+          ],
+        },
+      ],
+    },
   ]
 
   const processUnitAvailabilityData = (unitPricing: any[]) => {
@@ -1166,7 +1210,7 @@ export default function WResidenceLanding() {
       // Ensure only the date (no time) is submitted for preferredDate
       const preferredDateOnly = preferredDate ? format(preferredDate, 'yyyy-MM-dd') : undefined
 
-      const response = await fetch('/api/turquoise-lead-form', {
+      const response = await fetch('/api/orchard-sophia-lead-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1197,7 +1241,7 @@ export default function WResidenceLanding() {
         // Show success toast
         toast({
           title: "Request Submitted Successfully!",
-          description: "Thank you for your interest in Turquoise! We have sent you a confirmation email and our team will contact you soon to arrange your showflat visit.",
+          description: "Thank you for your interest in The Sen! We have sent you a confirmation email and our team will contact you soon to arrange your showflat visit.",
           variant: "default",
         })
         
@@ -1259,7 +1303,7 @@ export default function WResidenceLanding() {
 
     try {
       // Submit the form with the reCAPTCHA token
-      const response = await fetch('/api/turquoise-site-map-request', {
+      const response = await fetch('/api/orchard-sophia-site-map-request', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1362,12 +1406,6 @@ export default function WResidenceLanding() {
                   Project Info
                 </button>
                 <button 
-                  onClick={() => scrollToSection('facilities')}
-                  className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer md:hidden lg:inline-block"
-                >
-                  Facilities
-                </button>
-                <button 
                   onClick={scrollToGallery}
                   className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
                 >
@@ -1379,18 +1417,21 @@ export default function WResidenceLanding() {
                 >
                   Floor Plans
                 </button>
-                <button 
-                  onClick={scrollToNearbyAmenities}
-                  className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
-                >
-                  Location
-                </button>
                 {/* <button 
                   onClick={scrollToMedia}
                   className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
                 >
                   Explore
                 </button> */}
+                <button 
+                  onClick={scrollToNearbyAmenities}
+                  className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
+                >
+                  Location
+                </button>
+                {/* <a href="#editorial" className="text-white hover:text-[#ce001f] transition-colors duration-300">
+                  Editorial
+                </a> */}
                 <Button 
                   className="bg-[#ce001f] hover:bg-[#b3001a] transition-colors duration-300"
                   onClick={scrollToLeadForm}
@@ -1407,8 +1448,8 @@ export default function WResidenceLanding() {
         {/* Background elements */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/turquoise-hero-background.webp"
-            alt="Turquoise Hero"
+            src="https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/orchard-sophia-hero.jpg"
+            alt="The Sen Hero"
             fill
             className="object-cover"
             priority
@@ -1425,7 +1466,7 @@ export default function WResidenceLanding() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Badge className="bg-[#ce001f] text-white px-4 py-2 text-sm font-medium rounded-full animate-pulse">
-                LAST UNIT!
+                LIMITED UNITS
               </Badge>
             </div>
 
@@ -1434,21 +1475,20 @@ export default function WResidenceLanding() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-2 sm:mb-2 md:mb-2 lg:mb-4 leading-tight">
-                <span className={`transition-all duration-1000 delay-900 ${isVisible ? 'animate-fade-in-left' : ''}`}>TURQUOISE
-                </span>
+                <span className={`transition-all duration-1000 delay-900 ${isVisible ? 'animate-fade-in-left' : ''}`}>THE SEN</span>
               </h1>
 
               <div className={`flex items-center mb-2 sm:mb-2 md:mb-2 lg:mb-4 transition-all duration-700 delay-1300 ${
                 isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
               }`}>
                 <div className="w-12 h-px bg-[#ce001f] mr-4"></div>
-                <p className="text-lg text-gray-200 font-light">D4 - Cove Drive, Sentosa Cove</p>
+                <p className="text-lg text-gray-200 font-light">District 21 (Upper Bukit Timah)</p>
               </div>
 
               <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
-                The Only Place in Singapore With Both Marina & <span className="hidden md:inline"><br /></span> Golf Course Views
+                 Experience Unrivalled Urban Sophistication.
               </p>
             </div>
 
@@ -1480,13 +1520,13 @@ export default function WResidenceLanding() {
         </div>
 
         {/* Disclaimer Text */}
-        {/* <div className={`absolute bottom-2 right-2 sm:bottom-4 sm:right-4 transition-all duration-1000 delay-2000 ${
+        <div className={`absolute bottom-2 right-2 sm:bottom-4 sm:right-4 transition-all duration-1000 delay-2000 ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
         }`}>
           <p className="text-[9px] sm:text-xs text-white/70 bg-black/30 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-2 rounded-lg whitespace-nowrap">
-            Images are for illustrative purposes only and may <br className="sm:hidden"/> not reflect the final design of Turquoise.
+            Images are for illustrative purposes only and may <br className="sm:hidden"/> not reflect the final design of The Sen.
           </p>
-        </div> */}
+        </div>
       </section>
 
       {/* Enhanced Project Information Section */}
@@ -1500,115 +1540,35 @@ export default function WResidenceLanding() {
         }}
       >
         <div className="container mx-auto px-4">
-          {/* Detailed Information Grid */}
-          <div className={`w-full mb-12 transition-all duration-1000 delay-500 ${
-            animatedSections.has('project-info') ? 'animate-fade-in-up' : ''
-          }`} style={{
-            opacity: animatedSections.has('project-info') ? 1 : 0,
-            transform: animatedSections.has('project-info') ? 'translateY(0)' : 'translateY(50px)'
-          }}>
-            {/* Title */}
-            <div className="mb-6">
-              <div className="flex justify-between items-start mb-2">
-                <div>
-                  <h3 className="text-3xl font-bold text-white mb-2">Property Details</h3>
-                  <div className="w-16 h-1 bg-[#ce001f] rounded"></div>
-                </div>
-                <div className="text-right">
-                  <p className="text-white text-2xl font-medium">$ 4,697,000</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Two Column Layout */}
-            <div className="grid md:grid-cols-2 gap-8 border-gray-700 bg-[#18191b] rounded-lg p-6 md:p-4 lg:p-8">
-              {/* Left Column */}
-              <div className="space-y-6">
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Project Name:</span>
-                  <span className="font-semibold text-white text-right">Turquoise</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Address:</span>
-                  <span className="font-semibold text-white text-right">51 Cove Drive, Singapore 098393</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">District:</span>
-                  <span className="font-semibold text-white text-right">D04 - Sentosa / Harbourfront</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Nearest MRT:</span>
-                  <span className="font-semibold text-white text-right">Waterfront LRT</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Developer:</span>
-                  <span className="font-semibold text-white text-right">Ho Bee Cove Pte Ltd</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Tenure:</span>
-                  <span className="font-semibold text-white text-right">99 Years</span>
-                </div>
-              </div>
-
-              {/* Right Column */}
-              <div className="space-y-6">
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Unit No.:</span>
-                  <span className="font-semibold text-white text-right">#06-05</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Site Area:</span>
-                  <span className="font-semibold text-white text-right">3,111 sqft</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Property Type:</span>
-                  <span className="font-semibold text-white text-right">3-Bedroom</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Bedroom:</span>
-                  <span className="font-semibold text-white text-right">3</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">Bathroom:</span>
-                  <span className="font-semibold text-white text-right">3</span>
-                </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="font-medium text-gray-300">TOP:</span>
-                  <span className="font-semibold text-white text-right">2010</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('project-info') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-bold mb-3 text-white text-center tracking-wide">Rare waterway frontage with unblocked waterway views right outside</h2>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">The Pinnacle of Contemporary Living in the City</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
-            <p className="text-lg text-gray-300 max-w-4xl mx-auto">
-              Turquoise is a rare waterway-front residence offering calm, space, and privacy within Singapore’s premier marina enclave. 
-              The environment is defined by gentle waters, curated landscaping, and an overall sense of stillness. <br /> <br></br>
-              With waterway frontage on one side and the Sentosa Golf Club behind, the surroundings are peaceful and scenic. Private lift lobbies, Miele kitchenware, and quality bathroom fittings complete the sense of refined living. <br /> <br></br>
-              ONE°15 Marina, Quayside Isle, and the island’s beachfront attractions are just minutes away—a combination that makes Turquoise both practical and premium.
+            <p className="text-sm md:text-xl text-gray-300 max-w-4xl mx-auto">
+            The Sen offers something few can: a 99-year leasehold home in Upper Bukit Timah, with 1- to 4-bedroom + Study residences built for the modern dweller. This distinguished project by AGA Architect Pte Ltd is strategically located in District 21, 
+            ensuring seamless access to Singapore's premier attractions and business hubs. 
+            Live amidst luxury, where city vibrancy and comfort come together effortlessly.
             </p>
           </div>
 
           {/* Feature Cards */}
-          <div className="flex flex-wrap gap-6 lg:gap-4 mb-12 justify-center">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {[
-              { icon: <Footprints className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Immediate access to <strong>ONE°15 Marina</strong> giving residents", desc: "waterfront dining, yacht club facilities, and coastal convenience" },
-              { icon: <Home className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Ultra-spacious Large-format layouts built for", desc: "true livability, privacy, and everyday comfort" },
-              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Luxury Interior finishes featuring", desc: "<strong>Miele kitchenware</strong> and <strong>Laufen ILBAGNO ALESSI</strong> bathroom fittings" },
-              { icon: <MountainSnow className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "<strong>Full resort facilities</strong> including", desc: "a pool, gym, steam rooms, and landscaped relaxation decks" },
-              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "A Prestigious <strong>Sentosa Cove Address</strong> Offering", desc: "gated exclusivity in Singapore's only marina residential district" },
-              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Fast <strong>connectivity to HarbourFront</strong> enabling", desc: "quick and easy access to the mainland and the CBD" },
-              { icon: <ChartLine className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "Long-term upside supported by the upcoming", desc: "<strong>Sentosa–Brani</strong> transformation plan" }
+              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Well-connected to <strong>Upper Bukit Timah</strong> — a prime residential location" },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Located in <strong>District 21</strong> — a prime residential location" },
+              { icon: <BedDouble className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Exclusive collection of <strong>347</strong> 1- to 4-bedroom + Study units" },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Developed by <strong>SL Capital (8) Pte Ltd</strong>, blending beauty and functionality" },
+              { icon: <Home className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Premium fittings and appliances from <strong>Duravit</strong>, <strong>Hansgrohe</strong>, <strong>SMEG</strong>, and more" },
+              { icon: <Eye className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Panoramic views of <strong>Upper Bukit Timah</strong>, the Singapore skyline, and surrounding greenery" },
+              { icon: <MountainSnow className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "First-class facilities including a lap pool, spa pool, rooftop dining, and fitness areas" },
+              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "<strong>99-year leasehold</strong> commencing from 20 January 2025 | Expected TOP: <strong>August 2029</strong>" }
             ].map((card, index) => (
               <Card 
                 key={index} 
-                className={`basis-full md:basis-[calc(50%-12px)] lg:basis-[calc(25%-12px)] text-center hover:shadow-lg transition-all duration-700 border-gray-700 bg-[#18191b] hover:scale-105 hover-lift stagger-animation ${
+                className={`text-center hover:shadow-lg transition-all duration-700 border-gray-700 bg-[#18191b] hover:scale-105 hover-lift stagger-animation ${
                   animatedSections.has('project-info') ? 'animate' : ''
                 }`} 
                 style={{ 
@@ -1619,86 +1579,238 @@ export default function WResidenceLanding() {
               >
                 <CardContent className="p-6">
                   {card.icon}
-                  {card.title && (
-                    <h3 className="text-white font-normal mb-2 text-lg" dangerouslySetInnerHTML={{ __html: card.title }}></h3>
-                  )}
-                  {card.desc && (
-                    <p className="text-gray-300" dangerouslySetInnerHTML={{ __html: card.desc }}></p>
-                  )}
+                  <p className="text-gray-300" dangerouslySetInnerHTML={{ __html: card.desc }}></p>
                 </CardContent>
               </Card>
             ))}
+          </div>          
+
+          {/* Detailed Information Grid */}
+          <div className={`grid lg:grid-cols-10 gap-8 mb-12 transition-all duration-1000 delay-500 ${
+            animatedSections.has('project-info') ? 'animate-fade-in-up' : ''
+          }`} style={{
+            opacity: animatedSections.has('project-info') ? 1 : 0,
+            transform: animatedSections.has('project-info') ? 'translateY(0)' : 'translateY(50px)'
+          }}>
+            {/* Project Details */}
+            <Card className="lg:col-span-4 border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
+              <CardHeader>
+                <CardTitle className="text-[#ce001f] flex items-center">
+                  <Building className="w-5 h-5 mr-2" />
+                  Project Information
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Project Name:</span>
+                  <span className="font-semibold text-white text-right">The Sen</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Developer:</span>
+                  <span className="font-semibold text-white text-right">SL Capital (8) Pte Ltd</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Tenure:</span>
+                  <span className="font-semibold text-white text-right">99-year leasehold commencing from 20 January 2025</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">District:</span>
+                  <span className="font-semibold text-white text-right">21 (Upper Bukit Timah)</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Address:</span>
+                  <span className="font-semibold text-white text-right">222-230 Jalan Jurong Kechil, Singapore.</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Site Area:</span>
+                  <span className="font-semibold text-white text-right">19,245.4 sqm</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Blocks:</span>
+                  <span className="font-semibold text-white text-right">5 Blocks</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Storey:</span>
+                  <span className="font-semibold text-white text-right">10</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Total Units:</span>
+                  <span className="font-semibold text-white text-right">347</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Unit Mix:</span>
+                  <span className="font-semibold text-white text-right">1-to 4-bedroom + Study</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Architect:</span>
+                  <span className="font-semibold text-white text-right">AGA Architect Pte Ltd</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">Landscape:</span>
+                  <span className="font-semibold text-white text-right">EcoPlan Asia Pte Ltd</span>
+                </div>
+                <div className="flex justify-between pb-1">
+                  <span className="font-medium text-gray-300">TOP:</span>
+                  <span className="font-semibold text-white text-right">August 2029</span>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Site Plan & Floor Plans */}
+            <Card className="lg:col-span-6 border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500 max-w-4xl mx-auto">
+              <CardHeader>
+                <CardTitle className="text-[#ce001f] flex items-center">
+                  <Ruler className="w-5 h-5 mr-2" />
+                  Plans & Layout
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="font-semibold text-white">Site Plan</h4>
+                    </div>
+                    <div className="relative">
+                      <Carousel className="w-full">
+                        <CarouselContent>
+                          {sitePlanImages.map((image, index) => (
+                            <CarouselItem key={index}>
+                              <div className="relative">
+                                <Image
+                                  src={image}
+                                  alt={`The Sen Site Plan ${index + 1}`}
+                                  width={800}
+                                  height={500}
+                                  quality={90}
+                                  className="w-full rounded mb-3 object-contain"
+                                />
+                              </div>
+                            </CarouselItem>
+                          ))}
+                        </CarouselContent>
+                        <CarouselPrevious className="left-2 bg-white/90 hover:bg-white text-gray-800 border-gray-300 shadow-lg" />
+                        <CarouselNext className="right-2 bg-white/90 hover:bg-white text-gray-800 border-gray-300 shadow-lg" />
+                      </Carousel>
+                      {/* Carousel indicators */}
+                      <div className="flex justify-center space-x-2 mt-3">
+                        {sitePlanImages.map((_, index) => (
+                          <button
+                            key={index}
+                            className="w-2 h-2 rounded-full bg-gray-400 hover:bg-gray-300 transition-colors duration-200"
+                            aria-label={`Go to slide ${index + 1}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-300 mb-3 mt-3">
+                      View the overall development layout and facilities distribution
+                    </p>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full bg-[#ce001f] hover:bg-[#ce001f]/20 hover:text-white transition-all duration-300 border-gray-500 text-gray-300"
+                      onClick={() => setShowSiteMapPopup(true)}
+                    >
+                      <Download className="w-4 h-4 mr-2" />
+                      Request Site Plan
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
-          {/* Facilities Section */}
-          <div 
+          
+
+          {/* Call to Action */}
+          <div className={`text-center mb-4 transition-all duration-1000 delay-500 ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+          }`}>
+            <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
+              <h3 className="text-2xl font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
+              <p className="text-lg mb-6 opacity-90">
+                Register now for an exclusive preview of The Sen 
+              </p>
+              <div className="cta-buttons-container justify-center">
+                <Button 
+                  className="bg-white text-[#ce001f] hover:bg-gray-100 px-8 py-3 text-lg hover:scale-105 transition-all duration-300"
+                  onClick={scrollToLeadForm}
+                >
+                  <Calendar className="w-5 h-5 mr-2" />
+                  Book Showflat Visit
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Facilities */}
+      <section 
             id="facilities"
-            className="py-16 section-entrance"
+            className="py-16 bg-[#1c1c1d] section-entrance"
             data-section-id="facilities"
             style={{ 
-              opacity: animatedSections.has('facilities') ? 1 : 0,
-              transform: animatedSections.has('facilities') ? 'translateY(0)' : 'translateY(60px)'
+              opacity: animatedSections.has('facilities') ? 1 : 1,
+              transform: animatedSections.has('facilities') ? 'translateY(0)' : 'translateY(0)'
             }}
           >
-            <div className={`mb-20 transition-all duration-1000 delay-700 ${
-              isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-            }`}>
-              <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-3 text-white text-center tracking-wide">Facilities</h2>
+            <div className="container mx-auto px-4">
+              <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
+                animatedSections.has('facilities') ? 'animate-slide-in-top' : 'animate-slide-in-top'
+              }`}>
+                <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Facilities</h2>
                 <div className="flex justify-center mb-4">
                   <div className="w-16 h-1 bg-[#ce001f] rounded" />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
-                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                  <p className="text-gray-300 text-center">Guard House</p>
-                </div>
-                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                  <p className="text-gray-300 text-center">Garden Walk</p>
-                </div>
-                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                  <p className="text-gray-300 text-center">Entrance Water Feature</p>
-                </div>
-                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                  <p className="text-gray-300 text-center">Sanctuary Pavilion</p>
-                </div>
-                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                  <p className="text-gray-300 text-center">Cabana & BBQ Deck</p>
-                </div>
-                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                  <p className="text-gray-300 text-center">Waterfront Promenade</p>
-                </div>
-                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                  <p className="text-gray-300 text-center">Entrance Driveway</p>
-                </div>
-                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                  <p className="text-gray-300 text-center">Clubhouse & Gymnasium</p>
-                </div>
-                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                  <p className="text-gray-300 text-center">Entertainment Deck</p>
-                </div>
-                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                  <p className="text-gray-300 text-center">Main Pool Deck</p>
-                </div>
-                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                  <p className="text-gray-300 text-center">Water Feature</p>
-                </div>
-                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                  <p className="text-gray-300 text-center">Wading Pool</p>
-                </div>
-                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                  <p className="text-gray-300 text-center">Pool Deck</p>
-                </div>
-                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                  <p className="text-gray-300 text-center">Reflective Pool</p>
-                </div>
-                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                  <p className="text-gray-300 text-center">Spa Seats</p>
-                </div>
+              <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 transition-all duration-1000 delay-500 max-w-4xl mx-auto ${
+                animatedSections.has('facilities') ? 'animate-fade-in-up' : 'animate-fade-in-up'
+              }`} style={{
+                opacity: animatedSections.has('facilities') ? 1 : 1,
+                transform: animatedSections.has('facilities') ? 'translateY(0)' : 'translateY(0)'
+              }}>
+                {/* Rooftop */}
+                <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
+                  <CardHeader>
+                    <CardTitle className="text-white text-[20px]">Rooftop</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="list-disc list-inside space-y-1 text-gray-300 text-[16px]">
+                      <li>Spa Pool</li>
+                      <li>Changing Room</li>
+                      <li>Social Lounge</li>
+                      <li>Outdoor Fitness</li>
+                      <li>Alfresco BBQ</li>
+                      <li>Social Lawn</li>
+                      <li>Rooftop Bar</li>
+                      <li>Rooftop Dining</li>
+                      <li>Reading Lounge</li>
+                      <li>Generator Set</li>
+                      <li>Rooftop Water Tank</li>
+                    </ul>
+                  </CardContent>
+                </Card>
+
+                {/* 1st floor */}
+                <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
+                  <CardHeader>
+                    <CardTitle className="text-white text-[20px]">1st floor</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="list-disc list-inside space-y-1 text-gray-300 text-[16px]">
+                      <li>Lap Pool</li>
+                      <li>Pool Deck</li>
+                      <li>Side Gate</li>
+                      <li>Guard House</li>
+                      <li>Bin Centre</li>
+                    </ul>
+                  </CardContent>
+                </Card>
               </div>
             </div>
-          </div>
+          </section>
 
           {/* Image Gallery Section */}
           <div 
@@ -1708,7 +1820,7 @@ export default function WResidenceLanding() {
             }`}
           >
             <div className="text-center mb-8">
-              <h3 className="text-3xl font-bold mb-3 text-white text-center tracking-wide">Project Gallery</h3>
+              <h3 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Project Gallery</h3>
               <div className="flex justify-center mb-4">
                 <div className="w-16 h-1 bg-[#ce001f] rounded" />
               </div>
@@ -1790,14 +1902,430 @@ export default function WResidenceLanding() {
             </div>
           </div>  
 
+      {/* Floor Plans Section */}
+      <section 
+        id="floor-plans"
+        className="py-16 bg-[#242728] section-entrance"
+        data-section-id="floor-plans"
+        style={{ 
+          opacity: animatedSections.has('floor-plans') ? 1 : 0,
+          transform: animatedSections.has('floor-plans') ? 'translateY(0)' : 'translateY(60px)'
+        }}
+      >
+        <div className="container mx-auto px-4">
+          <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
+            animatedSections.has('floor-plans') ? 'animate-slide-in-top' : ''
+          }`}>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Floor Plans & Pricing</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-[#ce001f] rounded" />
+            </div>
+            <p className="text-xl text-gray-300">Discover your perfect home from our collection of meticulously designed residences</p>
+          </div>
+
+          <div className={`max-w-7xl mx-auto transition-all duration-1000 delay-500 ${
+            animatedSections.has('floor-plans') ? 'animate-fade-in-up' : ''
+          }`} style={{
+            opacity: animatedSections.has('floor-plans') ? 1 : 0,
+            transform: animatedSections.has('floor-plans') ? 'translateY(0)' : 'translateY(50px)'
+          }}>
+            {/* Tabs for unit types */}
+            <div className="w-full px-2 sm:px-6 pt-4 sm:pt-6 pb-2 border-b border-gray-700 mb-6 sm:mb-8">
+              <div className="relative">
+                <div id="unit-type-tabs-scroll" ref={unitTabsScrollRef as any} className="flex flex-nowrap gap-2 justify-start md:justify-center overflow-x-auto whitespace-nowrap scrollbar-none md:scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent snap-x snap-mandatory -mx-2 px-2" style={{ WebkitOverflowScrolling: 'touch' }}>
+                {(() => {
+                  const dynamicUnitData = processUnitAvailabilityData(project?.unitPricing || [])
+                  
+                  // If no API data, show message
+                  if (dynamicUnitData.length === 0) {
+                    return (
+                      <div className="col-span-full text-center py-8">
+                        <p className="text-gray-400">No unit information available at the moment.</p>
+                        <p className="text-sm text-gray-500 mt-2">Please check back later or contact our agents for more details.</p>
+                      </div>
+                    )
+                  }
+                  
+                  return dynamicUnitData.map((unit, idx) => {
+                    // Calculate total available units for this type
+                    const totalAvailable = unit.subtypes.reduce((sum: number, subtype: any) => sum + (typeof subtype.available === 'number' ? subtype.available : 0), 0)
+                    const totalUnits = unit.subtypes.reduce((sum: number, subtype: any) => sum + (typeof subtype.total === 'number' ? subtype.total : 0), 0)
+                    
+                    return (
+                      <button
+                        key={unit.unitType}
+                        onClick={() => setUnitsActiveTab(idx)}
+                        className={`px-2 sm:px-4 py-2 rounded-full font-light flex items-center gap-1 sm:gap-2 text-xs sm:text-sm transition-colors border focus:outline-none whitespace-nowrap min-w-max snap-start ${unitsActiveTab === idx ? 'bg-gray-800 border-[#ce001f] text-white' : 'bg-[#18191b] border-gray-700 text-gray-300 hover:bg-[#ce001f]/10 hover:text-[#ce001f]'}`}
+                      >
+                        <span>{unit.unitType.replace(' Units', '')}</span>
+                        {totalAvailable > 0 && (
+                          <span className="inline-flex items-center justify-center bg-green-500 text-white text-xs w-5 h-5 sm:w-6 sm:h-6 rounded-full leading-none">
+                            {totalAvailable}
+                          </span>
+                        )}
+                        {totalAvailable === 0 && (
+                          <span className="inline-flex items-center justify-center bg-red-500 text-white text-xs w-5 h-5 sm:w-6 sm:h-6 rounded-full leading-none">
+                            0
+                          </span>
+                        )}
+                      </button>
+                    )
+                  })
+                })()}
+                </div>
+              </div>
+            </div>
+
+            {/* Card layout for selected unit type */}
+            {(() => {
+              const dynamicUnitData = processUnitAvailabilityData(project?.unitPricing || [])
+              const currentUnit = dynamicUnitData[unitsActiveTab] || dynamicUnitData[0]
+              
+              // If no data available, show fallback
+              if (!currentUnit) {
+                return (
+                  <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 justify-center items-stretch bg-[#111] rounded-xl p-4 lg:p-8 max-w-5xl mx-auto shadow-lg pricing-container">
+                    <div className="w-full text-center text-gray-400 py-8">
+                      <p>No unit information available at the moment.</p>
+                      <p className="text-sm mt-2">Please check back later or contact our agents for more details.</p>
+                    </div>
+                  </div>
+                )
+              }
+              
+              // Calculate total availability for this unit type
+              const totalAvailable = currentUnit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.available, 0)
+              const totalUnits = currentUnit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.total, 0)
+              
+              return (
+                <div className="space-y-4 sm:space-y-6">
+                  {/* Cards */}
+                  <div className="w-full">
+                    {currentUnit.subtypes.slice(0, 1).map((subtype: any, subtypeIndex: number) => (
+                      <div key={subtypeIndex} className="bg-[#111] rounded-xl p-4 sm:p-6 shadow-lg border border-gray-800 w-full">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 w-full items-center">
+                          {/* Floor Plan Image - Left Side */}
+                          <div>
+                            {(() => {
+                              const images = Array.isArray(subtype.floor_plan_images) && subtype.floor_plan_images.length > 0
+                                ? subtype.floor_plan_images
+                                : generatePenrithFloorPlanCandidates(subtype, currentUnit.unitType)
+                              const hasImages = images && images.length > 0
+
+                              const prev = () => setFloorPlanIndex((i) => (i - 1 + images.length) % images.length)
+                              const next = () => setFloorPlanIndex((i) => (i + 1) % images.length)
+
+                              return (
+                                <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden border border-gray-700 group">
+                                  {hasImages ? (
+                                  <Image
+                                      key={images[floorPlanIndex % images.length]}
+                                      src={images[floorPlanIndex % images.length]}
+                                    alt={`${currentUnit.unitType.replace(' Units', '')} Floor Plan`}
+                                    fill
+                                      className="object-contain bg-black"
+                                    />
+                                  ) : (
+                                    <div className="absolute inset-0 flex items-center justify-center bg-black text-white text-xs">No floor plan images</div>
+                                  )}
+                                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
+                                  {hasImages && images.length > 1 && (
+                                    <>
+                                      <button
+                                        aria-label="Previous floor plan"
+                                        className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow"
+                                        onClick={prev}
+                                      >
+                                        <ChevronLeft className="w-4 h-4" />
+                                      </button>
+                                      <button
+                                        aria-label="Next floor plan"
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow"
+                                        onClick={next}
+                                      >
+                                        <ChevronRight className="w-4 h-4" />
+                                      </button>
+                                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+                                        {images.slice(0, 8).map((_img: string, idx: number) => (
+                                          <span
+                                            key={idx}
+                                            className={`w-2 h-2 rounded-full ${idx === (floorPlanIndex % images.length) ? 'bg-white' : 'bg-white/40'}`}
+                                          />
+                                        ))}
+                                      </div>
+                                    </>
+                                  )}
+                                  {/* Fullscreen button */}
+                                  {hasImages && (
+                                    <button
+                                      onClick={() => {
+                                        setCurrentFloorPlanImage(images[floorPlanIndex % images.length])
+                                        setIsFloorPlanDialogOpen(true)
+                                      }}
+                                      className="absolute bottom-2 right-2 p-2 bg-black/50 hover:bg-black/70 rounded-full transition-all duration-200 opacity-0 group-hover:opacity-100"
+                                      aria-label="View fullscreen floor plan"
+                                    >
+                                      <Maximize2 className="h-4 w-4 text-white" />
+                                    </button>
+                                  )}
+                                  <div className="absolute bottom-1 left-1 text-white text-xs font-medium">
+                                    Floor Plan
+                                  </div>
+                                </div>
+                              )
+                            })()}
+                          </div>
+
+                          {/* Information - Right Side */}
+                          <div className="flex flex-col justify-center">
+                            <div>
+                              {/* Unit Type Header */}
+                              <div className="mb-4">
+                                <h4 className="text-xl font-bold text-white mb-2">{subtype.subtype}</h4>
+                                <p className="text-gray-300 text-sm">{subtype.size}</p>
+                              </div>
+                              
+                              {/* Price */}
+                              <div className="mb-6">
+                                <p className="text-green-400 font-semibold text-lg">{subtype.price}</p>
+                                {subtype.price_per_sqft && (
+                                  <p className="text-gray-400 text-sm">
+                                    {subtype.price_per_sqft} per sqft
+                                  </p>
+                                )}
+                              </div>
+                              
+                            </div>
+                            
+                            {/* CTA Buttons */}
+                            <div className="space-y-3">
+                              <button 
+                                onClick={() => scrollToSection('lead-form')}
+                                className="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-4 rounded-lg text-sm transition-colors"
+                              >
+                                Book Showflat Visit
+                              </button>
+                              <button 
+                                onClick={() => setShowSiteMapPopup(true)}
+                                className="w-full bg-white text-red-500 hover:bg-white-600 text-red-500 font-medium py-3 px-4 rounded-lg text-sm transition-colors"
+                              >
+                                Site Map & Floor Plan
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )
+            })()}
+          </div>
+        </div>
+      </section>
+
+      {/* Investor Benefits & Pricing Comparison */}
+      <section 
+        className="py-16 bg-[#242728] section-entrance"
+        data-section-id="investor-benefits"
+        style={{ 
+          opacity: animatedSections.has('investor-benefits') ? 1 : 0,
+          transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(60px)'
+        }}
+      >
+        <div className="container mx-auto px-4">
+          <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
+            animatedSections.has('investor-benefits') ? 'animate-slide-in-top' : ''
+          }`}>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">For Investors</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-[#ce001f] rounded" />
+            </div>
+          </div>
+
+          {/* Investor Benefits */}
+          <div className={`max-w-6xl mx-auto transition-all duration-1000 delay-500 ${
+            animatedSections.has('investor-benefits') ? 'animate-fade-in-up' : ''
+          }`} style={{
+            opacity: animatedSections.has('investor-benefits') ? 1 : 0,
+            transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(50px)'
+          }}>
+            {/* Investor Benefits Grid - 2 per row on mobile, 3 per row on desktop */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+              {[
+                { icon: <Layers className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Prime 99-Year Leasehold Asset in Upper Bukit Timah', subtitle: 'Ensuring long-term capital appreciation.' },
+                { icon: <Home className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Diverse Unit Mix', subtitle: 'Catering to a wide range of future potential buyers.' },
+                { icon: <ChartLine className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Strong Capital Upside', subtitle: 'Poised for long-term value growth as Upper Bukit Timah continues to thrive.' },
+                { icon: <Building className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Architectural Prestige by AGA Architect', subtitle: 'Attracts discerning tenants and buyers, further enhancing its investment appeal.' },
+                { icon: <Train className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Exceptional Connectivity', subtitle: 'With seamless access to the CBD, Marina Bay, and other key economic zones.' },
+                { icon: <Users className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Prime Tenant Pool', subtitle: 'Ensuring a steady rental yield for investors.' }
+              ].map((benefit, index) => (
+                <div 
+                  key={index}
+                  className={`hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
+                    animatedSections.has('investor-benefits') ? 'animate' : ''
+                  }`}
+                  style={{ 
+                    transitionDelay: `${index * 200}ms`,
+                    opacity: animatedSections.has('investor-benefits') ? 1 : 0,
+                    transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
+                  }}
+                >
+                  <div className="p-4 md:p-6 flex flex-col items-center text-center space-y-2">
+                    <div className="flex-shrink-0">{benefit.icon}</div>
+                    <h3 className="text-sm md:text-lg text-white font-semibold leading-snug">{benefit.title}</h3>
+                    <p className="text-xs md:text-sm text-gray-300 font-light">{benefit.subtitle}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Removed mobile-only centered row to maintain 2 cards per row consistently */}
+          </div>
+        </div>
+      </section>
+
+      {/* Nearby Amenities */}
+      <section 
+        id="nearby-amenities"
+        className="py-16 bg-[#1c1c1d] section-entrance"
+        data-section-id="nearby-amenities"
+        style={{ 
+          opacity: animatedSections.has('nearby-amenities') ? 1 : 0,
+          transform: animatedSections.has('nearby-amenities') ? 'translateY(0)' : 'translateY(60px)'
+        }}
+      >
+        <div className="container mx-auto px-4">
+          <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
+            animatedSections.has('nearby-amenities') ? 'animate-slide-in-top' : ''
+          }`}>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Location</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-[#ce001f] rounded" />
+            </div>
+            <p className="text-xl text-gray-300">Everything you need is within reach</p>
+          </div>
+
+          {/* Location Information */}
+          <div className={`mb-12 transition-all duration-1000 delay-500 ${
+            animatedSections.has('nearby-amenities') ? 'animate-fade-in-up' : ''
+          }`} style={{
+            opacity: animatedSections.has('nearby-amenities') ? 1 : 0,
+            transform: animatedSections.has('nearby-amenities') ? 'translateY(0)' : 'translateY(50px)'
+          }}>
+            <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
+              <CardHeader>
+                <CardTitle className="text-[#ce001f] flex items-center">
+                  <MapPin className="w-5 h-5 mr-2" />
+                  Location Map
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Location Image */}
+                <div className="w-full rounded-lg overflow-hidden shadow-lg">
+                  <Image
+                    src="https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/orchard-sophia-location.jpg"
+                    alt="The Sen Location Map"
+                    width={1200}
+                    height={800}
+                    quality={90}
+                    className="w-full h-auto object-contain"
+                    priority
+                  />
+                </div>
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="flex items-center space-x-3">
+                    <MapPin className="w-5 h-5" style={{ color: '#ce001f' }} />
+                    <div>
+                    <p className="font-semibold text-white">Address</p>
+                      <p className="text-sm text-gray-300 font-light">222-230 Jalan Jurong Kechil, Singapore.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Train className="w-5 h-5" style={{ color: '#ce001f' }} />
+                    <div>
+                      <p className="font-semibold text-white">MRT</p>
+                      <p className="text-sm text-gray-300 font-light">Dhoby Ghaut MRT</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Car className="w-5 h-5" style={{ color: '#ce001f' }} />
+                    <div>
+                      <p className="font-semibold text-white">Access</p>
+                      <p className="text-sm text-gray-300 font-light">CTE | Nicoll Highway</p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Amenities Filter */}
+          <Tabs defaultValue="All" className="w-full">
+            <TabsList className="flex justify-start gap-2 bg-transparent p-0 mb-6 overflow-x-auto whitespace-nowrap snap-x snap-mandatory">
+              {tabsCategories.map((cat) => (
+                <TabsTrigger 
+                  key={cat} 
+                  value={cat} 
+                  className="bg-[#18191b] text-white data-[state=active]:bg-[#ce001f] data-[state=active]:text-white border border-gray-700 min-w-max snap-start rounded-full px-4 py-2 flex items-center gap-2"
+                >
+                  {cat === 'All' && <Layers className="w-4 h-4" />}
+                  {cat === 'Transport' && <Train className="w-4 h-4" />}
+                  {cat === 'Retail & F&B' && <ShoppingBag className="w-4 h-4" />}
+                  {cat === 'Cultural & Arts Institutions' && <Landmark className="w-4 h-4" />}
+                  {cat === 'Nature & Leisure' && <Trees className="w-4 h-4" />}
+                  {cat === 'Education' && <GraduationCap className="w-4 h-4" />}
+                  {cat === 'Healthcare' && <Hospital className="w-4 h-4" />}
+                  {cat}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+
+            {tabsCategories.map((cat) => (
+              <TabsContent key={cat} value={cat}>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+                  {amenities.filter(a => cat === 'All' ? true : a.category === cat).map((amenity, index) => (
+                    <Card 
+                      key={`${cat}-${index}`}
+                      className={`hover:shadow-lg transition-all duration-700 border-gray-700 bg-[#18191b] rounded-xl hover:scale-105 stagger-animation ${
+                        animatedSections.has('nearby-amenities') ? 'animate' : ''
+                      }`}
+                      style={{ 
+                        transitionDelay: `${index * 150}ms`,
+                        opacity: animatedSections.has('nearby-amenities') ? 1 : 0,
+                        transform: animatedSections.has('nearby-amenities') ? 'translateY(0)' : 'translateY(40px)'
+                      }}
+                    >
+                      <CardContent className="p-4 md:p-6 min-h-[100px] md:min-h-[120px] w-full">
+                        <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:items-center md:justify-start md:space-y-0 md:space-x-4 w-full">
+                          <div className="flex-shrink-0" style={{ color: '#ce001f' }}>{amenity.icon}</div>
+                          <div className="text-center md:text-center flex-1 min-w-0">
+                            <h3 className="font-semibold text-xs md:text-lg text-white break-words">{amenity.name}</h3>
+                            <p className="text-sm text-gray-300 font-light">{amenity.distance}</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+            ))}
+          </Tabs>
+        </div>
+      </section>
+
+      {/* Enhanced Media Section */}
+      <section id="media" className="pt-4 pb-4 bg-[#1c1c1d] flex items-center justify-center">
+        <div className="container mx-auto px-4 text-left">
+        
           {/* Call to Action */}
-          <div className={`text-center mb-4 transition-all duration-1000 delay-500 ${
+          <div className={`text-center mt-12 sm:mt-16 md:mt-18 lg:mt-12 mb-4 transition-all duration-1000 delay-500 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
             <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
-              <h3 className="text-2xl font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
-              <p className="text-lg mb-6 opacity-90">
-                Register now for an exclusive preview of Turquoise
+              <h3 className="text-xl md:text-2xl font-normal md:font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
+              <p className="text-base md:text-lg mb-6 opacity-90">
+                Register now for an exclusive preview of The Sen 
               </p>
               <div className="cta-buttons-container justify-center">
                 <Button 
@@ -1820,330 +2348,13 @@ export default function WResidenceLanding() {
         </div>
       </section>
 
-      {/* Floor Plans Section */}
-      <section 
-        id="floor-plans"
-        className="py-16 bg-[#242728] section-entrance"
-        data-section-id="floor-plans"
-        style={{ 
-          opacity: animatedSections.has('floor-plans') ? 1 : 0,
-          transform: animatedSections.has('floor-plans') ? 'translateY(0)' : 'translateY(60px)'
-        }}
-      >
-        <div className="container mx-auto px-4">
-          <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
-            animatedSections.has('floor-plans') ? 'animate-slide-in-top' : ''
-          }`}>
-            <h2 className="text-3xl font-bold mb-3 text-white text-center tracking-wide">Floor Plans</h2>
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-1 bg-[#ce001f] rounded" />
-            </div>
-            <p className="text-xl text-gray-300">Choose from our thoughtfully designed unit layouts</p>
-          </div>
-
-          <div className={`max-w-7xl mx-auto transition-all duration-1000 delay-500 ${
-            animatedSections.has('floor-plans') ? 'animate-fade-in-up' : ''
-          }`} style={{
-            opacity: animatedSections.has('floor-plans') ? 1 : 0,
-            transform: animatedSections.has('floor-plans') ? 'translateY(0)' : 'translateY(50px)'
-          }}>
-            
-
-            {/* Floor Plan Images - Centered */}
-            {(() => {
-              const dynamicUnitData = processUnitAvailabilityData(project?.unitPricing || [])
-              const currentUnit = dynamicUnitData[unitsActiveTab] || dynamicUnitData[0]
-              
-              // If no data available, show fallback
-              if (!currentUnit) {
-                return (
-                  <div className="w-full text-center text-gray-400 py-8">
-                    <p>No unit information available at the moment.</p>
-                    <p className="text-sm mt-2">Please check back later or contact our agents for more details.</p>
-                  </div>
-                )
-              }
-              
-              return (
-                <div className="flex justify-center">
-                  {currentUnit.subtypes.slice(0, 1).map((subtype: any, subtypeIndex: number) => {
-                    const images = Array.isArray(subtype.floor_plan_images) && subtype.floor_plan_images.length > 0
-                      ? subtype.floor_plan_images
-                      : generateTurquoiseFloorPlanCandidates(subtype, currentUnit.unitType)
-                    const hasImages = images && images.length > 0
-
-                    const prev = () => setFloorPlanIndex((i) => (i - 1 + images.length) % images.length)
-                    const next = () => setFloorPlanIndex((i) => (i + 1) % images.length)
-
-                    return (
-                      <div key={subtypeIndex} className="relative w-full max-w-5xl">
-                        <div 
-                          className="relative w-full aspect-[4/3] rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
-                          onClick={() => hasImages && setSelectedFloorPlanImage(images[floorPlanIndex % images.length])}
-                        >
-                          {hasImages ? (
-                            <Image
-                              key={images[floorPlanIndex % images.length]}
-                              src={images[floorPlanIndex % images.length]}
-                              alt={`${currentUnit.unitType.replace(' Units', '')} Floor Plan`}
-                              fill
-                              className="object-contain"
-                            />
-                          ) : (
-                            <div className="absolute inset-0 flex items-center justify-center text-white text-xs">
-                              No floor plan images
-                            </div>
-                          )}
-                          {hasImages && images.length > 1 && (
-                            <>
-                              <button
-                                aria-label="Previous floor plan"
-                                className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow z-10"
-                                onClick={prev}
-                              >
-                                <ChevronLeft className="w-4 h-4" />
-                              </button>
-                              <button
-                                aria-label="Next floor plan"
-                                className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow z-10"
-                                onClick={next}
-                              >
-                                <ChevronRight className="w-4 h-4" />
-                              </button>
-                              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10">
-                                {images.slice(0, 8).map((_img: string, idx: number) => (
-                                  <span
-                                    key={idx}
-                                    className={`w-2 h-2 rounded-full ${idx === (floorPlanIndex % images.length) ? 'bg-white' : 'bg-white/40'}`}
-                                  />
-                                ))}
-                              </div>
-                            </>
-                          )}
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              )
-            })()}
-          </div>
-        </div>
-      </section>
-
-      {/* Nearby Amenities */}
-      <section 
-        id="nearby-amenities"
-        className="py-16 bg-[#1c1c1d] section-entrance"
-        data-section-id="nearby-amenities"
-        style={{ 
-          opacity: animatedSections.has('nearby-amenities') ? 1 : 0,
-          transform: animatedSections.has('nearby-amenities') ? 'translateY(0)' : 'translateY(60px)'
-        }}
-      >
-        <div className="container mx-auto px-4">
-          <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
-            animatedSections.has('nearby-amenities') ? 'animate-slide-in-top' : ''
-          }`}>
-            <h2 className="text-3xl font-bold mb-3 text-white text-center tracking-wide">Location</h2>
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-1 bg-[#ce001f] rounded" />
-            </div>
-            <p className="text-xl text-gray-300">Everything you need is within reach</p>
-          </div>
-
-          {/* Location Information */}
-          <div className={`mb-12 transition-all duration-1000 delay-500 ${
-            animatedSections.has('nearby-amenities') ? 'animate-fade-in-up' : ''
-          }`} style={{
-            opacity: animatedSections.has('nearby-amenities') ? 1 : 0,
-            transform: animatedSections.has('nearby-amenities') ? 'translateY(0)' : 'translateY(50px)'
-          }}>
-            <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
-              <CardHeader>
-                <CardTitle className="text-[#ce001f] flex items-center">
-                  <MapPin className="w-5 h-5 mr-2" />
-                  Location Map
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Location Map */}
-                <div className="w-full rounded-lg overflow-hidden shadow-lg">
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7575.548231577715!2d103.83160209122002!3d1.2424847850859797!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da1fccfbd8c139%3A0xe9c1bcb9eec33d50!2s51%20Cove%20Dr%2C%20Singapore%20098393!5e0!3m2!1sen!2sid!4v1764582903817!5m2!1sen!2sid"
-                    width="600"
-                    height="450"
-                    style={{ border: 0, width: '100%' }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    className="w-full"
-                  ></iframe>
-                </div>
-                <div className="grid md:grid-cols-3 gap-6">
-                  <div className="flex items-center space-x-3">
-                    <MapPin className="w-5 h-5" style={{ color: '#ce001f' }} />
-                    <div>
-                    <p className="font-semibold text-white">Address</p>
-                      <p className="text-sm text-gray-300 font-light">51 Cove Drive, Singapore 098393</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Train className="w-5 h-5" style={{ color: '#ce001f' }} />
-                    <div>
-                      <p className="font-semibold text-white">MRT</p>
-                      <p className="text-sm text-gray-300 font-light">Waterfront LRT</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Car className="w-5 h-5" style={{ color: '#ce001f' }} />
-                    <div>
-                      <p className="font-semibold text-white">Access</p>
-                      <p className="text-sm text-gray-300 font-light">Easy access to Harbourfront MRT</p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Amenities Filter */}
-          <Tabs defaultValue="All" className="w-full">
-            <TabsList className="flex justify-start gap-2 bg-transparent p-0 mb-6 overflow-x-auto whitespace-nowrap snap-x snap-mandatory">
-              {['All','Transport','Retail & F&B','Nature & Leisure','Education','Healthcare'].map((cat) => (
-                <TabsTrigger 
-                  key={cat} 
-                  value={cat} 
-                  className="bg-[#18191b] text-white data-[state=active]:bg-[#ce001f] data-[state=active]:text-white border border-gray-700 min-w-max snap-start rounded-full px-4 py-2 flex items-center gap-2"
-                >
-                  {cat === 'All' && <Layers className="w-4 h-4" />}
-                  {cat === 'Transport' && <Train className="w-4 h-4" />}
-                  {cat === 'Retail & F&B' && <ShoppingBag className="w-4 h-4" />}
-                  {cat === 'Nature & Leisure' && <Trees className="w-4 h-4" />}
-                  {cat === 'Education' && <GraduationCap className="w-4 h-4" />}
-                  {cat === 'Healthcare' && <Hospital className="w-4 h-4" />}
-                  {cat}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-
-            {['All','Transport','Retail & F&B','Nature & Leisure','Education','Healthcare'].map((cat) => (
-              <TabsContent key={cat} value={cat}>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-                  {amenities.filter(a => cat === 'All' ? true : a.category === cat).map((amenity, index) => (
-                    <Card 
-                      key={`${cat}-${index}`}
-                      className={`hover:shadow-lg transition-all duration-700 border-gray-700 bg-[#18191b] rounded-xl hover:scale-105 stagger-animation ${
-                        animatedSections.has('nearby-amenities') ? 'animate' : ''
-                      }`}
-                      style={{ 
-                        transitionDelay: `${index * 150}ms`,
-                        opacity: animatedSections.has('nearby-amenities') ? 1 : 0,
-                        transform: animatedSections.has('nearby-amenities') ? 'translateY(0)' : 'translateY(40px)'
-                      }}
-                    >
-                      <CardContent className="p-4 md:p-6 min-h-[100px] md:min-h-[120px] w-full">
-                        <div className="flex flex-col items-center justify-center space-y-2 w-full">
-                          <div className="flex-shrink-0" style={{ color: '#ce001f' }}>{amenity.icon}</div>
-                          <div className="text-center flex-1 min-w-0">
-                            <h3 className="font-semibold text-xs md:text-lg text-white break-words">{amenity.name}</h3>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </TabsContent>
-            ))}
-          </Tabs>
-        </div>
-      </section>
-
-      {/* Enhanced Media Section (hidden) */}
-      {false && (
-      <section id="media" className="pt-4 pb-4 bg-[#1c1c1d] flex items-center justify-center">
-        <div className="container mx-auto px-4 text-left">
-        <div className={`text-center mb-8 md:mb-16 transition-all duration-1000 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            <h2 className="text-2xl md:text-3xl font-bold mb-3 text-white text-center tracking-wide">Explore Turquoise</h2>
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-1 bg-[#ce001f] rounded" />
-            </div>
-            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-              Immerse yourself in the luxury and elegance of our latest development through our comprehensive media
-              gallery
-            </p>
-          </div>
-
-          
-          <div className={`space-y-8 md:space-y-20 transition-all duration-1000 delay-300 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            
-            <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
-              <div className="space-y-6 order-2 lg:order-1">
-                <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
-                <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
-                  Discover Luxury Living in Sentosa
-                </h3>
-                <p className="text-gray-300 leading-relaxed text-base md:text-lg">
-                  Experience the epitome of luxury living at Turquoise, where modern elegance meets Sentosa's pristine natural beauty. 
-                  This exclusive development offers a rare opportunity to own a piece of paradise in one of Singapore's most prestigious locations. 
-                  Learn more about the unique features and investment potential of this exceptional property.
-                </p>
-                  <Button 
-                    className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
-                    onClick={scrollToLeadForm}
-                  >
-                    <Play className="w-5 h-5 mr-2" />
-                    Learn More
-                  </Button>
-              </div>
-              <div className="relative hover:scale-105 transition-transform duration-500 p-0 md:p-0 order-1 lg:order-2">
-                <div className="relative h-64 md:h-80 rounded-xl overflow-hidden shadow-2xl">
-                  <Image
-                    src="/images/penrith/explore-1.webp"
-                    alt="Explore Turquoise"
-                    fill
-                    className="object-contain md:object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Call to Action */}
-          <div className={`text-center mt-12 sm:mt-16 md:mt-18 lg:mt-12 mb-4 transition-all duration-1000 delay-500 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
-              <h3 className="text-xl md:text-2xl font-normal md:font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
-              <p className="text-base md:text-lg mb-6 opacity-90">
-                Register now for an exclusive preview of Turquoise
-              </p>
-              <div className="cta-buttons-container justify-center">
-                <Button 
-                  className="bg-white text-[#ce001f] hover:bg-gray-100 px-8 py-3 text-lg hover:scale-105 transition-all duration-300"
-                  onClick={scrollToLeadForm}
-                >
-                  <Calendar className="w-5 h-5 mr-2" />
-                  Book Showflat Visit
-                </Button>
-              </div>
-              </div>
-            </div>
-          </div>
-      </section>
-      )}
-
       {/* Lead Generation Form */}
       <section
         id="lead-form"
         className={`py-8 md:py-16 relative bg-cover bg-center section-entrance`}
         data-section-id="lead-form"
         style={{ 
-          backgroundImage: "url('https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/turquoise-hero-background.webp')",
+          backgroundImage: "url('https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/orchard-sophia-hero.jpg')",
           opacity: animatedSections.has('lead-form') ? 1 : 0,
           transform: animatedSections.has('lead-form') ? 'translateY(0)' : 'translateY(60px)'
         }}
@@ -2196,31 +2407,28 @@ export default function WResidenceLanding() {
         </GoogleReCaptchaProvider>
       )}
 
-      {/* Floor Plan Image Dialog */}
-      <Dialog open={selectedFloorPlanImage !== null} onOpenChange={(open) => !open && setSelectedFloorPlanImage(null)}>
-        <DialogContent className="max-w-[95vw] w-full max-h-[95vh] p-0 bg-black/80 border-0 overflow-auto">
-          <DialogTitle className="sr-only">Floor Plan</DialogTitle>
-          {selectedFloorPlanImage && (
-            <div className="relative w-full min-h-full flex items-center justify-center p-4 md:p-8">
-              <div className="relative inline-block">
-                <Image
-                  src={selectedFloorPlanImage}
-                  alt="Floor Plan"
-                  width={2400}
-                  height={1800}
-                  className="w-auto h-auto max-w-full object-contain"
-                  unoptimized
-                />
-                <button
-                  onClick={() => setSelectedFloorPlanImage(null)}
-                  className="fixed top-4 right-4 bg-white/90 hover:bg-white text-black rounded-full w-10 h-10 flex items-center justify-center shadow-lg z-50 transition-all hover:scale-110"
-                  aria-label="Close"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          )}
+      {/* Floor Plan Fullscreen Dialog */}
+      <Dialog open={isFloorPlanDialogOpen} onOpenChange={setIsFloorPlanDialogOpen}>
+        <DialogContent className="max-w-7xl w-full h-[90vh] p-0">
+          <DialogTitle className="sr-only">Floor Plan Fullscreen View</DialogTitle>
+          <div className="relative w-full h-full">
+            {currentFloorPlanImage && (
+              <Image
+                src={currentFloorPlanImage}
+                alt="Floor Plan Fullscreen"
+                fill
+                className="object-contain"
+                priority
+              />
+            )}
+            <button
+              onClick={() => setIsFloorPlanDialogOpen(false)}
+              className="absolute top-4 right-4 p-2 bg-black/50 hover:bg-black/70 rounded-full transition-all duration-200"
+              aria-label="Close fullscreen"
+            >
+              <X className="h-4 w-4 text-white" />
+            </button>
+          </div>
         </DialogContent>
       </Dialog>
 
