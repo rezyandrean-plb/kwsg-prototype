@@ -1621,7 +1621,7 @@ export default function WResidenceLanding() {
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('project-info') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-bold mb-3 text-white text-center tracking-wide">TBC</h2>
+            <h2 className="text-3xl font-bold mb-3 text-white text-center tracking-wide">Understated Luxury, Defined by Space and Privacy            </h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>

@@ -846,64 +846,63 @@ export default function Artisan8Landing() {
   
   // Site Plan images for carousel
   const sitePlanImages = [
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/site-plan/OrchardSophia-Site-Plan-01.jpg",
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/site-plan/OrchardSophia-Site-Plan-02.jpg"
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/site-plan/TheSen-Sitemap01.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/site-plan/TheSen-Sitemap02.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/site-plan/TheSen-Sitemap03.jpg",
   ]
   
   const [projectImages, setProjectImages] = useState<string[]>([
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/gallery/Front+Hero.jpg",
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/gallery/Lobby.jpg",
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/gallery/Rooftop.jpg",
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/gallery/Fine+Dining.jpg",
-    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/gallery/Spa+Pool.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/gallery/TheSen-Img01.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/gallery/TheSen-Img02.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/gallery/TheSen-Img03.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/gallery/TheSen-Img04.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/gallery/TheSen-Img05.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/gallery/TheSen-Img06.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/gallery/TheSen-Img07.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/gallery/TheSen-Img08.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/gallery/TheSen-Img09.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/gallery/TheSen-Img10.jpg",
   ])
 
 
   const amenities = [
     // TRANSPORT
-    { icon: <Train className="w-6 h-6" />, name: "Dhoby Ghaut MRT", distance: "8-Min Walk", category: "Transport" },
-    { icon: <Train className="w-6 h-6" />, name: "City Hall MRT", distance: "1-Stop MRT", category: "Transport" },
-    { icon: <Train className="w-6 h-6" />, name: "Raffles Place MRT", distance: "2-Stops MRT", category: "Transport" },
-    { icon: <Train className="w-6 h-6" />, name: "Orchard MRT", distance: "2-Stops MRT", category: "Transport" },
-    { icon: <Train className="w-6 h-6" />, name: "Bayfront MRT", distance: "4-Stops MRT", category: "Transport" },
-    { icon: <Car className="w-6 h-6" />, name: "CTE (Central Expressway)", distance: "3-Min Drive", category: "Transport" },
-    { icon: <Car className="w-6 h-6" />, name: "Nicoll Highway", distance: "4-Min Drive", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Beauty World MRT", distance: "3-Min Drive", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Hume MRT", distance: "3-Min Drive", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Botanic Garden MRT", distance: "4-Stops MRT", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Jurong Lake District MRT", distance: "5-Stops MRT", category: "Transport" },
+    { icon: <Train className="w-6 h-6" />, name: "Orchard MRT", distance: "8-Stops MRT", category: "Transport" },
+    { icon: <Car className="w-6 h-6" />, name: "Pan Island Expressway (PIE)", distance: "5-Min Drive", category: "Transport" },
+    { icon: <Car className="w-6 h-6" />, name: "Bukit Timah Expressway (BKE)", distance: "7-Min Drive", category: "Transport" },
 
     // RETAIL & F&B
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Wilkie Edge", distance: "4-Min Walk", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "The Cathay", distance: "5-Min Walk", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "GR.iD", distance: "5-Min Walk", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Plaza Singapura", distance: "5-Min Walk", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "313@Somerset", distance: "1-Stop MRT", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "ION Orchard", distance: "2-Stops MRT", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Marina Bay Sands", distance: "4-Stops MRT", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Bugis+", distance: "2-Min Drive", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Bugis Junction", distance: "2-Min Drive", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "Ngee Ann City", distance: "6-Min Drive", category: "Retail & F&B" },
-    { icon: <ShoppingBag className="w-6 h-6" />, name: "The Paragon", distance: "7-Min Drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Jalan Jurong Kechil Amenities", distance: "5-Min Walk", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Cheong Chin Nam Rd Food Street", distance: "4-Min Drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Bukit Timah Shopping Centre", distance: "4-Min Drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Beauty World Centre", distance: "5-Min Drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Bukit Timah Centre", distance: "5-Min Drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "The Ling at Beauty World", distance: "5-Min Drive", category: "Retail & F&B" },
 
     // NATURE & LEISURE
-    { icon: <Trees className="w-6 h-6" />, name: "Mount Emily Park", distance: "3-Min Walk", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "Gardens By The Bay", distance: "3-Stops MRT", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "Singapore Botanic Gardens", distance: "4-Stops MRT", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "Fort Canning Park", distance: "6-Min Drive", category: "Nature & Leisure" },
-
-    // CITY HUBS (Cultural & Arts Institutions)
-    { icon: <Landmark className="w-6 h-6" />, name: "National Library", distance: "2-Min Drive", category: "Cultural & Arts Institutions" },
-    { icon: <Landmark className="w-6 h-6" />, name: "National Museum of Singapore", distance: "4-Min Drive", category: "Cultural & Arts Institutions" },
-    { icon: <Landmark className="w-6 h-6" />, name: "Singapore Art Museum", distance: "4-Min Drive", category: "Cultural & Arts Institutions" },
+    { icon: <Trees className="w-6 h-6" />, name: "Bukit Batok Nature Park", distance: "5-Min Cycle", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Rifle Range Nature Park", distance: "5-Min Cycle", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Bukit Timah Nature Reserve", distance: "5-Min Cycle", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Bukit Timah Railway Station", distance: "10-Min Cycle", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Bukit Timah Rocher Green Corridor", distance: "15-Min Cycle", category: "Nature & Leisure" },
 
     // EDUCATION
-    { icon: <GraduationCap className="w-6 h-6" />, name: "St Margaret's Pri Sch", distance: "1-Min Walk", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Nanyang Academy of Fine Arts", distance: "5-Min Walk", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "School of the Arts (SOTA)", distance: "6-Min Walk", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "LASALLE College of the Arts", distance: "7-Min Walk", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Singapore Management University (SMU)", distance: "8-Min Walk", category: "Education" },
-    { icon: <GraduationCap className="w-6 h-6" />, name: "Anglo-Chinese School Junior (within 1km)", distance: "3-Min Drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Bukit Timah Primary School", distance: "4-Min Drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Pei Hwa Presbyterian Primary School", distance: "7-Min Drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Keming Primary School", distance: "8-Min Drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Singapore University of Social Sciences", distance: "7-Min Drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "SIM Global Education", distance: "7-Min Drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Methodist Girls' School", distance: "9-Min Drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "Nanyang Girls' High School", distance: "10-Min Drive", category: "Education" },
+    { icon: <GraduationCap className="w-6 h-6" />, name: "National Junior College", distance: "10-Min Drive", category: "Education" },
   ]
 
   // Compute available amenity categories dynamically in a preferred order
-  const amenityCategoryOrder = ['Transport', 'Retail & F&B', 'Cultural & Arts Institutions', 'Nature & Leisure', 'Education', 'Healthcare']
+  const amenityCategoryOrder = ['Transport', 'Retail & F&B', 'Nature & Leisure', 'Education', 'Healthcare']
   const availableAmenityCategories = amenityCategoryOrder.filter((category) => amenities.some((a) => a.category === category))
   const tabsCategories = ['All', ...availableAmenityCategories]
 
@@ -1002,61 +1001,10 @@ export default function Artisan8Landing() {
   const [siteMapSubmitError, setSiteMapSubmitError] = useState<string | null>(null)
 
   // Build likely floor-plan filenames from unit type/subtype to match files placed in public/images/penrith/floor-plan
+  // Note: This function is kept as a fallback but returns empty array since we're using online images
   const generatePenrithFloorPlanCandidates = (subtype: any, unitType: string) => {
-    const base = '/images/w-residences/floor-plan/'
-    const candidates: string[] = []
-
-    const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
-    const ut = normalize(unitType.replace(' Units', ''))
-    const st = normalize(subtype?.subtype || '')
-
-    const extractBedroomLabel = (raw: string) => {
-      const m = (raw || '').match(/(\d+)\s*-?\s*bedroom/i)
-      if (m) return `${m[1]} Bedroom`
-      const m2 = (unitType || '').match(/(\d+)\s*-?\s*bedroom/i)
-      if (m2) return `${m2[1]} Bedroom`
-      return ''
-    }
-    const bedroomLabel = extractBedroomLabel(subtype?.subtype || unitType)
-
-    if (bedroomLabel) {
-      const typeLetters = ['A','B','C','D','E','F']
-      const extsPriority = ['jpg', 'jpeg', 'png', 'webp']
-      for (const L of typeLetters) {
-        // Variants WITHOUT numbers (e.g., "Type A.jpg")
-        for (const ext of extsPriority) {
-          candidates.push(`${base}${bedroomLabel} - Type ${L}.${ext}`)
-        }
-        // Variants WITH numbers (e.g., "Type A1.jpg" and "Type A1H.jpg")
-        for (let n = 1; n <= 9; n++) {
-          for (const ext of extsPriority) {
-            candidates.push(`${base}${bedroomLabel} - Type ${L}${n}.${ext}`)
-            candidates.push(`${base}${bedroomLabel} - Type ${L}${n}H.${ext}`)
-          }
-        }
-      }
-    }
-
-    const patterns = [st, ut, st.replace('bedroom-', 'br-'), ut.replace('bedroom-', 'br-')].filter(Boolean)
-    for (const p of patterns) {
-      const exts = ['jpg', 'jpeg', 'png', 'webp']
-      for (const ext of exts) {
-        candidates.push(`${base}${p}.${ext}`)
-      }
-      for (let i = 1; i <= 9; i++) {
-        for (const ext of exts) {
-          candidates.push(`${base}${p}-${i}.${ext}`)
-          candidates.push(`${base}${p} ${i}.${ext}`)
-        }
-      }
-    }
-
-    if (subtype?.floor_plan_image) {
-      candidates.unshift(subtype.floor_plan_image)
-    }
-
-    const seen = new Set<string>()
-    return candidates.filter((c) => (seen.has(c) ? false : (seen.add(c), true)))
+    // All floor plans now use online images, so return empty array
+    return []
   }
 
   // Mock data and helpers for unit availability (align with Aurea implementation)
@@ -1068,17 +1016,14 @@ export default function Artisan8Landing() {
           subtype: "1-Bedroom",
           bedrooms: 1,
           bathrooms: 1,
-          size: "441 - 484 sqft",
-          price: "From $1,315,000",
+          size: "452 sqft",
+          price: "TBC",
           currency: "SGD",
-          total: 15,
-          available: 0,
+          total: 10,
+          available: 10,
           status: 0,
           floor_plan_images: [
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/1BD-A1.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/1BD-A2a.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/1BD-A2b.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/1BD-A3.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/floor-plan/TheSen-1BR-01.jpg"
           ],
         },
       ],
@@ -1090,32 +1035,36 @@ export default function Artisan8Landing() {
           subtype: "2-Bedroom",
           bedrooms: 2,
           bathrooms: 2,
-          size: "570 - 710 sqft",
-          price: "From $1,593,000",
+          size: "678 - 732 sqft",
+          price: "TBC",
           currency: "SGD",
-          total: 55,
-          available: 7,
+          total: 110,
+          available: 110,
           status: 0,
           floor_plan_images: [
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-B1a.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-B1b.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-B2.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C1a.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C1b.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C2a.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C2b.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C3a.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C3b.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C4.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C5a.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C5b.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C6a.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C6b.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C7a.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C7b.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C8.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C9a.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/2BD-C9b.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/floor-plan/TheSen-2BR-01.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/floor-plan/TheSen-2BR-02.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/floor-plan/TheSen-2BR-03.jpg",
+          ],
+        },
+      ],
+    },
+    {
+      unitType: "2-Bedroom + Study",
+      subtypes: [
+        {
+          subtype: "2-Bedroom + Study",
+          bedrooms: 2,
+          bathrooms: 2,
+          size: "764 - 775 sqft",
+          price: "TBC",
+          currency: "SGD",
+          total: 57,
+          available: 57,
+          status: 0,
+          floor_plan_images: [
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/floor-plan/TheSen-2BR-04.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/floor-plan/TheSen-2BR-04a.jpg",
           ],
         },
       ],
@@ -1127,34 +1076,55 @@ export default function Artisan8Landing() {
           subtype: "3-Bedroom",
           bedrooms: 3,
           bathrooms: 2,
-          size: "710 - 764 sqft",
-          price: "From $2,100,000",
+          size: "872 - 1,109 sqft",
+          price: "TBC",
           currency: "SGD",
-          total: 3,
-          available: 0,
+          total: 90,
+          available: 90,
           status: 0,
           floor_plan_images: [
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/3BD-D1.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/floor-plan/TheSen-3BR-01.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/floor-plan/TheSen-3BR-02.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/floor-plan/TheSen-3BR-03.jpg",
           ],
         },
       ],
     },
     {
-      unitType: "3-Bedroom (Dual Key)",
+      unitType: "3-Bedroom + Study",
       subtypes: [
         {
-          subtype: "3-Bedroom (Dual Key)",
+          subtype: "3-Bedroom + Study",
           bedrooms: 3,
           bathrooms: 2,
-          size: "829 - 840 sqft",
-          price: "From $2,252,028",
+          size: "1,259 sqft",
+          price: "TBC",
           currency: "SGD",
-          total: 5,
-          available: 0,
+          total: 40,
+          available: 40,
           status: 0,
           floor_plan_images: [
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/3BD-Dual+Key+-2a.png",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/floor-plan/3BD-Dual+Key+-2b.png",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/floor-plan/TheSen-3BR-04.jpg",
+          ],
+        },
+      ],
+    },
+    {
+      unitType: "4-Bedroom + Study",
+      subtypes: [
+        {
+          subtype: "4-Bedroom + Study",
+          bedrooms: 4,
+          bathrooms: 2,
+          size: "1,453 sqft",
+          price: "TBC",
+          currency: "SGD",
+          total: 40,
+          available: 40,
+          status: 0,
+          floor_plan_images: [
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/floor-plan/TheSen-4BR-01.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/floor-plan/TheSen-4BR-01a.jpg",
           ],
         },
       ],
@@ -1448,7 +1418,7 @@ export default function Artisan8Landing() {
         {/* Background elements */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/orchard-sophia-hero.jpg"
+            src="https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/the-sen-hero.webp"
             alt="The Sen Hero"
             fill
             className="object-cover"
@@ -1466,7 +1436,7 @@ export default function Artisan8Landing() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Badge className="bg-[#ce001f] text-white px-4 py-2 text-sm font-medium rounded-full animate-pulse">
-                LIMITED UNITS
+                OFFICIAL PREVIEW LAUNCH 2025
               </Badge>
             </div>
 
@@ -1482,13 +1452,13 @@ export default function Artisan8Landing() {
                 isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
               }`}>
                 <div className="w-12 h-px bg-[#ce001f] mr-4"></div>
-                <p className="text-lg text-gray-200 font-light">District 21 (Upper Bukit Timah)</p>
+                <p className="text-lg text-gray-200 font-light">District 21, Upper Bukit Timah</p>
               </div>
 
               <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
-                 Experience Unrivalled Urban Sophistication.
+                 Disconnect from the City, Reconnect with Life.
               </p>
             </div>
 
@@ -1543,28 +1513,28 @@ export default function Artisan8Landing() {
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('project-info') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">The Pinnacle of Contemporary Living in the City</h2>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Where Luxury is Experienced Through Space and Tranquility</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
             <p className="text-sm md:text-xl text-gray-300 max-w-4xl mx-auto">
-            The Sen offers something few can: a 99-year leasehold home in Upper Bukit Timah, with 1- to 4-bedroom + Study residences built for the modern dweller. This distinguished project by AGA Architect Pte Ltd is strategically located in District 21, 
-            ensuring seamless access to Singapore's premier attractions and business hubs. 
-            Live amidst luxury, where city vibrancy and comfort come together effortlessly.
+            Situated within the distinguished De Souza Avenue landed enclave, The Sen presents a compelling counter-narrative to the market—a low-density sanctuary offering immediate access to Bukit Batok Nature Park. <br /> <br />
+            This 347-unit development by Sustained Land delivers a strategic price advantage in the RCR, sitting just minutes from the unfolding transformation of the Beauty World Integrated Transport Hub. <br /> <br />
+            Combining efficient layouts with the exclusivity of a cul-de-sac address, this is a home that balances the peace of nature with the promise of future growth.
             </p>
           </div>
 
           {/* Feature Cards */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {[
-              { icon: <Train className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Well-connected to <strong>Upper Bukit Timah</strong> — a prime residential location" },
-              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Located in <strong>District 21</strong> — a prime residential location" },
-              { icon: <BedDouble className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Exclusive collection of <strong>347</strong> 1- to 4-bedroom + Study units" },
-              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Developed by <strong>SL Capital (8) Pte Ltd</strong>, blending beauty and functionality" },
-              { icon: <Home className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Premium fittings and appliances from <strong>Duravit</strong>, <strong>Hansgrohe</strong>, <strong>SMEG</strong>, and more" },
-              { icon: <Eye className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Panoramic views of <strong>Upper Bukit Timah</strong>, the Singapore skyline, and surrounding greenery" },
-              { icon: <MountainSnow className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "First-class facilities including a lap pool, spa pool, rooftop dining, and fitness areas" },
-              { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "<strong>99-year leasehold</strong> commencing from 20 January 2025 | Expected TOP: <strong>August 2029</strong>" }
+              { icon: <Trees className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Direct access to <strong>Bukit Batok Nature Park</strong> for daily recreation amidst protected rainforest greenery." },
+              { icon: <ChartLine className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Secure a rare value advantage with a <strong>competitive entry price</strong>." },
+              { icon: <Home className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Experience the exclusivity of quiet, low-density living tucked safely within the private <strong>De Souza landed estate.</strong>" },
+              { icon: <Car className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Benefit from immediate connectivity to the <strong>PIE and BKE</strong> for seamless and fast island-wide driving." },
+              { icon: <Maximize2 className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Space-maximised units designed with efficient \"dumbbell\" layouts and absolutely zero wasted space." },
+              { icon: <ChartLine className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Capital appreciation potential driven by the nearby <strong>Beauty World Integrated Transport Hub</strong> transformation." },
+              { icon: <Eye className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Permanent, <strong>unblocked views</strong> overlooking lush nature." },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, desc: "Quality construction by <strong>Sustained Land</strong>, a developer renowned for high-efficiency homes." }
             ].map((card, index) => (
               <Card 
                 key={index} 
@@ -1611,7 +1581,10 @@ export default function Artisan8Landing() {
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Tenure:</span>
-                  <span className="font-semibold text-white text-right">99-year leasehold commencing from 20 January 2025</span>
+                  <span className="font-semibold text-white text-right">
+                    99-year leasehold commencing <br />
+                    from 20 January 2025
+                  </span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">District:</span>
@@ -1702,7 +1675,7 @@ export default function Artisan8Landing() {
                         ))}
                       </div>
                     </div>
-                    <p className="text-sm text-gray-300 mb-3 mt-3">
+                    <p className="text-sm text-gray-300 mb-3 mt-6">
                       View the overall development layout and facilities distribution
                     </p>
                     <Button 
@@ -1765,49 +1738,161 @@ export default function Artisan8Landing() {
                 </div>
               </div>
 
-              <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 transition-all duration-1000 delay-500 max-w-4xl mx-auto ${
+              <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-1000 delay-500 max-w-6xl mx-auto ${
                 animatedSections.has('facilities') ? 'animate-fade-in-up' : 'animate-fade-in-up'
               }`} style={{
                 opacity: animatedSections.has('facilities') ? 1 : 1,
                 transform: animatedSections.has('facilities') ? 'translateY(0)' : 'translateY(0)'
               }}>
-                {/* Rooftop */}
+                {/* Sen Arrival (Level 1) & Ancillary (Level 1) */}
                 <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
                   <CardHeader>
-                    <CardTitle className="text-white text-[20px]">Rooftop</CardTitle>
+                    <CardTitle className="text-white text-[20px]">Sen Arrival (Level 1)</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4 text-gray-300 text-[16px]">
+                      <div>
+                        <ul className="list-disc list-inside space-y-1">
+                          <li>Child Care Centre</li>
+                          <li>Drop off Foyer</li>
+                          <li>Side Gate 1</li>
+                          <li>Side Gate 2</li>
+                          <li>Side Gate 3</li>
+                          <li>Guardhouse</li>
+                          <li>Management Office</li>
+                          <li>Bicycle Parking and Repair Station</li>
+                        </ul>
+                      </div>
+                      <div>
+                        <p className="text-white text-[20px] font-semibold">Ancillary (Level 1)</p>
+                        <ul className="list-disc list-inside space-y-1">
+                          <li>Bulk Meter</li>
+                          <li>Substation</li>
+                          <li>Genset</li>
+                          <li>Bin Centre</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Sen Commons (Level 1) */}
+                <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
+                  <CardHeader>
+                    <CardTitle className="text-white text-[20px]">Sen Commons (Level 1)</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <ul className="list-disc list-inside space-y-1 text-gray-300 text-[16px]">
-                      <li>Spa Pool</li>
-                      <li>Changing Room</li>
-                      <li>Social Lounge</li>
-                      <li>Outdoor Fitness</li>
-                      <li>Alfresco BBQ</li>
-                      <li>Social Lawn</li>
-                      <li>Rooftop Bar</li>
-                      <li>Rooftop Dining</li>
-                      <li>Reading Lounge</li>
-                      <li>Generator Set</li>
-                      <li>Rooftop Water Tank</li>
+                      <li>Serenity Waters</li>
+                      <li>Water Sculpture</li>
+                      <li>Picnic Lawn</li>
+                      <li>Play Lawn</li>
+                      <li>Tai Chi Lawn</li>
+                      <li>Tree Courtyard</li>
+                      <li>Pool Shower 1</li>
+                      <li>Terracing Water Feature</li>
+                      <li>Bubble Pool</li>
+                      <li>Aqua Gym</li>
+                      <li>Family Pool</li>
+                      <li>Spa Bed</li>
+                      <li>Spa Seat</li>
+                      <li>Hydro Pool</li>
+                      <li>Family Lounge</li>
+                      <li>Children's Pool</li>
+                      <li>Pool Shower 2</li>
+                      <li>Play Pavilion</li>
+                      <li>Children's Playground</li>
                     </ul>
                   </CardContent>
                 </Card>
 
-                {/* 1st floor */}
+                {/* Sen Club (Level 1) */}
                 <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
                   <CardHeader>
-                    <CardTitle className="text-white text-[20px]">1st floor</CardTitle>
+                    <CardTitle className="text-white text-[20px]">Sen Club (Level 1)</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <ul className="list-disc list-inside space-y-1 text-gray-300 text-[16px]">
-                      <li>Lap Pool</li>
-                      <li>Pool Deck</li>
-                      <li>Side Gate</li>
-                      <li>Guard House</li>
-                      <li>Bin Centre</li>
+                      <li>Clubhouse</li>
+                      <li>Reading Lounge</li>
+                      <li>Gathering Lounge</li>
+                      <li>Relaxation Lounge</li>
+                      <li>Forest Fitness</li>
+                      <li>Tennis Court</li>
+                      <li>BBQ Pavilion</li>
+                      <li>Open Deck</li>
                     </ul>
                   </CardContent>
                 </Card>
+
+                {/* Sen Boutique (Level 2) & Sen Roof - Centered Row */}
+                <div className="lg:col-span-3 lg:flex lg:justify-center lg:gap-6">
+                  <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500 lg:w-full lg:max-w-[calc((100%-48px)/3)]">
+                    <CardHeader>
+                      <CardTitle className="text-white text-[20px]">Sen Boutique (Level 2)</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="list-disc list-inside space-y-1 text-gray-300 text-[16px]">
+                        <li>Water Feature</li>
+                        <li>50m Lap Pool</li>
+                        <li>Main Pool Deck</li>
+                        <li>Pool Shower 3</li>
+                        <li>Serenity Lounge</li>
+                        <li>Gym</li>
+                        <li>Hot & Cold Bath</li>
+                        <li>Toilet with Steam Room</li>
+                        <li>Accessible Toilet</li>
+                      </ul>
+                    </CardContent>
+                  </Card>
+
+                  {/* Sen Roof */}
+                  <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500 lg:w-full lg:max-w-[calc((100%-48px)/3)]">
+                  <CardHeader>
+                    <CardTitle className="text-white text-[20px]">Sen Roof</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4 text-gray-300 text-[16px]">
+                      <div>
+                        <p className="font-semibold text-white mb-2">Blk 222</p>
+                        <ul className="list-disc list-inside space-y-1">
+                          <li>Pilates Pavilion</li>
+                          <li>Meditation Deck</li>
+                          <li>Yoga Lawn</li>
+                          <li>Floral Garden</li>
+                          <li>Sensory Garden</li>
+                        </ul>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-white mb-2">Blk 228</p>
+                        <ul className="list-disc list-inside space-y-1">
+                          <li>Foot Reflexology Walk</li>
+                          <li>Hammock Alcove</li>
+                          <li>Maze Garden</li>
+                          <li>Chess Garden</li>
+                          <li>Community Garden</li>
+                        </ul>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-white mb-2">Blk 230</p>
+                        <ul className="list-disc list-inside space-y-1">
+                          <li>Sky Bar Pavilion</li>
+                          <li>Sky Lounge</li>
+                          <li>Hangout Lounge</li>
+                          <li>Sky Deck</li>
+                        </ul>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-white mb-2">Ancillary</p>
+                        <ul className="list-disc list-inside space-y-1">
+                          <li>Water Tank</li>
+                          <li>Solar Panel</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+                </div>
               </div>
             </div>
           </section>
@@ -2124,67 +2209,6 @@ export default function Artisan8Landing() {
         </div>
       </section>
 
-      {/* Investor Benefits & Pricing Comparison */}
-      <section 
-        className="py-16 bg-[#242728] section-entrance"
-        data-section-id="investor-benefits"
-        style={{ 
-          opacity: animatedSections.has('investor-benefits') ? 1 : 0,
-          transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(60px)'
-        }}
-      >
-        <div className="container mx-auto px-4">
-          <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
-            animatedSections.has('investor-benefits') ? 'animate-slide-in-top' : ''
-          }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">For Investors</h2>
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-1 bg-[#ce001f] rounded" />
-            </div>
-          </div>
-
-          {/* Investor Benefits */}
-          <div className={`max-w-6xl mx-auto transition-all duration-1000 delay-500 ${
-            animatedSections.has('investor-benefits') ? 'animate-fade-in-up' : ''
-          }`} style={{
-            opacity: animatedSections.has('investor-benefits') ? 1 : 0,
-            transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(50px)'
-          }}>
-            {/* Investor Benefits Grid - 2 per row on mobile, 3 per row on desktop */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
-              {[
-                { icon: <Layers className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Prime 99-Year Leasehold Asset in Upper Bukit Timah', subtitle: 'Ensuring long-term capital appreciation.' },
-                { icon: <Home className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Diverse Unit Mix', subtitle: 'Catering to a wide range of future potential buyers.' },
-                { icon: <ChartLine className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Strong Capital Upside', subtitle: 'Poised for long-term value growth as Upper Bukit Timah continues to thrive.' },
-                { icon: <Building className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Architectural Prestige by AGA Architect', subtitle: 'Attracts discerning tenants and buyers, further enhancing its investment appeal.' },
-                { icon: <Train className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Exceptional Connectivity', subtitle: 'With seamless access to the CBD, Marina Bay, and other key economic zones.' },
-                { icon: <Users className="w-6 h-6 md:w-8 md:h-8" style={{ color: '#ce001f' }} />, title: 'Prime Tenant Pool', subtitle: 'Ensuring a steady rental yield for investors.' }
-              ].map((benefit, index) => (
-                <div 
-                  key={index}
-                  className={`hover:shadow-lg transition-all duration-700 bg-[#18191b] rounded-xl hover:scale-105 hover-lift stagger-animation ${
-                    animatedSections.has('investor-benefits') ? 'animate' : ''
-                  }`}
-                  style={{ 
-                    transitionDelay: `${index * 200}ms`,
-                    opacity: animatedSections.has('investor-benefits') ? 1 : 0,
-                    transform: animatedSections.has('investor-benefits') ? 'translateY(0)' : 'translateY(40px)'
-                  }}
-                >
-                  <div className="p-4 md:p-6 flex flex-col items-center text-center space-y-2">
-                    <div className="flex-shrink-0">{benefit.icon}</div>
-                    <h3 className="text-sm md:text-lg text-white font-semibold leading-snug">{benefit.title}</h3>
-                    <p className="text-xs md:text-sm text-gray-300 font-light">{benefit.subtitle}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Removed mobile-only centered row to maintain 2 cards per row consistently */}
-          </div>
-        </div>
-      </section>
-
       {/* Nearby Amenities */}
       <section 
         id="nearby-amenities"
@@ -2224,7 +2248,7 @@ export default function Artisan8Landing() {
                 {/* Location Image */}
                 <div className="w-full rounded-lg overflow-hidden shadow-lg">
                   <Image
-                    src="https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/orchard-sophia-location.jpg"
+                    src="https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/TheSen-Location.jpg"
                     alt="The Sen Location Map"
                     width={1200}
                     height={800}
@@ -2245,7 +2269,7 @@ export default function Artisan8Landing() {
                     <Train className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
                       <p className="font-semibold text-white">MRT</p>
-                      <p className="text-sm text-gray-300 font-light">Dhoby Ghaut MRT</p>
+                      <p className="text-sm text-gray-300 font-light">Beauty World MRT</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
@@ -2272,7 +2296,6 @@ export default function Artisan8Landing() {
                   {cat === 'All' && <Layers className="w-4 h-4" />}
                   {cat === 'Transport' && <Train className="w-4 h-4" />}
                   {cat === 'Retail & F&B' && <ShoppingBag className="w-4 h-4" />}
-                  {cat === 'Cultural & Arts Institutions' && <Landmark className="w-4 h-4" />}
                   {cat === 'Nature & Leisure' && <Trees className="w-4 h-4" />}
                   {cat === 'Education' && <GraduationCap className="w-4 h-4" />}
                   {cat === 'Healthcare' && <Hospital className="w-4 h-4" />}
@@ -2354,7 +2377,7 @@ export default function Artisan8Landing() {
         className={`py-8 md:py-16 relative bg-cover bg-center section-entrance`}
         data-section-id="lead-form"
         style={{ 
-          backgroundImage: "url('https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/orchard-sophia/orchard-sophia-hero.jpg')",
+          backgroundImage: "url('https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/the-sen-hero.webp')",
           opacity: animatedSections.has('lead-form') ? 1 : 0,
           transform: animatedSections.has('lead-form') ? 'translateY(0)' : 'translateY(60px)'
         }}
