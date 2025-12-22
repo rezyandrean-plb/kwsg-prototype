@@ -1103,7 +1103,7 @@ export default function WResidenceLanding() {
           bedrooms: 3,
           bathrooms: 3,
           size: "3,111 sqft",
-          price: "From $4,697,000",
+          price: "From $4,388,000",
           currency: "SGD",
           total: 1,
           available: 1,
@@ -1515,7 +1515,7 @@ export default function WResidenceLanding() {
                   <div className="w-16 h-1 bg-[#ce001f] rounded"></div>
                 </div>
                 <div className="text-right">
-                  <p className="text-white text-2xl font-medium">$ 4,697,000</p>
+                  <p className="text-white text-2xl font-medium">$ 4,388,000</p>
                 </div>
               </div>
             </div>

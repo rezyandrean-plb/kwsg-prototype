@@ -761,7 +761,7 @@ function LeadGenerationForm({
   )
 }
 
-export default function WResidenceLanding() {
+export default function TheDraycottLanding() {
   const { toast } = useToast()
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [selectedFloorPlan, setSelectedFloorPlan] = useState("1br")
@@ -1204,7 +1204,7 @@ export default function WResidenceLanding() {
       // Ensure only the date (no time) is submitted for preferredDate
       const preferredDateOnly = preferredDate ? format(preferredDate, 'yyyy-MM-dd') : undefined
 
-      const response = await fetch('/api/w-residences-form', {
+      const response = await fetch('/api/the-draycott-lead-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1297,7 +1297,7 @@ export default function WResidenceLanding() {
 
     try {
       // Submit the form with the reCAPTCHA token
-      const response = await fetch('/api/w-residences-site-map-request', {
+      const response = await fetch('/api/the-draycott-site-map-request', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1441,7 +1441,7 @@ export default function WResidenceLanding() {
       </header>
 
       {/* Clean Modern Hero Section */}
-      <section className="relative min-h-screen md:min-h-0 md:h-[50vh] lg:min-h-screen lg:h-auto flex items-center justify-center">
+      <section className="relative min-h-[60vh] md:min-h-0 md:h-[50vh] lg:min-h-screen lg:h-auto flex items-center justify-center">
         {/* Background elements */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -1454,12 +1454,12 @@ export default function WResidenceLanding() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/70" />
         </div>
 
-        <div className="relative container mx-auto px-4 min-h-screen flex items-center">
+        <div className="relative container mx-auto px-4 min-h-[60vh] md:min-h-screen flex items-center py-8 md:py-0">
           <div className={`max-w-4xl transition-all duration-1000 delay-300 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
             {/* Clean Badge */}
-            <div className={`mb-2 sm:mb-2 md:mb-2 transition-all duration-700 delay-500 ${
+            <div className={`mb-1 md:mb-2 transition-all duration-700 delay-500 ${
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Badge className="bg-[#ce001f] text-white px-4 py-2 text-sm font-medium rounded-full animate-pulse">
@@ -1468,22 +1468,22 @@ export default function WResidenceLanding() {
             </div>
 
             {/* Clean Typography */}
-            <div className={`mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-700 ${
+            <div className={`mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-700 ${
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
-              <h1 className="text-5xl md:text-7xl font-bold text-white mb-2 sm:mb-2 md:mb-2 lg:mb-4 leading-tight">
+              <h1 className="text-4xl md:text-7xl font-bold text-white mb-1 md:mb-2 lg:mb-4 leading-tight">
                 <span className={`transition-all duration-1000 delay-900 ${isVisible ? 'animate-fade-in-left' : ''}`}>THE DRAYCOTT
                 </span>
               </h1>
 
-              <div className={`flex items-center mb-2 sm:mb-2 md:mb-2 lg:mb-4 transition-all duration-700 delay-1300 ${
+              <div className={`flex items-center mb-1 md:mb-2 lg:mb-4 transition-all duration-700 delay-1300 ${
                 isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
               }`}>
                 <div className="w-12 h-px bg-[#ce001f] mr-4"></div>
                 <p className="text-lg text-gray-200 font-light">D10, Draycott Park</p>
               </div>
 
-              <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
+              <p className={`text-lg md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
                 Large-format freehold residences with rare single-unit-per-floor privacy hardly seen today
@@ -1491,7 +1491,7 @@ export default function WResidenceLanding() {
             </div>
 
             {/* Clean CTA Buttons */}
-            <div className={`cta-buttons-container mb-4 sm:mb-4 md:mb-4 lg:mb-8 transition-all duration-700 delay-1700 ${
+            <div className={`cta-buttons-container mb-2 md:mb-4 lg:mb-8 transition-all duration-700 delay-1700 ${
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Button 
@@ -1508,22 +1508,13 @@ export default function WResidenceLanding() {
         </div>
 
         {/* Clean Scroll Indicator */}
-        <div className={`absolute z-20 bottom-16 sm:bottom-28 md:bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-1000 delay-2000 ${
+        <div className={`absolute z-20 bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-1000 delay-2000 ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
         }`}>
           <div className="flex flex-col items-center text-white/60">
             <span className="text-sm mb-2">Scroll to explore</span>
             <MoveDownIcon className="w-5 h-5 rotate-90 animate-bounce" />
           </div>
-        </div>
-
-        {/* Disclaimer Text */}
-        <div className={`absolute bottom-2 right-2 sm:bottom-4 sm:right-4 transition-all duration-1000 delay-2000 ${
-          isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-        }`}>
-          <p className="text-[9px] sm:text-xs text-white/70 bg-black/30 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-2 rounded-lg whitespace-nowrap">
-            Images are for illustrative purposes only and may <br className="sm:hidden"/> not reflect the final design of The Draycott.
-          </p>
         </div>
       </section>
 
@@ -1586,14 +1577,14 @@ export default function WResidenceLanding() {
                   <span className="font-medium text-gray-300">Tenure:</span>
                   <span className="font-semibold text-white text-right">Freehold</span>
                 </div>
-              </div>
-
-              {/* Right Column */}
-              <div className="space-y-6">
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Unit No.:</span>
                   <span className="font-semibold text-white text-right">#05-03</span>
                 </div>
+              </div>
+
+              {/* Right Column */}
+              <div className="space-y-6">
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Site Area:</span>
                   <span className="font-semibold text-white text-right">2637 sqft</span>
@@ -1613,6 +1604,10 @@ export default function WResidenceLanding() {
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">TOP:</span>
                   <span className="font-semibold text-white text-right">1980</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-500 pb-3">
+                  <span className="font-medium text-gray-300">PSF:</span>
+                  <span className="font-semibold text-white text-right">$2,300 PSF</span>
                 </div>
               </div>
             </div>
@@ -1637,8 +1632,8 @@ export default function WResidenceLanding() {
             {[
               { icon: <MapPin className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Freehold residence located within the Ardmore–Draycott enclave in prime District 10" },
               { icon: <Trees className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Quiet residential setting just off Orchard Road with limited through traffic" },
-              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Homes of this scale and configuration are rarely replicated in newer developments today" },
-              { icon: <Ruler className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Units are predominantly 2,600 sq ft and above with a focus on spacious living" },
+              { icon: <Building className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Homes of this scale and configuration are rarely replicated in newer developments today." },
+              { icon: <Ruler className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Units are predominantly 2,600 sqft and above with a focus on spacious living" },
               { icon: <Layers className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Single-unit-per-floor tower residences offering enhanced privacy" },
               { icon: <Boxes className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Low-density development with only 132 units across an expansive site" },
               { icon: <Users className="w-12 h-12 mx-auto mb-4" style={{ color: '#ce001f' }} />, title: "", desc: "Predominantly owner-occupied community with limited resale availability" },
@@ -1688,7 +1683,7 @@ export default function WResidenceLanding() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
+              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
                 <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
                   <p className="text-gray-300 text-center">BBQ</p>
                 </div>
@@ -1707,7 +1702,7 @@ export default function WResidenceLanding() {
                 <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
                   <p className="text-gray-300 text-center">Swimming Pool</p>
                 </div>
-                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
+                <div className="rounded-xl border border-gray-700 bg-[#1c1c1d] shadow-xl p-6 hover:shadow-2xl transition-all duration-300 col-span-2 md:col-span-1">
                   <p className="text-gray-300 text-center">Wading Pool</p>
                 </div>
               </div>
@@ -2114,82 +2109,7 @@ export default function WResidenceLanding() {
           </Tabs>
         </div>
       </section>
-
-      {/* Enhanced Media Section */}
-      <section id="media" className="pt-4 pb-4 bg-[#1c1c1d] flex items-center justify-center">
-        <div className="container mx-auto px-4 text-left">
-        <div className={`text-center mb-8 md:mb-16 transition-all duration-1000 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            <h2 className="text-2xl md:text-3xl font-bold mb-3 text-white text-center tracking-wide">Explore The Draycott</h2>
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-1 bg-[#ce001f] rounded" />
-            </div>
-            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-              Immerse yourself in the luxury and elegance of our latest development through our comprehensive media
-              gallery
-            </p>
-          </div>
-
-          
-          <div className={`space-y-8 md:space-y-20 transition-all duration-1000 delay-300 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            
-            <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
-              <div className="space-y-6 order-2 lg:order-1">
-                <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
-                <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
-                  Discover Luxury Living in Sentosa
-                </h3>
-                <p className="text-gray-300 leading-relaxed text-base md:text-lg">
-                  Experience the epitome of luxury living at The Draycott, where modern elegance meets Sentosa's pristine natural beauty. 
-                  This exclusive development offers a rare opportunity to own a piece of paradise in one of Singapore's most prestigious locations. 
-                  Learn more about the unique features and investment potential of this exceptional property.
-                </p>
-                  <Button 
-                    className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
-                    onClick={scrollToLeadForm}
-                  >
-                    <Play className="w-5 h-5 mr-2" />
-                    Learn More
-                  </Button>
-              </div>
-              <div className="relative hover:scale-105 transition-transform duration-500 p-0 md:p-0 order-1 lg:order-2">
-                <div className="relative h-64 md:h-80 rounded-xl overflow-hidden shadow-2xl">
-                  <Image
-                    src="/images/penrith/explore-1.webp"
-                    alt="Explore The Draycott"
-                    fill
-                    className="object-contain md:object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Call to Action */}
-          <div className={`text-center mt-12 sm:mt-16 md:mt-18 lg:mt-12 mb-4 transition-all duration-1000 delay-500 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
-          }`}>
-            <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
-              <h3 className="text-xl md:text-2xl font-normal md:font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
-              <p className="text-base md:text-lg mb-6 opacity-90">
-                Register now for an exclusive preview of The Draycott
-              </p>
-              <div className="cta-buttons-container justify-center">
-                <Button 
-                  className="bg-white text-[#ce001f] hover:bg-gray-100 px-8 py-3 text-lg hover:scale-105 transition-all duration-300"
-                  onClick={scrollToLeadForm}
-                >
-                  <Calendar className="w-5 h-5 mr-2" />
-                  Book Showflat Visit
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      
 
       {/* Lead Generation Form */}
       <section
