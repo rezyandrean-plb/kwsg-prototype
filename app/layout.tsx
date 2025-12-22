@@ -146,7 +146,7 @@ export default function RootLayout({
                 if (window.location.protocol !== 'https:') return;
                 
                 h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-                h._hjSettings={hjid:6420441,hjsv:6};
+                h._hjSettings={hjid:6606723,hjsv:6};
                 a=o.getElementsByTagName('head')[0];
                 r=o.createElement('script');
                 r.async=1;
