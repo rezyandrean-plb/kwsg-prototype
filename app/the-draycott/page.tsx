@@ -1587,7 +1587,7 @@ export default function TheDraycottLanding() {
               <div className="space-y-6">
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Site Area:</span>
-                  <span className="font-semibold text-white text-right">2637 sqft</span>
+                  <span className="font-semibold text-white text-right">2,637 sqft</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="font-medium text-gray-300">Property Type:</span>
