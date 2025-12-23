@@ -1385,12 +1385,12 @@ export default function WResidenceLanding() {
                 >
                   Location
                 </button>
-                {/* <button 
+                <button 
                   onClick={scrollToMedia}
                   className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
                 >
                   Explore
-                </button> */}
+                </button>
                 <Button 
                   className="bg-[#ce001f] hover:bg-[#b3001a] transition-colors duration-300"
                   onClick={scrollToLeadForm}
