@@ -2059,8 +2059,8 @@ export default function WResidenceLanding() {
         </div>
       </section>
 
-      {/* Enhanced Media Section (hidden) */}
-      {false && (
+      {/* Enhanced Media Section */}
+      {true && (
       <section id="media" className="pt-4 pb-4 bg-[#1c1c1d] flex items-center justify-center">
         <div className="container mx-auto px-4 text-left">
         <div className={`text-center mb-8 md:mb-16 transition-all duration-1000 ${
@@ -2070,10 +2070,6 @@ export default function WResidenceLanding() {
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
-            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-              Immerse yourself in the luxury and elegance of our latest development through our comprehensive media
-              gallery
-            </p>
           </div>
 
           
@@ -2083,27 +2079,26 @@ export default function WResidenceLanding() {
             
             <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
               <div className="space-y-6 order-2 lg:order-1">
-                <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
                 <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
-                  Discover Luxury Living in Sentosa
+                  Turquoise - A Private Oasis Above the Marina | $4,388,000
                 </h3>
                 <p className="text-gray-300 leading-relaxed text-base md:text-lg">
-                  Experience the epitome of luxury living at Turquoise, where modern elegance meets Sentosa's pristine natural beauty. 
-                  This exclusive development offers a rare opportunity to own a piece of paradise in one of Singapore's most prestigious locations. 
-                  Learn more about the unique features and investment potential of this exceptional property.
+                  This 3,111 sq ft duplex penthouse at Turquoise, Sentosa Cove, offers an elevated waterfront lifestyle with panoramic marina and golf course views. 
+                  The home features a gourmet Miele kitchen and a full-floor master retreat with a private jacuzzi terrace. 
+                  Ideally located near Quayside Isle and the CBD, this rare property is perfectly positioned to benefit from the Greater Southern Waterfront transformation, making it a prestigious long-term investment in Singapore’s premier island enclave.
                 </p>
                   <Button 
                     className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
                     onClick={scrollToLeadForm}
                   >
                     <Play className="w-5 h-5 mr-2" />
-                    Learn More
+                    Watch New Launch Signature Tour
                   </Button>
               </div>
               <div className="relative hover:scale-105 transition-transform duration-500 p-0 md:p-0 order-1 lg:order-2">
                 <div className="relative h-64 md:h-80 rounded-xl overflow-hidden shadow-2xl">
                   <Image
-                    src="/images/penrith/explore-1.webp"
+                    src="https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/turquoise/Turquoise+2.jpg"
                     alt="Explore Turquoise"
                     fill
                     className="object-contain md:object-cover"
