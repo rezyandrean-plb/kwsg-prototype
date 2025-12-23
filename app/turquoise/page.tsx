@@ -1421,10 +1421,8 @@ export default function WResidenceLanding() {
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
             {/* Clean Badge */}
-            <div className={`mb-2 sm:mb-2 md:mb-2 transition-all duration-700 delay-500 ${
-              isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-            }`}>
-              <Badge className="bg-[#ce001f] text-white px-4 py-2 text-sm font-medium rounded-full animate-pulse">
+            <div className="mb-2 sm:mb-2 md:mb-2">
+              <Badge className="bg-[#ce001f] hover:bg-[#ce001f] text-white px-4 py-2 text-sm font-medium rounded-full animate-pulse">
                 LAST UNIT!
               </Badge>
             </div>
@@ -2083,7 +2081,7 @@ export default function WResidenceLanding() {
             
             <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
               <div className="space-y-6 order-2 lg:order-1">
-                <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
+                <Badge className="bg-white hover:bg-white text-[#ce001f]">New Launch Signature Tour</Badge>
                 <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
                   Turquoise - A Private Oasis Above the Marina | $4,388,000
                 </h3>
