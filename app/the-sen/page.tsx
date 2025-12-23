@@ -1378,7 +1378,7 @@ export default function Artisan8Landing() {
       </header>
 
       {/* Clean Modern Hero Section */}
-      <section className="relative min-h-screen md:min-h-0 md:h-[50vh] lg:min-h-screen lg:h-auto flex items-center justify-center">
+      <section className="relative min-h-[80vh] md:min-h-[60vh] lg:min-h-screen flex items-center justify-center">
         {/* Background elements */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -1391,7 +1391,7 @@ export default function Artisan8Landing() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/70" />
         </div>
 
-        <div className="relative container mx-auto px-4 min-h-screen flex items-center">
+        <div className="relative container mx-auto px-4 min-h-[80vh] md:min-h-[60vh] lg:min-h-[80vh] flex items-center">
           <div className={`max-w-4xl transition-all duration-1000 delay-300 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
@@ -1789,8 +1789,77 @@ export default function Artisan8Landing() {
                   </CardContent>
                 </Card>
 
-                {/* Sen Boutique (Level 2) & Sen Roof - Centered Row */}
-                <div className="lg:col-span-3 lg:flex lg:justify-center lg:gap-6">
+                {/* Tablet: Sen Boutique right after Sen Club */}
+                <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500 lg:hidden">
+                  <CardHeader>
+                    <CardTitle className="text-white text-[20px]">Sen Boutique (Level 2)</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="list-disc list-inside space-y-1 text-gray-300 text-[16px]">
+                      <li>Water Feature</li>
+                      <li>50m Lap Pool</li>
+                      <li>Main Pool Deck</li>
+                      <li>Pool Shower 3</li>
+                      <li>Serenity Lounge</li>
+                      <li>Gym</li>
+                      <li>Hot & Cold Bath</li>
+                      <li>Toilet with Steam Room</li>
+                      <li>Accessible Toilet</li>
+                    </ul>
+                  </CardContent>
+                </Card>
+
+                {/* Tablet: Sen Roof as its own card, centered if last (md only) */}
+                <div className="md:col-span-2 md:flex md:justify-center lg:col-span-1 lg:block">
+                  <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500 lg:hidden w-full md:w-1/2">
+                    <CardHeader>
+                      <CardTitle className="text-white text-[20px]">Sen Roof</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4 text-gray-300 text-[16px]">
+                        <div>
+                          <p className="font-semibold text-white mb-2">Blk 222</p>
+                          <ul className="list-disc list-inside space-y-1">
+                            <li>Pilates Pavilion</li>
+                            <li>Meditation Deck</li>
+                            <li>Yoga Lawn</li>
+                            <li>Floral Garden</li>
+                            <li>Sensory Garden</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <p className="font-semibold text-white mb-2">Blk 228</p>
+                          <ul className="list-disc list-inside space-y-1">
+                            <li>Foot Reflexology Walk</li>
+                            <li>Hammock Alcove</li>
+                            <li>Maze Garden</li>
+                            <li>Chess Garden</li>
+                            <li>Community Garden</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <p className="font-semibold text-white mb-2">Blk 230</p>
+                          <ul className="list-disc list-inside space-y-1">
+                            <li>Sky Bar Pavilion</li>
+                            <li>Sky Lounge</li>
+                            <li>Hangout Lounge</li>
+                            <li>Sky Deck</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <p className="font-semibold text-white mb-2">Ancillary</p>
+                          <ul className="list-disc list-inside space-y-1">
+                            <li>Water Tank</li>
+                            <li>Solar Panel</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Desktop: centered second row with Sen Boutique & Sen Roof */}
+                <div className="hidden lg:col-span-3 lg:flex lg:justify-center lg:gap-6 lg:block">
                   <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500 lg:w-full lg:max-w-[calc((100%-48px)/3)]">
                     <CardHeader>
                       <CardTitle className="text-white text-[20px]">Sen Boutique (Level 2)</CardTitle>
@@ -1810,52 +1879,51 @@ export default function Artisan8Landing() {
                     </CardContent>
                   </Card>
 
-                  {/* Sen Roof */}
                   <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500 lg:w-full lg:max-w-[calc((100%-48px)/3)]">
-                  <CardHeader>
-                    <CardTitle className="text-white text-[20px]">Sen Roof</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4 text-gray-300 text-[16px]">
-                      <div>
-                        <p className="font-semibold text-white mb-2">Blk 222</p>
-                        <ul className="list-disc list-inside space-y-1">
-                          <li>Pilates Pavilion</li>
-                          <li>Meditation Deck</li>
-                          <li>Yoga Lawn</li>
-                          <li>Floral Garden</li>
-                          <li>Sensory Garden</li>
-                        </ul>
+                    <CardHeader>
+                      <CardTitle className="text-white text-[20px]">Sen Roof</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4 text-gray-300 text-[16px]">
+                        <div>
+                          <p className="font-semibold text-white mb-2">Blk 222</p>
+                          <ul className="list-disc list-inside space-y-1">
+                            <li>Pilates Pavilion</li>
+                            <li>Meditation Deck</li>
+                            <li>Yoga Lawn</li>
+                            <li>Floral Garden</li>
+                            <li>Sensory Garden</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <p className="font-semibold text-white mb-2">Blk 228</p>
+                          <ul className="list-disc list-inside space-y-1">
+                            <li>Foot Reflexology Walk</li>
+                            <li>Hammock Alcove</li>
+                            <li>Maze Garden</li>
+                            <li>Chess Garden</li>
+                            <li>Community Garden</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <p className="font-semibold text-white mb-2">Blk 230</p>
+                          <ul className="list-disc list-inside space-y-1">
+                            <li>Sky Bar Pavilion</li>
+                            <li>Sky Lounge</li>
+                            <li>Hangout Lounge</li>
+                            <li>Sky Deck</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <p className="font-semibold text-white mb-2">Ancillary</p>
+                          <ul className="list-disc list-inside space-y-1">
+                            <li>Water Tank</li>
+                            <li>Solar Panel</li>
+                          </ul>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-semibold text-white mb-2">Blk 228</p>
-                        <ul className="list-disc list-inside space-y-1">
-                          <li>Foot Reflexology Walk</li>
-                          <li>Hammock Alcove</li>
-                          <li>Maze Garden</li>
-                          <li>Chess Garden</li>
-                          <li>Community Garden</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="font-semibold text-white mb-2">Blk 230</p>
-                        <ul className="list-disc list-inside space-y-1">
-                          <li>Sky Bar Pavilion</li>
-                          <li>Sky Lounge</li>
-                          <li>Hangout Lounge</li>
-                          <li>Sky Deck</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="font-semibold text-white mb-2">Ancillary</p>
-                        <ul className="list-disc list-inside space-y-1">
-                          <li>Water Tank</li>
-                          <li>Solar Panel</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
                 </div>
               </div>
             </div>
