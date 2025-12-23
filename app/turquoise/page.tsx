@@ -2070,6 +2070,10 @@ export default function WResidenceLanding() {
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
+            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+              Immerse yourself in the luxury and elegance of our latest development through our comprehensive media
+              gallery
+            </p>
           </div>
 
           
@@ -2079,6 +2083,7 @@ export default function WResidenceLanding() {
             
             <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
               <div className="space-y-6 order-2 lg:order-1">
+                <Badge className="bg-white text-[#ce001f]">NEW LAUNCH ANALYSIS</Badge>
                 <h3 className="text-xl md:text-3xl font-semibold md:font-bold text-[#ce001f]">
                   Turquoise - A Private Oasis Above the Marina | $4,388,000
                 </h3>
@@ -2089,7 +2094,7 @@ export default function WResidenceLanding() {
                 </p>
                   <Button 
                     className="bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-3 hover:scale-105 transition-all duration-300"
-                    onClick={scrollToLeadForm}
+                    onClick={() => window.open('https://www.youtube.com/watch?v=kgYoCEsPMYg', '_blank', 'noopener,noreferrer')}
                   >
                     <Play className="w-5 h-5 mr-2" />
                     Watch New Launch Signature Tour
