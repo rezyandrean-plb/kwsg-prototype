@@ -2136,7 +2136,7 @@ export default function Artisan8Landing() {
                               
                               {/* Price */}
                               <div className="mb-6">
-                                <p className="text-green-400 font-semibold text-lg">{subtype.price}</p>
+                                <p className="text-green-400 font-semibold text-lg">Form {subtype.price}</p>
                                 {subtype.price_per_sqft && (
                                   <p className="text-gray-400 text-sm">
                                     {subtype.price_per_sqft} per sqft
@@ -2158,7 +2158,7 @@ export default function Artisan8Landing() {
                                 onClick={() => setShowSiteMapPopup(true)}
                                 className="w-full bg-white text-red-500 hover:bg-white-600 text-red-500 font-medium py-3 px-4 rounded-lg text-sm transition-colors"
                               >
-                                Site Map & Floor Plan
+                                Request Site Map & Floor Plan
                               </button>
                             </div>
                           </div>
@@ -2240,7 +2240,7 @@ export default function Artisan8Landing() {
                     <Car className="w-5 h-5" style={{ color: '#ce001f' }} />
                     <div>
                       <p className="font-semibold text-white">Access</p>
-                      <p className="text-sm text-gray-300 font-light">CTE | Nicoll Highway</p>
+                      <p className="text-sm text-gray-300 font-light">PIE | Pan Island Expressway</p>
                     </div>
                   </div>
                 </div>
