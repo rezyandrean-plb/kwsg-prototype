@@ -1400,7 +1400,7 @@ export default function Artisan8Landing() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Badge className="bg-[#ce001f] text-white px-4 py-2 text-sm font-medium rounded-full animate-pulse">
-                OFFICIAL PREVIEW LAUNCH 2025
+                Units Available
               </Badge>
             </div>
 
