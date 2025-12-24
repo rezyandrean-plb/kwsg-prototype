@@ -19,6 +19,7 @@ const nextConfig = {
     },
   },
   images: {
+    qualities: [75, 90],
     domains: [
       'images.unsplash.com', 
       'source.unsplash.com',
