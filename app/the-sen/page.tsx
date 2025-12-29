@@ -1017,10 +1017,10 @@ export default function Artisan8Landing() {
           bedrooms: 1,
           bathrooms: 1,
           size: "452 sqft",
-          price: "$993,900",
+          price: "",
           currency: "SGD",
           total: 10,
-          available: 10,
+          available: 0,
           status: 0,
           floor_plan_images: [
             "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/the-sen/floor-plan/TheSen-1BR-01.jpg"
@@ -1036,7 +1036,7 @@ export default function Artisan8Landing() {
           bedrooms: 2,
           bathrooms: 2,
           size: "678 - 775 sqft",
-          price: "$1,499,000",
+          price: "$1,499,800",
           currency: "SGD",
           total: 167,
           available: 167,
@@ -1059,7 +1059,7 @@ export default function Artisan8Landing() {
           bedrooms: 3,
           bathrooms: 2,
           size: "872 - 1,259 sqft",
-          price: "$1,936,000",
+          price: "$1,955,200",
           currency: "SGD",
           total: 130,
           available: 130,
@@ -1081,7 +1081,7 @@ export default function Artisan8Landing() {
           bedrooms: 4,
           bathrooms: 2,
           size: "1,453 sqft",
-          price: "$2,899,000",
+          price: "$3,340,700",
           currency: "SGD",
           total: 40,
           available: 40,
@@ -2204,7 +2204,11 @@ export default function Artisan8Landing() {
                               
                               {/* Price */}
                               <div className="mb-6">
-                                <p className="text-green-400 font-semibold text-lg">Form {subtype.price}</p>
+                                {subtype.price && subtype.price.trim() !== '' ? (
+                                  <p className="text-green-400 font-semibold text-lg">Form {subtype.price}</p>
+                                ) : (
+                                  <p className="text-red-400 font-semibold text-lg">SOLD OUT</p>
+                                )}
                                 {subtype.price_per_sqft && (
                                   <p className="text-gray-400 text-sm">
                                     {subtype.price_per_sqft} per sqft
