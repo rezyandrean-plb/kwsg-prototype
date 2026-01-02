@@ -861,6 +861,8 @@ export default function AboutUsPage() {
 
               <div className="flex flex-col gap-3 justify-start lg:justify-end">
                 {[
+                  { date: "22 – 26", month: "Dec", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/24/Newsletter+Dec+24.pdf" },
+                  { date: "15 - 19", month: "Dec", year: "2025 (02)", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/10/Newsletter+Dec+16.pdf" },
                   { date: "15 - 19", month: "Dec", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/10/Newsletter+Dec+10.pdf" },
                   { date: "1 - 7", month: "Dec", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/3/Newsletter+Dec+3.pdf" },
                   { date: "24 - 28", month: "Nov", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/november-2025/26/Newsletter+Nov+26.pdf" },
