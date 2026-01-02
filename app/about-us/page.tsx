@@ -836,7 +836,7 @@ export default function AboutUsPage() {
 
         <div className="max-w-6xl mx-auto px-6 relative z-10">
           <div className="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12 backdrop-blur-sm shadow-2xl">
-            <div className="grid lg:grid-cols-[1.5fr_1fr] gap-8 lg:gap-12 items-center">
+            <div className="grid lg:grid-cols-[1.5fr_1fr] gap-8 lg:gap-12 items-start lg:items-center">
               <div>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -858,8 +858,10 @@ export default function AboutUsPage() {
                   </p>
                 </motion.div>
               </div>
-
-              <div className="flex flex-col gap-3 justify-start lg:justify-end">
+              
+              {/* Newsletter Section */}
+              <div className="w-full flex items-center justify-end">
+                <div className="flex flex-col gap-3 w-full max-w-sm h-[248px] overflow-y-auto overflow-x-hidden pr-2 scrollbar-thin scrollbar-thumb-red-700 scrollbar-track-transparent">
                 {[
                   { date: "22 – 26", month: "Dec", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/24/Newsletter+Dec+24.pdf" },
                   { date: "15 - 19", month: "Dec", year: "2025 (02)", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/10/Newsletter+Dec+16.pdf" },
@@ -874,7 +876,7 @@ export default function AboutUsPage() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-                    className="w-full max-w-sm"
+                    className="w-full max-w-sm flex-shrink-0"
                   >
                     <a href={newsletter.url} target="_blank" rel="noopener noreferrer" className="block group">
                       <div className="bg-gradient-to-br from-[#B40101] to-red-700 p-0.5 rounded-xl transition-transform duration-300 group-hover:scale-[1.02] shadow-lg shadow-red-900/20 max-w-xs lg:ml-auto">
@@ -892,6 +894,7 @@ export default function AboutUsPage() {
                     </a>
                   </motion.div>
                 ))}
+                </div>
               </div>
             </div>
           </div>
