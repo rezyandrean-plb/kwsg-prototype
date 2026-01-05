@@ -863,12 +863,13 @@ export default function AboutUsPage() {
               <div className="w-full flex items-center justify-end">
                 <div className="flex flex-col gap-3 w-full max-w-sm h-[248px] overflow-y-auto overflow-x-hidden pr-2 scrollbar-thin scrollbar-thumb-red-700 scrollbar-track-transparent">
                 {[
-                  { date: "22 – 26", month: "Dec", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/24/Newsletter+Dec+24.pdf" },
-                  { date: "15 - 19", month: "Dec", year: "2025 (02)", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/10/Newsletter+Dec+16.pdf" },
-                  { date: "15 - 19", month: "Dec", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/10/Newsletter+Dec+10.pdf" },
-                  { date: "1 - 7", month: "Dec", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/3/Newsletter+Dec+3.pdf" },
-                  { date: "24 - 28", month: "Nov", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/november-2025/26/Newsletter+Nov+26.pdf" },
-                  { date: "17 - 21", month: "Nov", year: "2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/november-2025/24/Updated+Newsletter+Nov+24.pdf" },
+                  { date: "Dec 31 (29/12 – 2/1)", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/31/Newsletter+Dec+31.pdf" },
+                  { date: "Dec 24 (22 – 26)", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/24/Newsletter+Dec+24.pdf" },
+                  { date: "Dec 17 (15 - 19)", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/10/Newsletter+Dec+16.pdf" },
+                  { date: "Dec 10 (8 - 12)", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/10/Newsletter+Dec+10.pdf" },
+                  { date: "Dec 3 (1 - 7)", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/3/Newsletter+Dec+3.pdf" },
+                  { date: "Nov 26 (24 - 28)", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/november-2025/26/Newsletter+Nov+26.pdf" },
+                  { date: "Nov 24 (17 - 21)", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/november-2025/24/Updated+Newsletter+Nov+24.pdf" },
                 ].map((newsletter, index) => (
                   <motion.div
                     key={index}
@@ -883,7 +884,7 @@ export default function AboutUsPage() {
                         <div className="bg-black/90 rounded-[10px] p-3 h-full flex items-center gap-3 group-hover:bg-black/80 transition-colors duration-300">
                           <div>
                             <p className="text-white text-base font-bold mb-0 group-hover:text-[#B40101] transition-colors">
-                              {newsletter.date} {newsletter.month} {newsletter.year} Newsletter
+                              {newsletter.date} Newsletter
                             </p>
                           </div>
                           <div className="ml-auto">
