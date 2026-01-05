@@ -209,8 +209,8 @@ export default function Home() {
   ]
 
   const consultantVideos = [
-    { src: "https://www.youtube.com/embed/C-SeyqyP4rU?start=4&autoplay=1&mute=1", label: "Meet the Consultants 1" },
-    { src: "https://www.youtube.com/embed/6S1Qgw7SS4I?autoplay=1&mute=1", label: "Meet the Consultants 2" }
+    { src: "https://www.youtube.com/embed/6S1Qgw7SS4I?autoplay=1&mute=1", label: "Meet the Consultants 2" },
+    { src: "https://www.youtube.com/embed/C-SeyqyP4rU?start=4&autoplay=1&mute=1", label: "Meet the Consultants 1" }
   ]
 
   useEffect(() => {
