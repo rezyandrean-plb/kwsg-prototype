@@ -40,6 +40,7 @@ export default function Home() {
   const [currentReelIndex2, setCurrentReelIndex2] = useState(0)
   const [currentReelIndex2Desktop, setCurrentReelIndex2Desktop] = useState(0)
   const [currentReelIndex2Tablet, setCurrentReelIndex2Tablet] = useState(0)
+  const [currentConsultantIndex, setCurrentConsultantIndex] = useState(0)
   
   // Ref for the KW Advantage section
   const advantageSectionRef = useRef<HTMLElement>(null)
@@ -135,6 +136,14 @@ export default function Home() {
     })
   }, [])
 
+  const nextConsultant = useCallback(() => {
+    setCurrentConsultantIndex((prev) => (prev + 1) % 2)
+  }, [])
+
+  const prevConsultant = useCallback(() => {
+    setCurrentConsultantIndex((prev) => (prev - 1 + 2) % 2)
+  }, [])
+
   // Optimize animation controls
   const [advantageRef, advantageInView] = useInView({
     triggerOnce: true,
@@ -197,6 +206,11 @@ export default function Home() {
     { src: "https://www.youtube.com/embed/fditK842Zbw?autoplay=1&mute=1&loop=1&playlist=fditK842Zbw", label: "KW Singapore Reel 6" },
     { src: "https://www.youtube.com/embed/__zDeHtZLn4?autoplay=1&mute=1&loop=1&playlist=__zDeHtZLn4", label: "KW Singapore Reel 7" },
     { src: "https://www.youtube.com/embed/6dMnifQl5JU?autoplay=1&mute=1&loop=1&playlist=6dMnifQl5JU", label: "KW Singapore Reel 8" }
+  ]
+
+  const consultantVideos = [
+    { src: "https://www.youtube.com/embed/C-SeyqyP4rU?start=4&autoplay=1&mute=1", label: "Meet the Consultants 1" },
+    { src: "https://www.youtube.com/embed/6S1Qgw7SS4I?autoplay=1&mute=1", label: "Meet the Consultants 2" }
   ]
 
   useEffect(() => {
@@ -805,14 +819,53 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="max-w-4xl mx-auto"
           >
-            <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-[#666666]/20 bg-black/40">
-              <iframe
-                className="absolute inset-0 w-full h-full"
-                src="https://www.youtube.com/embed/C-SeyqyP4rU?start=4&autoplay=1&mute=1"
-                title="Meet the Consultants"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
+            <div className="relative">
+              <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-[#666666]/20 bg-black/40">
+                <iframe
+                  key={currentConsultantIndex}
+                  className="absolute inset-0 w-full h-full"
+                  src={consultantVideos[currentConsultantIndex].src}
+                  title={consultantVideos[currentConsultantIndex].label}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+              
+              {/* Navigation buttons */}
+              {consultantVideos.length > 1 && (
+                <>
+                  <button
+                    onClick={prevConsultant}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 z-10"
+                    aria-label="Previous video"
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+                  <button
+                    onClick={nextConsultant}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 z-10"
+                    aria-label="Next video"
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
+                </>
+              )}
+              
+              {/* Indicators */}
+              {consultantVideos.length > 1 && (
+                <div className="flex justify-center mt-4 space-x-2">
+                  {consultantVideos.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentConsultantIndex(index)}
+                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                        index === currentConsultantIndex ? 'bg-[#B40101]' : 'bg-white/30'
+                      }`}
+                      aria-label={`Go to video ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </motion.div>
         </div>
