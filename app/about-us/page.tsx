@@ -865,7 +865,7 @@ export default function AboutUsPage() {
                 {[
                   { date: "29/12/2025 – 2/1/2026", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/31/Newsletter+Dec+31.pdf" },
                   { date: "22/12/2025 – 26/12/2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/24/Newsletter+Dec+24.pdf" },
-                  { date: "15/12/2025 – 19/12/2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/10/Newsletter+Dec+16.pdf" },
+                  { date: "15/12/2025 – 19/12/2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/16/Newsletter+Dec+16.pdf" },
                   { date: "8/12/2025 – 12/12/2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/10/Newsletter+Dec+10.pdf" },
                   { date: "1/12/2025 – 7/12/2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/december-2025/3/Newsletter+Dec+3.pdf" },
                   { date: "24/11/2025 – 28/11/2025", url: "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/newsletter/november-2025/26/Newsletter+Nov+26.pdf" },
