@@ -202,15 +202,13 @@ export default function Home() {
     { src: "https://www.youtube.com/embed/RAqxdrwk1HQ?autoplay=1&mute=1&loop=1&playlist=RAqxdrwk1HQ", label: "KW Singapore Reel 2" },
     { src: "https://www.youtube.com/embed/XBZWFBoJi08?autoplay=1&mute=1&loop=1&playlist=XBZWFBoJi08", label: "KW Singapore Reel 3" },
     { src: "https://www.youtube.com/embed/s3n1qH3M5cI?autoplay=1&mute=1&loop=1&playlist=s3n1qH3M5cI", label: "KW Singapore Reel 4" },
-    { src: "https://www.youtube.com/embed/Oq0pQG3_0wA?autoplay=1&mute=1&loop=1&playlist=Oq0pQG3_0wA", label: "KW Singapore Reel 5" },
-    { src: "https://www.youtube.com/embed/fditK842Zbw?autoplay=1&mute=1&loop=1&playlist=fditK842Zbw", label: "KW Singapore Reel 6" },
-    { src: "https://www.youtube.com/embed/__zDeHtZLn4?autoplay=1&mute=1&loop=1&playlist=__zDeHtZLn4", label: "KW Singapore Reel 7" },
-    { src: "https://www.youtube.com/embed/6dMnifQl5JU?autoplay=1&mute=1&loop=1&playlist=6dMnifQl5JU", label: "KW Singapore Reel 8" }
+    { src: "https://www.youtube.com/embed/fditK842Zbw?autoplay=1&mute=1&loop=1&playlist=fditK842Zbw", label: "KW Singapore Reel 5" },
+    { src: "https://www.youtube.com/embed/__zDeHtZLn4?autoplay=1&mute=1&loop=1&playlist=__zDeHtZLn4", label: "KW Singapore Reel 6" },
+    { src: "https://www.youtube.com/embed/6dMnifQl5JU?autoplay=1&mute=1&loop=1&playlist=6dMnifQl5JU", label: "KW Singapore Reel 7" }
   ]
 
   const consultantVideos = [
     { src: "https://www.youtube.com/embed/6S1Qgw7SS4I?autoplay=1&mute=1", label: "Meet the Consultants 2" },
-    { src: "https://www.youtube.com/embed/C-SeyqyP4rU?start=4&autoplay=1&mute=1", label: "Meet the Consultants 1" }
   ]
 
   useEffect(() => {
@@ -822,7 +820,7 @@ export default function Home() {
             <div className="relative">
               <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-[#666666]/20 bg-black/40">
                 <iframe
-                  key={currentConsultantIndex}
+                  key={consultantVideos.length > 1 ? currentConsultantIndex : 0}
                   className="absolute inset-0 w-full h-full"
                   src={consultantVideos[currentConsultantIndex].src}
                   title={consultantVideos[currentConsultantIndex].label}
@@ -831,7 +829,7 @@ export default function Home() {
                 />
               </div>
               
-              {/* Navigation buttons */}
+              {/* Navigation buttons - only show when there's more than one video */}
               {consultantVideos.length > 1 && (
                 <>
                   <button
@@ -851,7 +849,7 @@ export default function Home() {
                 </>
               )}
               
-              {/* Indicators */}
+              {/* Indicators - only show when there's more than one video */}
               {consultantVideos.length > 1 && (
                 <div className="flex justify-center mt-4 space-x-2">
                   {consultantVideos.map((_, index) => (
