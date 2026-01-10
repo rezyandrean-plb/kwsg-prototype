@@ -1100,7 +1100,7 @@ export default function TechToolPage() {
 
     setActiveCategory(category)
     const query = category === "All" ? "" : `?tab=${encodeURIComponent(category)}`
-    router.push(`/tools${query}`)
+    router.push(`/tech${query}`)
   }
 
   // After successful authentication via AuthDialog on this page,
@@ -1942,7 +1942,7 @@ export default function TechToolPage() {
         open={authDialogOpen} 
         onOpenChange={setAuthDialogOpen}
         toolTitle={selectedTool?.title}
-        redirectUrl="/tools?postLogin=1"
+        redirectUrl="/tech?postLogin=1"
       />
     </motion.main>
   )
