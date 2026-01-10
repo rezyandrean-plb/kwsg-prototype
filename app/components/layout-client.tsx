@@ -25,7 +25,7 @@ const navItems = [
   { href: "/press", label: "Press" },
   { href: "/awards", label: "Awards" },
   { href: "/about-us", label: "About Us" },
-  { href: "/tools", label: "Tools & Resources" },
+  { href: "/tech", label: "KW Tech" },
   { href: "/contact", label: "Contact" }
 ]
 
@@ -46,6 +46,7 @@ export function Header() {
   const isTurquoisePage = pathname === '/turquoise' || pathname?.startsWith('/turquoise')
   const isTheDraycottPage = pathname === '/the-draycott' || pathname?.startsWith('/the-draycott')
   const isTheSenPage = pathname === '/the-sen' || pathname?.startsWith('/the-sen')
+  const isAureaTheGoldenMilePage = pathname === '/aurea-the-golden-mile' || pathname?.startsWith('/aurea-the-golden-mile')
   const [isScrolled, setIsScrolled] = useState(false)
   const { isSignedIn, user } = useUser()
 
@@ -58,7 +59,7 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  if (isAdminPage || isSpringleafPage || isSpringleafBackupPage || isAureaPage || isPenrithPage || isPenrithEventPage || isWResidencePage || isArinaEastPage || isArtisan8Page || isOrchardSophiaPage || isTurquoisePage || isTheDraycottPage || isTheSenPage) return null
+  if (isAdminPage || isSpringleafPage || isSpringleafBackupPage || isAureaPage || isPenrithPage || isPenrithEventPage || isWResidencePage || isArinaEastPage || isArtisan8Page || isOrchardSophiaPage || isTurquoisePage || isTheDraycottPage || isTheSenPage || isAureaTheGoldenMilePage) return null
 
   return (
     <header 
@@ -176,6 +177,7 @@ export function Footer() {
   const isTurquoisePage = pathname === '/turquoise' || pathname?.startsWith('/turquoise')
   const isTheDraycottPage = pathname === '/the-draycott' || pathname?.startsWith('/the-draycott')
   const isTheSenPage = pathname === '/the-sen' || pathname?.startsWith('/the-sen')
+  const isAureaTheGoldenMilePage = pathname === '/aurea-the-golden-mile' || pathname?.startsWith('/aurea-the-golden-mile')
   
   // Set year on client side only to avoid hydration mismatch
   useEffect(() => {
@@ -186,7 +188,7 @@ export function Footer() {
 
   return (
     <>
-      {!isSpringleafPage && !isSpringleafBackupPage && !isAureaPage && !isPenrithPage && !isPenrithEventPage && !isWResidencePage && !isArinaEastPage && !isArtisan8Page && !isOrchardSophiaPage && !isTurquoisePage && !isTheDraycottPage && !isTheSenPage && <FloatingWhatsApp />}
+      {!isSpringleafPage && !isSpringleafBackupPage && !isAureaPage && !isPenrithPage && !isPenrithEventPage && !isWResidencePage && !isArinaEastPage && !isArtisan8Page && !isOrchardSophiaPage && !isTurquoisePage && !isTheDraycottPage && !isTheSenPage && !isAureaTheGoldenMilePage && <FloatingWhatsApp />}
       <footer className="border-t py-8 md:py-12 bg-black text-white">
         <div className="container grid gap-8 md:grid-cols-3">
           <div className="space-y-4">

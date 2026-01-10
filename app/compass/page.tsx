@@ -533,7 +533,7 @@ export default function TechToolPage() {
       setActiveCategory(category)
     } else {
       const encodedCategory = encodeURIComponent(category)
-      router.push(`/tools?tab=${encodedCategory}`)
+      router.push(`/tech?tab=${encodedCategory}`)
     }
   }
 
