@@ -901,11 +901,11 @@ export default function AureaLanding() {
           setProjectImages(data.images)
         } else {
           setProjectImages([
-    "/images/aurea/gallery/R-View03 - Aerial View from Nicoll Highway_04-min.webp",
-    "/images/aurea/gallery/R-View09 - L3 Infinity Pool View_08 (250109)-min.webp",
-    "/images/aurea/gallery/R-View17 - 2BR Living Dining Area B2_08 (250108)-min.webp",
-    "/images/aurea/gallery/R-View22 - Penthouse Living Dining Area PH2_06 (250108)-min.webp",
-    "/images/aurea/gallery/R-View34 - Aerial View from Beach Road Dusk_07 (241216) (1)-min.webp",
+          "/images/aurea/gallery/R-View03 - Aerial View from Nicoll Highway_04-min.webp",
+          "/images/aurea/gallery/R-View09 - L3 Infinity Pool View_08 (250109)-min.webp",
+          "/images/aurea/gallery/R-View17 - 2BR Living Dining Area B2_08 (250108)-min.webp",
+          "/images/aurea/gallery/R-View22 - Penthouse Living Dining Area PH2_06 (250108)-min.webp",
+          "/images/aurea/gallery/R-View34 - Aerial View from Beach Road Dusk_07 (241216) (1)-min.webp",
           ])
         }
       } catch (e) {
