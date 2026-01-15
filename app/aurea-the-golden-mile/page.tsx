@@ -19,6 +19,7 @@ import {
   Download,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   Building,
   MapPin,
   Home,
@@ -44,6 +45,7 @@ import {
   Bath,
   Layout,
   Image as ImageIcon,
+  Maximize2,
 } from "lucide-react"
 import { Calendar as CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
@@ -53,6 +55,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 // Add custom CSS animations
 const customStyles = `
@@ -757,6 +771,7 @@ export default function AureaLanding() {
   const { toast } = useToast()
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [currentCombinedGalleryIndex, setCurrentCombinedGalleryIndex] = useState(0)
+  const [currentGoldenMileImageIndex, setCurrentGoldenMileImageIndex] = useState(0)
   const [selectedFloorPlan, setSelectedFloorPlan] = useState("1br")
   const [isScrolled, setIsScrolled] = useState(false)
   const [date, setDate] = useState<Date>()
@@ -765,10 +780,37 @@ export default function AureaLanding() {
   const [showSiteMapPopup, setShowSiteMapPopup] = useState(false)
   const [unitsActiveTab, setUnitsActiveTab] = useState(0)
   const [floorPlanIndex, setFloorPlanIndex] = useState(0)
+  const [goldenMileUnitsActiveTab, setGoldenMileUnitsActiveTab] = useState(0)
+  const [goldenMileFloorPlanIndex, setGoldenMileFloorPlanIndex] = useState(0)
+  const [showFloorPlanDialog, setShowFloorPlanDialog] = useState(false)
+  const [selectedFloorPlanImage, setSelectedFloorPlanImage] = useState<string>("")
+  const [showGoldenMileFloorPlanDialog, setShowGoldenMileFloorPlanDialog] = useState(false)
+  const [selectedGoldenMileFloorPlanImage, setSelectedGoldenMileFloorPlanImage] = useState<string>("")
+  const [currentAureaSitePlanIndex, setCurrentAureaSitePlanIndex] = useState(0)
+  
+  // Aurea Site Plan Images
+  const aureaSitePlanImages = [
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-siteplan/Aurea_SitePlan_L03.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-siteplan/Aurea_SitePlan_L17.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-siteplan/Aurea_SitePlan_L33.jpg"
+  ]
+  
+  // Navigation functions for Aurea Site Plan
+  const nextAureaSitePlan = () => {
+    setCurrentAureaSitePlanIndex((prev) => (prev + 1) % aureaSitePlanImages.length)
+  }
+  
+  const prevAureaSitePlan = () => {
+    setCurrentAureaSitePlanIndex((prev) => (prev - 1 + aureaSitePlanImages.length) % aureaSitePlanImages.length)
+  }
 
   useEffect(() => {
     setFloorPlanIndex(0)
   }, [unitsActiveTab])
+
+  useEffect(() => {
+    setGoldenMileFloorPlanIndex(0)
+  }, [goldenMileUnitsActiveTab])
 
   const generateFloorPlanCandidates = (subtype: any, unitType: string) => {
     const base = '/images/aurea/floor-plan/'
@@ -885,15 +927,14 @@ export default function AureaLanding() {
   }, [])
 
   const [projectImages, setProjectImages] = useState<string[]>([])
-  
-  // Site Plan images for carousel
-  const combinedGalleryImages = [
+  const [goldenMileImages, setGoldenMileImages] = useState<string[]>([])
+  const [combinedGalleryImages, setCombinedGalleryImages] = useState<string[]>([
     "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/gallery/R-View03.webp",
     "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/gallery/R-View07.webp",
     "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/gallery/R-View15.webp",
     "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/gallery/R-View16.webp",
     "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/gallery/R-View34.webp",
-  ]
+  ])
   
   useEffect(() => {
     const loadGallery = async () => {
@@ -905,24 +946,89 @@ export default function AureaLanding() {
           setProjectImages(data.images)
         } else {
           setProjectImages([
-    "/images/aurea/gallery/R-View03 - Aerial View from Nicoll Highway_04-min.webp",
-    "/images/aurea/gallery/R-View09 - L3 Infinity Pool View_08 (250109)-min.webp",
-    "/images/aurea/gallery/R-View17 - 2BR Living Dining Area B2_08 (250108)-min.webp",
-    "/images/aurea/gallery/R-View22 - Penthouse Living Dining Area PH2_06 (250108)-min.webp",
-    "/images/aurea/gallery/R-View34 - Aerial View from Beach Road Dusk_07 (241216) (1)-min.webp",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View04.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View06.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View08.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View09.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View12.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View13.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View17.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View19.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View22.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View23.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View24.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View25.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View26.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View32.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View35.jpg",
           ])
         }
       } catch (e) {
         setProjectImages([
-          "/images/aurea/gallery/R-View03 - Aerial View from Nicoll Highway_04-min.webp",
-          "/images/aurea/gallery/R-View09 - L3 Infinity Pool View_08 (250109)-min.webp",
-          "/images/aurea/gallery/R-View17 - 2BR Living Dining Area B2_08 (250108)-min.webp",
-          "/images/aurea/gallery/R-View22 - Penthouse Living Dining Area PH2_06 (250108)-min.webp",
-          "/images/aurea/gallery/R-View34 - Aerial View from Beach Road Dusk_07 (241216) (1)-min.webp",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View04.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View06.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View08.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View09.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View12.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View13.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View17.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View19.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View22.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View23.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View24.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View25.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View26.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View32.jpg",
+          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View35.jpg",
         ])
       }
     }
     loadGallery()
+  }, [])
+
+  // Load gallery images for The Golden Mile Image Gallery Section
+  useEffect(() => {
+    const loadGoldenMileGallery = async () => {
+      try {
+        const res = await fetch('/api/aurea/golden-mile-gallery')
+        if (!res.ok) throw new Error('Failed to load The Golden Mile gallery')
+        const data = await res.json()
+        if (Array.isArray(data?.images) && data.images.length > 0) {
+          setGoldenMileImages(data.images)
+        } else {
+          setGoldenMileImages([
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+1.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+2.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+3.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+4.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+5.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+6.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+7.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+8.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+9.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+10.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+11.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+12.jpg",
+          ])
+        }
+      } catch (e) {
+        setGoldenMileImages([
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+1.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+2.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+3.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+4.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+5.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+6.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+7.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+8.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+9.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+10.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+11.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+12.jpg",
+        ])
+      }
+    }
+    loadGoldenMileGallery()
   }, [])
 
   const floorPlans = {
@@ -995,7 +1101,7 @@ export default function AureaLanding() {
   ]
 
   // Mock data for Aurea units and pricing
-  const mockUnitPricing = [
+  const aureaUnitPricing = [
     {
       unitType: "2-Bedroom",
       subtypes: [
@@ -1123,17 +1229,99 @@ export default function AureaLanding() {
     }
   ]
 
-  // Helper function to process unit availability data
-  const processUnitAvailabilityData = (unitPricing: any[]) => {
-    if (!unitPricing || unitPricing.length === 0) {
-      return mockUnitPricing
+  // Mock data for The Golden Mile (Commercial) units and pricing
+  const goldenMileUnitPricing = [
+    {
+      unitType: "Retail",
+      subtypes: [
+        {
+          subtype: "Retail (L1 - L2)",
+          bedrooms: 0,
+          bathrooms: 0,
+          size: "10,967 sqm / 118,066 sqft",
+          price: "Contact for pricing",
+          price_per_sqft: "Contact for pricing",
+          currency: "SGD",
+          total: 0,
+          available: 0,
+          status: 0,
+          floor_plan_images: [
+            "/images/springleaf-residence/site-plan-dummy.webp",
+          ],
+          payment_terms: "Contact for details",
+          discount_info: "Retail"
+        }
+      ]
+    },
+    {
+      unitType: "Medical Suites",
+      subtypes: [
+        {
+          subtype: "Medical Suites (L3)",
+          bedrooms: 0,
+          bathrooms: 1,
+          size: "47 – 228 sqm / 506 - 2,454 sqft",
+          price: "Contact for pricing",
+          price_per_sqft: "Contact for pricing",
+          currency: "SGD",
+          total: 19,
+          available: 19,
+          status: 100,
+          floor_plan_images: [
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/tgm-floor-plan/TGM-FloorPlan-L3.jpg",
+          ],
+          payment_terms: "Contact for details",
+          discount_info: "Medical Suites"
+        }
+      ]
+    },
+    {
+      unitType: "Office",
+      subtypes: [
+        {
+          subtype: "Office (L4 - L22)",
+          bedrooms: 0,
+          bathrooms: 1,
+          size: "123 - 501 sqm / 3,315 - 5,393 sqft",
+          price: "Contact for pricing",
+          price_per_sqft: "Contact for pricing",
+          currency: "SGD",
+          total: 156,
+          available: 156,
+          status: 100,
+          floor_plan_images: [
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/tgm-floor-plan/TGM-FloorPlan-L4.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/tgm-floor-plan/TGM-FloorPlan-L5.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/tgm-floor-plan/TGM-FloorPlan-L8.jpg",
+            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/tgm-floor-plan/TGM-FloorPlan-L10.jpg",
+          ],
+          payment_terms: "Contact for details",
+          discount_info: "Office"
+        }
+      ]
+    }
+  ]
+
+  // Helper function to process unit availability data for Aurea
+  const processUnitAvailabilityData = (unitPricing?: any[]) => {
+    if (!Array.isArray(unitPricing) || unitPricing.length === 0) {
+      return aureaUnitPricing
     }
     return unitPricing
   }
 
-  // Mock project object
+  // Helper function to process unit availability data for The Golden Mile
+  const processGoldenMileUnitAvailabilityData = (unitPricing?: any[]) => {
+    if (!Array.isArray(unitPricing) || unitPricing.length === 0) {
+      return goldenMileUnitPricing
+    }
+    return unitPricing
+  }
+
+  // Project config object (can be extended with more data if needed)
   const project = {
-    unitPricing: mockUnitPricing
+    unitPricingAurea: aureaUnitPricing,
+    unitPricingGoldenMile: goldenMileUnitPricing,
   }
 
   const nextImage = () => {
@@ -1150,6 +1338,16 @@ export default function AureaLanding() {
 
   const prevCombinedGalleryImage = () => {
     setCurrentCombinedGalleryIndex((prev) => (prev - 1 + combinedGalleryImages.length) % combinedGalleryImages.length)
+  }
+
+  const nextGoldenMileImage = () => {
+    if (goldenMileImages.length === 0) return
+    setCurrentGoldenMileImageIndex((prev) => (prev + 1) % goldenMileImages.length)
+  }
+
+  const prevGoldenMileImage = () => {
+    if (goldenMileImages.length === 0) return
+    setCurrentGoldenMileImageIndex((prev) => (prev - 1 + goldenMileImages.length) % goldenMileImages.length)
   }
 
   const scrollToLeadForm = () => {
@@ -1216,6 +1414,46 @@ export default function AureaLanding() {
     const floorPlansSection = document.getElementById('floor-plans')
     if (floorPlansSection) {
       floorPlansSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+  }
+
+  const scrollToAureaFloorPlans = () => {
+    const section = document.getElementById('aurea-floor-plans')
+    if (section) {
+      section.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+  }
+
+  const scrollToAureaSitePlan = () => {
+    const section = document.getElementById('aurea-site-plan')
+    if (section) {
+      section.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+  }
+
+  const scrollToGoldenMileFloorPlans = () => {
+    const section = document.getElementById('golden-mile-floor-plans')
+    if (section) {
+      section.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+  }
+
+  const scrollToGoldenMileSitePlan = () => {
+    const section = document.getElementById('golden-mile-site-plan')
+    if (section) {
+      section.scrollIntoView({ 
         behavior: 'smooth',
         block: 'start'
       })
@@ -1454,6 +1692,7 @@ export default function AureaLanding() {
               </Link>
             </div>
               <nav className="hidden md:flex items-center space-x-6">
+                {/* Order matches vertical section order: Project Info → Location → Aurea → Gallery → The Golden Mile → Explore */}
                 <button 
                   onClick={scrollToProjectInfo}
                   className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
@@ -1461,10 +1700,10 @@ export default function AureaLanding() {
                   Project Info
                 </button>
                 <button 
-                  onClick={scrollToFloorPlans}
+                  onClick={scrollToNearbyAmenities}
                   className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
                 >
-                  Floor Plans
+                  Location
                 </button>
                 <button 
                   onClick={scrollToGallery}
@@ -1472,21 +1711,46 @@ export default function AureaLanding() {
                 >
                   Gallery
                 </button>
-                <button 
-                  onClick={scrollToMedia}
-                  className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
-                >
-                  Explore
-                </button>
-                <button 
-                  onClick={scrollToNearbyAmenities}
-                  className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer"
-                >
-                  Location
-                </button>
-                {/* <a href="#editorial" className="text-white hover:text-[#ce001f] transition-colors duration-300">
-                  Editorial
-                </a> */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer flex items-center">
+                    Aurea
+                    <ChevronDown className="ml-1 h-4 w-4" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="bg-[#1c1c1d] border-gray-700 text-white">
+                    <DropdownMenuItem 
+                      onClick={scrollToAureaFloorPlans}
+                      className="text-white hover:text-[#ce001f] hover:bg-gray-800 cursor-pointer data-[highlighted]:text-[#ce001f] data-[highlighted]:bg-gray-800"
+                    >
+                      Floor Plan
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={scrollToAureaSitePlan}
+                      className="text-white hover:text-[#ce001f] hover:bg-gray-800 cursor-pointer data-[highlighted]:text-[#ce001f] data-[highlighted]:bg-gray-800"
+                    >
+                      Site Plan
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer flex items-center">
+                    The Golden Mile
+                    <ChevronDown className="ml-1 h-4 w-4" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="bg-[#1c1c1d] border-gray-700 text-white">
+                    <DropdownMenuItem 
+                      onClick={scrollToGoldenMileFloorPlans}
+                      className="text-white hover:text-[#ce001f] hover:bg-gray-800 cursor-pointer data-[highlighted]:text-[#ce001f] data-[highlighted]:bg-gray-800"
+                    >
+                      Floor Plan
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={scrollToGoldenMileSitePlan}
+                      className="text-white hover:text-[#ce001f] hover:bg-gray-800 cursor-pointer data-[highlighted]:text-[#ce001f] data-[highlighted]:bg-gray-800"
+                    >
+                      Site Plan
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 <Button 
                   className="bg-[#ce001f] hover:bg-[#b3001a] transition-colors duration-300"
                   onClick={scrollToLeadForm}
@@ -1732,7 +1996,7 @@ export default function AureaLanding() {
                         >
                           <ChevronRight className="w-5 h-5 text-[#ce001f]" />
                         </Button>
-                      </div>
+                              </div>
 
                       {/* Thumbnail Images */}
                       <div className="flex items-center justify-center mt-6 space-x-3 overflow-x-auto px-2">
@@ -1767,14 +2031,14 @@ export default function AureaLanding() {
                         ))}
 
                         {/* Next Arrow */}
-                        <Button
-                          variant="outline"
+                    <Button 
+                      variant="outline" 
                           size="icon"
                           className="w-10 h-10 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
                           onClick={nextCombinedGalleryImage}
                         >
                           <ChevronRight className="w-4 h-4 text-[#ce001f]" />
-                        </Button>
+                    </Button>
                       </div>
                     </div>
                   </div>
@@ -1967,28 +2231,146 @@ export default function AureaLanding() {
               <span className="hidden sm:block text-sm md:text-base opacity-90">Perennial Holdings</span>
             </div>
           </div>
-          <p className="text-base md:text-xl text-gray-300 leading-relaxed max-w-5xl mx-auto">
-          As Singapore’s largest private property developer, Far East Organization has been shaping the city’s skyline for over six decades. With a proven track record of delivering quality developments and a commitment to innovation, Far East Organization brings deep expertise to the Aurea project. 
+          <p className="text-sm md:text-base text-gray-300 leading-relaxed max-w-5xl mx-auto">
+          As Singapore's largest private property developer, Far East Organization has been shaping the city's skyline for over six decades. With a proven track record of delivering quality developments and a commitment to innovation, Far East Organization brings deep expertise to the Aurea project. 
           Their portfolio includes iconic developments across residential, commercial, hospitality, and retail sectors, making them the trusted choice for discerning property investors. <br /> <br></br>
           </p>
-          <p className="text-base md:text-xl text-gray-300 leading-relaxed max-w-5xl mx-auto">
-          Perennial Holdings Private Limited (“Perennial Holdings”) is an integrated real estate and healthcare company headquartered in Singapore. In real estate, it develops and manages large-scale transit-oriented and mixed-use projects, creating “live, work, play” destinations. 
+          <p className="text-sm md:text-base text-gray-300 leading-relaxed max-w-5xl mx-auto">
+          Perennial Holdings Private Limited ("Perennial Holdings") is an integrated real estate and healthcare company headquartered in Singapore. In real estate, it develops and manages large-scale transit-oriented and mixed-use projects, creating "live, work, play" destinations. 
           In healthcare, it owns and operates hospitals, medical centres, eldercare facilities, and senior housing. 
           The company has a presence in Singapore, China, Malaysia, and Indonesia, with a real estate portfolio of about 80 million sqft GFA and a healthcare portfolio of over 23,000 beds across 14 cities in China.
           </p>
         </div>
       </section>
-      
-      {/* Floor Plans & Pricing Section */}
+
+      {/* AureaFloor Plans & Pricing Section */}
       <section 
-        id="floor-plans"
+        id="aurea-floor-plans"
         className="py-16 bg-[#242728] section-entrance"
         data-section-id="floor-plans"
         style={{ 
           opacity: animatedSections.has('floor-plans') ? 1 : 0,
           transform: animatedSections.has('floor-plans') ? 'translateY(0)' : 'translateY(60px)'
         }}
-      >
+      > 
+
+      {/* Aurea Image Gallery Section */}
+          <div 
+            id="project-gallery"
+            className={`mb-20 transition-all duration-1000 delay-700 ${
+              isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+            }`}
+          >
+            <div className="text-center mb-8">
+            <h3 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Aurea</h3>
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-1 bg-[#ce001f] rounded" />
+              </div>
+              <div className="flex items-center justify-center space-x-2 text-sm text-gray-300">
+                <span>
+                  {currentImageIndex + 1} of {projectImages.length}
+                </span>
+              </div>
+            </div>
+
+            {/* Main Image Display */}
+            <div className="relative max-w-6xl mx-auto mb-8">
+            <div className="relative w-full h-[220px] sm:h-[320px] md:h-[500px] rounded-xl overflow-hidden shadow-2xl">
+                <Image
+                  src={projectImages[currentImageIndex] || "/placeholder.svg"}
+                  alt={`Aurea - Image ${currentImageIndex + 1}`}
+                  fill
+                  className="object-cover transition-all duration-500"
+                />
+                
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                  onClick={prevImage}
+                >
+                  <ChevronLeft className="w-5 h-5 text-[#ce001f]" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                  onClick={nextImage}
+                >
+                  <ChevronRight className="w-5 h-5 text-[#ce001f]" />
+                </Button>
+
+              
+              </div>
+
+              
+              <div className="flex items-center justify-center mt-6 space-x-3 overflow-x-auto px-2">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="w-10 h-10 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                  onClick={prevImage}
+                >
+                  <ChevronLeft className="w-4 h-4 text-[#ce001f]" />
+                </Button>
+                {projectImages.map((image, index) => (
+                  <button
+                    key={index}
+                    className={`relative w-20 h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-110 flex-shrink-0 ${
+                      index === currentImageIndex
+                        ? "border-primary-red shadow-lg scale-105"
+                        : "border-gray-200 hover:border-gray-300"
+                    }`}
+                    onClick={() => setCurrentImageIndex(index)}
+                  >
+                    <Image
+                      src={image || "/placeholder.svg"}
+                      alt={`Thumbnail ${index + 1}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </button>
+                ))}
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="w-10 h-10 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                  onClick={nextImage}
+                >
+                  <ChevronRight className="w-4 h-4 text-[#ce001f]" />
+                </Button>
+              </div>
+            </div>
+          </div> 
+
+        {/* Aurea Project Information Table */}
+        <div className="container mx-auto px-4 mb-12">
+          <div className="max-w-4xl mx-auto">
+            <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
+              <CardContent className="p-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                  <div className="text-center">
+                    <div className="text-sm font-medium text-gray-300 mb-2">Tower</div>
+                    <div className="text-sm font-semibold text-white">1</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-sm font-medium text-gray-300 mb-2">Storey</div>
+                    <div className="text-sm font-semibold text-white">45 Storeys + 3 Basements</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-sm font-medium text-gray-300 mb-2">Total Units</div>
+                    <div className="text-base font-semibold text-white">188</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-sm font-medium text-gray-300 mb-2">Unit Mix</div>
+                    <div className="text-sm font-semibold text-white">2- to 5-Bedroom</div>
+                </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
         <div className="container mx-auto px-4">
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('floor-plans') ? 'animate-slide-in-top' : ''
@@ -2010,7 +2392,7 @@ export default function AureaLanding() {
             <div className="w-full px-2 sm:px-6 pt-4 sm:pt-6 pb-2 border-b border-gray-700 mb-6 sm:mb-8">
               <div className="flex flex-nowrap gap-1 sm:gap-2 justify-center overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent" style={{ WebkitOverflowScrolling: 'touch' }}>
                 {(() => {
-                  const dynamicUnitData = processUnitAvailabilityData(project?.unitPricing || [])
+                  const dynamicUnitData = processUnitAvailabilityData(project?.unitPricingAurea || [])
                   
                   // If no API data, show message
                   if (dynamicUnitData.length === 0) {
@@ -2022,7 +2404,7 @@ export default function AureaLanding() {
                     )
                   }
                   
-                  return dynamicUnitData.map((unit, idx) => {
+                  return dynamicUnitData.map((unit: any, idx: number) => {
                     // Calculate total available units for this type
                     const totalAvailable = unit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.available, 0)
                     const totalUnits = unit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.total, 0)
@@ -2048,7 +2430,7 @@ export default function AureaLanding() {
 
             {/* Card layout for selected unit type */}
             {(() => {
-              const dynamicUnitData = processUnitAvailabilityData(project?.unitPricing || [])
+              const dynamicUnitData = processUnitAvailabilityData(project?.unitPricingAurea || [])
               const currentUnit = dynamicUnitData[unitsActiveTab] || dynamicUnitData[0]
               
               // If no data available, show fallback
@@ -2099,7 +2481,20 @@ export default function AureaLanding() {
                                     <div className="absolute inset-0 flex items-center justify-center bg-black text-white text-xs">No floor plan images</div>
                                   )}
                                   <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
-                                  {hasImages && images.length > 1 && (
+                                  {hasImages && (
+                                    <>
+                                      {/* Zoom Button */}
+                                      <button
+                                        aria-label="Zoom floor plan"
+                                        className="absolute bottom-2 right-2 p-2 bg-black/50 hover:bg-black/70 rounded-full transition-all duration-200 z-10"
+                                        onClick={() => {
+                                          setSelectedFloorPlanImage(images[floorPlanIndex % images.length])
+                                          setShowFloorPlanDialog(true)
+                                        }}
+                                      >
+                                        <Maximize2 className="h-4 w-4" style={{ color: '#40e0d0' }} />
+                                      </button>
+                                      {images.length > 1 && (
                                     <>
                                       <button
                                         aria-label="Previous floor plan"
@@ -2123,6 +2518,8 @@ export default function AureaLanding() {
                                           />
                                         ))}
                                       </div>
+                                        </>
+                                      )}
                                     </>
                                   )}
                                   <div className="absolute bottom-1 left-1 text-white text-xs font-medium">
@@ -2178,6 +2575,453 @@ export default function AureaLanding() {
                 </div>
               )
             })()}
+          </div>
+        </div>
+        <div className="container mx-auto px-4">
+          <div 
+            id="aurea-site-plan"
+            className={`mt-20 mb-20 transition-all duration-1000 delay-300 ${
+              animatedSections.has('floor-plans') ? 'animate-slide-in-top' : ''
+            }`}
+          >
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Facilities / Site Plan</h2>
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-1 bg-[#ce001f] rounded" />
+              </div>
+            </div>
+            
+            {/* Aurea Site Plan Carousel */}
+            <div className="relative max-w-6xl mx-auto mb-8">
+              <div className="relative w-full h-[220px] sm:h-[320px] md:h-[500px] rounded-xl overflow-hidden shadow-2xl">
+                <Image
+                  src={aureaSitePlanImages[currentAureaSitePlanIndex] || "/placeholder.svg"}
+                  alt={`Aurea Site Plan - Image ${currentAureaSitePlanIndex + 1}`}
+                  fill
+                  className="object-cover transition-all duration-500"
+                />
+        
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                  onClick={prevAureaSitePlan}
+                >
+                  <ChevronLeft className="w-5 h-5 text-[#ce001f]" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                  onClick={nextAureaSitePlan}
+                >
+                  <ChevronRight className="w-5 h-5 text-[#ce001f]" />
+                </Button>
+              </div>
+
+              {/* Thumbnail Navigation */}
+              <div className="flex items-center justify-center mt-6 space-x-3 overflow-x-auto px-2">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="w-10 h-10 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                  onClick={prevAureaSitePlan}
+                >
+                  <ChevronLeft className="w-4 h-4 text-[#ce001f]" />
+                </Button>
+                {aureaSitePlanImages.map((image, index) => (
+                  <button
+                    key={index}
+                    className={`relative w-20 h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-110 flex-shrink-0 ${
+                      index === currentAureaSitePlanIndex
+                        ? "border-primary-red shadow-lg scale-105"
+                        : "border-gray-200 hover:border-gray-300"
+                    }`}
+                    onClick={() => setCurrentAureaSitePlanIndex(index)}
+                  >
+                    <Image
+                      src={image || "/placeholder.svg"}
+                      alt={`Aurea Site Plan Thumbnail ${index + 1}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </button>
+                ))}
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="w-10 h-10 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                  onClick={nextAureaSitePlan}
+                >
+                  <ChevronRight className="w-4 h-4 text-[#ce001f]" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* The Golden Mile Floor Plans & Pricing Section */}
+      <section 
+        id="golden-mile-floor-plans"
+        className="py-16 bg-[#1c1c1d] section-entrance"
+        data-section-id="floor-plans"
+        style={{ 
+          opacity: animatedSections.has('floor-plans') ? 1 : 0,
+          transform: animatedSections.has('floor-plans') ? 'translateY(0)' : 'translateY(60px)'
+        }}
+      > 
+
+      {/* The Golden Mile Image Gallery Section */}
+      <div 
+          id="golden-mile-gallery"
+          className={`mb-20 transition-all duration-1000 delay-700 ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+          }`}
+        >
+          <div className="text-center mb-8">
+            <h3 className="text-3xl font-light mb-3 text-white text-center tracking-wide">The Golden Mile</h3>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-[#ce001f] rounded" />
+            </div>
+            <div className="flex items-center justify-center space-x-2 text-sm text-gray-300">
+              <span>
+                {currentGoldenMileImageIndex + 1} of {goldenMileImages.length}
+              </span>
+            </div>
+          </div>
+
+          {/* Main Image Display */}
+          <div className="relative max-w-6xl mx-auto mb-8">
+            <div className="relative w-full h-[220px] sm:h-[320px] md:h-[500px] rounded-xl overflow-hidden shadow-2xl">
+              <Image
+                src={goldenMileImages[currentGoldenMileImageIndex] || "/placeholder.svg"}
+                alt={`The Golden Mile - Image ${currentGoldenMileImageIndex + 1}`}
+                fill
+                className="object-cover transition-all duration-500"
+              />
+      
+              <Button
+                variant="outline"
+                size="icon"
+                className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                onClick={prevGoldenMileImage}
+              >
+                <ChevronLeft className="w-5 h-5 text-[#ce001f]" />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                onClick={nextGoldenMileImage}
+              >
+                <ChevronRight className="w-5 h-5 text-[#ce001f]" />
+              </Button>
+
+              
+                </div>
+
+            
+            <div className="flex items-center justify-center mt-6 space-x-3 overflow-x-auto px-2">
+              <Button
+                variant="outline"
+                size="icon"
+                className="w-10 h-10 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                onClick={prevGoldenMileImage}
+              >
+                <ChevronLeft className="w-4 h-4 text-[#ce001f]" />
+              </Button>
+              {goldenMileImages.map((image, index) => (
+                <button
+                  key={index}
+                  className={`relative w-20 h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-110 flex-shrink-0 ${
+                    index === currentGoldenMileImageIndex
+                      ? "border-primary-red shadow-lg scale-105"
+                      : "border-gray-200 hover:border-gray-300"
+                  }`}
+                  onClick={() => setCurrentGoldenMileImageIndex(index)}
+                >
+                  <Image
+                    src={image || "/placeholder.svg"}
+                    alt={`The Golden Mile Thumbnail ${index + 1}`}
+                    fill
+                    className="object-cover"
+                  />
+                </button>
+              ))}
+              <Button
+                variant="outline"
+                size="icon"
+                className="w-10 h-10 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                onClick={nextGoldenMileImage}
+              >
+                <ChevronRight className="w-4 h-4 text-[#ce001f]" />
+              </Button>
+                </div>
+                    </div>
+                  </div>
+
+        {/* The Golden Mile Project Information Table */}
+        <div className="container mx-auto px-4 mb-12">
+          <div className="max-w-4xl mx-auto">
+            <Card className="border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
+              <CardContent className="p-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                  <div className="text-center">
+                    <div className="text-sm font-medium text-gray-300 mb-2">Tower</div>
+                    <div className="text-sm font-semibold text-white">1</div>
+                    </div>
+                  <div className="text-center">
+                    <div className="text-sm font-medium text-gray-300 mb-2">Storey</div>
+                    <div className="text-sm font-semibold text-white">22 Storeys<br />+ 1 Basement</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-sm font-medium text-gray-300 mb-2">Total Units</div>
+                    <div className="text-sm font-semibold text-white">156 Offices<br />19 Medical Suites</div>
+                    </div>
+                  <div className="text-center">
+                    <div className="text-sm font-medium text-gray-300 mb-2">Carpark</div>
+                    <div className="text-sm font-semibold text-white">173 Lots, 3 Accessible Lots,<br />2 Loading / Unloading Lots</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+          </div>
+
+        <div className="container mx-auto px-4">
+          <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
+            animatedSections.has('floor-plans') ? 'animate-slide-in-top' : ''
+          }`}>
+            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">The Golden Mile - Floor Plans & Pricing</h2>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-1 bg-[#ce001f] rounded" />
+            </div>
+            <p className="text-xl text-gray-300">Discover commercial spaces from our collection of offices and medical suites</p>
+          </div>
+
+          <div className={`max-w-7xl mx-auto transition-all duration-1000 delay-500 ${
+            animatedSections.has('floor-plans') ? 'animate-fade-in-up' : ''
+          }`} style={{
+            opacity: animatedSections.has('floor-plans') ? 1 : 0,
+            transform: animatedSections.has('floor-plans') ? 'translateY(0)' : 'translateY(50px)'
+          }}>
+            {/* Tabs for unit types */}
+            <div className="w-full px-2 sm:px-6 pt-4 sm:pt-6 pb-2 border-b border-gray-700 mb-6 sm:mb-8">
+              <div className="flex flex-nowrap gap-1 sm:gap-2 justify-center overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent" style={{ WebkitOverflowScrolling: 'touch' }}>
+                {(() => {
+                  const dynamicUnitData = processGoldenMileUnitAvailabilityData(project?.unitPricingGoldenMile || [])
+                  
+                  // If no API data, show message
+                  if (dynamicUnitData.length === 0) {
+                    return (
+                      <div className="col-span-full text-center py-8">
+                        <p className="text-gray-400">No unit information available at the moment.</p>
+                        <p className="text-sm text-gray-500 mt-2">Please check back later or contact our agents for more details.</p>
+                      </div>
+                    )
+                  }
+                  
+                  return dynamicUnitData.map((unit: any, idx: number) => {
+                    // Calculate total available units for this type
+                    const totalAvailable = unit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.available, 0)
+                    const totalUnits = unit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.total, 0)
+                    
+                    return (
+                      <button
+                        key={unit.unitType}
+                        onClick={() => setGoldenMileUnitsActiveTab(idx)}
+                        className={`px-2 sm:px-4 py-2 rounded-full font-light flex items-center gap-1 sm:gap-2 text-xs sm:text-sm transition-colors border focus:outline-none whitespace-nowrap ${goldenMileUnitsActiveTab === idx ? 'bg-gray-800 border-[#ce001f] text-white' : 'bg-[#18191b] border-gray-700 text-gray-300 hover:bg-[#ce001f]/10 hover:text-[#ce001f]'}`}
+                      >
+                        <span>{unit.unitType.replace(' Units', '')}</span>
+                        {totalAvailable > 0 && (
+                          <span className="bg-green-500 text-white text-xs px-1 sm:px-2 py-1 rounded-full">
+                            {totalAvailable}
+                          </span>
+                        )}
+                      </button>
+                    )
+                  })
+                })()}
+              </div>
+            </div>
+
+            {/* Card layout for selected unit type */}
+            {(() => {
+              const dynamicUnitData = processGoldenMileUnitAvailabilityData(project?.unitPricingGoldenMile || [])
+              const currentUnit = dynamicUnitData[goldenMileUnitsActiveTab] || dynamicUnitData[0]
+              
+              // If no data available, show fallback
+              if (!currentUnit) {
+                return (
+                  <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 justify-center items-stretch bg-[#111] rounded-xl p-4 lg:p-8 max-w-5xl mx-auto shadow-lg pricing-container">
+                    <div className="w-full text-center text-gray-400 py-8">
+                      <p>No unit information available at the moment.</p>
+                      <p className="text-sm mt-2">Please check back later or contact our agents for more details.</p>
+                    </div>
+                  </div>
+                )
+              }
+              
+              // Calculate total availability for this unit type
+              const totalAvailable = currentUnit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.available, 0)
+              const totalUnits = currentUnit.subtypes.reduce((sum: number, subtype: any) => sum + subtype.total, 0)
+              
+              return (
+                <div className="space-y-4 sm:space-y-6">
+                  {/* Cards */}
+                  <div className="w-full">
+                    {currentUnit.subtypes.slice(0, 1).map((subtype: any, subtypeIndex: number) => (
+                      <div key={subtypeIndex} className="bg-[#111] rounded-xl p-4 sm:p-6 shadow-lg border border-gray-800 w-full">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 w-full items-center">
+                          {/* Floor Plan Image - Left Side */}
+                          <div>
+                            {(() => {
+                              const images = Array.isArray(subtype.floor_plan_images) && subtype.floor_plan_images.length > 0
+                                ? subtype.floor_plan_images
+                                : []
+                              const hasImages = images && images.length > 0
+
+                              const prev = () => setGoldenMileFloorPlanIndex((i) => (i - 1 + images.length) % images.length)
+                              const next = () => setGoldenMileFloorPlanIndex((i) => (i + 1) % images.length)
+
+                              return (
+                                <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden border border-gray-700">
+                                  {hasImages ? (
+                                  <Image
+                                      key={images[goldenMileFloorPlanIndex % images.length]}
+                                      src={images[goldenMileFloorPlanIndex % images.length]}
+                                    alt={`${currentUnit.unitType.replace(' Units', '')} Floor Plan`}
+                                    fill
+                                      className="object-contain bg-black"
+                                    />
+                                  ) : (
+                                    <div className="absolute inset-0 flex items-center justify-center bg-black text-white text-xs">No floor plan images</div>
+                                  )}
+                                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
+                                  {hasImages && (
+                                    <>
+                                      {/* Zoom Button */}
+                                      <button
+                                        aria-label="Zoom floor plan"
+                                        className="absolute bottom-2 right-2 p-2 bg-black/50 hover:bg-black/70 rounded-full transition-all duration-200 z-10"
+                                        onClick={() => {
+                                          setSelectedGoldenMileFloorPlanImage(images[goldenMileFloorPlanIndex % images.length])
+                                          setShowGoldenMileFloorPlanDialog(true)
+                                        }}
+                                      >
+                                        <Maximize2 className="h-4 w-4" style={{ color: '#40e0d0' }} />
+                                      </button>
+                                      {images.length > 1 && (
+                                        <>
+                                          <button
+                                            aria-label="Previous floor plan"
+                                            className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow"
+                                            onClick={prev}
+                                          >
+                                            <ChevronLeft className="w-4 h-4" />
+                                          </button>
+                                          <button
+                                            aria-label="Next floor plan"
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow"
+                                            onClick={next}
+                                          >
+                                            <ChevronRight className="w-4 h-4" />
+                                          </button>
+                                          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+                                            {images.slice(0, 8).map((_img: string, idx: number) => (
+                                              <span
+                                                key={idx}
+                                                className={`w-2 h-2 rounded-full ${idx === (goldenMileFloorPlanIndex % images.length) ? 'bg-white' : 'bg-white/40'}`}
+                                              />
+                                            ))}
+                                          </div>
+                                        </>
+                                      )}
+                                    </>
+                                  )}
+                                  <div className="absolute bottom-1 left-1 text-white text-xs font-medium">
+                                    Floor Plan
+                          </div>
+                        </div>
+                              )
+                            })()}
+                </div>
+
+                          {/* Information - Right Side */}
+                          <div className="flex flex-col justify-center">
+                            <div>
+                              {/* Unit Type Header */}
+                              <div className="mb-4">
+                                <h4 className="text-xl font-bold text-white mb-2">{subtype.subtype}</h4>
+                                <p className="text-gray-300 text-sm">{subtype.size}</p>
+                              </div>
+                              
+                              {/* Price */}
+                              <div className="mb-6">
+                                <p className="text-green-400 font-semibold text-lg">{subtype.price}</p>
+                                {subtype.price_per_sqft && (
+                                  <p className="text-gray-400 text-sm">
+                                    {subtype.price_per_sqft.toLocaleString()} per sqft
+                                  </p>
+                                )}
+                              </div>
+                              
+                              
+                            </div>
+                            
+                            {/* CTA Buttons */}
+                            <div className="space-y-3">
+                              <button 
+                                onClick={() => scrollToSection('lead-form')}
+                                className="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-4 rounded-lg text-sm transition-colors"
+                              >
+                                Book Showflat Visit
+                              </button>
+                              <button 
+                                onClick={() => setShowSiteMapPopup(true)}
+                                className="w-full bg-white text-red-500 hover:bg-white-600 text-red-500 font-medium py-3 px-4 rounded-lg text-sm transition-colors"
+                              >
+                                Request Floor Plan
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )
+            })()}
+          </div>
+        </div>
+        <div className="container mx-auto px-4">
+          <div 
+            id="golden-mile-site-plan"
+            className={`mt-20 mb-20 transition-all duration-1000 delay-300 ${
+              animatedSections.has('floor-plans') ? 'animate-slide-in-top' : ''
+            }`}
+          >
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Facilities / Site Plan</h2>
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-1 bg-[#ce001f] rounded" />
+              </div>
+            </div>
+            
+            {/* Site Plan Image */}
+            <div className="relative max-w-6xl mx-auto">
+              <div className="relative w-full rounded-xl overflow-hidden shadow-2xl">
+                <Image
+                  src="https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/TGM-Siteplan.jpg"
+                  alt="Facilities / Site Plan"
+                  width={1200}
+                  height={800}
+                  className="w-full h-auto object-contain"
+                  unoptimized
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -2241,6 +3085,45 @@ export default function AureaLanding() {
         </GoogleReCaptchaProvider>
       )}
 
+      {/* Floor Plan Zoom Dialog - Aurea */}
+      <Dialog open={showFloorPlanDialog} onOpenChange={setShowFloorPlanDialog}>
+        <DialogContent className="max-w-7xl w-full h-[90vh] p-0 bg-black border-gray-800 overflow-auto">
+          <DialogTitle className="sr-only">Aurea Floor Plan - Full Size</DialogTitle>
+          <div className="relative w-full min-h-full flex items-center justify-center p-4">
+            {selectedFloorPlanImage && (
+              <Image
+                src={selectedFloorPlanImage}
+                alt="Floor Plan - Full Size"
+                width={2400}
+                height={1800}
+                className="w-auto h-auto object-contain"
+                style={{ maxWidth: 'none' }}
+                unoptimized
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Floor Plan Zoom Dialog - The Golden Mile */}
+      <Dialog open={showGoldenMileFloorPlanDialog} onOpenChange={setShowGoldenMileFloorPlanDialog}>
+        <DialogContent className="max-w-7xl w-full h-[90vh] p-0 bg-black border-gray-800 overflow-auto">
+          <DialogTitle className="sr-only">The Golden Mile Floor Plan - Full Size</DialogTitle>
+          <div className="relative w-full min-h-full flex items-center justify-center p-4">
+            {selectedGoldenMileFloorPlanImage && (
+              <Image
+                src={selectedGoldenMileFloorPlanImage}
+                alt="Floor Plan - Full Size"
+                width={2400}
+                height={1800}
+                className="w-auto h-auto object-contain"
+                style={{ maxWidth: 'none' }}
+                unoptimized
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
 
       </div>
     </GoogleReCaptchaProvider>
