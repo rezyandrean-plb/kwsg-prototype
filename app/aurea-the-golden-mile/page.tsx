@@ -2089,7 +2089,7 @@ export default function AureaLanding() {
                 <div className="w-full rounded-lg overflow-hidden shadow-lg">
                   <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
                     <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15271.694546428162!2d103.85770980545122!3d1.3038412869991762!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19116424c627%3A0xa2823d888c760319!2sAurea!5e0!3m2!1sen!2sid!4v1757920658884!5m2!1sen!2sid"
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955.151251038296!2d103.86127752483931!3d1.3022549421312515!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19b38241d779%3A0xac34c19e47d3a9c9!2s800%20Beach%20Rd%2C%20Singapore%20199979!5e0!3m2!1sen!2sid!4v1768456349718!5m2!1sen!2sid"
                       style={{ border: 0 }}
                       allowFullScreen
                       loading="lazy"
