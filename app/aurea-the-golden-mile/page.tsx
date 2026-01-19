@@ -671,6 +671,24 @@ function LeadGenerationForm({
           </Popover>
         </div>
         <div className="space-y-2">
+          <label htmlFor="projectType" className="text-sm font-medium text-white">
+            Project Type
+          </label>
+          <Select 
+            value={formData.projectType}
+            onValueChange={(value) => setFormData((prev: any) => ({ ...prev, projectType: value }))}
+            disabled={isSubmitting || isExecutingRecaptcha}
+          >
+            <SelectTrigger id="projectType" className="w-full bg-white text-gray-800 border-0">
+              <SelectValue placeholder="Select project type" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200">
+              <SelectItem value="Aurea">Aurea</SelectItem>
+              <SelectItem value="The Golden Mile">The Golden Mile</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="space-y-2">
           <label htmlFor="preferredTiming" className="text-sm font-medium text-white">
             Preferred Time
           </label>
@@ -772,6 +790,12 @@ export default function AureaLanding() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [currentCombinedGalleryIndex, setCurrentCombinedGalleryIndex] = useState(0)
   const [currentGoldenMileImageIndex, setCurrentGoldenMileImageIndex] = useState(0)
+  const [isCombinedGalleryPaused, setIsCombinedGalleryPaused] = useState(false)
+  const [combinedGalleryFade, setCombinedGalleryFade] = useState(false)
+  const [isAureaGalleryPaused, setIsAureaGalleryPaused] = useState(false)
+  const [aureaGalleryFade, setAureaGalleryFade] = useState(false)
+  const [isGoldenMileGalleryPaused, setIsGoldenMileGalleryPaused] = useState(false)
+  const [goldenMileGalleryFade, setGoldenMileGalleryFade] = useState(false)
   const [selectedFloorPlan, setSelectedFloorPlan] = useState("1br")
   const [isScrolled, setIsScrolled] = useState(false)
   const [date, setDate] = useState<Date>()
@@ -926,8 +950,37 @@ export default function AureaLanding() {
     }
   }, [])
 
-  const [projectImages, setProjectImages] = useState<string[]>([])
-  const [goldenMileImages, setGoldenMileImages] = useState<string[]>([])
+  const [projectImages] = useState<string[]>([
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View04.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View06.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View08.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View09.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View12.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View13.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View17.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View19.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View22.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View23.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View24.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View25.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View26.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View32.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View35.jpg",
+  ])
+  const [goldenMileImages] = useState<string[]>([
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+1.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+2.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+3.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+4.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+5.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+6.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+7.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+8.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+9.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+10.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+11.jpg",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+12.jpg",
+  ])
   const [combinedGalleryImages, setCombinedGalleryImages] = useState<string[]>([
     "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/gallery/R-View03.webp",
     "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/gallery/R-View07.webp",
@@ -935,101 +988,77 @@ export default function AureaLanding() {
     "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/gallery/R-View16.webp",
     "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/gallery/R-View34.webp",
   ])
-  
-  useEffect(() => {
-    const loadGallery = async () => {
-      try {
-        const res = await fetch('/api/aurea/gallery')
-        if (!res.ok) throw new Error('Failed to load gallery')
-        const data = await res.json()
-        if (Array.isArray(data?.images) && data.images.length > 0) {
-          setProjectImages(data.images)
-        } else {
-          setProjectImages([
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View04.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View06.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View08.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View09.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View12.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View13.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View17.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View19.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View22.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View23.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View24.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View25.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View26.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View32.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View35.jpg",
-          ])
-        }
-      } catch (e) {
-        setProjectImages([
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View04.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View06.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View08.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View09.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View12.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View13.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View17.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View19.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View22.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View23.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View24.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View25.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View26.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View32.jpg",
-          "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/aurea-gallery/R-View35.jpg",
-        ])
-      }
-    }
-    loadGallery()
-  }, [])
 
-  // Load gallery images for The Golden Mile Image Gallery Section
+  // Refs to track timeouts for cleanup
+  const combinedGalleryTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const aureaGalleryTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const goldenMileGalleryTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Auto-slide for Combined Gallery
   useEffect(() => {
-    const loadGoldenMileGallery = async () => {
-      try {
-        const res = await fetch('/api/aurea/golden-mile-gallery')
-        if (!res.ok) throw new Error('Failed to load The Golden Mile gallery')
-        const data = await res.json()
-        if (Array.isArray(data?.images) && data.images.length > 0) {
-          setGoldenMileImages(data.images)
-        } else {
-          setGoldenMileImages([
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+1.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+2.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+3.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+4.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+5.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+6.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+7.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+8.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+9.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+10.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+11.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+12.jpg",
-          ])
-        }
-      } catch (e) {
-        setGoldenMileImages([
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+1.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+2.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+3.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+4.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+5.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+6.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+7.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+8.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+9.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+10.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+11.jpg",
-            "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/the-golden-mile-gallery/LR_The+Golden+Mile+-+12.jpg",
-        ])
+    if (isCombinedGalleryPaused || combinedGalleryImages.length === 0) return
+
+    const interval = setInterval(() => {
+      setCombinedGalleryFade(true)
+      combinedGalleryTimeoutRef.current = setTimeout(() => {
+        setCurrentCombinedGalleryIndex((prev) => (prev + 1) % combinedGalleryImages.length)
+        setCombinedGalleryFade(false)
+        combinedGalleryTimeoutRef.current = null
+      }, 300) // Half of transition duration
+    }, 4000) // Change image every 4 seconds
+
+    return () => {
+      clearInterval(interval)
+      if (combinedGalleryTimeoutRef.current) {
+        clearTimeout(combinedGalleryTimeoutRef.current)
+        combinedGalleryTimeoutRef.current = null
       }
     }
-    loadGoldenMileGallery()
-  }, [])
+  }, [isCombinedGalleryPaused, combinedGalleryImages.length])
+
+  // Auto-slide for Aurea Gallery
+  useEffect(() => {
+    if (isAureaGalleryPaused || projectImages.length === 0) return
+
+    const interval = setInterval(() => {
+      setAureaGalleryFade(true)
+      aureaGalleryTimeoutRef.current = setTimeout(() => {
+        setCurrentImageIndex((prev) => (prev + 1) % projectImages.length)
+        setAureaGalleryFade(false)
+        aureaGalleryTimeoutRef.current = null
+      }, 300) // Half of transition duration
+    }, 4000) // Change image every 4 seconds
+
+    return () => {
+      clearInterval(interval)
+      if (aureaGalleryTimeoutRef.current) {
+        clearTimeout(aureaGalleryTimeoutRef.current)
+        aureaGalleryTimeoutRef.current = null
+      }
+    }
+  }, [isAureaGalleryPaused, projectImages.length])
+
+  // Auto-slide for The Golden Mile Gallery
+  useEffect(() => {
+    if (isGoldenMileGalleryPaused || goldenMileImages.length === 0) return
+
+    const interval = setInterval(() => {
+      setGoldenMileGalleryFade(true)
+      goldenMileGalleryTimeoutRef.current = setTimeout(() => {
+        setCurrentGoldenMileImageIndex((prev) => (prev + 1) % goldenMileImages.length)
+        setGoldenMileGalleryFade(false)
+        goldenMileGalleryTimeoutRef.current = null
+      }, 300) // Half of transition duration
+    }, 4000) // Change image every 4 seconds
+
+    return () => {
+      clearInterval(interval)
+      if (goldenMileGalleryTimeoutRef.current) {
+        clearTimeout(goldenMileGalleryTimeoutRef.current)
+        goldenMileGalleryTimeoutRef.current = null
+      }
+    }
+  }, [isGoldenMileGalleryPaused, goldenMileImages.length])
 
   const floorPlans = {
     "1br": {
@@ -1080,7 +1109,8 @@ export default function AureaLanding() {
     // PARKS & RECREATION
     { icon: <Trees className="w-6 h-6" />, name: "Kallang Riverside Park", distance: "3 mins' walk (~0.3 km)", category: "Nature & Leisure" },
     { icon: <Trees className="w-6 h-6" />, name: "Esplanade – Theatres on the Bay", distance: "5 mins' drive", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "Sands Expo and Convention Centre", distance: "10 mins' drive", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Sands Expo and Convention Centre", distance: "5-Min Drive", category: "Nature & Leisure" },
+    { icon: <Trees className="w-6 h-6" />, name: "Suntec Singapore Convention & Exhibition Centre", distance: "4-Min Drive", category: "Nature & Leisure" },
     { icon: <Trees className="w-6 h-6" />, name: "Gardens by the Bay", distance: "9 mins' drive", category: "Nature & Leisure" },
     { icon: <Trees className="w-6 h-6" />, name: "Singapore Sports Hub & Indoor Stadium", distance: "9 mins' drive", category: "Nature & Leisure" },
     
@@ -1211,16 +1241,15 @@ export default function AureaLanding() {
           subtype: "Penthouse",
           bedrooms: 5,
           bathrooms: 4,
-          size: "Coming Soon",
+          size: "",
           price: "Coming Soon",
-          price_per_sqft: "Coming Soon",
+          price_per_sqft: "",
           currency: "SGD",
           total: 0,
           available: 0,
           status: 25,
           floor_plan_images: [
             "/images/springleaf-residence/site-plan-dummy.webp",
-            "/images/springleaf-residence/site-plan-dummy.webp"
           ],
           payment_terms: "20% Down Payment",
           discount_info: "Ultra-Luxury Collection"
@@ -1325,29 +1354,77 @@ export default function AureaLanding() {
   }
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % projectImages.length)
+    setAureaGalleryFade(true)
+    setTimeout(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % projectImages.length)
+      setAureaGalleryFade(false)
+    }, 300)
   }
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + projectImages.length) % projectImages.length)
+    setAureaGalleryFade(true)
+    setTimeout(() => {
+      setCurrentImageIndex((prev) => (prev - 1 + projectImages.length) % projectImages.length)
+      setAureaGalleryFade(false)
+    }, 300)
+  }
+
+  const handleAureaGalleryThumbnailClick = (index: number) => {
+    setAureaGalleryFade(true)
+    setTimeout(() => {
+      setCurrentImageIndex(index)
+      setAureaGalleryFade(false)
+    }, 300)
   }
 
   const nextCombinedGalleryImage = () => {
-    setCurrentCombinedGalleryIndex((prev) => (prev + 1) % combinedGalleryImages.length)
+    setCombinedGalleryFade(true)
+    setTimeout(() => {
+      setCurrentCombinedGalleryIndex((prev) => (prev + 1) % combinedGalleryImages.length)
+      setCombinedGalleryFade(false)
+    }, 300)
   }
 
   const prevCombinedGalleryImage = () => {
-    setCurrentCombinedGalleryIndex((prev) => (prev - 1 + combinedGalleryImages.length) % combinedGalleryImages.length)
+    setCombinedGalleryFade(true)
+    setTimeout(() => {
+      setCurrentCombinedGalleryIndex((prev) => (prev - 1 + combinedGalleryImages.length) % combinedGalleryImages.length)
+      setCombinedGalleryFade(false)
+    }, 300)
+  }
+
+  const handleCombinedGalleryThumbnailClick = (index: number) => {
+    setCombinedGalleryFade(true)
+    setTimeout(() => {
+      setCurrentCombinedGalleryIndex(index)
+      setCombinedGalleryFade(false)
+    }, 300)
   }
 
   const nextGoldenMileImage = () => {
     if (goldenMileImages.length === 0) return
-    setCurrentGoldenMileImageIndex((prev) => (prev + 1) % goldenMileImages.length)
+    setGoldenMileGalleryFade(true)
+    setTimeout(() => {
+      setCurrentGoldenMileImageIndex((prev) => (prev + 1) % goldenMileImages.length)
+      setGoldenMileGalleryFade(false)
+    }, 300)
   }
 
   const prevGoldenMileImage = () => {
     if (goldenMileImages.length === 0) return
-    setCurrentGoldenMileImageIndex((prev) => (prev - 1 + goldenMileImages.length) % goldenMileImages.length)
+    setGoldenMileGalleryFade(true)
+    setTimeout(() => {
+      setCurrentGoldenMileImageIndex((prev) => (prev - 1 + goldenMileImages.length) % goldenMileImages.length)
+      setGoldenMileGalleryFade(false)
+    }, 300)
+  }
+
+  const handleGoldenMileGalleryThumbnailClick = (index: number) => {
+    setGoldenMileGalleryFade(true)
+    setTimeout(() => {
+      setCurrentGoldenMileImageIndex(index)
+      setGoldenMileGalleryFade(false)
+    }, 300)
   }
 
   const scrollToLeadForm = () => {
@@ -1465,7 +1542,8 @@ export default function AureaLanding() {
     contactNumber: '',
     emailAddress: '',
     preferredDate: undefined as Date | undefined,
-    preferredTiming: ''
+    preferredTiming: '',
+    projectType: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
@@ -1535,7 +1613,8 @@ export default function AureaLanding() {
           contactNumber: '',
           emailAddress: '',
           preferredDate: undefined,
-          preferredTiming: ''
+          preferredTiming: '',
+          projectType: ''
         })
         setDate(undefined)
         
@@ -1968,15 +2047,21 @@ export default function AureaLanding() {
                 <div className="space-y-4">
                   <div>
                     {/* Main Image Display */}
-                    <div className="relative mb-6">
+                    <div 
+                      className="relative mb-6"
+                      onMouseEnter={() => setIsCombinedGalleryPaused(true)}
+                      onMouseLeave={() => setIsCombinedGalleryPaused(false)}
+                    >
                       <div className="relative w-full h-[500px] rounded-xl overflow-hidden shadow-2xl">
                         <Image
                           src={combinedGalleryImages[currentCombinedGalleryIndex] || "/placeholder.svg"}
-                          alt={`Aurea Gallery Image ${currentCombinedGalleryIndex + 1}`}
+                          alt={`Aurea + The Golden Mile Gallery Image ${currentCombinedGalleryIndex + 1}`}
                           width={800}
                           height={500}
                           quality={90}
-                          className="object-cover transition-all duration-500"
+                          className={`object-cover transition-opacity duration-700 ease-in-out ${
+                            combinedGalleryFade ? 'opacity-0' : 'opacity-100'
+                          }`}
                         />
                         
                         {/* Navigation buttons */}
@@ -2019,7 +2104,7 @@ export default function AureaLanding() {
                                 ? "border-[#ce001f] shadow-lg scale-105"
                                 : "border-gray-200 hover:border-gray-300"
                             }`}
-                            onClick={() => setCurrentCombinedGalleryIndex(index)}
+                            onClick={() => handleCombinedGalleryThumbnailClick(index)}
                           >
                             <Image
                               src={image || "/placeholder.svg"}
@@ -2185,7 +2270,7 @@ export default function AureaLanding() {
             <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
               <h3 className="text-2xl font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
               <p className="text-lg mb-6 opacity-90">
-                Register now for an exclusive preview of Aurea
+                Register now for an exclusive preview of & The Golden Mile 
               </p>
               <div className="cta-buttons-container justify-center">
                 <Button 
@@ -2207,7 +2292,7 @@ export default function AureaLanding() {
           <h3 className="text-2xl md:text-4xl font-semibold mb-8 md:mb-10">Trusted Developer with Proven Success</h3>
           <div className="flex items-center justify-center gap-8 md:gap-16 mb-8 md:mb-10 flex-wrap">
             <div className="flex items-center gap-4">
-              <div className="rounded-md bg-white/70 p-3">
+              <div className="rounded-md bg-white p-3">
                 <Image
                   src="https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/feo-eng-logo.webp"
                   alt="Far East Organization"
@@ -2219,7 +2304,7 @@ export default function AureaLanding() {
               <span className="hidden sm:block text-sm md:text-base opacity-90">Far East Organization</span>
             </div>
             <div className="flex items-center gap-4">
-              <div className="rounded-md bg-white/70 p-3">
+              <div className="rounded-md bg-white p-3">
                 <Image
                   src="https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/new-launch-collection/mega-landing-page/aurea-the-golden-mile/perennial-holdings-logo.webp"
                   alt="Perennial Holdings"
@@ -2231,14 +2316,17 @@ export default function AureaLanding() {
               <span className="hidden sm:block text-sm md:text-base opacity-90">Perennial Holdings</span>
             </div>
           </div>
-          <p className="text-sm md:text-base text-gray-300 leading-relaxed max-w-5xl mx-auto">
-          As Singapore's largest private property developer, Far East Organization has been shaping the city's skyline for over six decades. With a proven track record of delivering quality developments and a commitment to innovation, Far East Organization brings deep expertise to the Aurea project. 
-          Their portfolio includes iconic developments across residential, commercial, hospitality, and retail sectors, making them the trusted choice for discerning property investors. <br /> <br></br>
+          <p className="text-sm md:text-base text-gray-300 leading-relaxed max-w-5xl mx-auto mb-6">
+          Breathing new life into a renowned national monument requires a distinct calibre of expertise. Development of Aurea + The Golden Mile is led by a consortium that specialises in exactly this kind of sensitive restoration: Perennial Holdings, Far East Organization, and Sino Land.
+          </p>
+          <p className="text-sm md:text-base text-gray-300 leading-relaxed max-w-5xl mx-auto mb-6">
+          <strong className="text-white">Far East Organization:</strong> The team behind The Fullerton Heritage. They took the historic General Post Office and turned it into Singapore's finest hotel. They know how to protect a legacy while making it commercially viable.
+          </p>
+          <p className="text-sm md:text-base text-gray-300 leading-relaxed max-w-5xl mx-auto mb-6">
+          <strong className="text-white">Perennial Holdings:</strong> The specialists behind Capitol Singapore and CHIJMES. They have a track record of taking conservation clusters and turning them into thriving lifestyle destinations.
           </p>
           <p className="text-sm md:text-base text-gray-300 leading-relaxed max-w-5xl mx-auto">
-          Perennial Holdings Private Limited ("Perennial Holdings") is an integrated real estate and healthcare company headquartered in Singapore. In real estate, it develops and manages large-scale transit-oriented and mixed-use projects, creating "live, work, play" destinations. 
-          In healthcare, it owns and operates hospitals, medical centres, eldercare facilities, and senior housing. 
-          The company has a presence in Singapore, China, Malaysia, and Indonesia, with a real estate portfolio of about 80 million sqft GFA and a healthcare portfolio of over 23,000 beds across 14 cities in China.
+          <strong className="text-white">Sino Land:</strong> Bringing international luxury standards to ensure the new residential tower holds its own against the weight of the historic site.
           </p>
         </div>
       </section>
@@ -2274,13 +2362,19 @@ export default function AureaLanding() {
             </div>
 
             {/* Main Image Display */}
-            <div className="relative max-w-6xl mx-auto mb-8">
+            <div 
+              className="relative max-w-6xl mx-auto mb-8"
+              onMouseEnter={() => setIsAureaGalleryPaused(true)}
+              onMouseLeave={() => setIsAureaGalleryPaused(false)}
+            >
             <div className="relative w-full h-[220px] sm:h-[320px] md:h-[500px] rounded-xl overflow-hidden shadow-2xl">
                 <Image
                   src={projectImages[currentImageIndex] || "/placeholder.svg"}
                   alt={`Aurea - Image ${currentImageIndex + 1}`}
                   fill
-                  className="object-cover transition-all duration-500"
+                  className={`object-cover transition-opacity duration-700 ease-in-out ${
+                    aureaGalleryFade ? 'opacity-0' : 'opacity-100'
+                  }`}
                 />
                 
                 <Button
@@ -2321,7 +2415,7 @@ export default function AureaLanding() {
                         ? "border-primary-red shadow-lg scale-105"
                         : "border-gray-200 hover:border-gray-300"
                     }`}
-                    onClick={() => setCurrentImageIndex(index)}
+                    onClick={() => handleAureaGalleryThumbnailClick(index)}
                   >
                     <Image
                       src={image || "/placeholder.svg"}
@@ -2620,41 +2714,19 @@ export default function AureaLanding() {
               </div>
 
               {/* Thumbnail Navigation */}
-              <div className="flex items-center justify-center mt-6 space-x-3 overflow-x-auto px-2">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="w-10 h-10 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
-                  onClick={prevAureaSitePlan}
-                >
-                  <ChevronLeft className="w-4 h-4 text-[#ce001f]" />
-                </Button>
-                {aureaSitePlanImages.map((image, index) => (
+              <div className="flex items-center justify-center mt-6 gap-2">
+                {aureaSitePlanImages.map((_image, index) => (
                   <button
                     key={index}
-                    className={`relative w-20 h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-110 flex-shrink-0 ${
-                      index === currentAureaSitePlanIndex
-                        ? "border-primary-red shadow-lg scale-105"
-                        : "border-gray-200 hover:border-gray-300"
-                    }`}
                     onClick={() => setCurrentAureaSitePlanIndex(index)}
-                  >
-                    <Image
-                      src={image || "/placeholder.svg"}
-                      alt={`Aurea Site Plan Thumbnail ${index + 1}`}
-                      fill
-                      className="object-cover"
-                    />
-                  </button>
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      index === currentAureaSitePlanIndex
+                        ? "bg-[#ce001f] w-8"
+                        : "bg-white/40 hover:bg-white/60"
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
                 ))}
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="w-10 h-10 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
-                  onClick={nextAureaSitePlan}
-                >
-                  <ChevronRight className="w-4 h-4 text-[#ce001f]" />
-                </Button>
               </div>
             </div>
           </div>
@@ -2692,13 +2764,19 @@ export default function AureaLanding() {
           </div>
 
           {/* Main Image Display */}
-          <div className="relative max-w-6xl mx-auto mb-8">
+          <div 
+            className="relative max-w-6xl mx-auto mb-8"
+            onMouseEnter={() => setIsGoldenMileGalleryPaused(true)}
+            onMouseLeave={() => setIsGoldenMileGalleryPaused(false)}
+          >
             <div className="relative w-full h-[220px] sm:h-[320px] md:h-[500px] rounded-xl overflow-hidden shadow-2xl">
               <Image
                 src={goldenMileImages[currentGoldenMileImageIndex] || "/placeholder.svg"}
                 alt={`The Golden Mile - Image ${currentGoldenMileImageIndex + 1}`}
                 fill
-                className="object-cover transition-all duration-500"
+                className={`object-cover transition-opacity duration-700 ease-in-out ${
+                  goldenMileGalleryFade ? 'opacity-0' : 'opacity-100'
+                }`}
               />
       
               <Button
@@ -2739,7 +2817,7 @@ export default function AureaLanding() {
                       ? "border-primary-red shadow-lg scale-105"
                       : "border-gray-200 hover:border-gray-300"
                   }`}
-                  onClick={() => setCurrentGoldenMileImageIndex(index)}
+                  onClick={() => handleGoldenMileGalleryThumbnailClick(index)}
                 >
                   <Image
                     src={image || "/placeholder.svg"}
