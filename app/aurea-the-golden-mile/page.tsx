@@ -574,10 +574,10 @@ function LeadGenerationForm({
   }
 
   return (
-    <Card className={`bg-white/20 backdrop-blur-sm text-white p-6 md:p-12 shadow-2xl border-0 rounded-xl hover:shadow-3xl transition-all duration-700 hover:scale-105`}>
-      <h2 className="text-4xl font-bold mb-4 text-white text-center">Book Your Showflat Visit Today</h2>
-      <p className="text-md mb-8 opacity-90 text-white text-center">
-        Be the first to own a home that combines convenience, luxury, and nature. Register now for an exclusive preview of Aurea.
+    <Card className={`bg-white/20 backdrop-blur-sm text-white p-4 sm:p-6 md:p-12 shadow-2xl border-0 rounded-xl hover:shadow-3xl transition-all duration-700 hover:scale-105`}>
+      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-white text-center">Book Your Showflat Visit Today</h2>
+      <p className="text-sm sm:text-base md:text-md mb-6 sm:mb-8 opacity-90 text-white text-center">
+        Be the first to own a home that combines convenience, luxury, and nature. Register now for an exclusive preview of Aurea & The Golden Mile.
       </p>
       {submitError && (
         <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
@@ -591,7 +591,7 @@ function LeadGenerationForm({
         </div>
       )}
       
-      <form className="space-y-6" onSubmit={handleFormSubmit}>
+      <form className="space-y-4 sm:space-y-6" onSubmit={handleFormSubmit}>
         <div className="space-y-2">
           <label htmlFor="fullName" className="text-sm font-medium text-white">
             Full Name *
@@ -685,6 +685,7 @@ function LeadGenerationForm({
             <SelectContent className="bg-white border border-gray-200">
               <SelectItem value="Aurea">Aurea</SelectItem>
               <SelectItem value="The Golden Mile">The Golden Mile</SelectItem>
+              <SelectItem value="Aurea & The Golden Mile">Aurea & The Golden Mile</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -1104,13 +1105,13 @@ export default function AureaLanding() {
     { icon: <ShoppingBag className="w-6 h-6" />, name: "Kampong Glam Heritage District", distance: "9 mins' walk (~0.8 km)", category: "Retail & F&B" },
     { icon: <ShoppingBag className="w-6 h-6" />, name: "Bugis Junction", distance: "3 mins' drive", category: "Retail & F&B" },
     { icon: <ShoppingBag className="w-6 h-6" />, name: "Raffles City / Suntec City", distance: "3–4 mins' drive", category: "Retail & F&B" },
+    { icon: <ShoppingBag className="w-6 h-6" />, name: "Suntec Singapore Convention & Exhibition Centre", distance: "4-Min Drive", category: "Retail & F&B" },
     { icon: <ShoppingBag className="w-6 h-6" />, name: "The Shoppes at Marina Bay Sands", distance: "6 mins' drive", category: "Retail & F&B" },
     
     // PARKS & RECREATION
     { icon: <Trees className="w-6 h-6" />, name: "Kallang Riverside Park", distance: "3 mins' walk (~0.3 km)", category: "Nature & Leisure" },
     { icon: <Trees className="w-6 h-6" />, name: "Esplanade – Theatres on the Bay", distance: "5 mins' drive", category: "Nature & Leisure" },
     { icon: <Trees className="w-6 h-6" />, name: "Sands Expo and Convention Centre", distance: "5-Min Drive", category: "Nature & Leisure" },
-    { icon: <Trees className="w-6 h-6" />, name: "Suntec Singapore Convention & Exhibition Centre", distance: "4-Min Drive", category: "Nature & Leisure" },
     { icon: <Trees className="w-6 h-6" />, name: "Gardens by the Bay", distance: "9 mins' drive", category: "Nature & Leisure" },
     { icon: <Trees className="w-6 h-6" />, name: "Singapore Sports Hub & Indoor Stadium", distance: "9 mins' drive", category: "Nature & Leisure" },
     
@@ -1555,7 +1556,7 @@ export default function AureaLanding() {
   const [siteMapSubmitError, setSiteMapSubmitError] = useState<string | null>(null)
 
   const handleLeadFormSubmit = async (formDataWithToken: any) => {
-    const { fullName, contactNumber, emailAddress, preferredDate, preferredTiming, recaptchaToken } = formDataWithToken
+    const { fullName, contactNumber, emailAddress, preferredDate, preferredTiming, projectType, recaptchaToken } = formDataWithToken
     
     // Validate required fields
     if (!fullName.trim() || !contactNumber.trim()) {
@@ -1589,7 +1590,7 @@ export default function AureaLanding() {
         description: "Please wait while we process your request",
       })
 
-      const response = await fetch('/api/aurea-form', {
+      const response = await fetch('/api/aurea-the-golden-mile-lead-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1600,6 +1601,7 @@ export default function AureaLanding() {
           emailAddress, 
           preferredDate, 
           preferredTiming, 
+          projectType,
           recaptchaToken 
         }),
       })
@@ -1621,7 +1623,7 @@ export default function AureaLanding() {
         // Show success toast
         toast({
           title: "Request Submitted Successfully!",
-          description: "Thank you for your interest in Aurea! We have sent you a confirmation email and our team will contact you soon to arrange your showflat visit.",
+          description: "Thank you for your interest in Aurea + The Golden Mile! We have sent you a confirmation email and our team will contact you soon to arrange your showflat visit.",
           variant: "default",
         })
         
@@ -1757,7 +1759,7 @@ export default function AureaLanding() {
           isScrolled ? 'bg-[#1c1c1d] shadow-sm border-b border-gray-700' : 'bg-transparent'
         } ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}
       >
-        <div className="container mx-auto px-4 py-3">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8 py-2 sm:py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-6">
               <Link href="/" aria-label="Go to homepage" className="flex items-center space-x-2">
@@ -1766,7 +1768,7 @@ export default function AureaLanding() {
                   alt="KW Singapore Logo"
                   width={300}
                   height={100}
-                  className="h-12 w-auto"
+                  className="h-8 sm:h-10 md:h-12 w-auto"
                 />
               </Link>
             </div>
@@ -1842,7 +1844,7 @@ export default function AureaLanding() {
       </header>
 
       {/* Clean Modern Hero Section */}
-      <section className="relative min-h-screen md:min-h-0 md:h-[50vh] lg:min-h-screen lg:h-auto flex items-center justify-center">
+      <section className="relative min-h-screen md:min-h-[60vh] lg:min-h-screen lg:h-auto flex items-center justify-center">
         {/* Background elements */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -1855,12 +1857,12 @@ export default function AureaLanding() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/70" />
         </div>
 
-        <div className="relative container mx-auto px-4 min-h-screen flex items-center">
-          <div className={`max-w-4xl transition-all duration-1000 delay-300 ${
+        <div className="relative container mx-auto px-4 sm:px-6 md:px-8 min-h-screen md:min-h-[60vh] lg:min-h-screen flex items-center py-20 md:py-12 lg:py-0">
+          <div className={`max-w-4xl w-full transition-all duration-1000 delay-300 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
             {/* Clean Badge */}
-            <div className={`mb-2 sm:mb-2 md:mb-2 transition-all duration-700 delay-500 ${
+            <div className={`mb-4 sm:mb-3 md:mb-2 transition-all duration-700 delay-500 ${
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Image
@@ -1868,7 +1870,7 @@ export default function AureaLanding() {
                 alt="Aurea + The Golden Mile Logo"
                 width={300}
                 height={100}
-                className="h-auto w-auto max-w-full"
+                className="h-auto w-full max-w-[200px] sm:max-w-[250px] md:max-w-[300px]"
                 priority
               />
             </div>
@@ -1877,22 +1879,22 @@ export default function AureaLanding() {
             <div className={`mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-700 ${
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
-              <h1 className="text-5xl md:text-7xl font-bold text-white mb-2 sm:mb-2 md:mb-2 lg:mb-4 leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-3 sm:mb-2 md:mb-2 lg:mb-4 leading-tight">
                 <span
-                  className={`transition-all duration-1000 delay-900 md:whitespace-nowrap ${isVisible ? 'animate-fade-in-left' : ''}`}
+                  className={`transition-all duration-1000 delay-900 lg:whitespace-nowrap ${isVisible ? 'animate-fade-in-left' : ''}`}
                 >
                   AUREA + THE GOLDEN MILE
                 </span>
               </h1>
 
-              <div className={`flex items-center mb-2 sm:mb-2 md:mb-2 lg:mb-4 transition-all duration-700 delay-1300 ${
+              <div className={`flex items-center mb-3 sm:mb-2 md:mb-2 lg:mb-4 transition-all duration-700 delay-1300 ${
                 isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
               }`}>
-                <div className="w-12 h-px bg-[#ce001f] mr-4"></div>
-                <p className="text-lg text-gray-200 font-light">District 7, Beach Road</p>
+                <div className="w-8 sm:w-10 md:w-12 h-px bg-[#ce001f] mr-3 sm:mr-4"></div>
+                <p className="text-sm sm:text-base md:text-lg text-gray-200 font-light">District 7, Beach Road</p>
               </div>
 
-              <p className={`text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl mb-4 sm:mb-2 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
+              <p className={`text-base sm:text-lg md:text-xl lg:text-2xl text-white/80 leading-relaxed max-w-2xl mb-6 sm:mb-4 md:mb-2 lg:mb-6 transition-all duration-700 delay-1500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
                 A new 45-storey residential tower anchored by one of Singapore’s most iconic heritage landmarks.
@@ -1900,14 +1902,14 @@ export default function AureaLanding() {
             </div>
 
             {/* Clean CTA Buttons */}
-            <div className={`cta-buttons-container mb-4 sm:mb-4 md:mb-4 lg:mb-8 transition-all duration-700 delay-1700 ${
+            <div className={`cta-buttons-container mb-6 sm:mb-4 md:mb-4 lg:mb-8 transition-all duration-700 delay-1700 ${
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}>
               <Button 
-                className={`bg-[#ce001f] hover:bg-[#b3001a] text-white px-8 py-4 text-lg font-medium rounded-lg transition-all duration-300 hover:scale-105 hover-lift flex-shrink-0 ${isVisible ? 'animate-pulse-glow' : ''}`}
+                className={`bg-[#ce001f] hover:bg-[#b3001a] text-white px-6 py-3 sm:px-7 sm:py-3.5 md:px-8 md:py-4 text-base sm:text-lg font-medium rounded-lg transition-all duration-300 hover:scale-105 hover-lift flex-shrink-0 w-full sm:w-auto ${isVisible ? 'animate-pulse-glow' : ''}`}
                 onClick={scrollToLeadForm}
               >
-                <Calendar className="w-5 h-5 mr-2" />
+                <Calendar className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 Book Showflat Visit
               </Button>
               {/* <Button
@@ -1924,21 +1926,21 @@ export default function AureaLanding() {
         </div>
 
         {/* Clean Scroll Indicator */}
-        <div className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-1000 delay-2000 ${
+        <div className={`absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-1000 delay-2000 ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
         }`}>
           <div className="flex flex-col items-center text-white/60">
-            <span className="text-sm mb-2">Scroll to explore</span>
-            <MoveDownIcon className="w-5 h-5 rotate-90 animate-bounce" />
+            <span className="text-xs sm:text-sm mb-2">Scroll to explore</span>
+            <MoveDownIcon className="w-4 h-4 sm:w-5 sm:h-5 rotate-90 animate-bounce" />
           </div>
         </div>
 
         {/* Disclaimer Text */}
-        <div className={`absolute bottom-4 right-4 transition-all duration-1000 delay-2000 ${
+        <div className={`absolute bottom-2 sm:bottom-4 right-2 sm:right-4 transition-all duration-1000 delay-2000 ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
         }`}>
-          <p className="text-[10px] sm:text-xs text-white/70 bg-black/30 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-2 rounded-lg whitespace-nowrap">
-            Images are for illustrative purposes only and may <br className="sm:hidden"/> not reflect the final design of Aurea.
+          <p className="text-[9px] sm:text-[10px] md:text-xs text-white/70 bg-black/30 backdrop-blur-sm px-1.5 py-0.5 sm:px-2 sm:py-1 md:px-3 md:py-2 rounded-lg">
+            Images are for illustrative purposes only and may <br className="sm:hidden"/> not reflect the final design of Aurea & The Golden Mile.
           </p>
         </div>
       </section>
@@ -1946,22 +1948,22 @@ export default function AureaLanding() {
       {/* Enhanced Project Information Section */}
       <section 
         id="project-info" 
-        className="py-8 bg-[#1c1c1d] section-entrance"
+        className="py-6 sm:py-8 md:py-12 bg-[#1c1c1d] section-entrance"
         data-section-id="project-info"
         style={{ 
           opacity: animatedSections.has('project-info') ? 1 : 0,
           transform: animatedSections.has('project-info') ? 'translateY(0)' : 'translateY(60px)'
         }}
       >
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8">
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('project-info') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">A  Dual-Component Project Concept</h2>
+            <h2 className="text-2xl sm:text-3xl font-light mb-3 text-white text-center tracking-wide">A  Dual-Component Project Concept</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
-            <p className="text-lg text-gray-300 max-w-4xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-4xl mx-auto px-2">
               Aurea + The Golden Mile builds upon the legacy of the Golden Mile Complex, the architectural hallmark that anchored Beach Road in the 1970s. The developers are reshaping the precinct into two distinct yet connected components: <br /> <br></br>
               The Conservation Wing (formerly the Golden Mile Complex) is being repurposed into a high-spec commercial hub. The old retail chaos is replaced by a refined mix of office and lifestyle concepts that align with the structure’s bold geometry. <br /> <br></br>
               The Residential Tower Aurea—stands 45 storeys tall next to the conserved wing. It reclaims the old car park space to deliver 188 exclusive homes focused on pure utility and view.
@@ -1969,90 +1971,90 @@ export default function AureaLanding() {
           </div>
 
           {/* Detailed Information Grid */}
-          <div className={`grid lg:grid-cols-10 gap-8 mb-12 transition-all duration-1000 delay-500 ${
+          <div className={`grid grid-cols-1 lg:grid-cols-10 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-10 md:mb-12 transition-all duration-1000 delay-500 ${
             animatedSections.has('project-info') ? 'animate-fade-in-up' : ''
           }`} style={{
             opacity: animatedSections.has('project-info') ? 1 : 0,
             transform: animatedSections.has('project-info') ? 'translateY(0)' : 'translateY(50px)'
           }}>
             {/* Project Details */}
-            <Card className="lg:col-span-4 border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
-              <CardHeader>
-                <CardTitle className="text-[#ce001f] flex items-center">
-                  <Building className="w-5 h-5 mr-2" />
+            <Card className="lg:col-span-4 border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500 w-full">
+              <CardHeader className="p-4 sm:p-6">
+                <CardTitle className="text-[#ce001f] flex items-center text-base sm:text-lg">
+                  <Building className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                   Project Information
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="text-sm font-medium text-gray-300">Project Name:</span>
-                  <span className="text-sm font-semibold text-white text-right">Aurea (Residential) <br /> The Golden Mile (Commercial)</span>
+              <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                  <span className="text-xs sm:text-sm font-medium text-gray-300">Project Name:</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">Aurea (Residential) <br /> The Golden Mile (Commercial)</span>
                 </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="text-sm font-medium text-gray-300">Developer:</span>
-                  <span className="text-sm font-semibold text-white text-right">GMC Property Pte. Ltd. (JV between <br />Perennial Holdings and Far East Organization)</span>
+                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                  <span className="text-xs sm:text-sm font-medium text-gray-300">Developer:</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">GMC Property Pte. Ltd. (JV between <br />Perennial Holdings and Far East Organization)</span>
                 </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="text-sm font-medium text-gray-300">Tenure:</span>
-                  <span className="text-sm font-semibold text-white">99 years from 18 Nov 2024</span>
+                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                  <span className="text-xs sm:text-sm font-medium text-gray-300">Tenure:</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">99 years from 18 Nov 2024</span>
                 </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="text-sm font-medium text-gray-300">District:</span>
-                  <span className="text-sm font-semibold text-white">7 (Beach Road)</span>
+                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                  <span className="text-xs sm:text-sm font-medium text-gray-300">District:</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">7 (Beach Road)</span>
                 </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="text-sm font-medium text-gray-300">Address:</span>
-                  <span className="text-sm font-semibold text-white text-right">800 Beach Road, Singapore 199979,<br />802 Beach Road, Singapore 199980</span>
+                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                  <span className="text-xs sm:text-sm font-medium text-gray-300">Address:</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">800 Beach Road, Singapore 199979,<br />802 Beach Road, Singapore 199980</span>
                 </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="text-sm font-medium text-gray-300">Site Area:</span>
-                  <span className="text-sm font-semibold text-white">13,462.30 sqm / 144,908 sqft</span>
+                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                  <span className="text-xs sm:text-sm font-medium text-gray-300">Site Area:</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">13,462.30 sqm / 144,908 sqft</span>
                 </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="text-sm font-medium text-gray-300">Tower:</span>
-                  <span className="text-sm font-semibold text-white">1</span>
+                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                  <span className="text-xs sm:text-sm font-medium text-gray-300">Tower:</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">1</span>
                 </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="text-sm font-medium text-gray-300">Storey:</span>
-                  <span className="text-sm font-semibold text-white text-right">Aurea: 45 Storeys + 3 basements<br />The Golden Mile: 22 Storeys + 1 Basement</span>
+                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                  <span className="text-xs sm:text-sm font-medium text-gray-300">Storey:</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">Aurea: 45 Storeys + 3 basements<br />The Golden Mile: 22 Storeys + 1 Basement</span>
                 </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="text-sm font-medium text-gray-300">Total Units:</span>
-                  <span className="text-sm font-semibold text-white text-right">Aurea: 188 units<br />The Golden Mile: 156 Offices & 19 Medical suites</span>
+                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                  <span className="text-xs sm:text-sm font-medium text-gray-300">Total Units:</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">Aurea: 188 units<br />The Golden Mile: 156 Offices & 19 Medical suites</span>
                 </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="text-sm font-medium text-gray-300">Unit Mix:</span>
-                  <span className="text-sm font-semibold text-white">Aurea : 2- to 5-bedroom</span>
+                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                  <span className="text-xs sm:text-sm font-medium text-gray-300">Unit Mix:</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">Aurea : 2- to 5-bedroom</span>
                 </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="text-sm font-medium text-gray-300">Architect:</span>
-                  <span className="text-sm font-semibold text-white">DP Architects Pte Ltd</span>
+                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                  <span className="text-xs sm:text-sm font-medium text-gray-300">Architect:</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">DP Architects Pte Ltd</span>
                 </div>
-                <div className="flex justify-between border-b border-gray-500 pb-3">
-                  <span className="text-sm font-medium text-gray-300">TOP:</span>
-                  <span className="text-sm font-semibold text-white">Q2 2029</span>
+                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                  <span className="text-xs sm:text-sm font-medium text-gray-300">TOP:</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">Q2 2029</span>
                 </div>
               </CardContent>
             </Card>
 
             {/* Combined Gallery */}
-            <Card className="lg:col-span-6 border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500 max-w-5xl mx-auto">
-              <CardHeader>
-                <CardTitle className="text-[#ce001f] flex items-center">
-                  <ImageIcon className="w-5 h-5 mr-2" />
+            <Card className="lg:col-span-6 border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500 w-full">
+              <CardHeader className="p-4 sm:p-6">
+                <CardTitle className="text-[#ce001f] flex items-center text-base sm:text-lg">
+                  <ImageIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                   Gallery
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-3 sm:space-y-4 p-4 sm:p-6">
                 <div className="space-y-4">
                   <div>
                     {/* Main Image Display */}
                     <div 
-                      className="relative mb-6"
+                      className="relative mb-4 sm:mb-6"
                       onMouseEnter={() => setIsCombinedGalleryPaused(true)}
                       onMouseLeave={() => setIsCombinedGalleryPaused(false)}
                     >
-                      <div className="relative w-full h-[500px] rounded-xl overflow-hidden shadow-2xl">
+                      <div className="relative w-full h-[250px] sm:h-[350px] md:h-[400px] lg:h-[500px] rounded-xl overflow-hidden shadow-2xl">
                         <Image
                           src={combinedGalleryImages[currentCombinedGalleryIndex] || "/placeholder.svg"}
                           alt={`Aurea + The Golden Mile Gallery Image ${currentCombinedGalleryIndex + 1}`}
@@ -2068,38 +2070,38 @@ export default function AureaLanding() {
                         <Button
                           variant="outline"
                           size="icon"
-                          className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300 z-10"
+                          className="absolute left-2 sm:left-4 md:left-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300 z-10 w-8 h-8 sm:w-10 sm:h-10"
                           onClick={prevCombinedGalleryImage}
                         >
-                          <ChevronLeft className="w-5 h-5 text-[#ce001f]" />
+                          <ChevronLeft className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-[#ce001f]" />
                         </Button>
                         <Button
                           variant="outline"
                           size="icon"
-                          className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300 z-10"
+                          className="absolute right-2 sm:right-4 md:right-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300 z-10 w-8 h-8 sm:w-10 sm:h-10"
                           onClick={nextCombinedGalleryImage}
                         >
-                          <ChevronRight className="w-5 h-5 text-[#ce001f]" />
+                          <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-[#ce001f]" />
                         </Button>
                               </div>
 
                       {/* Thumbnail Images */}
-                      <div className="flex items-center justify-center mt-6 space-x-3 overflow-x-auto px-2">
+                      <div className="flex items-center justify-center mt-4 sm:mt-6 space-x-2 sm:space-x-3 overflow-x-auto px-2 pb-2">
                         {/* Previous Arrow */}
                         <Button
                           variant="outline"
                           size="icon"
-                          className="w-10 h-10 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                          className="w-8 h-8 sm:w-10 sm:h-10 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300 flex-shrink-0"
                           onClick={prevCombinedGalleryImage}
                         >
-                          <ChevronLeft className="w-4 h-4 text-[#ce001f]" />
+                          <ChevronLeft className="w-3 h-3 sm:w-4 sm:h-4 text-[#ce001f]" />
                         </Button>
 
                         {/* Thumbnail Images */}
                         {combinedGalleryImages.map((image, index) => (
                           <button
                             key={index}
-                            className={`relative w-20 h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-110 flex-shrink-0 ${
+                            className={`relative w-16 h-12 sm:w-20 sm:h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-110 flex-shrink-0 ${
                               index === currentCombinedGalleryIndex
                                 ? "border-[#ce001f] shadow-lg scale-105"
                                 : "border-gray-200 hover:border-gray-300"
@@ -2119,10 +2121,10 @@ export default function AureaLanding() {
                     <Button 
                       variant="outline" 
                           size="icon"
-                          className="w-10 h-10 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300"
+                          className="w-8 h-8 sm:w-10 sm:h-10 bg-white/90 hover:bg-white shadow-lg border-0 hover:scale-110 transition-all duration-300 flex-shrink-0"
                           onClick={nextCombinedGalleryImage}
                         >
-                          <ChevronRight className="w-4 h-4 text-[#ce001f]" />
+                          <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 text-[#ce001f]" />
                     </Button>
                       </div>
                     </div>
@@ -2137,22 +2139,22 @@ export default function AureaLanding() {
       {/* Nearby Amenities */}
       <section 
         id="nearby-amenities"
-        className="py-8 bg-[#1c1c1d] section-entrance"
+        className="py-6 sm:py-8 md:py-12 bg-[#1c1c1d] section-entrance"
         data-section-id="nearby-amenities"
         style={{ 
           opacity: animatedSections.has('nearby-amenities') ? 1 : 0,
           transform: animatedSections.has('nearby-amenities') ? 'translateY(0)' : 'translateY(60px)'
         }}
       >
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8">
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('nearby-amenities') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Location</h2>
+            <h2 className="text-2xl sm:text-3xl font-light mb-3 text-white text-center tracking-wide">Location</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
-            <p className="text-xl text-gray-300">Everything you need is within reach</p>
+            <p className="text-base sm:text-lg md:text-xl text-gray-300 px-2">Everything you need is within reach</p>
           </div>
 
           {/* Location Information */}
@@ -2232,7 +2234,7 @@ export default function AureaLanding() {
 
             {['All','Transport','Retail & F&B','Nature & Leisure','Education','Healthcare'].map((cat) => (
               <TabsContent key={cat} value={cat}>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                   {amenities.filter(a => cat === 'All' ? true : a.category === cat).map((amenity, index) => (
                     <Card 
                       key={`${cat}-${index}`}
@@ -2268,9 +2270,9 @@ export default function AureaLanding() {
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
             <div className="bg-gradient-to-r from-[#ce001f] to-[#b3001a] text-white rounded-2xl p-8 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:scale-105">
-              <h3 className="text-2xl font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
-              <p className="text-lg mb-6 opacity-90">
-                Register now for an exclusive preview of & The Golden Mile 
+              <h3 className="text-xl sm:text-2xl font-bold mb-4">Be the first to own a home that combines convenience, luxury, and nature</h3>
+              <p className="text-base sm:text-lg mb-6 opacity-90">
+                Register now for an exclusive preview of Aurea & The Golden Mile 
               </p>
               <div className="cta-buttons-container justify-center">
                 <Button 
@@ -2289,7 +2291,7 @@ export default function AureaLanding() {
       {/* Developer Section */}
       <section id="trusted-developer" className="bg-[#1c1c1d] text-white mt-8 md:mt-10 border-t border-gray-700 py-12 md:py-16">
         <div className="container mx-auto px-4 text-center max-w-6xl">
-          <h3 className="text-2xl md:text-4xl font-semibold mb-8 md:mb-10">Trusted Developer with Proven Success</h3>
+          <h3 className="text-xl sm:text-2xl md:text-4xl font-semibold mb-6 sm:mb-8 md:mb-10">Trusted Developer with Proven Success</h3>
           <div className="flex items-center justify-center gap-8 md:gap-16 mb-8 md:mb-10 flex-wrap">
             <div className="flex items-center gap-4">
               <div className="rounded-md bg-white p-3">
@@ -2334,7 +2336,7 @@ export default function AureaLanding() {
       {/* AureaFloor Plans & Pricing Section */}
       <section 
         id="aurea-floor-plans"
-        className="py-16 bg-[#242728] section-entrance"
+        className="py-8 sm:py-12 md:py-16 bg-[#242728] section-entrance"
         data-section-id="floor-plans"
         style={{ 
           opacity: animatedSections.has('floor-plans') ? 1 : 0,
@@ -2350,7 +2352,7 @@ export default function AureaLanding() {
             }`}
           >
             <div className="text-center mb-8">
-            <h3 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Aurea</h3>
+            <h3 className="text-2xl sm:text-3xl font-light mb-3 text-white text-center tracking-wide">Aurea</h3>
               <div className="flex justify-center mb-4">
                 <div className="w-16 h-1 bg-[#ce001f] rounded" />
               </div>
@@ -2444,8 +2446,8 @@ export default function AureaLanding() {
               <CardContent className="p-6">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                   <div className="text-center">
-                    <div className="text-sm font-medium text-gray-300 mb-2">Tower</div>
-                    <div className="text-sm font-semibold text-white">1</div>
+                    <div className="text-xs sm:text-sm font-medium text-gray-300 mb-2">Tower</div>
+                    <div className="text-xs sm:text-sm font-semibold text-white">1</div>
                   </div>
                   <div className="text-center">
                     <div className="text-sm font-medium text-gray-300 mb-2">Storey</div>
@@ -2465,15 +2467,15 @@ export default function AureaLanding() {
           </div>
         </div>
 
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8">
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('floor-plans') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Floor Plans & Pricing</h2>
+            <h2 className="text-2xl sm:text-3xl font-light mb-3 text-white text-center tracking-wide">Floor Plans & Pricing</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
-            <p className="text-xl text-gray-300">Discover your perfect home from our collection of meticulously designed residences</p>
+            <p className="text-sm sm:text-base md:text-xl text-gray-300 px-2">Discover your perfect home from our collection of meticulously designed residences</p>
           </div>
 
           <div className={`max-w-7xl mx-auto transition-all duration-1000 delay-500 ${
@@ -2483,8 +2485,8 @@ export default function AureaLanding() {
             transform: animatedSections.has('floor-plans') ? 'translateY(0)' : 'translateY(50px)'
           }}>
             {/* Tabs for unit types */}
-            <div className="w-full px-2 sm:px-6 pt-4 sm:pt-6 pb-2 border-b border-gray-700 mb-6 sm:mb-8">
-              <div className="flex flex-nowrap gap-1 sm:gap-2 justify-center overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent" style={{ WebkitOverflowScrolling: 'touch' }}>
+            <div className="w-full px-2 sm:px-4 md:px-6 pt-4 sm:pt-6 pb-2 border-b border-gray-700 mb-4 sm:mb-6 md:mb-8">
+              <div className="flex flex-nowrap gap-1 sm:gap-2 justify-start sm:justify-center overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent pb-2" style={{ WebkitOverflowScrolling: 'touch' }}>
                 {(() => {
                   const dynamicUnitData = processUnitAvailabilityData(project?.unitPricingAurea || [])
                   
@@ -2671,7 +2673,7 @@ export default function AureaLanding() {
             })()}
           </div>
         </div>
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8">
           <div 
             id="aurea-site-plan"
             className={`mt-20 mb-20 transition-all duration-1000 delay-300 ${
@@ -2679,7 +2681,7 @@ export default function AureaLanding() {
             }`}
           >
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Facilities / Site Plan</h2>
+              <h2 className="text-2xl sm:text-3xl font-light mb-3 text-white text-center tracking-wide">Facilities / Site Plan</h2>
               <div className="flex justify-center mb-4">
                 <div className="w-16 h-1 bg-[#ce001f] rounded" />
               </div>
@@ -2752,7 +2754,7 @@ export default function AureaLanding() {
           }`}
         >
           <div className="text-center mb-8">
-            <h3 className="text-3xl font-light mb-3 text-white text-center tracking-wide">The Golden Mile</h3>
+            <h3 className="text-2xl sm:text-3xl font-light mb-3 text-white text-center tracking-wide">The Golden Mile</h3>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
@@ -2846,8 +2848,8 @@ export default function AureaLanding() {
               <CardContent className="p-6">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                   <div className="text-center">
-                    <div className="text-sm font-medium text-gray-300 mb-2">Tower</div>
-                    <div className="text-sm font-semibold text-white">1</div>
+                    <div className="text-xs sm:text-sm font-medium text-gray-300 mb-2">Tower</div>
+                    <div className="text-xs sm:text-sm font-semibold text-white">1</div>
                     </div>
                   <div className="text-center">
                     <div className="text-sm font-medium text-gray-300 mb-2">Storey</div>
@@ -2867,15 +2869,15 @@ export default function AureaLanding() {
           </div>
           </div>
 
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8">
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('floor-plans') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">The Golden Mile - Floor Plans & Pricing</h2>
+            <h2 className="text-2xl sm:text-3xl font-light mb-3 text-white text-center tracking-wide">The Golden Mile - Floor Plans & Pricing</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
-            <p className="text-xl text-gray-300">Discover commercial spaces from our collection of offices and medical suites</p>
+            <p className="text-sm sm:text-base md:text-xl text-gray-300 px-2">Discover commercial spaces from our collection of offices and medical suites</p>
           </div>
 
           <div className={`max-w-7xl mx-auto transition-all duration-1000 delay-500 ${
@@ -2885,8 +2887,8 @@ export default function AureaLanding() {
             transform: animatedSections.has('floor-plans') ? 'translateY(0)' : 'translateY(50px)'
           }}>
             {/* Tabs for unit types */}
-            <div className="w-full px-2 sm:px-6 pt-4 sm:pt-6 pb-2 border-b border-gray-700 mb-6 sm:mb-8">
-              <div className="flex flex-nowrap gap-1 sm:gap-2 justify-center overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent" style={{ WebkitOverflowScrolling: 'touch' }}>
+            <div className="w-full px-2 sm:px-4 md:px-6 pt-4 sm:pt-6 pb-2 border-b border-gray-700 mb-4 sm:mb-6 md:mb-8">
+              <div className="flex flex-nowrap gap-1 sm:gap-2 justify-start sm:justify-center overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent pb-2" style={{ WebkitOverflowScrolling: 'touch' }}>
                 {(() => {
                   const dynamicUnitData = processGoldenMileUnitAvailabilityData(project?.unitPricingGoldenMile || [])
                   
@@ -3073,7 +3075,7 @@ export default function AureaLanding() {
             })()}
           </div>
         </div>
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8">
           <div 
             id="golden-mile-site-plan"
             className={`mt-20 mb-20 transition-all duration-1000 delay-300 ${
@@ -3081,7 +3083,7 @@ export default function AureaLanding() {
             }`}
           >
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-light mb-3 text-white text-center tracking-wide">Facilities / Site Plan</h2>
+              <h2 className="text-2xl sm:text-3xl font-light mb-3 text-white text-center tracking-wide">Facilities / Site Plan</h2>
               <div className="flex justify-center mb-4">
                 <div className="w-16 h-1 bg-[#ce001f] rounded" />
               </div>
@@ -3107,7 +3109,7 @@ export default function AureaLanding() {
       {/* Lead Generation Form */}
       <section
         id="lead-form"
-        className={`py-8 md:py-16 relative bg-cover bg-center section-entrance`}
+        className={`py-6 sm:py-8 md:py-16 relative bg-cover bg-center section-entrance`}
         data-section-id="lead-form"
         style={{ 
           backgroundImage: 'url("/images/aurea/gallery/R-View09 - L3 Infinity Pool View_08 (250109).jpg")',
