@@ -2930,10 +2930,7 @@ export default function AureaLanding() {
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('floor-plans') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-2xl sm:text-3xl font-light mb-3 text-white text-center tracking-wide">
-              <span className="block sm:inline">The Golden Mile</span>
-              <span className="block sm:inline sm:ml-1">- Floor Plans & Pricing</span>
-            </h2>
+            <h2 className="text-2xl sm:text-3xl font-light mb-3 text-white text-center tracking-wide">Floor Plans & Pricing</h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
