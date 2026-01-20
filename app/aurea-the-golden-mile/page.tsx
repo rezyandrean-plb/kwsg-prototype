@@ -2035,7 +2035,7 @@ export default function AureaLanding() {
             transform: animatedSections.has('project-info') ? 'translateY(0)' : 'translateY(50px)'
           }}>
             {/* Project Details */}
-            <Card className="lg:col-span-4 border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500 w-full">
+            <Card className="lg:col-span-4 border-gray-700 bg-[#18191b] hover:shadow-lg transition-all duration-500">
               <CardHeader className="p-4 sm:p-6">
                 <CardTitle className="text-[#ce001f] flex items-center text-base sm:text-lg">
                   <Building className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
@@ -2043,53 +2043,75 @@ export default function AureaLanding() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6">
-                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
+                <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">Project Name:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">Aurea (Residential) <br /> The Golden Mile (Commercial)</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white text-right">
+                    Aurea (Residential) <br /> The Golden Mile (Commercial)
+                  </span>
                 </div>
-                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
+                <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">Developer:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">GMC Property Pte. Ltd. (JV between <br />Perennial Holdings and Far East Organization)</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white text-right">
+                    GMC Property Pte. Ltd. (JV between <br />
+                    Perennial Holdings and Far East Organization)
+                  </span>
                 </div>
-                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
+                <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">Tenure:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">99 years from 18 Nov 2024</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white text-right">
+                    99 years from 18 Nov 2024
+                  </span>
                 </div>
-                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
+                <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">District:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">7 (Beach Road)</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white text-right">7 (Beach Road)</span>
                 </div>
-                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
+                <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">Address:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">800 Beach Road, Singapore 199979,<br />802 Beach Road, Singapore 199980</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white text-right">
+                    800 Beach Road, Singapore 199979,<br />
+                    802 Beach Road, Singapore 199980
+                  </span>
                 </div>
-                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
+                <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">Site Area:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">13,462.30 sqm / 144,908 sqft</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white text-right">
+                    13,462.30 sqm / 144,908 sqft
+                  </span>
                 </div>
-                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
+                <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">Tower:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">1</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white text-right">1</span>
                 </div>
-                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
+                <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">Storey:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">Aurea: 45 Storeys + 3 basements<br />The Golden Mile: 22 Storeys + 1 Basement</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white text-right">
+                    Aurea: 45 Storeys + 3 basements<br />
+                    The Golden Mile: 22 Storeys + 1 Basement
+                  </span>
                 </div>
-                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
+                <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">Total Units:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">Aurea: 188 units<br />The Golden Mile: 156 Offices & 19 Medical suites</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white text-right">
+                    Aurea: 188 units<br />
+                    The Golden Mile: 156 Offices & 19 Medical suites
+                  </span>
                 </div>
-                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
+                <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">Unit Mix:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">Aurea : 2- to 5-bedroom</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white text-right">
+                    Aurea : 2- to 5-bedroom
+                  </span>
                 </div>
-                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
+                <div className="flex justify-between border-b border-gray-500 pb-3">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">Architect:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">DP Architects Pte Ltd</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white text-right">
+                    DP Architects Pte Ltd
+                  </span>
                 </div>
-                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
+                <div className="flex justify-between pb-1">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">TOP:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">Q2 2029</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white text-right">Q2 2029</span>
                 </div>
               </CardContent>
             </Card>
