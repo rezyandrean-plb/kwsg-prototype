@@ -1772,7 +1772,64 @@ export default function AureaLanding() {
                 />
               </Link>
             </div>
-              <nav className="hidden md:flex items-center space-x-6">
+              {/* Tablet Navigation - md:flex lg:hidden */}
+              <nav className="hidden md:flex lg:hidden items-center space-x-4">
+                <button 
+                  onClick={scrollToProjectInfo}
+                  className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer text-sm"
+                >
+                  Project Info
+                </button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer flex items-center text-sm">
+                    Aurea
+                    <ChevronDown className="ml-1 h-4 w-4" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="bg-[#1c1c1d] border-gray-700 text-white">
+                    <DropdownMenuItem 
+                      onClick={scrollToAureaFloorPlans}
+                      className="text-white hover:text-[#ce001f] hover:bg-gray-800 cursor-pointer data-[highlighted]:text-[#ce001f] data-[highlighted]:bg-gray-800"
+                    >
+                      Floor Plan
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={scrollToAureaSitePlan}
+                      className="text-white hover:text-[#ce001f] hover:bg-gray-800 cursor-pointer data-[highlighted]:text-[#ce001f] data-[highlighted]:bg-gray-800"
+                    >
+                      Site Plan
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="text-white hover:text-[#ce001f] transition-colors duration-300 bg-transparent border-none cursor-pointer flex items-center text-sm">
+                    The Golden Mile
+                    <ChevronDown className="ml-1 h-4 w-4" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="bg-[#1c1c1d] border-gray-700 text-white">
+                    <DropdownMenuItem 
+                      onClick={scrollToGoldenMileFloorPlans}
+                      className="text-white hover:text-[#ce001f] hover:bg-gray-800 cursor-pointer data-[highlighted]:text-[#ce001f] data-[highlighted]:bg-gray-800"
+                    >
+                      Floor Plan
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={scrollToGoldenMileSitePlan}
+                      className="text-white hover:text-[#ce001f] hover:bg-gray-800 cursor-pointer data-[highlighted]:text-[#ce001f] data-[highlighted]:bg-gray-800"
+                    >
+                      Site Plan
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <Button 
+                  className="bg-[#ce001f] hover:bg-[#b3001a] transition-colors duration-300 text-sm px-3 py-1.5"
+                  onClick={scrollToLeadForm}
+                >
+                  Book Showflat Visit
+                </Button>
+              </nav>
+              
+              {/* Desktop Navigation - lg:flex */}
+              <nav className="hidden lg:flex items-center space-x-6">
                 {/* Order matches vertical section order: Project Info → Location → Aurea → Gallery → The Golden Mile → Explore */}
                 <button 
                   onClick={scrollToProjectInfo}
@@ -1844,7 +1901,7 @@ export default function AureaLanding() {
       </header>
 
       {/* Clean Modern Hero Section */}
-      <section className="relative min-h-screen md:min-h-[60vh] lg:min-h-screen lg:h-auto flex items-center justify-center">
+      <section className="relative min-h-[60vh] md:min-h-[60vh] lg:min-h-screen lg:h-auto flex items-center justify-center">
         {/* Background elements */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -1857,7 +1914,7 @@ export default function AureaLanding() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/70" />
         </div>
 
-        <div className="relative container mx-auto px-4 sm:px-6 md:px-8 min-h-screen md:min-h-[60vh] lg:min-h-screen flex items-center py-20 md:py-12 lg:py-0">
+        <div className="relative container mx-auto px-4 sm:px-6 md:px-8 min-h-[60vh] md:min-h-[60vh] lg:min-h-screen flex items-center py-12 md:py-12 lg:py-0">
           <div className={`max-w-4xl w-full transition-all duration-1000 delay-300 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
@@ -1926,7 +1983,7 @@ export default function AureaLanding() {
         </div>
 
         {/* Clean Scroll Indicator */}
-        <div className={`absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-1000 delay-2000 ${
+        <div className={`absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-1000 delay-2000 hidden md:flex ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
         }`}>
           <div className="flex flex-col items-center text-white/60">
@@ -1986,53 +2043,53 @@ export default function AureaLanding() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6">
-                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">Project Name:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">Aurea (Residential) <br /> The Golden Mile (Commercial)</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">Aurea (Residential) <br /> The Golden Mile (Commercial)</span>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">Developer:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">GMC Property Pte. Ltd. (JV between <br />Perennial Holdings and Far East Organization)</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">GMC Property Pte. Ltd. (JV between <br />Perennial Holdings and Far East Organization)</span>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">Tenure:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">99 years from 18 Nov 2024</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">99 years from 18 Nov 2024</span>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">District:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">7 (Beach Road)</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">7 (Beach Road)</span>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">Address:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">800 Beach Road, Singapore 199979,<br />802 Beach Road, Singapore 199980</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">800 Beach Road, Singapore 199979,<br />802 Beach Road, Singapore 199980</span>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">Site Area:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">13,462.30 sqm / 144,908 sqft</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">13,462.30 sqm / 144,908 sqft</span>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">Tower:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">1</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">1</span>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">Storey:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">Aurea: 45 Storeys + 3 basements<br />The Golden Mile: 22 Storeys + 1 Basement</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">Aurea: 45 Storeys + 3 basements<br />The Golden Mile: 22 Storeys + 1 Basement</span>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">Total Units:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">Aurea: 188 units<br />The Golden Mile: 156 Offices & 19 Medical suites</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">Aurea: 188 units<br />The Golden Mile: 156 Offices & 19 Medical suites</span>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">Unit Mix:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">Aurea : 2- to 5-bedroom</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">Aurea : 2- to 5-bedroom</span>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">Architect:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">DP Architects Pte Ltd</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">DP Architects Pte Ltd</span>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-500 pb-3 gap-2 sm:gap-0">
+                <div className="flex flex-col md:flex-row md:justify-between border-b border-gray-500 pb-3 gap-2 md:gap-0">
                   <span className="text-xs sm:text-sm font-medium text-gray-300">TOP:</span>
-                  <span className="text-xs sm:text-sm font-semibold text-white sm:text-right">Q2 2029</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white md:text-right">Q2 2029</span>
                 </div>
               </CardContent>
             </Card>
@@ -2234,7 +2291,7 @@ export default function AureaLanding() {
 
             {['All','Transport','Retail & F&B','Nature & Leisure','Education','Healthcare'].map((cat) => (
               <TabsContent key={cat} value={cat}>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                   {amenities.filter(a => cat === 'All' ? true : a.category === cat).map((amenity, index) => (
                     <Card 
                       key={`${cat}-${index}`}
@@ -2688,13 +2745,13 @@ export default function AureaLanding() {
             </div>
             
             {/* Aurea Site Plan Carousel */}
-            <div className="relative max-w-6xl mx-auto mb-8">
+            <div className="relative max-w-6xl md:max-w-full mx-auto mb-8">
               <div className="relative w-full h-[220px] sm:h-[320px] md:h-[500px] rounded-xl overflow-hidden shadow-2xl">
                 <Image
                   src={aureaSitePlanImages[currentAureaSitePlanIndex] || "/placeholder.svg"}
                   alt={`Aurea Site Plan - Image ${currentAureaSitePlanIndex + 1}`}
                   fill
-                  className="object-cover transition-all duration-500"
+                  className="object-cover md:object-contain transition-all duration-500"
                 />
         
                 <Button
@@ -2873,7 +2930,10 @@ export default function AureaLanding() {
           <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
             animatedSections.has('floor-plans') ? 'animate-slide-in-top' : ''
           }`}>
-            <h2 className="text-2xl sm:text-3xl font-light mb-3 text-white text-center tracking-wide">The Golden Mile - Floor Plans & Pricing</h2>
+            <h2 className="text-2xl sm:text-3xl font-light mb-3 text-white text-center tracking-wide">
+              <span className="block sm:inline">The Golden Mile</span>
+              <span className="block sm:inline sm:ml-1">- Floor Plans & Pricing</span>
+            </h2>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-1 bg-[#ce001f] rounded" />
             </div>
@@ -2888,7 +2948,7 @@ export default function AureaLanding() {
           }}>
             {/* Tabs for unit types */}
             <div className="w-full px-2 sm:px-4 md:px-6 pt-4 sm:pt-6 pb-2 border-b border-gray-700 mb-4 sm:mb-6 md:mb-8">
-              <div className="flex flex-nowrap gap-1 sm:gap-2 justify-start sm:justify-center overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent pb-2" style={{ WebkitOverflowScrolling: 'touch' }}>
+              <div className="flex flex-nowrap gap-1 sm:gap-2 justify-center overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent pb-2" style={{ WebkitOverflowScrolling: 'touch' }}>
                 {(() => {
                   const dynamicUnitData = processGoldenMileUnitAvailabilityData(project?.unitPricingGoldenMile || [])
                   
