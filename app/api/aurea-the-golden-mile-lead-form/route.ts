@@ -173,7 +173,7 @@ async function sendNotificationEmail({
       to: toEmails,
       from: fromEmail,
       bcc: 'cynthia.loh@propertylimbrothers.com',
-      subject: `New Aurea + The Golden Mile Lead Generation - ${fullName}`,
+      subject: `Aurea + The Golden Mile Lead Generation - ${fullName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #B40101; color: white; padding: 20px; text-align: center;">

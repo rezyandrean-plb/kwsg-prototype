@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import sgMail from '@sendgrid/mail'
-import { google } from 'googleapis'
 
 export async function POST(request: NextRequest) {
   try {
@@ -9,7 +8,8 @@ export async function POST(request: NextRequest) {
       fullName, 
       emailAddress, 
       contactNumber,
-      recaptchaToken
+      recaptchaToken,
+      projectType
     } = body
 
     console.log('Aurea Site Map & Floor Plan request form submission received:', { 
@@ -51,7 +51,8 @@ export async function POST(request: NextRequest) {
     const notificationResult = await sendNotificationEmail({
       fullName,
       emailAddress,
-      contactNumber
+      contactNumber,
+      projectType: projectType || 'Aurea'
     })
 
     console.log('Notification email result:', notificationResult)
@@ -63,7 +64,8 @@ export async function POST(request: NextRequest) {
     // Send auto-reply email to the contact
     const autoReplyResult = await sendAutoReplyEmail({
       fullName,
-      emailAddress
+      emailAddress,
+      projectType: projectType || 'Aurea'
     })
 
     console.log('Auto-reply result:', autoReplyResult)
@@ -72,25 +74,12 @@ export async function POST(request: NextRequest) {
       console.error('Failed to send auto-reply email:', autoReplyResult.error)
     }
 
-    // Insert data into Google Sheets
-    const sheetsResult = await insertIntoGoogleSheets({
-      fullName,
-      emailAddress,
-      contactNumber
-    })
-
-    console.log('Google Sheets result:', sheetsResult)
-
-    if (!sheetsResult.success) {
-      console.error('Failed to insert into Google Sheets:', sheetsResult.error)
-    }
-
+    const projectName = projectType || 'Aurea'
     return NextResponse.json({
       success: true,
-      message: 'Thank you for your interest in Aurea! We have sent you a confirmation email and our team will contact you soon with the site map & floor plan.',
+      message: `Thank you for your interest in ${projectName}! We have sent you a confirmation email and our team will contact you soon with the site map & floor plan.`,
       notificationSent: notificationResult.success,
-      autoReplySent: autoReplyResult.success,
-      sheetsInserted: sheetsResult.success
+      autoReplySent: autoReplyResult.success
     })
 
   } catch (error) {
@@ -105,11 +94,13 @@ export async function POST(request: NextRequest) {
 async function sendNotificationEmail({ 
   fullName, 
   emailAddress, 
-  contactNumber
+  contactNumber,
+  projectType
 }: {
   fullName: string
   emailAddress: string
   contactNumber: string
+  projectType: string
 }) {
   try {
     const isDevelopment = process.env.NODE_ENV === 'development'
@@ -139,12 +130,12 @@ async function sendNotificationEmail({
       to: toEmail,
       from: fromEmail,
       bcc: 'cynthia.loh@propertylimbrothers.com',
-      subject: `New Site Map & Floor Plan Request - Aurea - ${fullName}`,
+      subject: `New Site Map & Floor Plan Request - ${projectType} - ${fullName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #B40101; color: white; padding: 20px; text-align: center;">
             <h1 style="margin: 0; font-size: 24px;">KW Singapore</h1>
-            <p style="margin: 5px 0 0 0; font-size: 16px;">Site Map & Floor Plan Request - Aurea</p>
+            <p style="margin: 5px 0 0 0; font-size: 16px;">Site Map & Floor Plan Request - ${projectType}</p>
           </div>
           
           <div style="padding: 30px; background-color: #f9f9f9;">
@@ -172,9 +163,9 @@ async function sendNotificationEmail({
               <h3 style="color: #B40101; margin-top: 0;">Request Details</h3>
               <p style="color: #666; line-height: 1.6; margin: 0;">
                 <strong>Request Type:</strong> Site Map & Floor Plan<br>
-                <strong>Project:</strong> Aurea<br>
+                <strong>Project:</strong> ${projectType}<br>
                 <strong>Location:</strong> District 7, Beach Road<br>
-                <strong>Developer:</strong> Far East Organization, Perennial Holdings & Sino Land<br>
+                <strong>Developer:</strong> ${projectType === 'The Golden Mile' ? 'GMC Property Pte. Ltd. (JV between Perennial Holdings and Far East Organization)' : 'Far East Organization, Perennial Holdings & Sino Land'}<br>
                 <strong>Target Preview:</strong> Q2 2029
               </p>
             </div>
@@ -236,9 +227,10 @@ async function sendNotificationEmail({
   }
 }
 
-async function sendAutoReplyEmail({ fullName, emailAddress }: {
+async function sendAutoReplyEmail({ fullName, emailAddress, projectType }: {
   fullName: string
   emailAddress: string
+  projectType: string
 }) {
   try {
     const isDevelopment = process.env.NODE_ENV === 'development'
@@ -266,12 +258,12 @@ async function sendAutoReplyEmail({ fullName, emailAddress }: {
     const emailContent = {
       to: emailAddress,
       from: fromEmail,
-      subject: `Aurea Site Map & Floor Plan Request Confirmation - KW Singapore`,
+      subject: `${projectType} Site Map & Floor Plan Request Confirmation - KW Singapore`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #B40101; color: white; padding: 20px; text-align: center;">
             <h1 style="margin: 0; font-size: 24px;">KW Singapore</h1>
-            <p style="margin: 5px 0 0 0; font-size: 16px;">Site Map & Floor Plan Request - Aurea</p>
+            <p style="margin: 5px 0 0 0; font-size: 16px;">Site Map & Floor Plan Request - ${projectType}</p>
           </div>
           
           <div style="padding: 30px; background-color: #f9f9f9;">
@@ -282,7 +274,7 @@ async function sendAutoReplyEmail({ fullName, emailAddress }: {
                 Dear ${fullName},
               </p>
               <p style="color: #666; line-height: 1.6; margin: 10px 0 0 0;">
-                Thank you for your interest in Aurea! We have received your request for the site map & floor plan, and our team will contact you within 24 business hours to provide you with the detailed materials and additional project information.
+                Thank you for your interest in ${projectType}! We have received your request for the site map & floor plan, and our team will contact you within 24 business hours to provide you with the detailed materials and additional project information.
               </p>
             </div>
             
@@ -297,14 +289,22 @@ async function sendAutoReplyEmail({ fullName, emailAddress }: {
             </div>
             
             <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-              <h3 style="color: #B40101; margin-top: 0;">About Aurea</h3>
+              <h3 style="color: #B40101; margin-top: 0;">About ${projectType}</h3>
               <ul style="color: #666; line-height: 1.6; margin: 0; padding-left: 20px;">
-                <li>District 7, Beach Road - Prime location in the Golden Mile</li>
-                <li>Developed by Far East Organization, Perennial Holdings & Sino Land</li>
-                <li>Premium residential development with modern amenities</li>
-                <li>Strategic location near Nicoll Highway MRT and amenities</li>
-                <li>Excellent investment potential in District 7</li>
-                <li>Expected TOP: Q2 2029</li>
+                ${projectType === 'The Golden Mile' 
+                  ? `<li>District 7, Beach Road - Prime commercial location in the Golden Mile</li>
+                     <li>Developed by GMC Property Pte. Ltd. (JV between Perennial Holdings and Far East Organization)</li>
+                     <li>Commercial development with offices and medical suites</li>
+                     <li>Strategic location near Nicoll Highway MRT and amenities</li>
+                     <li>Excellent investment potential in District 7</li>
+                     <li>Expected TOP: Q2 2029</li>`
+                  : `<li>District 7, Beach Road - Prime location in the Golden Mile</li>
+                     <li>Developed by Far East Organization, Perennial Holdings & Sino Land</li>
+                     <li>Premium residential development with modern amenities</li>
+                     <li>Strategic location near Nicoll Highway MRT and amenities</li>
+                     <li>Excellent investment potential in District 7</li>
+                     <li>Expected TOP: Q2 2029</li>`
+                }
               </ul>
             </div>
             
@@ -408,149 +408,3 @@ async function verifyRecaptcha(token: string) {
   }
 }
 
-async function insertIntoGoogleSheets({ 
-  fullName, 
-  emailAddress, 
-  contactNumber
-}: {
-  fullName: string
-  emailAddress: string
-  contactNumber: string
-}) {
-  try {
-    // Use Aurea-specific spreadsheet configuration
-    const rawSpreadsheetEnv = process.env.GOOGLE_SHEETS_AUREA_LEAD_SPREADSHEET_ID
-    let spreadsheetId = rawSpreadsheetEnv
-    if (rawSpreadsheetEnv && rawSpreadsheetEnv.includes('/d/')) {
-      const match = rawSpreadsheetEnv.match(/\/d\/([^/]+)/)
-      spreadsheetId = match ? match[1] : rawSpreadsheetEnv
-    }
-    const clientEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL
-    const privateKey = process.env.GOOGLE_SHEETS_PRIVATE_KEY
-    const targetRange = process.env.GOOGLE_SHEETS_AUREA_SITE_MAP_RANGE || 'SiteMapRequests!A:F'
-    
-    console.log('Google Sheets configuration (Aurea Site Map & Floor Plan):', {
-      hasSpreadsheetId: !!spreadsheetId,
-      hasClientEmail: !!clientEmail,
-      hasPrivateKey: !!privateKey
-    })
-    
-    // If Google Sheets credentials are not configured, return error
-    if (!spreadsheetId || !clientEmail || !privateKey) {
-      console.error('❌ Google Sheets credentials not found')
-      return { success: false, error: 'Google Sheets service not configured' }
-    }
-
-    console.log('📊 Attempting to insert data into Google Sheets (Aurea Site Map & Floor Plan)...')
-    
-    // Process private key to handle different formats and OpenSSL compatibility
-    const processPrivateKey = (key: string): string => {
-      // Remove quotes if present
-      let processedKey = key.replace(/"/g, '')
-      
-      // Handle different newline formats
-      if (processedKey.includes('\\n')) {
-        processedKey = processedKey.replace(/\\n/g, '\n')
-      }
-      
-      // Ensure proper PEM format
-      if (!processedKey.includes('-----BEGIN PRIVATE KEY-----')) {
-        console.error('❌ Invalid private key format')
-        throw new Error('Invalid private key format')
-      }
-      
-      return processedKey
-    }
-    
-    // Create JWT client
-    const auth = new google.auth.JWT(
-      clientEmail,
-      undefined,
-      processPrivateKey(privateKey),
-      ['https://www.googleapis.com/auth/spreadsheets']
-    )
-
-    // Create Google Sheets API client
-    const sheets = google.sheets({ version: 'v4', auth })
-
-    // Prepare data row for Aurea Site Map requests
-    const timestamp = new Date().toLocaleString('en-SG', { 
-      timeZone: 'Asia/Singapore',
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false
-    })
-    const dataRow = [
-      timestamp,                       
-      fullName,                       
-      emailAddress,                   
-      contactNumber,                  
-      'Request Site Map & Floor Plan',  
-      'Aurea'
-    ]
-
-    // Append data to the spreadsheet
-    let response
-    try {
-      response = await sheets.spreadsheets.values.append({
-        spreadsheetId,
-        range: targetRange,
-        valueInputOption: 'RAW',
-        insertDataOption: 'INSERT_ROWS',
-        requestBody: { values: [dataRow] }
-      })
-    } catch (appendError) {
-      if (appendError instanceof Error && appendError.message.includes('protected cell or object')) {
-        const currentData = await sheets.spreadsheets.values.get({
-          spreadsheetId,
-          range: targetRange.split('!')[0] + '!A:A'
-        })
-        const nextRow = (currentData.data.values?.length || 1) + 1
-        const baseTab = targetRange.split('!')[0]
-        const range = `${baseTab}!A${nextRow}:F${nextRow}`
-        response = await sheets.spreadsheets.values.update({
-          spreadsheetId,
-          range,
-          valueInputOption: 'RAW',
-          requestBody: { values: [dataRow] }
-        })
-      } else {
-        throw appendError
-      }
-    }
-
-    console.log('✅ Data inserted into Google Sheets successfully (Aurea Site Map & Floor Plan)')
-    if ('updates' in response.data) {
-      console.log('📊 Sheets append response:', response.data.updates)
-    }
-    
-    return { success: true, message: 'Data inserted into Google Sheets successfully' }
-
-  } catch (error) {
-    console.error('❌ Google Sheets insertion error:', error)
-    
-    let errorMessage = 'Failed to insert data into Google Sheets'
-    
-    if (error instanceof Error) {
-      if (error.message.includes('Invalid JWT')) {
-        errorMessage = 'Invalid Google Sheets credentials. Please check your service account configuration.'
-      } else if (error.message.includes('Requested entity was not found')) {
-        errorMessage = 'Spreadsheet not found. Please check your GOOGLE_SHEETS_AUREA_LEAD_SPREADSHEET_ID.'
-      } else if (error.message.includes('Permission denied')) {
-        errorMessage = 'Permission denied. Please check if the service account has access to the spreadsheet.'
-      } else if (error.message.includes('DECODER routines::unsupported') || error.message.includes('ERR_OSSL_UNSUPPORTED')) {
-        errorMessage = 'OpenSSL compatibility issue with private key format. Please check the private key format.'
-      } else if (error.message.includes('Invalid private key format')) {
-        errorMessage = 'Invalid private key format. Please ensure the private key is in correct PEM format.'
-      } else {
-        errorMessage = error.message
-      }
-    }
-    
-    return { success: false, error: errorMessage }
-  }
-}
