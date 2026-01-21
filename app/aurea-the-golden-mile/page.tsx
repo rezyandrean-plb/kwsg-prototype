@@ -234,13 +234,15 @@ function SiteMapForm({
   onClose, 
   isSubmitting, 
   submitSuccess, 
-  submitError 
+  submitError,
+  projectType
 }: {
   onSubmit: (formData: any) => Promise<void>
   onClose: () => void
   isSubmitting: boolean
   submitSuccess: boolean
   submitError: string | null
+  projectType: 'Aurea' | 'The Golden Mile'
 }) {
   const { executeRecaptcha } = useGoogleReCaptcha()
   const [formData, setFormData] = useState({
@@ -302,7 +304,7 @@ function SiteMapForm({
       const mockScore = Math.random() * 0.3 + 0.7 // Score between 0.7 and 1.0
       setSecurityScore(mockScore)
       
-      await onSubmit({ ...formData, recaptchaToken: token })
+      await onSubmit({ ...formData, recaptchaToken: token, projectType })
     } catch (error) {
       console.error('reCAPTCHA execution failed:', error)
       setFormErrors({ general: 'Security verification failed. Please try again.' })
@@ -803,6 +805,7 @@ export default function AureaLanding() {
   const [isVisible, setIsVisible] = useState(false)
   const [animatedSections, setAnimatedSections] = useState<Set<string>>(new Set())
   const [showSiteMapPopup, setShowSiteMapPopup] = useState(false)
+  const [siteMapProjectType, setSiteMapProjectType] = useState<'Aurea' | 'The Golden Mile'>('Aurea')
   const [unitsActiveTab, setUnitsActiveTab] = useState(0)
   const [floorPlanIndex, setFloorPlanIndex] = useState(0)
   const [goldenMileUnitsActiveTab, setGoldenMileUnitsActiveTab] = useState(0)
@@ -1652,7 +1655,7 @@ export default function AureaLanding() {
   }
 
   const handleSiteMapFormSubmit = async (formDataWithToken: any) => {
-    const { fullName, emailAddress, contactNumber, recaptchaToken } = formDataWithToken
+    const { fullName, emailAddress, contactNumber, recaptchaToken, projectType } = formDataWithToken
     
     // Validate required fields
     if (!fullName.trim() || !emailAddress.trim() || !contactNumber.trim()) {
@@ -1690,7 +1693,8 @@ export default function AureaLanding() {
           fullName, 
           emailAddress, 
           contactNumber, 
-          recaptchaToken 
+          recaptchaToken,
+          projectType: projectType || 'Aurea'
         }),
       })
 
@@ -2736,7 +2740,10 @@ export default function AureaLanding() {
                                 Book Showflat Visit
                               </button>
                               <button 
-                                onClick={() => setShowSiteMapPopup(true)}
+                                onClick={() => {
+                                  setSiteMapProjectType('Aurea')
+                                  setShowSiteMapPopup(true)
+                                }}
                                 className="w-full bg-white text-red-500 hover:bg-white-600 text-red-500 font-medium py-3 px-4 rounded-lg text-sm transition-colors"
                               >
                                 Request Floor Plan
@@ -3138,7 +3145,10 @@ export default function AureaLanding() {
                                 Book Showflat Visit
                               </button>
                               <button 
-                                onClick={() => setShowSiteMapPopup(true)}
+                                onClick={() => {
+                                  setSiteMapProjectType('The Golden Mile')
+                                  setShowSiteMapPopup(true)
+                                }}
                                 className="w-full bg-white text-red-500 hover:bg-white-600 text-red-500 font-medium py-3 px-4 rounded-lg text-sm transition-colors"
                               >
                                 Request Floor Plan
@@ -3240,6 +3250,7 @@ export default function AureaLanding() {
             isSubmitting={isSiteMapSubmitting}
             submitSuccess={siteMapSubmitSuccess}
             submitError={siteMapSubmitError}
+            projectType={siteMapProjectType}
           />
         </GoogleReCaptchaProvider>
       )}
