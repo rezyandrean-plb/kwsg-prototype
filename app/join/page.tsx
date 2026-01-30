@@ -113,14 +113,7 @@ const cultureHighlights = [
 ]
 
 const lastSectionActions = [
-  {
-    title: "ATTEND THE NEXT LIVE EVENT",
-    copy:
-      "Want to experience the energy in person? Ask Melvin and Grayce your questions live? We still hold these exclusive sessions for a small group. See the next available date and reserve your seat.",
-    button: "RESERVE MY LIVE SEAT",
-    icon: Calendar,
-    href: "https://explore.kwsingapore.com/#form-J-C4unvV0p",
-  },
+  
   {
     title: "READY TO ONBOARD?",
     copy:
@@ -132,7 +125,7 @@ const lastSectionActions = [
   {
     title: "BOOK A 1-1 BUSINESS CONSULT",
     copy:
-      "Have questions? Want to discuss how the KW model can be tailored to your specific business goals? Book a confidential, no-obligation 1-on-1 strategy call with our Director of Growth, Grayce.",
+      "Have questions? Want to discuss how the KW model can be tailored to your specific business goals? Book a confidential, no-obligation 1-on-1 strategy call with us.",
     button: "BOOK MY 1-1 CONSULT",
     icon: Users,
     href: "https://api.mediax.sg/widget/form/7OJwwi1ynbfo578kPUAv",
@@ -179,14 +172,9 @@ const avatarImages = [
   "/images/why-kw-singapore/business-section/Business-DSC05252.jpg",
   "/images/why-kw-singapore/business-section/Business-DSC05255.jpg",
   "/images/why-kw-singapore/business-section/Business-DSC05261.jpg",
-  "/images/why-kw-singapore/business-section/Business-DSC05272.jpg",
   "/images/why-kw-singapore/business-section/Business-DSC05289.jpg",
-  "/images/why-kw-singapore/business-section/Business-POD-01.jpg",
-  "/images/why-kw-singapore/business-section/Business-POD-02.jpg",
-  "/images/why-kw-singapore/business-section/Business-POD-03.jpeg",
   "/images/why-kw-singapore/business-section/Business-POD-04.jpeg",
   "/images/why-kw-singapore/business-section/Business-POD-05.jpeg",
-  "/images/why-kw-singapore/business-section/Business-DSC04852.jpg",
 ]
 
 const avatarLayout = [
@@ -606,23 +594,7 @@ export default function JoinPage() {
             </p>
           </div>
 
-          <div
-            className="w-full max-w-4xl mx-auto mb-12 transition-all duration-700 ease-out"
-            style={{
-              opacity: kwEdgeOpacity,
-              transform: `translateY(${kwEdgeTranslateY}px)`,
-            }}
-          >
-            <div className="aspect-video rounded-lg overflow-hidden border border-white/10 shadow-lg">
-              <iframe
-                src="https://www.youtube.com/embed/98q3DIEeRdk"
-                className="w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                title="KW Singapore Edge Video"
-              />
-            </div>
-          </div>
+          
 
           {/* Hero Cards */}
           <div
@@ -768,20 +740,6 @@ export default function JoinPage() {
                   You're stuck on the income rollercoaster—unpredictable closings and unstable pay. At KW, we solved this by creating a three-pillar income
                   model designed for growth, stability, and legacy.
                 </p>
-              </div>
-            </div>
-
-            <div className="mt-12 flex justify-center">
-              <div className="w-full max-w-4xl">
-                <div className="aspect-video rounded-lg overflow-hidden border border-white/20 shadow-lg">
-                  <iframe
-                    src="https://www.youtube.com/embed/pJcbNolha-M"
-                    className="w-full h-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    title="Growth Share Passive Legacy Video"
-                  />
-                </div>
               </div>
             </div>
           </div>
@@ -1194,14 +1152,11 @@ export default function JoinPage() {
 
                   <div className="w-full order-2 lg:order-2">
                     <div className="relative bg-gradient-to-br from-gray-900 to-black rounded-lg overflow-hidden">
-                      <div className="aspect-video">
-                        <iframe
-                          src="https://www.youtube.com/embed/PHaW-ZscJuQ?start=420&autoplay=0&mute=0&controls=1&modestbranding=1&rel=0"
-                          title="The Blueprint: Scale Beyond Solo"
-                          frameBorder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                          allowFullScreen
-                          className="w-full h-full rounded-lg"
+                      <div className="aspect-video relative rounded-lg" style={{ backgroundColor: "#CE001F" }}>
+                        <img
+                          src="https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/gary-keller.webp"
+                          alt="Gary Keller"
+                          className="w-full h-full object-contain rounded-lg"
                         />
                       </div>
                     </div>
@@ -1362,21 +1317,45 @@ export default function JoinPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-3 md:gap-6 relative z-0">
-            {avatarLayout.map((column, columnIndex) => (
-              <div key={`column-${columnIndex}`} className={`${column.shift} ${column.start}`}>
-                {column.items.map((avatarIndex) => (
-                  <div key={`avatar-${avatarIndex}`} className={`${avatarIndex % 2 === 0 ? "aspect-[3/4]" : "aspect-square"} rounded-2xl overflow-hidden bg-gray-800 mb-6 last:mb-0`}>
-                    <img
-                      src={avatarImages[avatarIndex]}
-                      alt="Professional"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            ))}
+          {false && (
+          <div className="relative z-0">
+            {/* First Row - 5 avatars */}
+            <div className="grid grid-cols-3 md:grid-cols-5 gap-3 md:gap-6">
+              {[
+                { start: "hidden md:block pt-12", shift: "space-y-6", items: [0] },
+                { start: "pt-6 md:pt-24", shift: "space-y-6", items: [1] },
+                { start: "pt-12 md:pt-32", shift: "space-y-6", items: [2] },
+                { start: "pt-6 md:pt-24", shift: "space-y-6", items: [3] },
+                { start: "hidden md:block pt-12", shift: "space-y-6", items: [4] },
+              ].map((column, columnIndex) => (
+                <div key={`column-${columnIndex}`} className={`${column.shift} ${column.start}`}>
+                  {column.items.map((avatarIndex) => (
+                    <div key={`avatar-${avatarIndex}`} className={`${avatarIndex % 2 === 0 ? "aspect-[3/4]" : "aspect-square"} rounded-2xl overflow-hidden bg-gray-800 mb-6 last:mb-0`}>
+                      <img
+                        src={avatarImages[avatarIndex]}
+                        alt="Professional"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+
+            {/* Second Row - 4 avatars centered */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 max-w-5xl mx-auto mt-6">
+              {avatarImages.slice(5, 9).map((image, index) => (
+                <div key={`avatar-row2-${index}`} className={`${index === 1 || index === 2 ? "aspect-[3/4]" : "aspect-square"} rounded-2xl overflow-hidden bg-gray-800`}>
+                  <img
+                    src={image}
+                    alt="Professional"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
+          )}
 
           <div
             ref={cultureCardsRef}
@@ -1625,14 +1604,12 @@ export default function JoinPage() {
 
         <div
           ref={lastSectionCardsRef}
-          className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-6"
+          className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto px-6"
         >
           {lastSectionActions.map((action, index) => (
             <div
               key={action.title}
-              className={`relative backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:border-white/20 hover:scale-105 hover:shadow-lg hover:shadow-[#B40101]/20 group ${
-                action.title.includes("BOOK") ? "md:col-span-2 lg:col-span-1" : ""
-              } flex flex-col h-full`}
+              className="relative backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:border-white/20 hover:scale-105 hover:shadow-lg hover:shadow-[#B40101]/20 group flex flex-col h-full"
               style={{
                 opacity: lastSectionCardsOpacity[index] ?? 0,
                 transform: `translateX(${lastSectionCardsTranslateX[index] ?? -100}px)`,

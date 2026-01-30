@@ -41,6 +41,10 @@ export default function Home() {
   const [currentReelIndex2Desktop, setCurrentReelIndex2Desktop] = useState(0)
   const [currentReelIndex2Tablet, setCurrentReelIndex2Tablet] = useState(0)
   const [currentConsultantIndex, setCurrentConsultantIndex] = useState(0)
+  const [trainingAcademyCarouselIndex, setTrainingAcademyCarouselIndex] = useState(0)
+  const [trainingAcademyFade, setTrainingAcademyFade] = useState(false)
+  const [isTrainingAcademyPaused, setIsTrainingAcademyPaused] = useState(false)
+  const trainingAcademyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   
   // Ref for the KW Advantage section
   const advantageSectionRef = useRef<HTMLElement>(null)
@@ -189,12 +193,12 @@ export default function Home() {
     "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80"
   ]
 
-  // Reel data
+  // Reel data - supports both local videos and YouTube embeds
   const reels1 = [
-    { src: "/video/Shorts 1 - Melvin.mp4", label: "KW Singapore Reel 1" },
-    { src: "/video/Shorts 2 - Melvin.mp4", label: "KW Singapore Reel 2" },
-    { src: "/video/Shorts 3 - Grayce.mp4", label: "KW Singapore Reel 3" },
-    { src: "/video/Shorts 4 - Grayce.mp4", label: "KW Singapore Reel 4" }
+    { src: "https://www.youtube.com/embed/nx2vBlQJbNw?autoplay=1&mute=1&loop=1&playlist=nx2vBlQJbNw", label: "KW Singapore Reel 1", type: "youtube" as const },
+    { src: "https://www.youtube.com/embed/Gk81C-dXcag?autoplay=1&mute=1&loop=1&playlist=Gk81C-dXcag", label: "KW Singapore Reel 2", type: "youtube" as const },
+    { src: "https://www.youtube.com/embed/wQHbsW7nUfk?autoplay=1&mute=1&loop=1&playlist=wQHbsW7nUfk", label: "KW Singapore Reel 3", type: "youtube" as const },
+    { src: "https://www.youtube.com/embed/N-L8VuQPtBk?autoplay=1&mute=1&loop=1&playlist=N-L8VuQPtBk", label: "KW Singapore Reel 4", type: "youtube" as const }
   ]
 
   const reels2 = [
@@ -204,12 +208,41 @@ export default function Home() {
     { src: "https://www.youtube.com/embed/s3n1qH3M5cI?autoplay=1&mute=1&loop=1&playlist=s3n1qH3M5cI", label: "KW Singapore Reel 4" },
     { src: "https://www.youtube.com/embed/fditK842Zbw?autoplay=1&mute=1&loop=1&playlist=fditK842Zbw", label: "KW Singapore Reel 5" },
     { src: "https://www.youtube.com/embed/__zDeHtZLn4?autoplay=1&mute=1&loop=1&playlist=__zDeHtZLn4", label: "KW Singapore Reel 6" },
-    { src: "https://www.youtube.com/embed/6dMnifQl5JU?autoplay=1&mute=1&loop=1&playlist=6dMnifQl5JU", label: "KW Singapore Reel 7" }
+    { src: "https://www.youtube.com/embed/6dMnifQl5JU?autoplay=1&mute=1&loop=1&playlist=6dMnifQl5JU", label: "KW Singapore Reel 7" },
+    { src: "https://www.youtube.com/embed/Tdjr0wQ9YFY?autoplay=1&mute=1&loop=1&playlist=Tdjr0wQ9YFY", label: "KW Singapore Reel 8" }
   ]
 
   const consultantVideos = [
     { src: "https://www.youtube.com/embed/6S1Qgw7SS4I?autoplay=1&mute=1", label: "Meet the Consultants 2" },
   ]
+
+  const trainingAcademyImages = [
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/homepage/1.webp",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/homepage/2.webp",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/homepage/3.webp",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/homepage/4.webp",
+    "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/homepage/5.webp",
+  ]
+
+  // Auto-slide for Training Academy carousel
+  useEffect(() => {
+    if (isTrainingAcademyPaused || trainingAcademyImages.length === 0) return
+    const interval = setInterval(() => {
+      setTrainingAcademyFade(true)
+      trainingAcademyTimeoutRef.current = setTimeout(() => {
+        setTrainingAcademyCarouselIndex((prev) => (prev + 1) % trainingAcademyImages.length)
+        setTrainingAcademyFade(false)
+        trainingAcademyTimeoutRef.current = null
+      }, 300)
+    }, 4000)
+    return () => {
+      clearInterval(interval)
+      if (trainingAcademyTimeoutRef.current) {
+        clearTimeout(trainingAcademyTimeoutRef.current)
+        trainingAcademyTimeoutRef.current = null
+      }
+    }
+  }, [isTrainingAcademyPaused, trainingAcademyImages.length])
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout
@@ -314,18 +347,29 @@ export default function Home() {
           {/* Mobile Carousel */}
           <div className="sm:hidden relative">
             <div className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
-              <video
-                key={currentReelIndex}
-                className="w-full h-[600px] object-cover"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                aria-label={reels1[currentReelIndex].label}
-              >
-                <source src={reels1[currentReelIndex].src} type="video/mp4" />
-              </video>
+              {reels1[currentReelIndex].type === "youtube" ? (
+                <iframe
+                  key={currentReelIndex}
+                  className="w-full h-[600px]"
+                  src={reels1[currentReelIndex].src}
+                  title={reels1[currentReelIndex].label}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              ) : (
+                <video
+                  key={currentReelIndex}
+                  className="w-full h-[600px] object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  aria-label={reels1[currentReelIndex].label}
+                >
+                  <source src={reels1[currentReelIndex].src} type="video/mp4" />
+                </video>
+              )}
             </div>
             
             {/* Navigation buttons */}
@@ -363,17 +407,27 @@ export default function Home() {
           <div className="hidden sm:grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
             {reels1.map((reel, index) => (
               <div key={index} className="relative w-full overflow-hidden rounded-lg border border-[#666666]/20 bg-black/40">
-                <video
-                  className="w-full h-[500px] object-cover"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  aria-label={reel.label}
-                >
-                  <source src={reel.src} type="video/mp4" />
-                </video>
+                {reel.type === "youtube" ? (
+                  <iframe
+                    className="w-full h-[500px]"
+                    src={reel.src}
+                    title={reel.label}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                ) : (
+                  <video
+                    className="w-full h-[500px] object-cover"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    aria-label={reel.label}
+                  >
+                    <source src={reel.src} type="video/mp4" />
+                  </video>
+                )}
               </div>
             ))}
           </div>
@@ -410,7 +464,7 @@ export default function Home() {
                 {/* Image */}
                 <div className="relative h-64 md:h-full">
                   <img
-                    src="https://img.tepcdn.com/img-style/simplecrop_article/88304311.jpeg"
+                    src="https://cdn.sanity.io/images/7mbg6o4a/production/ad8ff2628646f0640b27a36299a5441e2b03ae4d-1920x640.png?w=1200&fm=webp&q=90&fit=crop"
                     alt="Real Estate Franchise Keller Williams Expands in Singapore"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
@@ -421,23 +475,23 @@ export default function Home() {
                 <div className="p-6 sm:p-8 flex flex-col justify-center">
                   <div className="mb-4">
                     <span className="inline-block bg-[#B40101] text-white text-xs font-semibold px-3 py-1 rounded-full">
-                      EdgeProp
+                      KWRI
                     </span>
-                    <span className="text-white/60 text-sm ml-3">July 7, 2025</span>
+                    <span className="text-white/60 text-sm ml-3">July 16, 2025</span>
                   </div>
                   
                   <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-white group-hover:text-[#B40101] transition-colors duration-300">
-                    Real Estate Franchise Keller Williams Expands in Singapore
+                    Keller Williams Expands to Singapore with KW Singapore
                   </h3>
                   
                   <p className="text-white/80 leading-relaxed mb-6 text-sm sm:text-base">
-                    Keller Williams, one of the world's largest real estate franchises, continues its expansion in Singapore with innovative technology and training programs for local property consultants.
+                    Keller Williams Realty, LLC (KW), the world's largest real estate franchise by agent count, is expanding across Asia. As momentum continues, KW has awarded a new master franchise in Singapore. As of June 30, KW has 22 market centers and 1,196 affiliated agents across Asia.<br></br>
                   </p>
                   
                   <div className="mt-auto">
                     <Button
                       className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-6 py-3 text-sm sm:text-base font-semibold transition-all duration-300 hover:scale-105 group"
-                      onClick={() => window.location.href = '/press/real-estate-franchise-keller-williams-expands-in-singapore'}
+                      onClick={() => window.location.href = 'https://kwri.kw.com/press/keller-williams-expands-to-singapore'}
                     >
                       Read Full Article
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -447,26 +501,24 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Mobile Layout - Card style like press page */}
+            {/* Mobile Layout - Card style like press page (same copy as desktop) */}
             <div className="md:hidden group relative overflow-hidden rounded-lg border border-[#666666]/20 transition-all duration-300 hover:scale-105 hover:border-[#B40101]/40 cursor-pointer"
-                 onClick={() => window.location.href = '/press/real-estate-franchise-keller-williams-expands-in-singapore'}>
+                 onClick={() => window.location.href = 'https://kwri.kw.com/press/keller-williams-expands-to-singapore'}>
               <img
-                src="https://img.tepcdn.com/img-style/simplecrop_article/88304311.jpeg"
+                src="https://cdn.sanity.io/images/7mbg6o4a/production/ad8ff2628646f0640b27a36299a5441e2b03ae4d-1920x640.png?w=1200&fm=webp&q=90&fit=crop"
                 alt="Real Estate Franchise Keller Williams Expands in Singapore"
                 className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <div className="bg-[#B40101] text-white text-xs px-2 py-1 rounded-full">
-                    July 7, 2025
+                  <div className="bg-[#B40101] text-white text-xs px-2 py-1 rounded-full font-semibold">
+                    KWRI
                   </div>
-                  <div className="bg-white/70 text-black text-xs px-2 py-1 rounded-full backdrop-blur-sm">
-                    EdgeProp
-                  </div>
+                  <span className="text-white/80 text-xs">July 16, 2025</span>
                 </div>
                 <h3 className="text-lg font-bold mb-2 text-white line-clamp-2">
-                  Real Estate Franchise Keller Williams Expands in Singapore
+                  Keller Williams Expands to Singapore with KW Singapore
                 </h3>
                 <div className="text-white/80 text-xs mt-2">
                   Click to read full article
@@ -686,44 +738,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Leadership Quote Section */}
-      <section className="relative py-8 sm:py-8 md:py-12 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800" />
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-[#B40101]/20 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 right-10 w-48 h-48 bg-[#B40101]/10 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-white/5 rounded-full blur-2xl" />
-        </div>
-        <div className="absolute inset-0 bg-[url('/images/pattern.png')] opacity-5" />
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            {/* Left Column - Quote */}
-            <div>
-              <blockquote className="text-2xl md:text-3xl font-light leading-relaxed text-white mb-8 italic">
-                "The real estate model in Singapore is due for innovation and forward-looking change. We provide the
-                tools, frameworks, platform and education for consultants to scale their business, while building true
-                passive income through the Growth Share Programme."
-              </blockquote>
-              <div className="border-l-4 border-[#B40101] pl-6">
-                <p className="text-xl font-semibold text-white mb-2">Melvin Lim</p>
-                <p className="text-white/80">Operating Principal of KW Singapore</p>
-              </div>
-            </div>
-
-            {/* Right Column - Photo */}
-            <div className="relative md:mb-0 -mb-8">
-              <div className="relative overflow-hidden rounded-lg">
-                <img
-                  src="/images/homepage/melvin-section.webp"
-                  alt="Melvin Lim - Operating Principal of KW Singapore"
-                  className="w-full h-[600px] object-cover object-top"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+    
 
       {/* Training Academy Section */}
       <section className="relative py-8 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-b from-black to-gray-900">
@@ -734,51 +749,69 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-12">
-            {[
-              {
-                title: "MREA Masterclass: The Blueprint for Exponential Real Estate Growth",
-                image: "/images/event/melvin-explore.webp",
-                cta: "Secure Your Spot",
-                date: undefined,
-                description: undefined,
-              },
-              {
-                title: "MEGA Realtors Summit: Scale Your Real Estate Business with Industry Leaders",
-                image: "/images/homepage/mrea-summit-stage-event.webp",
-                cta: "View More",
-                date: undefined,
-                description: undefined,
-              },
-            ].map((event, index) => (
-              <div key={index} className="group relative overflow-hidden rounded-lg">
-                <img
-                  src={event.image || "/placeholder.svg"}
-                  alt={event.title}
-                  className="w-full h-48 sm:h-56 md:h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+          <div className="relative max-w-5xl mx-auto mb-8 sm:mb-12">
+            <div
+              className="relative w-full min-h-[280px] sm:min-h-[360px] rounded-xl overflow-hidden bg-black/40 border border-[#666666]/20 flex items-center justify-center"
+              onMouseEnter={() => setIsTrainingAcademyPaused(true)}
+              onMouseLeave={() => setIsTrainingAcademyPaused(false)}
+            >
+              <img
+                src={trainingAcademyImages[trainingAcademyCarouselIndex]}
+                alt={`KW Training Academy ${trainingAcademyCarouselIndex + 1}`}
+                className={`w-full h-auto max-h-[70vh] object-contain transition-opacity duration-700 ease-in-out ${
+                  trainingAcademyFade ? "opacity-0" : "opacity-100"
+                }`}
+              />
+              <Button
+                variant="outline"
+                size="icon"
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white border-0 rounded-full z-10"
+                onClick={() => {
+                  setTrainingAcademyFade(true)
+                  setTimeout(() => {
+                    setTrainingAcademyCarouselIndex((prev) => (prev - 1 + trainingAcademyImages.length) % trainingAcademyImages.length)
+                    setTrainingAcademyFade(false)
+                  }, 300)
+                }}
+                aria-label="Previous image"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white border-0 rounded-full z-10"
+                onClick={() => {
+                  setTrainingAcademyFade(true)
+                  setTimeout(() => {
+                    setTrainingAcademyCarouselIndex((prev) => (prev + 1) % trainingAcademyImages.length)
+                    setTrainingAcademyFade(false)
+                  }, 300)
+                }}
+                aria-label="Next image"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </Button>
+            </div>
+            <div className="flex justify-center mt-4 gap-2">
+              {trainingAcademyImages.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => {
+                    if (i === trainingAcademyCarouselIndex) return
+                    setTrainingAcademyFade(true)
+                    setTimeout(() => {
+                      setTrainingAcademyCarouselIndex(i)
+                      setTrainingAcademyFade(false)
+                    }, 300)
+                  }}
+                  className={`w-2 h-2 rounded-full transition-all ${
+                    i === trainingAcademyCarouselIndex ? "bg-[#B40101] scale-125" : "bg-white/40 hover:bg-white/60"
+                  }`}
+                  aria-label={`Go to image ${i + 1}`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 text-white">{event.title}</h3>
-                  {event.date && <p className="text-[#B40101] font-medium mb-2 sm:mb-3 text-sm">{event.date}</p>}
-                  {event.description && <p className="text-white/90 mb-3 sm:mb-4 leading-relaxed text-sm">{event.description}</p>}
-                  <div className="text-center sm:text-left">
-                    <Button 
-                      className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-4 sm:px-6 py-2 text-sm sm:text-base font-semibold transition-all duration-300 hover:scale-105"
-                      onClick={() => {
-                        if (index === 0) {
-                          window.open('https://explore.kwsingapore.com/mrea-masterclass-registration-1', '_blank')
-                        } else if (index === 1) {
-                          window.location.href = '/events#mega-summit'
-                        }
-                      }}
-                    >
-                      {event.cta}
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
           <div className="text-center">

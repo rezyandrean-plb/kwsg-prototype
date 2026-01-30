@@ -37,28 +37,16 @@ const JoinFormDialog = dynamic(() => import("@/components/join-form-dialog").the
       images: [
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/September/1.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/September/2.jpg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/September/3.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/September/4.jpg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/September/5.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/September/6.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/September/7.jpg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/September/8.jpg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/September/9.jpg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/1.jpg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/2.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/3.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/4.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/5.jpg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/6.jpg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/7.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/8.jpg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/9.jpg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/10.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/October/11.jpg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/1.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/2.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/3.jpg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/4.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/5.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/6.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/realtor-branding/November/7.jpg",
@@ -80,11 +68,8 @@ const JoinFormDialog = dynamic(() => import("@/components/join-form-dialog").the
         "A 2-day intensive masterclass diving into the millionaire models, strategies, and systems for exponential growth.",
     images: [],
     video: [
-      "https://youtu.be/Sh8aD6uI0-E?si=rVtunRhP4MHe4V9X",
-      "https://youtu.be/4bjVvRaItHA?si=_oM6PtjNWfMBospn",
       "https://youtu.be/PW8A6XC0UhE?si=B5v-zjIhS9PbnEm3",
       "https://youtu.be/eo84p1nHWBE?si=hlN_j1XZM5VnuqzN",
-      "https://youtu.be/jc6GFFnQQB4?si=_1sfQfS4RkSkOMDN",
       "https://youtu.be/PW8A6XC0UhE?si=wDm6H9XFzWDG0WJc",
       ],
     },
@@ -128,17 +113,14 @@ const JoinFormDialog = dynamic(() => import("@/components/join-form-dialog").the
         "Frameworks and flows to convert leads into loyal clients across six distinct buyer profiles.",
       images: [
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-1.jpg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-2.jpg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-3.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-4.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-5.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-6.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-7.jpg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-8.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-9.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-10.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-11.jpg",
-        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-12.jpg",  
+        "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-12.jpg",
         "https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/business-network-13.jpg",
       ],
       video: [
@@ -287,6 +269,17 @@ export default function EventsPage() {
     })
   }, [eventCategory, eventImages, realtorSubTag])
 
+  // More Events: photos only from Realtor Branding Workshop + Business Connect (no categories)
+  const moreEventsRealtorPhotos = useMemo(() => {
+    return (eventImages["Realtor Branding Workshop"] || []).filter((item) => item.type === "image")
+  }, [eventImages])
+  const moreEventsBusinessPhotos = useMemo(() => {
+    return (eventImages["Business Connect"] || []).filter((item) => item.type === "image")
+  }, [eventImages])
+  const moreEventsPhotos = useMemo(() => {
+    return [...moreEventsRealtorPhotos, ...moreEventsBusinessPhotos]
+  }, [moreEventsRealtorPhotos, moreEventsBusinessPhotos])
+
   // Get all Explore Night media (single-item carousel)
   const allExploreMedia = useMemo(() => {
     if (eventCategory !== "Explore Night") return []
@@ -311,10 +304,10 @@ export default function EventsPage() {
     }
   }, [eventCategory, pastEvents])
 
-  // Track visible images to avoid re-animating those that remain
+  // Track visible images to avoid re-animating those that remain (More Events gallery)
   useEffect(() => {
-    prevVisibleImagesRef.current = new Set(filteredEventImages.map((img) => img.src))
-  }, [filteredEventImages])
+    prevVisibleImagesRef.current = new Set(moreEventsPhotos.map((img) => img.src))
+  }, [moreEventsPhotos])
 
   // Reset explore index when switching categories
   useEffect(() => {
@@ -372,17 +365,16 @@ export default function EventsPage() {
     return () => clearInterval(interval)
   }, [eventCategory, allExploreMedia.length])
 
-  // Auto-scroll Welcome Dinner / Founder's Market Insights images every 3 seconds (infinite right to left)
+  // Auto-scroll More Events gallery every 3 seconds (infinite right to left)
   useEffect(() => {
-    const fourUpCategories = ["Welcome Dinner", "Founder's Market Insights", "Business Connect"]
-    if (!fourUpCategories.includes(eventCategory) || filteredEventImages.length <= fourUpPerRow) return
+    if (moreEventsPhotos.length <= fourUpPerRow) return
     
     const interval = setInterval(() => {
       if (fourUpIsTransitioning.current) return
       
       setFourUpIndex((prev) => {
         const next = prev + 1
-        const totalItems = filteredEventImages.length
+        const totalItems = moreEventsPhotos.length
         
         // If we've reached the end (duplicate), seamlessly jump to start
         if (next > totalItems) {
@@ -399,7 +391,7 @@ export default function EventsPage() {
       })
     }, 3000)
     return () => clearInterval(interval)
-  }, [eventCategory, filteredEventImages.length, fourUpPerRow])
+  }, [moreEventsPhotos.length, fourUpPerRow])
 
   // Compute active past event media (images first, then videos)
   const activeEvent = pastEvents[activePastTab] || {}
@@ -583,7 +575,7 @@ export default function EventsPage() {
             transform: `translateY(${scrollY * 0.5}px)`,
           }}
         />
-        <div className="absolute inset-0 bg-[url('/images/event/kw-events-hero-new.webp')] bg-cover bg-center brightness-110" />
+        <div className="absolute inset-0 bg-[url('https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/events-page-hero.webp')] bg-cover bg-center brightness-110" />
         <div className="absolute inset-0 bg-black/65" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
 
@@ -671,7 +663,7 @@ export default function EventsPage() {
                 </div>
               </motion.div>
 
-              <motion.div
+              {/* <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
@@ -686,7 +678,7 @@ export default function EventsPage() {
                   Secure your spot now
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
-              </motion.div>
+              </motion.div> */}
             </motion.div>
 
             <motion.div 
@@ -702,7 +694,7 @@ export default function EventsPage() {
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
                 <img
-                  src="https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/mrea-pricing-new.jpg"
+                  src="https://kwsingapore.s3.ap-southeast-1.amazonaws.com/images/events/mrea-pricing-2026.jpg"
                   alt="MREA Pricing Information"
                   className="w-full h-auto rounded-lg shadow-2xl"
                 />
@@ -810,92 +802,6 @@ export default function EventsPage() {
           </div>
         </div>
       </section> */}
-
-      {/* Explore Night */}
-      <section className="relative py-12 sm:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/images/event/melvin-explore.webp')] bg-cover bg-center sm:bg-contain sm:bg-center sm:mx-8 sm:my-0" />
-        <div className="absolute inset-0 bg-black/60" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
-
-        <motion.div 
-          className="relative z-10 max-w-6xl mx-auto px-6 text-center border-0"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <motion.h2 
-            className="font-bold mb-8 font-sans text-3xl sm:text-4xl md:text-5xl"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            Your Real Estate Income
-            <span className="block text-[#B40101] italic">Shouldn't Stop When You Do.</span>
-          </motion.h2>
-
-          <motion.p 
-            className="text-base md:text-xl mb-12 max-w-4xl mx-auto leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            Discover how top-producing agents are building 3 income streams <br />
-            — without burning out or managing large teams.
-          </motion.p>
-
-          <motion.div 
-            className="flex flex-col items-center space-y-8 mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <div className="flex items-center space-x-6 text-white/80">
-              <div className="flex items-center space-x-2">
-                <Clock className="h-5 w-5 text-[#B40101]" />
-                <span className="text-slate-100">1 Hour Interactive</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Video className="h-5 w-5 text-[#B40101]" />
-                <span className="text-slate-100">Online Format</span>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div 
-            className="space-y-6 flex flex-col items-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <Button
-              size="lg"
-              className="bg-[#B40101] hover:bg-[#B40101]/90 text-white px-12 py-4 text-xl font-semibold transition-all duration-300 hover:scale-105 group rounded-md"
-              onClick={() => window.open("https://explore.kwsingapore.com/kw-explore-night-webinar-1", "_blank")}
-            >
-              Watch Now!
-              <Play className="ml-3 h-6 w-6 group-hover:scale-110 transition-transform" />
-            </Button>
-
-            <motion.p 
-              className="text-sm md:text-lg text-white/80 max-w-2xl mx-auto leading-6"
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              Watch our exclusive webinar and discover why top agents choose KW Singapore.
-              <span className="block mt-2 text-[#B40101] font-medium">
-                Sign up for Explore Night after watching to take your next step.
-              </span>
-            </motion.p>
-          </motion.div>
-        </motion.div>
-      </section>
 
       {/* KW Ignite */}
       <section className="relative py-8 sm:py-12 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
@@ -1009,11 +915,10 @@ export default function EventsPage() {
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
             <motion.div
-              className="order-2 lg:order-1"
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
               viewport={{ once: true, margin: "-100px" }}
             >
@@ -1028,7 +933,7 @@ export default function EventsPage() {
                 <span className="block text-[#B40101] italic">Scale Your Real Estate Business with Industry Leaders</span>
               </motion.h2>
               
-              <div className="flex items-center gap-2 my-4">
+              <div className="flex items-center justify-center gap-2 my-4">
                 <Calendar className="w-5 h-5 text-[#B40101]" />
                 <span className="text-white font-semibold">August 2025</span>
               </div>
@@ -1042,35 +947,9 @@ export default function EventsPage() {
               >
                 Designed for growth-minded real estate consultants, the MREA Summit is your gateway to market dominance. 
                 Learn cutting-edge strategies in lead generation, content, social media, team scaling, 
-                and new launches directly from KW titans J.P. Lewis, Melvin Lim, Grayce Tan, and Rayne Chua. 
+                and new launches directly from KW titans J.P. Lewis and Rayne Chua. 
                 Gain essential MREA insights to unlock millionaire-level success and accelerate your career.
               </motion.p>
-            </motion.div>
-
-            <motion.div 
-              className="relative h-full flex items-stretch order-1 lg:order-2"
-              initial={{ opacity: 0, x: 50, scale: 0.9 }}
-              whileInView={{ opacity: 1, x: 0, scale: 1 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              <motion.div 
-                className="relative rounded-lg overflow-hidden w-full h-[250px] sm:h-[300px] md:h-[400px] lg:h-full"
-                whileHover={{ scale: 1.02, y: -5 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-              >
-                <iframe 
-                  width="560" 
-                  height="100%" 
-                  src="https://www.youtube.com/embed/TSjkdfG6GMQ?autoplay=1&mute=1&si=TU8bF_QkIFTPq-mB" 
-                  title="YouTube video player" 
-                  frameBorder="0" 
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                  referrerPolicy="strict-origin-when-cross-origin" 
-                  allowFullScreen
-                  className="w-full h-full rounded-lg shadow-2xl"
-                ></iframe>
-              </motion.div>
             </motion.div>
           </div>
         </div>
@@ -1089,325 +968,97 @@ export default function EventsPage() {
             </motion.h2>
           </div>
 
-          {/* Category Filter Buttons */}
-          <motion.div 
-            className="flex flex-nowrap gap-3 mb-6 pb-2 overflow-x-auto lg:overflow-visible lg:flex-wrap lg:justify-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            {eventsWithImages.map((event) => (
-                  <button
-                    key={event.title}
-                onClick={() => setEventCategory(event.title)}
-                className={`px-4 py-2 text-sm rounded-full font-semibold transition-all duration-300 whitespace-nowrap flex-shrink-0 ${
-                  eventCategory === event.title
-                    ? "bg-[#B40101] text-white shadow-lg shadow-[#B40101]/30"
-                    : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
-                    }`}
-                  >
-                {event.title}
-                  </button>
-                ))}
-          </motion.div>
-
-          {/* Sub-tag for Realtor Branding Workshop */}
-          {eventCategory === "Realtor Branding Workshop" && (
-              <motion.div 
-              className="flex flex-nowrap gap-3 mt-3 mb-6 pb-2 overflow-x-auto lg:overflow-visible lg:flex-wrap lg:justify-center"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-            >
-              {["All", "September", "October", "November"].map((tag) => (
-                <button
-                  key={tag}
-                  onClick={() => setRealtorSubTag(tag as "All" | "September" | "October" | "November")}
-                  className={`px-3 py-1.5 text-xs sm:text-sm rounded-full font-semibold transition-all duration-300 whitespace-nowrap flex-shrink-0 ${
-                    realtorSubTag === tag
-                      ? "bg-white text-black shadow-lg shadow-white/20"
-                      : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
-                  }`}
-                >
-                  {tag}
-                </button>
-              ))}
-            </motion.div>
-          )}
-
-          {/* Image/Video Gallery */}
-          <motion.div 
-            key={eventCategory}
+          {/* Image Gallery - Realtor Branding Workshop + Business Connect photos only */}
+          <motion.div
             className="w-full max-w-none px-0"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
           >
-            {eventCategory === "Explore Night" ? (
-              <>
-                {/* Desktop/Tablet: grid gallery similar to Realtor Branding Workshop */}
-                <div className="hidden md:block max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8">
-                  <div className={`grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 ${allExploreMedia.length < 3 ? "justify-center" : ""}`}>
-                    {allExploreMedia.map((media) => {
-                      const isNew = !prevVisibleImagesRef.current.has(media.src)
-                      const hoverProps = media.type === "image" ? { whileHover: { scale: 1.035, zIndex: 10 } } : {}
-                      return (
-                        <motion.div
-                          key={media.src}
-                          initial={isNew ? { opacity: 0, y: 12, scale: 0.98 } : undefined}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          transition={isNew ? { duration: 0.45, ease: "easeOut" } : { duration: 0.2 }}
-                          {...hoverProps}
-                          className="group relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 aspect-video"
-                        >
-                          {media.type === "image" ? (
-                            <>
-                              <img
-                                src={media.src}
-                                alt={media.alt}
-                                className="w-full h-auto object-cover transition-transform duration-400 ease-out hover:scale-102"
-                                loading="lazy"
-                              />
-                              <div className="pointer-events-none absolute left-1/2 bottom-full mb-2 z-30 hidden -translate-x-1/2 group-hover:block">
-                                <div className="rounded-lg overflow-hidden shadow-2xl shadow-black/60 border border-white/10 bg-black/80">
-                                  <img
-                                    src={media.src}
-                                    alt={media.alt}
-                                    className="w-64 h-auto object-cover"
-                                    loading="lazy"
-                                  />
-                                </div>
-                              </div>
-                            </>
-                          ) : (
-                            <iframe
-                              src={getYouTubeEmbedUrl(media.src)}
-                              className="w-full h-full"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                              title={media.alt}
-                            />
-                          )}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-                        </motion.div>
-                      )
-                    })}
-                  </div>
-                </div>
-
-                {/* Mobile: keep current carousel */}
-                <div className="max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8 overflow-hidden md:hidden">
-                  <div className="relative w-full">
-                    <motion.div
-                      ref={exploreCarouselRef}
-                      className={`flex gap-6 md:gap-8 ${exploreLength < 3 ? "justify-center" : ""}`}
-                      animate={{
-                        x: `-${exploreIndex * 100}%`
-                      }}
-                      transition={{ duration: exploreIsResetting ? 0 : 0.8, ease: "easeInOut" }}
-                      onAnimationComplete={() => {
-                        if (exploreIsResetting) {
-                          setExploreIsResetting(false)
-                        }
-                      }}
-                    >
-                      {/* Original items */}
-                      {allExploreMedia.map((media, index) => {
-                        const isNew = !prevVisibleImagesRef.current.has(media.src)
-                        const hoverProps = media.type === "image" ? { whileHover: { scale: 1.02 } } : {}
-                        return (
-                          <motion.div
-                            key={`original-${media.src}-${index}`}
-                            initial={isNew ? { opacity: 0, scale: 0.98 } : undefined}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.45, ease: "easeOut" }}
-                            {...hoverProps}
-                            className="relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 aspect-video flex-shrink-0 w-full md:w-1/2"
-                          > 
-                            {media.type === "image" ? (
-                              <img
-                                src={media.src}
-                                alt={media.alt}
-                                className="w-full h-full object-cover"
-                                loading="lazy"
-                              />
-                            ) : (
-                              <iframe
-                                src={getYouTubeEmbedUrl(media.src)}
-                                className="w-full h-full"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                                title={media.alt}
-                              />
-                            )}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
-                          </motion.div>
-                        )
-                      })}
-                      {/* Duplicate first item at the end for infinite loop */}
-                      {allExploreMedia.length > 0 && allExploreMedia.map((media, index) => {
-                        const hoverProps = media.type === "image" ? { whileHover: { scale: 1.02 } } : {}
-                        return (
-                          <motion.div
-                            key={`duplicate-${media.src}-${index}`}
-                            {...hoverProps}
-                            className="relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 aspect-video flex-shrink-0 w-full md:w-1/2"
-                          > 
-                            {media.type === "image" ? (
-                              <img
-                                src={media.src}
-                                alt={media.alt}
-                                className="w-full h-full object-cover"
-                                loading="lazy"
-                              />
-                            ) : (
-                              <iframe
-                                src={getYouTubeEmbedUrl(media.src)}
-                                className="w-full h-full"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                                title={media.alt}
-                              />
-                            )}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
-                          </motion.div>
-                        )
-                      })}
-                    </motion.div>
-                    {exploreLength > 0 && (
-                      <div className="flex items-center justify-center gap-3 mt-6 md:mt-8">
-                        <button
-                          onClick={() => {
-                            if (exploreIsTransitioning.current) return
-                            setExploreIndex((prev) => {
-                              const newIndex = prev - 1
-                              if (newIndex < 0) {
-                                exploreIsTransitioning.current = true
-                                setExploreIsResetting(true)
-                                setTimeout(() => {
-                                  setExploreIndex(exploreLength - 1)
-                                  exploreIsTransitioning.current = false
-                                }, 50)
-                                return exploreLength + exploreLength - 1
-                              }
-                              return newIndex
-                            })
-                          }}
-                          className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
-                          aria-label="Previous video"
-                        >
-                          <ChevronRight className="h-4 w-4 rotate-180" />
-                        </button>
-
-                        <div className="flex items-center gap-1.5">
-                          {Array.from({ length: exploreLength }).map((_, idx) => (
-                            <button
-                              key={idx}
-                              onClick={() => {
-                                if (exploreIsTransitioning.current) return
-                                setExploreIndex(idx)
-                              }}
-                              aria-label={`Go to video ${idx + 1}`}
-                              className={`h-2 rounded-full transition-all ${
-                                (exploreIndex % exploreLength) === idx ? "w-6 bg-[#B40101]" : "w-2 bg-white/40"
-                              }`}
-                            />
-                          ))}
-                        </div>
-
-                        <button
-                          onClick={() => {
-                            if (exploreIsTransitioning.current) return
-                            setExploreIndex((prev) => {
-                              const next = prev + 1
-                              if (next > exploreLength) {
-                                exploreIsTransitioning.current = true
-                                setExploreIsResetting(true)
-                                setTimeout(() => {
-                                  setExploreIndex(0)
-                                  exploreIsTransitioning.current = false
-                                }, 50)
-                                return exploreLength
-                              }
-                              return next
-                            })
-                          }}
-                          className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
-                          aria-label="Next video"
-                        >
-                          <ChevronRight className="h-4 w-4" />
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </>
-            ) : ["Welcome Dinner", "Founder's Market Insights", "Business Connect"].includes(eventCategory) ? (
-              <>
-                {/* Desktop/Tablet: grid gallery similar to Realtor Branding Workshop */}
-                <div className="hidden md:block max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8">
-                  <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 ${filteredEventImages.length < 3 ? "justify-center" : ""}`}>
-                    {filteredEventImages.map((media) => {
-                      const isNew = !prevVisibleImagesRef.current.has(media.src)
-                      const hoverProps = media.type === "image" ? { whileHover: { scale: 1.035, zIndex: 10 } } : {}
-                      return (
-                        <motion.div
-                          key={media.src}
-                          initial={isNew ? { opacity: 0, y: 12, scale: 0.98 } : undefined}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          transition={isNew ? { duration: 0.45, ease: "easeOut" } : { duration: 0.2 }}
-                          {...hoverProps}
-                          className="group relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10"
-                        >
-                          {media.type === "image" ? (
-                            <>
-                              <img
-                                src={media.src}
-                                alt={media.alt}
-                                className="w-full h-auto object-cover transition-transform duration-400 ease-out hover:scale-102"
-                                loading="lazy"
-                              />
-                              <div className="pointer-events-none absolute left-1/2 bottom-full mb-2 z-30 hidden -translate-x-1/2 group-hover:block">
-                                <div className="rounded-lg overflow-hidden shadow-2xl shadow-black/60 border border-white/10 bg-black/80">
-                                  <img
-                                    src={media.src}
-                                    alt={media.alt}
-                                    className="w-64 h-auto object-cover"
-                                    loading="lazy"
-                                  />
-                                </div>
-                              </div>
-                            </>
-                          ) : isYouTubeUrl(media.src) ? (
-                            <iframe
-                              src={getYouTubeEmbedUrl(media.src)}
-                              className="w-full h-full"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                              title={media.alt}
-                            />
-                          ) : (
-                            <video
+            <>
+              {/* Desktop/Tablet: grid gallery - Realtor Branding Workshop */}
+              <div className="hidden md:block max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8">
+                <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 ${moreEventsRealtorPhotos.length < 3 ? "justify-center" : ""}`}>
+                  {moreEventsRealtorPhotos.map((media) => {
+                    const isNew = !prevVisibleImagesRef.current.has(media.src)
+                    return (
+                      <motion.div
+                        key={media.src}
+                        initial={isNew ? { opacity: 0, y: 12, scale: 0.98 } : undefined}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={isNew ? { duration: 0.45, ease: "easeOut" } : { duration: 0.2 }}
+                        whileHover={{ scale: 1.035, zIndex: 10 }}
+                        className="group relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10"
+                      >
+                        <img
+                          src={media.src}
+                          alt={media.alt}
+                          className="w-full h-auto object-cover transition-transform duration-400 ease-out hover:scale-102"
+                          loading="lazy"
+                        />
+                        <div className="pointer-events-none absolute left-1/2 bottom-full mb-2 z-30 hidden -translate-x-1/2 group-hover:block">
+                          <div className="rounded-lg overflow-hidden shadow-2xl shadow-black/60 border border-white/10 bg-black/80">
+                            <img
                               src={media.src}
-                              controls
-                              className="w-full h-auto object-cover"
-                              preload="metadata"
+                              alt={media.alt}
+                              className="w-64 h-auto object-cover"
+                              loading="lazy"
                             />
-                          )}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-                        </motion.div>
-                      )
-                    })}
-                  </div>
+                          </div>
+                        </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                      </motion.div>
+                    )
+                  })}
                 </div>
 
-                {/* Mobile: keep current four-up carousel */}
-                <div className="max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8 overflow-hidden md:hidden">
-                  <div className="relative w-full">
+                {/* Separator before Business Connect */}
+                {moreEventsBusinessPhotos.length > 0 && (
+                  <>
+                    <div className="w-full my-10 md:my-12 border-t border-white/20" aria-hidden />
+                    <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 ${moreEventsBusinessPhotos.length < 3 ? "justify-center" : ""}`}>
+                      {moreEventsBusinessPhotos.map((media) => {
+                        const isNew = !prevVisibleImagesRef.current.has(media.src)
+                        return (
+                          <motion.div
+                            key={media.src}
+                            initial={isNew ? { opacity: 0, y: 12, scale: 0.98 } : undefined}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            transition={isNew ? { duration: 0.45, ease: "easeOut" } : { duration: 0.2 }}
+                            whileHover={{ scale: 1.035, zIndex: 10 }}
+                            className="group relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10"
+                          >
+                            <img
+                              src={media.src}
+                              alt={media.alt}
+                              className="w-full h-auto object-cover transition-transform duration-400 ease-out hover:scale-102"
+                              loading="lazy"
+                            />
+                            <div className="pointer-events-none absolute left-1/2 bottom-full mb-2 z-30 hidden -translate-x-1/2 group-hover:block">
+                              <div className="rounded-lg overflow-hidden shadow-2xl shadow-black/60 border border-white/10 bg-black/80">
+                                <img
+                                  src={media.src}
+                                  alt={media.alt}
+                                  className="w-64 h-auto object-cover"
+                                  loading="lazy"
+                                />
+                              </div>
+                            </div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                          </motion.div>
+                        )
+                      })}
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {/* Mobile: four-up carousel */}
+              <div className="max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8 overflow-hidden md:hidden">
+                <div className="relative w-full">
                   <motion.div
                     ref={fourUpCarouselRef}
-                    className={`flex gap-4 md:gap-6 ${filteredEventImages.length < 3 ? "justify-center" : ""}`}
+                    className={`flex gap-4 md:gap-6 ${moreEventsPhotos.length < 3 ? "justify-center" : ""}`}
                     animate={{
                       x: `-${fourUpIndex * (100 / fourUpPerRow)}%`
                     }}
@@ -1418,371 +1069,138 @@ export default function EventsPage() {
                       }
                     }}
                   >
-                      {/* Original items */}
-                      {filteredEventImages.map((media, index) => {
+                    {moreEventsPhotos.map((media, index) => {
                       const isNew = !prevVisibleImagesRef.current.has(media.src)
-                      const hoverProps = media.type === "image" ? { whileHover: { scale: 1.08, zIndex: 20 } } : {}
                       return (
                         <motion.div
                           key={`original-${media.src}-${index}`}
                           initial={isNew ? { opacity: 0, scale: 0.98 } : undefined}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ duration: 0.45, ease: "easeOut" }}
-                          {...hoverProps}
+                          whileHover={{ scale: 1.08, zIndex: 20 }}
                           className="group relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
                         >
-                          {media.type === 'image' ? (
-                            <img
-                              src={media.src}
-                              alt={media.alt}
-                              className="w-full h-auto object-cover"
-                              loading="lazy"
-                            />
-                          ) : isYouTubeUrl(media.src) ? (
-                            <iframe
-                              src={getYouTubeEmbedUrl(media.src)}
-                              className="w-full h-full"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                              title={media.alt}
-                            />
-                          ) : (
-                            <video
-                              src={media.src}
-                              controls
-                              className="w-full h-auto object-cover"
-                              preload="metadata"
-                              autoPlay
-                              muted
-                              loop
-                            />
-                          )}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
-                          {media.type === 'image' && (
-                            <div className="pointer-events-none absolute left-1/2 bottom-full mb-3 z-30 hidden -translate-x-1/2 group-hover:block">
-                              <div className="rounded-lg overflow-hidden shadow-2xl shadow-black/60 border border-white/10 bg-black/80">
-                                <img
-                                  src={media.src}
-                                  alt={media.alt}
-                                  className="w-72 h-auto object-cover"
-                                  loading="lazy"
-                                />
-                      </div>
-                            </div>
-                          )}
-                        </motion.div>
-                      )
-                    })}
-                    {/* Duplicate items at the end for infinite loop */}
-                    {filteredEventImages.length > 0 && filteredEventImages.map((media, index) => {
-                      const hoverProps = media.type === "image" ? { whileHover: { scale: 1.08, zIndex: 20 } } : {}
-                      return (
-                        <motion.div
-                          key={`duplicate-${media.src}-${index}`}
-                          {...hoverProps}
-                          className="group relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
-                        >
-                          {media.type === 'image' ? (
-                            <img
-                              src={media.src}
-                              alt={media.alt}
-                              className="w-full h-auto object-cover"
-                              loading="lazy"
-                            />
-                          ) : isYouTubeUrl(media.src) ? (
-                            <iframe
-                              src={getYouTubeEmbedUrl(media.src)}
-                              className="w-full h-full"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                              title={media.alt}
-                            />
-                          ) : (
-                            <video
-                              src={media.src}
-                              controls
-                              className="w-full h-auto object-cover"
-                              preload="metadata"
-                              autoPlay
-                              muted
-                              loop
-                            />
-                          )}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
-                          {media.type === 'image' && (
-                            <div className="pointer-events-none absolute left-1/2 bottom-full mb-3 z-30 hidden -translate-x-1/2 group-hover:block">
-                              <div className="rounded-lg overflow-hidden shadow-2xl shadow-black/60 border border-white/10 bg-black/80">
-                                <img
-                                  src={media.src}
-                                  alt={media.alt}
-                                  className="w-72 h-auto object-cover"
-                                  loading="lazy"
-                                />
-                      </div>
-                            </div>
-                          )}
-                        </motion.div>
-                      )
-                    })}
-                    </motion.div>
-                  </div>
-
-                  {filteredEventImages.length > 0 && (
-                    <div className="flex items-center justify-center gap-3 mt-6 md:mt-8">
-                      <button
-                        onClick={() => {
-                          if (fourUpIsTransitioning.current) return
-                          setFourUpIndex((prev) => {
-                            const newIndex = prev - 1
-                            const totalItems = filteredEventImages.length
-                            if (newIndex < 0) {
-                              fourUpIsTransitioning.current = true
-                              setFourUpIsResetting(true)
-                              setTimeout(() => {
-                                setFourUpIndex(totalItems - 1)
-                                fourUpIsTransitioning.current = false
-                              }, 50)
-                              return totalItems + totalItems - 1
-                            }
-                            return newIndex
-                          })
-                        }}
-                        className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
-                        aria-label="Previous image"
-                      >
-                        <ChevronRight className="h-4 w-4 rotate-180" />
-                      </button>
-
-                      <div className="flex items-center gap-1.5">
-                        {Array.from({ length: filteredEventImages.length }).map((_, idx) => (
-                          <button
-                            key={idx}
-                            onClick={() => {
-                              if (fourUpIsTransitioning.current) return
-                              setFourUpIndex(idx)
-                            }}
-                            aria-label={`Go to image ${idx + 1}`}
-                            className={`h-2 rounded-full transition-all ${
-                              (fourUpIndex % filteredEventImages.length) === idx ? "w-6 bg-[#B40101]" : "w-2 bg-white/40"
-                            }`}
+                          <img
+                            src={media.src}
+                            alt={media.alt}
+                            className="w-full h-auto object-cover"
+                            loading="lazy"
                           />
-                        ))}
-                      </div>
-
-                      <button
-                        onClick={() => {
-                          if (fourUpIsTransitioning.current) return
-                          setFourUpIndex((prev) => {
-                            const next = prev + 1
-                            const totalItems = filteredEventImages.length
-                            if (next > totalItems) {
-                              fourUpIsTransitioning.current = true
-                              setFourUpIsResetting(true)
-                              setTimeout(() => {
-                                setFourUpIndex(0)
-                                fourUpIsTransitioning.current = false
-                              }, 50)
-                              return totalItems
-                            }
-                            return next
-                          })
-                        }}
-                        className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
-                        aria-label="Next image"
-                      >
-                        <ChevronRight className="h-4 w-4" />
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </>
-            ) : (
-              <>
-                {/* Realtor Branding Workshop: grid on desktop/tablet, carousel on mobile */}
-                {eventCategory === "Realtor Branding Workshop" ? (
-                  <>
-                    {/* Desktop/Tablet grid */}
-                    <div className="hidden md:block max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8">
-                      <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 ${filteredEventImages.length < 3 ? "justify-center" : ""}`}>
-                        {filteredEventImages.map((media) => {
-                          const isNew = !prevVisibleImagesRef.current.has(media.src)
-                          const hoverProps = media.type === "image" ? { whileHover: { scale: 1.035, zIndex: 10 } } : {}
-                          return (
-                            <motion.div
-                              key={media.src}
-                              initial={isNew ? { opacity: 0, y: 12, scale: 0.98 } : undefined}
-                              animate={{ opacity: 1, y: 0, scale: 1 }}
-                              transition={isNew ? { duration: 0.45, ease: "easeOut" } : { duration: 0.2 }}
-                              {...hoverProps}
-                              className="group relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10"
-                            >
-                              {media.type === "image" ? (
-                                <>
-                                  <img
-                                    src={media.src}
-                                    alt={media.alt}
-                                    className="w-full h-auto object-cover transition-transform duration-400 ease-out hover:scale-102"
-                                    loading="lazy"
-                                  />
-                                  <div className="pointer-events-none absolute left-1/2 bottom-full mb-2 z-30 hidden -translate-x-1/2 group-hover:block">
-                                    <div className="rounded-lg overflow-hidden shadow-2xl shadow-black/60 border border-white/10 bg-black/80">
-                                      <img
-                                        src={media.src}
-                                        alt={media.alt}
-                                        className="w-64 h-auto object-cover"
-                                        loading="lazy"
-                                      />
-                                    </div>
-                                  </div>
-                                </>
-                              ) : (
-                                <video
-                                  src={media.src}
-                                  controls
-                                  className="w-full h-auto object-cover"
-                                  preload="metadata"
-                                />
-                              )}
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-                            </motion.div>
-                          )
-                        })}
-                      </div>
-                    </div>
-
-                    {/* Mobile carousel */}
-                    <div className="max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8 overflow-hidden md:hidden">
-                      <div className="relative w-full">
-                        <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${realtorMobileIndex * 100}%)` }}>
-                          {filteredEventImages.map((media) => (
-                            <div
-                              key={media.src}
-                              className="w-full flex-shrink-0"
-                            >
-                              <div className="relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 aspect-video">
-                                {media.type === "image" ? (
-                                  <img
-                                    src={media.src}
-                                    alt={media.alt}
-                                    className="w-full h-full object-cover"
-                                    loading="lazy"
-                                  />
-                                ) : (
-                                  <video
-                                    src={media.src}
-                                    controls
-                                    className="w-full h-full object-cover"
-                                    preload="metadata"
-                                  />
-                                )}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-
-                        {filteredEventImages.length > 1 && (
-                          <div className="flex items-center justify-center gap-3 mt-6">
-                            <button
-                              onClick={() => {
-                                setRealtorMobileIndex((prev) =>
-                                  prev === 0 ? filteredEventImages.length - 1 : prev - 1
-                                )
-                              }}
-                              className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
-                              aria-label="Previous image"
-                            >
-                              <ChevronRight className="h-4 w-4 rotate-180" />
-                            </button>
-
-                            <div className="flex items-center gap-1.5">
-                              {Array.from({ length: Math.min(5, filteredEventImages.length) }).map((_, idx) => {
-                                const dotCount = Math.min(5, filteredEventImages.length)
-                                const groupSize = Math.ceil(filteredEventImages.length / dotCount) || 1
-                                const activeDot = Math.floor(realtorMobileIndex / groupSize)
-                                return (
-                                  <button
-                                    key={idx}
-                                    onClick={() => setRealtorMobileIndex(idx * groupSize)}
-                                    aria-label={`Go to image group ${idx + 1}`}
-                                    className={`h-2 rounded-full transition-all ${
-                                      activeDot === idx ? "w-6 bg-[#B40101]" : "w-2 bg-white/40"
-                                    }`}
-                                  />
-                                )
-                              })}
-                            </div>
-
-                            <button
-                              onClick={() => {
-                                setRealtorMobileIndex((prev) =>
-                                  prev === filteredEventImages.length - 1 ? 0 : prev + 1
-                                )
-                              }}
-                              className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
-                              aria-label="Next image"
-                            >
-                              <ChevronRight className="h-4 w-4" />
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <div className="max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8">
-                    <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 ${filteredEventImages.length < 3 ? "justify-center" : ""}`}>
-                      {filteredEventImages.map((media) => {
-                        const isNew = !prevVisibleImagesRef.current.has(media.src)
-                        const hoverProps = media.type === "image" ? { whileHover: { scale: 1.035, zIndex: 10 } } : {}
-                        return (
-                          <motion.div
-                            key={media.src}
-                            initial={isNew ? { opacity: 0, y: 12, scale: 0.98 } : undefined}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            transition={isNew ? { duration: 0.45, ease: "easeOut" } : { duration: 0.2 }}
-                            {...hoverProps}
-                            className="group relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10"
-                          >
-                            {media.type === "image" ? (
-                              <>
-                                <img
-                                  src={media.src}
-                                  alt={media.alt}
-                                  className="w-full h-auto object-cover transition-transform duration-400 ease-out hover:scale-102"
-                                  loading="lazy"
-                                />
-                                <div className="pointer-events-none absolute left-1/2 bottom-full mb-2 z-30 hidden -translate-x-1/2 group-hover:block">
-                                  <div className="rounded-lg overflow-hidden shadow-2xl shadow-black/60 border border-white/10 bg-black/80">
-                                    <img
-                                      src={media.src}
-                                      alt={media.alt}
-                                      className="w-64 h-auto object-cover"
-                                      loading="lazy"
-                                    />
-                                  </div>
-                                </div>
-                              </>
-                            ) : (
-                              <video
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+                          <div className="pointer-events-none absolute left-1/2 bottom-full mb-3 z-30 hidden -translate-x-1/2 group-hover:block">
+                            <div className="rounded-lg overflow-hidden shadow-2xl shadow-black/60 border border-white/10 bg-black/80">
+                              <img
                                 src={media.src}
-                                controls
-                                className="w-full h-auto object-cover"
-                                preload="metadata"
+                                alt={media.alt}
+                                className="w-72 h-auto object-cover"
+                                loading="lazy"
                               />
-                            )}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-                          </motion.div>
-                        )
-                      })}
+                            </div>
+                          </div>
+                        </motion.div>
+                      )
+                    })}
+                    {moreEventsPhotos.length > 0 && moreEventsPhotos.map((media, index) => (
+                      <motion.div
+                        key={`duplicate-${media.src}-${index}`}
+                        whileHover={{ scale: 1.08, zIndex: 20 }}
+                        className="group relative overflow-hidden rounded-lg bg-gray-800 shadow-sm shadow-black/10 flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
+                      >
+                        <img
+                          src={media.src}
+                          alt={media.alt}
+                          className="w-full h-auto object-cover"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+                        <div className="pointer-events-none absolute left-1/2 bottom-full mb-3 z-30 hidden -translate-x-1/2 group-hover:block">
+                          <div className="rounded-lg overflow-hidden shadow-2xl shadow-black/60 border border-white/10 bg-black/80">
+                            <img
+                              src={media.src}
+                              alt={media.alt}
+                              className="w-72 h-auto object-cover"
+                              loading="lazy"
+                            />
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </div>
+
+                {moreEventsPhotos.length > 0 && (
+                  <div className="flex items-center justify-center gap-3 mt-6 md:mt-8">
+                    <button
+                      onClick={() => {
+                        if (fourUpIsTransitioning.current) return
+                        setFourUpIndex((prev) => {
+                          const newIndex = prev - 1
+                          const totalItems = moreEventsPhotos.length
+                          if (newIndex < 0) {
+                            fourUpIsTransitioning.current = true
+                            setFourUpIsResetting(true)
+                            setTimeout(() => {
+                              setFourUpIndex(totalItems - 1)
+                              fourUpIsTransitioning.current = false
+                            }, 50)
+                            return totalItems + totalItems - 1
+                          }
+                          return newIndex
+                        })
+                      }}
+                      className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
+                      aria-label="Previous image"
+                    >
+                      <ChevronRight className="h-4 w-4 rotate-180" />
+                    </button>
+
+                    <div className="flex items-center gap-1.5">
+                      {Array.from({ length: moreEventsPhotos.length }).map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => {
+                            if (fourUpIsTransitioning.current) return
+                            setFourUpIndex(idx)
+                          }}
+                          aria-label={`Go to image ${idx + 1}`}
+                          className={`h-2 rounded-full transition-all ${
+                            (fourUpIndex % moreEventsPhotos.length) === idx ? "w-6 bg-[#B40101]" : "w-2 bg-white/40"
+                          }`}
+                        />
+                      ))}
                     </div>
+
+                    <button
+                      onClick={() => {
+                        if (fourUpIsTransitioning.current) return
+                        setFourUpIndex((prev) => {
+                          const next = prev + 1
+                          const totalItems = moreEventsPhotos.length
+                          if (next > totalItems) {
+                            fourUpIsTransitioning.current = true
+                            setFourUpIsResetting(true)
+                            setTimeout(() => {
+                              setFourUpIndex(0)
+                              fourUpIsTransitioning.current = false
+                            }, 50)
+                            return totalItems
+                          }
+                          return next
+                        })
+                      }}
+                      className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white border border-white/10 transition"
+                      aria-label="Next image"
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
                   </div>
                 )}
-              </>
-            )}
+              </div>
+            </>
           </motion.div>
         </div>
       </section>
+
 
       {/* CTA Section */}
       <section className="relative py-12 sm:py-32">
